@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+apply plugin: 'bugly'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
+
+    defaultConfig {
+        applicationId "com.putao.wd"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //源码集
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/db-gen']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    //产品渠道配置
+    productFlavors {
+        local_release {
+            versionName = "V" + defaultConfig.versionName
+        }
+        local_debug {
+            versionName = "D" + defaultConfig.versionName
+        }
+    }
+}
+
+bugly {
+    appId = "900013684"
+    appKey = "36vri8M7BqFUAzg9"
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':library')
+}

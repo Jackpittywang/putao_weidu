@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--ImageDraweeView-->
+    <declare-styleable name="ImageDraweeView">
+        <attr name="aspect_ratio" format="float" />
+    </declare-styleable>
+
+    <!--BasicRecyclerView-->
+    <declare-styleable name="BasicRecyclerView">
+        <attr name="layout_mode" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="invalid_offset" value="2" />
+            <enum name="grid" value="3" />
+        </attr>
+        <attr name="column_num" format="integer" />
+        <attr name="has_divider" format="boolean" />
+        <attr name="divider_height" format="dimension" />
+        <attr name="divider_marginLeft" format="dimension" />
+        <attr name="divider_marginRight" format="dimension" />
+        <attr name="divider_color" format="color" />
+        <attr name="is_inner" format="boolean" />
+    </declare-styleable>
+
+    <!--NavigationBar-->
+    <declare-styleable name="NavigationBar">
+        <attr name="nav_left_icon" format="reference" />
+        <attr name="nav_right_icon" format="reference" />
+        <attr name="nav_left_title" format="string" />
+        <attr name="nav_right_title" format="string" />
+        <attr name="nav_left_title_color" format="color" />
+        <attr name="nav_right_title_color" format="color" />
+        <attr name="nav_main_title" format="string" />
+        <attr name="nav_main_title_color" format="color" />
+        <attr name="nav_divider_color" format="color" />
+        <attr name="nav_has_divider" format="boolean" />
+    </declare-styleable>
+
+    <!--CircleIndicator-->
+    <declare-styleable name="CircleIndicator">
+        <attr name="radius" format="dimension" />
+        <attr name="margin" format="dimension" />
+        <attr name="none_background" format="color|integer" />
+        <attr name="selected_background" format="color|integer" />
+        <attr name="gravity">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <attr name="mode">
+            <enum name="inside" value="0" />
+            <enum name="outside" value="1" />
+            <enum name="solo" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <!--CleanableEditText-->
+    <declare-styleable name="CleanableEditText">
+        <attr name="maxLength" format="integer" />
+    </declare-styleable>
+
+    <!--TabItem-->
+    <declare-styleable name="TabItem">
+        <attr name="indicator_background_color" format="color" />
+        <attr name="activeDrawable" format="reference" />
+        <attr name="inactiveDrawable" format="reference" />
+        <attr name="active" format="boolean" />
+    </declare-styleable>
+
+    <!--PullToRefreshLayout-->
+    <declare-styleable name="PullToRefreshLayout">
+        <attr name="refresh_layout" format="reference" />
+        <attr name="refresh_layout_height" format="integer" />
+        <attr name="refresh_prepare_text" format="string|reference" />
+        <attr name="refresh_recycle_text" format="string|reference" />
+        <attr name="refresh_loading_text" format="string|reference" />
+        <attr name="refresh_complete_text" format="string|reference" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.sunnybear.library.view.tab.TabBar
+        android:id="@+id/tb_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/tab_background"
+        android:orientation="horizontal">
+
+        <com.sunnybear.library.view.tab.TabItem
+            android:id="@+id/ti_start_circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            auto:active="true"
+            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
+            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+
+        <com.sunnybear.library.view.tab.TabItem
+            android:id="@+id/ti_explore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            auto:active="false"
+            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
+            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+
+        <com.sunnybear.library.view.tab.TabItem
+            android:id="@+id/ti_store"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            auto:active="false"
+            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
+            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+
+        <com.sunnybear.library.view.tab.TabItem
+            android:id="@+id/ti_me"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            auto:active="false"
+            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
+            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+    </com.sunnybear.library.view.tab.TabBar>
+
+    <com.sunnybear.library.view.UnScrollableViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tb_tab" />
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+project(':dbgenerate') {
+    apply plugin: 'application'
+    apply plugin: 'java'
+
+    mainClassName = "com.putao.wd.GenerateDB"
+    def outputDir = "../app/src/main/db-gen"
+
+    task createDocs {
+        def docs = file(outputDir)
+        docs.mkdirs();
+    }
+
+    run {
+        args outputDir
+    }
+
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'de.greenrobot:greendao-generator:2.1.0'
+}

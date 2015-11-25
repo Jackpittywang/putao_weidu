@@ -1,0 +1,158 @@
+package com.sunnybear.library.controller;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.R;
+import com.sunnybear.library.controller.intent.FragmentIntent;
+import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.view.loading.LoadingHUD;
+
+import butterknife.ButterKnife;
+
+/**
+ * 基础Fragment
+ * Created by guchenkai on 2015/11/19.
+ */
+public abstract class BasicFragment<App extends BasicApplication> extends LazyFragment {
+    private boolean isPrepared;//标志位，标志已经初始化完成
+    private View fragmentView = null;
+    protected BasicFragmentActivity mActivity;
+
+    //fragment管理器
+    private FragmentManager mFragmentManager;
+    protected Bundle args;//传递的参数值
+
+    protected App mApp;
+    private OkHttpClient mOkHttpClient;
+    private LoadingHUD loading;
+
+    protected DiskFileCacheHelper mDiskFileCacheHelper;//磁盘文件缓存器
+
+    /**
+     * 设置布局id
+     *
+     * @return 布局id
+     */
+    protected abstract int getLayoutId();
+
+    /**
+     * 布局创建完成回调
+     *
+     * @param savedInstanceState savedInstanceState
+     */
+    public abstract void onViewCreatedFinish(Bundle savedInstanceState);
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (BasicFragmentActivity) activity;
+        mApp = (App) mActivity.getApplication();
+        this.loading = LoadingHUD.getINSTANCE(mActivity);
+        mOkHttpClient = mApp.getOkHttpClient();
+        mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();
+
+        mFragmentManager = mActivity.getSupportFragmentManager();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        args = getArguments();
+        EventBusHelper.register(this);//注册EventBus
+    }
+
+    @Nullable
+    @Override
+    public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        int layoutId = getLayoutId();
+        if (layoutId == 0)
+            throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
+        fragmentView = inflater.inflate(layoutId, container, false);
+        ButterKnife.bind(this, fragmentView);
+        isPrepared = true;
+        return fragmentView;
+    }
+
+    @Override
+    public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        lazyLoad(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);//反注册EventBus
+        mApp.getRefWatcher().watch(this);
+    }
+
+    /**
+     * 懒加载
+     */
+    @Override
+    protected final void lazyLoad(Bundle savedInstanceState) {
+        if (!isPrepared || !isVisible) return;
+        onViewCreatedFinish(savedInstanceState);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    protected void networkRequest(Request request, JSONObjectCallback callback) {
+        if (request == null)
+            throw new NullPointerException("request为空");
+        loading.show();
+        mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 返回
+     */
+    protected void onBackPressed() {
+        mFragmentManager.popBackStack();
+    }
+
+    /**
+     * 启动Fragment
+     *
+     * @param intent Fragment意图
+     */
+    protected void startFragment(FragmentIntent intent) {
+        Fragment currentFragment = intent.getCurrentFragment();
+        Class<? extends Fragment> targetFragmentClazz = intent.getTargetFragmentClazz();
+        Bundle args = intent.getExtras();
+        switchFragment(currentFragment, Fragment.instantiate(mActivity, targetFragmentClazz.getName(), args));
+    }
+
+    /**
+     * 切换Fragment
+     *
+     * @param currentFragment 当前fragment
+     * @param targetFragment  目标fragment
+     */
+    private void switchFragment(Fragment currentFragment, Fragment targetFragment) {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        String tag = targetFragment.getClass().getName();
+        if (currentFragment != null)
+            transaction.replace(R.id.fragment_container, targetFragment, targetFragment.getClass().getName()).addToBackStack(tag).commit();
+        else
+            transaction.add(R.id.fragment_container, targetFragment, targetFragment.getClass().getName()).commit();
+    }
+}

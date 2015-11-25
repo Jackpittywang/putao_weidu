@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fragment_container" type="id" />
+    <!--NavigationBar-->
+    <item name="nav_background" type="id" />
+    <item name="navigation_bar" type="id" />
+    <!--PullToRefreshLayout-->
+    <item name="refresh_text" type="id" />
+    <item name="refresh_view" type="id" />
+</resources>
