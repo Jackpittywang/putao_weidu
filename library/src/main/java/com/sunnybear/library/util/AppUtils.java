@@ -3,12 +3,23 @@ package com.sunnybear.library.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.provider.Settings;
 
 /**
  * App信息工具
  * Created by guchenkai on 2015/11/25.
  */
 public class AppUtils {
+
+    /**
+     * 获取设备Id
+     *
+     * @param context context
+     * @return 设备Id
+     */
+    public static String getDeviceId(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
 
     /**
      * 获取应用程序名称
@@ -46,7 +57,6 @@ public class AppUtils {
     }
 
     /**
-     *
      * @param context context
      * @return 当前应用的版本名称
      */

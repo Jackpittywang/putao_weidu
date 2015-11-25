@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import com.putao.wd.account.AccountApi;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.SDCardUtil;
@@ -9,6 +10,13 @@ import com.sunnybear.library.util.SDCardUtil;
  * Created by guchenkai on 2015/11/25.
  */
 public class GlobalApplication extends BasicApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        AccountApi.updateDebugStatus(isDebug(), "1", "", "");
+    }
 
     @Override
     protected String getBuglyKey() {

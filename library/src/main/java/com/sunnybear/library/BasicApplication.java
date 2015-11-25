@@ -10,7 +10,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.sunnybear.library.model.http.OkHttpManager;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.view.image.ImagePipelineConfigFactory;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import butterknife.ButterKnife;
 
@@ -44,7 +43,7 @@ public abstract class BasicApplication extends Application {
         Fresco.initialize(getApplicationContext(),
                 ImagePipelineConfigFactory.getOkhttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));
         //开启bugly
-        CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
+//        CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
         //网络缓存最大时间
         maxAge = getNetworkCacheMaxAgeTime();
         //磁盘文件缓存器
