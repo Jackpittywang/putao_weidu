@@ -103,8 +103,13 @@ public class NavigationBar extends RelativeLayout {
             mMainView.setTextColor(mMainTitleColor);
     }
 
-    public void setLeftTitle() {
-
+    public void setLeftTitle(String title) {
+        mLeftTitle = title;
+        if (mLeftView instanceof TextView) {
+            ((TextView) mLeftView).setText(title);
+            if (mLeftTitleColor != -1)
+                ((TextView) mLeftView).setTextColor(mLeftTitleColor);
+        }
     }
 
     public void setRightTitle(String title) {

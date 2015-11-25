@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
@@ -18,7 +19,7 @@ import com.sunnybear.library.R;
 import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.loading.LoadingHUD;
 
@@ -38,6 +39,8 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     protected Bundle args;
     private static WeakHandler mWeakHandler;
     private HomeBroadcastReceiver mReceiver = new HomeBroadcastReceiver();//监听Home键
+
+    protected DiskFileCacheHelper mDiskFileCacheHelper;
 
     /**
      * 设置布局id
@@ -71,6 +74,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         mOkHttpClient = mApp.getOkHttpClient();
         this.loading = LoadingHUD.getINSTANCE(mContext);
         this.args = getIntent().getExtras() != null ? getIntent().getExtras() : new Bundle();
+        mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();
         mWeakHandler = new WeakHandler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
@@ -133,7 +137,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      * @param request  request主体
      * @param callback 请求回调(建议使用SimpleFastJsonCallback)
      */
-    protected void networkRequest(Request request, JSONObjectCallback callback) {
+    protected void networkRequest(Request request, Callback callback) {
         if (request == null)
             throw new NullPointerException("request为空");
         loading.show();

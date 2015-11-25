@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
@@ -114,7 +115,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
      * @param request  request主体
      * @param callback 请求回调(建议使用SimpleFastJsonCallback)
      */
-    protected void networkRequest(Request request, JSONObjectCallback callback) {
+    protected void networkRequest(Request request, Callback callback) {
         if (request == null)
             throw new NullPointerException("request为空");
         loading.show();
