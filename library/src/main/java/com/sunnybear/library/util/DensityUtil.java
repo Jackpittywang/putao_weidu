@@ -10,10 +10,6 @@ import android.view.WindowManager;
  */
 public final class DensityUtil {
 
-    private DensityUtil() {
-        throw new UnsupportedOperationException("cannot be instantiated");
-    }
-
     /**
      * dp转px
      *

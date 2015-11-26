@@ -17,7 +17,6 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.view.loading.LoadingHUD;
 
@@ -42,6 +41,9 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
 
     protected DiskFileCacheHelper mDiskFileCacheHelper;//磁盘文件缓存器
 
+    private Fragment currentFragment;//当前Fragment
+    private Fragment targetFragment;//目标Fragment
+
     /**
      * 设置布局id
      *
@@ -55,6 +57,13 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
      * @param savedInstanceState savedInstanceState
      */
     public abstract void onViewCreatedFinish(Bundle savedInstanceState);
+
+    /**
+     * 收集本Activity请求时的url
+     *
+     * @return url
+     */
+    protected abstract String[] getRequestUrls();
 
     @Override
     public void onAttach(Activity activity) {
@@ -91,6 +100,16 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lazyLoad(savedInstanceState);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //Fragment停止时取消所有请求
+        String[] urls = getRequestUrls();
+        for (String url : urls) {
+            mOkHttpClient.cancel(url);
+        }
     }
 
     @Override
@@ -134,11 +153,36 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
      *
      * @param intent Fragment意图
      */
-    protected void startFragment(FragmentIntent intent) {
-        Fragment currentFragment = intent.getCurrentFragment();
+    private void startFragment(FragmentIntent intent) {
+        currentFragment = intent.getCurrentFragment();
         Class<? extends Fragment> targetFragmentClazz = intent.getTargetFragmentClazz();
         Bundle args = intent.getExtras();
-        switchFragment(currentFragment, Fragment.instantiate(mActivity, targetFragmentClazz.getName(), args));
+        if (args != null)
+            targetFragment = Fragment.instantiate(mActivity, targetFragmentClazz.getName(), args);
+        else
+            targetFragment = Fragment.instantiate(mActivity, targetFragmentClazz.getName());
+        switchFragment(currentFragment, targetFragment);
+    }
+
+    /**
+     * 跳转Fragment
+     *
+     * @param targetClass 目标Fragment
+     * @param args        传递参数
+     */
+    protected void startFragment(Class<? extends Fragment> targetClass, Bundle args) {
+        FragmentIntent fragmentIntent = new FragmentIntent(this, targetClass, args);
+        startFragment(fragmentIntent);
+    }
+
+    /**
+     * 跳转Fragment
+     *
+     * @param targetClass 目标Fragment
+     */
+    protected void startFragment(Class<? extends Fragment> targetClass) {
+        FragmentIntent fragmentIntent = new FragmentIntent(this, targetClass, null);
+        startFragment(fragmentIntent);
     }
 
     /**

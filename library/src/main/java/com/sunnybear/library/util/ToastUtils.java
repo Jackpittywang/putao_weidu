@@ -7,7 +7,7 @@ import android.widget.Toast;
  * Android Toast 封装
  * Created by guchenkai on 2015/11/6.
  */
-public class ToastUtils {
+public final class ToastUtils {
     public static void showToastLong(Context context, String msg) {
         showToast(context, msg, Toast.LENGTH_LONG);
     }

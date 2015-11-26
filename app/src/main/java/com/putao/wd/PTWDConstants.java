@@ -11,5 +11,7 @@ public class PTWDConstants {
     public static final String PREFERENCE_KEY_EXPIRE_TIME = "expire_tim";
     public static final String PREFERENCE_KEY_REFRESH_TOKEN = "refresh_token";
 
-
+    //===================request key================================
+    public static final String REQUEST_KEY_UID = "uid";
+    public static final String REQUEST_KEY_TOKEN = "token";
 }

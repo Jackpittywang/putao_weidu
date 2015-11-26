@@ -9,7 +9,7 @@ import android.provider.Settings;
  * App信息工具
  * Created by guchenkai on 2015/11/25.
  */
-public class AppUtils {
+public final class AppUtils {
 
     /**
      * 获取设备Id

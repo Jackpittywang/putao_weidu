@@ -1,5 +1,7 @@
 package com.sunnybear.library.controller;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +9,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -17,9 +23,9 @@ import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.handler.WeakHandler;
-import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.loading.LoadingHUD;
 
@@ -66,7 +72,10 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+        int layoutId = getLayoutId();
+        if (layoutId == 0)
+            throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
+        setContentView(layoutId);
         ButterKnife.bind(this);
 
         mContext = this;
@@ -145,16 +154,142 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     }
 
     /**
-     * 启动Fragment
+     * 添加fragment显示
      *
-     * @param intent Fragment意图
+     * @param targetClass 目标fragment
+     * @param args        传递参数
      */
-    protected void startFragment(FragmentIntent intent) {
-        Class<? extends Fragment> targetFragmentClazz = intent.getTargetFragmentClazz();
-        Bundle args = intent.getExtras();
+    protected void addFragment(Class<? extends Fragment> targetClass, Bundle args) {
+        String fragmentName = targetClass.getName();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container,
-                        Fragment.instantiate(mContext, targetFragmentClazz.getName(), args), targetFragmentClazz.getName()).commit();
+                .add(R.id.fragment_container, Fragment.instantiate(mContext, fragmentName, args), fragmentName).commit();
+    }
+
+    /**
+     * 添加fragment显示
+     *
+     * @param targetClass 目标fragment
+     */
+    protected void addFragment(Class<? extends Fragment> targetClass) {
+        addFragment(targetClass, null);
+    }
+
+    /**
+     * 跳转目标Activity
+     *
+     * @param targetClass 目标Activity类型
+     */
+    protected void startActivity(Class<? extends Activity> targetClass) {
+        startActivity(targetClass, null);
+    }
+
+    /**
+     * 跳转目标Activity(传递参数)
+     *
+     * @param targetClass 目标Activity类型
+     * @param args        传递参数
+     */
+    protected void startActivity(Class<? extends Activity> targetClass, Bundle args) {
+        Intent intent = new Intent(this, targetClass);
+        if (args != null)
+            intent.putExtras(args);
+        startActivity(intent);
+    }
+
+    /**
+     * 隐式跳转目标Activity
+     *
+     * @param action 隐式动作
+     */
+    protected void startActivity(String action) {
+        startActivity(action, null);
+    }
+
+    /**
+     * 隐式跳转目标Activity
+     *
+     * @param action 隐式动作
+     */
+    protected void startActivity(String action, Bundle args) {
+        Intent intent = new Intent(action);
+        if (args != null)
+            intent.putExtras(args);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动目标Service
+     *
+     * @param targetClass 目标Service类型
+     * @param args        传递参数
+     */
+    protected void startService(Class<? extends Service> targetClass, Bundle args) {
+        Intent intent = new Intent(this, targetClass);
+        if (args != null)
+            intent.putExtras(args);
+        startService(intent);
+    }
+
+    /**
+     * 启动目标Service
+     *
+     * @param targetClass 目标Service类型
+     */
+    protected void startService(Class<? extends Service> targetClass) {
+        startService(targetClass, null);
+    }
+
+    /**
+     * 隐式跳转目标Service
+     *
+     * @param action 隐式动作
+     */
+    protected void startService(String action) {
+        startService(action, null);
+    }
+
+    /**
+     * 隐式跳转目标Service
+     *
+     * @param action 隐式动作
+     */
+    protected void startService(String action, Bundle args) {
+        Intent intent = new Intent(action);
+        if (args != null)
+            intent.putExtras(args);
+        startService(intent);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(@Nullable MotionEvent ev) {
+        if (ev != null && ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View view = getCurrentFocus();
+            if (isShouldHideInput(view, ev))
+                KeyboardUtils.closeKeyboard(mContext, view);
+            return super.dispatchTouchEvent(ev);
+        }
+        //必不可少,否则所有的组件都不会有TouchEvent了
+        return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
+    }
+
+    /**
+     * 是否应该隐藏键盘
+     *
+     * @param view  对应的view
+     * @param event 事件
+     * @return 是否隐藏
+     */
+    private boolean isShouldHideInput(View view, MotionEvent event) {
+        if (view != null && (view instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            //获取输入框当前的位置
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + view.getHeight();
+            int right = left + view.getWidth();
+            return !(event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom);
+        }
+        return false;
     }
 
     /**
