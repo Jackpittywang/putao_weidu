@@ -14,6 +14,21 @@ import de.greenrobot.dao.query.QueryBuilder;
  */
 public interface DatabaseInterface<Entity extends DBEntity, Key extends Serializable> {
 
+    /**
+     * closing available connections
+     */
+    void closeDBConnections();
+
+    /**
+     * 清理缓存
+     */
+    void clearDaoSession();
+
+    /**
+     * Delete all tables and content from our database
+     */
+    boolean dropDatabase(Class<? extends Serializable>... classes);
+
     boolean insert(Entity entity);
 
     boolean delete(Entity entity);
@@ -39,21 +54,6 @@ public interface DatabaseInterface<Entity extends DBEntity, Key extends Serializ
     List<Entity> loadAll();
 
     boolean refresh(Entity entity);
-
-    /**
-     * closing available connections
-     */
-    void closeDBConnections();
-
-    /**
-     * 清理缓存
-     */
-    void clearDaoSession();
-
-    /**
-     * Delete all tables and content from our database
-     */
-    boolean dropDatabase(Class<? extends Serializable>... classes);
 
     /**
      * 事务

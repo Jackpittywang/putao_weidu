@@ -76,4 +76,16 @@
         <attr name="refresh_loading_text" format="string|reference" />
         <attr name="refresh_complete_text" format="string|reference" />
     </declare-styleable>
+
+    <!--SettingItem-->
+    <declare-styleable name="SettingItem">
+        <attr name="setting_icon" format="reference" />
+        <attr name="setting_text" format="string" />
+        <attr name="setting_divider" format="enum">
+            <enum name="top_bottom" value="0" />
+            <enum name="top" value="1" />
+            <enum name="bottom" value="2" />
+        </attr>
+        <attr name="setting_indicator_background" format="reference" />
+    </declare-styleable>
 </resources>

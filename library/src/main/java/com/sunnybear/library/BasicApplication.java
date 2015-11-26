@@ -12,6 +12,7 @@ import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.view.image.ImagePipelineConfigFactory;
 
 import butterknife.ButterKnife;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * 基础Application
@@ -48,6 +49,9 @@ public abstract class BasicApplication extends Application {
         maxAge = getNetworkCacheMaxAgeTime();
         //磁盘文件缓存器
         mDiskFileCacheHelper = DiskFileCacheHelper.get(getApplicationContext(), "putao_weidu");
+        //数据库调试
+        QueryBuilder.LOG_SQL = isDebug();
+        QueryBuilder.LOG_VALUES = isDebug();
     }
 
     public static Context getInstance() {

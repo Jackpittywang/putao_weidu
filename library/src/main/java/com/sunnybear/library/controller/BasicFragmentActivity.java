@@ -162,6 +162,8 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     protected void addFragment(Class<? extends Fragment> targetClass, Bundle args) {
         String fragmentName = targetClass.getName();
         getSupportFragmentManager().beginTransaction()
+//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                 .add(R.id.fragment_container, Fragment.instantiate(mContext, fragmentName, args), fragmentName).commit();
     }
 

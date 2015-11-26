@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_left_title="@string/cancel"
+        auto:nav_main_title="@string/address_manager"
+        auto:nav_right_title="@string/save" />
+
+    <!--收货人姓名-->
+    <LinearLayout style="@style/style_address_title">
+
+        <TextView
+            style="@style/style_address_title_text"
+            android:text="@string/consignee_name" />
+
+        <TextView
+            style="@style/style_address_title_text_must"
+            android:text="@string/must" />
+    </LinearLayout>
+    <!--收货人姓名编辑-->
+    <EditText
+        android:id="@+id/et_name"
+        style="@style/style_edit_text"
+        android:hint="@string/et_name" />
+
+    <!--所在地区和街道地址-->
+    <LinearLayout style="@style/style_address_title">
+
+        <TextView
+            style="@style/style_address_title_text"
+            android:text="@string/consignee_address" />
+
+        <TextView
+            style="@style/style_address_title_text_must"
+            android:text="@string/must" />
+    </LinearLayout>
+    <!--所在地区和街道地址编辑-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:orientation="vertical">
+
+        <!--省份,城市,城区-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_province"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="省份" />
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="城市" />
+
+            <TextView
+                android:id="@+id/tv_district"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="城区" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@mipmap/ic_launcher" />
+        </LinearLayout>
+
+        <!--街道地址-->
+        <EditText
+            android:id="@+id/et_street"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:hint="@string/et_street"
+            android:paddingLeft="8dp"
+            android:singleLine="false" />
+    </LinearLayout>
+
+    <!--电话号码-->
+    <LinearLayout style="@style/style_address_title">
+
+        <TextView
+            style="@style/style_address_title_text"
+            android:text="@string/consignee_address" />
+
+        <TextView
+            style="@style/style_address_title_text_must"
+            android:text="@string/must" />
+    </LinearLayout>
+    <!--收货人姓名编辑-->
+    <EditText
+        android:id="@+id/et_phone"
+        style="@style/style_edit_text"
+        android:hint="@string/et_phone" />
+
+    <!--默认收货地址-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/layout_background">
+
+        <CheckBox
+            android:id="@+id/cb_default"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/default_address"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_20sp" />
+    </LinearLayout>
+
+    <!--删除本条地址-->
+    <LinearLayout
+        android:id="@+id/ll_delete_address"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:text="@string/delete_address"
+            android:textColor="@color/text_color_red"
+            android:textSize="@dimen/text_size_18sp" />
+    </LinearLayout>
+</LinearLayout>

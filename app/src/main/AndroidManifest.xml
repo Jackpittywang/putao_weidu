@@ -20,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--收货地址-->
+        <activity
+            android:name=".me.AddressActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -20,4 +20,9 @@ public class PutaoStartCircleFragment extends BasicFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
 
     }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
 }

@@ -1,6 +1,7 @@
 package com.sunnybear.library.controller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -19,6 +21,8 @@ import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.view.loading.LoadingHUD;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -99,7 +103,8 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
     @Override
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        lazyLoad(savedInstanceState);
+//        lazyLoad(savedInstanceState);
+        onViewCreatedFinish(savedInstanceState);
     }
 
     @Override
@@ -145,7 +150,11 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
      * 返回
      */
     protected void onBackPressed() {
-        mFragmentManager.popBackStack();
+        List<Fragment> fragments = mFragmentManager.getFragments();
+        if (fragments.size() > 1)
+            mFragmentManager.popBackStack();
+        else
+            ActivityManager.getInstance().finishCurrentActivity();
     }
 
     /**
@@ -183,6 +192,25 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
     protected void startFragment(Class<? extends Fragment> targetClass) {
         FragmentIntent fragmentIntent = new FragmentIntent(this, targetClass, null);
         startFragment(fragmentIntent);
+    }
+
+    /**
+     * 跳转Activity
+     *
+     * @param targetClass 目标Activity类型
+     * @param args        传递参数
+     */
+    protected void startActivity(Class<? extends Activity> targetClass, Bundle args) {
+        mActivity.startActivity(targetClass, args);
+    }
+
+    /**
+     * 跳转Activity
+     *
+     * @param targetClass 目标Activity类型
+     */
+    protected void startActivity(Class<? extends Activity> targetClass) {
+        mActivity.startActivity(targetClass);
     }
 
     /**

@@ -5,4 +5,48 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="style_navigation_bar">
+        <item name="android:id">@id/navigation_bar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/navigation_bar_height</item>
+    </style>
+    <!--地址管理title-->
+    <style name="style_address_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/layout_background</item>
+    </style>
+    <!--地址管理title文字-->
+    <style name="style_address_title_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+    <!--地址管理title文字(必填)-->
+    <style name="style_address_title_text_must">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textColor">@color/text_color_red</item>
+        <item name="android:layout_marginLeft">4dp</item>
+    </style>
+    <!--地址管理编辑文字-->
+    <style name="style_edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="style_setting">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
 </resources>

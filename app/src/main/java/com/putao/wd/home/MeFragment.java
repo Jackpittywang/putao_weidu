@@ -1,15 +1,19 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.putao.wd.R;
+import com.putao.wd.me.AddressActivity;
 import com.sunnybear.library.controller.BasicFragment;
+
+import butterknife.OnClick;
 
 /**
  * 我
  * Created by guchenkai on 2015/11/25.
  */
-public class MeFragment extends BasicFragment {
+public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_me;
@@ -18,5 +22,32 @@ public class MeFragment extends BasicFragment {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+
+    @OnClick({R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.si_message})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.si_order://我的订单
+
+                break;
+            case R.id.si_address://收货地址
+                startActivity(AddressActivity.class);
+                break;
+            case R.id.si_action://我参与的活动
+
+                break;
+            case R.id.si_question://我的提问
+
+                break;
+            case R.id.si_message://消息中心
+
+                break;
+        }
     }
 }

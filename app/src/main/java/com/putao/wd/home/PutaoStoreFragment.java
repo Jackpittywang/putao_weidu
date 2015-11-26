@@ -19,4 +19,9 @@ public class PutaoStoreFragment extends BasicFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
 
     }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
 }
