@@ -126,6 +126,14 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         super.finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
+            getSupportFragmentManager().popBackStack();
+        else
+            super.onBackPressed();
+    }
+
     /**
      * 注册广播接收器
      *

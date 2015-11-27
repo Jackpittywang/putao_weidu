@@ -1,7 +1,6 @@
 package com.sunnybear.library.controller;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -21,8 +19,6 @@ import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.view.loading.LoadingHUD;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -150,11 +146,15 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
      * 返回
      */
     protected void onBackPressed() {
-        List<Fragment> fragments = mFragmentManager.getFragments();
-        if (fragments.size() > 1)
-            mFragmentManager.popBackStack();
-        else
-            ActivityManager.getInstance().finishCurrentActivity();
+//        List<Fragment> fragments = mFragmentManager.getFragments();
+//        int size = fragments.size();
+//        if (size > 1) {
+//            mFragmentManager.popBackStackImmediate();
+//            mFragmentManager.beginTransaction().remove(fragments.get(size - 1)).commit();
+//        } else {
+//            ActivityManager.getInstance().finishCurrentActivity();
+//        }
+        mActivity.onBackPressed();
     }
 
     /**
