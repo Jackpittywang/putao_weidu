@@ -18,6 +18,7 @@ import com.sunnybear.library.R;
 import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.loading.LoadingHUD;
 
 import butterknife.ButterKnife;
@@ -26,9 +27,8 @@ import butterknife.ButterKnife;
  * 基础Fragment
  * Created by guchenkai on 2015/11/19.
  */
-public abstract class BasicFragment<App extends BasicApplication> extends LazyFragment {
-    private boolean isPrepared;//标志位，标志已经初始化完成
-    private View fragmentView = null;
+public abstract class BasicFragment<App extends BasicApplication> extends Fragment {
+    private View mFragmentView = null;
     protected BasicFragmentActivity mActivity;
 
     //fragment管理器
@@ -90,16 +90,18 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
         int layoutId = getLayoutId();
         if (layoutId == 0)
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
-        fragmentView = inflater.inflate(layoutId, container, false);
-        ButterKnife.bind(this, fragmentView);
-        isPrepared = true;
-        return fragmentView;
+        mFragmentView = inflater.inflate(layoutId, container, false);
+        ViewGroup parent = (ViewGroup) mFragmentView.getParent();
+        if (parent != null)
+            parent.removeView(mFragmentView);
+        ButterKnife.bind(this, mFragmentView);
+        return mFragmentView;
     }
 
     @Override
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Logger.d("onViewCreated");
         super.onViewCreated(view, savedInstanceState);
-//        lazyLoad(savedInstanceState);
         onViewCreatedFinish(savedInstanceState);
     }
 
@@ -114,19 +116,17 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mFragmentView != null)
+            ((ViewGroup) mFragmentView.getParent()).removeView(mFragmentView);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBusHelper.unregister(this);//反注册EventBus
         mApp.getRefWatcher().watch(this);
-    }
-
-    /**
-     * 懒加载
-     */
-    @Override
-    protected final void lazyLoad(Bundle savedInstanceState) {
-        if (!isPrepared || !isVisible) return;
-        onViewCreatedFinish(savedInstanceState);
     }
 
     /**

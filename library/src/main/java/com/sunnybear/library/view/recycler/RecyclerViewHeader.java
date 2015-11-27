@@ -31,6 +31,7 @@ public class RecyclerViewHeader extends RelativeLayout {
     private boolean mReversed;
     private boolean mAlreadyAligned;
     private boolean mRecyclerWantsTouchEvent;
+    private boolean isAdd = false;
 
     /**
      * 读取额外的布局添加头部
@@ -69,6 +70,12 @@ public class RecyclerViewHeader extends RelativeLayout {
 
         setupAlignment(recyclerView);
         setupHeader(recyclerView);
+
+        isAdd = true;
+    }
+
+    public boolean isAdd() {
+        return isAdd;
     }
 
     private boolean isLayoutManagerReversed(RecyclerView recyclerView) {
