@@ -6,7 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.db.AddressDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
@@ -21,7 +21,8 @@ import butterknife.OnClick;
  * 收货地址列表
  * Created by guchenkai on 2015/11/26.
  */
-public class AddressListFragment extends PTWDFragment<GlobalApplication> implements View.OnClickListener {
+public class AddressListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+    public static final String KEY_IS_ADD = "isAdd";
     @Bind(R.id.rv_addresses)
     BasicRecyclerView rv_addresses;
     @Bind(R.id.rl_no_address)
@@ -32,18 +33,18 @@ public class AddressListFragment extends PTWDFragment<GlobalApplication> impleme
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_address_list;
+        return R.layout.activity_address_list;
     }
 
     @Override
-    public void onViewCreatedFinish(Bundle savedInstanceState) {
+    protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
         addresses = AddressDBManager.getInstance(mApp).loadAll();
         if (addresses == null || addresses.size() == 0) {
             rl_no_address.setVisibility(View.VISIBLE);
             return;
         }
-        adapter = new AddressAdapter(mActivity, addresses);
+        adapter = new AddressAdapter(mContext, addresses);
         rv_addresses.setAdapter(adapter);
     }
 
@@ -58,8 +59,8 @@ public class AddressListFragment extends PTWDFragment<GlobalApplication> impleme
         switch (v.getId()) {
             case R.id.rl_add_address://新增地址
                 Bundle bundle = new Bundle();
-                bundle.putBoolean(AddressActivity.KEY_IS_ADD, true);
-                startFragment(AddressEditFragment.class, bundle);
+                bundle.putBoolean(AddressListActivity.KEY_IS_ADD, true);
+                startActivity(AddressEditActivity.class, bundle);
                 break;
         }
     }

@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * 收货地址标记
- * Created by guchenkai on 2015/11/26.
+ * 收货地址编辑
+ * Created by guchenkai on 2015/11/27.
  */
-public class AddressEditFragment extends PTWDFragment<GlobalApplication> implements View.OnClickListener {
+public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.et_name)
     EditText et_name;//收货人姓名
     @Bind(R.id.tv_province)
@@ -40,13 +40,13 @@ public class AddressEditFragment extends PTWDFragment<GlobalApplication> impleme
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_address_edit;
+        return R.layout.activity_address_edit;
     }
 
     @Override
-    public void onViewCreatedFinish(Bundle savedInstanceState) {
+    protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
-        isAdd = args.getBoolean(AddressActivity.KEY_IS_ADD);
+        isAdd = args.getBoolean(AddressListActivity.KEY_IS_ADD);
         if (isAdd)
             ll_delete_address.setVisibility(View.GONE);
     }

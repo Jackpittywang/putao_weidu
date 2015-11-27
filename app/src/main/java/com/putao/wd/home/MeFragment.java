@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.putao.wd.R;
-import com.putao.wd.me.address.AddressActivity;
+import com.putao.wd.me.address.AddressListActivity;
 import com.sunnybear.library.controller.BasicFragment;
 
 import butterknife.Bind;
@@ -41,7 +41,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
                 break;
             case R.id.si_address://收货地址
-                startActivity(AddressActivity.class);
+                startActivity(AddressListActivity.class);
                 break;
             case R.id.si_action://我参与的活动
 

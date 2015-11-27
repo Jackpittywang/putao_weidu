@@ -18,6 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--主页-->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +27,13 @@
             </intent-filter>
         </activity>
 
-        <!--收货地址-->
+        <!--收货地址列表-->
         <activity
-            android:name=".me.address.AddressActivity"
+            android:name=".me.address.AddressListActivity"
+            android:screenOrientation="portrait" />
+        <!--收货地址编辑-->
+        <activity
+            android:name=".me.address.AddressEditActivity"
             android:screenOrientation="portrait" />
 
         <!--shareSDK-->
