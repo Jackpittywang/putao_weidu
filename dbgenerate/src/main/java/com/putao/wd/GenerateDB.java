@@ -17,7 +17,7 @@ public class GenerateDB {
     }
 
     private static void initAddress(Schema schema) {
-        Entity address = schema.addEntity("ShippingAddressDB");
+        Entity address = schema.addEntity("AddressDB");
         address.setTableName("putao_wd_shipping_address");
         address.addIdProperty().autoincrement().index();//id
         address.addStringProperty("name").notNull();//收货人姓名
