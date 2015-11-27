@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
@@ -97,8 +98,18 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
         Logger.d(content.getClass().getSimpleName());
+        Logger.d(frame.getScaleY() + "");
         if (content instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) content;
+            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
+            if (firstVisiblePosition == 0)
+                return true;
+        } else if (content instanceof FrameLayout) {
+            FrameLayout layout = (FrameLayout) content;
+            RecyclerView recyclerView = (RecyclerView) layout.getChildAt(0);
+            if (recyclerView == null)
+                throw new RuntimeException("第一个view不是RecyclerView");
             LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
             if (firstVisiblePosition == 0)

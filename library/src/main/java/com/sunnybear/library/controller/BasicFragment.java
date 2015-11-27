@@ -36,7 +36,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends LazyFr
     protected BasicFragmentActivity mActivity;
 
     //fragment管理器
-    private FragmentManager mFragmentManager;
+    protected FragmentManager mFragmentManager;
     protected Bundle args;//传递的参数值
 
     protected App mApp;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.sunnybear.library.view.indicator.CircleIndicator
+        android:id="@+id/ci_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
+        auto:R="5dp"
+        auto:margin="6dp"
+        auto:mode="outside"
+        auto:none_background="#AAAAAA"
+        auto:selected_background="#FF6666" />
+</RelativeLayout>

@@ -82,7 +82,7 @@ public class CircleIndicator extends View {
         if (attrs == null)
             return;
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleIndicator);
-        mIndicatorRadius = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_radius, DEFAULT_INDICATOR_RADIUS);
+        mIndicatorRadius = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_R, DEFAULT_INDICATOR_RADIUS);
         mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_margin, DEFAULT_INDICATOR_MARGIN);
         mIndicatorBackground = typedArray.getColor(R.styleable.CircleIndicator_none_background, DEFAULT_INDICATOR_BACKGROUND);
         mIndicatorSelectedBackground = typedArray.getColor(R.styleable.CircleIndicator_selected_background, DEFAULT_INDICATOR_SELECTED_BACKGROUND);

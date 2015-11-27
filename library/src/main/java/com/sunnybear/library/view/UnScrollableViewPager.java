@@ -23,4 +23,9 @@ public class UnScrollableViewPager extends ViewPager {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return false;
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return false;
+    }
 }

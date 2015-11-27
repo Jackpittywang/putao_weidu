@@ -38,7 +38,7 @@
 
     <!--CircleIndicator-->
     <declare-styleable name="CircleIndicator">
-        <attr name="radius" format="dimension" />
+        <attr name="R" format="dimension" />
         <attr name="margin" format="dimension" />
         <attr name="none_background" format="color|integer" />
         <attr name="selected_background" format="color|integer" />
