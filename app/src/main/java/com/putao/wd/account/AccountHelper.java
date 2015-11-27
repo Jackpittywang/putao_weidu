@@ -1,7 +1,7 @@
 package com.putao.wd.account;
 
 import com.alibaba.fastjson.JSONObject;
-import com.putao.wd.PTWDConstants;
+import com.putao.wd.GlobalApplication;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
 
@@ -24,15 +24,15 @@ public final class AccountHelper {
         String refresh_token = jsonObject.getString("refresh_token");
 
         if (!StringUtils.isEmpty(uid))
-            PreferenceUtils.save(PTWDConstants.PREFERENCE_KEY_UID, uid);
+            PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_UID, uid);
         if (!StringUtils.isEmpty(token))
-            PreferenceUtils.save(PTWDConstants.PREFERENCE_KEY_TOKEN, token);
+            PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_TOKEN, token);
         if (!StringUtils.isEmpty(nickname))
-            PreferenceUtils.save(PTWDConstants.PREFERENCE_KEY_NICKNAME, nickname);
+            PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_NICKNAME, nickname);
         if (!StringUtils.isEmpty(expire_time))
-            PreferenceUtils.save(PTWDConstants.PREFERENCE_KEY_EXPIRE_TIME, expire_time);
+            PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_EXPIRE_TIME, expire_time);
         if (!StringUtils.isEmpty(uid))
-            PreferenceUtils.save(PTWDConstants.PREFERENCE_KEY_REFRESH_TOKEN, refresh_token);
+            PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_REFRESH_TOKEN, refresh_token);
     }
 
     /**
@@ -48,7 +48,7 @@ public final class AccountHelper {
      * @return 当前登录的Uid
      */
     public static String getCurrentUid() {
-        return PreferenceUtils.getValue(PTWDConstants.PREFERENCE_KEY_UID, "");
+        return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, "");
     }
 
     /**
@@ -57,6 +57,6 @@ public final class AccountHelper {
      * @return 当前登录的Uid
      */
     public static String getCurrentToken() {
-        return PreferenceUtils.getValue(PTWDConstants.PREFERENCE_KEY_TOKEN, "");
+        return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, "");
     }
 }

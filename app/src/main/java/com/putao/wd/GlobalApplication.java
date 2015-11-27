@@ -75,4 +75,14 @@ public class GlobalApplication extends BasicApplication {
     protected int getNetworkCacheMaxAgeTime() {
         return 0;
     }
+
+    /**
+     * 有此至下为常量定义
+     */
+    //===================preference key============================
+    public static final String PREFERENCE_KEY_UID = "uid";
+    public static final String PREFERENCE_KEY_TOKEN = "token";
+    public static final String PREFERENCE_KEY_NICKNAME = "nickname";
+    public static final String PREFERENCE_KEY_EXPIRE_TIME = "expire_tim";
+    public static final String PREFERENCE_KEY_REFRESH_TOKEN = "refresh_token";
 }
