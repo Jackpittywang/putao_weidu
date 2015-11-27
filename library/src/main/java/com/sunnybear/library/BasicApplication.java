@@ -9,6 +9,9 @@ import com.squareup.leakcanary.RefWatcher;
 import com.squareup.okhttp.OkHttpClient;
 import com.sunnybear.library.model.http.OkHttpManager;
 import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.hawk.Hawk;
+import com.sunnybear.library.util.hawk.LogLevel;
 import com.sunnybear.library.view.image.ImagePipelineConfigFactory;
 
 import butterknife.ButterKnife;
@@ -35,9 +38,9 @@ public abstract class BasicApplication extends Application {
         //ButterKnife的Debug模式
         ButterKnife.setDebug(isDebug());
         //偏好设置文件初始化
-//        Hawk.init(getApplicationContext(), getPackageName(), isDebug() ? LogLevel.FULL : LogLevel.NONE);
+        Hawk.init(getApplicationContext(), getPackageName(), isDebug() ? LogLevel.FULL : LogLevel.NONE);
         //日志输出
-//        Logger.init(getPackageName()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
+        Logger.init(getPackageName()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
         //OkHttp初始化
         mOkHttpClient = OkHttpManager.getInstance(getNetworkCacheDirectoryPath(), getNetworkCacheSize()).build();
         //Fresco初始化
