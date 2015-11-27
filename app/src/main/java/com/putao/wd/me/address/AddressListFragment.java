@@ -25,7 +25,7 @@ public class AddressListFragment extends PTWDFragment<GlobalApplication> impleme
     @Bind(R.id.rv_addresses)
     BasicRecyclerView rv_addresses;
     @Bind(R.id.rl_no_address)
-    RelativeLayout rl_no_address;//没有地址时的布局
+    RelativeLayout rl_no_address;//没有收货地址时的布局
 
     private AddressAdapter adapter;
     private List<AddressDB> addresses;

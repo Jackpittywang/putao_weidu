@@ -1,25 +1,28 @@
 package com.putao.wd.share.view;
 
 import android.content.Context;
-import android.util.AttributeSet;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 分享弹出框
- * Created by guchenkai on 2015/11/26.
+ * Created by guchenkai on 2015/11/27.
  */
-public class SharePopupWindow extends RelativeLayout implements View.OnClickListener {
-    private Animation in_from_down;//进入动画
-    private Animation out_from_down;//退出动画
+public class SharePopupWindow extends PopupWindow implements View.OnClickListener {
+    @Bind(R.id.popup_layout)
+    RelativeLayout popup_layout;
 
     private OnShareListener mOnShareListener;
 
@@ -28,41 +31,35 @@ public class SharePopupWindow extends RelativeLayout implements View.OnClickList
     }
 
     public SharePopupWindow(Context context) {
-        this(context, null, 0);
-    }
-
-    public SharePopupWindow(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public SharePopupWindow(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context);
-        initAnimation(context);
-    }
-
-    private void initView(Context context) {
-        View mRootView = LayoutInflater.from(context).inflate(R.layout.popup_share, null);
+        super(context);
+        final View mRootView = LayoutInflater.from(context).inflate(R.layout.popup_share, null);
+        setContentView(mRootView);
         ButterKnife.bind(this, mRootView);
-        addView(mRootView);
-    }
 
-    private void initAnimation(Context context) {
-        in_from_down = AnimationUtils.loadAnimation(context, R.anim.in_from_down);
-        out_from_down = AnimationUtils.loadAnimation(context, R.anim.out_from_down);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        setAnimationStyle(R.anim.in_from_down);
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        setBackgroundDrawable(dw);
+        mRootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int height = popup_layout.getHeight();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP && y < height)
+                    dismiss();
+                return true;
+            }
+        });
     }
 
     /**
-     * 分享栏弹出
+     * 设置layout在PopupWindow中显示的位置
+     *
+     * @param view
      */
-    public void toggle() {
-        if (getVisibility() == View.GONE) {
-            setVisibility(VISIBLE);
-            startAnimation(in_from_down);
-        } else if (getVisibility() == View.VISIBLE) {
-            setVisibility(GONE);
-            startAnimation(out_from_down);
-        }
+    public void show(View view) {
+        showAtLocation(view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     @OnClick({
@@ -97,7 +94,7 @@ public class SharePopupWindow extends RelativeLayout implements View.OnClickList
                     mOnShareListener.onCopyUrlShare();
                     break;
                 case R.id.tv_cancel://取消
-                    toggle();
+                    dismiss();
                     break;
             }
     }

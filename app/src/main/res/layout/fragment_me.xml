@@ -1,111 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/layout_background"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:auto="http://schemas.android.com/apk/res-auto"
+    <!--用户头像昵称栏-->
+    <RelativeLayout
+        android:id="@+id/user"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/layout_background"
+        android:layout_height="200dp"
+        android:background="#6666CC">
+
+        <ImageView
+            android:id="@+id/iv_user_icon"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_user_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="这里显示用户的昵称"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@mipmap/ic_launcher" />
+    </RelativeLayout>
+
+    <!--我的订单-->
+    <LinearLayout
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <!--用户头像昵称栏-->
-        <RelativeLayout
-            android:id="@+id/user"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#6666CC">
-
-            <ImageView
-                android:id="@+id/iv_user_icon"
-                android:layout_width="88dp"
-                android:layout_height="88dp"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/tv_user_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_user_icon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:text="这里显示用户的昵称"
-                android:textColor="@color/text_color_white"
-                android:textSize="@dimen/text_size_18sp" />
-
-            <ImageView
-                android:id="@+id/iv_setting"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@mipmap/ic_launcher" />
-        </RelativeLayout>
-
-        <!--我的订单-->
-        <LinearLayout
-            android:id="@+id/order"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:background="#FFFFFF"
-            android:orientation="vertical">
-
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_order"
-                style="@style/style_setting"
-                auto:setting_divider="top"
-                auto:setting_icon="@mipmap/ic_launcher"
-                auto:setting_text="@string/order" />
-        </LinearLayout>
-
-        <!--设置区-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/order"
-            android:orientation="vertical">
-
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_address"
-                style="@style/style_setting"
-                android:layout_marginTop="8dp"
-                auto:setting_icon="@mipmap/ic_launcher"
-                auto:setting_text="@string/address" />
-
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_action"
-                style="@style/style_setting"
-                android:layout_marginTop="8dp"
-                auto:setting_divider="top"
-                auto:setting_icon="@mipmap/ic_launcher"
-                auto:setting_text="@string/action" />
-
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_question"
-                style="@style/style_setting"
-                auto:setting_divider="bottom"
-                auto:setting_icon="@mipmap/ic_launcher"
-                auto:setting_text="@string/question" />
-
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_message"
-                style="@style/style_setting"
-                android:layout_marginTop="8dp"
-                auto:setting_icon="@mipmap/ic_launcher"
-                auto:setting_text="@string/message" />
-        </LinearLayout>
-
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_order"
+            style="@style/style_setting"
+            auto:setting_divider="top"
+            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_text="@string/order" />
     </LinearLayout>
 
-    <!--分享栏-->
-    <com.putao.wd.share.view.SharePopupWindow
-        android:id="@+id/rl_share"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone" />
-</FrameLayout>
+    <!--设置区-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/order"
+        android:orientation="vertical">
+
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_address"
+            style="@style/style_setting"
+            android:layout_marginTop="8dp"
+            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_text="@string/address" />
+
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_action"
+            style="@style/style_setting"
+            android:layout_marginTop="8dp"
+            auto:setting_divider="top"
+            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_text="@string/action" />
+
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_question"
+            style="@style/style_setting"
+            auto:setting_divider="bottom"
+            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_text="@string/question" />
+
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_message"
+            style="@style/style_setting"
+            android:layout_marginTop="8dp"
+            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_text="@string/message" />
+    </LinearLayout>
+
+</LinearLayout>

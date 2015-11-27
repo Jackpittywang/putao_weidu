@@ -2,10 +2,10 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressActivity;
-import com.putao.wd.share.view.SharePopupWindow;
 import com.sunnybear.library.controller.BasicFragment;
 
 import butterknife.Bind;
@@ -16,8 +16,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class MeFragment extends BasicFragment implements View.OnClickListener {
-    @Bind(R.id.rl_share)
-    SharePopupWindow rl_share;
+    @Bind(R.id.ll_main)
+    LinearLayout ll_main;
 
     @Override
     protected int getLayoutId() {
@@ -26,7 +26,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -39,7 +38,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.si_order://我的订单
-                rl_share.toggle();
+
                 break;
             case R.id.si_address://收货地址
                 startActivity(AddressActivity.class);
