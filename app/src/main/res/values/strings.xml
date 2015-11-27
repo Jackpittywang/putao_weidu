@@ -33,4 +33,6 @@
     <string name="qq_zone">QQ空间</string>
     <string name="sina_weibo">新浪微博</string>
     <string name="copy_url">复制链接</string>
+    <!--登录注册-->
+    <string name="login">登录葡萄账户</string>
 </resources>

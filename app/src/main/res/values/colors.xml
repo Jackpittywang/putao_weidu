@@ -8,4 +8,8 @@
 
     <color name="white">#FFFFFF</color>
     <color name="divider_color">#959595</color>
+
+    <!--主颜色-->
+    <color name="main_color_sel">#B57DE4</color>
+    <color name="main_color_nor">#985EC9</color>
 </resources>
