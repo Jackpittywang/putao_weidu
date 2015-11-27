@@ -14,39 +14,31 @@
 
         <com.sunnybear.library.view.tab.TabItem
             android:id="@+id/ti_start_circle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/style_tab_bar"
             auto:active="true"
-            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
-            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+            auto:activeDrawable="@drawable/tab_bar_c_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_c_nor" />
 
         <com.sunnybear.library.view.tab.TabItem
             android:id="@+id/ti_explore"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
-            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+            auto:activeDrawable="@drawable/tab_bar_e_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_e_nor" />
 
         <com.sunnybear.library.view.tab.TabItem
             android:id="@+id/ti_store"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
-            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+            auto:activeDrawable="@drawable/tab_bar_store_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_store_nor" />
 
         <com.sunnybear.library.view.tab.TabItem
             android:id="@+id/ti_me"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/test_tab_bar_home_sel"
-            auto:inactiveDrawable="@drawable/test_tab_bar_home_nor" />
+            auto:activeDrawable="@drawable/tab_bar_me_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_me_nor" />
     </com.sunnybear.library.view.tab.TabBar>
 
     <com.sunnybear.library.view.UnScrollableViewPager

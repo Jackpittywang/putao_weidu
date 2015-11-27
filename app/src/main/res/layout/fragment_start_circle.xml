@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="葡星圈"
-        android:textSize="24sp"/>
-</RelativeLayout>
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:refresh_complete_text="@string/pullToRefresh_Complete"
+        auto:refresh_layout="@layout/robot_refresh_header"
+        auto:refresh_layout_height="90"
+        auto:refresh_loading_text="@string/pullToRefresh_loading"
+        auto:refresh_prepare_text="@string/pullToRefresh_prepare"
+        auto:refresh_recycle_text="@string/pullToRefresh_recycle">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                auto:divider_color="#626262"
+                auto:divider_height="1px"
+                auto:divider_marginLeft="20dp"
+                auto:has_divider="true" />
+
+            <com.sunnybear.library.view.recycler.RecyclerViewHeader
+                android:id="@+id/rvh_header"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="top|center_horizontal"
+                android:background="#CCFFFF">
+
+                <TextView
+                    android:id="@+id/tv_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="头部"
+                    android:textSize="40sp" />
+            </com.sunnybear.library.view.recycler.RecyclerViewHeader>
+        </FrameLayout>
+
+    </com.sunnybear.library.view.PullToRefreshLayout>
+</FrameLayout>

@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.me.AddressActivity;
+import com.putao.wd.me.address.AddressActivity;
+import com.putao.wd.share.view.SharePopupWindow;
 import com.sunnybear.library.controller.BasicFragment;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -14,6 +16,9 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class MeFragment extends BasicFragment implements View.OnClickListener {
+    @Bind(R.id.rl_share)
+    SharePopupWindow rl_share;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_me;
@@ -34,7 +39,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.si_order://我的订单
-
+                rl_share.toggle();
                 break;
             case R.id.si_address://收货地址
                 startActivity(AddressActivity.class);

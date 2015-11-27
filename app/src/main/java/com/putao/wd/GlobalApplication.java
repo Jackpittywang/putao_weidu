@@ -8,6 +8,8 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.SDCardUtil;
 
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * 全局变量
  * Created by guchenkai on 2015/11/25.
@@ -19,6 +21,7 @@ public class GlobalApplication extends BasicApplication {
     public void onCreate() {
         super.onCreate();
         installDataBase();
+        ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         AccountApi.updateDebugStatus(isDebug(), "1", "1109", "515d7213721042a5ac31c2de95d2c7a7");
     }
 

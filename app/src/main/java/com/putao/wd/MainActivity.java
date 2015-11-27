@@ -2,13 +2,14 @@ package com.putao.wd;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.util.SparseArray;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.FragmentSwitchAdapter;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.UnScrollableViewPager;
 import com.sunnybear.library.view.tab.TabBar;
@@ -30,6 +31,8 @@ public class MainActivity extends BasicFragmentActivity implements TabBar.TabIte
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;
 
+    private SparseArray<Fragment> mFragmentArray;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -37,37 +40,22 @@ public class MainActivity extends BasicFragmentActivity implements TabBar.TabIte
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-        vp_content.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                Fragment fragment = null;
-                switch (position) {
-                    case 0:
-                        fragment = Fragment.instantiate(mContext, PutaoStartCircleFragment.class.getName());
-                        break;
-                    case 1:
-                        fragment = Fragment.instantiate(mContext, PutaoExploreFragment.class.getName());
-                        break;
-                    case 2:
-                        fragment = Fragment.instantiate(mContext, PutaoStoreFragment.class.getName());
-                        break;
-                    case 3:
-                        fragment = Fragment.instantiate(mContext, MeFragment.class.getName());
-                        break;
-                }
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-                return tb_tab.getPosition();
-            }
-        });
+        addFragment();
+        vp_content.setAdapter(new FragmentSwitchAdapter(getSupportFragmentManager(), mFragmentArray));
+        vp_content.setOffscreenPageLimit(4);
 //        ti_start_circle.show();
 //        ti_explore.show();
 //        ti_store.show();
 //        ti_me.show();
         addListener();
+    }
+
+    private void addFragment() {
+        mFragmentArray = new SparseArray<>();
+        mFragmentArray.put(0, Fragment.instantiate(mContext, PutaoStartCircleFragment.class.getName()));
+        mFragmentArray.put(1, Fragment.instantiate(mContext, PutaoExploreFragment.class.getName()));
+        mFragmentArray.put(2, Fragment.instantiate(mContext, PutaoStoreFragment.class.getName()));
+        mFragmentArray.put(3, Fragment.instantiate(mContext, MeFragment.class.getName()));
     }
 
     /**

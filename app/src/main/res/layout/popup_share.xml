@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66000000"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/ll_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <!--标题栏-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="分享给好友"
+                android:textSize="@dimen/text_size_18sp" />
+        </RelativeLayout>
+
+        <!--按钮栏-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--第一行-->
+            <LinearLayout style="@style/style_share_row">
+
+                <!--微信-->
+                <LinearLayout
+                    android:id="@+id/ll_wechat"
+                    style="@style/style_share_button"
+                    android:paddingLeft="8dp">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/ssdk_oks_logo_wechat" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/wechat" />
+                </LinearLayout>
+
+                <!--微信朋友圈-->
+                <LinearLayout
+                    android:id="@+id/ll_wechat_friend_circle"
+                    style="@style/style_share_button"
+                    android:paddingLeft="8dp">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/ssdk_oks_logo_wechat" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/wechat_friend_circle" />
+                </LinearLayout>
+
+                <!--QQ好友-->
+                <LinearLayout
+                    android:id="@+id/ll_qq_friend"
+                    style="@style/style_share_button"
+                    android:paddingRight="8dp">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/ssdk_oks_logo_wechat" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/qq" />
+                </LinearLayout>
+
+                <!--QQ空间-->
+                <LinearLayout
+                    android:id="@+id/ll_qq_zone"
+                    style="@style/style_share_button"
+                    android:paddingRight="8dp">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/ssdk_oks_logo_wechat" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/qq_zone" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--第二排-->
+            <LinearLayout style="@style/style_share_row">
+
+                <!--新浪微博-->
+                <LinearLayout
+                    android:id="@+id/ll_sina_weibo"
+                    style="@style/style_share_button"
+                    android:paddingLeft="8dp">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/ssdk_oks_logo_wechat" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/sina_weibo" />
+                </LinearLayout>
+
+                <!--复制链接-->
+                <LinearLayout
+                    android:id="@+id/ll_copy_url"
+                    style="@style/style_share_button"
+                    android:paddingLeft="8dp">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/ssdk_oks_logo_wechat" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/copy_url" />
+                </LinearLayout>
+
+                <!--占位-->
+                <LinearLayout
+                    style="@style/style_share_button"
+                    android:visibility="invisible" />
+
+                <!--占位-->
+                <LinearLayout
+                    style="@style/style_share_button"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <!--取消-->
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/text_color_red"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
