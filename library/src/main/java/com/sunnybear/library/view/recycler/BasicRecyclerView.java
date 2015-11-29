@@ -31,8 +31,6 @@ public class BasicRecyclerView extends RecyclerView {
     private int divider_color;//间隔线的颜色
     private int divider_marginLeft, divider_marginRight;
 
-    private Adapter mAdapter;
-
     public BasicRecyclerView(Context context) {
         this(context, null, 0);
     }

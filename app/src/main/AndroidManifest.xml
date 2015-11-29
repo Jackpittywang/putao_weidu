@@ -26,7 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!--登录注册-->
+        <activity
+            android:name=".user.LoginActivity"
+            android:screenOrientation="portrait" />
         <!--收货地址列表-->
         <activity
             android:name=".me.address.AddressListActivity"

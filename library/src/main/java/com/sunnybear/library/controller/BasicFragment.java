@@ -100,7 +100,6 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
 
     @Override
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Logger.d("onViewCreated");
         super.onViewCreated(view, savedInstanceState);
         onViewCreatedFinish(savedInstanceState);
     }

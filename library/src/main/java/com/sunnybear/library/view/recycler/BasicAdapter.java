@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.WidgetUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +83,10 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(item, position);
+                    if (!WidgetUtils.isFastClick())
+                        mOnItemClickListener.onItemClick(item, position);
+                    else
+                        Logger.e("重复点击");
                 }
             });
         if (mOnItemLongClickListener != null)
