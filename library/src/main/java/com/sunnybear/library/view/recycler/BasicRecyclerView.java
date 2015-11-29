@@ -31,7 +31,7 @@ public class BasicRecyclerView extends RecyclerView {
     private int divider_height;//间隔线的宽度
     private int divider_color;//间隔线的颜色
     private int divider_marginLeft, divider_marginRight;
-    private Drawable mClickBackground;
+    private int mProcessBackground;//点击时背景色
 
     public BasicRecyclerView(Context context) {
         this(context, null, 0);
@@ -57,6 +57,7 @@ public class BasicRecyclerView extends RecyclerView {
         divider_marginLeft = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginLeft, 0f);
         divider_marginRight = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginRight, 0f);
         divider_color = array.getColor(R.styleable.BasicRecyclerView_divider_color, Color.parseColor("#00000000"));
+        mProcessBackground = array.getInteger(R.styleable.BasicRecyclerView_process_background, R.drawable.recyclerview_background);
         array.recycle();
     }
 
@@ -107,11 +108,38 @@ public class BasicRecyclerView extends RecyclerView {
         }
     }
 
+    @Override
+    public void setAdapter(Adapter adapter) {
+        BasicAdapter basicAdapter = getBasicAdapter(adapter);
+        basicAdapter.setProcessDrawable(mProcessBackground);
+        super.setAdapter(adapter);
+    }
+
+    /**
+     * 获得BasicAdapter实例
+     *
+     * @return BasicAdapter实例
+     */
+    private BasicAdapter getBasicAdapter(Adapter adapter) {
+        if (!(adapter instanceof BasicAdapter))
+            throw new RuntimeException("adapter的的类型必须是BasicAdapter");
+        return (BasicAdapter) adapter;
+    }
+
+    /**
+     * 获得BasicAdapter实例
+     *
+     * @return BasicAdapter实例
+     */
+    private BasicAdapter getBasicAdapter() {
+        return getBasicAdapter(getAdapter());
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        ((BasicAdapter) getAdapter()).setOnItemClickListener(onItemClickListener);
+        getBasicAdapter().setOnItemClickListener(onItemClickListener);
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
-        ((BasicAdapter) getAdapter()).setOnItemLongClickListener(onItemLongClickListener);
+        getBasicAdapter().setOnItemLongClickListener(onItemLongClickListener);
     }
 }

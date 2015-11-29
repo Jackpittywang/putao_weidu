@@ -28,6 +28,7 @@
                 auto:divider_marginLeft="20dp"
                 auto:has_divider="true" />
 
+            <!--头部布局-->
             <com.sunnybear.library.view.recycler.RecyclerViewHeader
                 android:id="@+id/rvh_header"
                 android:layout_width="match_parent"

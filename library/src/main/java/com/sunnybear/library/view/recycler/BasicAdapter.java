@@ -1,10 +1,8 @@
 package com.sunnybear.library.view.recycler;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,12 +19,14 @@ import java.util.List;
  */
 public abstract class BasicAdapter<Item extends Serializable, VH extends BasicViewHolder> extends RecyclerView.Adapter<VH> {
     protected Context context;
-    protected Resources resources;
     protected List<Item> mItems;
     private OnItemClickListener<Item> mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
     private boolean isProcess = false;
+    private View mItemView;
+
+    private int mProcessDrawable;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
@@ -36,9 +36,12 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         this.mOnItemLongClickListener = onItemLongClickListener;
     }
 
+    public void setProcessDrawable(int processDrawable) {
+        mProcessDrawable = processDrawable;
+    }
+
     public BasicAdapter(Context context, List<Item> items) {
         this.context = context;
-        this.resources = context.getResources();
         this.mItems = items != null ? items : new ArrayList<Item>();
     }
 
@@ -74,48 +77,37 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
 
     @Override
     public final VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(getLayoutId(viewType), parent, false);
-        return getViewHolder(itemView, viewType);
+        mItemView = LayoutInflater.from(context).inflate(getLayoutId(viewType), parent, false);
+        mItemView.setBackgroundResource(mProcessDrawable);
+        return getViewHolder(mItemView, viewType);
     }
 
     @Override
     public final void onBindViewHolder(final VH holder, final int position) {
         final Item item = mItems.get(position);
-        holder.itemView.setTag(position);
-        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
-            long lastClickTime = 0;//最后一次点击时间
-            long time = 0;
-
+        final View itemView = holder.itemView;
+        itemView.setTag(position);
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        lastClickTime = System.currentTimeMillis();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        time = System.currentTimeMillis();
-                        long diff = time - lastClickTime;
-                        if (diff < 2000) {
-                            Logger.d("点击事件");
-                            if (mOnItemClickListener != null && !isProcess)
-                                mOnItemClickListener.onItemClick(item, position);
-                            if (isProcess) Logger.e("重复点击");
-                            isProcess = true;
-                        } else if (diff >= 2000) {
-                            Logger.d("长按事件");
-                            if (mOnItemLongClickListener != null)
-                                mOnItemLongClickListener.onItemLongClick(item, position);
-                        }
-                        lastClickTime = time;
-                        //初始化按下状态
-                        new WeakHandler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                isProcess = false;
-                            }
-                        }, 500);
-                        break;
-                }
+            public void onClick(View v) {
+                if (isProcess) Logger.e("重复点击");
+                if (mOnItemClickListener != null && !isProcess)
+                    mOnItemClickListener.onItemClick(item, position);
+                isProcess = true;
+                new WeakHandler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isProcess = false;
+                    }
+                }, 200);
+            }
+        });
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Logger.d("长按事件");
+                if (mOnItemLongClickListener != null)
+                    mOnItemLongClickListener.onItemLongClick(item, position);
                 return true;
             }
         });
