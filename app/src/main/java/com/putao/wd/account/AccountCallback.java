@@ -3,7 +3,7 @@ package com.putao.wd.account;
 import com.alibaba.fastjson.JSONObject;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.loading.LoadingHUD;
+import com.sunnybear.library.view.LoadingHUD;
 
 /**
  * 通信证回调

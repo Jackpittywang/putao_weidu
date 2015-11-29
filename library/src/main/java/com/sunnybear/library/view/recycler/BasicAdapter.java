@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.WidgetUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     protected List<Item> mItems;
     private OnItemClickListener<Item> mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
+
+    private boolean isProcess = false;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
@@ -79,24 +82,61 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     public final void onBindViewHolder(final VH holder, final int position) {
         final Item item = mItems.get(position);
         holder.itemView.setTag(position);
-        if (mOnItemClickListener != null)
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!WidgetUtils.isFastClick())
-                        mOnItemClickListener.onItemClick(item, position);
-                    else
-                        Logger.e("重复点击");
+        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+            long lastClickTime = 0;//最后一次点击时间
+            long time = 0;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        lastClickTime = System.currentTimeMillis();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        time = System.currentTimeMillis();
+                        long diff = time - lastClickTime;
+                        if (diff < 2000) {
+                            Logger.d("点击事件");
+                            if (mOnItemClickListener != null && !isProcess)
+                                mOnItemClickListener.onItemClick(item, position);
+                            if (isProcess) Logger.e("重复点击");
+                            isProcess = true;
+                        } else if (diff >= 2000) {
+                            Logger.d("长按事件");
+                            if (mOnItemLongClickListener != null)
+                                mOnItemLongClickListener.onItemLongClick(item, position);
+                        }
+                        lastClickTime = time;
+                        //初始化按下状态
+                        new WeakHandler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isProcess = false;
+                            }
+                        }, 500);
+                        break;
                 }
-            });
-        if (mOnItemLongClickListener != null)
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mOnItemLongClickListener.onItemLongClick(v);
-                    return true;
-                }
-            });
+                return true;
+            }
+        });
+//        if (mOnItemClickListener != null)
+//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (!WidgetUtils.isFastClick() && !isLongClick)
+//                        mOnItemClickListener.onItemClick(item, position);
+//                    else
+//                        Logger.e("重复点击");
+//                }
+//            });
+//        if (mOnItemLongClickListener != null)
+//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    mOnItemLongClickListener.onItemLongClick(item, position);
+//                    return true;
+//                }
+//            });
         onBindItem(holder, item, position);
     }
 

@@ -18,8 +18,7 @@ import com.sunnybear.library.R;
 import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DiskFileCacheHelper;
-import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.loading.LoadingHUD;
+import com.sunnybear.library.view.LoadingHUD;
 
 import butterknife.ButterKnife;
 

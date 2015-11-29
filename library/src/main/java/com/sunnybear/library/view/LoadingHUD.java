@@ -1,4 +1,4 @@
-package com.sunnybear.library.view.loading;
+package com.sunnybear.library.view;
 
 import android.app.Activity;
 import android.app.Dialog;

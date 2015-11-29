@@ -3,6 +3,7 @@ package com.sunnybear.library.view.recycler;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class BasicRecyclerView extends RecyclerView {
     private int divider_height;//间隔线的宽度
     private int divider_color;//间隔线的颜色
     private int divider_marginLeft, divider_marginRight;
+    private Drawable mClickBackground;
 
     public BasicRecyclerView(Context context) {
         this(context, null, 0);

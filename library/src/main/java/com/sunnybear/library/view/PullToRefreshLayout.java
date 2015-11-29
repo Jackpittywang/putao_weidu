@@ -98,7 +98,6 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
         Logger.d(content.getClass().getSimpleName());
-        Logger.d(frame.getScaleY() + "");
         if (content instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) content;
             LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();

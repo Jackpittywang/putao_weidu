@@ -1,7 +1,7 @@
 package com.sunnybear.library.model.http.callback;
 
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.loading.LoadingHUD;
+import com.sunnybear.library.view.LoadingHUD;
 
 import java.io.Serializable;
 
