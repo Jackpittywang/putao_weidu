@@ -1,65 +1,32 @@
 package com.putao.wd.share.view;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
+import com.sunnybear.library.view.BasicPopupWindow;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 分享弹出框
  * Created by guchenkai on 2015/11/27.
  */
-public class SharePopupWindow extends PopupWindow implements View.OnClickListener {
-    @Bind(R.id.popup_layout)
-    RelativeLayout popup_layout;
-
+public class SharePopupWindow extends BasicPopupWindow implements View.OnClickListener {
     private OnShareListener mOnShareListener;
+
+
+    public SharePopupWindow(Context context, boolean isClickOtherClosePopupWindow) {
+        super(context, isClickOtherClosePopupWindow);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.popup_share;
+    }
 
     public void setOnShareListener(OnShareListener onShareListener) {
         mOnShareListener = onShareListener;
-    }
-
-    public SharePopupWindow(Context context) {
-        super(context);
-        final View mRootView = LayoutInflater.from(context).inflate(R.layout.popup_share, null);
-        setContentView(mRootView);
-        ButterKnife.bind(this, mRootView);
-
-        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setAnimationStyle(R.anim.in_from_down);
-        ColorDrawable dw = new ColorDrawable(0xb0000000);
-        setBackgroundDrawable(dw);
-        mRootView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int height = popup_layout.getHeight();
-                int y = (int) event.getY();
-                if (event.getAction() == MotionEvent.ACTION_UP && y < height)
-                    dismiss();
-                return true;
-            }
-        });
-    }
-
-    /**
-     * 设置layout在PopupWindow中显示的位置
-     *
-     * @param view
-     */
-    public void show(View view) {
-        showAtLocation(view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     @OnClick({
@@ -73,6 +40,10 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     })
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.tv_cancel) {//取消
+            dismiss();
+            return;
+        }
         if (mOnShareListener != null)
             switch (v.getId()) {
                 case R.id.ll_wechat://微信
@@ -92,9 +63,6 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
                     break;
                 case R.id.ll_copy_url://复制链接
                     mOnShareListener.onCopyUrlShare();
-                    break;
-                case R.id.tv_cancel://取消
-                    dismiss();
                     break;
             }
     }

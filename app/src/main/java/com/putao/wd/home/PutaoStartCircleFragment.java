@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.recycler.RecyclerViewHeader;
 
 import java.util.ArrayList;
@@ -58,6 +60,13 @@ public class PutaoStartCircleFragment extends BasicFragment {
             }
         });
 
+        rv_content.setOnItemClickListener(new OnItemClickListener<String>() {
+            @Override
+            public void onItemClick(String serializable, int position) {
+                ToastUtils.showToastShort(mActivity, "点击第" + position + "项");
+                startActivity(LoginActivity.class);
+            }
+        });
         tv_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

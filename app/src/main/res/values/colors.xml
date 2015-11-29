@@ -2,6 +2,7 @@
 <resources>
     <color name="tab_background">#FFFFFF</color>
     <color name="layout_background">#959595</color>
+    <color name="edit_text_background">#FFF</color>
 
     <color name="text_color_white">#FFFFFF</color>
     <color name="text_color_red">#CC3333</color>

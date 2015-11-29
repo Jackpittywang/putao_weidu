@@ -26,7 +26,7 @@
     <!--收货人姓名编辑-->
     <EditText
         android:id="@+id/et_name"
-        style="@style/style_edit_text"
+        style="@style/style_address_edit_text"
         android:hint="@string/et_name" />
 
     <!--所在地区和街道地址-->
@@ -111,7 +111,7 @@
     <!--收货人姓名编辑-->
     <EditText
         android:id="@+id/et_phone"
-        style="@style/style_edit_text"
+        style="@style/style_address_edit_text"
         android:hint="@string/et_phone" />
 
     <!--默认收货地址-->
