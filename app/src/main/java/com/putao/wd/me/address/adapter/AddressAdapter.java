@@ -26,7 +26,7 @@ public class AddressAdapter extends BasicAdapter<AddressDB, AddressAdapter.Addre
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.fragment_address_list_item;
+        return R.layout.activity_address_list_item;
     }
 
     @Override

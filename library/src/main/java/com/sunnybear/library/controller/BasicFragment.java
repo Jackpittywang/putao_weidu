@@ -37,7 +37,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
 
     protected App mApp;
     private OkHttpClient mOkHttpClient;
-    private LoadingHUD loading;
+    protected LoadingHUD loading;//加载框
 
     protected DiskFileCacheHelper mDiskFileCacheHelper;//磁盘文件缓存器
 

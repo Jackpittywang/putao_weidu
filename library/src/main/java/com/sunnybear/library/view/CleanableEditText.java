@@ -51,6 +51,12 @@ public class CleanableEditText extends EditText implements View.OnFocusChangeLis
     private void init() {
         Drawable[] drawables = getCompoundDrawables();
         mRightDrawable = drawables[2];
+        if (mRightDrawable == null)
+            if (isInEditMode())
+                mRightDrawable = getResources().getDrawable(android.R.drawable.presence_offline);
+            else
+                mRightDrawable = getResources().getDrawableForDensity(android.R.drawable.presence_offline,
+                        getResources().getDisplayMetrics().densityDpi);
         setOnFocusChangeListener(this);//设置焦点变化的监听
         addTextChangedListener(this);//设置EditText文字变化的监听
         setClearDrawableVisible(false);//初始化时让右边clean图标不可见

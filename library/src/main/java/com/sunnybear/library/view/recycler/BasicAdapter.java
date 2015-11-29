@@ -19,7 +19,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     protected Context context;
     protected Resources resources;
     protected List<Item> mItems;
-    private OnItemClickListener<Item, VH> mOnItemClickListener;
+    private OnItemClickListener<Item> mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -80,7 +80,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(item, holder, position);
+                    mOnItemClickListener.onItemClick(item, position);
                 }
             });
         if (mOnItemLongClickListener != null)

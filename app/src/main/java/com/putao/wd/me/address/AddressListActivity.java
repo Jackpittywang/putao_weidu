@@ -11,6 +11,7 @@ import com.putao.wd.db.db.AddressDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.List;
 
@@ -46,7 +47,23 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         }
         adapter = new AddressAdapter(mContext, addresses);
         rv_addresses.setAdapter(adapter);
+        //点击item
+        rv_addresses.setOnItemClickListener(new OnItemClickListener<AddressDB>() {
+
+            @Override
+            public void onItemClick(AddressDB addressDB, int position) {
+
+            }
+        });
+        //网络请求Demo
+//        networkRequest("自己组合的request", new SimpleFastJsonCallback<"自己的接收model">() {
+//            @Override
+//            public void onSuccess("自己的接收model" url, String result) {
+//
+//            }
+//        });
     }
+
 
     @Override
     protected String[] getRequestUrls() {
