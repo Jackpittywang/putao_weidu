@@ -119,24 +119,6 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
                 return true;
             }
         });
-//        if (mOnItemClickListener != null)
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (!WidgetUtils.isFastClick() && !isLongClick)
-//                        mOnItemClickListener.onItemClick(item, position);
-//                    else
-//                        Logger.e("重复点击");
-//                }
-//            });
-//        if (mOnItemLongClickListener != null)
-//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    mOnItemLongClickListener.onItemLongClick(item, position);
-//                    return true;
-//                }
-//            });
         onBindItem(holder, item, position);
     }
 
