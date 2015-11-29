@@ -3,6 +3,8 @@ package com.sunnybear.library.view.recycler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.sunnybear.library.R;
+
 import butterknife.ButterKnife;
 
 /**
@@ -14,5 +16,6 @@ public class BasicViewHolder extends RecyclerView.ViewHolder {
     public BasicViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setBackgroundResource(R.drawable.recyclerview_background);
     }
 }
