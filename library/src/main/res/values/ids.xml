@@ -7,4 +7,6 @@
     <!--PullToRefreshLayout-->
     <item name="refresh_text" type="id" />
     <item name="refresh_view" type="id" />
+    <!--BasicPopupWindow-->
+    <item name="popup_layout" type="id" />
 </resources>
