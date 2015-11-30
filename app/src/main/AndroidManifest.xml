@@ -64,9 +64,14 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--关于我们-->
         <activity android:name=".me.address.AboutUsActivity" >
         </activity>
+        <!--设置-->
         <activity android:name=".me.address.SettingActivity" >
+        </activity>
+        <!--我-->
+        <activity android:name=".me.address.MeActivity" >
         </activity>
     </application>
 
