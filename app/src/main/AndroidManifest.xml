@@ -74,9 +74,7 @@
         <!--设置-->
         <activity android:name=".me.address.SettingActivity" >
         </activity>
-        <!--我-->
-        <activity android:name=".me.address.MeActivity" >
-        </activity>
+
     </application>
 
 </manifest>
