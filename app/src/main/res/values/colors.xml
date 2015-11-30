@@ -3,9 +3,13 @@
     <color name="tab_background">#FFFFFF</color>
     <color name="layout_background">#959595</color>
     <color name="edit_text_background">#FFF</color>
+    <color name="popup_background">#66000000</color>
+    <color name="background_F5F5F5">#F5F5F5</color>
 
+    <color name="text_color_646464">#646464</color>
     <color name="text_color_white">#FFFFFF</color>
-    <color name="text_color_red">#CC3333</color>
+    <color name="text_color_red">#CD5564</color>
+    <color name="text_color_gray">#959595</color>
 
     <color name="white">#FFFFFF</color>
     <color name="divider_color">#959595</color>
@@ -13,4 +17,7 @@
     <!--主颜色-->
     <color name="main_color_sel">#B57DE4</color>
     <color name="main_color_nor">#985EC9</color>
+
+    <color name="color_rectangle_nor">#F5F5F5</color>
+    <color name="color_rectangle_sel">#985EC9</color>
 </resources>

@@ -34,12 +34,12 @@
 
         <ImageView
             android:id="@+id/iv_setting"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/setting_selector" />
     </RelativeLayout>
 
     <!--我的订单-->
@@ -55,7 +55,7 @@
             android:id="@+id/si_order"
             style="@style/style_setting"
             auto:setting_divider="top"
-            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_icon="@drawable/icon_20_01"
             auto:setting_text="@string/order" />
     </LinearLayout>
 
@@ -70,7 +70,7 @@
             android:id="@+id/si_address"
             style="@style/style_setting"
             android:layout_marginTop="8dp"
-            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_icon="@drawable/icon_20_06"
             auto:setting_text="@string/address" />
 
         <com.sunnybear.library.view.SettingItem
@@ -78,21 +78,21 @@
             style="@style/style_setting"
             android:layout_marginTop="8dp"
             auto:setting_divider="top"
-            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_icon="@drawable/icon_20_07"
             auto:setting_text="@string/action" />
 
         <com.sunnybear.library.view.SettingItem
             android:id="@+id/si_question"
             style="@style/style_setting"
             auto:setting_divider="bottom"
-            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_icon="@drawable/icon_20_08"
             auto:setting_text="@string/question" />
 
         <com.sunnybear.library.view.SettingItem
             android:id="@+id/si_message"
             style="@style/style_setting"
             android:layout_marginTop="8dp"
-            auto:setting_icon="@mipmap/ic_launcher"
+            auto:setting_icon="@drawable/icon_20_09"
             auto:setting_text="@string/message" />
     </LinearLayout>
 

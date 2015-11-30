@@ -9,8 +9,7 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
-        auto:nav_left_title="@string/cancel"
-        auto:nav_left_title_color="@color/main_color_nor"
+        auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="完善用户信息"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title="保存"

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@color/transparent">
+
+    <!--产品图标-->
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_product_icon"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:background="#CCCCCC" />
+
+    <!--产品介绍-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_marginLeft="8dp"
+        android:orientation="vertical">
+
+        <!--产品标题-->
+        <TextView
+            android:id="@+id/tv_product_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="葡萄探索号"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_20sp" />
+
+        <!--产品介绍-->
+        <TextView
+            android:id="@+id/tv_product_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)" />
+
+        <!--产品价格-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/text_color_red"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <TextView
+                android:id="@+id/tv_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="798.00"
+                android:textColor="@color/text_color_red"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

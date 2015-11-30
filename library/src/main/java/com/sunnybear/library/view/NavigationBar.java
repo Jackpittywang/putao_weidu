@@ -48,7 +48,7 @@ public class NavigationBar extends RelativeLayout {
     }
 
     private void initNavigationBar(Context context, AttributeSet attrs) {
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.NavigationBar);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar);
         mMainTitle = typedArray.getString(R.styleable.NavigationBar_nav_main_title);
         mLeftTitle = typedArray.getString(R.styleable.NavigationBar_nav_left_title);
         mRightTitle = typedArray.getString(R.styleable.NavigationBar_nav_right_title);
