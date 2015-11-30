@@ -3,12 +3,11 @@
     android:id="@+id/popup_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#66000000"
+    android:background="@color/popup_background"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
     <LinearLayout
-        android:id="@+id/ll_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -44,7 +43,7 @@
 
                     <ImageView
                         style="@style/style_share_icon"
-                        android:src="@drawable/ssdk_oks_logo_wechat" />
+                        android:src="@drawable/icon_40_01" />
 
                     <TextView
                         style="@style/style_share_text"
@@ -59,7 +58,7 @@
 
                     <ImageView
                         style="@style/style_share_icon"
-                        android:src="@drawable/ssdk_oks_logo_wechat" />
+                        android:src="@drawable/icon_40_02" />
 
                     <TextView
                         style="@style/style_share_text"
@@ -74,7 +73,7 @@
 
                     <ImageView
                         style="@style/style_share_icon"
-                        android:src="@drawable/ssdk_oks_logo_wechat" />
+                        android:src="@drawable/icon_40_03" />
 
                     <TextView
                         style="@style/style_share_text"
@@ -89,7 +88,7 @@
 
                     <ImageView
                         style="@style/style_share_icon"
-                        android:src="@drawable/ssdk_oks_logo_wechat" />
+                        android:src="@drawable/icon_40_04" />
 
                     <TextView
                         style="@style/style_share_text"
@@ -109,7 +108,7 @@
 
                     <ImageView
                         style="@style/style_share_icon"
-                        android:src="@drawable/ssdk_oks_logo_wechat" />
+                        android:src="@drawable/icon_40_05" />
 
                     <TextView
                         style="@style/style_share_text"
@@ -124,7 +123,7 @@
 
                     <ImageView
                         style="@style/style_share_icon"
-                        android:src="@drawable/ssdk_oks_logo_wechat" />
+                        android:src="@drawable/icon_40_06" />
 
                     <TextView
                         style="@style/style_share_text"

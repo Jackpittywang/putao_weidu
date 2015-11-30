@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.sunnybear.library.R;
+import com.sunnybear.library.util.DensityUtil;
 
 import butterknife.ButterKnife;
 
@@ -29,7 +30,15 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
      */
     protected abstract int getLayoutId();
 
-    public BasicPopupWindow(Context context, boolean isClickOtherClosePopupWindow) {
+    public BasicPopupWindow(Context context) {
+        this(context, true, false);
+    }
+
+    public BasicPopupWindow(Context context, boolean isOpenSelfAdaptionHeight) {
+        this(context, true, isOpenSelfAdaptionHeight);
+    }
+
+    public BasicPopupWindow(Context context, boolean isClickOtherClosePopupWindow, boolean isOpenSelfAdaptionHeight) {
         super(context);
         int layoutId = getLayoutId();
         if (layoutId == 0)
@@ -40,7 +49,10 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
 
         mMainLayout = (ViewGroup) mRootView.findViewById(R.id.popup_layout);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);//设置宽
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);//设置高
+        if (!isOpenSelfAdaptionHeight)
+            setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);//设置高
+        else
+            setHeight(DensityUtil.getScreenH(context) * 2 / 3);
         setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         setBackgroundDrawable(dw);//设置背景

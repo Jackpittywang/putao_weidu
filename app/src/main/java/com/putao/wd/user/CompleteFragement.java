@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.share.view.SharePopupWindow;
+import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.view.CleanableEditText;
 
 import butterknife.Bind;

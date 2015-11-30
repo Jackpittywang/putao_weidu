@@ -33,10 +33,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         return new String[0];
     }
 
-    @OnClick({R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.si_message})
+    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.si_message})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_setting://设置
+
+                break;
             case R.id.si_order://我的订单
 
                 break;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.user.LoginActivity;
+import com.putao.wd.product.TestSelectActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -46,8 +46,16 @@ public class PutaoStartCircleFragment extends BasicFragment {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mHeader.attachTo(rv_content, true);
-        adapter = new TextAdapter(mActivity, getData());
+        adapter = new TextAdapter(mActivity, getTestData());
         rv_content.setAdapter(adapter);
+        refresh();
+        addListener();
+    }
+
+    /**
+     * 刷新方法
+     */
+    private void refresh() {
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -59,12 +67,17 @@ public class PutaoStartCircleFragment extends BasicFragment {
                 }, 3 * 1000);
             }
         });
+    }
 
+    /**
+     * 添加监听器
+     */
+    private void addListener() {
         rv_content.setOnItemClickListener(new OnItemClickListener<String>() {
             @Override
             public void onItemClick(String serializable, int position) {
                 ToastUtils.showToastShort(mActivity, "点击第" + position + "项");
-                startActivity(LoginActivity.class);
+                startActivity(TestSelectActivity.class);
             }
         });
         tv_header.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +88,7 @@ public class PutaoStartCircleFragment extends BasicFragment {
         });
     }
 
-    private List<String> getData() {
+    private List<String> getTestData() {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
             list.add("第" + (i + 1) + "项");
