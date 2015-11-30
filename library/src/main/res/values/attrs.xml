@@ -14,10 +14,14 @@
             <enum name="grid" value="3" />
         </attr>
         <attr name="column_num" format="integer" />
-        <attr name="has_divider" format="boolean" />
+        <attr name="has_row_divider" format="boolean" />
+        <attr name="has_rank_divider" format="boolean" />
+        <attr name="divider_width" format="dimension" />
         <attr name="divider_height" format="dimension" />
         <attr name="divider_marginLeft" format="dimension" />
         <attr name="divider_marginRight" format="dimension" />
+        <attr name="divider_marginTop" format="dimension" />
+        <attr name="divider_marginBottom" format="dimension" />
         <attr name="divider_color" format="color" />
         <attr name="is_inner" format="boolean" />
         <attr name="process_background" format="reference" />
@@ -89,4 +93,15 @@
         </attr>
         <attr name="setting_indicator_background" format="reference" />
     </declare-styleable>
+
+    <!--ScrollableLayout-->
+    <!--<declare-styleable name="ScrollableLayout">-->
+    <!--<attr name="scrollable_maxScroll" format="dimension" />-->
+    <!--<attr name="scrollable_scrollerFlywheel" format="boolean" />-->
+    <!--<attr name="scrollable_considerIdleMillis" format="integer" />-->
+    <!--<attr name="scrollable_defaultCloseUp" format="boolean" />-->
+    <!--<attr name="scrollable_friction" format="float" />-->
+    <!--<attr name="scrollable_closeUpAnimationMillis" format="integer" />-->
+    <!--<attr name="scrollable_closeUpAnimatorInterpolator" format="reference" />-->
+    <!--</declare-styleable>-->
 </resources>

@@ -3,7 +3,6 @@ package com.sunnybear.library.view.recycler;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import android.util.AttributeSet;
 
 import com.sunnybear.library.R;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+import com.yqritc.recyclerviewflexibledivider.VerticalDividerItemDecoration;
 
 /**
  * 提供基本处理的RecyclerView
@@ -27,10 +27,12 @@ public class BasicRecyclerView extends RecyclerView {
     private int layout_mode;//布局方式
     private boolean is_inner;//是否是内部使用
     private int column_num;//布局方式为grid时,每行的显示数
-    private boolean has_divider;//是否显示间隔线
-    private int divider_height;//间隔线的宽度
+    private boolean has_row_divider;//是否显示行间隔线
+    private boolean has_rank_divider;//是否显示列间距
+    private int divider_width;//列间隔线的宽度
+    private int divider_height;//行间隔线的高度
     private int divider_color;//间隔线的颜色
-    private int divider_marginLeft, divider_marginRight;
+    private int divider_marginLeft, divider_marginRight, divider_marginTop, divider_marginBottom;
     private int mProcessBackground;//点击时背景色
 
     public BasicRecyclerView(Context context) {
@@ -51,11 +53,16 @@ public class BasicRecyclerView extends RecyclerView {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BasicRecyclerView);
         layout_mode = array.getInt(R.styleable.BasicRecyclerView_layout_mode, VERTICAL);
         column_num = array.getInt(R.styleable.BasicRecyclerView_column_num, 3);
-        has_divider = array.getBoolean(R.styleable.BasicRecyclerView_has_divider, false);
+        has_row_divider = array.getBoolean(R.styleable.BasicRecyclerView_has_row_divider, false);
+        has_rank_divider = array.getBoolean(R.styleable.BasicRecyclerView_has_rank_divider, false);
+
         is_inner = array.getBoolean(R.styleable.BasicRecyclerView_is_inner, false);
+        divider_width = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_width, 1f);
         divider_height = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_height, 1f);
         divider_marginLeft = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginLeft, 0f);
         divider_marginRight = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginRight, 0f);
+        divider_marginTop = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginTop, 0f);
+        divider_marginBottom = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginBottom, 0f);
         divider_color = array.getColor(R.styleable.BasicRecyclerView_divider_color, Color.parseColor("#00000000"));
         mProcessBackground = array.getInteger(R.styleable.BasicRecyclerView_process_background, R.drawable.recyclerview_background);
         array.recycle();
@@ -98,11 +105,19 @@ public class BasicRecyclerView extends RecyclerView {
         //添加删除的动画
         setItemAnimator(new DefaultItemAnimator());
         //添加间隔线
-        if (has_divider) {
-            HorizontalDividerItemDecoration decoration = new HorizontalDividerItemDecoration.Builder(getContext())
+        if (has_row_divider) {
+            HorizontalDividerItemDecoration decoration = new HorizontalDividerItemDecoration.Builder(context)
                     .color(divider_color)
                     .size(divider_height)
                     .margin(divider_marginLeft, divider_marginRight)
+                    .build();
+            addItemDecoration(decoration);
+        }
+        if (has_rank_divider) {
+            VerticalDividerItemDecoration decoration = new VerticalDividerItemDecoration.Builder(context)
+                    .color(divider_color)
+                    .size(divider_width)
+                    .margin(divider_marginTop, divider_marginBottom)
                     .build();
             addItemDecoration(decoration);
         }

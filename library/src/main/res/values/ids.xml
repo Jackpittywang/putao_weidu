@@ -9,4 +9,8 @@
     <item name="refresh_view" type="id" />
     <!--BasicPopupWindow-->
     <item name="popup_layout" type="id" />
+
+    <item name="stickyHeaderLayout_header" type="id" />
+    <item name="stickyHeaderLayout_sticky" type="id" />
+    <item name="stickyHeaderLayout_scrollable" type="id" />
 </resources>
