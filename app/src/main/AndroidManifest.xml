@@ -66,6 +66,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".me.address.AboutUsActivity" >
         </activity>
+        <activity android:name=".me.address.SettingActivity" >
+        </activity>
     </application>
 
 </manifest>
