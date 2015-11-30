@@ -19,7 +19,22 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent" />
         <TextView
-            android:id="@+id/attribution"
+            android:id="@+id/company"
+            android:text="葡萄纬度"
+            android:textSize="30sp"
+            android:textColor="@color/main_color_nor"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@+id/company"
+            android:text="1.0.0"
+            android:layout_alignRight="@+id/company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/attributo"
             android:text="葡萄科技 版权所有"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
@@ -30,7 +45,7 @@
         <TextView
             android:text="2015 Putao.com"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/attribution"
+            android:layout_below="@+id/attributo"
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
