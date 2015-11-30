@@ -77,4 +77,28 @@ public final class DensityUtil {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getHeight();
     }
+
+    /**
+     * 获得设备的屏幕宽度
+     *
+     * @param context
+     * @return
+     */
+    public static int getDeviceWidth(Context context) {
+        WindowManager manager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        return manager.getDefaultDisplay().getWidth();
+    }
+
+    /**
+     * 获得设备的屏幕高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getDeviceHeight(Context context) {
+        WindowManager manager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        return manager.getDefaultDisplay().getHeight();
+    }
 }
