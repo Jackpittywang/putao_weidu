@@ -28,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:layout_below="@+id/company"
             android:text="1.0.0"
+            android:layout_below="@+id/company"
             android:layout_alignRight="@+id/company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
