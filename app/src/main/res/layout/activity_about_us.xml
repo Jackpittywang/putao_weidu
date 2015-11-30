@@ -18,10 +18,16 @@
             android:scaleType="fitXY"
             android:layout_width="fill_parent"
             android:layout_height="match_parent" />
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:layout_above="@+id/company"
+            android:layout_centerHorizontal="true"
+            auto:roundedCornerRadius="5dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <TextView
             android:id="@+id/company"
             android:text="葡萄纬度"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:textColor="@color/main_color_nor"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
