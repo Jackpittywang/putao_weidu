@@ -1,4 +1,4 @@
-package com.sunnybear.library.view;
+package com.sunnybear.library.controller;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;

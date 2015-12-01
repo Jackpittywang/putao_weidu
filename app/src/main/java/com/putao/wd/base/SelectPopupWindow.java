@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.sunnybear.library.view.BasicPopupWindow;
+import com.sunnybear.library.controller.BasicPopupWindow;
 
 import butterknife.Bind;
 import butterknife.OnClick;
