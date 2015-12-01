@@ -7,7 +7,8 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
+import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -20,114 +21,151 @@ import com.sunnybear.library.R;
  * Created by sunnybear on 2015/3/9.
  */
 public class LoadingHUD extends Dialog {
+    public static final int FADED_ROUND_SPINNER = 0;
+    public static final int GEAR_SPINNER = 1;
+    public static final int SIMPLE_ROUND_SPINNER = 2;
 
-    public static final int FADED_ROUND_SPINNER = 0x00;
-    public static final int GEAR_SPINNER = 0x01;
-    public static final int SIMPLE_ROUND_SPINNER = 0x02;
+    static LoadingHUD instance;
+    View view;
+    TextView tvMessage;
+    ImageView ivSuccess;
+    ImageView ivFailure;
+    ImageView ivProgressSpinner;
+    AnimationDrawable adProgressSpinner;
+    Context context;
 
-    private static LoadingHUD INSTANCE;
-    private Context mContext;
-    private View mView;
-    private TextView tvMessage;
+    OnDialogDismiss onDialogDismiss;
 
-    private ImageView ivSuccess, ivFailure, ivProgressSpinner;
-    private AnimationDrawable adProgressSpinner;
+    public OnDialogDismiss getOnDialogDismiss() {
+        return onDialogDismiss;
+    }
 
-    public static LoadingHUD getINSTANCE(Context context) {
-        if (INSTANCE == null)
-            INSTANCE = new LoadingHUD(context);
-        return INSTANCE;
+    public void setOnDialogDismiss(OnDialogDismiss onDialogDismiss) {
+        this.onDialogDismiss = onDialogDismiss;
+    }
+
+    public static LoadingHUD getInstance(Context context) {
+        if (instance == null) {
+            instance = new LoadingHUD(context);
+        }
+        return instance;
     }
 
     public LoadingHUD(Context context) {
         super(context, R.style.DialogTheme);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setCanceledOnTouchOutside(false);
-
-        mContext = context;
-        mView = getLayoutInflater().inflate(R.layout.widget_loading_dialog_progress, null);
-        tvMessage = (TextView) mView.findViewById(R.id.textview_message);
-        ivSuccess = (ImageView) mView.findViewById(R.id.imageview_success);
-        ivFailure = (ImageView) mView.findViewById(R.id.imageview_failure);
-        ivProgressSpinner = (ImageView) mView.findViewById(R.id.imageview_progress_spinner);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setBackgroundDrawable(
+                new ColorDrawable(Color.TRANSPARENT));
+        this.setCanceledOnTouchOutside(false);
+        this.context = context;
+        view = getLayoutInflater().inflate(R.layout.widget_loading_dialog_progress, null);
+        tvMessage = (TextView) view.findViewById(R.id.textview_message);
+        ivSuccess = (ImageView) view.findViewById(R.id.imageview_success);
+        ivFailure = (ImageView) view.findViewById(R.id.imageview_failure);
+        ivProgressSpinner = (ImageView) view
+                .findViewById(R.id.imageview_progress_spinner);
 
         setSpinnerType(FADED_ROUND_SPINNER);
-        setContentView(mView);
+        this.setContentView(view);
     }
 
     public void setSpinnerType(int spinnerType) {
         switch (spinnerType) {
-            case FADED_ROUND_SPINNER:
+            case 0:
                 ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
                 break;
-            case GEAR_SPINNER:
+            case 1:
                 ivProgressSpinner.setImageResource(R.anim.gear_spinner);
                 break;
-            case SIMPLE_ROUND_SPINNER:
+            case 2:
                 ivProgressSpinner.setImageResource(R.anim.round_spinner);
                 break;
             default:
                 ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
-                break;
         }
         adProgressSpinner = (AnimationDrawable) ivProgressSpinner.getDrawable();
     }
 
-    public LoadingHUD setMessage(String message) {
+    public void setMessage(String message) {
         tvMessage.setText(message);
-        return this;
     }
 
     @Override
     public void show() {
-        if (!((Activity) mContext).isFinishing())
+        if (!((Activity) context).isFinishing()) {
             super.show();
-        else
-            INSTANCE = null;
+        } else {
+            instance = null;
+        }
     }
 
     public void dismissWithSuccess() {
-        dismissWithSuccess("Success", null);
-    }
-
-    public void dismissWithSuccess(String message, final OnDialogDismissListener onDialogDismissListener) {
+        tvMessage.setText("Success");
         showSuccessImage();
-        if (message != null)
-            tvMessage.setText(message);
-        else
-            tvMessage.setText("");
 
-        if (onDialogDismissListener != null)
+        if (onDialogDismiss != null) {
             this.setOnDismissListener(new OnDismissListener() {
 
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    onDialogDismissListener.onDialogDismiss();
+                    onDialogDismiss.onDismiss();
                 }
             });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithSuccess(String message) {
+        showSuccessImage();
+        if (message != null) {
+            tvMessage.setText(message);
+        } else {
+            tvMessage.setText("");
+        }
+
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
         dismissHUD();
     }
 
     public void dismissWithFailure() {
-        dismissWithFailure("Failure", null);
-    }
-
-    public void dismissWithFailure(String message, final OnDialogDismissListener onDialogDismissListener) {
         showFailureImage();
-        if (message != null)
-            tvMessage.setText(message);
-        else
-            tvMessage.setText("");
-
-        if (onDialogDismissListener != null)
+        tvMessage.setText("Failure");
+        if (onDialogDismiss != null) {
             this.setOnDismissListener(new OnDismissListener() {
 
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    onDialogDismissListener.onDialogDismiss();
+                    onDialogDismiss.onDismiss();
                 }
             });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithFailure(String message) {
+        showFailureImage();
+        if (message != null) {
+            tvMessage.setText(message);
+        } else {
+            tvMessage.setText("");
+        }
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
         dismissHUD();
     }
 
@@ -149,30 +187,40 @@ public class LoadingHUD extends Dialog {
     }
 
     protected void dismissHUD() {
-        new Handler().postDelayed(new Runnable() {
+        AsyncTask<String, Integer, Long> task = new AsyncTask<String, Integer, Long>() {
+
             @Override
-            public void run() {
+            protected Long doInBackground(String... params) {
+                SystemClock.sleep(500);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Long result) {
+                super.onPostExecute(result);
                 dismiss();
                 reset();
             }
-        }, 500);
+        };
+        task.execute();
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         ivProgressSpinner.post(new Runnable() {
+
             @Override
             public void run() {
                 adProgressSpinner.start();
+
             }
         });
     }
 
     /**
-     * 关闭Dialog回调
+     * 关闭加载框回调
      */
-    public interface OnDialogDismissListener {
-
-        void onDialogDismiss();
+    public interface OnDialogDismiss {
+        void onDismiss();
     }
 }

@@ -128,13 +128,12 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
 
     public void replace(Item oldItem, Item newItem) {
         int index = mItems.indexOf(oldItem);
-        mItems.set(index, newItem);
-        notifyItemChanged(index);
+        replace(index, newItem);
     }
 
     public void replace(int index, Item item) {
         mItems.set(index, item);
-        notifyDataSetChanged();
+        notifyItemChanged(index);
     }
 
     public void replaceAll(List<Item> items) {
@@ -144,13 +143,13 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     }
 
     public void delete(Item item) {
-        mItems.remove(item);
-        notifyDataSetChanged();
+        int index = mItems.indexOf(item);
+        delete(index);
     }
 
     public void delete(int index) {
         mItems.remove(index);
-        notifyDataSetChanged();
+        notifyItemRemoved(index);
     }
 
     public void clear() {
