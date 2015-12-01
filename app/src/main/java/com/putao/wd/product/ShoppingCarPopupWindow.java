@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.product.adapter.NormsSelectAdapter;
-import com.sunnybear.library.view.BasicPopupWindow;
+import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import butterknife.Bind;
