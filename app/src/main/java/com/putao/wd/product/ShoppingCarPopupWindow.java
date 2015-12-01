@@ -16,9 +16,6 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
-    private static final String[] colors = new String[]{
-            "塔塔紫", "淘淘粉", "萌撕拉蓝", "班得瑞绿", "魔方橙",
-    };
     @Bind(R.id.rv_select_norms)
     BasicRecyclerView rv_select_norms;
 
