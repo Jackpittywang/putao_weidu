@@ -1,4 +1,4 @@
-package com.putao.wd.me.address.adapter;
+package com.putao.wd.me.message.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

@@ -1,4 +1,4 @@
-package com.putao.wd.me.address;
+package com.putao.wd.me.setting;
 
 import android.os.Bundle;
 import android.view.View;

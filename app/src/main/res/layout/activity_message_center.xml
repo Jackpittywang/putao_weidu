@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        android:visibility="gone"
+        style="@style/style_navigation_bar"/>
     <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -22,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <TextView
+            android:id="@+id/tv_notify"
             android:text="通知"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -30,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/tv_reply"
             android:text="回复"
             android:textSize="24sp"
             android:layout_marginLeft="10dp"
@@ -38,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/tv_praise"
             android:text="赞"
             android:textSize="24sp"
             android:layout_marginLeft="10dp"

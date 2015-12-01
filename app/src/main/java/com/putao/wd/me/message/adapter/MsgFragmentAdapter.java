@@ -1,4 +1,4 @@
-package com.putao.wd.me.address.adapter;
+package com.putao.wd.me.message.adapter;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
