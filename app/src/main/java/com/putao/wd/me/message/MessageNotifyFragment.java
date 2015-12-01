@@ -38,6 +38,8 @@ public class MessageNotifyFragment extends BasicFragment {
         for(int i=0;i<10;i++) {
             MessageNotifyItem msgitem=new MessageNotifyItem();
             msgitem.setTitle("title"+i);
+            msgitem.setDate("刚刚而已");
+            msgitem.setIntro("这里显示用系统发来的通知，字数没有限制，没有详情页。未读信息为黑色字");
             list.add(msgitem);
         }
         return list;

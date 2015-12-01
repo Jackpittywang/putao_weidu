@@ -58,7 +58,7 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
     <ImageView
-        android:id="@+id/cursor"
+        android:id="@+id/iv_cursor"
         android:layout_width="40dp"
         android:layout_height="5dp"
         android:layout_marginLeft="120dp"
@@ -66,7 +66,7 @@
         android:scaleType="matrix"
         android:background="#985ec9"/>
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/vp_content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
 

@@ -64,7 +64,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
         //加上cursor混动当前页导航提示
         initeCursor();
-        vp_content.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int arg0) {  //当滑动式，顶部的imageView是通过animation缓慢的滑动
