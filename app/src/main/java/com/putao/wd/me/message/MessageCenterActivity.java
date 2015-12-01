@@ -33,10 +33,9 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Bind(R.id.iv_cursor)
     ImageView iv_cursor;
 
-    //-------------切换页面相关信息----------------------
+    //-------------页面相关信息----------------------
     private List<Fragment> fragments;           //fragment集合
     private MsgFragmentAdapter fAdapter;        //fragment集合适配器
-    private int currentItem;                    //当前页
 
     //-------------切换效果相关变量---------------------
     private Animation animation;                //
@@ -44,6 +43,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     private Matrix matrix = new Matrix();
     private int bmWidth;                        //导航条宽度
     private ViewGroup.LayoutParams imagepara;   //导航条信息（为了获得宽度）
+    private int currentItem;                    //当前页
 
     @Override
     protected int getLayoutId() {
