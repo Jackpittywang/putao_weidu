@@ -3,10 +3,9 @@
     android:layout_height="match_parent"
     tools:context="com.putao.wd.me.message.MessageNotifyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@+id/brv_msgnotify"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment1" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
