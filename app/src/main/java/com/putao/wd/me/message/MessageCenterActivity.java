@@ -1,7 +1,5 @@
 package com.putao.wd.me.message;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,6 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.message.adapter.MsgFragmentAdapter;
-import com.putao.wd.me.message.adapter.MsgViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,18 +33,17 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Bind(R.id.iv_cursor)
     ImageView iv_cursor;
 
+    //-------------切换页面相关信息----------------------
+    private List<Fragment> fragments;           //fragment集合
+    private MsgFragmentAdapter fAdapter;        //fragment集合适配器
+    private int currentItem;                    //当前页
 
-    private Animation animation;
-    //“直接对fragment布局切换”的变量申明
-    private MsgFragmentAdapter fAdapter;
-    private List<Fragment> fragments;
-
-    //加上cursor混动当前页导航提示
-    private int offSet;
-    private int currentItem;
+    //-------------切换效果相关变量---------------------
+    private Animation animation;                //
+    private int offSet;                         //导航条起始点
     private Matrix matrix = new Matrix();
-    private int bmWidth;
-    private ViewGroup.LayoutParams imagepara;
+    private int bmWidth;                        //导航条宽度
+    private ViewGroup.LayoutParams imagepara;   //导航条信息（为了获得宽度）
 
     @Override
     protected int getLayoutId() {
@@ -57,11 +53,13 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
-        //“直接对fragment布局切换”的初始化
+        //初始化fragment集合
         initFragmentView();
+        //获得导航条信息
         imagepara= iv_cursor.getLayoutParams();
         //加上cursor混动当前页导航提示
         initeCursor();
+        //滑动切换页面
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -84,7 +82,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             }
         });
     }
-    //“直接对fragment布局切换”的初始化
+    //初始化fragment集合
     private void initFragmentView(){
         fragments= new ArrayList<Fragment>();
         fragments.add(new MessageNotifyFragment());
