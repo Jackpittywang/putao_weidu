@@ -4,6 +4,7 @@
     android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_bg_signup"
     android:orientation="vertical">
 
     <!--标题栏-->
@@ -13,7 +14,7 @@
         auto:nav_main_title="完善用户信息"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title="保存"
-        auto:nav_right_title_color="@color/main_color_nor" />
+        auto:nav_right_title_color="@color/text_main_color_nor" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,8 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
-                android:hint="用戶昵称"
-                android:inputType="phone" />
+                android:drawableRight="@drawable/close_selector"
+                android:hint="用戶昵称" />
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -57,8 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
-                android:hint="个人简介"
-                android:inputType="phone" />
+                android:drawableRight="@drawable/close_selector"
+                android:hint="个人简介" />
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -73,12 +74,24 @@
             android:layout_width="match_parent"
             android:layout_height="150dp">
 
-            <ImageView
-                android:id="@+id/iv_header_icon"
-                android:layout_width="88dp"
-                android:layout_height="88dp"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/ic_launcher" />
+            <FrameLayout
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/iv_header_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_launcher" />
+
+                <ImageView
+                    android:id="@+id/iv_select_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom|right"
+                    android:src="@drawable/icon_20_12" />
+            </FrameLayout>
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

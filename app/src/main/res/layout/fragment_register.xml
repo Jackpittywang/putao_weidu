@@ -3,6 +3,7 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_bg_signup"
     android:orientation="vertical">
 
     <!--标题栏-->
@@ -28,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
+                android:drawableRight="@drawable/close_selector"
                 android:hint="@string/mobile"
                 android:inputType="phone"
                 auto:maxLength="11" />
@@ -50,11 +52,11 @@
             <com.sunnybear.library.view.CleanableEditText
                 android:id="@+id/et_graph_verify"
                 style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:background="@null"
-                android:hint="@string/graph_verify"
-                android:inputType="numberPassword" />
+                android:drawableRight="@drawable/close_selector"
+                android:hint="@string/graph_verify" />
             <!--图形验证码-->
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:layout_width="88dp"
@@ -85,27 +87,30 @@
             <com.sunnybear.library.view.CleanableEditText
                 android:id="@+id/et_sms_verify"
                 style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:background="@null"
-                android:hint="@string/sms_verify"
-                android:inputType="numberPassword" />
+                android:drawableRight="@drawable/close_selector"
+                android:hint="@string/sms_verify" />
 
-            <TextView
-                android:id="@+id/tv_get_verify"
-                style="@style/style_login_text"
-                android:layout_width="80dp"
+            <com.sunnybear.library.view.TimeButton
+                android:id="@+id/tb_get_verify"
+                android:layout_width="88dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="@string/get_verify"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"
+                auto:click_background="@drawable/text_select"
+                auto:countdown_time="10"
+                auto:text_after="获取验证码($s后重发)"
+                auto:text_before="获取验证码"
+                auto:unclick_background="@color/text_color_gray" />
             <!--竖向间隔线-->
             <View
                 android:layout_width="1px"
                 android:layout_height="32dp"
                 android:layout_margin="8dp"
-                android:layout_toLeftOf="@id/tv_get_verify"
+                android:layout_toLeftOf="@id/tb_get_verify"
                 android:background="@color/divider_color" />
             <!--间隔线-->
             <View
@@ -131,8 +136,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
+                android:drawableRight="@drawable/close_selector"
                 android:hint="@string/login_password"
-                android:inputType="numberPassword" />
+                android:inputType="textPassword" />
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -149,7 +155,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_password"
             android:layout_margin="16dp"
-            android:background="#C2C2C2"
+            android:background="@drawable/btn_los_focus"
+            android:clickable="false"
             android:text="@string/next"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/text_size_16sp" />
@@ -165,16 +172,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="点击下一步表示您已同意"
-                android:textColor="@color/main_color_sel"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textColor="@color/text_main_color_sel"
+                android:textSize="@dimen/text_size_16sp" />
 
             <TextView
                 android:id="@+id/tv_user_protocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《用户服务协议》"
-                android:textColor="@color/main_color_sel"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textColor="@color/text_main_color_sel"
+                android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

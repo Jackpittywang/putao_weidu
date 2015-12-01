@@ -19,10 +19,6 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         super(context);
     }
 
-    public SharePopupWindow(Context context, boolean isClickOtherClosePopupWindow) {
-        super(context, isClickOtherClosePopupWindow);
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.popup_share;

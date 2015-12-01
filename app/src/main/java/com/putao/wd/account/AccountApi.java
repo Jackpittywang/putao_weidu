@@ -35,52 +35,52 @@ public class AccountApi {
     /**
      * 注册
      */
-    public static final String URL_REGISTER = BASE_URL + AccountConstants.Url.URL_REGISTER;
+    public static final String URL_REGISTER = AccountConstants.Url.URL_REGISTER;
 
     /**
      * 手机注册与否检测
      */
-    public static final String URL_CHECK_MOBILE = BASE_URL + AccountConstants.Url.URL_CHECK_MOBILE;
+    public static final String URL_CHECK_MOBILE = AccountConstants.Url.URL_CHECK_MOBILE;
 
     /**
      * 发送验证码
      */
-    public static final String URL_SEND_VERIFY_CODE = BASE_URL + AccountConstants.Url.URL_SEND_VERIFY_CODE;
+    public static final String URL_SEND_VERIFY_CODE = AccountConstants.Url.URL_SEND_VERIFY_CODE;
 
     /**
      * 忘记密码
      */
-    public static final String URL_FORGET = BASE_URL + AccountConstants.Url.URL_FORGET;
+    public static final String URL_FORGET = AccountConstants.Url.URL_FORGET;
 
     /**
      * 登录
      */
-    public static final String URL_LOGIN = BASE_URL + AccountConstants.Url.URL_LOGIN;
+    public static final String URL_LOGIN = AccountConstants.Url.URL_LOGIN;
 
     /**
      * 修改密码
      */
-    public static final String URL_UPDATE_PASSWORD = BASE_URL + AccountConstants.Url.URL_UPDATE_PASSWORD;
+    public static final String URL_UPDATE_PASSWORD = AccountConstants.Url.URL_UPDATE_PASSWORD;
 
     /**
      * 刷新token
      */
-    public static final String URL_UPDATE_TOKEN = BASE_URL + AccountConstants.Url.URL_UPDATE_TOKEN;
+    public static final String URL_UPDATE_TOKEN = AccountConstants.Url.URL_UPDATE_TOKEN;
 
     /**
      * 验证token
      */
-    public static final String URL_CHECK_TOKEN = BASE_URL + AccountConstants.Url.URL_CHECK_TOKEN;
+    public static final String URL_CHECK_TOKEN = AccountConstants.Url.URL_CHECK_TOKEN;
 
     /**
      * 获取昵称
      */
-    public static final String URL_GET_NAICK_NAME = BASE_URL + AccountConstants.Url.URL_GET_NICK_NAME;
+    public static final String URL_GET_NAICK_NAME = AccountConstants.Url.URL_GET_NICK_NAME;
 
     /**
      * 设置昵称
      */
-    public static final String URL_SET_NAICK_NAME = BASE_URL + AccountConstants.Url.URL_SET_NICK_NAME;
+    public static final String URL_SET_NAICK_NAME = AccountConstants.Url.URL_SET_NICK_NAME;
 
     /**
      * 注册
@@ -100,7 +100,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(AccountConstants.Parameter.PARAM_CODE, code)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-                .build(RequestMethod.POST, URL_REGISTER);
+                .build(RequestMethod.POST, BASE_URL + URL_REGISTER);
 
     }
 
@@ -113,7 +113,7 @@ public class AccountApi {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
                 .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
-                .build(RequestMethod.POST, URL_CHECK_MOBILE);
+                .build(RequestMethod.POST, BASE_URL + URL_CHECK_MOBILE);
     }
 
     /**
@@ -127,7 +127,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
                 .addParam(AccountConstants.Parameter.PARAM_ACTION, action)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-                .build(RequestMethod.POST, URL_SEND_VERIFY_CODE);
+                .build(RequestMethod.POST, BASE_URL + URL_SEND_VERIFY_CODE);
     }
 
     /**
@@ -144,7 +144,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_PASSWD_TWICE, password)
                 .addParam(AccountConstants.Parameter.PARAM_CODE, code)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-                .build(RequestMethod.POST, URL_FORGET);
+                .build(RequestMethod.POST, BASE_URL + URL_FORGET);
     }
 
     /**
@@ -173,7 +173,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
-                .build(RequestMethod.POST, URL_LOGIN);
+                .build(RequestMethod.POST, BASE_URL + URL_LOGIN);
     }
 
     /**
@@ -195,7 +195,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(AccountConstants.Parameter.PARAM_TOKEN, token)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-                .build(RequestMethod.POST, URL_UPDATE_PASSWORD);
+                .build(RequestMethod.POST, BASE_URL + URL_UPDATE_PASSWORD);
     }
 
     /**
@@ -209,7 +209,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .addParam(AccountConstants.Parameter.PARAM_TOKEN, token)
                 .addParam(AccountConstants.Parameter.PARAM_REFRESH_TOKEN, refresh_token)
-                .build(RequestMethod.POST, URL_UPDATE_TOKEN);
+                .build(RequestMethod.POST, BASE_URL + URL_UPDATE_TOKEN);
     }
 
     /**
@@ -221,7 +221,7 @@ public class AccountApi {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .addParam(AccountConstants.Parameter.PARAM_TOKEN, token)
-                .build(RequestMethod.POST, URL_CHECK_TOKEN);
+                .build(RequestMethod.POST, BASE_URL + URL_CHECK_TOKEN);
     }
 
     /**
@@ -235,7 +235,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_TOKEN, token)
                 .addParam(AccountConstants.Parameter.PARAM_UID, uid)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-                .build(RequestMethod.POST, URL_GET_NAICK_NAME);
+                .build(RequestMethod.POST, BASE_URL + URL_GET_NAICK_NAME);
     }
 
     /**
@@ -250,7 +250,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_TOKEN, token)
                 .addParam(AccountConstants.Parameter.PARAM_UID, uid)
                 .addParam(AccountConstants.Parameter.PARAM_NICK_NAME, nick_name)
-                .build(RequestMethod.POST, URL_SET_NAICK_NAME);
+                .build(RequestMethod.POST, BASE_URL + URL_SET_NAICK_NAME);
     }
 
     /**
