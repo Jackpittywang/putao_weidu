@@ -3,6 +3,7 @@ package com.putao.wd.dto;
 import java.io.Serializable;
 
 /**
+ * 消息通知列表item
  * Created by wango on 2015/12/1.
  */
 public class MessageNotifyItem implements Serializable {
