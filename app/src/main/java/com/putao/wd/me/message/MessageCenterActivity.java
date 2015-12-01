@@ -37,16 +37,12 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     ImageView iv_cursor;
 
 
-    //“直接对xml布局切换”的变量申明
-    private MsgViewPagerAdapter vAdapter;
-    private List<View> views;
     private Animation animation;
     //“直接对fragment布局切换”的变量申明
     private MsgFragmentAdapter fAdapter;
     private List<Fragment> fragments;
 
     //加上cursor混动当前页导航提示
-    private Bitmap cursor;
     private int offSet;
     private int currentItem;
     private Matrix matrix = new Matrix();
@@ -99,10 +95,6 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         vp_content.setCurrentItem(0);
     }
 
-    @Override
-    public void onLeftAction() {
-        finish();
-    }
 
     //初始化滑动导航条图标
     private void initeCursor()
@@ -164,13 +156,14 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
 
     //顶部菜单点击事件
-    @OnClick({R.id.tv_praise,R.id.tv_reply,R.id.tv_notify})
+    @OnClick({R.id.iv_back,R.id.tv_praise,R.id.tv_reply,R.id.tv_notify})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_notify:setAnimation(0);vp_content.setCurrentItem(0);break;
-            case R.id.tv_reply:setAnimation(1);vp_content.setCurrentItem(1);break;
-            case R.id.tv_praise:setAnimation(2);vp_content.setCurrentItem(2);break;
+            case R.id.iv_back:finish();break;//返回退出当前页面
+            case R.id.tv_notify:setAnimation(0);vp_content.setCurrentItem(0);break;//通知
+            case R.id.tv_reply:setAnimation(1);vp_content.setCurrentItem(1);break; //回复
+            case R.id.tv_praise:setAnimation(2);vp_content.setCurrentItem(2);break;//赞
         }
     }
 }
