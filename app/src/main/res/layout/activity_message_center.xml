@@ -17,8 +17,8 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/btn_20_back_p_sel"
             android:layout_gravity="center_vertical"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="40dp"
+            android:layout_height="30dp" />
         <LinearLayout
             android:layout_weight="1"
             android:layout_marginLeft="30dp"
