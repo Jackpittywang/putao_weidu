@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressListActivity;
-import com.putao.wd.me.address.MessageCenterActivity;
-import com.putao.wd.me.address.SettingActivity;
+import com.putao.wd.me.message.MessageCenterActivity;
+import com.putao.wd.me.setting.SettingActivity;
 import com.sunnybear.library.controller.BasicFragment;
 
 import butterknife.Bind;
