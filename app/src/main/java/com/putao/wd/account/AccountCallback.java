@@ -32,6 +32,7 @@ public abstract class AccountCallback extends JSONObjectCallback {
 
     @Override
     public final void onSuccess(String url, JSONObject result) {
+        loading.dismiss();
         String error_code = result.getString("error_code");
         if ("0".equals(error_code))
             onSuccess(result);

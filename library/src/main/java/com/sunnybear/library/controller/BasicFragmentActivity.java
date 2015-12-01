@@ -81,7 +81,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         mContext = this;
         mApp = (App) getApplication();
         mOkHttpClient = mApp.getOkHttpClient();
-        this.loading = LoadingHUD.getINSTANCE(mContext);
+        this.loading = LoadingHUD.getInstance(mContext);
         this.args = getIntent().getExtras() != null ? getIntent().getExtras() : new Bundle();
         mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();
         mWeakHandler = new WeakHandler(new Handler.Callback() {

@@ -3,13 +3,14 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_bg_signup"
     android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         auto:nav_left_title="@string/cancel"
-        auto:nav_left_title_color="@color/main_color_nor"
+        auto:nav_left_title_color="@drawable/text_select"
         auto:nav_main_title="@string/login_title"
         auto:nav_main_title_color="@color/text_color" />
 
@@ -29,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
+                android:drawableRight="@drawable/close_selector"
                 android:hint="@string/mobile"
                 android:inputType="phone"
                 auto:maxLength="11" />
@@ -55,8 +57,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
+                android:drawableRight="@drawable/close_selector"
                 android:hint="@string/login_password"
-                android:inputType="numberPassword" />
+                android:inputType="textPassword" />
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -66,23 +69,61 @@
                 android:background="@color/divider_color" />
         </LinearLayout>
 
+        <!--图形验证码-->
+        <RelativeLayout
+            android:id="@+id/rl_graph_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_password"
+            android:visibility="gone">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_graph_verify"
+                style="@style/WeiduText.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:hint="@string/graph_verify"
+                android:drawableRight="@drawable/close_selector" />
+
+            <!--图形验证码-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:layout_width="88dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@id/et_graph_verify"
+                android:background="#959595"
+                android:src="@mipmap/ic_launcher" />
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/et_graph_verify"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </RelativeLayout>
+
         <!--登录按钮-->
         <Button
             android:id="@+id/btn_login"
-            android:layout_below="@id/ll_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login"
+            android:layout_below="@id/rl_graph_verify"
             android:layout_margin="16dp"
-            android:textSize="@dimen/text_size_16sp"
+            android:background="@drawable/btn_los_focus"
+            android:clickable="false"
+            android:text="@string/login"
             android:textColor="#FFFFFF"
-            android:background="#C2C2C2"/>
+            android:textSize="@dimen/text_size_16sp" />
 
         <RelativeLayout
-            android:layout_below="@id/btn_login"
-            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:layout_marginTop="16dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 
@@ -90,15 +131,15 @@
             <TextView
                 android:id="@+id/tv_register"
                 style="@style/style_login_text"
-                android:text="@string/reg_user"
-                android:layout_alignParentLeft="true"/>
+                android:layout_alignParentLeft="true"
+                android:text="@string/reg_user" />
 
             <!--忘记密码-->
             <TextView
                 android:id="@+id/tv_forget"
                 style="@style/style_login_text"
-                android:text="@string/forget_password"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:text="@string/forget_password" />
         </RelativeLayout>
     </RelativeLayout>
 

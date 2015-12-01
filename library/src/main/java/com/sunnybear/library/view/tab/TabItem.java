@@ -3,13 +3,11 @@ package com.sunnybear.library.view.tab;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.sunnybear.library.R;
-import com.sunnybear.library.view.BadgeView;
 
 /**
  * 切换工具条上的按钮,配合TabBar使用
@@ -22,8 +20,10 @@ public class TabItem extends View {
     private Drawable mInActiveDrawable;
 
     private Drawable mCurrentDrawable;//当前Drawable
-    private BadgeView mIndicatorView;
-    private int mIndicatorBackgroundColorId;
+
+    private int mIndicatorRadius = 0;
+    private int mNotificationSize = 0;
+    private IndicatorDrawable mIndicator;
 
     public TabItem(Context context) {
         this(context, null, 0);
@@ -41,50 +41,33 @@ public class TabItem extends View {
 
     private void initStyleable(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TabItem);
-        mIndicatorBackgroundColorId = array.getColor(R.styleable.TabItem_indicator_background_color, 0);
+        mIndicatorRadius = array.getInt(R.styleable.TabItem_indicator_radius, 3);
         mActive = array.getBoolean(R.styleable.TabItem_active, false);
         mActiveDrawable = array.getDrawable(R.styleable.TabItem_activeDrawable);
         mInActiveDrawable = array.getDrawable(R.styleable.TabItem_inactiveDrawable);
         array.recycle();
     }
 
-    /**
-     * 初始化指示点
-     *
-     * @param context
-     */
-    private void initIndicator(Context context) {
-        mIndicatorView = new BadgeView(context, this);
-        mIndicatorView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        mIndicatorView.setBadgeBackgroundColor(mIndicatorBackgroundColorId);
-        mIndicatorView.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
+
+    private void updateIndicator(Context context) {
+        if (mNotificationSize == -1)
+            mIndicator = new IndicatorDrawable(context, true, mIndicatorRadius);
+        if (mNotificationSize != 0 && mIndicator == null)
+            mIndicator = new IndicatorDrawable(context);
+        if (mIndicator != null)
+            mIndicator.setSize(mNotificationSize);
     }
 
-    /**
-     * 显示指示点
-     *
-     * @param count 指示条数
-     */
-    public void show(int count) {
-        initIndicator(getContext());
-        if (count != 0)
-            mIndicatorView.setText(String.valueOf(count));
-        mIndicatorView.show();
+    public void show(int notificationSize) {
+        mNotificationSize = notificationSize;
+        updateIndicator(getContext());
+        postInvalidate();
     }
 
-    /**
-     * 显示指示点
-     */
-    public void show() {
-        show(0);
-    }
-
-    /**
-     * 隐藏指示点
-     */
     public void hide() {
-        if (mIndicatorView != null)
-            mIndicatorView.hide();
+        mNotificationSize = 0;
+        mIndicator = null;
+        postInvalidate();
     }
 
     public void setActive(boolean active) {
@@ -110,5 +93,13 @@ public class TabItem extends View {
         mCurrentDrawable.setBounds(0, 0, mCurrentDrawable.getIntrinsicWidth(), mCurrentDrawable.getIntrinsicHeight());
         mCurrentDrawable.draw(canvas);
         canvas.restore();
+
+        if (mNotificationSize != 0) {
+            canvas.save();
+            canvas.translate(measuredWidth / 2 + drawableWidth / 2 - mIndicator.getIntrinsicWidth(), 0);
+            mIndicator.setBounds(0, 0, mIndicator.getIntrinsicWidth(), mIndicator.getIntrinsicHeight());
+            mIndicator.draw(canvas);
+            canvas.restore();
+        }
     }
 }

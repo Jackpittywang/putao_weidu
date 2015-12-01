@@ -28,7 +28,7 @@
             android:id="@+id/company"
             android:text="葡萄纬度"
             android:textSize="40sp"
-            android:textColor="@color/main_color_nor"
+            android:textColor="@color/text_main_color_nor"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"

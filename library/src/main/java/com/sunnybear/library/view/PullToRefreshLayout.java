@@ -42,6 +42,8 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     private String mLoadingText;//正在加载时的文字
     private String mCompleteText;//加载完成时的文字
 
+    private boolean isViewPagerScroll = false;//ViewPager是否移动
+
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         mOnRefreshListener = onRefreshListener;
     }
@@ -95,9 +97,10 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
         addPtrUIHandler(this);
     }
 
+
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-        Logger.d(content.getClass().getSimpleName());
+//        Logger.d(content.getClass().getSimpleName());
         if (content instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) content;
             LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -106,14 +109,19 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
                 return true;
         } else if (content instanceof FrameLayout) {
             FrameLayout layout = (FrameLayout) content;
-            RecyclerView recyclerView = (RecyclerView) layout.getChildAt(0);
-            if (recyclerView == null)
-                throw new RuntimeException("第一个view不是RecyclerView");
-            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
-            if (firstVisiblePosition == 0)
-                return true;
+            return isPullForFragment(layout);
         }
+        return false;
+    }
+
+    private boolean isPullForFragment(FrameLayout layout) {
+        RecyclerView recyclerView = (RecyclerView) layout.getChildAt(0);
+        if (recyclerView == null)
+            throw new RuntimeException("第一个view不是RecyclerView");
+        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
+        if (firstVisiblePosition == 0 && !isViewPagerScroll)
+            return true;
         return false;
     }
 

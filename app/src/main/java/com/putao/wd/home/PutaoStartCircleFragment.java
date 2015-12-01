@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.product.TestSelectActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -16,6 +18,8 @@ import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.recycler.RecyclerViewHeader;
+import com.sunnybear.library.view.viewpager.AutoScrollPagerAdapter;
+import com.sunnybear.library.view.viewpager.AutoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +31,17 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStartCircleFragment extends BasicFragment {
+    private static final int[] resIds = new int[]{
+            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
+    };
     @Bind(R.id.rvh_header)
     RecyclerViewHeader mHeader;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.tv_header)
-    TextView tv_header;
+    @Bind(R.id.vp_banner)
+    AutoScrollViewPager vp_banner;
 
     private TextAdapter adapter;
 
@@ -48,6 +55,55 @@ public class PutaoStartCircleFragment extends BasicFragment {
         mHeader.attachTo(rv_content, true);
         adapter = new TextAdapter(mActivity, getTestData());
         rv_content.setAdapter(adapter);
+
+//        vp_banner.setAdapter(new PagerAdapter() {
+//
+//            @Override
+//            public int getCount() {
+//                return resIds.length;
+//            }
+//
+//            @Override
+//            public boolean isViewFromObject(View view, Object object) {
+//                return view == object;
+//            }
+//
+//            @Override
+//            public Object instantiateItem(ViewGroup container, int position) {
+//                ImageView imageView = new ImageView(mActivity);
+//                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                imageView.setLayoutParams(params);
+//                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//                imageView.setImageResource(resIds[position]);
+//                container.addView(imageView);
+//                return imageView;
+//            }
+//
+//            @Override
+//            public void destroyItem(ViewGroup container, int position, Object object) {
+//                container.removeView((View) object);
+//            }
+//        });
+        vp_banner.setAdapter(new AutoScrollPagerAdapter() {
+            @Override
+            public int getItemCount() {
+                return resIds.length;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup container) {
+                ImageView imageView = new ImageView(mActivity);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                imageView.setLayoutParams(params);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setImageResource(resIds[position]);
+                container.addView(imageView);
+                return imageView;
+            }
+        });
+        vp_banner.setAutoScrollTime(2000);
+        vp_banner.startAutoScroll();
+
         refresh();
         addListener();
     }
@@ -77,13 +133,7 @@ public class PutaoStartCircleFragment extends BasicFragment {
             @Override
             public void onItemClick(String serializable, int position) {
                 ToastUtils.showToastShort(mActivity, "点击第" + position + "项");
-                startActivity(TestSelectActivity.class);
-            }
-        });
-        tv_header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.showToastLong(mActivity, "点击头部");
+                startActivity(LoginActivity.class);
             }
         });
     }

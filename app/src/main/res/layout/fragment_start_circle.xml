@@ -2,12 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="afterDescendants">
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="afterDescendants"
         auto:refresh_complete_text="@string/pullToRefresh_Complete"
         auto:refresh_layout="@layout/robot_refresh_header"
         auto:refresh_layout_height="90"
@@ -17,7 +19,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="afterDescendants">
             <!--列表-->
             <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
                 android:id="@+id/rv_content"
@@ -33,18 +36,13 @@
                 android:id="@+id/rvh_header"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_gravity="top|center_horizontal"
-                android:background="#CCFFFF">
+                android:layout_gravity="top|center_horizontal">
 
-                <TextView
-                    android:id="@+id/tv_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="头部"
-                    android:textSize="40sp" />
+                <com.sunnybear.library.view.viewpager.AutoScrollViewPager
+                    android:id="@+id/vp_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </com.sunnybear.library.view.recycler.RecyclerViewHeader>
         </FrameLayout>
-
     </com.sunnybear.library.view.PullToRefreshLayout>
 </FrameLayout>

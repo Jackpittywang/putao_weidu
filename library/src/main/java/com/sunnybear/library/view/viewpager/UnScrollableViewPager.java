@@ -1,4 +1,4 @@
-package com.sunnybear.library.view;
+package com.sunnybear.library.view.viewpager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

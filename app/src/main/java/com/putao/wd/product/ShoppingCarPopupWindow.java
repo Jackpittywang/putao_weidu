@@ -21,8 +21,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
     private NormsSelectAdapter adapter;
 
-    public ShoppingCarPopupWindow(Context context, boolean isOpenSelfAdaptionHeight) {
-        super(context, isOpenSelfAdaptionHeight);
+    public ShoppingCarPopupWindow(Context context) {
+        super(context);
         adapter = new NormsSelectAdapter(context, null);
         rv_select_norms.setAdapter(adapter);
     }

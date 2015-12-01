@@ -44,7 +44,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
         mSharePopupWindow = new SharePopupWindow(mContext);
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, false);
+        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.qq.com");
     }

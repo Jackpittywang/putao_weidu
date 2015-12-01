@@ -69,7 +69,8 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
         super.onAttach(activity);
         mActivity = (BasicFragmentActivity) activity;
         mApp = (App) mActivity.getApplication();
-        this.loading = LoadingHUD.getINSTANCE(mActivity);
+        this.loading = LoadingHUD.getInstance(mActivity);
+        loading.setSpinnerType(LoadingHUD.SIMPLE_ROUND_SPINNER);
         mOkHttpClient = mApp.getOkHttpClient();
         mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();
 
