@@ -60,7 +60,7 @@ public class LoginFragment extends PTWDFragment implements View.OnClickListener 
 
                 break;
             case R.id.tv_forget://忘记密码
-
+                startFragment(ForgetPasswordFragment.class);
                 break;
         }
     }
