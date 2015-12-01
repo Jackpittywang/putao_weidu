@@ -1,5 +1,6 @@
 package com.putao.wd.me.message;
 
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -29,9 +31,15 @@ import butterknife.OnClick;
  */
 public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.vp_content)
-    ViewPager vp_content;
+    ViewPager vp_content;   //viewpager
     @Bind(R.id.iv_cursor)
-    ImageView iv_cursor;
+    ImageView iv_cursor;    //导航条
+    @Bind(R.id.tv_notify)
+    TextView tv_notify;     //通知
+    @Bind(R.id.tv_reply)
+    TextView tv_reply;      //回复
+    @Bind(R.id.tv_praise)
+    TextView tv_praise;     //赞
 
     //-------------页面相关信息----------------------
     private List<Fragment> fragments;           //fragment集合
@@ -130,6 +138,9 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
                 {
                     animation = new TranslateAnimation(offSet + 2 * bmWidth-10, offSet, 0, 0);
                 }
+                tv_notify.setTextColor(Color.parseColor("#9851c9"));
+                tv_reply.setTextColor(Color.parseColor("#959595"));
+                tv_praise.setTextColor(Color.parseColor("#959595"));
                 break;
             case 1://第1页：回复
                 if (currentItem == 0)
@@ -140,6 +151,9 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
                 {
                     animation = new TranslateAnimation(offSet + 2 * bmWidth-10, offSet  + bmWidth, 0, 0);
                 }
+                tv_reply.setTextColor(Color.parseColor("#9851c9"));
+                tv_notify.setTextColor(Color.parseColor("#959595"));
+                tv_praise.setTextColor(Color.parseColor("#959595"));
                 break;
             case 2://第2页面：赞
                 if (currentItem == 0)
@@ -150,8 +164,16 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
                 {
                     animation = new TranslateAnimation(offSet + bmWidth, offSet + 2 * bmWidth-10, 0, 0);
                 }
+                tv_praise.setTextColor(Color.parseColor("#9851c9"));
+                tv_notify.setTextColor(Color.parseColor("#959595"));
+                tv_reply.setTextColor(Color.parseColor("#959595"));
                 break;
-            default:animation = new TranslateAnimation(0, offSet, 0, 0);
+            default:
+                animation = new TranslateAnimation(0, offSet, 0, 0);
+//                tv_notify.setTextColor(Color.parseColor("#9851c9"));
+//                tv_reply.setTextColor(Color.parseColor("#959595"));
+//                tv_praise.setTextColor(Color.parseColor("#959595"));
+
         }
         if(index==-1) {
             currentItem = 0;
@@ -176,10 +198,17 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_back:finish();break;//返回退出当前页面
-            case R.id.tv_notify:setAnimation(0);vp_content.setCurrentItem(0);break;//通知
-            case R.id.tv_reply:setAnimation(1);vp_content.setCurrentItem(1);break; //回复
-            case R.id.tv_praise:setAnimation(2);vp_content.setCurrentItem(2);break;//赞
+            case R.id.iv_back:
+                finish();break;//返回退出当前页面
+            case R.id.tv_notify:
+                setAnimation(0);vp_content.setCurrentItem(0);
+                break;//通知
+            case R.id.tv_reply:
+                setAnimation(1);vp_content.setCurrentItem(1);
+                break; //回复
+            case R.id.tv_praise:setAnimation(2);
+                vp_content.setCurrentItem(2);
+                break;//赞
         }
     }
 }
