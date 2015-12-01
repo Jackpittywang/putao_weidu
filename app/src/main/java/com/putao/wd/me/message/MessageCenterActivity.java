@@ -59,7 +59,8 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-    //“直接对fragment布局切换”的初始化
+        addNavgation();
+        //“直接对fragment布局切换”的初始化
         initFragmentView();
 
         //加上cursor混动当前页导航提示
@@ -97,6 +98,10 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         vp_content.setCurrentItem(0);
     }
 
+    @Override
+    public void onLeftAction() {
+        finish();
+    }
 
     private void initeCursor()
     {
