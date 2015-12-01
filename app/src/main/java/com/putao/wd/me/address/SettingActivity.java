@@ -2,11 +2,14 @@ package com.putao.wd.me.address;
 
 import android.os.Bundle;
 import android.view.View;
-
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
+/*
+**create by wangou
+**设置
+ */
 public class SettingActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override
