@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@color/transparent">
+
+    <!--消息通知图标-->
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_notify_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:placeholderImage="@drawable/tab_bar_me_sel"
+        android:background="#CCCCCC" />
+
+    <!--消息通知介绍-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:orientation="vertical">
+
+        <!--消息通知标题-->
+        <TextView
+            android:id="@+id/tv_notify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="葡萄籽"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <!--消息通知日期-->
+        <TextView
+            android:id="@+id/tv_notify_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/text_size_14sp"
+            android:singleLine="false"
+            android:text="刚刚而已"/>
+
+        <!--通知消息内容-->
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_notify_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
+                android:textColor="@color/popup_background"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

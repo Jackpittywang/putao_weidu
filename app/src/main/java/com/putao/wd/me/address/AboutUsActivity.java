@@ -7,6 +7,11 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
+
+/*
+**create by wangou
+**关于我们
+ */
 public class AboutUsActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override

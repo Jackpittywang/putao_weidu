@@ -1,12 +1,15 @@
-package com.putao.wd.me.address;
+package com.putao.wd.me.setting;
 
 import android.os.Bundle;
 import android.view.View;
-
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
+/*
+**create by wangou
+**设置
+ */
 public class SettingActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override
@@ -16,7 +19,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
@@ -28,4 +31,5 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
     public void onClick(View v) {
 
     }
+
 }

@@ -50,7 +50,7 @@ public class RegisterFragment extends PTWDFragment implements View.OnClickListen
 
                 break;
             case R.id.tv_user_protocol://用户服务协议
-
+                startFragment(ProtocolFragment.class);
                 break;
         }
     }
