@@ -61,7 +61,7 @@
         android:id="@+id/iv_cursor"
         android:layout_width="40dp"
         android:layout_height="5dp"
-        android:layout_marginLeft="120dp"
+        android:layout_marginLeft="130dp"
         android:src="@drawable/img_details_as_steps_cover"
         android:scaleType="matrix"
         android:background="#985ec9"/>

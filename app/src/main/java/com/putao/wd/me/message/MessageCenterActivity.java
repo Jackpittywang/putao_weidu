@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -50,7 +51,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     private int currentItem;
     private Matrix matrix = new Matrix();
     private int bmWidth;
-
+    private ViewGroup.LayoutParams imagepara;
 
     @Override
     protected int getLayoutId() {
@@ -62,13 +63,13 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         addNavgation();
         //“直接对fragment布局切换”的初始化
         initFragmentView();
-
+        imagepara= iv_cursor.getLayoutParams();
         //加上cursor混动当前页导航提示
         initeCursor();
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
-            public void onPageSelected(int arg0) {  //当滑动式，顶部的imageView是通过animation缓慢的滑动
+            public void onPageSelected(int arg0) {  //当滑动时，顶部的imageView是通过animation缓慢的滑动
                 // TODO Auto-generated method stub
                 setAnimation(arg0);
 
@@ -103,55 +104,51 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         finish();
     }
 
+    //初始化滑动导航条图标
     private void initeCursor()
     {
-        cursor = BitmapFactory.decodeResource(getResources(), R.drawable.img_details_as_steps_cover);
-        bmWidth = cursor.getWidth();
-
+        bmWidth=imagepara.width*5/3;
         DisplayMetrics dm;
         dm = getResources().getDisplayMetrics();
 
-        offSet = (dm.widthPixels - 3 * bmWidth) / 6;
+        offSet = (dm.widthPixels) / 6;
         matrix.setTranslate(offSet, 0);
-        iv_cursor.setImageMatrix(matrix);                                             //需要iamgeView的scaleType为matrix
+        iv_cursor.setImageMatrix(matrix);             //需要iamgeView的scaleType为matrix
         currentItem = 0;
     }
+
+    //根据滑动页面或点击菜单来切换页面和实现滑动导航条效果
     private void setAnimation(int index){
         switch (index)
         {
             case 0:
                 if (currentItem == 1)
                 {
-                    animation = new TranslateAnimation(
-                            offSet * 2 + bmWidth, 0 , 0, 0);
+                    animation = new TranslateAnimation(offSet + bmWidth,offSet , 0, 0);
                 }
                 else if(currentItem == 2)
                 {
-                    animation = new TranslateAnimation(
-                            offSet * 4 + 2 * bmWidth, 0, 0, 0);
+                    animation = new TranslateAnimation(offSet + 2 * bmWidth, offSet, 0, 0);
                 }
                 break;
             case 1:
                 if (currentItem == 0)
                 {
-                    animation = new TranslateAnimation(
-                            0, offSet * 2 + bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet, offSet+ bmWidth, 0, 0);
                 }
                 else if (currentItem == 2)
                 {
-                    animation = new TranslateAnimation(4* offSet + 2 * bmWidth, offSet * 2 + bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet + 2 * bmWidth, offSet  + bmWidth, 0, 0);
                 }
                 break;
             case 2:
                 if (currentItem == 0)
                 {
-                    animation = new TranslateAnimation(
-                            0, 4 * offSet + 2 * bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet, offSet + 2 * bmWidth, 0, 0);
                 }
                 else if (currentItem == 1)
                 {
-                    animation = new TranslateAnimation(
-                            offSet * 2 + bmWidth, 4 * offSet + 2 * bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet + bmWidth, offSet + 2 * bmWidth, 0, 0);
                 }
         }
         currentItem = index;
@@ -166,6 +163,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     }
 
 
+    //顶部菜单点击事件
     @OnClick({R.id.tv_praise,R.id.tv_reply,R.id.tv_notify})
     @Override
     public void onClick(View v) {
