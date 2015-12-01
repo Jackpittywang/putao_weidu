@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.address.MessageCenterActivity;
+import com.putao.wd.me.address.SettingActivity;
 import com.sunnybear.library.controller.BasicFragment;
 
 import butterknife.Bind;
@@ -38,7 +40,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_setting://设置
-
+                startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
 
@@ -53,7 +55,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
                 break;
             case R.id.si_message://消息中心
-
+                startActivity(MessageCenterActivity.class);
                 break;
         }
     }
