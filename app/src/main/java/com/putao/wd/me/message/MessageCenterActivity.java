@@ -59,6 +59,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         imagepara= iv_cursor.getLayoutParams();
         //加上cursor混动当前页导航提示
         initeCursor();
+        setAnimation(-1);
         //滑动切换页面
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -81,6 +82,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
             }
         });
+
     }
     //初始化fragment集合
     private void initFragmentView(){
@@ -99,49 +101,60 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     {
         bmWidth=imagepara.width*5/3;
         DisplayMetrics dm;
-        dm = getResources().getDisplayMetrics();
+        dm = getResources().getDisplayMetrics();      //获得屏幕参数
 
-        offSet = (dm.widthPixels) / 6;
+        offSet = (dm.widthPixels) / 6+5;
         matrix.setTranslate(offSet, 0);
         iv_cursor.setImageMatrix(matrix);             //需要iamgeView的scaleType为matrix
         currentItem = 0;
     }
 
-    //根据滑动页面或点击菜单来切换页面和实现滑动导航条效果
+    /**
+     * 根据滑动页面或点击菜单来切换页面和实现滑动导航条效果
+     * (由于“赞”只占一个字位置，以下位置有-10，是以为了防止在滑动到“赞”时，导航条滑动过多）
+     */
     private void setAnimation(int index){
         switch (index)
         {
-            case 0:
+            case 0://第0页：通知
                 if (currentItem == 1)
                 {
                     animation = new TranslateAnimation(offSet + bmWidth,offSet , 0, 0);
                 }
                 else if(currentItem == 2)
                 {
-                    animation = new TranslateAnimation(offSet + 2 * bmWidth, offSet, 0, 0);
+                    animation = new TranslateAnimation(offSet + 2 * bmWidth-10, offSet, 0, 0);
                 }
                 break;
-            case 1:
+            case 1://第1页：回复
                 if (currentItem == 0)
                 {
                     animation = new TranslateAnimation(offSet, offSet+ bmWidth, 0, 0);
                 }
                 else if (currentItem == 2)
                 {
-                    animation = new TranslateAnimation(offSet + 2 * bmWidth, offSet  + bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet + 2 * bmWidth-10, offSet  + bmWidth, 0, 0);
                 }
                 break;
-            case 2:
+            case 2://第2页面：赞
                 if (currentItem == 0)
                 {
-                    animation = new TranslateAnimation(offSet, offSet + 2 * bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet, offSet + 2 * bmWidth-10, 0, 0);
                 }
                 else if (currentItem == 1)
                 {
-                    animation = new TranslateAnimation(offSet + bmWidth, offSet + 2 * bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet + bmWidth, offSet + 2 * bmWidth-10, 0, 0);
                 }
+                break;
+            default:animation = new TranslateAnimation(0, offSet, 0, 0);
         }
-        currentItem = index;
+        if(index==-1) {
+            currentItem = 0;
+        }
+        else{
+            currentItem = index;
+        }
+
 
         animation.setDuration(500);
         animation.setFillAfter(true);
