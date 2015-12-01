@@ -25,8 +25,9 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /*
-**create by wangou
 **消息中心
+**create by wangou
+**
  */
 public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.viewpager)

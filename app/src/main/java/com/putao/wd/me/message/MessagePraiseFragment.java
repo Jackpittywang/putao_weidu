@@ -9,8 +9,8 @@ import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragment;
 
 /*
-**create by wangou
 **消息-赞
+**create by wangou
  */
 public class MessagePraiseFragment extends BasicFragment {
     @Override

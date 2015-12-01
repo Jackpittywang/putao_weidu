@@ -7,8 +7,10 @@ import android.view.View;
 
 import java.util.List;
 
-/**
- * Created by wango on 2015/12/1.
+/*
+**消息中心tab页管理
+**create by wangou
+**
  */
 public class MsgViewPagerAdapter extends PagerAdapter{
     //    private List<View> views;

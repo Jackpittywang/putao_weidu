@@ -4,10 +4,10 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-/**
- * FragmentPager
- * @author wwj
- *
+/*
+**消息中心tab页管理
+**create by wangou
+**
  */
 public class MsgFragmentAdapter extends FragmentPagerAdapter{
 

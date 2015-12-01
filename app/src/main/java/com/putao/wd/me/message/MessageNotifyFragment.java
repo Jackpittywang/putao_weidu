@@ -14,8 +14,8 @@ import java.util.List;
 import butterknife.Bind;
 
 /*
-**create by wangou
 **消息-通知
+**create by wangou
  */
 public class MessageNotifyFragment extends BasicFragment {
     @Bind(R.id.brv_msgnotify)
