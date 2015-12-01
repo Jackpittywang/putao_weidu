@@ -15,10 +15,8 @@ import android.widget.ImageView;
 import com.putao.wd.R;
 import com.putao.wd.me.address.adapter.MsgFragmentAdapter;
 import com.putao.wd.me.address.adapter.MsgViewPagerAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 /*
 **create by wangou
@@ -49,12 +47,9 @@ public class MessageCenterActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_center);
-        //“直接对xml布局切换”的初始化
-        //initXmlView();
+
         //“直接对fragment布局切换”的初始化
         initFragmentView();
-
-        //vp.setAdapter(fAdapter);
 
         //加上cursor混动当前页导航提示
         imageView=(ImageView)findViewById(R.id.cursor);
@@ -62,7 +57,7 @@ public class MessageCenterActivity extends FragmentActivity {
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
-            public void onPageSelected(int arg0) {                                 //当滑动式，顶部的imageView是通过animation缓慢的滑动
+            public void onPageSelected(int arg0) {  //当滑动式，顶部的imageView是通过animation缓慢的滑动
                 // TODO Auto-generated method stub
                 switch (arg0)
                 {
@@ -122,20 +117,6 @@ public class MessageCenterActivity extends FragmentActivity {
             }
         });
     }
-
-    //“直接对xml布局切换”的变量申明
-    /*private void initXmlView(){
-        LayoutInflater inflater=LayoutInflater.from(this);
-        views= new ArrayList<View>();
-        views.add(inflater.inflate(R.layout.one,null));
-        views.add(inflater.inflate(R.layout.two,null));
-        views.add(inflater.inflate(R.layout.three,null));
-        vAdapter=new ViewAdapter(views,this);
-
-        vp=(ViewPager)findViewById(R.id.viewpager);
-
-        vp.setAdapter(vAdapter);
-    }*/
 
     //“直接对fragment布局切换”的初始化
     private void initFragmentView(){
