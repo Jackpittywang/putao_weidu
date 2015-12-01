@@ -53,12 +53,17 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
+
         //初始化fragment集合
         initFragmentView();
+
         //获得导航条信息
         imagepara= iv_cursor.getLayoutParams();
+
         //加上cursor混动当前页导航提示
         initeCursor();
+
+        //导航条默认为第一页的位置
         setAnimation(-1);
         //滑动切换页面
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
