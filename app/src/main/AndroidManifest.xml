@@ -51,10 +51,10 @@
             android:screenOrientation="portrait" />
         <!-- 设置 -->
         <activity
-            android:name=".me.address.SettingActivity"
+            android:name=".me.setting.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.address.MessageCenterActivity"
+            android:name=".me.message.MessageCenterActivity"
             android:screenOrientation="portrait" />
 
         <!--===============================业务activity定义在这条线之上==================================-->

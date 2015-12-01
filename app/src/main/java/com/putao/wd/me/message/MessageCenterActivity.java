@@ -51,7 +51,6 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     private int bmWidth;
 
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_message_center;
@@ -86,7 +85,31 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             }
         });
     }
+    //“直接对fragment布局切换”的初始化
+    private void initFragmentView(){
+        fragments= new ArrayList<Fragment>();
+        fragments.add(new MessageNotifyFragment());
+        fragments.add(new MessageReplyFragment());
+        fragments.add(new MessagePraiseFragment());
+        fAdapter= new MsgFragmentAdapter(this.getSupportFragmentManager(), fragments);
+        vp.setAdapter(fAdapter);
+        vp.setCurrentItem(0);
+    }
 
+
+    private void initeCursor()
+    {
+        cursor = BitmapFactory.decodeResource(getResources(), R.drawable.img_details_as_steps_cover);
+        bmWidth = cursor.getWidth();
+
+        DisplayMetrics dm;
+        dm = getResources().getDisplayMetrics();
+
+        offSet = (dm.widthPixels - 3 * bmWidth) / 6;
+        matrix.setTranslate(offSet, 0);
+        imageView.setImageMatrix(matrix);                                             //需要iamgeView的scaleType为matrix
+        currentItem = 0;
+    }
     private void setAnimation(int index){
         switch (index)
         {
@@ -137,40 +160,13 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     }
 
 
-
-    //“直接对fragment布局切换”的初始化
-    private void initFragmentView(){
-        fragments= new ArrayList<Fragment>();
-        fragments.add(new MessageNotifyFragment());
-        fragments.add(new MessageReplyFragment());
-        fragments.add(new MessagePraiseFragment());
-        fAdapter= new MsgFragmentAdapter(this.getSupportFragmentManager(), fragments);
-        vp.setAdapter(fAdapter);
-        vp.setCurrentItem(0);
-    }
-
-
-    private void initeCursor()
-    {
-        cursor = BitmapFactory.decodeResource(getResources(), R.drawable.img_details_as_steps_cover);
-        bmWidth = cursor.getWidth();
-
-        DisplayMetrics dm;
-        dm = getResources().getDisplayMetrics();
-
-        offSet = (dm.widthPixels - 3 * bmWidth) / 6;
-        matrix.setTranslate(offSet, 0);
-        imageView.setImageMatrix(matrix);                                             //需要iamgeView的scaleType为matrix
-        currentItem = 0;
-    }
-
     @OnClick({R.id.tv_praise,R.id.tv_reply,R.id.tv_notify})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_notify:setAnimation(0);break;
-            case R.id.tv_reply:setAnimation(1);break;
-            case R.id.tv_praise:setAnimation(2);break;
+            case R.id.tv_notify:setAnimation(0);vp.setCurrentItem(0);break;
+            case R.id.tv_reply:setAnimation(1);vp.setCurrentItem(1);break;
+            case R.id.tv_praise:setAnimation(2);vp.setCurrentItem(2);break;
         }
     }
 }
