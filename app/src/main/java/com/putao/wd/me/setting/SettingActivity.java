@@ -19,7 +19,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
@@ -31,4 +31,5 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
     public void onClick(View v) {
 
     }
+
 }

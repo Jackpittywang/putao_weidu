@@ -30,10 +30,10 @@ import butterknife.OnClick;
 **
  */
 public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
-    @Bind(R.id.viewpager)
-    ViewPager vp;
-    @Bind(R.id.cursor)
-    ImageView imageView;
+    @Bind(R.id.vp_content)
+    ViewPager vp_content;
+    @Bind(R.id.iv_cursor)
+    ImageView iv_cursor;
 
 
     //“直接对xml布局切换”的变量申明
@@ -64,7 +64,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
         //加上cursor混动当前页导航提示
         initeCursor();
-        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp_content.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int arg0) {  //当滑动式，顶部的imageView是通过animation缓慢的滑动
@@ -93,8 +93,8 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         fragments.add(new MessageReplyFragment());
         fragments.add(new MessagePraiseFragment());
         fAdapter= new MsgFragmentAdapter(this.getSupportFragmentManager(), fragments);
-        vp.setAdapter(fAdapter);
-        vp.setCurrentItem(0);
+        vp_content.setAdapter(fAdapter);
+        vp_content.setCurrentItem(0);
     }
 
 
@@ -108,7 +108,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
         offSet = (dm.widthPixels - 3 * bmWidth) / 6;
         matrix.setTranslate(offSet, 0);
-        imageView.setImageMatrix(matrix);                                             //需要iamgeView的scaleType为matrix
+        iv_cursor.setImageMatrix(matrix);                                             //需要iamgeView的scaleType为matrix
         currentItem = 0;
     }
     private void setAnimation(int index){
@@ -153,7 +153,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
         animation.setDuration(500);
         animation.setFillAfter(true);
-        imageView.startAnimation(animation);
+        iv_cursor.startAnimation(animation);
     }
     @Override
     protected String[] getRequestUrls() {
@@ -165,9 +165,9 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_notify:setAnimation(0);vp.setCurrentItem(0);break;
-            case R.id.tv_reply:setAnimation(1);vp.setCurrentItem(1);break;
-            case R.id.tv_praise:setAnimation(2);vp.setCurrentItem(2);break;
+            case R.id.tv_notify:setAnimation(0);vp_content.setCurrentItem(0);break;
+            case R.id.tv_reply:setAnimation(1);vp_content.setCurrentItem(1);break;
+            case R.id.tv_praise:setAnimation(2);vp_content.setCurrentItem(2);break;
         }
     }
 }
