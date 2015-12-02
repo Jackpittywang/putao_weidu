@@ -37,7 +37,7 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-
+        addNavgation();
     }
 
     @Override
