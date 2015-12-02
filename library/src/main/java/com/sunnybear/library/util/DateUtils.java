@@ -103,12 +103,34 @@ public final class DateUtils {
      */
     public static String getWeekDate(String date) {
         try {
-            Date d=mDataFormat.parse(date);
+            Date d = mDataFormat.parse(date);
             return getWeekDate(d);
         } catch (ParseException e) {
             e.printStackTrace();
             Logger.e(TAG, e);
         }
         return "星期数未知";
+    }
+
+    /**
+     * 毫秒转日期
+     *
+     * @param millisecond 毫秒数
+     * @param pattern     正则式
+     * @return 日期
+     */
+    public static String millisecondToDate(long millisecond, String pattern) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(millisecond);
+    }
+
+    /**
+     * 毫秒转日期
+     *
+     * @param millisecond 毫秒数
+     * @return 日期
+     */
+    public static String millisecondToDate(long millisecond) {
+        return millisecondToDate(millisecond, "yyyy-MM-dd");
     }
 }
