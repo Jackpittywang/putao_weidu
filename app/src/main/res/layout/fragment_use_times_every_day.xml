@@ -11,9 +11,9 @@
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="受控设备"/>
+        auto:nav_main_title="每次使用次数"/>
     <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@+id/brv_equipment"
+        android:id="@+id/brv_usertime_everyday"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

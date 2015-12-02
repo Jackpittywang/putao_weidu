@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="40dp">
     <TextView
+        android:gravity="center_vertical"
+        android:text="次数"
         android:layout_weight="1"
         android:background="@color/white"
         android:id="@+id/tv_equipment_name"
