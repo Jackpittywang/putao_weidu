@@ -1,12 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:gravity="center_horizontal"
     tools:context="com.putao.wd.me.message.MessageNotifyFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment2" />
-
-</FrameLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/brv_msgreply"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                auto:divider_color="#626262"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_margin="30dp"
+                android:gravity="top"
+                android:text="没有更多信息了"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_nomore"
+            android:gravity="center_horizontal"
+            android:text="还没有消息"
+            android:background="#ebebeb"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+</LinearLayout>
