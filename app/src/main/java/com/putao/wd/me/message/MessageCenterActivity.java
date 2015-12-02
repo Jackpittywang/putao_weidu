@@ -184,10 +184,6 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         animation.setFillAfter(true);
         iv_cursor.startAnimation(animation);
     }
-    @Override
-    protected String[] getRequestUrls() {
-        return new String[0];
-    }
 
 
     //顶部菜单点击事件
@@ -195,17 +191,22 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_back:
-                finish();break;//返回退出当前页面
-            case R.id.tv_notify:
+            case R.id.iv_back://返回退出当前页面
+                finish();break;
+            case R.id.tv_notify://通知
                 setAnimation(0);vp_content.setCurrentItem(0);
-                break;//通知
-            case R.id.tv_reply:
+                break;
+            case R.id.tv_reply://回复
                 setAnimation(1);vp_content.setCurrentItem(1);
-                break; //回复
-            case R.id.tv_praise:setAnimation(2);
+                break;
+            case R.id.tv_praise:setAnimation(2);//赞
                 vp_content.setCurrentItem(2);
-                break;//赞
+                break;
         }
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
     }
 }

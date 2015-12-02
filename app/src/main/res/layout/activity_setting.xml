@@ -16,11 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_modify_password"
             android:layout_marginTop="20dp"
             auto:setting_text="@string/modifypassword"
             android:layout_width="match_parent"
             android:layout_height="80dp"/>
         <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_about_us"
             auto:setting_text="@string/aboutus"
             android:layout_width="match_parent"
             android:layout_height="80dp"/>
