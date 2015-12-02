@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/ll_msgreply"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -34,6 +36,7 @@
             android:id="@+id/tv_nomore"
             android:gravity="center_horizontal"
             android:text="还没有消息"
+            android:visibility="gone"
             android:background="#ebebeb"
             android:paddingTop="10dp"
             android:layout_width="match_parent"

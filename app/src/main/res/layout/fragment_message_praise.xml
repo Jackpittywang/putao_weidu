@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/ll_msgpraise"
             android:orientation="vertical"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.sunnybear.library.view.recycler.BasicRecyclerView
-                android:id="@+id/brv_msgprase"
+                android:id="@+id/brv_msgpraise"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 auto:divider_color="#626262"

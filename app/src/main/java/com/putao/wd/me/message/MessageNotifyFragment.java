@@ -1,6 +1,9 @@
 package com.putao.wd.me.message;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.MessageNotifyItem;
@@ -20,6 +23,10 @@ import butterknife.Bind;
 public class MessageNotifyFragment extends BasicFragment {
     @Bind(R.id.brv_msgnotify)
     BasicRecyclerView brv_msgnotify;
+    @Bind(R.id.tv_nomore)
+    TextView tv_nomore;
+    @Bind(R.id.ll_msgnotify)
+    LinearLayout ll_msgnotify;
 
     @Override
     protected int getLayoutId() {
@@ -28,8 +35,13 @@ public class MessageNotifyFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        MsgNotifyAdapter msgNotifyAdapter=new MsgNotifyAdapter(mActivity,initDataTest());
-        brv_msgnotify.setAdapter(msgNotifyAdapter);
+        if(initDataTest().size()!=0) {
+            ll_msgnotify.setVisibility(View.VISIBLE);
+            MsgNotifyAdapter msgNotifyAdapter = new MsgNotifyAdapter(mActivity, initDataTest());
+            brv_msgnotify.setAdapter(msgNotifyAdapter);
+        }else{
+            tv_nomore.setVisibility(View.VISIBLE);
+        }
 
     }
 
