@@ -21,7 +21,7 @@ public class AboutUsActivity  extends PTWDActivity<GlobalApplication> implements
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+            addNavgation();
     }
 
     @Override
