@@ -74,7 +74,7 @@ public class LoginFragment extends PTWDFragment implements View.OnClickListener,
                         });
                 break;
             case R.id.tv_register://注册新用户
-
+                startFragment(RegisterFragment.class);
                 break;
             case R.id.tv_forget://忘记密码
                 startFragment(ForgetPasswordFragment.class);

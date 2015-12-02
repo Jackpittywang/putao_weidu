@@ -53,6 +53,7 @@
         <activity
             android:name=".me.setting.SettingActivity"
             android:screenOrientation="portrait" />
+        <!--消息中心-->
         <activity
             android:name=".me.message.MessageCenterActivity"
             android:screenOrientation="portrait" />

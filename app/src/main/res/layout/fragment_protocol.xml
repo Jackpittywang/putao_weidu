@@ -11,7 +11,7 @@
         style="@style/style_navigation_bar"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
         auto:nav_left_title_color="@color/text_main_color_nor"
-        auto:nav_main_title="用户协议"
+        auto:nav_main_title="用户服务协议"
         auto:nav_main_title_color="@color/text_color" />
 
     <ScrollView

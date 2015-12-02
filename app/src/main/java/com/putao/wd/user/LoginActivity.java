@@ -17,7 +17,7 @@ public class LoginActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addFragment(CompleteFragment.class);
+        addFragment(LoginFragment.class);
     }
 
     @Override

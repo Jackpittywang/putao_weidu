@@ -19,13 +19,13 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent" />
         <com.sunnybear.library.view.image.ImageDraweeView
-            android:layout_above="@+id/company"
+            android:layout_above="@+id/tv_company"
             android:layout_centerHorizontal="true"
             auto:roundedCornerRadius="5dp"
             android:layout_width="100dp"
             android:layout_height="100dp" />
         <TextView
-            android:id="@+id/company"
+            android:id="@+id/tv_company"
             android:text="葡萄纬度"
             android:textSize="40sp"
             android:textColor="@color/text_main_color_nor"
@@ -34,9 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/tv_version"
             android:text="1.0.0"
-            android:layout_below="@+id/company"
-            android:layout_alignRight="@+id/company"
+            android:layout_below="@+id/tv_company"
+            android:layout_alignRight="@+id/tv_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
