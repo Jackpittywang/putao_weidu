@@ -75,6 +75,16 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         return mItems.size();
     }
 
+    /**
+     * 获得item
+     *
+     * @param position 标号
+     * @return item
+     */
+    public final Item getItem(int position) {
+        return mItems.get(position);
+    }
+
     @Override
     public final VH onCreateViewHolder(ViewGroup parent, int viewType) {
         mItemView = LayoutInflater.from(context).inflate(getLayoutId(viewType), parent, false);

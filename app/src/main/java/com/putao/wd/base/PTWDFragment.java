@@ -52,6 +52,15 @@ public abstract class PTWDFragment<App extends BasicApplication> extends BasicFr
     }
 
     /**
+     * 设置主标题文字颜色
+     *
+     * @param color
+     */
+    protected void setMainTitleColor(int color) {
+        navigation_bar.setMainTitleColor(color);
+    }
+
+    /**
      * 设置左标题文字
      *
      * @param text 标题文字
@@ -65,7 +74,7 @@ public abstract class PTWDFragment<App extends BasicApplication> extends BasicFr
      *
      * @param color 颜色id
      */
-    protected void setLeftTitleColor(int color){
+    protected void setLeftTitleColor(int color) {
         navigation_bar.setLeftTitleColor(color);
     }
 
@@ -83,7 +92,7 @@ public abstract class PTWDFragment<App extends BasicApplication> extends BasicFr
      *
      * @param color 颜色id
      */
-    protected void setRightTitleColor(int color){
+    protected void setRightTitleColor(int color) {
         navigation_bar.setRightTitleColor(color);
     }
 

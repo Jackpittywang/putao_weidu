@@ -1,6 +1,9 @@
 package com.sunnybear.library.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
@@ -72,4 +75,39 @@ public final class AppUtils {
         return "";
     }
 
+    /**
+     * 读取application标签下的meta-data信息
+     *
+     * @param context context
+     * @param name    key
+     * @return value信息
+     */
+    public static String getMetaData(Context context, String name) {
+        try {
+            ApplicationInfo applicationInfo = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            return applicationInfo.metaData.getString(name);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 读取activity标签下的meta-data信息
+     *
+     * @param activity activity
+     * @param name     key
+     * @return value信息
+     */
+    public static String getMetaData(Activity activity, String name) {
+        try {
+            ActivityInfo activityInfo = activity.getPackageManager()
+                    .getActivityInfo(activity.getComponentName(), PackageManager.GET_META_DATA);
+            return activityInfo.metaData.getString(name);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

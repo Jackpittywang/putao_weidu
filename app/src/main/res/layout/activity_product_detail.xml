@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <!--内容区-->
-        <com.sunnybear.library.view.StickyHeaderLayout
+        <com.sunnybear.library.view.sticky.StickyHeaderLayout
             android:id="@+id/sticky_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -124,7 +124,7 @@
                 android:id="@id/stickyHeaderLayout_scrollable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </com.sunnybear.library.view.StickyHeaderLayout>
+        </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
         <!--价格栏-->
         <LinearLayout

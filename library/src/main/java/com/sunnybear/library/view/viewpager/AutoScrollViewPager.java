@@ -1,13 +1,15 @@
 package com.sunnybear.library.view.viewpager;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
+
+import com.sunnybear.library.R;
 
 /**
  * 自动循环播放ViewPager
@@ -15,14 +17,10 @@ import android.view.MotionEvent;
  */
 public class AutoScrollViewPager extends ViewPager {
 
-    private final static boolean DEBUG = false;
-
     public static void log(String msg) {
-        if (DEBUG)
-            Log.i("AutoScrollViewPager", msg);
+//        Logger.i("AutoScrollViewPager", msg);
     }
 
-    private static final long DEFAULT_AUTO_SCROLL_INTERVAL = 3000;//3s
     private static final int MSG_AUTO_SCROLL = 1;
     private static final int MSG_SET_PAGE = 2;
     private Handler mHandler;
@@ -33,27 +31,45 @@ public class AutoScrollViewPager extends ViewPager {
      */
     private boolean mTouchedWhenAutoScroll;
     private OnPageChangeListener mOnPageChangeListener;
-    private long mDelay = DEFAULT_AUTO_SCROLL_INTERVAL;
+    private long mDelay;
+
+    private long mIntervalTime;
+    private boolean isAutoScroll;
+
+    public void setOnClickItemListener(AutoScrollPagerAdapter.OnClickItemListener onClickItemListener) {
+        PagerAdapter pagerAdapter = getAdapter();
+        if (!(pagerAdapter instanceof AutoScrollPagerAdapter))
+            throw new RuntimeException("adapter必须使用AutoScrollPagerAdapter");
+        ((AutoScrollPagerAdapter) pagerAdapter).setOnClickItemListener(onClickItemListener);
+    }
 
     public AutoScrollViewPager(Context context) {
         this(context, null);
     }
 
+    private void initStyleable(Context context, AttributeSet attrs) {
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AutoScrollViewPager);
+        mIntervalTime = array.getInt(R.styleable.AutoScrollViewPager_interval_time, 3) * 1000;
+        isAutoScroll = array.getBoolean(R.styleable.AutoScrollViewPager_is_auto_scroll, false);
+        array.recycle();
+    }
+
     public AutoScrollViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initStyleable(context, attrs);
         init();
     }
 
-    void init() {
+    private void init() {
+        mDelay = mIntervalTime;
         setOffscreenPageLimit(1);
         //set listeners
         super.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //                log("onPageScrolled:" + position + "->" + positionOffset + "-" + positionOffsetPixels);
-                if (mOnPageChangeListener != null) {
+                if (mOnPageChangeListener != null)
                     mOnPageChangeListener.onPageScrolled(FakePositionHelper.getFakeFromReal(AutoScrollViewPager.this, position), positionOffset, positionOffsetPixels);
-                }
             }
 
             @Override
@@ -69,28 +85,16 @@ public class AutoScrollViewPager extends ViewPager {
                 } else {
                     log("position:" + position + "->" + FakePositionHelper.getRealPositon(AutoScrollViewPager.this, position));
                 }
-                if (mOnPageChangeListener != null) {
+                if (mOnPageChangeListener != null)
                     mOnPageChangeListener.onPageSelected(FakePositionHelper.getFakeFromReal(AutoScrollViewPager.this, position));
-                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//                String sta = "default";
-//                if (ViewPager.SCROLL_STATE_IDLE == state) {
-//                    sta = "idle";
-//                } else if (ViewPager.SCROLL_STATE_DRAGGING == state) {
-//                    sta = "dragging";
-//                } else if (ViewPager.SCROLL_STATE_SETTLING == state) {
-//                    sta = "setting";
-//                }
-//                log("onPageScrollStateChanged->" + sta);
-                if (mOnPageChangeListener != null) {
+                if (mOnPageChangeListener != null)
                     mOnPageChangeListener.onPageScrollStateChanged(state);
-                }
             }
         });
-        //
         mHandler = new Handler() {
             @Override
             public void dispatchMessage(Message msg) {
@@ -105,6 +109,7 @@ public class AutoScrollViewPager extends ViewPager {
                 }
             }
         };
+        if (isAutoScroll) startAutoScroll();
     }
 
 
@@ -113,12 +118,11 @@ public class AutoScrollViewPager extends ViewPager {
     }
 
     public void startAutoScroll(long delayTime) {
-        if (getAdapter() == null || getAdapter().getCount() == 0)
-            return;
+//        if (getAdapter() == null || getAdapter().getCount() == 0)
+//            return;
         this.mDelay = delayTime;
         this.mAutoScroll = true;
         sendDelayMessage();
-
     }
 
     private void sendDelayMessage() {
@@ -307,6 +311,5 @@ public class AutoScrollViewPager extends ViewPager {
         public static boolean isOutOfRange(AutoScrollViewPager viewPager, int position) {
             return position < getStartPosition(viewPager) || position > getEndPosition(viewPager);
         }
-
     }
 }

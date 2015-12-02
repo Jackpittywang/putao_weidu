@@ -19,7 +19,7 @@ public final class StringUtils {
      * @return 是否为空
      */
     public static boolean isEmpty(String target) {
-        if (TextUtils.isEmpty(target) && TextUtils.equals("null", target))
+        if (TextUtils.isEmpty(target) || TextUtils.equals("null", target))
             return true;
         return false;
     }

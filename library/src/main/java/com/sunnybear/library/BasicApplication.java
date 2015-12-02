@@ -8,11 +8,13 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.squareup.okhttp.OkHttpClient;
 import com.sunnybear.library.model.http.OkHttpManager;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.hawk.Hawk;
 import com.sunnybear.library.util.hawk.LogLevel;
 import com.sunnybear.library.view.image.ImagePipelineConfigFactory;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import butterknife.ButterKnife;
 import de.greenrobot.dao.query.QueryBuilder;
@@ -22,12 +24,16 @@ import de.greenrobot.dao.query.QueryBuilder;
  * Created by guchenkai on 2015/11/19.
  */
 public abstract class BasicApplication extends Application {
+    private static final String KEY_APP_ID = "app_id";
     private static Context mContext;
     private static RefWatcher mRefWatcher;//内存泄露检查
     private static OkHttpClient mOkHttpClient;//OkHttp
     private static int maxAge;//网络缓存最大时间
 
     private static DiskFileCacheHelper mDiskFileCacheHelper;//磁盘文件缓存器
+
+    public static String app_id;
+    public static boolean isDebug;
 
     @Override
     public void onCreate() {
@@ -47,7 +53,7 @@ public abstract class BasicApplication extends Application {
         Fresco.initialize(getApplicationContext(),
                 ImagePipelineConfigFactory.getOkhttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));
         //开启bugly
-//        CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
+        CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
         //网络缓存最大时间
         maxAge = getNetworkCacheMaxAgeTime();
         //磁盘文件缓存器
@@ -55,6 +61,9 @@ public abstract class BasicApplication extends Application {
         //数据库调试
         QueryBuilder.LOG_SQL = isDebug();
         QueryBuilder.LOG_VALUES = isDebug();
+        //app_id配置
+        app_id = AppUtils.getMetaData(getApplicationContext(), KEY_APP_ID);
+        isDebug = isDebug();
     }
 
     public static Context getInstance() {

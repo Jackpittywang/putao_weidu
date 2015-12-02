@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <!--标题-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0.7"
+            android:orientation="vertical">
+
+            <!--主标题-->
+            <TextView
+                android:id="@+id/tv_news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="活动标题最多十五个汉字限制一行"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <!--副标题-->
+            <TextView
+                android:id="@+id/tv_news_sub_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"
+                android:maxLines="2"
+                android:singleLine="false"
+                android:text="活动简介字数限制为四十字这里完整显示全部简介的信息这里是两行"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_14sp" />
+        </LinearLayout>
+
+        <!--图片-->
+        <FrameLayout
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginLeft="8dp">
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_news_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#959595"
+                auto:roundBottomLeft="true"
+                auto:roundBottomRight="true"
+                auto:roundTopLeft="true"
+                auto:roundTopRight="true"
+                auto:roundedCornerRadius="4dp" />
+
+            <!--活动类型-->
+            <TextView
+                android:id="@+id/tv_news_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/action_ing_background"
+                android:padding="4dp"
+                android:text="活动"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14sp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+</LinearLayout>

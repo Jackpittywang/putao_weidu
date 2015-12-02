@@ -1,23 +1,22 @@
 package com.putao.wd.home;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.user.LoginActivity;
-import com.sunnybear.library.controller.BasicFragment;
+import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.dto.ActionNewsItem;
+import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.recycler.BasicAdapter;
-import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
-import com.sunnybear.library.view.recycler.RecyclerViewHeader;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
+import com.sunnybear.library.view.tab.TitleBar;
+import com.sunnybear.library.view.tab.TitleItem;
 import com.sunnybear.library.view.viewpager.AutoScrollPagerAdapter;
 import com.sunnybear.library.view.viewpager.AutoScrollViewPager;
 
@@ -30,20 +29,22 @@ import butterknife.Bind;
  * 葡星圈
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoStartCircleFragment extends BasicFragment {
+public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.TitleItemSelectedListener {
     private static final int[] resIds = new int[]{
             R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
     };
-    @Bind(R.id.rvh_header)
-    RecyclerViewHeader mHeader;
+    @Bind(R.id.sticky_layout)
+    StickyHeaderLayout sticky_layout;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
-    @Bind(R.id.rv_content)
+    @Bind(R.id.stickyHeaderLayout_scrollable)
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.vp_banner)
     AutoScrollViewPager vp_banner;
+    @Bind(R.id.stickyHeaderLayout_sticky)
+    TitleBar ll_title;
 
-    private TextAdapter adapter;
+    private ActionNewsAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -52,38 +53,12 @@ public class PutaoStartCircleFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        mHeader.attachTo(rv_content, true);
-        adapter = new TextAdapter(mActivity, getTestData());
+        addNavgation();
+        setMainTitleColor(Color.WHITE);
+        sticky_layout.canScrollView();
+        adapter = new ActionNewsAdapter(mActivity, getTestData());
         rv_content.setAdapter(adapter);
 
-//        vp_banner.setAdapter(new PagerAdapter() {
-//
-//            @Override
-//            public int getCount() {
-//                return resIds.length;
-//            }
-//
-//            @Override
-//            public boolean isViewFromObject(View view, Object object) {
-//                return view == object;
-//            }
-//
-//            @Override
-//            public Object instantiateItem(ViewGroup container, int position) {
-//                ImageView imageView = new ImageView(mActivity);
-//                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                imageView.setLayoutParams(params);
-//                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//                imageView.setImageResource(resIds[position]);
-//                container.addView(imageView);
-//                return imageView;
-//            }
-//
-//            @Override
-//            public void destroyItem(ViewGroup container, int position, Object object) {
-//                container.removeView((View) object);
-//            }
-//        });
         vp_banner.setAdapter(new AutoScrollPagerAdapter() {
             @Override
             public int getItemCount() {
@@ -101,9 +76,6 @@ public class PutaoStartCircleFragment extends BasicFragment {
                 return imageView;
             }
         });
-        vp_banner.setAutoScrollTime(2000);
-        vp_banner.startAutoScroll();
-
         refresh();
         addListener();
     }
@@ -129,19 +101,35 @@ public class PutaoStartCircleFragment extends BasicFragment {
      * 添加监听器
      */
     private void addListener() {
-        rv_content.setOnItemClickListener(new OnItemClickListener<String>() {
+        vp_banner.setOnClickItemListener(new AutoScrollPagerAdapter.OnClickItemListener() {
             @Override
-            public void onItemClick(String serializable, int position) {
-                ToastUtils.showToastShort(mActivity, "点击第" + position + "项");
-                startActivity(LoginActivity.class);
+            public void onClickItem(View view, int position) {
+                ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
             }
         });
+        ll_title.setTitleItemSelectedListener(this);
     }
 
-    private List<String> getTestData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
-            list.add("第" + (i + 1) + "项");
+    @Override
+    public void onStop() {
+        super.onStop();
+        vp_banner.stopAutoScroll();
+    }
+
+    private List<ActionNewsItem> getTestData() {
+        List<ActionNewsItem> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            ActionNewsItem actionNewsItem = new ActionNewsItem();
+            actionNewsItem.setId((i + 1) + "");
+            actionNewsItem.setTitle("这是第" + (i + 1) + "个标题");
+            actionNewsItem.setIntro("这是第" + (i + 1) + "个简介");
+            actionNewsItem.setIsAction(i % 2 == 0);
+            actionNewsItem.setType(i % 2 == 0 ? "活动" : "新闻");
+            actionNewsItem.setAddress("上海.莘庄.凯德龙之梦");
+            actionNewsItem.setTime("2015.12.02");
+            actionNewsItem.setJoinCount("100000");
+            actionNewsItem.setImgUrl("http://i1.mopimg.cn/img/tt/2015-11/551/20151124175324870.jpg790x600.jpg");
+            list.add(actionNewsItem);
         }
         return list;
     }
@@ -151,40 +139,21 @@ public class PutaoStartCircleFragment extends BasicFragment {
         return new String[0];
     }
 
-    /**
-     *
-     */
-    static class TextAdapter extends BasicAdapter<String, TextAdapter.TextViewHolder> {
-
-        public TextAdapter(Context context, List<String> strings) {
-            super(context, strings);
-        }
-
-        @Override
-        public int getLayoutId(int viewType) {
-            return R.layout.fragment_start_circle_item;
-        }
-
-        @Override
-        public TextViewHolder getViewHolder(View itemView, int viewType) {
-            return new TextViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindItem(TextViewHolder holder, String s, int position) {
-            holder.tv_content.setText(s);
-        }
-
-        /**
-         *
-         */
-        static class TextViewHolder extends BasicViewHolder {
-            @Bind(R.id.tv_content)
-            TextView tv_content;
-
-            public TextViewHolder(View itemView) {
-                super(itemView);
-            }
+    @Override
+    public void onTitleItemSelected(TitleItem item, int position) {
+        switch (item.getId()) {
+            case R.id.ll_all://全部
+                ToastUtils.showToastLong(mActivity, "全部");
+                break;
+            case R.id.ll_ing://进行中
+                ToastUtils.showToastLong(mActivity, "进行中");
+                break;
+            case R.id.ll_finish://已结束
+                ToastUtils.showToastLong(mActivity, "已结束");
+                break;
+            case R.id.ll_news://新闻
+                ToastUtils.showToastLong(mActivity, "新闻");
+                break;
         }
     }
 }

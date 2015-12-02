@@ -24,6 +24,13 @@ public abstract class SelectPopupWindow extends BasicPopupWindow implements View
         super(context);
     }
 
+    public SelectPopupWindow(Context context,String firstText,int firstTextColor,String secondText,int secondTextColor){
+        super(context);
+        tv_first.setText(firstText);
+        tv_first.setTextColor(firstTextColor);
+        tv_second.setText(secondText);
+        tv_second.setTextColor(secondTextColor);
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.popup_select;

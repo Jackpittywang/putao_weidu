@@ -1,13 +1,14 @@
 package com.putao.wd.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ProductItem;
 import com.putao.wd.home.adapter.ProductAdapter;
 import com.putao.wd.product.ProductDetailActivity;
-import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -23,7 +24,7 @@ import butterknife.Bind;
  * 葡商城
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoStoreFragment extends BasicFragment {
+public class PutaoStoreFragment extends PTWDFragment {
     @Bind(R.id.rvh_header)
     RecyclerViewHeader mHeader;
     @Bind(R.id.ptl_refresh)
@@ -43,6 +44,8 @@ public class PutaoStoreFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        addNavgation();
+        setMainTitleColor(Color.WHITE);
         mHeader.attachTo(rv_content, true);
         adapter = new ProductAdapter(mActivity, null);
         rv_content.setAdapter(adapter);

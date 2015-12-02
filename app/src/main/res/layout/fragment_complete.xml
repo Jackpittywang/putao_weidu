@@ -56,9 +56,13 @@
                 android:id="@+id/et_intro"
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
+                android:singleLine="false"
+                android:maxLength="100"
                 android:hint="个人简介" />
             <!--间隔线-->
             <View

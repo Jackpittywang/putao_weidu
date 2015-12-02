@@ -9,7 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.view.BasicWebView;
-import com.sunnybear.library.view.StickyHeaderLayout;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
 import butterknife.Bind;
 import butterknife.OnClick;

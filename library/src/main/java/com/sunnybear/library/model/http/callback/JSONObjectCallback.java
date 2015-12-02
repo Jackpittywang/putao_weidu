@@ -118,7 +118,6 @@ public abstract class JSONObjectCallback implements Callback {
             message.what = RESULT_FAILURE;
             message.obj = bundle;
             mWeakHandler.sendMessage(message);
-
 //            mWeakHandler.sendMessage(Message.obtain(mWeakHandler.getHandler(), RESULT_FINISH, false));
         }
     }

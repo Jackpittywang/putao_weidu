@@ -1,48 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.sunnybear.library.view.PullToRefreshLayout
-        android:id="@+id/ptl_refresh"
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/text_main_color_nor"
+        auto:nav_main_title="葡商城"
+        auto:nav_main_title_color="#FFFFFF"
+        auto:nav_main_title_size="@dimen/text_size_8sp"
+        auto:nav_right_icon="@drawable/btn_shopping_car_selector" />
+
+    <!--内容区-->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        auto:refresh_complete_text="@string/pullToRefresh_Complete"
-        auto:refresh_layout="@layout/robot_refresh_header"
-        auto:refresh_layout_height="90"
-        auto:refresh_loading_text="@string/pullToRefresh_loading"
-        auto:refresh_prepare_text="@string/pullToRefresh_prepare"
-        auto:refresh_recycle_text="@string/pullToRefresh_recycle">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <com.sunnybear.library.view.PullToRefreshLayout
+            android:id="@+id/ptl_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--列表-->
-            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/img_bg_store"
-                auto:has_row_divider="false" />
+            android:layout_height="match_parent"
+            auto:refresh_layout="@layout/robot_refresh_header"
+            auto:refresh_layout_height="90">
 
-            <!--头部布局-->
-            <com.sunnybear.library.view.recycler.RecyclerViewHeader
-                android:id="@+id/rvh_header"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_gravity="top|center_horizontal"
-                android:background="#CCFFFF">
+                android:layout_height="match_parent">
+                <!--列表-->
+                <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                    android:id="@+id/rv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_bg_store"
+                    auto:has_row_divider="false" />
 
-                <TextView
-                    android:id="@+id/tv_header"
-                    android:layout_width="wrap_content"
+                <!--头部布局-->
+                <com.sunnybear.library.view.recycler.RecyclerViewHeader
+                    android:id="@+id/rvh_header"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="头部"
-                    android:textSize="40sp" />
-            </com.sunnybear.library.view.recycler.RecyclerViewHeader>
-        </FrameLayout>
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="#CCFFFF">
 
-    </com.sunnybear.library.view.PullToRefreshLayout>
-</FrameLayout>
+                    <TextView
+                        android:id="@+id/tv_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="头部"
+                        android:textSize="40sp" />
+                </com.sunnybear.library.view.recycler.RecyclerViewHeader>
+            </FrameLayout>
+        </com.sunnybear.library.view.PullToRefreshLayout>
+    </FrameLayout>
+</LinearLayout>

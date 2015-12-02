@@ -48,6 +48,12 @@ public class CompleteFragment extends PTWDFragment implements View.OnClickListen
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }

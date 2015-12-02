@@ -50,7 +50,7 @@ public class LoginFragment extends PTWDFragment implements View.OnClickListener,
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{AccountApi.URL_LOGIN};
     }
 
     @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget})

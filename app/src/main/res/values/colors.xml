@@ -10,8 +10,9 @@
     <color name="text_color_red">#CD5564</color>
     <color name="text_color_gray">#959595</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="divider_color">#959595</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="divider_color">#E1E1E1</color>
+    <color name="color_EBEBEB">#EBEBEB</color>
 
     <color name="color_C2C2C2">#C2C2C2</color>
     <!--主颜色-->

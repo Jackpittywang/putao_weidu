@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -42,8 +43,6 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     private String mLoadingText;//正在加载时的文字
     private String mCompleteText;//加载完成时的文字
 
-    private boolean isViewPagerScroll = false;//ViewPager是否移动
-
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         mOnRefreshListener = onRefreshListener;
     }
@@ -58,17 +57,28 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
 
     public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initStyleable(context, attrs);
+        initAnimation();
+        initView(context);
+    }
+
+    private void initStyleable(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PullToRefreshLayout);
         mRefreshLayoutId = array.getResourceId(R.styleable.PullToRefreshLayout_refresh_layout, 0);
         mRefreshLayoutHeight = array.getInt(R.styleable.PullToRefreshLayout_refresh_layout_height, 0);
         mPrepareText = array.getString(R.styleable.PullToRefreshLayout_refresh_prepare_text);
+        if (StringUtils.isEmpty(mPrepareText))
+            mPrepareText = context.getResources().getString(R.string.pullToRefresh_prepare);
         mRecycleText = array.getString(R.styleable.PullToRefreshLayout_refresh_recycle_text);
+        if (StringUtils.isEmpty(mRecycleText))
+            mRecycleText = context.getResources().getString(R.string.pullToRefresh_recycle);
         mLoadingText = array.getString(R.styleable.PullToRefreshLayout_refresh_loading_text);
+        if (StringUtils.isEmpty(mLoadingText))
+            mLoadingText = context.getResources().getString(R.string.pullToRefresh_loading);
         mCompleteText = array.getString(R.styleable.PullToRefreshLayout_refresh_complete_text);
+        if (StringUtils.isEmpty(mCompleteText))
+            mCompleteText = context.getResources().getString(R.string.pullToRefresh_complete);
         array.recycle();
-
-        initAnimation();
-        initView(context);
     }
 
     /**
@@ -88,7 +98,8 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
      */
     private void initView(Context context) {
         View parentView = LayoutInflater.from(context).inflate(mRefreshLayoutId, null);
-        parentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(this.getContext(), mRefreshLayoutHeight)));
+        parentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                , DensityUtil.dp2px(this.getContext(), mRefreshLayoutHeight)));
         mRefreshText = (TextView) parentView.findViewById(R.id.refresh_text);
         mRefreshView = parentView.findViewById(R.id.refresh_view);
 
@@ -100,27 +111,26 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
 
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-//        Logger.d(content.getClass().getSimpleName());
         if (content instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) content;
             LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
             if (firstVisiblePosition == 0)
                 return true;
-        } else if (content instanceof FrameLayout) {
-            FrameLayout layout = (FrameLayout) content;
+        } else if (content instanceof StickyHeaderLayout) {
+            StickyHeaderLayout layout = (StickyHeaderLayout) content;
             return isPullForFragment(layout);
         }
         return false;
     }
 
-    private boolean isPullForFragment(FrameLayout layout) {
-        RecyclerView recyclerView = (RecyclerView) layout.getChildAt(0);
+    private boolean isPullForFragment(StickyHeaderLayout layout) {
+        RecyclerView recyclerView = (RecyclerView) layout.getChildAt(2);
         if (recyclerView == null)
             throw new RuntimeException("第一个view不是RecyclerView");
         LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
         int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
-        if (firstVisiblePosition == 0 && !isViewPagerScroll)
+        if (firstVisiblePosition == 0 && layout.isScrollTop())
             return true;
         return false;
     }
@@ -162,7 +172,7 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
 
     @Override
     public void onUIRefreshPrepare(PtrFrameLayout frame) {
-
+        Logger.d("onUIRefreshPrepare");
     }
 
     @Override

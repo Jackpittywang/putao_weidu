@@ -25,6 +25,11 @@ public class NavigationBar extends RelativeLayout {
     private int mLeftTitleColor;
     private int mRightTitleColor;
 
+    private int mMainTitleSize;
+    private int mLeftTitleSize;
+    private int mRightTitleSize;
+
+
     private Drawable mLeftDrawable;
     private Drawable mRightDrawable;
 
@@ -48,19 +53,22 @@ public class NavigationBar extends RelativeLayout {
     }
 
     private void initNavigationBar(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar);
-        mMainTitle = typedArray.getString(R.styleable.NavigationBar_nav_main_title);
-        mLeftTitle = typedArray.getString(R.styleable.NavigationBar_nav_left_title);
-        mRightTitle = typedArray.getString(R.styleable.NavigationBar_nav_right_title);
-        mMainTitleColor = typedArray.getColor(R.styleable.NavigationBar_nav_main_title_color, -1);
-        mLeftTitleColor = typedArray.getColor(R.styleable.NavigationBar_nav_left_title_color, -1);
-        mRightTitleColor = typedArray.getColor(R.styleable.NavigationBar_nav_right_title_color, -1);
-        mLeftDrawable = typedArray.getDrawable(R.styleable.NavigationBar_nav_left_icon);
-        mRightDrawable = typedArray.getDrawable(R.styleable.NavigationBar_nav_right_icon);
-        mDividerColor = typedArray.getColor(R.styleable.NavigationBar_nav_divider_color, -1);
-        mHasDivider = typedArray.getBoolean(R.styleable.NavigationBar_nav_has_divider, true);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar);
+        mMainTitle = array.getString(R.styleable.NavigationBar_nav_main_title);
+        mLeftTitle = array.getString(R.styleable.NavigationBar_nav_left_title);
+        mRightTitle = array.getString(R.styleable.NavigationBar_nav_right_title);
+        mMainTitleColor = array.getColor(R.styleable.NavigationBar_nav_main_title_color, -1);
+        mLeftTitleColor = array.getColor(R.styleable.NavigationBar_nav_left_title_color, -1);
+        mRightTitleColor = array.getColor(R.styleable.NavigationBar_nav_right_title_color, -1);
+        mMainTitleSize = array.getDimensionPixelSize(R.styleable.NavigationBar_nav_main_title_size, -1);
+        mLeftTitleSize = array.getDimensionPixelSize(R.styleable.NavigationBar_nav_left_title_size, -1);
+        mRightTitleSize = array.getDimensionPixelSize(R.styleable.NavigationBar_nav_right_title_size, -1);
+        mLeftDrawable = array.getDrawable(R.styleable.NavigationBar_nav_left_icon);
+        mRightDrawable = array.getDrawable(R.styleable.NavigationBar_nav_right_icon);
+        mDividerColor = array.getColor(R.styleable.NavigationBar_nav_divider_color, -1);
+        mHasDivider = array.getBoolean(R.styleable.NavigationBar_nav_has_divider, true);
 
-        typedArray.recycle();
+        array.recycle();
 
 
         //TODO://use custom view to do this to improve performance
@@ -74,26 +82,19 @@ public class NavigationBar extends RelativeLayout {
         mRightView = rightTitle;
 
         setMainTitle(mMainTitle);
-        leftTitle.setText(mLeftTitle);
-        if (mLeftTitleColor != -1)
-            leftTitle.setTextColor(mLeftTitleColor);
-        rightTitle.setText(mRightTitle);
-        if (mRightTitleColor != -1)
-            rightTitle.setTextColor(mRightTitleColor);
+        setLeftTitle(mLeftTitle);
+        setRightTitle(mRightTitle);
 
         setDrawableLeft(leftTitle, mLeftDrawable);
         setDrawableLeft(rightTitle, mRightDrawable);
 
         //setDivider
-        if (mDividerColor != -1) {
+        if (mDividerColor != -1)
             findViewById(R.id.divider).setBackgroundColor(mDividerColor);
-        }
         findViewById(R.id.divider).setVisibility(mHasDivider ? VISIBLE : GONE);
-
         //setId
-        if (getId() == View.NO_ID) {
+        if (getId() == View.NO_ID)
             setId(R.id.navigation_bar);
-        }
     }
 
     public void setMainTitle(String title) {
@@ -101,6 +102,12 @@ public class NavigationBar extends RelativeLayout {
         mMainView.setText(mMainTitle);
         if (mMainTitleColor != -1)
             mMainView.setTextColor(mMainTitleColor);
+        if (mMainTitleSize != -1)
+            mMainView.setTextSize(mMainTitleSize);
+    }
+
+    public void setMainTitleColor(int colorId) {
+        mMainView.setTextColor(colorId);
     }
 
     public void setLeftTitle(String title) {
@@ -109,6 +116,8 @@ public class NavigationBar extends RelativeLayout {
             ((TextView) mLeftView).setText(title);
             if (mLeftTitleColor != -1)
                 ((TextView) mLeftView).setTextColor(mLeftTitleColor);
+            if (mLeftTitleSize != -1)
+                ((TextView) mLeftView).setTextSize(mLeftTitleSize);
         }
     }
 
@@ -122,6 +131,8 @@ public class NavigationBar extends RelativeLayout {
             ((TextView) mRightView).setText(title);
             if (mRightTitleColor != -1)
                 ((TextView) mRightView).setTextColor(mRightTitleColor);
+            if (mRightTitleSize != -1)
+                ((TextView) mRightView).setTextSize(mRightTitleSize);
         }
     }
 
