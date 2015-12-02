@@ -12,6 +12,7 @@
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
         auto:nav_main_title="@string/manager"/>
     <LinearLayout
+        android:background="#ebebeb"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,6 +27,30 @@
             auto:setting_text="受控产品"
             android:layout_width="match_parent"
             android:layout_height="80dp"/>
-
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_usetimes_everyday"
+            auto:setting_text="每日使用次数"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+        <com.sunnybear.library.view.SettingItem
+            android:id="@+id/si_usetime_everytime"
+            auto:setting_text="每次使用时间"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+        <Button
+            android:text="立即让宝宝停止使用产品"
+            android:textColor="#cd5564"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
+        <TextView
+            android:text="使用此功能需宝宝使用的iPad联网喔！"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+
 </LinearLayout>
