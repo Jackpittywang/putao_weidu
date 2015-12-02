@@ -123,7 +123,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     }
 
     /**
-     * 根据滑动页面或点击菜单来切换页面和实现滑动导航条效果
+     * 根据滑动页面或点击菜单来切换页面和实现滑动导航条效果，以下为导航条在对应菜单下的位置
      * “通知”的位置：offSet+5
      * “回复”的位置：offSet + bmWidth
      * “赞”的位置：offSet + 2 * bmWidth-15
