@@ -1,7 +1,10 @@
 package com.putao.wd.user;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
@@ -20,7 +23,7 @@ import butterknife.OnClick;
  * 注册页面
  * Created by guchenkai on 2015/11/29.
  */
-public class RegisterFragment extends PTWDFragment implements View.OnClickListener {
+public class RegisterFragment extends PTWDFragment implements View.OnClickListener,TextWatcher {
     @Bind(R.id.et_mobile)
     CleanableEditText et_mobile;
     @Bind(R.id.et_graph_verify)
@@ -29,6 +32,8 @@ public class RegisterFragment extends PTWDFragment implements View.OnClickListen
     CleanableEditText et_sms_verify;
     @Bind(R.id.et_password)
     CleanableEditText et_password;
+    @Bind(R.id.btn_next)
+    Button btn_next;
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +43,9 @@ public class RegisterFragment extends PTWDFragment implements View.OnClickListen
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavgation();
+        et_mobile.addTextChangedListener(this);
+        et_password.addTextChangedListener(this);
+        et_sms_verify.addTextChangedListener(this);
     }
 
     @Override
@@ -51,8 +59,8 @@ public class RegisterFragment extends PTWDFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.tb_get_verify://获取验证码
                 String mobile = et_mobile.getText().toString();
-                if (StringUtils.isEmpty(mobile)) {
-                    ToastUtils.showToastLong(mActivity, "请输入手机号码");
+                if (StringUtils.isEmpty(mobile) || ""==mobile.trim() ) {
+                    ToastUtils.showToastLong(mActivity, "请输入正确的手机号码");
                     return;
                 }
                 networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER),
@@ -75,5 +83,26 @@ public class RegisterFragment extends PTWDFragment implements View.OnClickListen
                 startFragment(ProtocolFragment.class);
                 break;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        if (s.length() > 0) {
+            btn_next.setClickable(true);
+            btn_next.setBackgroundResource(R.drawable.btn_get_focus);
+        } else {
+            btn_next.setClickable(false);
+            btn_next.setBackgroundResource(R.drawable.btn_los_focus);
+        }
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
