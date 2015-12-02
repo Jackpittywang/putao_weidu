@@ -34,7 +34,7 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-
+        addNavgation();
     }
 
     @Override
