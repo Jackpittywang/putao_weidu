@@ -31,12 +31,15 @@
     <declare-styleable name="NavigationBar">
         <attr name="nav_left_icon" format="reference" />
         <attr name="nav_right_icon" format="reference" />
-        <attr name="nav_left_title" format="string" />
-        <attr name="nav_right_title" format="string" />
-        <attr name="nav_left_title_color" format="color|reference" />
-        <attr name="nav_right_title_color" format="color|reference" />
         <attr name="nav_main_title" format="string" />
         <attr name="nav_main_title_color" format="color" />
+        <attr name="nav_main_title_size" format="dimension|reference" />
+        <attr name="nav_left_title" format="string" />
+        <attr name="nav_left_title_color" format="color" />
+        <attr name="nav_left_title_size" format="dimension|reference" />
+        <attr name="nav_right_title" format="string" />
+        <attr name="nav_right_title_color" format="color" />
+        <attr name="nav_right_title_size" format="dimension|reference" />
         <attr name="nav_divider_color" format="color" />
         <attr name="nav_has_divider" format="boolean" />
     </declare-styleable>
@@ -102,14 +105,29 @@
         <attr name="click_background" format="reference" />
         <attr name="unclick_background" format="reference" />
     </declare-styleable>
+
+    <!--AutoScrollViewPager-->
+    <declare-styleable name="AutoScrollViewPager">
+        <attr name="interval_time" format="integer" />
+        <attr name="is_auto_scroll" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleItem">
+        <attr name="is_active" format="boolean" />
+        <attr name="active_color" format="color|reference" />
+        <attr name="inactive_color" format="color|reference" />
+        <attr name="indicator_color" format="color|reference" />
+        <attr name="title_text" format="string" />
+    </declare-styleable>
+
     <!--ScrollableLayout-->
-    <!--<declare-styleable name="ScrollableLayout">-->
-    <!--<attr name="scrollable_maxScroll" format="dimension" />-->
-    <!--<attr name="scrollable_scrollerFlywheel" format="boolean" />-->
-    <!--<attr name="scrollable_considerIdleMillis" format="integer" />-->
-    <!--<attr name="scrollable_defaultCloseUp" format="boolean" />-->
-    <!--<attr name="scrollable_friction" format="float" />-->
-    <!--<attr name="scrollable_closeUpAnimationMillis" format="integer" />-->
-    <!--<attr name="scrollable_closeUpAnimatorInterpolator" format="reference" />-->
-    <!--</declare-styleable>-->
+    <declare-styleable name="ScrollableLayout">
+        <attr name="scrollable_maxScroll" format="dimension" />
+        <attr name="scrollable_scrollerFlywheel" format="boolean" />
+        <attr name="scrollable_considerIdleMillis" format="integer" />
+        <attr name="scrollable_defaultCloseUp" format="boolean" />
+        <attr name="scrollable_friction" format="float" />
+        <attr name="scrollable_closeUpAnimationMillis" format="integer" />
+        <attr name="scrollable_closeUpAnimatorInterpolator" format="reference" />
+    </declare-styleable>
 </resources>

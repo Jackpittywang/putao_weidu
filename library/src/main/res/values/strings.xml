@@ -2,10 +2,10 @@
     <string name="app_name">Library</string>
     <!--LoadingHUD-->
     <string name="loading">载入中...</string>
-    
+
     <!--PullToRefreshLayout-->
     <string name="pullToRefresh_prepare">下拉以刷新</string>
     <string name="pullToRefresh_recycle">释放以更新</string>
     <string name="pullToRefresh_loading">正在刷新,请等待</string>
-    <string name="pullToRefresh_Complete">更新完成</string>
+    <string name="pullToRefresh_complete">更新完成</string>
 </resources>
