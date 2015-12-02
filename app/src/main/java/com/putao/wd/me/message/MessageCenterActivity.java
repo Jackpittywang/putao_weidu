@@ -132,11 +132,11 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             case 0://第0页：通知
                 if (currentItem == 1)
                 {
-                    animation = new TranslateAnimation(offSet + bmWidth,offSet , 0, 0);
+                    animation = new TranslateAnimation(offSet + bmWidth,offSet+5 , 0, 0);
                 }
                 else if(currentItem == 2)
                 {
-                    animation = new TranslateAnimation(offSet + 2 * bmWidth-10, offSet, 0, 0);
+                    animation = new TranslateAnimation(offSet + 2 * bmWidth-15, offSet+5, 0, 0);
                 }
                 tv_notify.setTextColor(Color.parseColor("#9851c9"));
                 tv_reply.setTextColor(Color.parseColor("#959595"));
@@ -145,11 +145,11 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             case 1://第1页：回复
                 if (currentItem == 0)
                 {
-                    animation = new TranslateAnimation(offSet, offSet+ bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet+5, offSet+ bmWidth, 0, 0);
                 }
                 else if (currentItem == 2)
                 {
-                    animation = new TranslateAnimation(offSet + 2 * bmWidth-10, offSet  + bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet + 2 * bmWidth-15, offSet  + bmWidth, 0, 0);
                 }
                 tv_reply.setTextColor(Color.parseColor("#9851c9"));
                 tv_notify.setTextColor(Color.parseColor("#959595"));
@@ -158,11 +158,11 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             case 2://第2页面：赞
                 if (currentItem == 0)
                 {
-                    animation = new TranslateAnimation(offSet, offSet + 2 * bmWidth-10, 0, 0);
+                    animation = new TranslateAnimation(offSet+5, offSet + 2 * bmWidth, 0, 0);
                 }
                 else if (currentItem == 1)
                 {
-                    animation = new TranslateAnimation(offSet + bmWidth, offSet + 2 * bmWidth-10, 0, 0);
+                    animation = new TranslateAnimation(offSet + bmWidth, offSet + 2 * bmWidth-15, 0, 0);
                 }
                 tv_praise.setTextColor(Color.parseColor("#9851c9"));
                 tv_notify.setTextColor(Color.parseColor("#959595"));
@@ -170,9 +170,6 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
                 break;
             default:
                 animation = new TranslateAnimation(0, offSet, 0, 0);
-//                tv_notify.setTextColor(Color.parseColor("#9851c9"));
-//                tv_reply.setTextColor(Color.parseColor("#959595"));
-//                tv_praise.setTextColor(Color.parseColor("#959595"));
 
         }
         if(index==-1) {
