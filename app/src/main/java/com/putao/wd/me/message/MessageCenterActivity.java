@@ -160,7 +160,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             case 2://第2页面：赞
                 if (currentItem == 0)
                 {
-                    animation = new TranslateAnimation(offSet+5, offSet + 2 * bmWidth, 0, 0);
+                    animation = new TranslateAnimation(offSet+5, offSet + 2 * bmWidth-15, 0, 0);
                 }
                 else if (currentItem == 1)
                 {
@@ -171,7 +171,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
                 tv_reply.setTextColor(Color.parseColor("#959595"));
                 break;
             default:
-                animation = new TranslateAnimation(0, offSet, 0, 0);
+                animation = new TranslateAnimation(0, offSet+5, 0, 0);
 
         }
         if(index==-1) {
