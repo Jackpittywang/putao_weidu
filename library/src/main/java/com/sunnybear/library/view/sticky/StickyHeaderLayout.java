@@ -1,4 +1,4 @@
-package com.sunnybear.library.view;
+package com.sunnybear.library.view.sticky;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.sunnybear.library.R;
-
-import ru.noties.scrollable.CanScrollVerticallyDelegate;
-import ru.noties.scrollable.OnScrollChangedListener;
-import ru.noties.scrollable.ScrollableLayout;
 
 /**
  * 粘性头部
