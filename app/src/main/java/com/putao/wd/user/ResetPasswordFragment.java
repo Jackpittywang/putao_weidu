@@ -3,9 +3,11 @@ package com.putao.wd.user;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -23,11 +25,13 @@ import butterknife.OnClick;
  * 重置密码
  * Created by wango on 2015/12/1.
  */
-public class ResetPasswordFragment extends PTWDFragment implements View.OnClickListener {
+public class ResetPasswordFragment extends PTWDFragment implements View.OnClickListener,TextWatcher {
     @Bind(R.id.et_password)
     CleanableEditText et_password;//密码
     @Bind(R.id.iv_lock)
     ImageView iv_lock;//密码是否可见图标
+    @Bind(R.id.btn_complete)
+    Button btn_complete;
 
     private boolean isPasswordVisible = false;
     @Override
@@ -38,6 +42,8 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavgation();
+        et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());//设置为隐藏密码
+        et_password.addTextChangedListener(this);
     }
 
     @Override
@@ -51,31 +57,16 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_complete://完成
-
-//                if(args.getString(ValidationFragment.VALIDATECODE)!=null) {
-//                    //忘记密码验证登录
-//                    if(args.getString(PasswordFragment.FORFET)!=null){
-//                        ToastUtils.showToastShort(mActivity, "忘记密码验证登录");
-//                        FindPasswordToLogin();
-//                    }else {//注册登录
-//                        ToastUtils.showToastShort(mActivity,"注册登录");
-//                        RegisterToLogin();
-//                    }
-//                }else{//直接登录
-//                    ToastUtils.showToastShort(mActivity,"直接登录");
-//                    RememberPasswordToLogin();
-//                }
-                //startActivity(new Intent(getActivity(), HomeActivity.class));//具体跳转逻辑有数据了以后改
-
+                 startFragment(LoginFragment.class);
                 break;
             case R.id.ll_password_visible://是否显示密码
                 if (isPasswordVisible) { //设置为隐藏
                     et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    isPasswordVisible = true;
+                    isPasswordVisible = false;
                     iv_lock.setImageResource(R.drawable.icon_20_10);
                 } else {//设置为可见
                     et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    isPasswordVisible = false;
+                    isPasswordVisible = true;
                     iv_lock.setImageResource(R.drawable.icon_20_11);
                 }
                 removeCursor(et_password);
@@ -91,5 +82,26 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
     private void removeCursor(EditText editText) {
         Editable etext = editText.getText();
         Selection.setSelection(etext, etext.length());
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() > 0) {
+            btn_complete.setClickable(true);
+            btn_complete.setBackgroundResource(R.drawable.btn_get_focus);
+        } else {
+            btn_complete.setClickable(false);
+            btn_complete.setBackgroundResource(R.drawable.btn_los_focus);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
