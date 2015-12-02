@@ -22,9 +22,9 @@ import butterknife.OnClick;
  */
 public class ResetPasswordFragment extends PTWDFragment implements View.OnClickListener {
     @Bind(R.id.et_password)
-    CleanableEditText et_password;
+    CleanableEditText et_password;//密码
     @Bind(R.id.iv_lock)
-    ImageView iv_lock;
+    ImageView iv_lock;//密码是否可见图标
 
     private boolean isPasswordVisible = false;
     @Override
@@ -42,6 +42,7 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
         return new String[0];
     }
 
+    //-------|完成---------------|设置密码是否可见layout可点击区域
     @OnClick({R.id.btn_complete, R.id.ll_password_visible})
     @Override
     public void onClick(View v) {
