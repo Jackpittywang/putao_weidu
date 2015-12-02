@@ -1,9 +1,12 @@
 package com.putao.wd.user;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
@@ -66,7 +69,7 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
 
                 break;
             case R.id.ll_password_visible://是否显示密码
-                if (!isPasswordVisible) { //设置为隐藏
+                if (isPasswordVisible) { //设置为隐藏
                     et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     isPasswordVisible = true;
                     iv_lock.setImageResource(R.drawable.icon_20_10);
@@ -75,8 +78,18 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
                     isPasswordVisible = false;
                     iv_lock.setImageResource(R.drawable.icon_20_11);
                 }
+                removeCursor(et_password);
                 break;
 
         }
+    }
+    /**
+     * 移动光标到最后
+     *
+     * @param editText editText
+     */
+    private void removeCursor(EditText editText) {
+        Editable etext = editText.getText();
+        Selection.setSelection(etext, etext.length());
     }
 }

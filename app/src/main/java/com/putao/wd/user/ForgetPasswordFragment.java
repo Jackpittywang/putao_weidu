@@ -1,6 +1,8 @@
 package com.putao.wd.user;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,7 +24,7 @@ import butterknife.OnClick;
 **忘记密码
 **create by wangou
  */
-public class ForgetPasswordFragment extends PTWDFragment implements View.OnClickListener {
+public class ForgetPasswordFragment extends PTWDFragment implements View.OnClickListener ,TextWatcher{
     @Bind(R.id.btn_nextstep)
     Button btn_nextstep;//下一步
     @Bind(R.id.et_mobile)
@@ -38,6 +40,8 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavgation();
+        et_mobile.addTextChangedListener(this);
+        //et_password.addTextChangedListener(this);
     }
 
     @Override
@@ -51,7 +55,10 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_nextstep://下一步
-                startFragment(ResetPasswordFragment.class);
+                if(11!=et_mobile.getText().toString().length() || ""==et_mobile.getText().toString().trim())
+                    ToastUtils.showToastLong(mActivity, "请输入正确手机号码");
+                else
+                    startFragment(ResetPasswordFragment.class);
                 break;
             case R.id.tb_get_verify://获取验证码
                 String mobile = et_mobile.getText().toString();
@@ -73,5 +80,26 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
                         });
                 break;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() > 0) {
+            btn_nextstep.setClickable(true);
+            btn_nextstep.setBackgroundResource(R.drawable.btn_get_focus);
+        } else {
+            btn_nextstep.setClickable(false);
+            btn_nextstep.setBackgroundResource(R.drawable.btn_los_focus);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

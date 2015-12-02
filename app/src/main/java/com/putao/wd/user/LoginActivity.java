@@ -17,7 +17,11 @@ public class LoginActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addFragment(LoginFragment.class);
+        if(args.getBoolean("isresetpass")==true)
+            addFragment(ResetPasswordFragment.class);
+        else
+            addFragment(LoginFragment.class);
+
     }
 
     @Override
