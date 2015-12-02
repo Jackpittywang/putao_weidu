@@ -1,4 +1,4 @@
-package com.putao.wd.explore;
+package com.putao.wd.explore.equipment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,13 +7,14 @@ import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragment;
 
 /**
- * 我
+ * 探索号-受控设备
  * Created by wangou on 2015/12/2.
  */
-public class ManageFragment extends BasicFragment implements View.OnClickListener {
+public class ControlledEquipmentFragment  extends BasicFragment implements View.OnClickListener {
+
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_manage;
+        return R.layout.fragment_controlled_equipment;
     }
 
     @Override
