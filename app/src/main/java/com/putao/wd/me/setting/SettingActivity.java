@@ -30,12 +30,13 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
         return new String[0];
     }
 
+    //-------|关于我们----------|修改密码
     @OnClick({R.id.si_about_us,R.id.si_modify_password})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.si_about_us:startActivity(AboutUsActivity.class);break;
-            //case R.id.si_modify_password:startActivity(AboutUsActivity.class);break;
+            case R.id.si_about_us:startActivity(AboutUsActivity.class);break;//关于我们
+            //case R.id.si_modify_password:startActivity(AboutUsActivity.class);break;//修改密码
         }
     }
 
