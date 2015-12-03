@@ -10,6 +10,7 @@ import com.putao.wd.dto.ProductItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ import butterknife.Bind;
  * Created by wango on 2015/12/1.
  *
  */
-public class MsgNotifyAdapter extends BasicAdapter<MessageNotifyItem,MsgNotifyAdapter.MsgNotifyViewHolder> {
+public class MsgNotifyAdapter extends LoadMoreAdapter<MessageNotifyItem,MsgNotifyAdapter.MsgNotifyViewHolder>{
+        //extends BasicAdapter<MessageNotifyItem,MsgNotifyAdapter.MsgNotifyViewHolder> {
 
     public MsgNotifyAdapter(Context context, List<MessageNotifyItem> messagenotifyitems) {
         super(context, messagenotifyitems);

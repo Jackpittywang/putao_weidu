@@ -1,6 +1,7 @@
 package com.putao.wd.me.message;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import com.putao.wd.me.message.adapter.MsgPraiseAdapter;
 import com.putao.wd.me.message.adapter.MsgReplyAdapter;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.tab.TitleBar;
 import com.sunnybear.library.view.tab.TitleItem;
 
@@ -28,7 +30,7 @@ import butterknife.OnClick;
 
 public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener,TitleBar.TitleItemSelectedListener {
     @Bind(R.id.brv_messagelist)
-    BasicRecyclerView brv_messagelist;//消息列表
+    LoadMoreRecyclerView brv_messagelist;//消息列表
     @Bind(R.id.ll_msgnotify)
     LinearLayout ll_msgnotify;
     @Bind(R.id.tv_nomore)
@@ -37,6 +39,8 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     TitleBar ll_title;                //顶部导航菜单
     @Bind(R.id.iv_back)
     ImageView iv_back;                //关闭退出当前页面
+//    @Bind(R.id.stickyHeaderLayout_scrollable)
+//    LoadMoreRecyclerView rv_content;
 
     @Override
     protected int getLayoutId() {
@@ -53,6 +57,19 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
      * 添加监听器
      */
     private void addListener() {
+        brv_messagelist.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+//                adapter.addAll(getTestData());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        rv_content.loadMoreComplete();
+                        brv_messagelist.noMoreLoading();
+                    }
+                }, 3 * 1000);
+            }
+        });
         ll_title.setTitleItemSelectedListener(this);
     }
 
