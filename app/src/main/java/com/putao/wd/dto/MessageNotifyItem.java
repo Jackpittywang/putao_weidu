@@ -7,11 +7,11 @@ import java.io.Serializable;
  * Created by wango on 2015/12/1.
  */
 public class MessageNotifyItem implements Serializable {
-    private String id;
-    private String iconUrl;
-    private String title;
-    private String date;
-    private String intro;
+    private String id;      //消息ID
+    private String iconUrl;//头像url
+    private String title;//标题
+    private String date;//时间
+    private String intro;//内容介绍
 
 
     public String getId() {

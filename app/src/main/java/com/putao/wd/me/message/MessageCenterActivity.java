@@ -9,7 +9,10 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.MessageNotifyItem;
+import com.putao.wd.dto.MessagePraiseItem;
+import com.putao.wd.dto.MessageReplyItem;
 import com.putao.wd.me.message.adapter.MsgNotifyAdapter;
+import com.putao.wd.me.message.adapter.MsgPraiseAdapter;
 import com.putao.wd.me.message.adapter.MsgReplyAdapter;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -42,8 +45,6 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         addListener();
         initNotifyList();
     }
-
-
 
     /**
      * 添加监听器
@@ -80,8 +81,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         }
     }
 
-    //-------------------------------------初始化"通知“列表------------------------------------
-    //初始化通知
+    //初始化"通知“列表
     private void initNotifyList(){
         //默认初始化“通知”列表
         if(initNotifyData().size()!=0) {
@@ -94,19 +94,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             tv_nomore.setVisibility(View.VISIBLE);
         }
     }
-    //测试用的“通知”列表数据
-    private List<MessageNotifyItem> initNotifyData(){
-        List<MessageNotifyItem> list=new ArrayList<>();
-        for(int i=0;i<10;i++) {
-            MessageNotifyItem msgitem=new MessageNotifyItem();
-            msgitem.setTitle("title"+i);
-            msgitem.setDate("刚刚而已");
-            msgitem.setIntro("这里显示用系统发来的通知，字数没有限制，没有详情页。未读信息为黑色字");
-            list.add(msgitem);
-        }
-        return list;
-    }
-    //-------------------------------------初始化"回复“列表------------------------------------
+    //-初始化"回复“列表
     private void initReplyList(){
         if (initReplyData().size() != 0){//“赞”列表有数据
             ll_msgnotify.setVisibility(View.VISIBLE);
@@ -119,27 +107,75 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         }
 
     }
-    private List<String> initReplyData(){
-        List<String> list=new ArrayList<>();
-        for(int i=0;i<3;i++) {
-            list.add("title"+i);
-        }
-        return list;
-    }
-    //-------------------------------------初始化"赞“列表------------------------------------
+
+    //初始化"赞“列表
     private void initPraiseList(){
         if (initPraiseData().size() != 0){//“赞”列表有数据
             ll_msgnotify.setVisibility(View.VISIBLE);
-            MsgReplyAdapter msgReplyAdapter = new MsgReplyAdapter(this, initPraiseData());
-            brv_messagelist.setAdapter(msgReplyAdapter);
+            tv_nomore.setVisibility(View.GONE);
+            MsgPraiseAdapter msgPraiseAdapter = new MsgPraiseAdapter(this, initPraiseData());
+            brv_messagelist.setAdapter(msgPraiseAdapter);
         }else{
             ll_msgnotify.setVisibility(View.GONE);
             tv_nomore.setVisibility(View.VISIBLE);
         }
-    }
-    private List<String> initPraiseData(){
-        List<String> list=new ArrayList<>();
 
+    }
+    //-------------------------------------初始化测试数据------------------------------------
+    //测试用的“通知”列表数据
+    private List<MessageNotifyItem> initNotifyData(){
+        List<MessageNotifyItem> list=new ArrayList<>();
+        for(int i=0;i<10;i++) {
+            MessageNotifyItem msgitem=new MessageNotifyItem();
+            msgitem.setTitle("title"+i);
+            msgitem.setDate("刚刚而已");
+            msgitem.setIntro("这里显示用系统发来的通知，字数没有限制，没有详情页。未读信息为黑色字");
+            list.add(msgitem);
+        }
+        return list;
+    }
+    private List<MessageReplyItem> initReplyData(){
+        List<MessageReplyItem> list=new ArrayList<>();
+        MessageReplyItem messageReplyItem;
+        messageReplyItem=new MessageReplyItem();
+//            messageReplyItem.setHeadIconUrl();
+        messageReplyItem.setDate("天前");
+        messageReplyItem.setComment("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+        messageReplyItem.setRepliedUserName("RepliedUserName");
+        messageReplyItem.setReplyUserNickname("ReplyUserNickname");
+        list.add(messageReplyItem);
+        for(int i=0;i<13;i++) {
+            messageReplyItem=new MessageReplyItem();
+//            messageReplyItem.setHeadIconUrl();
+            messageReplyItem.setDate(i + "天前");
+            messageReplyItem.setComment(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+            messageReplyItem.setRepliedUserName(i + "RepliedUserName");
+            messageReplyItem.setReplyUserNickname(i + "ReplyUserNickname");
+            messageReplyItem.setRepliedcontent(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+            list.add(messageReplyItem);
+        }
+        return list;
+    }
+    private List<MessagePraiseItem> initPraiseData(){
+        List<MessagePraiseItem> list=new ArrayList<>();
+        MessagePraiseItem messagePraiseItem;
+        messagePraiseItem=new MessagePraiseItem();
+//            messageReplyItem.setHeadIconUrl();
+        messagePraiseItem.setDate("天前");
+        //messagePraiseItem.setComment("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+        messagePraiseItem.setPraisedUserName("RepliedUserName");
+        messagePraiseItem.setPraiseUserNickname("ReplyUserNickname");
+        list.add(messagePraiseItem);
+        for(int i=0;i<13;i++) {
+            messagePraiseItem=new MessagePraiseItem();
+//            messageReplyItem.setHeadIconUrl();
+            messagePraiseItem.setDate(i + "天前");
+            //messagePraiseItem.setComment(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+            messagePraiseItem.setPraisedUserName(i + "RepliedUserName");
+            messagePraiseItem.setPraiseUserNickname(i + "ReplyUserNickname");
+            messagePraiseItem.setPraisedcontent(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+            list.add(messagePraiseItem);
+        }
         return list;
     }
 }

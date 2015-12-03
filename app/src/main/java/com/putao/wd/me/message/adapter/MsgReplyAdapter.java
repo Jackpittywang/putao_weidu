@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.MessageNotifyItem;
+import com.putao.wd.dto.MessageReplyItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -17,10 +18,10 @@ import butterknife.Bind;
 /**
  * Created by wango on 2015/12/2.
  */
-public class MsgReplyAdapter  extends BasicAdapter<String,MsgReplyAdapter.MsgReplyViewHolder> {
+public class MsgReplyAdapter  extends BasicAdapter<MessageReplyItem,MsgReplyAdapter.MsgReplyViewHolder> {
 
-    public MsgReplyAdapter(Context context, List<String> messagereplyitems) {
-        super(context, messagereplyitems);
+    public MsgReplyAdapter(Context context, List<MessageReplyItem> messageReplyItems) {
+        super(context, messageReplyItems);
     }
 
     @Override
@@ -34,16 +35,32 @@ public class MsgReplyAdapter  extends BasicAdapter<String,MsgReplyAdapter.MsgRep
     }
 
     @Override
-    public void onBindItem(MsgReplyViewHolder holder, String messagenotifyitem, int position) {
-        holder.tv_msgreply_title.setText(messagenotifyitem);
+    public void onBindItem(MsgReplyViewHolder holder, MessageReplyItem messageReplyItem, int position) {
+        holder.iv_reply_headericon.setImageURL(messageReplyItem.getHeadIconUrl());
+        holder.tv_reply_usernickname.setText(messageReplyItem.getReplyUserNickname());
+        holder.tv_reply_date.setText(messageReplyItem.getDate());
+        holder.tv_reply_content.setText(messageReplyItem.getComment());
+        holder.tv_replied_username.setText(messageReplyItem.getRepliedUserName());
+        holder.tv_replied_content.setText(messageReplyItem.getRepliedcontent());
     }
 
     /**
      *
      */
     static class MsgReplyViewHolder extends BasicViewHolder {
-        @Bind(R.id.tv_msgreply_title)
-        TextView tv_msgreply_title;
+        @Bind(R.id.iv_reply_headericon)
+        ImageDraweeView iv_reply_headericon;
+        @Bind(R.id.tv_reply_usernickname)
+        TextView tv_reply_usernickname;
+        @Bind(R.id.tv_reply_date)
+        TextView tv_reply_date;
+        @Bind(R.id.tv_reply_content)
+        TextView tv_reply_content;
+        @Bind(R.id.tv_replied_username)
+        TextView tv_replied_username;
+        @Bind(R.id.tv_replied_content)
+        TextView tv_replied_content;
+
         public MsgReplyViewHolder(View itemView) {
             super(itemView);
         }
