@@ -86,10 +86,12 @@
                 android:textColor="#959595"
                 android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E1E1E1" />
     </LinearLayout>
-    <!--间隔线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/divider_color" />
+
 </LinearLayout>
