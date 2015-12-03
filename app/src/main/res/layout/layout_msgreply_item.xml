@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="@color/transparent">
 
     <!--消息通知图标-->
@@ -93,6 +94,7 @@
         </LinearLayout>
         <!--间隔线-->
         <View
+            android:id="@+id/v_msgreply_divide"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
