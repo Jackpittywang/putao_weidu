@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 消息通知适配器
+ * 消息：“通知”适配器
  * Created by wango on 2015/12/1.
  *
  */
@@ -49,13 +49,13 @@ public class MsgNotifyAdapter extends BasicAdapter<MessageNotifyItem,MsgNotifyAd
      */
     static class MsgNotifyViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_notify_icon)
-        ImageDraweeView iv_notify_icon;
+        ImageDraweeView iv_notify_icon;//用户头像
         @Bind(R.id.tv_notify_title)
-        TextView tv_notify_title;
+        TextView tv_notify_title;//通知标题
         @Bind(R.id.tv_notify_date)
-        TextView tv_notify_date;
+        TextView tv_notify_date;//通知时间
         @Bind(R.id.tv_notify_content)
-        TextView tv_notify_content;
+        TextView tv_notify_content;//通知内容
 
         public MsgNotifyViewHolder(View itemView) {
             super(itemView);

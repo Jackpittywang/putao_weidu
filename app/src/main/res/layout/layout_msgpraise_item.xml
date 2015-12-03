@@ -10,7 +10,7 @@
 
     <!--消息通知图标-->
     <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_reply_headericon"
+        android:id="@+id/iv_praise_headericon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:placeholderImage="@drawable/tab_bar_me_sel"/>
@@ -24,7 +24,7 @@
 
         <!--消息通知标题-->
         <TextView
-            android:id="@+id/tv_reply_usernickname"
+            android:id="@+id/tv_praise_usernickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="这里显示用户昵称"
@@ -33,7 +33,7 @@
 
         <!--消息通知日期-->
         <TextView
-            android:id="@+id/tv_reply_date"
+            android:id="@+id/tv_praise_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -44,24 +44,19 @@
         <!--通知消息内容-->
         <LinearLayout
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal">
-            <!--<TextView-->
-                <!--android:text="回复 您："-->
-                <!--android:textColor="#959595"-->
-                <!--android:textSize="@dimen/text_size_16sp"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
+
             <TextView
                 android:id="@+id/tv_reply_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="5dp"
-                android:text="这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复"
+                android:text="赞了您"
+                android:textColor="#313131"
                 android:maxLength="200"
+                android:layout_marginBottom="10dp"
                 android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
         <LinearLayout
@@ -70,8 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!--<TextView-->
-                <!--android:id="@+id/tv_replied_username"-->
-                <!--android:text="被回复人用户名："-->
+                <!--android:id="@+id/tv_praised_username"-->
+                <!--android:text="回复 您"-->
                 <!--android:textColor="#959595"-->
                 <!--android:textSize="@dimen/text_size_16sp"-->
                 <!--android:layout_width="wrap_content"-->
@@ -81,11 +76,11 @@
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content" />-->
             <TextView
-                android:id="@+id/tv_replied_content"
+                android:id="@+id/tv_praised_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="5dp"
                 android:maxLength="200"
+                android:lineSpacingExtra="5dp"
                 android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
                 android:textColor="#959595"
                 android:textSize="@dimen/text_size_16sp" />

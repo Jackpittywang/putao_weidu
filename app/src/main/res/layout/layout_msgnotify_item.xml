@@ -53,8 +53,9 @@
                 android:id="@+id/tv_notify_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
                 android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
-                android:textColor="@color/popup_background"
+                android:textColor="#313131"
                 android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
     </LinearLayout>
