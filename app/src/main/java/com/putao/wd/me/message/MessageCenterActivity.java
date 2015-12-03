@@ -2,6 +2,7 @@ package com.putao.wd.me.message;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener,TitleBar.TitleItemSelectedListener {
     @Bind(R.id.brv_messagelist)
@@ -33,6 +35,8 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_nomore;               //没有更多
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;                //顶部导航菜单
+    @Bind(R.id.iv_back)
+    ImageView iv_back;                //关闭退出当前页面
 
     @Override
     protected int getLayoutId() {
@@ -41,7 +45,6 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
         addListener();
         initNotifyList();
     }
@@ -58,9 +61,14 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         return new String[0];
     }
 
+    @OnClick({R.id.iv_back})
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.iv_back://关闭退出当前页面
+                finish();
+                break;
+        }
     }
 
     @Override
