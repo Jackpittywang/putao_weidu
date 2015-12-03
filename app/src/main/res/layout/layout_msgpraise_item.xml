@@ -11,6 +11,7 @@
     <!--消息通知图标-->
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_praise_headericon"
+        app:roundAsCircle="true"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:placeholderImage="@drawable/tab_bar_me_sel"/>
