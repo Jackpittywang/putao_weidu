@@ -1,6 +1,8 @@
 package com.putao.wd.me.message.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,7 +41,8 @@ public class MsgReplyAdapter  extends BasicAdapter<MessageReplyItem,MsgReplyAdap
         holder.iv_reply_headericon.setImageURL(messageReplyItem.getHeadIconUrl());
         holder.tv_reply_usernickname.setText(messageReplyItem.getReplyUserNickname());
         holder.tv_reply_date.setText(messageReplyItem.getDate());
-        holder.tv_reply_content.setText(messageReplyItem.getComment());
+        Spanned sstr=Html.fromHtml("<font color=#959595>回复 您：</font>"+"<font color=#313131>"+messageReplyItem.getComment()+"</font>");
+        holder.tv_reply_content.setText(sstr);
         //holder.tv_replied_username.setText(messageReplyItem.getRepliedUserName());
         holder.tv_replied_content.setText(messageReplyItem.getRepliedUserName()+"："+messageReplyItem.getRepliedcontent());
     }
