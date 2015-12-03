@@ -53,17 +53,17 @@ public class MsgReplyAdapter  extends BasicAdapter<MessageReplyItem,MsgReplyAdap
      */
     static class MsgReplyViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_reply_headericon)
-        ImageDraweeView iv_reply_headericon;
+        ImageDraweeView iv_reply_headericon;//用户头像
         @Bind(R.id.tv_reply_usernickname)
-        TextView tv_reply_usernickname;
+        TextView tv_reply_usernickname;//用户昵称
         @Bind(R.id.tv_reply_date)
-        TextView tv_reply_date;
+        TextView tv_reply_date;//评论时间
         @Bind(R.id.tv_reply_content)
-        TextView tv_reply_content;
+        TextView tv_reply_content;//评论内容
 //        @Bind(R.id.tv_replied_username)
 //        TextView tv_replied_username;
         @Bind(R.id.tv_replied_content)
-        TextView tv_replied_content;
+        TextView tv_replied_content;//被评论的内容
 
         public MsgReplyViewHolder(View itemView) {
             super(itemView);
