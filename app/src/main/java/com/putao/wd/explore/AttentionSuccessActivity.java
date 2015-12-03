@@ -9,7 +9,7 @@ import com.putao.wd.base.PTWDActivity;
  * 关注成功
  * Created by guchenkai on 2015/12/3.
  */
-public class AttrentionSuccessActivity extends PTWDActivity {
+public class AttentionSuccessActivity extends PTWDActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_attention_success;
