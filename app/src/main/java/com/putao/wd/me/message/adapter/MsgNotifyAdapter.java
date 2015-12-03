@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 消息通知适配器
+ * 消息：“通知”适配器
  * Created by wango on 2015/12/1.
  *
  */

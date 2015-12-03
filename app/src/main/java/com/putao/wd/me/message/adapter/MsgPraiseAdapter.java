@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 通知：赞
+ * 通知：”赞”适配器
  * Created by wango on 2015/12/3.
  */
 public class MsgPraiseAdapter  extends BasicAdapter<MessagePraiseItem,MsgPraiseAdapter.MsgPraiseViewHolder> {
