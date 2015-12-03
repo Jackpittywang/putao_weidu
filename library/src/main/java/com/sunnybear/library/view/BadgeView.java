@@ -30,6 +30,8 @@ public class BadgeView extends TextView {
     public static final int POSITION_BOTTOM_LEFT = 3;
     public static final int POSITION_BOTTOM_RIGHT = 4;
     public static final int POSITION_CENTER = 5;
+    public static final int POSITION_CENTER_LEFT = 6;
+    public static final int POSITION_CENTER_RIGHT = 7;
 
     private static final int DEFAULT_MARGIN_DIP = 5;
     private static final int DEFAULT_LR_PADDING_DIP = 5;
@@ -326,9 +328,7 @@ public class BadgeView extends TextView {
     }
 
     private void applyLayoutParams() {
-
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
         switch (badgePosition) {
             case POSITION_TOP_LEFT:
                 lp.gravity = Gravity.LEFT | Gravity.TOP;
@@ -350,12 +350,16 @@ public class BadgeView extends TextView {
                 lp.gravity = Gravity.CENTER;
                 lp.setMargins(0, 0, 0, 0);
                 break;
-            default:
+            case POSITION_CENTER_LEFT:
+                lp.gravity = Gravity.CENTER | Gravity.LEFT;
+                lp.setMargins(badgeMarginH, 0, 0, 0);
+                break;
+            case POSITION_CENTER_RIGHT:
+                lp.gravity = Gravity.CENTER | Gravity.RIGHT;
+                lp.setMargins(0, 0, badgeMarginH, 0);
                 break;
         }
-
         setLayoutParams(lp);
-
     }
 
     /**
