@@ -5,10 +5,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.dto.MessageNotifyItem;
 import com.putao.wd.dto.MessagePraiseItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
@@ -18,7 +20,8 @@ import butterknife.Bind;
  * 通知：”赞”适配器
  * Created by wango on 2015/12/3.
  */
-public class MsgPraiseAdapter  extends BasicAdapter<MessagePraiseItem,MsgPraiseAdapter.MsgPraiseViewHolder> {
+public class MsgPraiseAdapter  extends LoadMoreAdapter<MessagePraiseItem,MsgPraiseAdapter.MsgPraiseViewHolder> {
+        //BasicAdapter<MessagePraiseItem,MsgPraiseAdapter.MsgPraiseViewHolder> {
 
     public MsgPraiseAdapter(Context context, List<MessagePraiseItem> messagePraiseItems) {
         super(context, messagePraiseItems);
@@ -41,7 +44,7 @@ public class MsgPraiseAdapter  extends BasicAdapter<MessagePraiseItem,MsgPraiseA
         holder.tv_praise_date.setText(messagePraiseItem.getDate());
         //holder.tv_reply_content.setText(messagePraiseItem.getComment());
         //holder.tv_praised_username.setText(messagePraiseItem.getPraisedUserName());
-        holder.tv_praised_content.setText(messagePraiseItem.getPraisedUserName()+"："+messagePraiseItem.getPraisedcontent());
+        holder.tv_praised_content.setText(messagePraiseItem.getPraisedUserName() + "：" + messagePraiseItem.getPraisedcontent());
     }
 
     /**

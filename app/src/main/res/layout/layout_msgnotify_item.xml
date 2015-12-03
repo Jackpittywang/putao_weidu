@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="@color/transparent">
 
     <!--消息通知图标-->
@@ -58,11 +59,15 @@
                 android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
                 android:textColor="#313131"
                 android:textSize="@dimen/text_size_16sp" />
+
         </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:id="@+id/v_msgnotify_divide"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E1E1E1" />
     </LinearLayout>
-    <!--间隔线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/divider_color" />
+
 </LinearLayout>
