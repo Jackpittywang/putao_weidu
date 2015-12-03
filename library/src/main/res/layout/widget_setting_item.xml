@@ -7,13 +7,13 @@
 
     <View
         android:id="@+id/divider_top"
-        style="@style/divider"
         android:layout_width="match_parent"
-        android:visibility="gone" />
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:paddingLeft="@dimen/margin_big"
         android:paddingRight="@dimen/margin_big">
 
@@ -35,21 +35,12 @@
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/setting_indicator"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/btn_arrow" />
-
-        <ImageView
-            android:id="@+id/setting_indicator_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/btn_arrow" />
+            android:layout_toLeftOf="@id/btn_arrow"
+            android:text="18" />
 
         <ImageView
             android:id="@+id/btn_arrow"
@@ -62,7 +53,7 @@
 
     <View
         android:id="@+id/divider_bottom"
-        style="@style/divider"
         android:layout_width="match_parent"
-        android:visibility="gone" />
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
 </LinearLayout>

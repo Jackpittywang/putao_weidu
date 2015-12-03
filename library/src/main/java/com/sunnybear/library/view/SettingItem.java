@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
@@ -16,17 +16,15 @@ import com.sunnybear.library.R;
  * 设置条目按钮
  * Created by guchenkai on 2015/11/26.
  */
-public class SettingItem extends RelativeLayout {
-    private static final String TAG = SettingItem.class.getSimpleName();
-    private static final int ENUM_TOP_BOTTOM = 0;
+public class SettingItem extends LinearLayout {
+    private static final int ENUM_NONE = 0;
     private static final int ENUM_TOP = 1;
     private static final int ENUM_BOTTOM = 2;
-    private final Drawable mSettingIcon;
-    private final String mSettingText;
-    private final View mRootView;
-    private final int mSettingDivider;
-    private final ImageView mSettingIndicator;
-    private final ImageView mSettingIndicator2;
+    private Drawable mSettingIcon;
+    private String mSettingText;
+    private View mRootView;
+    private int mSettingDivider;
+    private int mSettingDividerColor;
 
     public SettingItem(Context context) {
         this(context, null);
@@ -38,38 +36,44 @@ public class SettingItem extends RelativeLayout {
 
     public SettingItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initStyleable(context, attrs);
+        initView(context);
+    }
 
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SettingItem);
-        mSettingIcon = typedArray.getDrawable(R.styleable.SettingItem_setting_icon);
-        mSettingText = typedArray.getString(R.styleable.SettingItem_setting_text);
-        mSettingDivider = typedArray.getInt(R.styleable.SettingItem_setting_divider, 0);
-        typedArray.recycle();
+    private void initStyleable(Context context, AttributeSet attrs) {
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SettingItem);
+        mSettingIcon = array.getDrawable(R.styleable.SettingItem_setting_icon);
+        mSettingText = array.getString(R.styleable.SettingItem_setting_text);
+        mSettingDivider = array.getInt(R.styleable.SettingItem_setting_divider, -1);
+        mSettingDividerColor = array.getColor(R.styleable.SettingItem_setting_divider_color, -1);
+        array.recycle();
+    }
 
+    private void initView(Context context) {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_setting_item, this);
         ImageView settingIconView = (ImageView) mRootView.findViewById(R.id.setting_icon);
-        mSettingIndicator = (ImageView) mRootView.findViewById(R.id.setting_indicator);
-        mSettingIndicator2 = (ImageView) mRootView.findViewById(R.id.setting_indicator_2);
         TextView settingTextView = (TextView) mRootView.findViewById(R.id.setting_text);
         View dividerTop = mRootView.findViewById(R.id.divider_top);
         View dividerBottom = mRootView.findViewById(R.id.divider_bottom);
+
         settingIconView.setImageDrawable(mSettingIcon);
         settingTextView.setText(mSettingText);
-        mSettingIndicator.setVisibility(GONE);
-        mSettingIndicator2.setVisibility(GONE);
-        if (mSettingIcon == null) {
-            settingIconView.setVisibility(GONE);
+        if (mSettingDividerColor != -1) {
+            dividerTop.setBackgroundColor(mSettingDividerColor);
+            dividerBottom.setBackgroundColor(mSettingDividerColor);
         }
-
+        if (mSettingIcon == null)
+            settingIconView.setVisibility(GONE);
         switch (mSettingDivider) {
-            case ENUM_TOP_BOTTOM:
-                dividerTop.setVisibility(VISIBLE);
-                dividerBottom.setVisibility(VISIBLE);
+            case ENUM_NONE:
+                dividerTop.setVisibility(GONE);
+                dividerBottom.setVisibility(GONE);
                 break;
             case ENUM_TOP:
-                dividerTop.setVisibility(VISIBLE);
+                dividerBottom.setVisibility(GONE);
                 break;
             case ENUM_BOTTOM:
-                dividerBottom.setVisibility(VISIBLE);
+                dividerTop.setVisibility(GONE);
                 break;
         }
     }
