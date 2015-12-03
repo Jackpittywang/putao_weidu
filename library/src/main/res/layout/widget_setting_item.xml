@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/setting_item_background"
@@ -34,13 +35,6 @@
             android:text="收货地址"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/btn_arrow"
-            android:text="18" />
 
         <ImageView
             android:id="@+id/btn_arrow"

@@ -27,6 +27,7 @@ import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.LoadingHUD;
 
 import butterknife.ButterKnife;
@@ -47,6 +48,8 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     private HomeBroadcastReceiver mReceiver = new HomeBroadcastReceiver();//监听Home键
 
     protected DiskFileCacheHelper mDiskFileCacheHelper;
+
+    private long exitTime = 0;
 
     /**
      * 设置布局id
@@ -280,6 +283,28 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         }
         //必不可少,否则所有的组件都不会有TouchEvent了
         return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
+    }
+
+    /**
+     * 双击退出App
+     *
+     * @param exit 退出时间(毫秒数)
+     */
+    protected boolean exit(long exit) {
+        if (System.currentTimeMillis() - exitTime > exit) {
+            ToastUtils.showToastShort(mContext, "再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            ActivityManager.getInstance().killProcess(mContext.getApplicationContext());
+        }
+        return true;
+    }
+
+    /**
+     * 双击退出App
+     */
+    protected boolean exit() {
+        return exit(2000);
     }
 
     /**

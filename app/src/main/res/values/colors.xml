@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="tab_background">#FFFFFF</color>
-    <color name="layout_background">#959595</color>
+    <color name="layout_background">#EBEBEB</color>
     <color name="edit_text_background">#FFF</color>
     <color name="background_F5F5F5">#F5F5F5</color>
 
@@ -21,4 +21,6 @@
 
     <color name="color_rectangle_nor">#F5F5F5</color>
     <color name="color_rectangle_sel">#985EC9</color>
+
+    <color name="half_transparent_bg">#80000000</color>
 </resources>

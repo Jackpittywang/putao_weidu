@@ -7,8 +7,8 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.dto.ActionNewsItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import butterknife.Bind;
  * 葡星圈活动和新闻适配器
  * Created by guchenkai on 2015/12/2.
  */
-public class ActionNewsAdapter extends BasicAdapter<ActionNewsItem, BasicViewHolder> {
-    private static final int TYPE_ACTION = 0;
-    private static final int TYPE_NEWS = 1;
+public class ActionNewsAdapter extends LoadMoreAdapter<ActionNewsItem, BasicViewHolder> {
+    private static final int TYPE_ACTION = 1;
+    private static final int TYPE_NEWS = 2;
 
 
     public ActionNewsAdapter(Context context, List<ActionNewsItem> actionNewsItems) {
@@ -28,7 +28,7 @@ public class ActionNewsAdapter extends BasicAdapter<ActionNewsItem, BasicViewHol
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getMultiItemViewType(int position) {
         ActionNewsItem actionNewsItem = getItem(position);
         if (actionNewsItem.isAction())
             return TYPE_ACTION;

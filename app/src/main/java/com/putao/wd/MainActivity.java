@@ -3,15 +3,18 @@ package com.putao.wd;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.FragmentSwitchAdapter;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.tab.TabBar;
 import com.sunnybear.library.view.tab.TabItem;
+import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 
 import butterknife.Bind;
 
@@ -30,6 +33,8 @@ public class MainActivity extends BasicFragmentActivity implements TabBar.TabIte
     TabItem ti_store;
     @Bind(R.id.ti_me)
     TabItem ti_me;
+    @Bind(R.id.vp_content)
+    UnScrollableViewPager vp_content;
 
     private SparseArray<Fragment> mFragmentArray;
 
@@ -41,34 +46,39 @@ public class MainActivity extends BasicFragmentActivity implements TabBar.TabIte
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addFragment();
+        vp_content.setAdapter(new FragmentSwitchAdapter(getSupportFragmentManager(), mFragmentArray));
+        vp_content.setOffscreenPageLimit(4);
+        vp_content.setPageTransformer(false, null);
+
         ti_start_circle.show(4);
         ti_explore.show(4);
         ti_store.show(4);
         ti_me.show(4);
         addListener();
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, mFragmentArray.get(R.id.ti_start_circle)).commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.fragment_container, mFragmentArray.get(R.id.ti_start_circle)).commit();
     }
 
     private void addFragment() {
         mFragmentArray = new SparseArray<>();
-        mFragmentArray.put(R.id.ti_start_circle, Fragment.instantiate(mContext, PutaoStartCircleFragment.class.getName()));
-        mFragmentArray.put(R.id.ti_explore, Fragment.instantiate(mContext, PutaoExploreFragment.class.getName()));
-        mFragmentArray.put(R.id.ti_store, Fragment.instantiate(mContext, PutaoStoreFragment.class.getName()));
-        mFragmentArray.put(R.id.ti_me, Fragment.instantiate(mContext, MeFragment.class.getName()));
+        mFragmentArray.put(0, Fragment.instantiate(mContext, PutaoStartCircleFragment.class.getName()));
+        mFragmentArray.put(1, Fragment.instantiate(mContext, PutaoExploreFragment.class.getName()));
+        mFragmentArray.put(2, Fragment.instantiate(mContext, PutaoStoreFragment.class.getName()));
+        mFragmentArray.put(3, Fragment.instantiate(mContext, MeFragment.class.getName()));
     }
 
-    /**
-     * 切换当前页
-     *
-     * @param resId
-     */
-    private void setCurrentItem(int resId) {
-        Fragment fragment = mFragmentArray.get(resId);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment).commit();
-    }
+//    /**
+//     * 切换当前页
+//     *
+//     * @param resId
+//     */
+//    private void setCurrentItem(int resId) {
+//        Fragment fragment = mFragmentArray.get(resId);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, fragment)
+//                .addToBackStack(String.valueOf(resId)).commit();
+//    }
 
     /**
      * 添加监听器
@@ -105,6 +115,13 @@ public class MainActivity extends BasicFragmentActivity implements TabBar.TabIte
                 break;
         }
         Logger.d("点击了第" + position + "个");
-        setCurrentItem(id);
+        vp_content.setCurrentItem(position);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+            return exit();
+        return super.onKeyDown(keyCode, event);
     }
 }

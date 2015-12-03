@@ -107,6 +107,18 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
             }
         });
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+//                adapter.addAll(getTestData());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rv_content.noMoreLoading();
+                    }
+                }, 3 * 1000);
+            }
+        });
         ll_title.setTitleItemSelectedListener(this);
     }
 

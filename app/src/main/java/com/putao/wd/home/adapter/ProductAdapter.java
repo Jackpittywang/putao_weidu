@@ -7,8 +7,8 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.dto.ProductItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import butterknife.Bind;
  * 商城产品列表适配器
  * Created by guchenkai on 2015/11/30.
  */
-public class ProductAdapter extends BasicAdapter<ProductItem,ProductAdapter.ProductViewHolder> {
+public class ProductAdapter extends LoadMoreAdapter<ProductItem,ProductAdapter.ProductViewHolder> {
 
     public ProductAdapter(Context context, List<ProductItem> productItems) {
         super(context, productItems);

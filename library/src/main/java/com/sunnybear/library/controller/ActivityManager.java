@@ -1,6 +1,7 @@
 package com.sunnybear.library.controller;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.Stack;
 
@@ -91,9 +92,8 @@ public class ActivityManager {
      * 结束所有的activity
      */
     public void finishAllActivity() {
-        for (Activity activity : activityStack) {
-            if (activity != null)
-                finishActivity(activity);
+        while (getCurrentActivity() == null) {
+            finishActivity(getCurrentActivity());
         }
         activityStack.clear();
     }
@@ -109,6 +109,22 @@ public class ActivityManager {
             if (null == activity || activity.getClass().equals(cls))
                 continue;
             activity.finish();
+        }
+    }
+
+    /**
+     * 退出应用程序
+     */
+    public void killProcess(Context context) {
+        try {
+            finishAllActivity();
+            android.app.ActivityManager activityMgr = (android.app.ActivityManager) context
+                    .getSystemService(Context.ACTIVITY_SERVICE);
+            activityMgr.killBackgroundProcesses(context.getPackageName());
+//            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

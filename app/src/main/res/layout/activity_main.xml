@@ -41,8 +41,8 @@
             auto:inactiveDrawable="@drawable/tab_bar_me_nor" />
     </com.sunnybear.library.view.tab.TabBar>
 
-    <FrameLayout
-        android:id="@id/fragment_container"
+    <com.sunnybear.library.view.viewpager.UnScrollableViewPager
+        android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tb_tab" />

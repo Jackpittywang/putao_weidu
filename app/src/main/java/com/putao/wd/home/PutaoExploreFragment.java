@@ -1,15 +1,17 @@
 package com.putao.wd.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.putao.wd.R;
-import com.sunnybear.library.controller.BasicFragment;
+import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.qrcode.CaptureActivity;
 
 /**
  * 探索号
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoExploreFragment extends BasicFragment {
+public class PutaoExploreFragment extends PTWDFragment {
 
     @Override
     protected int getLayoutId() {
@@ -18,10 +20,17 @@ public class PutaoExploreFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        addNavgation();
+        setMainTitleColor(Color.WHITE);
     }
 
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    @Override
+    public void onLeftAction() {
+        startActivity(CaptureActivity.class);
     }
 }

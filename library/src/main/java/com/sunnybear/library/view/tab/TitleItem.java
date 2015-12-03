@@ -54,10 +54,9 @@ public class TitleItem extends LinearLayout {
     }
 
     private void initView(Context context) {
-        mRootView = LayoutInflater.from(context).inflate(R.layout.widget_title_item, null);
+        mRootView = LayoutInflater.from(context).inflate(R.layout.widget_title_item, this);
         mTitleView = (TextView) mRootView.findViewById(R.id.tv_title);
         mIndicator = mRootView.findViewById(R.id.indicator);
-        addView(mRootView);
     }
 
     private void init() {
