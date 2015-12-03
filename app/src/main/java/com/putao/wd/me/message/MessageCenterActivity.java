@@ -76,15 +76,15 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         switch (item.getId()) {
             case R.id.ll_all://通知
                 initNotifyList();
-                ToastUtils.showToastLong(this, "通知");
+                //ToastUtils.showToastLong(this, "通知");
                 break;
             case R.id.ll_ing://回复
                 initReplyList();
-                ToastUtils.showToastLong(this, "回复");
+                //ToastUtils.showToastLong(this, "回复");
                 break;
             case R.id.ll_finish://赞
                 initPraiseList();
-                ToastUtils.showToastLong(this, "赞");
+                //ToastUtils.showToastLong(this, "赞");
                 break;
         }
     }
