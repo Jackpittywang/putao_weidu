@@ -141,16 +141,17 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 //            messageReplyItem.setHeadIconUrl();
         messageReplyItem.setDate("天前");
         messageReplyItem.setComment("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
-        messageReplyItem.setRepliedUserName("RepliedUserName");
-        messageReplyItem.setReplyUserNickname("ReplyUserNickname");
+        messageReplyItem.setRepliedUserName("被回复的用户名");
+        messageReplyItem.setRepliedcontent("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
+        messageReplyItem.setReplyUserNickname("被回复的昵称");
         list.add(messageReplyItem);
         for(int i=0;i<13;i++) {
             messageReplyItem=new MessageReplyItem();
 //            messageReplyItem.setHeadIconUrl();
             messageReplyItem.setDate(i + "天前");
             messageReplyItem.setComment(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
-            messageReplyItem.setRepliedUserName(i + "RepliedUserName");
-            messageReplyItem.setReplyUserNickname(i + "ReplyUserNickname");
+            messageReplyItem.setRepliedUserName(i + "被回复的用户名");
+            messageReplyItem.setReplyUserNickname(i + "被回复的昵称");
             messageReplyItem.setRepliedcontent(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
             list.add(messageReplyItem);
         }
@@ -163,16 +164,17 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
 //            messageReplyItem.setHeadIconUrl();
         messagePraiseItem.setDate("天前");
         //messagePraiseItem.setComment("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
-        messagePraiseItem.setPraisedUserName("RepliedUserName");
-        messagePraiseItem.setPraiseUserNickname("ReplyUserNickname");
+        messagePraiseItem.setPraisedUserName("被回复的用户名");
+        messagePraiseItem.setPraiseUserNickname("被回复的昵称");
+        messagePraiseItem.setPraisedcontent("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
         list.add(messagePraiseItem);
         for(int i=0;i<13;i++) {
             messagePraiseItem=new MessagePraiseItem();
 //            messageReplyItem.setHeadIconUrl();
             messagePraiseItem.setDate(i + "天前");
             //messagePraiseItem.setComment(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
-            messagePraiseItem.setPraisedUserName(i + "RepliedUserName");
-            messagePraiseItem.setPraiseUserNickname(i + "ReplyUserNickname");
+            messagePraiseItem.setPraisedUserName(i + "被回复的用户名");
+            messagePraiseItem.setPraiseUserNickname(i + "被回复的昵称");
             messagePraiseItem.setPraisedcontent(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
             list.add(messagePraiseItem);
         }
