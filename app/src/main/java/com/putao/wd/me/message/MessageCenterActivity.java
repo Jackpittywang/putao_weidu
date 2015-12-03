@@ -147,7 +147,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         MessageReplyItem messageReplyItem;
         messageReplyItem=new MessageReplyItem();
 //            messageReplyItem.setHeadIconUrl();
-        messageReplyItem.setDate("天前");
+        messageReplyItem.setDate("1天前");
         messageReplyItem.setComment("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
         messageReplyItem.setRepliedUserName("被回复的用户名");
         messageReplyItem.setRepliedcontent("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
@@ -170,7 +170,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         MessagePraiseItem messagePraiseItem;
         messagePraiseItem=new MessagePraiseItem();
 //            messageReplyItem.setHeadIconUrl();
-        messagePraiseItem.setDate("天前");
+        messagePraiseItem.setDate("1天前");
         //messagePraiseItem.setComment("这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
         messagePraiseItem.setPraisedUserName("被回复的用户名");
         messagePraiseItem.setPraiseUserNickname("被回复的昵称");
