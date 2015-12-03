@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ActionNewsItem;
+import com.putao.wd.dto.Banner;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -78,6 +81,19 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         });
         refresh();
         addListener();
+    }
+
+    /**
+     * 获取广告列表
+     */
+    private void getBannerList() {
+        networkRequestCache(StartApi.getBannerList()
+                , new SimpleFastJsonCallback<ArrayList<Banner>>(Banner.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Banner> result) {
+
+            }
+        });
     }
 
     /**

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -15,4 +16,36 @@
         auto:nav_right_title="管理"
         auto:nav_right_title_color="@drawable/text_select" />
 
-</RelativeLayout>
+    <!--内容区-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--空页面-->
+        <RelativeLayout
+            android:id="@+id/rl_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_explore_empty_arrow"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_explore_empty_arrow" />
+
+            <ImageView
+                android:id="@+id/iv_explore_empty_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="48dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/img_explore_empty_word" />
+
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/img_explore_empty" />
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -98,7 +97,8 @@ public class SettingItem extends LinearLayout {
      */
     public void show(int count) {
         mIndicator = new BadgeView(getContext(), mMainView);
-        mIndicator.setGravity(Gravity.CENTER | Gravity.RIGHT);
+        mIndicator.setBadgePosition(BadgeView.POSITION_CENTER_RIGHT);
+        mIndicator.setBadgeMargin(100);
         mIndicator.setBackground(mSettingIndicatorBackground);
         mIndicator.setText(String.valueOf(count));
         if (mSettingIndicatorColor != -1)

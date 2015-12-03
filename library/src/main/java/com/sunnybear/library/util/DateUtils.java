@@ -1,8 +1,5 @@
 package com.sunnybear.library.util;
 
-import com.sunnybear.library.BasicApplication;
-import com.sunnybear.library.R;
-
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -16,7 +13,8 @@ import java.util.TimeZone;
  */
 public final class DateUtils {
     private static final String TAG = DateUtils.class.getSimpleName();
-    private static final String[] weeks = ResourcesUtils.getStringArray(BasicApplication.getInstance(), R.array.weeks);
+    private static final String[] weeks = new String[]{};
+    //            ResourcesUtils.getStringArray(BasicApplication.getInstance(), R.array.weeks);
     private static final SimpleDateFormat mDataFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat mTimeFormat = new SimpleDateFormat("yyyy-MM-dd mm:HH:ss");
 
@@ -132,5 +130,59 @@ public final class DateUtils {
      */
     public static String millisecondToDate(long millisecond) {
         return millisecondToDate(millisecond, "yyyy-MM-dd");
+    }
+
+
+    /**
+     * 时间计算
+     *
+     * @param millisecond 毫秒数
+     * @return 计算后显示的文字
+     */
+    public static String timeCalculate(long millisecond) {
+        String result = "";
+        long diff = System.currentTimeMillis() - millisecond;//时间差
+        if (diff < 1000 * 60)
+            return "刚刚以前";
+        else if (diff >= 1000 * 60 && diff < 1000 * 60 * 60)
+            return diff / (1000 * 60) + "分钟以前";
+        else if (diff >= 1000 * 60 * 60 && diff < 1000 * 60 * 60 * 24)
+            return diff / (1000 * 60 * 60) + "小时以前";
+        else if (diff >= 1000 * 60 * 60 * 24)
+            return diff / (1000 * 60 * 60 * 24) + "天以前";
+        return result;
+    }
+
+    /**
+     * 时间计算
+     *
+     * @param second 秒数
+     * @return 计算后显示的文字
+     */
+    public static String timeCalculate(int second) {
+        String result = "";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int currentSecond = calendar.get(calendar.SECOND);
+        int diff = currentSecond - second;
+        if (diff < 60)
+            return "刚刚以前";
+        else if (diff >= 60 && diff < 60 * 60)
+            return diff / 60 + "分钟以前";
+        else if (diff >= 60 * 60 && diff < 60 * 60 * 24)
+            return diff / (60 * 60) + "小时以前";
+        else if (diff >= 60 * 60 * 24)
+            return diff / (60 * 60 * 24) + "天以前";
+        return result;
+    }
+
+    /**
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse("2015-12-3 19:03:00");
+        System.out.println(timeCalculate((int) (date.getTime() / 1000)));
     }
 }
