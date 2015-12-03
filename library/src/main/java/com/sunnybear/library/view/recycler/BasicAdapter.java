@@ -71,7 +71,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     public abstract void onBindItem(VH holder, Item item, int position);
 
     @Override
-    public final int getItemCount() {
+    public int getItemCount() {
         return mItems.size();
     }
 
@@ -81,19 +81,19 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
      * @param position 标号
      * @return item
      */
-    public final Item getItem(int position) {
+    public Item getItem(int position) {
         return mItems.get(position);
     }
 
     @Override
-    public final VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         mItemView = LayoutInflater.from(context).inflate(getLayoutId(viewType), parent, false);
         mItemView.setBackgroundResource(mProcessDrawable);
         return getViewHolder(mItemView, viewType);
     }
 
     @Override
-    public final void onBindViewHolder(final VH holder, final int position) {
+    public void onBindViewHolder(final VH holder, final int position) {
         final Item item = mItems.get(position);
         final View itemView = holder.itemView;
         itemView.setTag(position);
