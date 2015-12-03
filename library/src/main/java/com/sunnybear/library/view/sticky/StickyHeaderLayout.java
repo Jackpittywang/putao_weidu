@@ -1,10 +1,8 @@
 package com.sunnybear.library.view.sticky;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ListView;
 
 import com.sunnybear.library.R;
 
@@ -21,16 +19,25 @@ public class StickyHeaderLayout extends ScrollableLayout {
 
     private int maxScrollY;
 
+//    private int downX;
+//    private int downY;
+//    private int mTouchSlop;
+
     public StickyHeaderLayout(Context context) {
-        super(context);
+        this(context, null, 0);
     }
 
     public StickyHeaderLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public StickyHeaderLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    private void init(Context context) {
+//        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     public void setMinusView(View minusView) {
@@ -68,13 +75,20 @@ public class StickyHeaderLayout extends ScrollableLayout {
         setMaxScrollY(maxScrollY);
     }
 
-    public boolean canScrollVerticallyListView(ListView listView, int direction) {
-        return listView != null && listView.canScrollVertically(direction);
-    }
-
-    public boolean canScrollVerticallyRecyclerView(RecyclerView recyclerView, int direction) {
-        return recyclerView != null && recyclerView.canScrollVertically(direction);
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                downX = (int) ev.getRawX();
+//                downY = (int) ev.getRawY();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                int moveY = (int) ev.getRawY();
+//                if (Math.abs(moveY - downY) > mTouchSlop)
+//                    return true;
+//        }
+//        return super.onInterceptTouchEvent(ev);
+//    }
 
     public void canScrollView() {
         setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
