@@ -39,8 +39,8 @@ public class MsgPraiseAdapter  extends BasicAdapter<MessagePraiseItem,MsgPraiseA
         holder.tv_praise_usernickname.setText(messagePraiseItem.getPraiseUserNickname());
         holder.tv_praise_date.setText(messagePraiseItem.getDate());
         //holder.tv_reply_content.setText(messagePraiseItem.getComment());
-        holder.tv_praised_username.setText(messagePraiseItem.getPraisedUserName());
-        holder.tv_praised_content.setText(messagePraiseItem.getPraisedcontent());
+        //holder.tv_praised_username.setText(messagePraiseItem.getPraisedUserName());
+        holder.tv_praised_content.setText(messagePraiseItem.getPraisedUserName()+"："+messagePraiseItem.getPraisedcontent());
     }
 
     /**
@@ -55,8 +55,8 @@ public class MsgPraiseAdapter  extends BasicAdapter<MessagePraiseItem,MsgPraiseA
         TextView tv_praise_date;
 //        @Bind(R.id.tv_praised_content)
 ////        TextView tv_reply_content;
-        @Bind(R.id.tv_praised_username)
-        TextView tv_praised_username;
+//        @Bind(R.id.tv_praised_username)
+//        TextView tv_praised_username;
         @Bind(R.id.tv_praised_content)
         TextView tv_praised_content;
 

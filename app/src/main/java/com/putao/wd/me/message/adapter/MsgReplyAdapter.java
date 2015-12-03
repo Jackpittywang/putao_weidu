@@ -40,8 +40,8 @@ public class MsgReplyAdapter  extends BasicAdapter<MessageReplyItem,MsgReplyAdap
         holder.tv_reply_usernickname.setText(messageReplyItem.getReplyUserNickname());
         holder.tv_reply_date.setText(messageReplyItem.getDate());
         holder.tv_reply_content.setText(messageReplyItem.getComment());
-        holder.tv_replied_username.setText(messageReplyItem.getRepliedUserName());
-        holder.tv_replied_content.setText(messageReplyItem.getRepliedcontent());
+        //holder.tv_replied_username.setText(messageReplyItem.getRepliedUserName());
+        holder.tv_replied_content.setText(messageReplyItem.getRepliedUserName()+"："+messageReplyItem.getRepliedcontent());
     }
 
     /**
@@ -56,8 +56,8 @@ public class MsgReplyAdapter  extends BasicAdapter<MessageReplyItem,MsgReplyAdap
         TextView tv_reply_date;
         @Bind(R.id.tv_reply_content)
         TextView tv_reply_content;
-        @Bind(R.id.tv_replied_username)
-        TextView tv_replied_username;
+//        @Bind(R.id.tv_replied_username)
+//        TextView tv_replied_username;
         @Bind(R.id.tv_replied_content)
         TextView tv_replied_content;
 
