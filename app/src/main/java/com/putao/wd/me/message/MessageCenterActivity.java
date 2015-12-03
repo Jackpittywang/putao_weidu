@@ -135,6 +135,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         List<MessageNotifyItem> list=new ArrayList<>();
         for(int i=0;i<10;i++) {
             MessageNotifyItem msgitem=new MessageNotifyItem();
+            msgitem.setIconUrl("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
             msgitem.setTitle("title"+i);
             msgitem.setDate("刚刚而已");
             msgitem.setIntro("这里显示用系统发来的通知，字数没有限制，没有详情页。未读信息为黑色字");
@@ -156,6 +157,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         for(int i=0;i<13;i++) {
             messageReplyItem=new MessageReplyItem();
 //            messageReplyItem.setHeadIconUrl();
+            messageReplyItem.setHeadIconUrl("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
             messageReplyItem.setDate(i + "天前");
             messageReplyItem.setComment(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
             messageReplyItem.setRepliedUserName(i + "被回复的用户名");
@@ -180,6 +182,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
             messagePraiseItem=new MessagePraiseItem();
 //            messageReplyItem.setHeadIconUrl();
             messagePraiseItem.setDate(i + "天前");
+            messagePraiseItem.setHeadIconUrl("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
             //messagePraiseItem.setComment(i + "这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复");
             messagePraiseItem.setPraisedUserName(i + "被回复的用户名");
             messagePraiseItem.setPraiseUserNickname(i + "被回复的昵称");
