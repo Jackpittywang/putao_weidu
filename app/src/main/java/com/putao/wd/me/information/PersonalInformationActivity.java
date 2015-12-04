@@ -40,7 +40,7 @@ public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication
                 startActivity(NicknameActivity.class);
                 break;
             case R.id.si_personinfo_resume:
-
+                startActivity(ResumeActivity.class);
                 break;
 
 

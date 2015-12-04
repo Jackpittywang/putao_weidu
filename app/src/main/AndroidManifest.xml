@@ -107,7 +107,11 @@
         <!-- 个人信息 -->
         <activity android:name=".me.information.PersonalInformationActivity" >
         </activity>
+        <!-- 昵称 -->
         <activity android:name=".me.information.NicknameActivity" >
+        </activity>
+        <!-- 个人简历 -->
+        <activity android:name=".me.information.ResumeActivity" >
         </activity>
     </application>
 
