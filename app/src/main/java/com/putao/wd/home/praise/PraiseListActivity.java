@@ -7,6 +7,10 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
+/**
+ * 点赞列表
+ * Created by wangou on 2015/12/4.
+ */
 public class PraiseListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override
