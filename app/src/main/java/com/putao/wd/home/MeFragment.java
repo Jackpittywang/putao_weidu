@@ -6,6 +6,7 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.myactivities.MyActivitiesActivity;
+import com.putao.wd.me.personalinfo.PersonalInformationActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.SettingItem;
@@ -51,8 +52,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         return new String[0];
     }
 
-    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.si_message
-            , R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
+    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question//,R.id.iv_user_icon
+            , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -71,6 +72,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             case R.id.si_question://我的提问
 
                 break;
+//            case R.id.iv_user_icon://个人信息
+//                startActivity(PersonalInformationActivity.class);
+//                break;
             case R.id.si_message://消息中心
 //                startActivity(MessageCenterActivity.class);
                 si_message.hide();
