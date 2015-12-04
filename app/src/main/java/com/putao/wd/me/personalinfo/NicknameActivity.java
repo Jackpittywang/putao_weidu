@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 
+/**
+ * 用户昵称
+ * Created by wangou on 2015/12/4.
+ */
 public class NicknameActivity extends AppCompatActivity {
 
     @Override

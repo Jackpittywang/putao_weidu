@@ -11,6 +11,10 @@ import com.sunnybear.library.view.tab.TitleBar;
 
 import butterknife.OnClick;
 
+/**
+ * 个人信息
+ * Created by wangou on 2015/12/4.
+ */
 public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Override
     protected int getLayoutId() {
@@ -35,7 +39,7 @@ public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication
 
                 break;
             case R.id.si_personinfo_nickname:
-
+                startActivity(NicknameActivity.class);
                 break;
             case R.id.si_personinfo_resume:
 
