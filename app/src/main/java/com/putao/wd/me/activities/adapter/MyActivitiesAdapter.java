@@ -12,6 +12,10 @@ import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 import java.util.List;
 
+/**
+ * “我参加的活动”适配器
+ * Created by wangou on 2015/12/4.
+ */
 public class MyActivitiesAdapter extends LoadMoreAdapter<MyActivitiesItem, MyActivitiesAdapter.MyActivitiesViewHolder> {
     public MyActivitiesAdapter(Context context, List<MyActivitiesItem> myActivitiesItems) {
         super(context, myActivitiesItems);

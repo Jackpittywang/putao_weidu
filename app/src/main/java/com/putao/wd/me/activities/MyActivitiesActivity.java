@@ -16,7 +16,10 @@ import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 我参加的活动
+ * Created by wangou on 2015/12/4.
+ */
 public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
     @Bind(R.id.brv_activitylist)
     LoadMoreRecyclerView brv_activitylist;
