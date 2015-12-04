@@ -47,17 +47,17 @@ public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication
         return new String[0];
     }
 
-    @OnClick({R.id.si_personinfo_headicon,R.id.si_personinfo_nickname,R.id.si_personinfo_resume})
+    @OnClick({R.id.iv_personinfo_headicon,R.id.tv_personinfo_nickname,R.id.tv_personinfo_resume})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.si_personinfo_headicon://头像
+            case R.id.iv_personinfo_headicon://头像
                 mSelectPopupWindow.show(ll_main);
                 break;
-            case R.id.si_personinfo_nickname://昵称
+            case R.id.tv_personinfo_nickname://昵称
                 startActivity(NicknameActivity.class);
                 break;
-            case R.id.si_personinfo_resume://简历
+            case R.id.tv_personinfo_resume://简历
                 startActivity(ResumeActivity.class);
                 break;
 
