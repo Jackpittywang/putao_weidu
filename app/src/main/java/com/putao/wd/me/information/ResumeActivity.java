@@ -21,7 +21,7 @@ public class ResumeActivity extends PTWDActivity<GlobalApplication> implements V
     @Bind(R.id.et_resume)
     CleanableEditText et_resume;//简历
     @Bind(R.id.tv_rest_part)
-    TextView tv_rest_part;//可输入简历的剩余字数
+    TextView tv_rest_part;//剩余字数
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +52,7 @@ public class ResumeActivity extends PTWDActivity<GlobalApplication> implements V
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-            tv_rest_part.setText((40-s.length())+"");
+            tv_rest_part.setText((40-s.length())+"");//剩余字数
     }
 
     @Override
