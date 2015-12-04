@@ -75,8 +75,8 @@ public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implem
             }
 
             item.setActionIcon("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
-            item.setIntroduction(i + "活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行");
-            item.setTitle(i + "活动标题最多15个汉字限制2行");
+            item.setIntroduction(i + "活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行");
+            item.setTitle(i + "活动标题最多15个汉字限制2行活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行");
             list.add(item);
         }
 

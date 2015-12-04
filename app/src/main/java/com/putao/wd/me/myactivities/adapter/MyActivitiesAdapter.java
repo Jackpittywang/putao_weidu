@@ -1,6 +1,7 @@
 package com.putao.wd.me.myactivities.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -27,13 +28,14 @@ public class MyActivitiesAdapter extends LoadMoreAdapter<MyActivitiesItem, MyAct
 
     public void onBindItem(MyActivitiesAdapter.MyActivitiesViewHolder holder, MyActivitiesItem myActivitiesItem, int position) {
         holder.iv_myactivities_icon.setImageURL(myActivitiesItem.getActionIcon());
-        if("体验".equals(myActivitiesItem.getStatus())) {
-            holder.tv_myactivities_title.getPaint().setFakeBoldText(true);
-        }
-
         holder.tv_myactivities_title.setText(myActivitiesItem.getTitle());
         holder.tv_myactivities_content.setText(myActivitiesItem.getIntroduction());
         holder.tv_myactivities_status.setText(myActivitiesItem.getStatus());
+        if("体验".equals(myActivitiesItem.getStatus())) {
+            holder.tv_myactivities_title.setTextColor(Color.parseColor("#000000"));
+        }else{
+            holder.tv_myactivities_status.setBackgroundColor(Color.parseColor("#959595"));
+        }
     }
 
     static class MyActivitiesViewHolder extends BasicViewHolder {

@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:padding="10dp"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="110dp">
     <LinearLayout
         android:layout_weight="1"
         android:orientation="vertical"
@@ -29,6 +29,7 @@
     </LinearLayout>
     <RelativeLayout
         android:gravity="center"
+        android:layout_marginLeft="10dp"
         android:layout_width="80dp"
         android:layout_height="80dp">
         <com.sunnybear.library.view.image.ImageDraweeView
