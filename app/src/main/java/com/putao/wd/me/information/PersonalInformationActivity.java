@@ -51,13 +51,13 @@ public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.si_personinfo_headicon:
+            case R.id.si_personinfo_headicon://头像
                 mSelectPopupWindow.show(ll_main);
                 break;
-            case R.id.si_personinfo_nickname:
+            case R.id.si_personinfo_nickname://昵称
                 startActivity(NicknameActivity.class);
                 break;
-            case R.id.si_personinfo_resume:
+            case R.id.si_personinfo_resume://简历
                 startActivity(ResumeActivity.class);
                 break;
 
