@@ -72,14 +72,13 @@
             android:background="@color/divider_color" />
         <!--报名相关信息-->
         <LinearLayout
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"/>
-
+                android:layout_height="50dp"/>
             <LinearLayout
                 android:gravity="center"
                 android:orientation="vertical"
@@ -187,7 +186,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/icon_20_22"/>
             <LinearLayout
                 android:padding="10dp"
