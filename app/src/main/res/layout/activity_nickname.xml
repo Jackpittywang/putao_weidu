@@ -25,10 +25,12 @@
         android:layout_height="match_parent">
         <com.sunnybear.library.view.CleanableEditText
             android:id="@+id/et_nickname"
+            android:textColor="#313131"
+            android:maxLength="20"
+            android:maxLines="1"
             android:hint="这里显示用户昵称"
             android:paddingLeft="10dp"
             android:background="#fff"
-            android:textColorHint="#313131"
             android:layout_width="match_parent"
             android:layout_height="44dp" />
     </LinearLayout>
