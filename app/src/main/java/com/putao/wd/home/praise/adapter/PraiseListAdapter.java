@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.MyActivitiesItem;
 import com.putao.wd.dto.PraiseListItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -39,13 +38,13 @@ public class PraiseListAdapter  extends LoadMoreAdapter<PraiseListItem, PraiseLi
 
     static class PraiseListViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_praise_headericon)
-        ImageDraweeView iv_praise_headericon;
+        ImageDraweeView iv_praise_headericon;//用户头像
         @Bind(R.id.tv_praise_usernickname)
-        TextView tv_praise_usernickname;
+        TextView tv_praise_usernickname;//用户昵称
         @Bind(R.id.tv_praise_count)
-        TextView tv_praise_count;
+        TextView tv_praise_count;//点赞数
         @Bind(R.id.iv_praise_userdetail)
-        ImageView iv_praise_userdetail;
+        ImageView iv_praise_userdetail;//用户主页链接
         public PraiseListViewHolder(View itemView) {
             super(itemView);
         }
