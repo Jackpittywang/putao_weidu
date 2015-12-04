@@ -10,29 +10,33 @@
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="@string/setting"/>
+        auto:nav_main_title="@string/setting" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <com.sunnybear.library.view.SettingItem
             android:id="@+id/si_modify_password"
-            android:layout_marginTop="20dp"
-            auto:setting_text="@string/modifypassword"
             android:layout_width="match_parent"
-            android:layout_height="80dp"/>
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            auto:setting_text="@string/modifypassword" />
+
         <com.sunnybear.library.view.SettingItem
             android:id="@+id/si_about_us"
-            auto:setting_text="@string/aboutus"
             android:layout_width="match_parent"
-            android:layout_height="80dp"/>
+            android:layout_height="80dp"
+            auto:setting_text="@string/aboutus" />
+
         <TextView
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="#ed5564"
-            android:background="#fff"
-            android:text="@string/exitaccout"
             android:layout_width="match_parent"
-            android:layout_height="44dp" />
+            android:layout_height="44dp"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="@string/exitaccout"
+            android:textColor="#ed5564"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

@@ -33,7 +33,7 @@ public class CompleteFragment extends PTWDFragment implements View.OnClickListen
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         mSelectPopupWindow=new SelectPopupWindow(mActivity) {
             @Override
             public void onFirstClick(View v) {

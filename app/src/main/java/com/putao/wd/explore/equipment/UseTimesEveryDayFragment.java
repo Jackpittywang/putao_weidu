@@ -29,7 +29,7 @@ public class UseTimesEveryDayFragment extends PTWDFragment implements View.OnCli
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         if(initDataTest().size()!=0) {
             ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mActivity, initDataTest());
             brv_usertime_everyday.setAdapter(controlledEquipmentAdatper);

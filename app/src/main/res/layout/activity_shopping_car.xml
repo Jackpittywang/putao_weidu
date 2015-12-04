@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="购物车"
+        auto:nav_right_title="编辑"
+        auto:nav_right_title_color="@drawable/text_select" />
+
+    <!--内容区-->
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/navigation_bar">
+
+        <!--物品列表-->
+        <com.sunnybear.library.view.recycler.BasicRecyclerView
+            android:id="@+id/rv_cars"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            auto:divider_color="@color/white"
+            auto:divider_height="1px"
+            auto:has_row_divider="true" />
+
+        <!--空页面-->
+        <RelativeLayout
+            android:id="@+id/rl_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/layout_background"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="120dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_car_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_cart_empty" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_car_empty"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:text="购物车空空如也"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_20sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <!--结算操作栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp">
+
+            <!--全选-->
+            <LinearLayout
+                android:id="@+id/ll_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <com.sunnybear.library.view.SwitchButton
+                    android:id="@+id/btn_sel_all"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    auto:norDrawable="@drawable/check_box_nor"
+                    auto:selDrawable="@drawable/check_box_sel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="全选"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_18sp" />
+            </LinearLayout>
+
+            <!--金额-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="应付金额"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥"
+                        android:textColor="@color/text_color_red"
+                        android:textSize="@dimen/text_size_12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="399.00"
+                        android:textColor="@color/text_color_red"
+                        android:textSize="@dimen/text_size_20sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--结算按钮-->
+        <LinearLayout
+            android:id="@+id/ll_closing"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="@color/text_main_color_sel"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="去结算"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/text_size_20sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

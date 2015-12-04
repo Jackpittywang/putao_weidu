@@ -12,7 +12,6 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.base.PTWDFragment;
-import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
@@ -39,7 +38,7 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         et_mobile.addTextChangedListener(this);
         //et_password.addTextChangedListener(this);
     }

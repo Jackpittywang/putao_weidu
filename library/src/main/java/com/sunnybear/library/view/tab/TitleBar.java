@@ -49,7 +49,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        selectTabItem((TitleItem) v);
+        selectTitleItem((TitleItem) v);
     }
 
     /**
@@ -57,7 +57,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
      *
      * @param item 选中的TabItem
      */
-    public void selectTabItem(TitleItem item) {
+    public void selectTitleItem(TitleItem item) {
         if (mLastSelectedItem == item) {
             mLastSelectedItem.setActive(true);
             return;

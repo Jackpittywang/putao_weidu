@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunnybear.library.util.Logger;
+
 /**
  * 内部LinearLayoutManager
  * Created by guchenkai on 2015/11/13.
  */
 public class InnerLinearLayoutManager extends LinearLayoutManager {
-    private int[] mMeasuredDimension = new int[2];
+    private static final String TAG = InnerLinearLayoutManager.class.getSimpleName();
 
     public InnerLinearLayoutManager(Context context) {
         super(context);
@@ -21,38 +23,46 @@ public class InnerLinearLayoutManager extends LinearLayoutManager {
         super(context, orientation, reverseLayout);
     }
 
+    private int[] mMeasuredDimension = new int[2];
+
     @Override
     public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+
         final int widthMode = View.MeasureSpec.getMode(widthSpec);
         final int heightMode = View.MeasureSpec.getMode(heightSpec);
         final int widthSize = View.MeasureSpec.getSize(widthSpec);
         final int heightSize = View.MeasureSpec.getSize(heightSpec);
+        Logger.i(TAG, "onMeasure called. \nwidthMode " + widthMode
+                + " \nheightMode " + heightSpec
+                + " \nwidthSize " + widthSize
+                + " \nheightSize " + heightSize
+                + " \ngetItemCount() " + getItemCount());
 
-        int width = 0, height = 0;
-        int count = getItemCount();
-        for (int i = 0; i < count; i++) {
+        int width = 0;
+        int height = 0;
+        for (int i = 0; i < getItemCount(); i++) {
             measureScrapChild(recycler, i,
                     View.MeasureSpec.makeMeasureSpec(i, View.MeasureSpec.UNSPECIFIED),
                     View.MeasureSpec.makeMeasureSpec(i, View.MeasureSpec.UNSPECIFIED),
                     mMeasuredDimension);
 
             if (getOrientation() == HORIZONTAL) {
-                width += mMeasuredDimension[0];
+                width = width + mMeasuredDimension[0];
                 if (i == 0)
                     height = mMeasuredDimension[1];
             } else {
-                height += mMeasuredDimension[1];
+                height = height + mMeasuredDimension[1];
                 if (i == 0)
                     width = mMeasuredDimension[0];
             }
         }
-
         switch (widthMode) {
             case View.MeasureSpec.EXACTLY:
                 width = widthSize;
             case View.MeasureSpec.AT_MOST:
             case View.MeasureSpec.UNSPECIFIED:
         }
+
         switch (heightMode) {
             case View.MeasureSpec.EXACTLY:
                 height = heightSize;
@@ -82,6 +92,7 @@ public class InnerLinearLayoutManager extends LinearLayoutManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
         }
     }
 }

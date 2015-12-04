@@ -46,6 +46,15 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     }
 
     /**
+     * 获得全部对象
+     *
+     * @return
+     */
+    public List<Item> getItems() {
+        return mItems;
+    }
+
+    /**
      * 设置item布局id
      *
      * @param viewType view类型
@@ -146,12 +155,6 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         notifyItemChanged(index);
     }
 
-    public void replaceAll(List<Item> items) {
-        mItems.clear();
-        mItems.addAll(items);
-        notifyDataSetChanged();
-    }
-
     public void delete(Item item) {
         int index = mItems.indexOf(item);
         delete(index);
@@ -164,6 +167,10 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
 
     public void clear() {
         mItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public void refresh() {
         notifyDataSetChanged();
     }
 

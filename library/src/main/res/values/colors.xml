@@ -17,4 +17,6 @@
 
     <color name="recycler_click_sel">#44CCCCCC</color>
     <color name="recycler_click_nor">@color/white</color>
+
+    <color name="blue">#FF33B5E5</color>
 </resources>

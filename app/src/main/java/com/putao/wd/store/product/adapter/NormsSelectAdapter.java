@@ -1,4 +1,4 @@
-package com.putao.wd.product.adapter;
+package com.putao.wd.store.product.adapter;
 
 import android.content.Context;
 import android.view.View;

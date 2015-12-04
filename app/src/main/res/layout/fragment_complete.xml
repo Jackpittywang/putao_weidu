@@ -10,11 +10,12 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
+        android:background="@color/transparent"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="完善用户信息"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title="保存"
-        auto:nav_right_title_color="@color/text_main_color_nor" />
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,13 +58,13 @@
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
-                android:singleLine="false"
+                android:hint="个人简介"
                 android:maxLength="100"
-                android:hint="个人简介" />
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:singleLine="false" />
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"

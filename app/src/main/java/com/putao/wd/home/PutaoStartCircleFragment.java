@@ -14,6 +14,7 @@ import com.putao.wd.dto.ActionNewsItem;
 import com.putao.wd.dto.Banner;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -56,7 +57,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         setMainTitleColor(Color.WHITE);
         sticky_layout.canScrollView();
         adapter = new ActionNewsAdapter(mActivity, getTestData());
@@ -81,6 +82,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         });
         refresh();
         addListener();
+
+//        getBannerList();
     }
 
     /**
@@ -91,7 +94,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 , new SimpleFastJsonCallback<ArrayList<Banner>>(Banner.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Banner> result) {
-
+                loading.dismiss();
+                Logger.d(result.toString());
             }
         });
     }

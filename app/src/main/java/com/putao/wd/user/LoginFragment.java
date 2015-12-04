@@ -43,7 +43,7 @@ public class LoginFragment extends PTWDFragment implements View.OnClickListener,
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         et_mobile.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
     }

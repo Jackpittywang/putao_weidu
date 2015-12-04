@@ -8,7 +8,8 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ProductItem;
 import com.putao.wd.home.adapter.ProductAdapter;
-import com.putao.wd.product.ProductDetailActivity;
+import com.putao.wd.store.product.ProductDetailActivity;
+import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -44,7 +45,7 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         setMainTitleColor(Color.WHITE);
         mHeader.attachTo(rv_content, true);
         adapter = new ProductAdapter(mActivity, null);
@@ -97,5 +98,10 @@ public class PutaoStoreFragment extends PTWDFragment {
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    @Override
+    public void onRightAction() {
+        startActivity(ShoppingCarActivity.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.putao.wd.product;
+package com.putao.wd.store.product;
 
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +46,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
         sticky_layout.canScrollView();
-        wv_content.loadUrl("http://www.qq.com");
+        wv_content.loadUrl("http://www.putao.com");
     }
 
     private void addListener() {
