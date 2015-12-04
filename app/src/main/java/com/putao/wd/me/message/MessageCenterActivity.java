@@ -28,6 +28,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ * 消息中心
+ * Created by wangou on 2015/12/1.
+ */
 public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener,TitleBar.TitleItemSelectedListener {
     @Bind(R.id.brv_messagelist)
     LoadMoreRecyclerView brv_messagelist;//消息列表
