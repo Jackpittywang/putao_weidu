@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 通知：“回复”适配器
+ * 消息中心：“回复”适配器
  * Created by wango on 2015/12/2.
  */
 public class MsgReplyAdapter  extends LoadMoreAdapter<MessageReplyItem,MsgReplyAdapter.MsgReplyViewHolder> {
