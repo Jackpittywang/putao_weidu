@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 
 import com.putao.wd.R;
 
-/*
-**create by wangou
-**消息-通知
+
+/**
+ * 消息-通知
+ * Created by wangou on 2015/12/1.
  */
 public class MessageNotifyFragment extends Fragment {
     @Override

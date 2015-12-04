@@ -7,10 +7,9 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
-
-/*
-**create by wangou
-**关于我们
+/**
+ * 关于我们
+ * Created by wangou on 2015/12/1.
  */
 public class AboutUsActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
