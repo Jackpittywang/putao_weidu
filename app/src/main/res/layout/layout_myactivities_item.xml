@@ -44,7 +44,7 @@
             android:gravity="center"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:text="体验"
             android:textSize="@dimen/text_size_12sp"
             android:textColor="@color/white"
