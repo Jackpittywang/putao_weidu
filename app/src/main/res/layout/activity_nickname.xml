@@ -28,6 +28,7 @@
             android:textColor="#313131"
             android:maxLength="20"
             android:maxLines="1"
+            android:drawableRight="@drawable/close_selector"
             android:hint="这里显示用户昵称"
             android:paddingLeft="10dp"
             android:background="#fff"
