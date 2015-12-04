@@ -4,13 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_praise_headericon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:placeholderImage="@drawable/tab_bar_me_sel"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
     <TextView
-        android:id="@+id/tv_personinfo_address"
+        android:id="@+id/tv_praise_usernickname"
         android:textColor="#313131"
         android:layout_weight="1"
         android:textSize="@dimen/text_size_16sp"
@@ -23,11 +24,13 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
         <TextView
+            android:visibility="invisible"
             android:id="@+id/tv_praise_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
-            android:id="@+id/tv_praise_userdetail"
+            android:id="@+id/iv_praise_userdetail"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/btn_arrow"/>
