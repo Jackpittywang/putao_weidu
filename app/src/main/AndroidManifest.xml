@@ -113,6 +113,9 @@
         <!-- 个人简历 -->
         <activity android:name=".me.information.ResumeActivity" >
         </activity>
+        <!--活动详情-->
+        <activity android:name=".home.activities.ActivitiesDetailActivity" >
+        </activity>
     </application>
 
 </manifest>
