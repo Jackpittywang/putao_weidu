@@ -19,7 +19,7 @@ import butterknife.OnClick;
  */
 public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.ll_main)
-    LinearLayout ll_main;
+    LinearLayout ll_main;//当前窗体
 
     private SelectPopupWindow mSelectPopupWindow;
 
