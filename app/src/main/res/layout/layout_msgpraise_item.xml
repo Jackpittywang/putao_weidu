@@ -9,7 +9,7 @@
     android:paddingRight="10dp"
     android:background="@color/transparent">
 
-    <!--消息通知图标-->
+    <!--赞用户图标-->
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_praise_headericon"
         app:roundAsCircle="true"
@@ -17,14 +17,14 @@
         android:layout_height="40dp"
         app:placeholderImage="@drawable/tab_bar_me_sel"/>
 
-    <!--消息通知介绍-->
+    <!--赞介绍-->
     <LinearLayout
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--消息通知标题-->
+        <!--赞标题-->
         <TextView
             android:id="@+id/tv_praise_usernickname"
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_size_14sp" />
 
-        <!--消息通知日期-->
+        <!--赞日期-->
         <TextView
             android:id="@+id/tv_praise_date"
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:singleLine="false"
             android:text="刚刚而已"/>
 
-        <!--通知消息内容-->
+        <!--被赞内容-->
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
@@ -77,6 +77,7 @@
                 <!--android:text="："-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content" />-->
+            <!--被赞内容-->
             <TextView
                 android:id="@+id/tv_praised_content"
                 android:layout_width="wrap_content"
