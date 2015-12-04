@@ -1,4 +1,4 @@
-package com.putao.wd.me.myactivities;
+package com.putao.wd.me.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +11,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.MyActivitiesItem;
-import com.putao.wd.me.myactivities.adapter.MyActivitiesAdapter;
+import com.putao.wd.me.activities.adapter.MyActivitiesAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView.OnLoadMoreListener;
 import java.util.ArrayList;

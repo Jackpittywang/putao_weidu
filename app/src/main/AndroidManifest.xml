@@ -102,12 +102,12 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".me.myactivities.MyActivitiesActivity" >
+        <activity android:name=".me.activities.MyActivitiesActivity" >
         </activity>
         <!-- 个人信息 -->
-        <activity android:name=".me.personalinfo.PersonalInformationActivity" >
+        <activity android:name=".me.information.PersonalInformationActivity" >
         </activity>
-        <activity android:name=".me.personalinfo.NicknameActivity" >
+        <activity android:name=".me.information.NicknameActivity" >
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package com.putao.wd.me.personalinfo;
+package com.putao.wd.me.information;
 
 import android.os.Bundle;
 import android.view.View;

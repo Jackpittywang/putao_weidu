@@ -1,7 +1,6 @@
-package com.putao.wd.me.myactivities.adapter;
+package com.putao.wd.me.activities.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;

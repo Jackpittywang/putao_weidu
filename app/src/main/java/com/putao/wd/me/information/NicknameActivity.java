@@ -1,4 +1,4 @@
-package com.putao.wd.me.personalinfo;
+package com.putao.wd.me.information;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +16,7 @@ public class NicknameActivity extends PTWDActivity<GlobalApplication> implements
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
