@@ -31,11 +31,11 @@ public class MyActivitiesAdapter extends LoadMoreAdapter<MyActivitiesItem, MyAct
         holder.tv_myactivities_title.setText(myActivitiesItem.getTitle());
         holder.tv_myactivities_content.setText(myActivitiesItem.getIntroduction());
         holder.tv_myactivities_status.setText(myActivitiesItem.getStatus());
-        if("体验".equals(myActivitiesItem.getStatus())) {
-            holder.tv_myactivities_title.setTextColor(Color.parseColor("#000000"));
-        }else{
-            holder.tv_myactivities_status.setBackgroundColor(Color.parseColor("#959595"));
-        }
+//        if("体验".equals(myActivitiesItem.getStatus())) {
+//            holder.tv_myactivities_title.setTextColor(Color.parseColor("#000000"));
+//        }else{
+//            holder.tv_myactivities_status.setBackgroundColor(Color.parseColor("#959595"));
+//        }
     }
 
     static class MyActivitiesViewHolder extends BasicViewHolder {

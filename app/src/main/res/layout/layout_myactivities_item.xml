@@ -14,6 +14,7 @@
             android:id="@+id/tv_myactivities_title"
             android:text="活动标题最多15个汉字限制2行活动标题最多15个汉字限制2行"
             android:maxLines="2"
+            android:textColor="#000"
             android:textSize="@dimen/text_size_16sp"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
