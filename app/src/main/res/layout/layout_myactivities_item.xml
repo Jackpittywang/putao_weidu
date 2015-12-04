@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:padding="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp">
     <LinearLayout
         android:layout_weight="1"
         android:orientation="vertical"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_myactivities_title"
-            android:text="活动标题最多15个汉字限制2行"
+            android:text="活动标题最多15个汉字限制2行活动标题最多15个汉字限制2行"
             android:maxLines="2"
             android:textSize="@dimen/text_size_16sp"
             android:layout_marginBottom="10dp"
@@ -29,12 +29,12 @@
     </LinearLayout>
     <RelativeLayout
         android:gravity="center"
-        android:layout_width="60dp"
-        android:layout_height="60dp">
+        android:layout_width="80dp"
+        android:layout_height="80dp">
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_myactivities_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             app:roundedCornerRadius="4px"
             />
         <TextView
@@ -45,10 +45,11 @@
             android:layout_marginRight="10dp"
             android:text="体验"
             android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/white"
             android:background="@drawable/textview_circle_coner"
             android:layout_marginTop="5dp"
-            android:layout_width="30dp"
-            android:layout_height="15dp" />
+            android:layout_width="35dp"
+            android:layout_height="20dp" />
     </RelativeLayout>
 
 </LinearLayout>
