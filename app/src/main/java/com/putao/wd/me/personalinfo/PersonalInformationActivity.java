@@ -1,13 +1,11 @@
 package com.putao.wd.me.personalinfo;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.view.tab.TitleBar;
 
 import butterknife.OnClick;
 
@@ -23,7 +21,7 @@ public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
