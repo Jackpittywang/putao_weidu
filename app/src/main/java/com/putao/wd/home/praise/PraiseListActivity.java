@@ -20,7 +20,7 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
