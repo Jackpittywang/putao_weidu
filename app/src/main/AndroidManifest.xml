@@ -107,6 +107,8 @@
         <!-- 个人信息 -->
         <activity android:name=".me.personalinfo.PersonalInformationActivity" >
         </activity>
+        <activity android:name=".me.personalinfo.NicknameActivity" >
+        </activity>
     </application>
 
 </manifest>
