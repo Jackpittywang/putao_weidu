@@ -21,7 +21,7 @@ public class NewsDetailActivity  extends PTWDActivity<GlobalApplication> impleme
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
