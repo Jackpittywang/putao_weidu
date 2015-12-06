@@ -123,7 +123,7 @@
                 android:background="@color/divider_color" />
 
             <!--标题栏-->
-            <com.sunnybear.library.view.tab.TitleBar
+            <com.sunnybear.library.view.select.TitleBar
                 android:id="@id/stickyHeaderLayout_sticky"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -133,7 +133,7 @@
                 android:padding="8dp">
 
                 <!--概述-->
-                <com.sunnybear.library.view.tab.TitleItem
+                <com.sunnybear.library.view.select.TitleItem
                     android:id="@+id/ll_all"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                     auto:title_text="概述" />
 
                 <!--规格参数-->
-                <com.sunnybear.library.view.tab.TitleItem
+                <com.sunnybear.library.view.select.TitleItem
                     android:id="@+id/ll_ing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                     auto:title_text="规格参数" />
 
                 <!--包装清单-->
-                <com.sunnybear.library.view.tab.TitleItem
+                <com.sunnybear.library.view.select.TitleItem
                     android:id="@+id/ll_finish"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
                     auto:title_text="包装清单" />
 
                 <!--售后-->
-                <com.sunnybear.library.view.tab.TitleItem
+                <com.sunnybear.library.view.select.TitleItem
                     android:id="@+id/ll_news"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
                     auto:inactive_color="@color/text_color_gray"
                     auto:indicator_color="@color/text_main_color_nor"
                     auto:title_text="售后" />
-            </com.sunnybear.library.view.tab.TitleBar>
+            </com.sunnybear.library.view.select.TitleBar>
 
             <View
                 android:layout_width="match_parent"
