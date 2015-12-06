@@ -1,8 +1,7 @@
 package com.putao.wd.home.apply;
 
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,9 +10,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ApplyListItem;
-import com.putao.wd.dto.PraiseListItem;
 import com.putao.wd.home.apply.adapter.ApplyListAdapter;
-import com.putao.wd.home.praise.adapter.PraiseListAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -28,11 +25,11 @@ import butterknife.Bind;
  */
 public class ApplyListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.brv_applylist)
-    LoadMoreRecyclerView brv_applylist;
+    LoadMoreRecyclerView brv_applylist;//报名列表
     @Bind(R.id.tv_nomore)
-    TextView tv_nomore;
+    TextView tv_nomore;//没有更多
     @Bind(R.id.ll_applylist)
-    LinearLayout ll_applylist;
+    LinearLayout ll_applylist;//报名列表layout区域
     @Override
     protected int getLayoutId() {
         return R.layout.activity_apply_list;
@@ -42,7 +39,7 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
         addListener();
-        this.initPraiseList();
+        this.initApplyList();
     }
 
     private void addListener() {
@@ -57,7 +54,8 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
         });
     }
 
-    private void initPraiseList(){
+    //初始化报名列表数据
+    private void initApplyList(){
         if(this.initApplyListData().size() != 0) {
             this.ll_applylist.setVisibility(View.VISIBLE);
             this.tv_nomore.setVisibility(View.GONE);
