@@ -81,16 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#ebebeb" />
-        <!--间隔线-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/divider_color" />
 
-        <!--间隔区-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#ebebeb" />
     </LinearLayout>
 </LinearLayout>
