@@ -53,11 +53,10 @@
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
                 android:layout_height="48dp">
-                <EditText
-                    android:id="@+id/et_childname"
+                <TextView
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:drawableRight=""
                     android:textColorHint="#646464"
                     android:background="@null"
@@ -66,9 +65,17 @@
                     android:text="*"
                     android:textColor="@color/text_color_red"
                     android:gravity="left"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/et_childname"
+                    android:layout_weight="1"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:drawableRight=""
+                    android:textColorHint="#646464"
+                    android:background="@null"/>
                 <ImageView
                     android:layout_marginRight="10dp"
                     android:src="@drawable/btn_arrow_down"
@@ -96,12 +103,10 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
-                <EditText
-                    android:id="@+id/et_phone"
+                <TextView
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
-                    android:layout_height="48dp"
-                    android:drawableRight=""
+                    android:layout_height="wrap_content"
                     android:textColorHint="#646464"
                     android:background="@null"
                     android:hint="手机号码"/>
@@ -109,9 +114,17 @@
                     android:text="*"
                     android:textColor="@color/text_color_red"
                     android:gravity="left"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <com.sunnybear.library.view.CleanableEditText
+                    android:id="@+id/et_phone"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:textColorHint="#646464"
+                    android:drawableRight="@drawable/close_selector"
+                    android:background="@null"/>
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -134,8 +147,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
-                <EditText
-                    android:id="@+id/et_nickname"
+                <TextView
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
@@ -147,9 +159,17 @@
                     android:text="*"
                     android:textColor="@color/text_color_red"
                     android:gravity="left"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/et_nickname"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:drawableRight=""
+                    android:textColorHint="#646464"
+                    android:background="@null"/>
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -173,7 +193,6 @@
                 android:layout_height="48dp">
 
                     <EditText
-                        android:id="@+id/et_childage"
                         style="@style/WeiduText.EditText"
                         android:layout_width="100dp"
                         android:layout_height="48dp"
@@ -184,10 +203,17 @@
                     <TextView
                         android:text="*"
                         android:textColor="@color/text_color_red"
-                        android:gravity="left"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/et_childage"
+                        style="@style/WeiduText.EditText"
+                        android:layout_width="100dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:drawableRight=""
+                        android:textColorHint="#646464"
+                        android:background="@null"/>
                 <ImageView
                     android:layout_marginRight="10dp"
                     android:src="@drawable/btn_arrow_down"
@@ -222,17 +248,29 @@
     <LinearLayout
         android:id="@+id/ll_activitytimes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_activitytimes"
-            style="@style/WeiduText.EditText"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:textColorHint="#646464"
-            android:hint="活动场次"/>
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/WeiduText.EditText"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:hint="活动场次"/>
+            <EditText
+                android:id="@+id/et_activitytimes"
+                style="@style/WeiduText.EditText"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"/>
+        </LinearLayout>
         <!--间隔线-->
         <View
             android:layout_width="match_parent"
@@ -247,15 +285,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_QQorWX"
-            style="@style/WeiduText.EditText"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:textColorHint="#646464"
-            android:hint="QQ/微信"/>
+            android:layout_height="wrap_content">
+            <EditText
+                style="@style/WeiduText.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:hint="QQ/微信"/>
+            <EditText
+                android:id="@+id/et_QQorWX"
+                android:layout_weight="1"
+                style="@style/WeiduText.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"/>
+        </LinearLayout>
         <!--间隔线-->
         <View
             android:layout_width="match_parent"
@@ -270,15 +319,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_parentname"
-            style="@style/WeiduText.EditText"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:textColorHint="#646464"
-            android:hint="家长姓名"/>
+            android:layout_height="wrap_content">
+            <EditText
+                style="@style/WeiduText.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:hint="家长姓名"/>
+            <EditText
+                android:id="@+id/et_parentname"
+                style="@style/WeiduText.EditText"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"/>
+        </LinearLayout>
         <!--间隔线-->
         <View
             android:layout_width="match_parent"
