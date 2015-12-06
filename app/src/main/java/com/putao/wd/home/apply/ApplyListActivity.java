@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 活动详情
+ * 报名列表
  * Created by wango on 2015/12/4.
  *
  */
