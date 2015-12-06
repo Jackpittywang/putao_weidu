@@ -7,10 +7,10 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
- * Created by guchenkai on 2015/12/6.
+ * 标签类
+ * Created by guchenkai on 2015/12/4.
  */
-public class TagItem extends TextView {
-
+class TagItem extends TextView {
     private boolean isState;
     private Tag tag;
 

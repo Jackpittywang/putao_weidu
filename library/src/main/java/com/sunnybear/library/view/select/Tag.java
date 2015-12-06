@@ -2,6 +2,10 @@ package com.sunnybear.library.view.select;
 
 import java.io.Serializable;
 
+/**
+ * 标签实体
+ * Created by guchenkai on 2015/12/4.
+ */
 public class Tag implements Serializable {
     private int id;
     private boolean isEnable = true;

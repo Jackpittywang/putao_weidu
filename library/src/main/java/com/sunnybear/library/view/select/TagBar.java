@@ -14,7 +14,10 @@ import com.sunnybear.library.util.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 标签选择控件
+ * Created by guchenkai on 2015/12/4.
+ */
 public class TagBar extends FlowLayout implements OnClickListener {
     private List<Tag> mTags = new ArrayList<>();
 

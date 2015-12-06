@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 
 import com.sunnybear.library.R;
 
+/**
+ * 排版控件
+ * Created by guchenkai on 2015/12/4.
+ */
 public class FlowLayout extends ViewGroup {
 
     public static final int HORIZONTAL = 0;
