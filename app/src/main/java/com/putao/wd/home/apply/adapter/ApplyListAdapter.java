@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 报名列表
  * Created by wango on 2015/12/6.
  */
 public class ApplyListAdapter extends LoadMoreAdapter<ApplyListItem, ApplyListAdapter.ApplyListViewHolder> {

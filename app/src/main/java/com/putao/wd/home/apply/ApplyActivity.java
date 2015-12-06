@@ -7,6 +7,11 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
+/**
+ * 我要参加
+ * Created by wango on 2015/12/4.
+ *
+ */
 public class ApplyActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override

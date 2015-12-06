@@ -21,6 +21,11 @@ import java.util.List;
 
 import butterknife.Bind;
 
+/**
+ * 活动详情
+ * Created by wango on 2015/12/4.
+ *
+ */
 public class ApplyListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.brv_applylist)
     LoadMoreRecyclerView brv_applylist;
