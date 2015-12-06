@@ -83,7 +83,7 @@
         <activity
             android:name=".qrcode.CaptureActivity"
             android:screenOrientation="portrait" />
-        <!--报名列表-->
+        <!-- 报名列表 -->
         <activity android:name=".home.apply.ApplyListActivity" />
         <!-- shareSDK -->
         <activity
@@ -109,7 +109,9 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+        <!--新闻详情-->
+        <activity android:name=".home.news.NewsDetailActivity" >
+        </activity>
     </application>
 
 </manifest>
