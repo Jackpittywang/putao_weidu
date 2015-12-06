@@ -46,7 +46,6 @@
             android:id="@+id/ll_childname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_phone"
             android:orientation="vertical">
             <LinearLayout
                 android:orientation="horizontal"
@@ -57,7 +56,6 @@
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:drawableRight=""
                     android:textColorHint="#646464"
                     android:background="@null"
                     android:hint="孩子年龄"/>
@@ -73,7 +71,6 @@
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:drawableRight=""
                     android:textColorHint="#646464"
                     android:background="@null"/>
                 <ImageView
@@ -151,7 +148,6 @@
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:drawableRight=""
                     android:textColorHint="#646464"
                     android:background="@null"
                     android:hint="孩子昵称"/>
@@ -167,7 +163,6 @@
                     android:layout_width="100dp"
                     android:layout_weight="1"
                     android:layout_height="48dp"
-                    android:drawableRight=""
                     android:textColorHint="#646464"
                     android:background="@null"/>
             </LinearLayout>
@@ -196,7 +191,6 @@
                         style="@style/WeiduText.EditText"
                         android:layout_width="100dp"
                         android:layout_height="48dp"
-                        android:drawableRight=""
                         android:textColorHint="#646464"
                         android:background="@null"
                         android:hint="孩子年龄"/>
@@ -211,7 +205,6 @@
                         android:layout_width="100dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:drawableRight=""
                         android:textColorHint="#646464"
                         android:background="@null"/>
                 <ImageView
@@ -349,7 +342,7 @@
     </LinearLayout>
     <TextView
         android:paddingLeft="15dp"
-        android:textColorHint="c2c2c2"
+        android:textColorHint="#c2c2c2"
         android:textSize="16sp"
         android:paddingTop="10dp"
         android:hint="留言"
