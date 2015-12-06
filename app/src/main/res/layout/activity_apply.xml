@@ -155,11 +155,12 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:textColorHint="#646464"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:hint="孩子昵称"/>
                 <TextView
                     android:text="*"
                     android:textColor="@color/text_color_red"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
@@ -198,20 +199,22 @@
                         android:layout_width="100dp"
                         android:layout_height="48dp"
                         android:textColorHint="#646464"
-                        android:background="@null"
+                        android:background="@color/white"
                         android:hint="孩子年龄"/>
                     <TextView
                         android:text="*"
                         android:textColor="@color/text_color_red"
+                        android:gravity="center_vertical"
+                        android:background="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent" />
                     <TextView
                         android:id="@+id/tv_childage"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textColorHint="#646464"
-                        android:background="@null"/>
+                        android:background="@color/white"/>
                 <ImageView
                     android:layout_marginRight="10dp"
                     android:src="@drawable/btn_arrow_down"
