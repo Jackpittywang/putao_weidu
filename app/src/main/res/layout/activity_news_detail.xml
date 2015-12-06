@@ -10,7 +10,7 @@
     <com.sunnybear.library.view.NavigationBar
         android:visibility="visible"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="新闻详情"
+        auto:nav_main_title="活动详情"
         auto:nav_right_icon="@drawable/btn_20_share_p_nor"
         style="@style/style_navigation_bar"/>
     <!--间隔线-->
@@ -26,15 +26,15 @@
         android:layout_height="match_parent">
         <!--顶部图片区域-->
         <RelativeLayout
-            android:id="@+id/layout_activitiesdetail_header"
+            android:id="@+id/layout_newsdetail_header"
             android:layout_width="match_parent"
             android:layout_height="150dp">
             <com.sunnybear.library.view.image.ImageDraweeView
-                android:id="@+id/iv_activitiesdetail_header"
+                android:id="@+id/iv_newsdetail_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <TextView
-                android:id="@+id/tv_activitiesdetail_status"
+                android:id="@+id/tv_newsdetail_status"
                 android:textColor="@color/white"
                 android:padding="5dp"
                 android:textSize="12sp"
@@ -49,7 +49,7 @@
         </RelativeLayout>
         <!--活动标题-->
         <TextView
-            android:id="@+id/tv_activitiesdetail_title"
+            android:id="@+id/tv_newsdetail_title"
             android:text="活动标题最多十五个汉字限制一行"
             android:textSize="@dimen/text_size_16sp"
             android:maxLength="15"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content" />
         <!--活动简介-->
         <TextView
-            android:id="@+id/tv_activitiesdetail_resume"
+            android:id="@+id/tv_newsdetail_resume"
             android:text="活动简介字数限制四十字，这里完整显示全部简介的信息，这粒是俩行这里完整显示全部简介的信息，这粒是俩行，"
             android:textSize="@dimen/text_size_16sp"
             android:maxLines="2"
@@ -81,6 +81,76 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#ebebeb" />
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+        <!--地址-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="#fff"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_20_20"/>
+            <TextView
+                android:id="@+id/tv_news_address"
+                android:textColor="#313131"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_16sp"
+                android:text="上海.徐汇区.贝岭大厦"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/btn_arrow"/>
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+        <!--日期-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="#fff"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_20_21"/>
+            <TextView
+                android:id="@+id/tv_news_time"
+                android:textColor="#313131"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_16sp"
+                android:text="2015/12/25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
 
+        <!--间隔区-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#ebebeb" />
     </LinearLayout>
 </LinearLayout>
