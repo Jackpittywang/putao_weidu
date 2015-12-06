@@ -184,7 +184,6 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:gravity="1"
                 android:layout_height="48dp">
 
                     <EditText
