@@ -30,7 +30,7 @@ public class ApplyActivity extends PTWDActivity<GlobalApplication> implements Vi
     @Bind(R.id.et_nickname)
     EditText et_nickname;//孩子昵称
     @Bind(R.id.tv_childage)
-    EditText tv_childage;//孩子年龄
+    TextView tv_childage;//孩子年龄
     @Bind(R.id.et_activitytimes)
     EditText et_activitytimes;//活动场次
     @Bind(R.id.et_QQorWX)
