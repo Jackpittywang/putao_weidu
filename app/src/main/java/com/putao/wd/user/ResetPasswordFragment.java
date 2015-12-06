@@ -13,9 +13,6 @@ import android.widget.ImageView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
-import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.controller.intent.FragmentIntent;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 
 import butterknife.Bind;
@@ -41,7 +38,7 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());//设置为隐藏密码
         et_password.addTextChangedListener(this);
     }

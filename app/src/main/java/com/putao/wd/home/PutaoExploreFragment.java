@@ -20,7 +20,7 @@ public class PutaoExploreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         setMainTitleColor(Color.WHITE);
     }
 

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
-import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.ResourcesUtils;
 
 import butterknife.Bind;
@@ -27,7 +26,7 @@ public class ProtocolFragment extends PTWDFragment implements View.OnClickListen
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         String protocol = ResourcesUtils.getAssetTextFile(mActivity, "protocol.txt");
         tv_protocol.setText(Html.fromHtml(protocol));
     }

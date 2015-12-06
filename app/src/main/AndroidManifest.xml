@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -55,7 +56,7 @@
             android:screenOrientation="portrait" />
         <!-- 商品详情 -->
         <activity
-            android:name=".product.ProductDetailActivity"
+            android:name=".store.product.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 关于我们 -->
         <activity
@@ -72,6 +73,10 @@
         <!-- 关注成功 -->
         <activity
             android:name=".explore.AttentionSuccessActivity"
+            android:screenOrientation="portrait" />
+        <!--购物车-->
+        <activity
+            android:name=".store.shopping.ShoppingCarActivity"
             android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
@@ -102,23 +107,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".me.activities.MyActivitiesActivity" >
-        </activity>
-        <!-- 个人信息 -->
-        <activity android:name=".me.information.PersonalInformationActivity" >
-        </activity>
-        <!-- 昵称 -->
-        <activity android:name=".me.information.NicknameActivity" >
-        </activity>
-        <!-- 个人简历 -->
-        <activity android:name=".me.information.ResumeActivity" >
-        </activity>
-        <!-- 活动详情 -->
-        <activity android:name=".home.activities.ActivitiesDetailActivity" >
-        </activity>
-        <!--点赞列表-->
-        <activity android:name=".home.praise.PraiseListActivity" >
-        </activity>
     </application>
 
 </manifest>

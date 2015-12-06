@@ -33,8 +33,7 @@
                 android:id="@+id/sticky_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                auto:scrollable_closeUpAnimatorInterpolator="@android:anim/bounce_interpolator"
-                auto:scrollable_maxScroll="208dp">
+                auto:scrollable_closeUpAnimatorInterpolator="@android:anim/bounce_interpolator">
 
                 <!--头部布局-->
                 <RelativeLayout

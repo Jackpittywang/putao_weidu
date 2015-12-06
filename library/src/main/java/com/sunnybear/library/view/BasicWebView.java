@@ -11,17 +11,20 @@ import android.webkit.WebViewClient;
  * Created by guchenkai on 2015/11/30.
  */
 public class BasicWebView extends WebView {
+
     public BasicWebView(Context context) {
         super(context);
+        initView();
     }
 
     public BasicWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initView();
     }
 
     public BasicWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        initView();
+        initView();
     }
 
     /**

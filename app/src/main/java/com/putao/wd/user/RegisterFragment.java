@@ -42,7 +42,7 @@ public class RegisterFragment extends PTWDFragment implements View.OnClickListen
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavgation();
+        addNavigation();
         et_mobile.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
         et_sms_verify.addTextChangedListener(this);

@@ -34,13 +34,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:text="广告banner" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_color" />
 
                 <!--产品介绍-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
@@ -69,8 +76,8 @@
                             android:layout_marginTop="2dp"
                             android:maxLines="2"
                             android:singleLine="false"
-                            android:textColor="@color/text_color_gray"
-                            android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)" />
+                            android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
+                            android:textColor="@color/text_color_gray" />
                     </LinearLayout>
 
                     <!--间隔线-->
@@ -110,20 +117,82 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
+
             <!--标题栏-->
-            <TextView
+            <com.sunnybear.library.view.tab.TitleBar
                 android:id="@id/stickyHeaderLayout_sticky"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="#CCFFFF"
-                android:gravity="center"
-                android:text="标题栏" />
+                android:layout_centerVertical="true"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!--概述-->
+                <com.sunnybear.library.view.tab.TitleItem
+                    android:id="@+id/ll_all"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:is_active="true"
+                    auto:title_text="概述" />
+
+                <!--规格参数-->
+                <com.sunnybear.library.view.tab.TitleItem
+                    android:id="@+id/ll_ing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:title_text="规格参数" />
+
+                <!--包装清单-->
+                <com.sunnybear.library.view.tab.TitleItem
+                    android:id="@+id/ll_finish"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:title_text="包装清单" />
+
+                <!--售后-->
+                <com.sunnybear.library.view.tab.TitleItem
+                    android:id="@+id/ll_news"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:title_text="售后" />
+            </com.sunnybear.library.view.tab.TitleBar>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
 
             <!--H5页面-->
             <com.sunnybear.library.view.BasicWebView
                 android:id="@id/stickyHeaderLayout_scrollable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp" />
         </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
         <!--价格栏-->

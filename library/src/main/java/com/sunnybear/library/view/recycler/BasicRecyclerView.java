@@ -127,7 +127,7 @@ public class BasicRecyclerView extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         BasicAdapter basicAdapter = getBasicAdapter(adapter);
         basicAdapter.setProcessDrawable(mProcessBackground);
-        super.setAdapter(adapter);
+        super.setAdapter(basicAdapter);
     }
 
     /**
@@ -156,5 +156,15 @@ public class BasicRecyclerView extends RecyclerView {
 
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         getBasicAdapter().setOnItemLongClickListener(onItemLongClickListener);
+    }
+
+    @Override
+    protected void onMeasure(int widthSpec, int heightSpec) {
+        int height = 0;
+        if (!is_inner)
+            height = heightSpec;
+        else
+            height = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthSpec, height);
     }
 }

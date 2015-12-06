@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
  * Created by guchenkai on 2015/11/29.
  */
 public abstract class BasicPopupWindow extends PopupWindow implements View.OnTouchListener, View.OnKeyListener {
+    protected Context mContext;
     private View mRootView;
     private ViewGroup mMainLayout;
 
@@ -30,11 +31,8 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     protected abstract int getLayoutId();
 
     public BasicPopupWindow(Context context) {
-        this(context, true);
-    }
-
-    public BasicPopupWindow(Context context, boolean isClickOtherClosePopupWindow) {
         super(context);
+        mContext = context;
         int layoutId = getLayoutId();
         if (layoutId == 0)
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
@@ -48,9 +46,10 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         setBackgroundDrawable(dw);//设置背景
-        if (isClickOtherClosePopupWindow)
-            //点击PopupWindow之外的区域关闭PopupWindow
-            mRootView.setOnTouchListener(this);
+        setFocusable(true);
+        setOutsideTouchable(true);
+        //点击PopupWindow之外的区域关闭PopupWindow
+//            mRootView.setOnTouchListener(this);
         //响应返回键
         mRootView.setOnKeyListener(this);
     }

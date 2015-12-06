@@ -50,24 +50,6 @@
         <attr name="nav_has_divider" format="boolean" />
     </declare-styleable>
 
-    <!--CircleIndicator-->
-    <declare-styleable name="CircleIndicator">
-        <attr name="R" format="dimension" />
-        <attr name="margin" format="dimension" />
-        <attr name="none_background" format="color|integer" />
-        <attr name="selected_background" format="color|integer" />
-        <attr name="gravity">
-            <enum name="left" value="0" />
-            <enum name="center" value="1" />
-            <enum name="right" value="2" />
-        </attr>
-        <attr name="mode">
-            <enum name="inside" value="0" />
-            <enum name="outside" value="1" />
-            <enum name="solo" value="2" />
-        </attr>
-    </declare-styleable>
-
     <!--CleanableEditText-->
     <declare-styleable name="CleanableEditText">
         <attr name="maxLength" format="integer" />
@@ -146,5 +128,37 @@
         <attr name="indicator_title_color" format="color|reference" />
         <attr name="indicator_title_size" format="dimension" />
         <attr name="indicator_text_color" format="color|reference" />
+    </declare-styleable>
+
+    <!--SwitchButton-->
+    <declare-styleable name="SwitchButton">
+        <attr name="isSelect" format="boolean" />
+        <attr name="selDrawable" format="reference" />
+        <attr name="norDrawable" format="reference" />
+    </declare-styleable>
+
+    <!--FlowLayout-->
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="verticalSpacing" format="dimension" />
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="debugDraw" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams">
+        <attr name="layout_newLine" format="boolean" />
+        <attr name="layout_horizontalSpacing" format="dimension" />
+        <attr name="layout_verticalSpacing" format="dimension" />
+    </declare-styleable>
+
+    <!--TagBar-->
+    <declare-styleable name="TagBar">
+        <attr name="tag_background_sel" format="reference" />
+        <attr name="tag_background_nor" format="reference" />
+        <attr name="tag_text_color_sel" format="color|reference" />
+        <attr name="tag_text_color_nor" format="color|reference" />
+        <attr name="tag_text_color_dis" format="color|reference" />
     </declare-styleable>
 </resources>
