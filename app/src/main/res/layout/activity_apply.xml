@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_left_title="@string/cancel"
+        auto:nav_left_title_color="@drawable/text_select"
+        auto:nav_main_title="我要参加"
+        auto:nav_main_title_color="@color/text_color"
+        auto:nav_right_title="提交"/>
+    <TextView
+        android:gravity="center"
+        android:background="#ffE874"
+        android:textColor="#ed5564"
+        android:textSize="@dimen/text_size_14sp"
+        android:text="提交成功后，会有客服联系确认报名结果。"
+        android:layout_width="match_parent"
+        android:layout_height="34dp" />
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+    <!--间隔区-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ebebeb" />
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--家长身份-->
+        <LinearLayout
+            android:id="@+id/ll_parentrelation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_parentrelation"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textColorHint="#646464"
+                android:background="@null"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="家长身份"
+                android:inputType="phone"
+                auto:maxLength="11" />
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+
+        <!--手机号码-->
+        <LinearLayout
+            android:id="@+id/ll_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_phone"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textColorHint="#646464"
+                android:background="@null"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="手机号码"/>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+
+        <!--孩子昵称-->
+        <LinearLayout
+            android:id="@+id/ll_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_nickname"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="孩子昵称"/>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+
+        <!--孩子年龄-->
+        <LinearLayout
+            android:id="@+id/ll_chldage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_chldage"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textColorHint="#646464"
+                android:background="@null"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="孩子年龄"/>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+        <!--间隔区-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#ebebeb" />
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+        <!--活动场次-->
+        <LinearLayout
+            android:id="@+id/ll_activitytimes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_activitytimes"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="活动场次"/>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+        <!--QQ/微信-->
+        <LinearLayout
+            android:id="@+id/ll_QQorWX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_QQorWX"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="QQ/微信"/>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+        <!--家长姓名-->
+        <LinearLayout
+            android:id="@+id/ll_parentname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
+            android:orientation="vertical">
+
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_parentname"
+                style="@style/WeiduText.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:textColorHint="#646464"
+                android:drawableRight="@drawable/close_selector"
+                android:hint="家长姓名"/>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+        <TextView
+            android:paddingLeft="15dp"
+            android:textColorHint="c2c2c2"
+            android:textSize="16sp"
+            android:paddingTop="10dp"
+            android:hint="留言"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+        <TextView
+            android:layout_weight="1"
+            android:background="#ebebeb"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+    </LinearLayout>
+
+</LinearLayout>
