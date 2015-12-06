@@ -34,6 +34,20 @@ public class PraiseListAdapter  extends LoadMoreAdapter<PraiseListItem, PraiseLi
 
     public void onBindItem(PraiseListAdapter.PraiseListViewHolder holder, PraiseListItem praiseListItem, int position) {
         holder.iv_praise_headericon.setImageURL(praiseListItem.getUserIconUrl());
+        holder.tv_praise_usernickname.setText(praiseListItem.getUsername());
+        if("游客".equals(praiseListItem.getUserattr())){
+            holder.tv_praise_count.setVisibility(View.VISIBLE);
+            holder.tv_praise_count.setText(praiseListItem.getPraiseCount()+"个赞");
+        }else if("普通用户".equals(praiseListItem.getUserattr())){
+            holder.iv_praise_userdetail.setVisibility(View.VISIBLE);
+            holder.iv_praise_userdetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转到对应的用户主页
+                }
+            });
+        }
+
     }
 
     static class PraiseListViewHolder extends BasicViewHolder {

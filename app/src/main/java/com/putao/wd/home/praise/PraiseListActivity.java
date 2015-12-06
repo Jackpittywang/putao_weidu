@@ -14,6 +14,7 @@ import com.putao.wd.home.praise.adapter.PraiseListAdapter;
 import com.putao.wd.me.activities.adapter.MyActivitiesAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -27,8 +28,8 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
     LoadMoreRecyclerView brv_praiselist;
     @Bind(R.id.tv_nomore)
     TextView tv_nomore;
-    @Bind(R.id.ll_acitivites)
-    LinearLayout ll_acitivites;
+    @Bind(R.id.ll_praiselist)
+    LinearLayout ll_praiselist;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_praise_list;
@@ -55,18 +56,37 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
 
     private void initPraiseList(){
         if(this.initPraiseListData().size() != 0) {
-            this.ll_acitivites.setVisibility(View.VISIBLE);
+            this.ll_praiselist.setVisibility(View.VISIBLE);
             this.tv_nomore.setVisibility(View.GONE);
             PraiseListAdapter praiseListAdapter = new PraiseListAdapter(this, this.initPraiseListData());
             this.brv_praiselist.setAdapter(praiseListAdapter);
         } else {
-            this.ll_acitivites.setVisibility(View.GONE);
+            this.ll_praiselist.setVisibility(View.GONE);
             this.tv_nomore.setVisibility(View.VISIBLE);
         }
     }
 
     private List<PraiseListItem> initPraiseListData(){
-        return null;
+        List<PraiseListItem> praiseList=new ArrayList<>();
+        PraiseListItem item;
+
+        for (int i = 0; i < 20; i++) {
+            item=new PraiseListItem();
+            item.setUserIconUrl("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
+            item.setUsername("username" + i);
+            item.setPraiseCount(i+"");
+            if(i%2==0)
+                item.setUserattr("游客");
+            else if(i==9){
+                item.setUserattr("用户本人");
+            }
+            else{
+                item.setUserattr("普通用户");
+            }
+            praiseList.add(item);
+        }
+
+        return praiseList;
     }
 
     @Override

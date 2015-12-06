@@ -8,11 +8,11 @@ import java.io.Serializable;
  */
 public class PraiseListItem implements Serializable {
     private int id;
-    private String userIconUrl;
-    private String username;
-    private String userattr;
-    private String praiseCount;
-    private String userDetailUrl;
+    private String userIconUrl;//用户头像
+    private String username;//用户名
+    private String userattr;//用户类型
+    private String praiseCount;//点赞数
+    private String userDetailUrl;//用户主页链接
 
     public String getUserIconUrl() {
         return userIconUrl;
