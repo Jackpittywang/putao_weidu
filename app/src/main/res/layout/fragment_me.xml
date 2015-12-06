@@ -64,7 +64,7 @@
             android:orientation="horizontal">
 
             <!--待付款-->
-            <com.sunnybear.library.view.tab.IndicatorButton
+            <com.sunnybear.library.view.select.IndicatorButton
                 android:id="@+id/btn_pay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 auto:indicator_title_color="@color/text_color" />
 
             <!--待发货-->
-            <com.sunnybear.library.view.tab.IndicatorButton
+            <com.sunnybear.library.view.select.IndicatorButton
                 android:id="@+id/btn_deliver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 auto:indicator_title_color="@color/text_color" />
 
             <!--待收货-->
-            <com.sunnybear.library.view.tab.IndicatorButton
+            <com.sunnybear.library.view.select.IndicatorButton
                 android:id="@+id/btn_take_deliver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 auto:indicator_title_color="@color/text_color" />
 
             <!--售后-->
-            <com.sunnybear.library.view.tab.IndicatorButton
+            <com.sunnybear.library.view.select.IndicatorButton
                 android:id="@+id/btn_after_sale"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
