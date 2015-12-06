@@ -74,7 +74,7 @@
         <activity
             android:name=".explore.AttentionSuccessActivity"
             android:screenOrientation="portrait" />
-        <!--购物车-->
+        <!-- 购物车 -->
         <activity
             android:name=".store.shopping.ShoppingCarActivity"
             android:screenOrientation="portrait" />
@@ -107,6 +107,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".home.apply.ApplyActivity" >
+        </activity>
     </application>
 
 </manifest>
