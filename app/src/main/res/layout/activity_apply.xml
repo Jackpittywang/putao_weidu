@@ -12,7 +12,8 @@
         auto:nav_left_title_color="@drawable/text_select"
         auto:nav_main_title="我要参加"
         auto:nav_main_title_color="@color/text_color"
-        auto:nav_right_title="提交"/>
+        auto:nav_right_title="提交"
+        auto:nav_right_title_color="@drawable/text_select"/>
     <TextView
         android:gravity="center"
         android:background="#ffE874"
@@ -40,30 +41,38 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--家长身份-->
+        <!--孩子年龄-->
         <LinearLayout
-            android:id="@+id/ll_parentrelation"
+            android:id="@+id/ll_childname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/ll_phone"
             android:orientation="vertical">
-
-            <com.sunnybear.library.view.CleanableEditText
-                android:id="@+id/et_parentrelation"
-                style="@style/WeiduText.EditText"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColorHint="#646464"
-                android:background="@null"
-                android:drawableRight="@drawable/close_selector"
-                android:hint="家长身份"
-                android:inputType="phone"
-                auto:maxLength="11" />
+                android:layout_height="48dp">
+                <EditText
+                    android:id="@+id/et_childname"
+                    android:layout_weight="1"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:textColorHint="#646464"
+                    android:background="@null"
+                    android:hint="孩子年龄"/>
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/btn_arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:background="@color/divider_color" />
         </LinearLayout>
 
@@ -101,14 +110,13 @@
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.CleanableEditText
+            <EditText
                 android:id="@+id/et_nickname"
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
                 android:textColorHint="#646464"
-                android:drawableRight="@drawable/close_selector"
                 android:hint="孩子昵称"/>
             <!--间隔线-->
             <View
@@ -126,16 +134,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
-
-            <com.sunnybear.library.view.CleanableEditText
-                android:id="@+id/et_chldage"
-                style="@style/WeiduText.EditText"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColorHint="#646464"
-                android:background="@null"
-                android:drawableRight="@drawable/close_selector"
-                android:hint="孩子年龄"/>
+                android:layout_height="48dp">
+                <EditText
+                    android:id="@+id/et_chldage"
+                    android:layout_weight="1"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:textColorHint="#646464"
+                    android:background="@null"
+                    android:hint="孩子年龄"/>
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/btn_arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -167,14 +184,13 @@
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.CleanableEditText
+            <EditText
                 android:id="@+id/et_activitytimes"
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
                 android:textColorHint="#646464"
-                android:drawableRight="@drawable/close_selector"
                 android:hint="活动场次"/>
             <!--间隔线-->
             <View
@@ -192,14 +208,13 @@
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.CleanableEditText
+            <EditText
                 android:id="@+id/et_QQorWX"
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
                 android:textColorHint="#646464"
-                android:drawableRight="@drawable/close_selector"
                 android:hint="QQ/微信"/>
             <!--间隔线-->
             <View
@@ -217,14 +232,13 @@
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.CleanableEditText
+            <EditText
                 android:id="@+id/et_parentname"
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@null"
                 android:textColorHint="#646464"
-                android:drawableRight="@drawable/close_selector"
                 android:hint="家长姓名"/>
             <!--间隔线-->
             <View
