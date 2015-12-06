@@ -1,7 +1,4 @@
-/**
- *
- */
-package com.sunnybear.library.view.tag;
+package com.sunnybear.library.view.select;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -17,8 +14,9 @@ import com.sunnybear.library.util.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagLayout extends FlowLayout implements OnClickListener {
-    private final List<Tag> mTags = new ArrayList<>();
+
+public class TagBar extends FlowLayout implements OnClickListener {
+    private List<Tag> mTags = new ArrayList<>();
 
     private Drawable mTagItemBackgroundSel;
     private Drawable mTagItemBackgroundNor;
@@ -34,27 +32,27 @@ public class TagLayout extends FlowLayout implements OnClickListener {
         this.mTagItemCheckListener = tagItemCheckListener;
     }
 
-    public TagLayout(Context context) {
+    public TagBar(Context context) {
         this(context, null, 0);
     }
 
-    public TagLayout(Context context, AttributeSet attrs) {
+    public TagBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TagLayout(Context context, AttributeSet attrs, int defStyle) {
+    public TagBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initStyleable(context, attrs);
         array = new SparseIntArray();
     }
 
     private void initStyleable(Context context, AttributeSet attrs) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TagLayout);
-        mTagItemBackgroundSel = array.getDrawable(R.styleable.TagLayout_tag_background_sel);
-        mTagItemBackgroundNor = array.getDrawable(R.styleable.TagLayout_tag_background_nor);
-        mTextSelColor = array.getColor(R.styleable.TagLayout_tag_text_color_sel, -1);
-        mTextNorColor = array.getColor(R.styleable.TagLayout_tag_text_color_nor, -1);
-        mTextDisColor = array.getColor(R.styleable.TagLayout_tag_text_color_dis, -1);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TagBar);
+        mTagItemBackgroundSel = array.getDrawable(R.styleable.TagBar_tag_background_sel);
+        mTagItemBackgroundNor = array.getDrawable(R.styleable.TagBar_tag_background_nor);
+        mTextSelColor = array.getColor(R.styleable.TagBar_tag_text_color_sel, -1);
+        mTextNorColor = array.getColor(R.styleable.TagBar_tag_text_color_nor, -1);
+        mTextDisColor = array.getColor(R.styleable.TagBar_tag_text_color_dis, -1);
     }
 
     private void inflateTagView(Tag tag) {
@@ -82,7 +80,7 @@ public class TagLayout extends FlowLayout implements OnClickListener {
                 View child = getChildAt(i);
                 array.put(child.getId(), i);
                 if (!(child instanceof TagItem))
-                    throw new RuntimeException("TagLayout's child must be subclass of TagItem!");
+                    throw new RuntimeException("TagBar's child must be subclass of TagItem!");
                 if (((TagItem) child).isState())
                     mLastCheckItem = (TagItem) child;
                 if (((TagItem) child).getTags().isEnable())

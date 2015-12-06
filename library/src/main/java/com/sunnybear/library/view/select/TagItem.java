@@ -1,4 +1,4 @@
-package com.sunnybear.library.view.tag;
+package com.sunnybear.library.view.select;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -6,7 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-class TagItem extends TextView {
+/**
+ * Created by guchenkai on 2015/12/6.
+ */
+public class TagItem extends TextView {
+
     private boolean isState;
     private Tag tag;
 

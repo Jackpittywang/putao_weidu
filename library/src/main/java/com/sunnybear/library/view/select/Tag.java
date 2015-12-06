@@ -1,4 +1,4 @@
-package com.sunnybear.library.view.tag;
+package com.sunnybear.library.view.select;
 
 import java.io.Serializable;
 
