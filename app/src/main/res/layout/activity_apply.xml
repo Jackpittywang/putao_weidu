@@ -71,6 +71,7 @@
                     android:layout_height="match_parent" />
                 <TextView
                     android:id="@+id/tv_parent_relation"
+                    android:paddingLeft="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:background="@color/white"
@@ -122,6 +123,7 @@
                     android:layout_height="match_parent" />
                 <com.sunnybear.library.view.CleanableEditText
                     android:id="@+id/et_phone"
+                    android:paddingLeft="5dp"
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
@@ -171,6 +173,7 @@
                     android:id="@+id/et_nickname"
                     style="@style/WeiduText.EditText"
                     android:layout_width="100dp"
+                    android:paddingLeft="5dp"
                     android:layout_weight="1"
                     android:layout_height="48dp"
                     android:maxLines="1"
@@ -277,6 +280,7 @@
                 android:id="@+id/et_activitytimes"
                 android:layout_marginLeft="10dp"
                 style="@style/WeiduText.EditText"
+                android:paddingLeft="5dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
@@ -314,6 +318,7 @@
                 android:id="@+id/et_QQorWX"
                 android:layout_weight="1"
                 android:layout_marginLeft="13dp"
+                android:paddingLeft="5dp"
                 style="@style/WeiduText.EditText"
                 android:maxLines="1"
                 android:layout_width="wrap_content"
@@ -351,6 +356,7 @@
                 android:id="@+id/et_parentname"
                 style="@style/WeiduText.EditText"
                 android:layout_weight="1"
+                android:paddingLeft="5dp"
                 android:maxLines="1"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
