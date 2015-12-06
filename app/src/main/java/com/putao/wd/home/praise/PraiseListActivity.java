@@ -58,7 +58,7 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
         if(this.initPraiseListData().size() != 0) {
             this.ll_praiselist.setVisibility(View.VISIBLE);
             this.tv_nomore.setVisibility(View.GONE);
-            PraiseListAdapter praiseListAdapter = new PraiseListAdapter(this, this.initPraiseListData());
+            PraiseListAdapter praiseListAdapter = new PraiseListAdapter(mContext, this.initPraiseListData());
             this.brv_praiselist.setAdapter(praiseListAdapter);
         } else {
             this.ll_praiselist.setVisibility(View.GONE);

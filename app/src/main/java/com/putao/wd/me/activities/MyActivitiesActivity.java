@@ -57,7 +57,7 @@ public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implem
         if(this.initActivityData().size() != 0) {
             this.ll_acitivites.setVisibility(View.VISIBLE);
             this.tv_nomore.setVisibility(View.GONE);
-            MyActivitiesAdapter myActivitiesAdapter = new MyActivitiesAdapter(this, this.initActivityData());
+            MyActivitiesAdapter myActivitiesAdapter = new MyActivitiesAdapter(mContext, this.initActivityData());
             this.brv_activitylist.setAdapter(myActivitiesAdapter);
         } else {
             this.ll_acitivites.setVisibility(View.GONE);
