@@ -51,21 +51,29 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:gravity="center_vertical"
                 android:layout_height="48dp">
                 <EditText
                     android:id="@+id/et_childname"
-                    android:layout_weight="1"
                     style="@style/WeiduText.EditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="48dp"
+                    android:drawableRight=""
                     android:textColorHint="#646464"
                     android:background="@null"
                     android:hint="孩子年龄"/>
+                <TextView
+                    android:text="*"
+                    android:textColor="@color/text_color_red"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <ImageView
                     android:layout_marginRight="10dp"
                     android:src="@drawable/btn_arrow_down"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -84,15 +92,27 @@
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.CleanableEditText
-                android:id="@+id/et_phone"
-                style="@style/WeiduText.EditText"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColorHint="#646464"
-                android:background="@null"
-                android:drawableRight="@drawable/close_selector"
-                android:hint="手机号码"/>
+                android:layout_height="48dp">
+                <EditText
+                    android:id="@+id/et_phone"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:drawableRight=""
+                    android:textColorHint="#646464"
+                    android:background="@null"
+                    android:hint="手机号码"/>
+                <TextView
+                    android:text="*"
+                    android:textColor="@color/text_color_red"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -110,14 +130,27 @@
             android:layout_below="@id/ll_phone"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/et_nickname"
-                style="@style/WeiduText.EditText"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:textColorHint="#646464"
-                android:hint="孩子昵称"/>
+                android:layout_height="48dp">
+                <EditText
+                    android:id="@+id/et_nickname"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:drawableRight=""
+                    android:textColorHint="#646464"
+                    android:background="@null"
+                    android:hint="孩子昵称"/>
+                <TextView
+                    android:text="*"
+                    android:textColor="@color/text_color_red"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -138,134 +171,140 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
-                <EditText
-                    android:id="@+id/et_chldage"
-                    android:layout_weight="1"
-                    style="@style/WeiduText.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:textColorHint="#646464"
-                    android:background="@null"
-                    android:hint="孩子年龄"/>
+
+                    <EditText
+                        android:id="@+id/et_childage"
+                        style="@style/WeiduText.EditText"
+                        android:layout_width="100dp"
+                        android:layout_height="48dp"
+                        android:drawableRight=""
+                        android:textColorHint="#646464"
+                        android:background="@null"
+                        android:hint="孩子年龄"/>
+                    <TextView
+                        android:text="*"
+                        android:textColor="@color/text_color_red"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 <ImageView
                     android:layout_marginRight="10dp"
                     android:src="@drawable/btn_arrow_down"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
+                </LinearLayout>
+
             </LinearLayout>
             <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
-        <!--间隔线-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="@color/divider_color" />
-        <!--间隔区-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#ebebeb" />
-        <!--间隔线-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/divider_color" />
-        <!--活动场次-->
-        <LinearLayout
-            android:id="@+id/ll_activitytimes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_phone"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/et_activitytimes"
-                style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:textColorHint="#646464"
-                android:hint="活动场次"/>
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
-        <!--QQ/微信-->
-        <LinearLayout
-            android:id="@+id/ll_QQorWX"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_phone"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/et_QQorWX"
-                style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:textColorHint="#646464"
-                android:hint="QQ/微信"/>
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
-        <!--家长姓名-->
-        <LinearLayout
-            android:id="@+id/ll_parentname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_phone"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/et_parentname"
-                style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:textColorHint="#646464"
-                android:hint="家长姓名"/>
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
-        <TextView
-            android:paddingLeft="15dp"
-            android:textColorHint="c2c2c2"
-            android:textSize="16sp"
-            android:paddingTop="10dp"
-            android:hint="留言"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-        <!--间隔线-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/divider_color" />
-        <TextView
-            android:layout_weight="1"
-            android:background="#ebebeb"
-            android:layout_width="match_parent"
-            android:layout_height="120dp" />
     </LinearLayout>
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+    <!--间隔区-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ebebeb" />
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+    <!--活动场次-->
+    <LinearLayout
+        android:id="@+id/ll_activitytimes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_activitytimes"
+            style="@style/WeiduText.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:textColorHint="#646464"
+            android:hint="活动场次"/>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/divider_color" />
+    </LinearLayout>
+    <!--QQ/微信-->
+    <LinearLayout
+        android:id="@+id/ll_QQorWX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_QQorWX"
+            style="@style/WeiduText.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:textColorHint="#646464"
+            android:hint="QQ/微信"/>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/divider_color" />
+    </LinearLayout>
+    <!--家长姓名-->
+    <LinearLayout
+        android:id="@+id/ll_parentname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_parentname"
+            style="@style/WeiduText.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:textColorHint="#646464"
+            android:hint="家长姓名"/>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/divider_color" />
+    </LinearLayout>
+    <TextView
+        android:paddingLeft="15dp"
+        android:textColorHint="c2c2c2"
+        android:textSize="16sp"
+        android:paddingTop="10dp"
+        android:hint="留言"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+    <TextView
+        android:layout_weight="1"
+        android:background="#ebebeb"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
 
 </LinearLayout>
