@@ -112,7 +112,7 @@
 
             </LinearLayout>
             <com.sunnybear.library.view.recycler.BasicRecyclerView
-                android:id="@+id/write_orderlist"
+                android:id="@+id/brv_write_orderlist"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="#ebebeb"/>
