@@ -6,14 +6,14 @@ import java.io.Serializable;
  * Created by wango on 2015/12/3.
  */
 
-public class MyActivitiesItem implements Serializable {
+public class MyActionsItem implements Serializable {
     private String id;
     private String title;
     private String introduction;
     private String actionIcon;
     private String status;
 
-    public MyActivitiesItem() {
+    public MyActionsItem() {
     }
 
     public String getTitle() {

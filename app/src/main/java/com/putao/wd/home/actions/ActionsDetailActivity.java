@@ -1,4 +1,4 @@
-package com.putao.wd.home.activities;
+package com.putao.wd.home.actions;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +12,11 @@ import com.putao.wd.base.PTWDActivity;
  * Created by wango on 2015/12/4.
  *
  */
-public class ActivitiesDetailActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_activities_detail;
+        return R.layout.activity_actions_detail;
     }
 
     @Override

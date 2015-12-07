@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressListActivity;
-import com.putao.wd.me.activities.MyActivitiesActivity;
+import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.SettingItem;
@@ -66,7 +66,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(AddressListActivity.class);
                 break;
             case R.id.si_action://我参与的活动
-                startActivity(MyActivitiesActivity.class);
+                startActivity(MyActionsActivity.class);
                 break;
             case R.id.si_question://我的提问
 
