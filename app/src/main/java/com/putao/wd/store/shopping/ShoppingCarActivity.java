@@ -34,6 +34,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     TextView tv_money;
 
     private ShoppingCarAdapter adapter;
+    private boolean isSelectAll = false;
 
     @Override
     protected int getLayoutId() {
@@ -89,10 +90,15 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return new String[0];
     }
 
-    @OnClick(R.id.ll_closing)
+    @OnClick({R.id.ll_closing, R.id.ll_all})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_all://全选
+                isSelectAll = isSelectAll ? false : true;
+                btn_sel_all.setState(isSelectAll);
+                adapter.selAll(isSelectAll);
+                break;
             case R.id.ll_closing://去结算
 
                 break;

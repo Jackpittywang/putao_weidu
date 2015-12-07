@@ -3,6 +3,11 @@ package com.putao.wd;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.putao.wd.account.AccountApi;
+import com.putao.wd.db.AddressDBManager;
+import com.putao.wd.db.CityDBManager;
+import com.putao.wd.db.DataBaseManager;
+import com.putao.wd.db.DistrictDBManager;
+import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
@@ -23,6 +28,8 @@ public class GlobalApplication extends BasicApplication {
         installDataBase();
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         AccountApi.install("1", "1109", "515d7213721042a5ac31c2de95d2c7a7");
+
+//        WechatShareTools.regToWX(getApplicationContext());
     }
 
     /**
@@ -31,9 +38,9 @@ public class GlobalApplication extends BasicApplication {
     private void installDataBase() {
         if (mHelper == null)
             if (isDebug())
-                mHelper = new DaoMaster.DevOpenHelper(getApplicationContext(), "album.db", null);
+                mHelper = new DaoMaster.DevOpenHelper(getApplicationContext(), "putao-weidu.db", null);
             else
-                mHelper = new DaoMaster.OpenHelper(getApplicationContext(), "album.db", null) {
+                mHelper = new DaoMaster.OpenHelper(getApplicationContext(), "putao-weidu.db", null) {
                     @Override
                     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -41,10 +48,25 @@ public class GlobalApplication extends BasicApplication {
                 };
     }
 
-    public DaoMaster.OpenHelper getDBHelper() {
-        return mHelper;
+    /**
+     * 获取DataBaseManager
+     *
+     * @param clazz 类型
+     * @return DataBaseManager实例
+     */
+    public DataBaseManager getDataBaseManager(Class<? extends DataBaseManager> clazz) {
+        switch (clazz.getSimpleName()) {
+            case "AddressDBManager":
+                return AddressDBManager.getInstance(mHelper);
+            case "CityDBManager":
+                return CityDBManager.getInstance(mHelper);
+            case "DistrictDBManager":
+                return DistrictDBManager.getInstance(mHelper);
+            case "ProvinceDBManager":
+                return ProvinceDBManager.getInstance(mHelper);
+        }
+        return null;
     }
-
 
     @Override
     protected String getBuglyKey() {
@@ -59,6 +81,11 @@ public class GlobalApplication extends BasicApplication {
     @Override
     public String getPackageName() {
         return "com.putao.wd";
+    }
+
+    @Override
+    protected String getLogTag() {
+        return "putao-weidu";
     }
 
     @Override

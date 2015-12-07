@@ -46,7 +46,7 @@ public abstract class BasicApplication extends Application {
         //偏好设置文件初始化
         Hawk.init(getApplicationContext(), getPackageName(), isDebug() ? LogLevel.FULL : LogLevel.NONE);
         //日志输出
-        Logger.init(getPackageName()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
+        Logger.init(getLogTag()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
         //OkHttp初始化
         mOkHttpClient = OkHttpManager.getInstance(getNetworkCacheDirectoryPath(), getNetworkCacheSize()).build();
         //Fresco初始化
@@ -106,6 +106,13 @@ public abstract class BasicApplication extends Application {
      * @return 工程包名
      */
     public abstract String getPackageName();
+
+    /**
+     * 设置调试日志标签名
+     *
+     * @return 调试日志标签名
+     */
+    protected abstract String getLogTag();
 
     /**
      * 网络缓存文件夹路径

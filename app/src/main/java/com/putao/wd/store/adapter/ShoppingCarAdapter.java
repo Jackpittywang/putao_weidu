@@ -36,7 +36,7 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     }
 
     @Override
-    public void onBindItem(ShoppingCarViewHolder holder, ShoppingCar shoppingCar, int position) {
+    public void onBindItem(ShoppingCarViewHolder holder, final ShoppingCar shoppingCar, final int position) {
         holder.tv_big_title.setText(!shoppingCar.isNull() ? "商品信息" : "无效商品");
         if (position != 0) {//和上一条信息比较
             ShoppingCar previCar = getItem(position - 1);
@@ -55,6 +55,13 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
         holder.tv_money.setText(shoppingCar.getMoney());
         holder.tv_count.setText(shoppingCar.getCount());
         holder.btn_sel.setState(shoppingCar.isSelect());
+        holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
+            @Override
+            public void onSwitchClick(View v, boolean isSelect) {
+                shoppingCar.setIsSelect(isSelect);
+                replace(position, shoppingCar);
+            }
+        });
     }
 
     /**
@@ -63,9 +70,10 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     public void selAll(boolean isSelect) {
         List<ShoppingCar> cars = getItems();
         for (ShoppingCar car : cars) {
+            int index = cars.indexOf(car);
             car.setIsSelect(isSelect);
+            replace(index, car);
         }
-        refresh();
     }
 
     /**

@@ -11,7 +11,7 @@ import com.putao.wd.base.PTWDActivity;
  * 关于我们
  * Created by wangou on 2015/12/1.
  */
-public class AboutUsActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {
@@ -20,7 +20,7 @@ public class AboutUsActivity  extends PTWDActivity<GlobalApplication> implements
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-            addNavgation();
+        addNavgation();
     }
 
     @Override

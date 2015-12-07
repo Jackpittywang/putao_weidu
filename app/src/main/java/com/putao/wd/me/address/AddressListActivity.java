@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.db.db.AddressDBManager;
+import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -40,7 +40,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
-        addresses = AddressDBManager.getInstance(mApp).loadAll();
+        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
         if (addresses == null || addresses.size() == 0) {
             rl_no_address.setVisibility(View.VISIBLE);
             return;

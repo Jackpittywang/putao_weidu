@@ -11,7 +11,6 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.PraiseListItem;
 import com.putao.wd.home.praise.adapter.PraiseListAdapter;
-import com.putao.wd.me.activities.adapter.MyActivitiesAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;

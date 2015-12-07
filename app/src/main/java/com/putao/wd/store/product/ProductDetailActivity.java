@@ -45,6 +45,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         addNavgation();
         mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
+
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
     }

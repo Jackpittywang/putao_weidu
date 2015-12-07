@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Library</string>
     <!--LoadingHUD-->
-    <string name="loading">载入中...</string>
+    <string name="loading">玩命加载中...</string>
 
     <!--PullToRefreshLayout-->
     <string name="pullToRefresh_prepare">下拉以刷新</string>

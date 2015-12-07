@@ -155,6 +155,12 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         notifyItemChanged(index);
     }
 
+    public void replaceAll(List<Item> items) {
+        mItems.clear();
+        mItems.addAll(items);
+        notifyDataSetChanged();
+    }
+
     public void delete(Item item) {
         int index = mItems.indexOf(item);
         delete(index);
