@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/iv_back"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/btn_20_back_p_sel"
+            android:src="@drawable/back_selector"
             android:layout_gravity="center_vertical"
             android:layout_width="20dp"
             android:layout_height="20dp" />

@@ -18,9 +18,8 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/2.
  */
 public class ManageFragment extends BasicFragment implements View.OnClickListener {
-    @Bind(R.id.tv_stopuse)
-    Button tv_stopuse;
-
+    @Bind(R.id.btn_stopuse)
+    Button btn_stopuse;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_manage;
@@ -35,11 +34,11 @@ public class ManageFragment extends BasicFragment implements View.OnClickListene
     protected String[] getRequestUrls() {
         return new String[0];
     }
-    @OnClick({R.id.tv_stopuse})
+    @OnClick({R.id.btn_stopuse})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_stopuse://停止使用
+            case R.id.btn_stopuse://停止使用
                 new AlertDialog.Builder(mActivity).setTitle("").setMessage("让宝宝停止使用葡萄产品?")
                         .setCancelable(false)
                         .setPositiveButton("停止", new DialogInterface.OnClickListener() {
