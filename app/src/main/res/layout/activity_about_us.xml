@@ -8,53 +8,60 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
-        auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="@string/aboutus"/>
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="@string/aboutus" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
-            android:src="@drawable/img_bg_signup"
-            android:scaleType="fitXY"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_bg_signup" />
+
         <com.sunnybear.library.view.image.ImageDraweeView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_above="@+id/tv_company"
             android:layout_centerHorizontal="true"
-            auto:roundedCornerRadius="5dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            auto:roundedCornerRadius="5dp" />
+
         <TextView
             android:id="@+id/tv_company"
-            android:text="葡萄纬度"
-            android:textSize="40sp"
-            android:textColor="@color/text_main_color_nor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="葡萄纬度"
+            android:textColor="@color/text_main_color_nor"
+            android:textSize="40sp" />
+
         <TextView
             android:id="@+id/tv_version"
-            android:text="1.0.0"
-            android:layout_below="@+id/tv_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignRight="@+id/tv_company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_below="@+id/tv_company"
+            android:text="1.0.0" />
+
         <TextView
-            android:layout_above="@+id/about"
-            android:text="葡萄科技 版权所有"
-            android:layout_centerHorizontal="true"
-            android:textSize="18sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/about"
+            android:layout_centerHorizontal="true"
+            android:text="葡萄科技 版权所有"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/about"
-            android:text="2015 Putao.com"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:textSize="18sp"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="50dp"
-            android:layout_height="wrap_content" />
+            android:text="2015 Putao.com"
+            android:textSize="18sp" />
     </RelativeLayout>
 </LinearLayout>
