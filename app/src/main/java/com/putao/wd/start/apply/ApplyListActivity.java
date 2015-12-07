@@ -1,4 +1,4 @@
-package com.putao.wd.home.apply;
+package com.putao.wd.start.apply;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +10,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ApplyListItem;
-import com.putao.wd.home.apply.adapter.ApplyListAdapter;
+import com.putao.wd.start.apply.adapter.ApplyListAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;

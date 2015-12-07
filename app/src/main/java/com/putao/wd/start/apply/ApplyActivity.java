@@ -1,14 +1,12 @@
-package com.putao.wd.home.apply;
+package com.putao.wd.start.apply;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.imageformat.ImageFileExtensionMap;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;

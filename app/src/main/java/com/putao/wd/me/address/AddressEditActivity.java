@@ -1,17 +1,20 @@
 package com.putao.wd.me.address;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.dto.DistrictSelect;
 import com.putao.wd.me.address.fragment.DistrictFragment;
 import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 
 import butterknife.Bind;
@@ -21,9 +24,9 @@ import butterknife.OnClick;
  * 收货地址编辑
  * Created by guchenkai on 2015/11/27.
  */
-public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
     @Bind(R.id.et_name)
-    EditText et_name;//收货人姓名
+    CleanableEditText et_name;//收货人姓名
     @Bind(R.id.tv_province)
     TextView tv_province;//省份
     @Bind(R.id.tv_city)
@@ -31,15 +34,17 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     @Bind(R.id.tv_district)
     TextView tv_district;//城区
     @Bind(R.id.et_street)
-    EditText et_street;//街道
+    CleanableEditText et_street;//街道
     @Bind(R.id.et_phone)
-    EditText et_phone;//电话号码
+    CleanableEditText et_phone;//电话号码
     @Bind(R.id.btn_default)
     SwitchButton btn_default;//是否设置默认
     @Bind(R.id.ll_delete_address)
     LinearLayout ll_delete_address;//删除
 
     private boolean isAdd = false;//是否是新增地址
+
+    private AddressDB address;//地址model
 
     @Override
     protected int getLayoutId() {
@@ -52,6 +57,14 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         isAdd = args.getBoolean(AddressListActivity.KEY_IS_ADD);
         if (isAdd)
             ll_delete_address.setVisibility(View.GONE);
+
+        addListener();
+    }
+
+    private void addListener() {
+        et_name.addTextChangedListener(this);
+        et_phone.addTextChangedListener(this);
+        btn_default.setOnSwitchClickListener(this);
     }
 
     @Override
@@ -84,6 +97,34 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     @Override
     public void onRightAction() {
+
+    }
+
+    private void checkData() {
+
+    }
+
+    @Override
+    public void onSwitchClick(View v, boolean isSelect) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (isAdd)
+            if (s != null && s.length() > 0)
+                setRightTitleColor(R.drawable.text_select);
+            else
+                setRightTitleColor(R.color.text_color_gray);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
 
     }
 }

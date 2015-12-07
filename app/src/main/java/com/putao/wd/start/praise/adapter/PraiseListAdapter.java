@@ -1,4 +1,4 @@
-package com.putao.wd.home.praise.adapter;
+package com.putao.wd.start.praise.adapter;
 
 import android.content.Context;
 import android.view.View;

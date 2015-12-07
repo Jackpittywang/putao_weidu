@@ -1,4 +1,4 @@
-package com.putao.wd.home.praise;
+package com.putao.wd.start.praise;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +10,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.PraiseListItem;
-import com.putao.wd.home.praise.adapter.PraiseListAdapter;
+import com.putao.wd.start.praise.adapter.PraiseListAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;

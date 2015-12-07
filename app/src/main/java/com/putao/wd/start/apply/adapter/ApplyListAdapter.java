@@ -1,4 +1,4 @@
-package com.putao.wd.home.apply.adapter;
+package com.putao.wd.start.apply.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ApplyListItem;
-import com.putao.wd.dto.PraiseListItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;

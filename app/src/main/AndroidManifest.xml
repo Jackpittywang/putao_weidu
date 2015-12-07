@@ -100,11 +100,11 @@
             android:screenOrientation="portrait" />
         <!-- 新闻详情 -->
         <activity
-            android:name=".home.news.NewsDetailActivity"
+            android:name=".start.news.NewsDetailActivity"
             android:screenOrientation="portrait" />
         <!--我要参加-->
         <activity
-            android:name=".home.apply.ApplyActivity"
+            android:name=".start.apply.ApplyActivity"
             android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
