@@ -108,7 +108,7 @@
             android:screenOrientation="portrait" />
         <!-- 评论 -->
         <activity
-            android:name=".start.Comment.CommentActivity"
+            android:name=".start.comment.CommentActivity"
             android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
