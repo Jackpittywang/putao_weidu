@@ -28,7 +28,7 @@
 
     <!--收货人地址-->
     <TextView
-        android:id="@+id/tv_address"
+        android:id="@+id/tv_customer_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="2"

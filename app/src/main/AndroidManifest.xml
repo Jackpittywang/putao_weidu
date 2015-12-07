@@ -62,6 +62,22 @@
         <activity
             android:name=".store.product.ProductDetailActivity"
             android:screenOrientation="portrait" />
+
+        <!--订单列表-->
+        <activity
+            android:name=".me.order.OrderListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--订单详情页-->
+        <activity
+            android:name=".me.order.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--订单物流详情页-->
+        <activity
+            android:name=".me.order.OrderShipmentDetailActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 关于我们 -->
         <activity
             android:name=".me.address.AboutUsActivity"
