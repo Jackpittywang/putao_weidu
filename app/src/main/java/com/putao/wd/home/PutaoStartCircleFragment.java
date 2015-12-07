@@ -22,7 +22,6 @@ import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
-import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.AutoScrollPagerAdapter;
 
 import java.util.ArrayList;
