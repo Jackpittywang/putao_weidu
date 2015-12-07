@@ -1,5 +1,6 @@
 package com.putao.wd.start.action;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.view.NavigationBar;
 
 import butterknife.Bind;
 
@@ -28,6 +30,7 @@ public class PictrueInfoActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         tv_picture_info.setMovementMethod(ScrollingMovementMethod.getInstance());
+        setMainTitleColor(Color.WHITE);
     }
 
     @Override
