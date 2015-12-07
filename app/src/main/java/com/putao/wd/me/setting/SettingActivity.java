@@ -7,18 +7,15 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AboutUsActivity;
-import com.putao.wd.user.CompleteFragment;
 import com.putao.wd.user.LoginActivity;
-import com.putao.wd.user.ResetPasswordFragment;
 
 import butterknife.OnClick;
 
-/*
-**create by wangou
-**设置
+/**
+ * 设置
+ * create by wangou
  */
 public class SettingActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
-
 
     @Override
     protected int getLayoutId() {
@@ -45,11 +42,9 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 break;//关于我们
             case R.id.si_modify_password:
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("isresetpass",true);
+                bundle.putBoolean("isresetpass", true);
                 startActivity(LoginActivity.class, bundle);
                 break;//修改密码
         }
     }
-
-
 }
