@@ -26,6 +26,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
+
+
     }
 
     @Override
