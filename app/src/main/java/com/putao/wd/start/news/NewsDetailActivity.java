@@ -10,9 +10,8 @@ import com.putao.wd.base.PTWDActivity;
 /**
  * 新闻详情
  * Created by wango on 2015/12/4.
- *
  */
-public class NewsDetailActivity  extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class NewsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Override
     protected int getLayoutId() {
@@ -28,7 +27,6 @@ public class NewsDetailActivity  extends PTWDActivity<GlobalApplication> impleme
     protected String[] getRequestUrls() {
         return new String[0];
     }
-
 
     @Override
     public void onClick(View v) {

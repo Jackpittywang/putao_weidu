@@ -1,4 +1,4 @@
-package com.putao.wd.start.action;
+package com.putao.wd.start.comment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,22 +6,28 @@ import android.view.View;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+
+import butterknife.Bind;
 
 /**
- * 活动详情
- * Created by wango on 2015/12/4.
- *
+ * Created by yanghx on 2015/12/7.
  */
-public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class CommentActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+
+    @Bind(R.id.stickyHeaderLayout_scrollable)
+    LoadMoreRecyclerView rv_content;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_actions_detail;
+        return R.layout.activity_comment;
     }
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
+
+
     }
 
     @Override
@@ -33,5 +39,4 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
 
     }
-
 }
