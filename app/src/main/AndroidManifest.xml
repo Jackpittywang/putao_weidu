@@ -141,6 +141,9 @@
         <activity
             android:name=".start.action.PictrueInfoActivity"
             android:screenOrientation="portrait" />
+        <!--填写订单-->
+        <activity android:name=".store.order.WriteOrderActivity" >
+        </activity>
     </application>
 
 </manifest>
