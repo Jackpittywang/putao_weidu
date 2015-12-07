@@ -9,7 +9,7 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
-        auto:nav_left_icon="@drawable/btn_20_back_p_sel"
+        auto:nav_left_icon="@drawable/back_selector"
         auto:nav_right_title="@string/save"
         auto:nav_main_title="昵称"/>
     <!--间隔线-->
