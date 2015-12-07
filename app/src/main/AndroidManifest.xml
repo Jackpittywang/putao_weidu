@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.putao.wd"
     android:versionCode="1"
-    android:versionName="1.0.0">
+    android:versionName="1.0.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -26,7 +26,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
 
         <!-- 分属app_id -->
         <meta-data
@@ -35,7 +35,7 @@
         <!-- 主页 -->
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +50,7 @@
         <activity
             android:name=".me.address.AddressListActivity"
             android:screenOrientation="portrait" />
-        <!--地区选择-->
+        <!-- 地区选择 -->
         <activity
             android:name=".me.address.CitySelectActivity"
             android:screenOrientation="portrait" />
@@ -63,17 +63,17 @@
             android:name=".store.product.ProductDetailActivity"
             android:screenOrientation="portrait" />
 
-        <!--订单列表-->
+        <!-- 订单列表 -->
         <activity
             android:name=".me.order.OrderListActivity"
             android:screenOrientation="portrait" />
 
-        <!--订单详情页-->
+        <!-- 订单详情页 -->
         <activity
             android:name=".me.order.OrderDetailActivity"
             android:screenOrientation="portrait" />
 
-        <!--订单物流详情页-->
+        <!-- 订单物流详情页 -->
         <activity
             android:name=".me.order.OrderShipmentDetailActivity"
             android:screenOrientation="portrait" />
@@ -94,7 +94,7 @@
         <activity
             android:name=".explore.AttentionSuccessActivity"
             android:screenOrientation="portrait" />
-        <!--购物车-->
+        <!-- 购物车 -->
         <activity
             android:name=".store.shopping.ShoppingCarActivity"
             android:screenOrientation="portrait" />
@@ -102,7 +102,7 @@
         <activity
             android:name=".home.news.NewsDetailActivity"
             android:screenOrientation="portrait" />
-        <!--我要参加-->
+        <!-- 我要参加 -->
         <activity
             android:name=".home.apply.ApplyActivity"
             android:screenOrientation="portrait" />
@@ -117,8 +117,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter tools:ignore="GoogleAppIndexingWarning">
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter tools:ignore="GoogleAppIndexingWarning" >
 
                 <!-- <data android:scheme="tencent" /> -->
 
@@ -135,8 +135,12 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--地区选择-->
+        <!-- 地区选择 -->
         <service android:name=".me.address.CityService" />
+        图片介绍
+        <activity
+            android:name=".home.actions.PictrueDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
