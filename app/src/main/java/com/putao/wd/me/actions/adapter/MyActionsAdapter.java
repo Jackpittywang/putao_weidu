@@ -1,4 +1,4 @@
-package com.putao.wd.me.activities.adapter;
+package com.putao.wd.me.actions.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -16,8 +16,8 @@ import java.util.List;
  * “我参加的活动”适配器
  * Created by wangou on 2015/12/4.
  */
-public class MyActivitiesAdapter extends LoadMoreAdapter<MyActivitiesItem, MyActivitiesAdapter.MyActivitiesViewHolder> {
-    public MyActivitiesAdapter(Context context, List<MyActivitiesItem> myActivitiesItems) {
+public class MyActionsAdapter extends LoadMoreAdapter<MyActivitiesItem, MyActionsAdapter.MyActivitiesViewHolder> {
+    public MyActionsAdapter(Context context, List<MyActivitiesItem> myActivitiesItems) {
         super(context, myActivitiesItems);
     }
 
@@ -25,11 +25,11 @@ public class MyActivitiesAdapter extends LoadMoreAdapter<MyActivitiesItem, MyAct
         return R.layout.layout_myactivities_item;
     }
 
-    public MyActivitiesAdapter.MyActivitiesViewHolder getViewHolder(View itemView, int viewType) {
-        return new MyActivitiesAdapter.MyActivitiesViewHolder(itemView);
+    public MyActionsAdapter.MyActivitiesViewHolder getViewHolder(View itemView, int viewType) {
+        return new MyActionsAdapter.MyActivitiesViewHolder(itemView);
     }
 
-    public void onBindItem(MyActivitiesAdapter.MyActivitiesViewHolder holder, MyActivitiesItem myActivitiesItem, int position) {
+    public void onBindItem(MyActionsAdapter.MyActivitiesViewHolder holder, MyActivitiesItem myActivitiesItem, int position) {
         holder.iv_myactivities_icon.setImageURL(myActivitiesItem.getActionIcon());
         holder.tv_myactivities_title.setText(myActivitiesItem.getTitle());
         holder.tv_myactivities_content.setText(myActivitiesItem.getIntroduction());
