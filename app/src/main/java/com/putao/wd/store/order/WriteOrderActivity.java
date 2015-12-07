@@ -15,7 +15,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
