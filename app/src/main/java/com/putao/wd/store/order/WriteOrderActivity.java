@@ -36,7 +36,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 
     }
 
-    //BitmapHelper.java 中的方法
+    //将图片在imageview中x轴循环填充
     public static Bitmap createRepeater(int width, Bitmap src) {
         int count = (width + src.getWidth() - 1) / src.getWidth(); //计算出平铺填满所给width（宽度）最少需要的重复次数
         Bitmap bitmap = Bitmap.createBitmap(src.getWidth()*count, src.getHeight(), Bitmap.Config.ARGB_8888);
