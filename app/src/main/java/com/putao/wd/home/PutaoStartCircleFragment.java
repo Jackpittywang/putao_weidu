@@ -16,13 +16,13 @@ import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.BannerLayout;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.AutoScrollPagerAdapter;
-import com.sunnybear.library.view.viewpager.AutoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.stickyHeaderLayout_scrollable)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.vp_banner)
-    AutoScrollViewPager vp_banner;
+    @Bind(R.id.bl_banner)
+    BannerLayout bl_banner;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
@@ -63,7 +63,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         adapter = new ActionNewsAdapter(mActivity, getTestData());
         rv_content.setAdapter(adapter);
 
-        vp_banner.setAdapter(new AutoScrollPagerAdapter() {
+        bl_banner.setAdapter(new AutoScrollPagerAdapter() {
             @Override
             public int getItemCount() {
                 return resIds.length;
@@ -121,7 +121,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
      * 添加监听器
      */
     private void addListener() {
-        vp_banner.setOnClickItemListener(new AutoScrollPagerAdapter.OnClickItemListener() {
+        bl_banner.setOnClickItemListener(new AutoScrollPagerAdapter.OnClickItemListener() {
             @Override
             public void onClickItem(View view, int position) {
                 ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
@@ -145,7 +145,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     @Override
     public void onStop() {
         super.onStop();
-        vp_banner.stopAutoScroll();
+        bl_banner.stopAutoScroll();
     }
 
     private List<ActionNewsItem> getTestData() {
