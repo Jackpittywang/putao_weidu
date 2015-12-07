@@ -1,24 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context="com.putao.wd.start.action.PictrueInfoActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:background="#000"
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/idv_picture_url"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:background="#000"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+    </LinearLayout>
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="#1A000000"
+        android:layout_alignParentTop="true"
+        auto:nav_left_icon="@drawable/btn_20_back_w_nor"
+        auto:nav_main_title="1/300"
+        auto:nav_main_title_color="#fff"
+        auto:nav_right_icon="@drawable/btn_20_share_w_nor"/>
 
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    <TextView
+        android:id="@+id/tv_picture_info"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:lineSpacingExtra="5dp"
+        android:scrollbars="vertical"
+        android:text="这是对图片的解释和介绍。因为一夜回到赔放前，所以我要把之前的帖子搬过来！ 啥也不说论，无论如何我们都不会放..因为一夜回到赔放前，所以我要把之前的帖子搬过来！ 啥也不说论，无论如何我们都不会放..因为一夜回到赔放前，所以我要把之前的帖子搬过来！ 啥也不说论，无论如何我们都不会放..因为一夜回到赔放前，所以我要把之前的帖子搬过来！ 啥也不说论，无论如何我们都不会放.."
+        android:layout_alignParentBottom="true"
+        android:background="#e0000000"
+        android:layout_width="match_parent"
+        android:layout_height="110dp" />
 
-        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
