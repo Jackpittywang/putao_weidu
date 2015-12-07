@@ -193,15 +193,17 @@
             android:textSize="12sp"
             android:textColor="#cd5564"
             android:gravity="bottom"
-            android:paddingBottom="8dp"
+            android:paddingBottom="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
         <LinearLayout
+            android:gravity="center_vertical"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <TextView
                 android:text="应付金额"
+                android:layout_marginTop="5dp"
                 android:textSize="12sp"
                 android:textColor="#313131"
                 android:layout_width="wrap_content"
