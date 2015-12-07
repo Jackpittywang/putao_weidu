@@ -29,6 +29,7 @@ public class PictrueInfoActivity extends PTWDActivity<GlobalApplication> impleme
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
+        addNavgation();
         tv_picture_info.setMovementMethod(ScrollingMovementMethod.getInstance());
         setMainTitleColor(Color.WHITE);
     }
