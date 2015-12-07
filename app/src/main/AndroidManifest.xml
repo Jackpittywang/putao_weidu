@@ -139,7 +139,7 @@
         <service android:name=".me.address.CityService" />
         图片介绍
         <activity
-            android:name=".home.actions.PictrueDetailActivity"
+            android:name=".start.action.PictrueInfoActivity"
             android:screenOrientation="portrait" />
     </application>
 
