@@ -68,7 +68,7 @@ public class AddressAdapter extends BasicAdapter<AddressDB, AddressAdapter.Addre
         TextView tv_name;
         @Bind(R.id.iv_default)
         ImageView iv_default;
-        @Bind(R.id.tv_address)
+        @Bind(R.id.tv_customer_address)
         TextView tv_address;
         @Bind(R.id.tv_mobile)
         TextView tv_mobile;

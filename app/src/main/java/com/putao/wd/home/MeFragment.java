@@ -6,6 +6,9 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.activities.MyActivitiesActivity;
+import com.putao.wd.me.information.PersonalInformationActivity;
+import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.SettingItem;
@@ -60,7 +63,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
-
+                startActivity(OrderListActivity.class);
                 break;
             case R.id.si_address://收货地址
                 startActivity(AddressListActivity.class);
