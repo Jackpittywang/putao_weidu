@@ -63,4 +63,14 @@ public class CityDBManager extends DataBaseManager<CityDB, String> {
         }
         return cityNames;
     }
+
+    /**
+     * 根据城市名称获得城市id
+     * @param cityName 城市名称
+     * @return 城市id
+     */
+    public String getCityId(String cityName) {
+        CityDB cityDB=getQueryBuilder().where(CityDBDao.Properties.Name.eq(cityName)).uniqueOrThrow();
+        return cityDB.getCity_id();
+    }
 }

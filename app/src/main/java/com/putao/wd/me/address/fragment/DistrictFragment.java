@@ -7,7 +7,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.DistrictDBManager;
-import com.putao.wd.dto.DistrictSelect;
+import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.CitySelectAdapter;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
@@ -23,7 +23,7 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/12/7.
  */
 public class DistrictFragment extends PTWDFragment<GlobalApplication> {
-    public static final String EVENT_DISRICT_SELECT = "disrict_select";
+    public static final String EVENT_DISTRICT_SELECT = "disrict_select";
 
     public static final String KEY_PROVINCE_NAME = "province_name";
     private String province_name;
@@ -66,11 +66,11 @@ public class DistrictFragment extends PTWDFragment<GlobalApplication> {
         rv_district.setOnItemClickListener(new OnItemClickListener<String>() {
             @Override
             public void onItemClick(String s, int position) {
-                DistrictSelect districtSelect = new DistrictSelect();
-                districtSelect.setProvinceName(province_name);
-                districtSelect.setCityName(city_name);
-                districtSelect.setDistrictName(s);
-                EventBusHelper.post(districtSelect, EVENT_DISRICT_SELECT);
+                AddressDB addressDB = new AddressDB();
+                addressDB.setProvince(province_name);
+                addressDB.setCity(city_name);
+                addressDB.setDistrict(s);
+                EventBusHelper.post(addressDB, EVENT_DISTRICT_SELECT);
                 ActivityManager.getInstance().finishCurrentActivity();
             }
         });

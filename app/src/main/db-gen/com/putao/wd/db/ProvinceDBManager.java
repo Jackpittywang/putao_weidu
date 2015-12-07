@@ -1,6 +1,7 @@
 package com.putao.wd.db;
 
 import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.db.dao.ProvinceDBDao;
 import com.putao.wd.db.entity.ProvinceDB;
 
 import java.util.ArrayList;
@@ -42,5 +43,15 @@ public class ProvinceDBManager extends DataBaseManager<ProvinceDB, String> {
             provinces.add(provinceDB.getName());
         }
         return provinces;
+    }
+
+    /**
+     * 根据省份名称获得省份id
+     * @param provinceName 省份名称
+     * @return 省份id
+     */
+    public String getProvinceId(String provinceName) {
+        ProvinceDB provinceDB = getQueryBuilder().where(ProvinceDBDao.Properties.Name.eq(provinceName)).uniqueOrThrow();
+        return provinceDB.getProvince_id();
     }
 }

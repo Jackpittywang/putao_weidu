@@ -26,9 +26,10 @@
             android:text="@string/must" />
     </LinearLayout>
     <!--收货人姓名编辑-->
-    <EditText
+    <com.sunnybear.library.view.CleanableEditText
         android:id="@+id/et_name"
         style="@style/style_address_edit_text"
+
         android:hint="@string/et_name" />
 
     <!--所在地区和街道地址-->
@@ -58,29 +59,32 @@
 
             <TextView
                 android:id="@+id/tv_province"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:gravity="center_vertical"
                 android:paddingLeft="8dp"
+                android:singleLine="false"
                 android:text="省份" />
 
             <TextView
                 android:id="@+id/tv_city"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:gravity="center_vertical"
                 android:paddingLeft="8dp"
+                android:singleLine="false"
                 android:text="城市" />
 
             <TextView
                 android:id="@+id/tv_district"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
                 android:gravity="center_vertical"
                 android:paddingLeft="8dp"
+                android:singleLine="false"
                 android:text="城区" />
 
             <ImageView
@@ -93,13 +97,15 @@
         </LinearLayout>
 
         <!--街道地址-->
-        <EditText
+        <com.sunnybear.library.view.CleanableEditText
             android:id="@+id/et_street"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/white"
+            android:drawableRight="@drawable/btn_clear"
             android:hint="@string/et_street"
             android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:singleLine="false" />
     </LinearLayout>
 
@@ -115,10 +121,12 @@
             android:text="@string/must" />
     </LinearLayout>
     <!--收货人姓名编辑-->
-    <EditText
+    <com.sunnybear.library.view.CleanableEditText
         android:id="@+id/et_phone"
         style="@style/style_address_edit_text"
-        android:hint="@string/et_phone" />
+        android:hint="@string/et_phone"
+        android:inputType="number"
+        auto:maxLength="11" />
 
     <!--默认收货地址-->
     <LinearLayout

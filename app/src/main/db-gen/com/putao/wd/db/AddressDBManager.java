@@ -3,6 +3,8 @@ package com.putao.wd.db;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.AddressDB;
 
+import java.util.List;
+
 import de.greenrobot.dao.AbstractDao;
 
 /**
@@ -25,5 +27,16 @@ public class AddressDBManager extends DataBaseManager<AddressDB, Long> {
     @Override
     public AbstractDao<AddressDB, Long> getAbstractDao() {
         return daoSession.getAddressDBDao();
+    }
+
+    /**
+     * 清除默认状态
+     */
+    public void clearDefaultState() {
+        List<AddressDB> addresses = loadAll();
+        for (AddressDB address : addresses) {
+            address.setIsDefault(false);
+            update(address);
+        }
     }
 }

@@ -14,15 +14,19 @@
     <!--内容区-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/layout_background">
 
         <!--有收货地址时-->
         <com.sunnybear.library.view.recycler.BasicRecyclerView
             android:id="@+id/rv_addresses"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:background="@color/white"
             auto:divider_color="@color/divider_color"
-            auto:divider_height="1px" />
+            auto:divider_height="1px"
+            auto:has_row_divider="true" />
 
         <!--没有收货地址时-->
         <RelativeLayout
@@ -32,27 +36,38 @@
             android:background="@color/layout_background"
             android:visibility="gone">
 
+            <ImageView
+                android:id="@+id/iv_address_empty"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/img_address_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_address_empty"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:text="@string/no_address"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_18sp" />
+        </RelativeLayout>
+
+        <!--新增地址-->
+        <RelativeLayout
+            android:id="@+id/rl_add_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/no_address"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/text_size_18sp" />
-
-            <RelativeLayout
-                android:id="@+id/rl_add_address"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="新增地址" />
-            </RelativeLayout>
+                android:text="新增地址" />
         </RelativeLayout>
     </FrameLayout>
 </LinearLayout>
