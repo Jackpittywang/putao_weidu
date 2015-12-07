@@ -14,7 +14,7 @@
         <com.sunnybear.library.view.NavigationBar
             android:visibility="visible"
             auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-            auto:nav_main_title="报名列表"
+            auto:nav_main_title="填写订单"
             style="@style/style_navigation_bar"/>
         <!--间隔线-->
         <View
@@ -111,6 +111,10 @@
                     android:layout_height="match_parent" />
 
             </LinearLayout>
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/write"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
