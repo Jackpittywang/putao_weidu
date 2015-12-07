@@ -1,15 +1,30 @@
 package com.putao.wd.store.order;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.putao.wd.R;
+import com.putao.wd.base.PTWDActivity;
 
-public class WriteOrderActivity extends AppCompatActivity {
+public class WriteOrderActivity extends PTWDActivity implements View.OnClickListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_order);
+    protected int getLayoutId() {
+        return R.layout.activity_write_order;
+    }
+
+    @Override
+    protected void onViewCreateFinish(Bundle saveInstanceState) {
+
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
