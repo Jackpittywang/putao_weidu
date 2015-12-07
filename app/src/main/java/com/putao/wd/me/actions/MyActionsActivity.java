@@ -1,4 +1,4 @@
-package com.putao.wd.me.activities;
+package com.putao.wd.me.actions;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -6,30 +6,31 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.Bind;
+
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.MyActivitiesItem;
-import com.putao.wd.me.activities.adapter.MyActivitiesAdapter;
+import com.putao.wd.me.actions.adapter.MyActionsAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView.OnLoadMoreListener;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+
 /**
  * 我参加的活动
  * Created by wangou on 2015/12/4.
  */
-public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
+public class MyActionsActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
     @Bind(R.id.brv_activitylist)
     LoadMoreRecyclerView brv_activitylist;
     @Bind(R.id.tv_nomore)
     TextView tv_nomore;
     @Bind(R.id.ll_acitivites)
     LinearLayout ll_acitivites;
-
-    public MyActivitiesActivity() {
-    }
 
     protected int getLayoutId() {
         return R.layout.activity_my_activities;
@@ -46,7 +47,7 @@ public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implem
             public void onLoadMore() {
                 (new Handler()).postDelayed(new Runnable() {
                     public void run() {
-                        MyActivitiesActivity.this.brv_activitylist.noMoreLoading();
+                        MyActionsActivity.this.brv_activitylist.noMoreLoading();
                     }
                 }, 3000L);
             }
@@ -54,11 +55,11 @@ public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implem
     }
 
     private void initActivityList() {
-        if(this.initActivityData().size() != 0) {
+        if (this.initActivityData().size() != 0) {
             this.ll_acitivites.setVisibility(View.VISIBLE);
             this.tv_nomore.setVisibility(View.GONE);
-            MyActivitiesAdapter myActivitiesAdapter = new MyActivitiesAdapter(this, this.initActivityData());
-            this.brv_activitylist.setAdapter(myActivitiesAdapter);
+            MyActionsAdapter myActionsAdapter = new MyActionsAdapter(this, this.initActivityData());
+            this.brv_activitylist.setAdapter(myActionsAdapter);
         } else {
             this.ll_acitivites.setVisibility(View.GONE);
             this.tv_nomore.setVisibility(View.VISIBLE);
@@ -69,9 +70,9 @@ public class MyActivitiesActivity extends PTWDActivity<GlobalApplication> implem
     private List<MyActivitiesItem> initActivityData() {
         ArrayList list = new ArrayList();
 
-        for(int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             MyActivitiesItem item = new MyActivitiesItem();
-            if(i % 2 == 1) {
+            if (i % 2 == 1) {
                 item.setStatus("体验");
             } else {
                 item.setStatus("聚会");
