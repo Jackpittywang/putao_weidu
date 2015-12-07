@@ -58,6 +58,8 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColorHint">@color/color_C2C2C2</item>
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:drawableRight">@drawable/btn_clear</item>
+        <item name="android:paddingRight">8dp</item>
     </style>
     <!--设置行-->
     <style name="style_setting">

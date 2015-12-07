@@ -10,9 +10,14 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.AddressDBManager;
+import com.putao.wd.db.CityDBManager;
+import com.putao.wd.db.DistrictDBManager;
+import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.entity.AddressDB;
-import com.putao.wd.dto.DistrictSelect;
 import com.putao.wd.me.address.fragment.DistrictFragment;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
@@ -25,6 +30,13 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/27.
  */
 public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
+    public static final String EVENT_ADDRESS_ADD = "address_add";
+    public static final String EVENT_ADDRESS_UPDATE = "address_update";
+    public static final String EVENT_ADDRESS_DELETE = "address_delete";
+    public static final String EVENT_ADDRESS_IS_DEFAULT = "address_is_default";
+    public static final String KEY_IS_ADD = "isAdd";
+    public static final String KEY_ADDRESS = "address";
+
     @Bind(R.id.et_name)
     CleanableEditText et_name;//收货人姓名
     @Bind(R.id.tv_province)
@@ -46,6 +58,11 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
 
     private AddressDB address;//地址model
 
+    private AddressDBManager mAddressDBManager;
+    private ProvinceDBManager mProvinceDBManager;
+    private CityDBManager mCityDBManager;
+    private DistrictDBManager mDistrictDBManager;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_edit;
@@ -54,11 +71,33 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
-        isAdd = args.getBoolean(AddressListActivity.KEY_IS_ADD);
-        if (isAdd)
-            ll_delete_address.setVisibility(View.GONE);
+        mAddressDBManager = (AddressDBManager) mApp.getDataBaseManager(AddressDBManager.class);
+        mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
+        mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
+        mDistrictDBManager = (DistrictDBManager) mApp.getDataBaseManager(DistrictDBManager.class);
 
+        isAdd = args.getBoolean(KEY_IS_ADD);
+        if (isAdd) {
+            ll_delete_address.setVisibility(View.GONE);
+        } else {
+            address = (AddressDB) args.getSerializable(KEY_ADDRESS);
+            initView();
+        }
         addListener();
+    }
+
+    /**
+     * 编辑时初始化页面
+     */
+    private void initView() {
+        et_name.setText(address.getName());
+        tv_province.setText(address.getProvince());
+        tv_city.setText(address.getCity());
+        tv_district.setText(address.getDistrict());
+        et_street.setText(address.getStreet());
+        et_phone.setText(address.getMobile());
+        if (address.getIsDefault() != null)
+            btn_default.setState(address.getIsDefault());
     }
 
     private void addListener() {
@@ -77,7 +116,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
-
+                mAddressDBManager.delete(address);
+                EventBusHelper.post(address, EVENT_ADDRESS_DELETE);
+                ActivityManager.getInstance().finishCurrentActivity();
                 break;
             case R.id.ll_city_sel://地区选择
                 startActivity(CitySelectActivity.class);
@@ -85,11 +126,25 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         }
     }
 
-    @Subcriber(tag = DistrictFragment.EVENT_DISRICT_SELECT)
-    public void eventDistrictSelect(DistrictSelect districtSelect) {
-        tv_province.setText(districtSelect.getProvinceName());
-        tv_city.setText(districtSelect.getCityName());
-        tv_district.setText(districtSelect.getDistrictName());
+    @Subcriber(tag = DistrictFragment.EVENT_DISTRICT_SELECT)
+    public void eventDistrictSelect(AddressDB addressDB) {
+        if (isAdd) address = addressDB;
+        String provinceName = addressDB.getProvince();
+        String cityName = addressDB.getCity();
+        String districtName = addressDB.getDistrict();
+
+        tv_province.setText(provinceName);
+        tv_city.setText(cityName);
+        tv_district.setText(districtName);
+
+        address.setProvince_id(mProvinceDBManager.getProvinceId(provinceName));
+        address.setCity_id(mCityDBManager.getCityId(cityName));
+        address.setDistrict_id(mDistrictDBManager.getDistrictId(districtName));
+        if (!isAdd) {
+            address.setProvince(provinceName);
+            address.setCity(cityName);
+            address.setDistrict(districtName);
+        }
     }
 
     /**
@@ -97,23 +152,36 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     @Override
     public void onRightAction() {
-
+        address.setName(et_name.getText().toString());
+        address.setMobile(et_phone.getText().toString());
+        address.setStreet(et_street.getText().toString());
+        if (isAdd) {
+            mAddressDBManager.insert(address);
+            EventBusHelper.post(address, EVENT_ADDRESS_ADD);
+        } else {
+            mAddressDBManager.update(address);
+            EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
+        }
+        ActivityManager.getInstance().finishCurrentActivity();
     }
 
+    /**
+     * 验证信息
+     */
     private void checkData() {
 
     }
 
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
-
+        address.setIsDefault(isSelect);
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (isAdd)
             if (s != null && s.length() > 0)
-                setRightTitleColor(R.drawable.text_select);
+                setRightTitleColor(R.color.text_main_color_nor);
             else
                 setRightTitleColor(R.color.text_color_gray);
     }

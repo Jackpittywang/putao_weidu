@@ -62,12 +62,15 @@ public class GenerateDB {
         Entity address = schema.addEntity("AddressDB");
         address.setTableName("putao_wd_address");
         address.addIdProperty().autoincrement().index();//id
-        address.addStringProperty("name").notNull();//收货人姓名
-        address.addStringProperty("province").notNull();//省
-        address.addStringProperty("city").notNull();//市
-        address.addStringProperty("district").notNull();//区
-        address.addStringProperty("street").notNull();//街道
-        address.addStringProperty("mobile").notNull();//收货人电话
+        address.addStringProperty("name");//收货人姓名
+        address.addStringProperty("province");//省份
+        address.addStringProperty("province_id");//省份id
+        address.addStringProperty("city");//城市
+        address.addStringProperty("city_id");//城市id
+        address.addStringProperty("district");//城区
+        address.addStringProperty("district_id");//城区id
+        address.addStringProperty("street");//街道
+        address.addStringProperty("mobile");//收货人电话
         address.addBooleanProperty("isDefault");//是否是默认地址
     }
 }

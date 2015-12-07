@@ -10,29 +10,14 @@ import com.sunnybear.library.model.db.DBEntity;
 public class AddressDB extends DBEntity {
 
     private Long id;
-    /**
-     * Not-null value.
-     */
     private String name;
-    /**
-     * Not-null value.
-     */
     private String province;
-    /**
-     * Not-null value.
-     */
+    private String province_id;
     private String city;
-    /**
-     * Not-null value.
-     */
+    private String city_id;
     private String district;
-    /**
-     * Not-null value.
-     */
+    private String district_id;
     private String street;
-    /**
-     * Not-null value.
-     */
     private String mobile;
     private Boolean isDefault;
 
@@ -43,12 +28,15 @@ public class AddressDB extends DBEntity {
         this.id = id;
     }
 
-    public AddressDB(Long id, String name, String province, String city, String district, String street, String mobile, Boolean isDefault) {
+    public AddressDB(Long id, String name, String province, String province_id, String city, String city_id, String district, String district_id, String street, String mobile, Boolean isDefault) {
         this.id = id;
         this.name = name;
         this.province = province;
+        this.province_id = province_id;
         this.city = city;
+        this.city_id = city_id;
         this.district = district;
+        this.district_id = district_id;
         this.street = street;
         this.mobile = mobile;
         this.isDefault = isDefault;
@@ -62,86 +50,74 @@ public class AddressDB extends DBEntity {
         this.id = id;
     }
 
-    /**
-     * Not-null value.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Not-null value.
-     */
     public String getProvince() {
         return province;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
     public void setProvince(String province) {
         this.province = province;
     }
 
-    /**
-     * Not-null value.
-     */
+    public String getProvince_id() {
+        return province_id;
+    }
+
+    public void setProvince_id(String province_id) {
+        this.province_id = province_id;
+    }
+
     public String getCity() {
         return city;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
     public void setCity(String city) {
         this.city = city;
     }
 
-    /**
-     * Not-null value.
-     */
+    public String getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(String city_id) {
+        this.city_id = city_id;
+    }
+
     public String getDistrict() {
         return district;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
     public void setDistrict(String district) {
         this.district = district;
     }
 
-    /**
-     * Not-null value.
-     */
+    public String getDistrict_id() {
+        return district_id;
+    }
+
+    public void setDistrict_id(String district_id) {
+        this.district_id = district_id;
+    }
+
     public String getStreet() {
         return street;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
     public void setStreet(String street) {
         this.street = street;
     }
 
-    /**
-     * Not-null value.
-     */
     public String getMobile() {
         return mobile;
     }
 
-    /**
-     * Not-null value; ensure this value is available before it is saved to the database.
-     */
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }

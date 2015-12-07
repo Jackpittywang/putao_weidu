@@ -184,7 +184,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param targetClass 目标fragment
      */
-    protected void addFragment(Class<? extends Fragment> targetClass) {
+    public void addFragment(Class<? extends Fragment> targetClass) {
         addFragment(targetClass, null);
     }
 
@@ -193,7 +193,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param targetClass 目标Activity类型
      */
-    protected void startActivity(Class<? extends Activity> targetClass) {
+    public void startActivity(Class<? extends Activity> targetClass) {
         startActivity(targetClass, null);
     }
 
@@ -203,7 +203,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      * @param targetClass 目标Activity类型
      * @param args        传递参数
      */
-    protected void startActivity(Class<? extends Activity> targetClass, Bundle args) {
+    public void startActivity(Class<? extends Activity> targetClass, Bundle args) {
         Intent intent = new Intent(this, targetClass);
         if (args != null)
             intent.putExtras(args);
@@ -215,7 +215,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param action 隐式动作
      */
-    protected void startActivity(String action) {
+    public void startActivity(String action) {
         startActivity(action, null);
     }
 
@@ -224,7 +224,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param action 隐式动作
      */
-    protected void startActivity(String action, Bundle args) {
+    public void startActivity(String action, Bundle args) {
         Intent intent = new Intent(action);
         if (args != null)
             intent.putExtras(args);
@@ -237,7 +237,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      * @param targetClass 目标Service类型
      * @param args        传递参数
      */
-    protected void startService(Class<? extends Service> targetClass, Bundle args) {
+    public void startService(Class<? extends Service> targetClass, Bundle args) {
         Intent intent = new Intent(this, targetClass);
         if (args != null)
             intent.putExtras(args);
@@ -249,7 +249,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param targetClass 目标Service类型
      */
-    protected void startService(Class<? extends Service> targetClass) {
+    public void startService(Class<? extends Service> targetClass) {
         startService(targetClass, null);
     }
 
@@ -258,7 +258,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param action 隐式动作
      */
-    protected void startService(String action) {
+    public void startService(String action) {
         startService(action, null);
     }
 

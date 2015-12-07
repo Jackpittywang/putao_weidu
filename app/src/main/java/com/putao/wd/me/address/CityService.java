@@ -57,12 +57,12 @@ public class CityService extends Service {
                 stopSelf();
             }
         };
-//        new Thread() {
-//            @Override
-//            public void run() {
-        mHandler.post(mRunnable);
-//            }
-//        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                mHandler.post(mRunnable);
+            }
+        }.start();
     }
 
     @Nullable
