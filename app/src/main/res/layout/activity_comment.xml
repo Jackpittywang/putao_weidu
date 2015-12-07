@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="评论"
+        auto:nav_main_title_color="@color/white"
+        auto:nav_main_title_size="@dimen/text_size_8sp"
+        />
+
+    <!--下拉刷新-->
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:refresh_layout="@layout/robot_refresh_header"
+        auto:refresh_layout_height="90">
+
+
+        <!--列表-->
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/stickyHeaderLayout_scrollable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            auto:divider_color="@color/color_EBEBEB"
+            auto:divider_height="8dp"
+            auto:has_row_divider="true"/>
+
+
+    </com.sunnybear.library.view.PullToRefreshLayout>
+
+
+</LinearLayout>

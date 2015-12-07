@@ -19,6 +19,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BannerLayout;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
