@@ -11,32 +11,170 @@
         style="@style/style_navigation_bar"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
         auto:nav_main_title="@string/manager"/>
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#EBEBEB" />
     <LinearLayout
         android:background="#ebebeb"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_control_equipment"
-            android:layout_marginTop="20dp"
-            auto:setting_text="受控设备"
+        <LinearLayout
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="#fff"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="80dp"/>
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_control_product"
-            auto:setting_text="受控产品"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="44">
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="受控设备"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:textColor="#313131"
+                    android:text="全部"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/btn_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="44">
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="受控产品"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:textColor="#313131"
+                    android:text="2个，共3个"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/btn_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="44">
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="每日使用次数"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:textColor="#313131"
+                    android:text="不限"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/btn_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="44">
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="每日使用时间"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:textColor="#313131"
+                    android:text="不限"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/btn_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <!--间隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+        <!--<com.sunnybear.library.view.SettingItem-->
+            <!--android:id="@+id/si_control_equipment"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--auto:setting_text="受控设备"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"/>-->
+        <!--<com.sunnybear.library.view.SettingItem-->
+            <!--android:id="@+id/si_control_product"-->
+            <!--auto:setting_text="受控产品"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"/>-->
+        <!--<com.sunnybear.library.view.SettingItem-->
+            <!--android:id="@+id/si_usetimes_everyday"-->
+            <!--auto:setting_text="每日使用次数"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"/>-->
+        <!--<com.sunnybear.library.view.SettingItem-->
+            <!--android:id="@+id/si_usetime_everytime"-->
+            <!--auto:setting_text="每次使用时间"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"/>-->
+        <!--间隔线-->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"/>
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_usetimes_everyday"
-            auto:setting_text="每日使用次数"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"/>
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_usetime_everytime"
-            auto:setting_text="每次使用时间"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"/>
+            android:layout_height="20dp"
+            android:background="#EBEBEB" />
         <Button
             android:text="立即让宝宝停止使用产品"
             android:textColor="#cd5564"
