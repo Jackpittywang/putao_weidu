@@ -6,11 +6,10 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.activities.MyActivitiesActivity;
-import com.putao.wd.me.information.PersonalInformationActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.SettingItem;
-import com.sunnybear.library.view.tab.IndicatorButton;
+import com.sunnybear.library.view.select.IndicatorButton;
 
 import butterknife.Bind;
 import butterknife.OnClick;

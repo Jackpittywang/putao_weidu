@@ -6,8 +6,8 @@ import android.view.View;
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.tag.Tag;
-import com.sunnybear.library.view.tag.TagLayout;
+import com.sunnybear.library.view.select.Tag;
+import com.sunnybear.library.view.select.TagBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import butterknife.OnClick;
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
     @Bind(R.id.tl_color_tag)
-    TagLayout tl_color_tag;
+    TagBar tl_color_tag;
     private final List<Tag> mTags = new ArrayList<>();
 
     public ShoppingCarPopupWindow(Context context) {
@@ -29,7 +29,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         setUpData();
         tl_color_tag.addTags(mTags);
 
-        tl_color_tag.setTagItemCheckListener(new TagLayout.TagItemCheckListener() {
+        tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
             public void onTagItemCheck(Tag tag, int position) {
                 ToastUtils.showToastLong(mContext, tag.toString());

@@ -12,8 +12,8 @@ import com.putao.wd.home.PutaoStoreFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.FragmentSwitchAdapter;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.tab.TabBar;
-import com.sunnybear.library.view.tab.TabItem;
+import com.sunnybear.library.view.select.TabBar;
+import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 
 import butterknife.Bind;

@@ -1,4 +1,4 @@
-package com.putao.wd.home.praise;
+package com.putao.wd.home.apply;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,9 +9,8 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.PraiseListItem;
-import com.putao.wd.home.praise.adapter.PraiseListAdapter;
-import com.putao.wd.me.activities.adapter.MyActivitiesAdapter;
+import com.putao.wd.dto.ApplyListItem;
+import com.putao.wd.home.apply.adapter.ApplyListAdapter;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -20,61 +19,62 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 点赞列表
- * Created by wangou on 2015/12/4.
+ * 报名列表
+ * Created by wango on 2015/12/4.
+ *
  */
-public class PraiseListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
-    @Bind(R.id.brv_praiselist)
-    LoadMoreRecyclerView brv_praiselist;
+public class ApplyListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+    @Bind(R.id.brv_applylist)
+    LoadMoreRecyclerView brv_applylist;//报名列表
     @Bind(R.id.tv_nomore)
-    TextView tv_nomore;
-    @Bind(R.id.ll_praiselist)
-    LinearLayout ll_praiselist;
+    TextView tv_nomore;//没有更多
+    @Bind(R.id.ll_applylist)
+    LinearLayout ll_applylist;//报名列表layout区域
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_praise_list;
+        return R.layout.activity_apply_list;
     }
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
         addListener();
-        this.initPraiseList();
+        this.initApplyList();
     }
 
     private void addListener() {
-        this.brv_praiselist.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        this.brv_applylist.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             public void onLoadMore() {
                 (new Handler()).postDelayed(new Runnable() {
                     public void run() {
-                        PraiseListActivity.this.brv_praiselist.noMoreLoading();
+                        ApplyListActivity.this.brv_applylist.noMoreLoading();
                     }
                 }, 3000L);
             }
         });
     }
 
-    private void initPraiseList(){
-        if(this.initPraiseListData().size() != 0) {
-            this.ll_praiselist.setVisibility(View.VISIBLE);
+    //初始化报名列表数据
+    private void initApplyList(){
+        if(this.initApplyListData().size() != 0) {
+            this.ll_applylist.setVisibility(View.VISIBLE);
             this.tv_nomore.setVisibility(View.GONE);
-            PraiseListAdapter praiseListAdapter = new PraiseListAdapter(mContext, this.initPraiseListData());
-            this.brv_praiselist.setAdapter(praiseListAdapter);
+            ApplyListAdapter applyListAdapter = new ApplyListAdapter(mContext, this.initApplyListData());
+            this.brv_applylist.setAdapter(applyListAdapter);
         } else {
-            this.ll_praiselist.setVisibility(View.GONE);
+            this.ll_applylist.setVisibility(View.GONE);
             this.tv_nomore.setVisibility(View.VISIBLE);
         }
     }
 
-    private List<PraiseListItem> initPraiseListData(){
-        List<PraiseListItem> praiseList=new ArrayList<>();
-        PraiseListItem item;
+    private List<ApplyListItem> initApplyListData(){
+        List<ApplyListItem> applyList=new ArrayList<>();
+        ApplyListItem item;
 
         for (int i = 0; i < 20; i++) {
-            item=new PraiseListItem();
+            item=new ApplyListItem();
             item.setUserIconUrl("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
             item.setUsername("username" + i);
-            item.setPraiseCount(i+"");
             if(i%2==0)
                 item.setUserattr("游客");
             else if(i==9){
@@ -83,10 +83,10 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
             else{
                 item.setUserattr("普通用户");
             }
-            praiseList.add(item);
+            applyList.add(item);
         }
 
-        return praiseList;
+        return applyList;
     }
 
     @Override

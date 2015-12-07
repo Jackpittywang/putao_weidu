@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sunnybear.library.view.tab.TabBar
+    <com.sunnybear.library.view.select.TabBar
         android:id="@+id/tb_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_bar_height"
@@ -12,34 +12,34 @@
         android:background="@color/tab_background"
         android:orientation="horizontal">
 
-        <com.sunnybear.library.view.tab.TabItem
+        <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_start_circle"
             style="@style/style_tab_bar"
             auto:active="true"
             auto:activeDrawable="@drawable/tab_bar_c_sel"
             auto:inactiveDrawable="@drawable/tab_bar_c_nor" />
 
-        <com.sunnybear.library.view.tab.TabItem
+        <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_explore"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_e_sel"
             auto:inactiveDrawable="@drawable/tab_bar_e_nor" />
 
-        <com.sunnybear.library.view.tab.TabItem
+        <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_store"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_store_sel"
             auto:inactiveDrawable="@drawable/tab_bar_store_nor" />
 
-        <com.sunnybear.library.view.tab.TabItem
+        <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_me"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_me_sel"
             auto:inactiveDrawable="@drawable/tab_bar_me_nor" />
-    </com.sunnybear.library.view.tab.TabBar>
+    </com.sunnybear.library.view.select.TabBar>
 
     <com.sunnybear.library.view.viewpager.UnScrollableViewPager
         android:id="@+id/vp_content"

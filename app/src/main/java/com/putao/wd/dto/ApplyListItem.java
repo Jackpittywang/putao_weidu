@@ -3,16 +3,22 @@ package com.putao.wd.dto;
 import java.io.Serializable;
 
 /**
- * 点赞列表项
- * Created by wango on 2015/12/4.
+ * Created by wango on 2015/12/6.
  */
-public class PraiseListItem implements Serializable {
+public class ApplyListItem  implements Serializable {
     private int id;
     private String userIconUrl;//用户头像
     private String username;//用户名
     private String userattr;//用户类型
-    private String praiseCount;//点赞数
     private String userDetailUrl;//用户主页链接
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUserIconUrl() {
         return userIconUrl;
@@ -38,14 +44,6 @@ public class PraiseListItem implements Serializable {
         this.userattr = userattr;
     }
 
-    public String getPraiseCount() {
-        return praiseCount;
-    }
-
-    public void setPraiseCount(String praiseCount) {
-        this.praiseCount = praiseCount;
-    }
-
     public String getUserDetailUrl() {
         return userDetailUrl;
     }
@@ -54,21 +52,8 @@ public class PraiseListItem implements Serializable {
         this.userDetailUrl = userDetailUrl;
     }
 
-
-
-    public int getId() {
-        return id;
+    public ApplyListItem() {
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-
-    public PraiseListItem() {
-    }
-
-
     @Override
     public String toString() {
         return "PraiseListItem{" +
@@ -76,7 +61,6 @@ public class PraiseListItem implements Serializable {
                 "userIconUrl='" + userIconUrl + '\'' +
                 "username='" + username + '\'' +
                 "userattr='" + userattr + '\'' +
-                "praiseCount='" + praiseCount + '\'' +
                 "userDetailUrl='" + userDetailUrl + '\'' +
                 '}';
     }

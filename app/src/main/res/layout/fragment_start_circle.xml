@@ -59,7 +59,7 @@
                 </RelativeLayout>
 
                 <!--标题栏-->
-                <com.sunnybear.library.view.tab.TitleBar
+                <com.sunnybear.library.view.select.TitleBar
                     android:id="@id/stickyHeaderLayout_sticky"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -69,7 +69,7 @@
                     android:padding="6dp">
 
                     <!--全部-->
-                    <com.sunnybear.library.view.tab.TitleItem
+                    <com.sunnybear.library.view.select.TitleItem
                         android:id="@+id/ll_all"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                         auto:title_text="全部" />
 
                     <!--进行中-->
-                    <com.sunnybear.library.view.tab.TitleItem
+                    <com.sunnybear.library.view.select.TitleItem
                         android:id="@+id/ll_ing"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                         auto:title_text="进行中" />
 
                     <!--已结束-->
-                    <com.sunnybear.library.view.tab.TitleItem
+                    <com.sunnybear.library.view.select.TitleItem
                         android:id="@+id/ll_finish"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                         auto:title_text="已结束" />
 
                     <!--新闻-->
-                    <com.sunnybear.library.view.tab.TitleItem
+                    <com.sunnybear.library.view.select.TitleItem
                         android:id="@+id/ll_news"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                         auto:inactive_color="@color/text_color_gray"
                         auto:indicator_color="@color/text_main_color_nor"
                         auto:title_text="新闻" />
-                </com.sunnybear.library.view.tab.TitleBar>
+                </com.sunnybear.library.view.select.TitleBar>
 
                 <!--列表-->
                 <com.sunnybear.library.view.recycler.LoadMoreRecyclerView

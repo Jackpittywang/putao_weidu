@@ -108,7 +108,7 @@
                         android:textColor="@color/text_color_646464"
                         android:textSize="@dimen/text_size_18sp" />
 
-                    <com.sunnybear.library.view.tag.TagLayout
+                    <com.sunnybear.library.view.select.TagBar
                         android:id="@+id/tl_color_tag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

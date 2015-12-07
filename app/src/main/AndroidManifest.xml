@@ -74,7 +74,7 @@
         <activity
             android:name=".explore.AttentionSuccessActivity"
             android:screenOrientation="portrait" />
-        <!--购物车-->
+        <!-- 购物车 -->
         <activity
             android:name=".store.shopping.ShoppingCarActivity"
             android:screenOrientation="portrait" />
@@ -83,6 +83,8 @@
         <activity
             android:name=".qrcode.CaptureActivity"
             android:screenOrientation="portrait" />
+        <!-- 报名列表 -->
+        <activity android:name=".home.apply.ApplyListActivity" />
         <!-- shareSDK -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -107,6 +109,13 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 新闻详情 -->
+        <activity android:name=".home.news.NewsDetailActivity" >
+        </activity>
+        <!--我要参加-->
+        <activity
+            android:name=".home.apply.ApplyActivity" >
+        </activity>
     </application>
 
 </manifest>

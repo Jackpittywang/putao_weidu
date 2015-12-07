@@ -19,8 +19,8 @@ import com.putao.wd.me.message.adapter.MsgReplyAdapter;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.tab.TitleBar;
-import com.sunnybear.library.view.tab.TitleItem;
+import com.sunnybear.library.view.select.TitleBar;
+import com.sunnybear.library.view.select.TitleItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +116,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         if(initNotifyData().size()!=0) {
             ll_msgnotify.setVisibility(View.VISIBLE);
             tv_nomore.setVisibility(View.GONE);
-            MsgNotifyAdapter msgNotifyAdapter = new MsgNotifyAdapter(this, initNotifyData());
+            MsgNotifyAdapter msgNotifyAdapter = new MsgNotifyAdapter(mContext, initNotifyData());
             brv_messagelist.setAdapter(msgNotifyAdapter);
         }else{
             ll_msgnotify.setVisibility(View.GONE);
@@ -128,7 +128,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
         if (initReplyData().size() != 0){//“赞”列表有数据
             ll_msgnotify.setVisibility(View.VISIBLE);
             tv_nomore.setVisibility(View.GONE);
-            MsgReplyAdapter msgReplyAdapter = new MsgReplyAdapter(this, initReplyData());
+            MsgReplyAdapter msgReplyAdapter = new MsgReplyAdapter(mContext, initReplyData());
             brv_messagelist.setAdapter(msgReplyAdapter);
         }else{
             ll_msgnotify.setVisibility(View.GONE);

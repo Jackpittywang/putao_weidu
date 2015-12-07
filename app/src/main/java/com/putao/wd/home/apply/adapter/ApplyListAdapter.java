@@ -1,4 +1,4 @@
-package com.putao.wd.home.praise.adapter;
+package com.putao.wd.home.apply.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.dto.ApplyListItem;
 import com.putao.wd.dto.PraiseListItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -16,11 +17,11 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 点赞列表适配器
- * Created by wango on 2015/12/4.
+ * 报名列表
+ * Created by wango on 2015/12/6.
  */
-public class PraiseListAdapter  extends LoadMoreAdapter<PraiseListItem, PraiseListAdapter.PraiseListViewHolder> {
-    public PraiseListAdapter(Context context, List<PraiseListItem> praiseListItems) {
+public class ApplyListAdapter extends LoadMoreAdapter<ApplyListItem, ApplyListAdapter.ApplyListViewHolder> {
+    public ApplyListAdapter(Context context, List<ApplyListItem> praiseListItems) {
         super(context, praiseListItems);
     }
 
@@ -28,17 +29,15 @@ public class PraiseListAdapter  extends LoadMoreAdapter<PraiseListItem, PraiseLi
         return R.layout.layout_praiselist_item;
     }
 
-    public PraiseListAdapter.PraiseListViewHolder getViewHolder(View itemView, int viewType) {
-        return new PraiseListAdapter.PraiseListViewHolder(itemView);
+    public ApplyListAdapter.ApplyListViewHolder getViewHolder(View itemView, int viewType) {
+        return new ApplyListAdapter.ApplyListViewHolder(itemView);
     }
 
-    public void onBindItem(PraiseListAdapter.PraiseListViewHolder holder, PraiseListItem praiseListItem, int position) {
-        holder.iv_praise_headericon.setImageURL(praiseListItem.getUserIconUrl());
-        holder.tv_praise_usernickname.setText(praiseListItem.getUsername());
-        if("游客".equals(praiseListItem.getUserattr())){
-            holder.tv_praise_count.setVisibility(View.VISIBLE);
-            holder.tv_praise_count.setText(praiseListItem.getPraiseCount()+"个赞");
-        }else if("普通用户".equals(praiseListItem.getUserattr())){
+    public void onBindItem(ApplyListAdapter.ApplyListViewHolder holder, ApplyListItem applyListItem, int position) {
+        holder.iv_praise_headericon.setImageURL(applyListItem.getUserIconUrl());
+        holder.tv_praise_usernickname.setText(applyListItem.getUsername());
+
+        if("普通用户".equals(applyListItem.getUserattr())){
             holder.iv_praise_userdetail.setVisibility(View.VISIBLE);
             holder.iv_praise_userdetail.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,16 +49,16 @@ public class PraiseListAdapter  extends LoadMoreAdapter<PraiseListItem, PraiseLi
 
     }
 
-    static class PraiseListViewHolder extends BasicViewHolder {
+    static class ApplyListViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_praise_headericon)
         ImageDraweeView iv_praise_headericon;//用户头像
         @Bind(R.id.tv_praise_usernickname)
         TextView tv_praise_usernickname;//用户昵称
-        @Bind(R.id.tv_praise_count)
-        TextView tv_praise_count;//点赞数
+//        @Bind(R.id.tv_praise_count)
+//        TextView tv_praise_count;//点赞数
         @Bind(R.id.iv_praise_userdetail)
         ImageView iv_praise_userdetail;//用户主页链接
-        public PraiseListViewHolder(View itemView) {
+        public ApplyListViewHolder(View itemView) {
             super(itemView);
         }
     }
