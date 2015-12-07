@@ -18,9 +18,8 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/2.
  */
 public class ManageFragment extends BasicFragment implements View.OnClickListener {
-    @Bind(R.id.tv_stopuse)
-    Button tv_stopuse;
-
+    @Bind(R.id.btn_stopuse)
+    Button btn_stopuse;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_manage;
