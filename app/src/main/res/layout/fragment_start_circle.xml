@@ -15,123 +15,117 @@
         auto:nav_main_title_size="@dimen/text_size_8sp"
         auto:nav_right_icon="@drawable/btn_contact_selector" />
 
-    <FrameLayout
+    <!--下拉刷新-->
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        auto:refresh_layout="@layout/robot_refresh_header"
+        auto:refresh_layout_height="90">
 
-        <!--下拉刷新-->
-        <com.sunnybear.library.view.PullToRefreshLayout
-            android:id="@+id/ptl_refresh"
+        <!--内容-->
+        <com.sunnybear.library.view.sticky.StickyHeaderLayout
+            android:id="@+id/sticky_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            auto:refresh_layout="@layout/robot_refresh_header"
-            auto:refresh_layout_height="90">
+            auto:scrollable_closeUpAnimatorInterpolator="@android:anim/bounce_interpolator">
 
-            <!--内容-->
-            <com.sunnybear.library.view.sticky.StickyHeaderLayout
-                android:id="@+id/sticky_layout"
+            <!--头部布局-->
+            <RelativeLayout
+                android:id="@+id/stickyHeaderLayout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal">
+
+                <com.sunnybear.library.view.BannerLayout
+                    android:id="@+id/bl_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    auto:banner_fill_color="@color/text_main_color_nor"
+                    auto:banner_interval_time="2"
+                    auto:banner_page_color="@color/text_color_gray" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_below="@id/bl_banner"
+                    android:background="@color/color_EBEBEB" />
+
+            </RelativeLayout>
+
+            <!--标题栏-->
+            <com.sunnybear.library.view.select.TitleBar
+                android:id="@id/stickyHeaderLayout_sticky"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/divider"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <!--全部-->
+                <com.sunnybear.library.view.select.TitleItem
+                    android:id="@+id/ll_all"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:is_active="true"
+                    auto:title_text="全部" />
+
+                <!--进行中-->
+                <com.sunnybear.library.view.select.TitleItem
+                    android:id="@+id/ll_ing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:title_text="进行中" />
+
+                <!--已结束-->
+                <com.sunnybear.library.view.select.TitleItem
+                    android:id="@+id/ll_finish"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:title_text="已结束" />
+
+                <!--新闻-->
+                <com.sunnybear.library.view.select.TitleItem
+                    android:id="@+id/ll_news"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    auto:active_color="@color/text_main_color_nor"
+                    auto:inactive_color="@color/text_color_gray"
+                    auto:indicator_color="@color/text_main_color_nor"
+                    auto:title_text="新闻" />
+            </com.sunnybear.library.view.select.TitleBar>
+
+            <!--列表-->
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                android:id="@id/stickyHeaderLayout_scrollable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                auto:scrollable_closeUpAnimatorInterpolator="@android:anim/bounce_interpolator">
+                android:layout_marginTop="48dp"
+                auto:divider_color="@color/color_EBEBEB"
+                auto:divider_height="8dp"
+                auto:has_row_divider="true" />
 
-                <!--头部布局-->
-                <RelativeLayout
-                    android:id="@+id/stickyHeaderLayout_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center_horizontal">
+        </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
-                    <com.sunnybear.library.view.viewpager.AutoScrollViewPager
-                        android:id="@+id/vp_banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        auto:interval_time="2"
-                        auto:is_auto_scroll="true" />
-
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:layout_below="@id/vp_banner"
-                        android:background="@color/color_EBEBEB" />
-
-                </RelativeLayout>
-
-                <!--标题栏-->
-                <com.sunnybear.library.view.select.TitleBar
-                    android:id="@id/stickyHeaderLayout_sticky"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/divider"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal"
-                    android:padding="6dp">
-
-                    <!--全部-->
-                    <com.sunnybear.library.view.select.TitleItem
-                        android:id="@+id/ll_all"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        auto:active_color="@color/text_main_color_nor"
-                        auto:inactive_color="@color/text_color_gray"
-                        auto:indicator_color="@color/text_main_color_nor"
-                        auto:is_active="true"
-                        auto:title_text="全部" />
-
-                    <!--进行中-->
-                    <com.sunnybear.library.view.select.TitleItem
-                        android:id="@+id/ll_ing"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        auto:active_color="@color/text_main_color_nor"
-                        auto:inactive_color="@color/text_color_gray"
-                        auto:indicator_color="@color/text_main_color_nor"
-                        auto:title_text="进行中" />
-
-                    <!--已结束-->
-                    <com.sunnybear.library.view.select.TitleItem
-                        android:id="@+id/ll_finish"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        auto:active_color="@color/text_main_color_nor"
-                        auto:inactive_color="@color/text_color_gray"
-                        auto:indicator_color="@color/text_main_color_nor"
-                        auto:title_text="已结束" />
-
-                    <!--新闻-->
-                    <com.sunnybear.library.view.select.TitleItem
-                        android:id="@+id/ll_news"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        auto:active_color="@color/text_main_color_nor"
-                        auto:inactive_color="@color/text_color_gray"
-                        auto:indicator_color="@color/text_main_color_nor"
-                        auto:title_text="新闻" />
-                </com.sunnybear.library.view.select.TitleBar>
-
-                <!--列表-->
-                <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                    android:id="@id/stickyHeaderLayout_scrollable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="48dp"
-                    auto:divider_color="@color/color_EBEBEB"
-                    auto:divider_height="8dp"
-                    auto:has_row_divider="true" />
-
-            </com.sunnybear.library.view.sticky.StickyHeaderLayout>
-
-        </com.sunnybear.library.view.PullToRefreshLayout>
-
-    </FrameLayout>
+    </com.sunnybear.library.view.PullToRefreshLayout>
 
 </LinearLayout>

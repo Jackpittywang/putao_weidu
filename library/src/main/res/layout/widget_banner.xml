@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,7 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.sunnybear.library.view.indicator.CircleIndicator
+    <com.sunnybear.library.view.indicator.CirclePageIndicator
+        android:id="@+id/ci_indicator"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
-</merge>
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        auto:radius="5dp"
+        auto:strokeColor="@color/transparent" />
+</RelativeLayout>
