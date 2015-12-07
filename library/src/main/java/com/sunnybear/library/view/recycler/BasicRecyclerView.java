@@ -3,7 +3,6 @@ package com.sunnybear.library.view.recycler;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -103,7 +102,7 @@ public class BasicRecyclerView extends RecyclerView {
         //排版方式
         setLayoutManager(manager);
         //添加删除的动画
-        setItemAnimator(new DefaultItemAnimator());
+        setItemAnimator(new BasicItemAnimator());
         //添加间隔线
         if (has_row_divider) {
             HorizontalDividerItemDecoration decoration = new HorizontalDividerItemDecoration.Builder(context)

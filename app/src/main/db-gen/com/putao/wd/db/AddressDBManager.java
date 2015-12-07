@@ -1,7 +1,5 @@
-package com.putao.wd.db.db;
+package com.putao.wd.db;
 
-import com.putao.wd.GlobalApplication;
-import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.AddressDB;
 
@@ -14,9 +12,9 @@ import de.greenrobot.dao.AbstractDao;
 public class AddressDBManager extends DataBaseManager<AddressDB, Long> {
     private static AddressDBManager mInstance;
 
-    public static AddressDBManager getInstance(GlobalApplication application) {
+    public static AddressDBManager getInstance(DaoMaster.OpenHelper helper) {
         if (mInstance == null)
-            mInstance = new AddressDBManager(application.getDBHelper());
+            mInstance = new AddressDBManager(helper);
         return mInstance;
     }
 

@@ -16,8 +16,6 @@ import com.putao.wd.dto.MessageReplyItem;
 import com.putao.wd.me.message.adapter.MsgNotifyAdapter;
 import com.putao.wd.me.message.adapter.MsgPraiseAdapter;
 import com.putao.wd.me.message.adapter.MsgReplyAdapter;
-import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;

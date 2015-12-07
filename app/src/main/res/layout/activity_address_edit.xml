@@ -9,8 +9,10 @@
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         auto:nav_left_title="@string/cancel"
+        auto:nav_left_title_color="@drawable/text_select"
         auto:nav_main_title="@string/address_manager"
-        auto:nav_right_title="@string/save" />
+        auto:nav_right_title="@string/save"
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <!--收货人姓名-->
     <LinearLayout style="@style/style_address_title">
@@ -48,8 +50,10 @@
 
         <!--省份,城市,城区-->
         <LinearLayout
+            android:id="@+id/ll_city_sel"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <TextView
@@ -80,10 +84,12 @@
                 android:text="城区" />
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
                 android:layout_weight="0.1"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/btn_arrow_down" />
         </LinearLayout>
 
         <!--街道地址-->
@@ -117,15 +123,17 @@
     <!--默认收货地址-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="@color/layout_background">
 
-        <CheckBox
-            android:id="@+id/cb_default"
+        <com.sunnybear.library.view.SwitchButton
+            android:id="@+id/btn_default"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            auto:norDrawable="@drawable/check_box_nor"
+            auto:selDrawable="@drawable/check_box_sel" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -147,10 +155,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginLeft="8dp"
             android:text="@string/delete_address"
-            android:textColor="@color/text_color_red"
+            android:textColor="@color/text_color_ED5564"
             android:textSize="@dimen/text_size_18sp" />
     </LinearLayout>
 </LinearLayout>

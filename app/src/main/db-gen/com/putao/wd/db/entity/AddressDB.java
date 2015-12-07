@@ -5,7 +5,7 @@ package com.putao.wd.db.entity;
 import com.sunnybear.library.model.db.DBEntity;
 
 /**
- * Entity mapped to table "putao_wd_shipping_address".
+ * Entity mapped to table "putao_wd_address".
  */
 public class AddressDB extends DBEntity {
 

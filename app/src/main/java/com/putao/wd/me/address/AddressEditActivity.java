@@ -2,7 +2,6 @@ package com.putao.wd.me.address;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,6 +9,10 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.dto.DistrictSelect;
+import com.putao.wd.me.address.fragment.DistrictFragment;
+import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.view.SwitchButton;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -31,8 +34,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     EditText et_street;//街道
     @Bind(R.id.et_phone)
     EditText et_phone;//电话号码
-    @Bind(R.id.cb_default)
-    CheckBox ck_default;//是否设置默认
+    @Bind(R.id.btn_default)
+    SwitchButton btn_default;//是否设置默认
     @Bind(R.id.ll_delete_address)
     LinearLayout ll_delete_address;//删除
 
@@ -56,14 +59,24 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         return new String[0];
     }
 
-    @OnClick(R.id.ll_delete_address)
+    @OnClick({R.id.ll_delete_address, R.id.ll_city_sel})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
 
                 break;
+            case R.id.ll_city_sel://地区选择
+                startActivity(CitySelectActivity.class);
+                break;
         }
+    }
+
+    @Subcriber(tag = DistrictFragment.EVENT_DISRICT_SELECT)
+    public void eventDistrictSelect(DistrictSelect districtSelect) {
+        tv_province.setText(districtSelect.getProvinceName());
+        tv_city.setText(districtSelect.getCityName());
+        tv_district.setText(districtSelect.getDistrictName());
     }
 
     /**
