@@ -1,5 +1,6 @@
 package com.putao.wd.api;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.AuditType;
 import com.putao.wd.model.CommentType;
@@ -33,10 +34,10 @@ public class StartApi {
     private static final String REQUEST_UID = "uid";//用户的唯一标识ID
 
 
-    private static String BASE_URL;//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.event.start.wang/" : "http://api.event.start.wang/";//基础url
 
     public static void install(String base_url) {
-        BASE_URL = base_url;
+//        BASE_URL = base_url;
     }
 
     /**

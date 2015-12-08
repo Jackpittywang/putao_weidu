@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.putao.wd"
     android:versionCode="1"
-    android:versionName="1.0.0" >
+    android:versionName="1.0.0">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -26,7 +26,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- 分属app_id -->
         <meta-data
@@ -35,7 +35,7 @@
         <!-- 主页 -->
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -110,6 +110,18 @@
         <activity
             android:name=".start.comment.CommentActivity"
             android:screenOrientation="portrait" />
+        <!--图片介绍-->
+        <activity
+            android:name=".start.action.PictrueInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 填写订单 -->
+        <activity
+            android:name=".store.order.WriteOrderActivity"
+            android:screenOrientation="portrait" />
+        <!--发票信息-->
+        <activity
+            android:name=".store.invoice.InvoiceInfoActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
@@ -121,8 +133,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-            <intent-filter tools:ignore="GoogleAppIndexingWarning" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter
+                tools:ignore="GoogleAppIndexingDeepLinkError,GoogleAppIndexingWarning">
 
                 <!-- <data android:scheme="tencent" /> -->
 
@@ -141,19 +154,5 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 地区选择 -->
         <service android:name=".me.address.CityService" />
-        图片介绍
-        <activity
-            android:name=".start.action.PictrueInfoActivity"
-            android:screenOrientation="portrait" />
-        <!-- 填写订单 -->
-        <activity android:name=".store.order.WriteOrderActivity" >
-        </activity>
-        <!-- 发票信息 -->
-        <activity android:name=".store.invoice.InvoiceInfoActivity" >
-        </activity>
-        <!--收银台-->
-        <activity android:name=".store.cashier.CashierActivity" >
-        </activity>
     </application>
-
 </manifest>

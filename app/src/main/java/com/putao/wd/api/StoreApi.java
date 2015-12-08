@@ -1,5 +1,6 @@
 package com.putao.wd.api;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.RequestMethod;
@@ -11,10 +12,10 @@ import com.sunnybear.library.model.http.request.RequestMethod;
 public class StoreApi {
     private static final String REQUEST_PRODUCT_ID = "id";//产品id
 
-    private static String BASE_URL;//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.sotre.putao.com/" : "http://api.sotre.putao.com/";//基础url
 
     public static void install(String base_url) {
-        BASE_URL = base_url;
+//        BASE_URL = base_url;
     }
 
     /**
