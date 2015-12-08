@@ -1,10 +1,246 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.putao.wd.store.invoice.InvoiceInfoActivity">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            android:visibility="visible"
+            auto:nav_left_icon="@drawable/btn_20_back_p_sel"
+            auto:nav_main_title="发票信息"
+            auto:nav_right_title="保存"/>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="5dp"
+            android:background="@color/divider_color" />
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/color_EBEBEB" />
+        <!--需要发票-->
+        <LinearLayout
+            android:id="@+id/ll_need_invoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_need_invoice"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="不需要发票"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/divider_color" />
+        <!--不需要-->
+        <LinearLayout
+            android:id="@+id/ll_noneed_invoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_noneed_invoice"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="需要发票"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:paddingTop="20dp"
+            android:text="发票抬头"
+            android:textSize="14sp"
+            android:background="@color/color_EBEBEB"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <!--个人-->
+        <LinearLayout
+            android:id="@+id/ll_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_person"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="个人"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/divider_color" />
+        <!--单位-->
+        <LinearLayout
+            android:id="@+id/ll_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_company"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="单位"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:paddingTop="20dp"
+            android:text="发票内容"
+            android:textSize="14sp"
+            android:background="@color/color_EBEBEB"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <!--需要明细-->
+        <LinearLayout
+            android:id="@+id/ll_invoice_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_invoice_info"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="需要明细"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/divider_color" />
+        <!--电子产品-->
+        <LinearLayout
+            android:id="@+id/ll_electronic_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_electronic_product"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="电子产品"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/divider_color" />
+        <!--电子产品-->
+        <LinearLayout
+            android:id="@+id/ll_toy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_toy"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="玩具"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

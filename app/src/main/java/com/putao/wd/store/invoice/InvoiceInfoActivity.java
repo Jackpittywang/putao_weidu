@@ -11,7 +11,7 @@ import com.putao.wd.base.PTWDActivity;
  * Created by wangou on 2015/12/08.
  */
 public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickListener {
- 
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_invoice_info;
