@@ -152,7 +152,7 @@
                 auto:divider_color="@color/white"
                 auto:divider_height="1px"
                 auto:has_row_divider="true" />
-            <!--&lt;!&ndash;订单汇总&ndash;&gt;-->
+            <!--订单汇总-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
