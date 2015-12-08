@@ -71,10 +71,10 @@ public class OrdersAdapter extends BasicAdapter<OrderListItem, BasicViewHolder> 
             viewHolder.tv_count.setText(orderListItem.getCount());
         }else if(holder instanceof SumOrderListViewHolder){
             SumOrderListViewHolder sumviewHolder= (SumOrderListViewHolder) holder;
-            sumviewHolder.tv_order_sumcount.setText(orderListItem.getTitle());
-            sumviewHolder.tv_product_summoney.setText(orderListItem.getColor());
-            sumviewHolder.tv_carriage.setText(orderListItem.getSize());
-            sumviewHolder.tv_sum_noney.setText(orderListItem.getMoney());
+            sumviewHolder.tv_order_sumcount.setText(orderListItem.getCount());
+            sumviewHolder.tv_product_summoney.setText(orderListItem.getSum_price());
+            sumviewHolder.tv_carriage.setText(orderListItem.getCarriage());
+            sumviewHolder.tv_sum_noney.setText(orderListItem.getSum());
         }
 
     }
