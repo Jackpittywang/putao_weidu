@@ -153,8 +153,8 @@
                 auto:selDrawable="@drawable/check_box_sel" />
             <ImageView
                 android:src="@drawable/img_explore_flaunte_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_width="60dp"
+                android:layout_height="20dp" />
         </LinearLayout>
         <TextView
             android:layout_weight="1"
