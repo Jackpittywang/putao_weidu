@@ -54,15 +54,24 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     private List<OrderListItem> getTestData() {
         List<OrderListItem> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            OrderListItem car = new OrderListItem();
-            car.setTitle(i+"葡萄探索号.虚拟+现实儿童科技益智玩具");
-            car.setColor("塔塔紫");
-            car.setSize("均码");
-            car.setMoney("399.00");
-            car.setCount("2");
-            car.setIsNull(i % 2 == 1);
-            list.add(car);
+            OrderListItem order = new OrderListItem();
+            order.setTitle(i+"葡萄探索号.虚拟+现实儿童科技益智玩具");
+            order.setColor("塔塔紫");
+            order.setSize("均码");
+            order.setMoney("399.00");
+            order.setCount("2");
+            list.add(order);
         }
+        OrderListItem orderfooter=new OrderListItem();
+        orderfooter.setSum_count("3");
+        orderfooter.setCarriage("399.00");
+        orderfooter.setSum("3666.00");
+        orderfooter.setSum_price("8888");
+        list.add(orderfooter);
+//        for (){
+//
+//        }
+
         return list;
     }
 

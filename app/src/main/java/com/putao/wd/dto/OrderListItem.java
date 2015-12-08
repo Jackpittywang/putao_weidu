@@ -14,8 +14,48 @@ public class OrderListItem implements Serializable {
     private String money;
     private String count;
     private String imgUrl;
-    private boolean isNull;
-    private boolean isSelect;
+
+    private String sum_count;
+    private String sum_price;
+    private String carriage;
+
+    public String getCarriage() {
+        return carriage;
+    }
+
+    public void setCarriage(String carriage) {
+        this.carriage = carriage;
+    }
+
+    private String sum;
+
+    public String getSum_count() {
+        return sum_count;
+    }
+
+    public void setSum_count(String sum_count) {
+        this.sum_count = sum_count;
+    }
+
+    public String getSum_price() {
+        return sum_price;
+    }
+
+    public void setSum_price(String sum_price) {
+        this.sum_price = sum_price;
+    }
+
+
+    public String getSum() {
+        return sum;
+    }
+
+    public void setSum(String sum) {
+        this.sum = sum;
+    }
+
+
+
 
     public String getId() {
         return id;
@@ -65,14 +105,6 @@ public class OrderListItem implements Serializable {
         this.count = count;
     }
 
-    public boolean isNull() {
-        return isNull;
-    }
-
-    public void setIsNull(boolean isNull) {
-        this.isNull = isNull;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }
@@ -81,26 +113,5 @@ public class OrderListItem implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public boolean isSelect() {
-        return isSelect;
-    }
 
-    public void setIsSelect(boolean isSelect) {
-        this.isSelect = isSelect;
-    }
-
-    @Override
-    public String toString() {
-        return "ShoppingCar{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", color='" + color + '\'' +
-                ", size='" + size + '\'' +
-                ", money='" + money + '\'' +
-                ", count='" + count + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", isNull=" + isNull +
-                ", isSelect=" + isSelect +
-                '}';
-    }
 }
