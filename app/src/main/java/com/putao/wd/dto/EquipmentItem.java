@@ -3,6 +3,7 @@ package com.putao.wd.dto;
 import java.io.Serializable;
 
 /**
+ * 设备
  * Created by wango on 2015/12/2.
  */
 public class EquipmentItem implements Serializable {
