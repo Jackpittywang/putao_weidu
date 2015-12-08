@@ -43,12 +43,14 @@ public class CommentAdapter extends LoadMoreAdapter<CommentItem, CommentAdapter.
         holder.tv_comment_time.setText(commentItem.getTime());
         holder.tv_comment_content.setText(commentItem.getComment());
         holder.tv_comment.setText(commentItem.getComment_count());
+        holder.tv_support.setText(commentItem.getSupport_count());
+
         holder.sb_support_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
+
             }
         });
-        holder.tv_support.setText(commentItem.getSupport_count());
     }
 
 
