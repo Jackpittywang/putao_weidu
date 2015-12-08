@@ -57,33 +57,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         adapter = new OrdersAdapter(mContext, cars);
         brv_write_orderlist.setAdapter(adapter);
 
-        //重新设置list高度
-//        ViewGroup.LayoutParams mParams = brv_write_orderlist.getLayoutParams();
-//        mParams.height = (CommonUtils.getScreenWidthPX(mContext) * 480 / 720 + CommonUtils.dipToPixels(40)) * cars.size() + CommonUtils.dipToPixels(8);
-//        mParams.width = CommonUtils.getScreenWidthPX(mContext);
-//        brv_write_orderlist.setLayoutParams(mParams);
-        //setListViewHeightBasedOnChildren();
-    }
-    /**
-     * 动态设置ListView的高度
-     * @param
-     */
-    public  void setListViewHeightBasedOnChildren() {
-//        if(brv_write_orderlist == null) return;
-//
-//        if (adapter == null) {
-//            // pre-condition
-//            return;
-//        }
-//        int totalHeight = 0;
-//        for (int i = 0; i < adapter.getItemCount(); i++) {
-//            View listItem = adapter.getViewHolder(i, null, brv_write_orderlist);
-//            listItem.measure(0, 0);
-//            totalHeight += listItem.getMeasuredHeight();
-//        }
-//        ViewGroup.LayoutParams params = brv_write_orderlist.getLayoutParams();
-//        params.height = totalHeight + (brv_write_orderlist.getDividerHeight() * (adapter.getItemCount() - 1));
-//        brv_write_orderlist.setLayoutParams(params);
     }
 
     //将图片在imageview中x轴循环填充需要的bitmap
