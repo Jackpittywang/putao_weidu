@@ -19,7 +19,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override
