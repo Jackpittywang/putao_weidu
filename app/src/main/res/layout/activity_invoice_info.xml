@@ -42,6 +42,7 @@
                 android:id="@+id/btn_noneed_invoice"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                auto:isSelect="true"
                 auto:norDrawable="@drawable/check_box_nor"
                 auto:selDrawable="@drawable/check_box_sel" />
 
@@ -87,7 +88,7 @@
         <!--需要发票详细-->
         <LinearLayout
             android:id="@+id/ll_need_invoice_detail"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
