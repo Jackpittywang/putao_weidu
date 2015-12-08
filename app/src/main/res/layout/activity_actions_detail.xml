@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/icon_20_21"/>
+                android:src="@drawable/icon_date"/>
             <TextView
                 android:id="@+id/tv_personinfo_time"
                 android:textColor="#313131"
