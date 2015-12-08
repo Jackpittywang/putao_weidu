@@ -75,28 +75,37 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
         switch (v.getId()){
-            case R.id.btn_need_invoice:
+            case R.id.btn_need_invoice://需要发票
                 ll_need_invoice_detail.setVisibility(View.VISIBLE);
+                btn_need_invoice.setState(true);
                 btn_noneed_invoice.setState(false);
                 break;
-            case R.id.btn_noneed_invoice:
+            case R.id.btn_noneed_invoice://不需要发票
                 ll_need_invoice_detail.setVisibility(View.GONE);
+                btn_noneed_invoice.setState(true);
                 btn_need_invoice.setState(false);
                 break;
-            case R.id.btn_person:
+            case R.id.btn_person://个人
                 btn_company.setState(false);
                 break;
-            case R.id.btn_company:
+            case R.id.btn_company://单位
+                btn_person.setState(true);
                 btn_person.setState(false);
                 break;
-            case R.id.btn_invoice_info:
-
+            case R.id.btn_invoice_info://发票明细
+                btn_invoice_info.setState(true);
+                btn_electronic_product.setState(false);
+                btn_toy.setState(false);
                 break;
-            case R.id.btn_electronic_product:
-
+            case R.id.btn_electronic_product://电子产品
+                btn_electronic_product.setState(true);
+                btn_invoice_info.setState(false);
+                btn_toy.setState(false);
                 break;
-            case R.id.btn_toy:
-
+            case R.id.btn_toy://玩具
+                btn_toy.setState(true);
+                btn_invoice_info.setState(false);
+                btn_electronic_product.setState(false);
                 break;
         }
     }
