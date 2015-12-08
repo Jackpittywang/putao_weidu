@@ -55,7 +55,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         List<OrderListItem> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             OrderListItem car = new OrderListItem();
-            car.setTitle("葡萄探索号.虚拟+现实儿童科技益智玩具");
+            car.setTitle(i+"葡萄探索号.虚拟+现实儿童科技益智玩具");
             car.setColor("塔塔紫");
             car.setSize("均码");
             car.setMoney("399.00");
