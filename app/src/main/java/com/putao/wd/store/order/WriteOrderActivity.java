@@ -26,7 +26,7 @@ import butterknife.Bind;
 
 /**
  * 填写订单
- * Created by guchenkai on 2015/11/30.
+ * Created by wangou on 2015/12/08.
  */
 public class WriteOrderActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.iv_reapte_picbar)//分割图片
