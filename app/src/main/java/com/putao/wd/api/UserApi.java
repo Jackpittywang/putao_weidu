@@ -1,49 +1,67 @@
 package com.putao.wd.api;
 
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.RequestMethod;
 
 /**
- * 用户Api
- * Created by guchenkai on 2015/12/2.
+ * 用户接口
+ * Created by guchenkai on 2015/12/8.
  */
 public class UserApi {
-    public static final String BASE_URL = GlobalApplication.isDebug ? "http://api.putao.io/" : "http://api.putao.com/";
+    private static final String REQUEST_NICK_NAME = "nick_name";//昵称
+    private static final String REQUEST_HEAD_IMG = "head_img";//头像图片名
+    private static final String REQUEST_PROFILE = "profile";//简介
 
-    public static void install() {
+    private static String BASE_URL;//基础url
+
+    public static void install(String base_url) {
+        BASE_URL = base_url;
     }
 
     /**
-     * 登录
+     * 登录接口（查询）
      */
-    public static final String URL_LOGIN = BASE_URL + "login";
+    public static final String URL_LOGIN = BASE_URL + "login/verification";
 
     /**
-     * 登录
+     * 登录接口（查询）
      */
     public static Request login() {
-        return PTWDRequestHelper.start(true).build(RequestMethod.POST, URL_LOGIN);
+        return PTWDRequestHelper.explore()
+                .build(RequestMethod.POST, URL_LOGIN);
     }
 
     /**
-     * 完善用户信息
+     * 完善用户信息（更新）
      */
-    public static final String URL_EDIT_INFO = BASE_URL + "editInfo";
+    public static final String URL_USER_EDIT = BASE_URL + "user/edit";
 
     /**
-     * 完善用户信息
+     * 完善用户信息（更新）
      *
-     * @param nickname 昵称
-     * @param headimg  头像图片名
-     * @param profile  简介
+     * @param nick_name 昵称
+     * @param head_img  头像图片名
+     * @param profile   简介
      */
-    public static Request editInfo(String nickname, String headimg, String profile) {
-        return PTWDRequestHelper.start(true)
-                .addParam("nickName", nickname)
-                .addParam("headImg", headimg)
-                .addParam("profile", profile)
-                .build(RequestMethod.POST, URL_EDIT_INFO);
+    public static Request userEdit(String nick_name, String head_img, String profile) {
+        return PTWDRequestHelper.explore()
+                .addParam(REQUEST_NICK_NAME, nick_name)
+                .addParam(REQUEST_HEAD_IMG, head_img)
+                .addParam(REQUEST_PROFILE, profile)
+                .build(RequestMethod.POST, URL_USER_EDIT);
+    }
+
+    /**
+     * 完善用户信息（查询）
+     */
+    public static final String URL_USER_INFO = BASE_URL + "user/info";
+
+    /**
+     * 完善用户信息（查询）
+     */
+    public static Request getUserInfo() {
+        return PTWDRequestHelper.explore()
+                .build(RequestMethod.POST, URL_USER_INFO);
     }
 }
