@@ -188,6 +188,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_pay"
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
