@@ -19,6 +19,7 @@ import com.putao.wd.me.address.fragment.DistrictFragment;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 
@@ -152,24 +153,47 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     @Override
     public void onRightAction() {
-        address.setName(et_name.getText().toString());
-        address.setMobile(et_phone.getText().toString());
-        address.setStreet(et_street.getText().toString());
-        if (isAdd) {
-            mAddressDBManager.insert(address);
-            EventBusHelper.post(address, EVENT_ADDRESS_ADD);
-        } else {
-            mAddressDBManager.update(address);
-            EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
+        if (checkData()) {
+            address.setName(et_name.getText().toString());
+            address.setMobile(et_phone.getText().toString());
+            address.setStreet(et_street.getText().toString());
+            if (isAdd) {
+                mAddressDBManager.insert(address);
+                EventBusHelper.post(address, EVENT_ADDRESS_ADD);
+            } else {
+                mAddressDBManager.update(address);
+                EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
+            }
+            ActivityManager.getInstance().finishCurrentActivity();
         }
-        ActivityManager.getInstance().finishCurrentActivity();
     }
 
     /**
      * 验证信息
      */
-    private void checkData() {
-
+    private boolean checkData() {
+        String name = et_name.getText().toString();
+        String street = et_street.getText().toString();
+        String phone = et_phone.getText().toString();
+        boolean noFill = false;
+        StringBuilder str = new StringBuilder();
+        if (null == name || "".equals(name)) {
+            str.append(" 姓名 ");
+            noFill = true;
+        }
+        if (null == street || "".equals(street)){
+            str.append(" 地址 ");
+            noFill = true;
+        }
+        if (null == phone || "".equals(phone)){
+            str.append(" 电话 ");
+            noFill = true;
+        }
+        if (noFill) {
+            ToastUtils.showToastShort(this, "收货人" + str + "未填写");
+            return false;
+        }
+        return true;
     }
 
     @Override
