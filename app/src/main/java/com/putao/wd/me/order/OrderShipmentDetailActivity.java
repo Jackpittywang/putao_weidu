@@ -2,6 +2,7 @@ package com.putao.wd.me.order;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,6 +35,11 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     private TextView tv_package_status;
 
     private LinearLayout ll_package_shipment;
+
+    // 包裹列表的horizontalscrollview
+    private HorizontalScrollView hsv_package_list;
+    // 放包裹列表的布局
+    private LinearLayout ll_package_list;
 
     @Override
     protected int getLayoutId() {

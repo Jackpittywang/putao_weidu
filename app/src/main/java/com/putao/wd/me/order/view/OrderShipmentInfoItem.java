@@ -14,6 +14,7 @@ import com.sunnybear.library.util.Logger;
 
 
 /**
+ * 物流详情里面显示物流详细状态的item
  * Created by yanguoqiang on 15/12/3.
  */
 public class OrderShipmentInfoItem extends LinearLayout {

@@ -14,6 +14,22 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="物流状态" />
 
+    <HorizontalScrollView
+        android:id="@+id/hsv_package_list"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <LinearLayout
+            android:id="@+id/ll_package_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -90,8 +106,8 @@
                 android:gravity="center_vertical"
                 android:padding="10dp"
                 android:text="-------------------"
-                android:textSize="@dimen/text_size_18sp"
-                android:textColor="#313131" />
+                android:textColor="#313131"
+                android:textSize="@dimen/text_size_18sp" />
 
             <LinearLayout
                 android:id="@+id/ll_package_shipment"
