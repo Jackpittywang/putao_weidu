@@ -145,8 +145,11 @@
         <activity
             android:name=".start.action.PictrueInfoActivity"
             android:screenOrientation="portrait" />
-        <!--填写订单-->
+        <!-- 填写订单 -->
         <activity android:name=".store.order.WriteOrderActivity" >
+        </activity>
+        <!--发票信息-->
+        <activity android:name=".store.invoice.InvoiceInfoActivity" >
         </activity>
     </application>
 

@@ -13,17 +13,20 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ActionNewsItem;
 import com.putao.wd.dto.Banner;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
+import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BannerLayout;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.viewpager.AutoScrollPagerAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +142,13 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 }, 3 * 1000);
             }
         });
+        rv_content.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Serializable serializable, int position) {
+                startActivity(CommentActivity.class);
+            }
+        });
+
         ll_title.setTitleItemSelectedListener(this);
     }
 

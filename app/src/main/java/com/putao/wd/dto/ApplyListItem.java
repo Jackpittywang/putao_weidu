@@ -3,6 +3,7 @@ package com.putao.wd.dto;
 import java.io.Serializable;
 
 /**
+ * 报名列表
  * Created by wango on 2015/12/6.
  */
 public class ApplyListItem  implements Serializable {

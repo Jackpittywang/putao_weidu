@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/btn_support_sel" android:state_selected="true"/>
+    <itam android:drawable="@drawable/btn_support_nor"/>
+
+</selector>
