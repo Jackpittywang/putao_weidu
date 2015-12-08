@@ -33,18 +33,11 @@ public class OrdersAdapter extends BasicAdapter<OrderListItem, OrdersAdapter.Ord
         return new OrderListViewHolder(itemView);
     }
 
+
+
     @Override
     public void onBindItem(OrderListViewHolder holder, final OrderListItem orderListItem, final int position) {
-        if (position != 0) {//和上一条信息比较
-            OrderListItem previCar = getItem(position - 1);
-            if (previCar.isNull() == orderListItem.isNull()) {
-                //holder.tv_big_title.setVisibility(View.GONE);
-                holder.divider.setVisibility(View.GONE);
-            }
-        } else {
-            //holder.tv_big_title.setVisibility(View.VISIBLE);
-            holder.divider.setVisibility(View.GONE);
-        }
+
         holder.iv_car_icon.setImageURL(orderListItem.getImgUrl());
         holder.tv_title.setText(orderListItem.getTitle());
         holder.tv_color.setText(orderListItem.getColor());
@@ -70,10 +63,7 @@ public class OrdersAdapter extends BasicAdapter<OrderListItem, OrdersAdapter.Ord
      * 购物车视图
      */
     static class OrderListViewHolder extends BasicViewHolder {
-        @Bind(R.id.divider)
-        View divider;
-//        @Bind(R.id.tv_big_title)
-//        TextView tv_big_title;
+
         @Bind(R.id.iv_car_icon)
         ImageDraweeView iv_car_icon;
         @Bind(R.id.tv_title)
@@ -86,8 +76,7 @@ public class OrdersAdapter extends BasicAdapter<OrderListItem, OrdersAdapter.Ord
         TextView tv_money;
         @Bind(R.id.tv_count)
         TextView tv_count;
-//        @Bind(R.id.btn_sel)
-//        SwitchButton btn_sel;
+
 
         public OrderListViewHolder(View itemView) {
             super(itemView);

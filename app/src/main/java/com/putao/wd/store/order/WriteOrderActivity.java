@@ -41,6 +41,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         return R.layout.activity_write_order;
     }
 
+
+
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
@@ -96,7 +98,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     }
     private List<OrderListItem> getTestData() {
         List<OrderListItem> list = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 13; i++) {
             OrderListItem car = new OrderListItem();
             car.setTitle("葡萄探索号.虚拟+现实儿童科技益智玩具");
             car.setColor("塔塔紫");
