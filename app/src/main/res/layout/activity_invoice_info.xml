@@ -46,6 +46,7 @@
                 auto:norDrawable="@drawable/check_box_nor"
                 auto:selDrawable="@drawable/check_box_sel" />
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,6 +113,7 @@
                     android:id="@+id/btn_person"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    auto:isSelect="true"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
 
@@ -175,6 +177,7 @@
                     android:id="@+id/btn_invoice_info"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
+                    auto:isSelect="true"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
 

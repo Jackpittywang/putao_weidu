@@ -76,10 +76,12 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     public void onSwitchClick(View v, boolean isSelect) {
         switch (v.getId()){
             case R.id.btn_need_invoice:
-                ll_need_invoice_detail.setVisibility(View.GONE);
+                ll_need_invoice_detail.setVisibility(View.VISIBLE);
+                btn_noneed_invoice.setState(false);
                 break;
             case R.id.btn_noneed_invoice:
-                ll_need_invoice_detail.setVisibility(View.VISIBLE);
+                ll_need_invoice_detail.setVisibility(View.GONE);
+                btn_need_invoice.setState(false);
                 break;
             case R.id.btn_person:
                 btn_company.setState(false);
