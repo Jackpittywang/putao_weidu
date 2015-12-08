@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_C2C2C2"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_comment_icon"
+            android:layout_width="81dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:background="#959595"
+            auto:roundBottomLeft="true"
+            auto:roundBottomRight="true"
+            auto:roundTopLeft="true"
+            auto:roundTopRight="true"
+            auto:roundedCornerRadius="4dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="用户名"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_18sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_comment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="评论时间"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_comment_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="4dp"
+                android:lineSpacingExtra="4dp"
+                android:maxLength="200"
+                android:text="评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="赞"
+                    android:drawablePadding="4dp"
+                    android:drawableLeft="@drawable/btn_support_nor"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@id/tv_support"
+                    android:text="评论"
+                    android:drawablePadding="4dp"
+                    android:drawableLeft="@drawable/btn_comment"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_16sp"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
