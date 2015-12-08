@@ -13,14 +13,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_comment_icon"
             android:layout_width="81dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="8dp"
             android:background="#959595"
             auto:roundBottomLeft="true"
             auto:roundBottomRight="true"
@@ -32,7 +32,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="8dp"
             android:orientation="vertical">
 
             <TextView
@@ -71,8 +71,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 >
 
                 <TextView
@@ -80,12 +80,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginRight="20dp"
                     android:text="赞"
-                    android:drawablePadding="4dp"
-                    android:drawableLeft="@drawable/btn_support_nor"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_16sp"
+                    />
+
+                <com.sunnybear.library.view.SwitchButton
+                    android:id="@+id/sb_support_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/tv_support"
+                    auto:isSelect="false"
+                    auto:norDrawable="@drawable/btn_support_nor"
+                    auto:selDrawable="@drawable/btn_support_sel"
                     />
 
                 <TextView
@@ -93,10 +102,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:layout_toLeftOf="@id/tv_support"
-                    android:text="评论"
-                    android:drawablePadding="4dp"
+                    android:layout_toLeftOf="@id/sb_support_icon"
                     android:drawableLeft="@drawable/btn_comment"
+                    android:drawablePadding="4dp"
+                    android:text="评论"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_16sp"
                     />

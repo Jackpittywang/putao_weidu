@@ -1,5 +1,6 @@
 package com.putao.wd.api;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.RequestMethod;
@@ -13,10 +14,10 @@ public class UserApi {
     private static final String REQUEST_HEAD_IMG = "head_img";//头像图片名
     private static final String REQUEST_PROFILE = "profile";//简介
 
-    private static String BASE_URL;//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/";//基础url
 
     public static void install(String base_url) {
-        BASE_URL = base_url;
+//        BASE_URL = base_url;
     }
 
     /**

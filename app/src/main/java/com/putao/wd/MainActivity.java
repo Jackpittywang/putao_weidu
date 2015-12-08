@@ -53,10 +53,10 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         vp_content.setOffscreenPageLimit(4);
         vp_content.setPageTransformer(false, null);
 
-        ti_start_circle.show(4);
-        ti_explore.show(4);
-        ti_store.show(4);
-        ti_me.show(4);
+//        ti_start_circle.show(4);
+//        ti_explore.show(4);
+//        ti_store.show(4);
+//        ti_me.show(4);
         addListener();
 
         Logger.d(mApp.getDataBaseManager(ProvinceDBManager.class).getQueryBuilder().count() + "");
@@ -124,7 +124,6 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 //                startService(new Intent(this, CityService.class));
                 break;
         }
-        Logger.d("点击了第" + position + "个");
         vp_content.setCurrentItem(position);
     }
 
