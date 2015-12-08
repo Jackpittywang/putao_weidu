@@ -16,27 +16,28 @@ public class PTWDRequestHelper {
     public static final String REQUEST_KEY_DEVICE_ID = "masterSlaveDeviceId";
     public static final String REQUEST_KEY_APP_ID = "appid";
 
+
     /**
-     * 封装固定请求参数(不加登录参数)
+     * 封装固定请求参数(葡商城使用)
      *
      * @return Request实例
      */
-    public static FormEncodingRequestBuilder start() {
-        return start(false);
+    public static FormEncodingRequestBuilder store() {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""));
     }
 
     /**
-     * 封装固定请求参数
+     * 封装固定请求参数(探索号使用)
      *
      * @return Request实例
      */
-    public static FormEncodingRequestBuilder start(boolean isAddLoginParams) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+    public static FormEncodingRequestBuilder explore() {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
-        if (isAddLoginParams)
-            builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
-                    .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""));
-        return builder;
     }
 }
