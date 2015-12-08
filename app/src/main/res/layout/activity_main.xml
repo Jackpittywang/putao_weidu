@@ -23,8 +23,8 @@
             android:id="@+id/ti_explore"
             style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/tab_bar_e_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_e_nor" />
+            auto:activeDrawable="@drawable/tab_bar_p_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
 
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_store"
