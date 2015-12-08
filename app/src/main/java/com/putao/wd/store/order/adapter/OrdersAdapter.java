@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 填写订单的订单列表适配器
  * Created by wango on 2015/12/7.
  */
 public class OrdersAdapter extends BasicAdapter<OrderListItem, OrdersAdapter.OrderListViewHolder> {
