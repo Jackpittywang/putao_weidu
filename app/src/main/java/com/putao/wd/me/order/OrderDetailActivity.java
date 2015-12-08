@@ -12,8 +12,11 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderDto;
 import com.putao.wd.dto.OrderGoodsDto;
+import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.order.view.OrderGoodsItem;
+import com.putao.wd.me.order.view.OrderShipmentListItem;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -41,6 +44,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     private TextView tv_total_cost;
     private LinearLayout ll_goods;
     private TextView tv_goods_total_number;
+    private LinearLayout ll_shipment;
 
     @Override
     protected int getLayoutId() {
@@ -73,11 +77,19 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_shipment:// 全部
-                Bundle bundle = new Bundle();
-                bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, orderDto.getOrderNo());
-                startActivity(OrderShipmentDetailActivity.class, bundle);
+                openShipmentDetailActivity();
                 break;
         }
+    }
+
+
+    /**
+     * 打开包裹详情页面
+     */
+    private void openShipmentDetailActivity() {
+        Bundle bundle = new Bundle();
+        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, orderDto.getOrderNo());
+        startActivity(OrderShipmentDetailActivity.class, bundle);
     }
 
     private void initComponent() {
@@ -93,6 +105,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_total_cost = (TextView) findViewById(R.id.tv_total_cost);
         ll_goods = (LinearLayout) findViewById(R.id.ll_goods);
         tv_goods_total_number = (TextView) findViewById(R.id.tv_goods_total_number);
+        ll_shipment = (LinearLayout) findViewById(R.id.ll_shipment);
     }
 
     private void refreshView() {
@@ -108,6 +121,17 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_customer_phone.setText(orderDto.getCustomerPhone());
         tv_shipment_fee.setText("¥" + orderDto.getShipmentFee());
         tv_total_cost.setText("¥" + orderDto.getTotalCost());
+
+        List<OrderShipmentListItemDto> shipmentList = orderDto.getShipmentList();
+        Logger.i("OrderDetailActivity", "package size is:" + shipmentList.size());
+        if (shipmentList.size() > 0) {
+            ll_shipment.removeAllViews();
+            for (int i = 0; i < shipmentList.size(); i++) {
+                OrderShipmentListItem orderShipmentListItem = new OrderShipmentListItem(this, shipmentList.get(i));
+                ll_shipment.addView(orderShipmentListItem);
+            }
+        }
+
         List<OrderGoodsDto> goodsList = orderDto.getGoodsList();
         ll_goods.removeAllViews();
         int goodsTotalNumber = 0;
@@ -119,6 +143,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         }
         tv_goods_total_number.setText(goodsTotalNumber + "");
         setOrderStatus(orderDto.getOrderStatus());
+
+
     }
 
     /**

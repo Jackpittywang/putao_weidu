@@ -122,6 +122,10 @@
         <activity
             android:name=".store.invoice.InvoiceInfoActivity"
             android:screenOrientation="portrait" />
+        <!--发票信息-->
+        <activity
+            android:name=".store.cashier.CashierActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

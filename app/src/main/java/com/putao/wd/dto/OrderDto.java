@@ -23,8 +23,25 @@ public class OrderDto implements Serializable {
     // 总价
     private int totalCost;
 
+    // 商品列表
+    private List <OrderGoodsDto> goodsList;
+
 
     private String customerName;
+
+    private String customerAddress;
+
+    private String customerPhone;
+
+    private List<OrderShipmentListItemDto> shipmentList;
+
+    public List<OrderShipmentListItemDto> getShipmentList() {
+        return shipmentList;
+    }
+
+    public void setShipmentList(List<OrderShipmentListItemDto> shipmentList) {
+        this.shipmentList = shipmentList;
+    }
 
     public String getCustomerName() {
         return customerName;
@@ -49,11 +66,6 @@ public class OrderDto implements Serializable {
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
-
-    private String customerAddress;
-
-    private String customerPhone;
-
 
     public long getPurchaseTime() {
         return purchaseTime;
@@ -86,9 +98,6 @@ public class OrderDto implements Serializable {
     public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;
     }
-
-    // 商品列表
-    private List <OrderGoodsDto> goodsList;
 
     public List<OrderGoodsDto> getGoodsList() {
         return goodsList;
