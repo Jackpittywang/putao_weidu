@@ -148,8 +148,11 @@
         <!-- 填写订单 -->
         <activity android:name=".store.order.WriteOrderActivity" >
         </activity>
-        <!--发票信息-->
+        <!-- 发票信息 -->
         <activity android:name=".store.invoice.InvoiceInfoActivity" >
+        </activity>
+        <!--收银台-->
+        <activity android:name=".store.cashier.CashierActivity" >
         </activity>
     </application>
 
