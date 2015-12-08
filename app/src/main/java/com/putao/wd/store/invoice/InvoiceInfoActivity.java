@@ -25,7 +25,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @Bind(R.id.btn_need_invoice)
     SwitchButton btn_need_invoice;//需要发票
     @Bind(R.id.btn_noneed_invoice)
-    SwitchButton btn_noneed_invoice;//不需要发布
+    SwitchButton btn_noneed_invoice;//不需要发票
     //发票抬头
     @Bind(R.id.btn_person)
     SwitchButton btn_person;//个人
