@@ -113,3 +113,7 @@
             方法名:ExploreApi.getPlotDetails();
             接收model:PlotDetail(剧情理念详情(查询));
             返回类型:object;
+四.特别说明
+    1.AuditType是审核类型
+    2.CommentType是回复类型
+    3.CoolType赞的类型
