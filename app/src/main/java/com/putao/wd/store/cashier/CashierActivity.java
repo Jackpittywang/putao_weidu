@@ -19,7 +19,7 @@ public class CashierActivity extends PTWDActivity implements View.OnClickListene
 
     @Override
     protected void onViewCreateFinish(Bundle saveInstanceState) {
-
+        addNavgation();
     }
 
     @Override

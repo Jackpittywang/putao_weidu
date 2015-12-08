@@ -15,6 +15,7 @@
         <com.sunnybear.library.view.NavigationBar
             style="@style/style_navigation_bar"
             android:visibility="visible"
+            auto:nav_left_title_color="#985ec9"
             auto:nav_left_title="取消"
             auto:nav_main_title="收银台" />
         <!--间隔线-->
@@ -187,7 +188,7 @@
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="#985cc9"
+            android:background="@drawable/textview_circle_coner"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="马上支付" />
