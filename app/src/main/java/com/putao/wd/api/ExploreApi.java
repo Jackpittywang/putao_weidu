@@ -1,5 +1,6 @@
 package com.putao.wd.api;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
@@ -18,10 +19,10 @@ public class ExploreApi {
     private static final String REQUEST_EDIT_LIST = "edit_list";//用户修改的数据列表
     private static final String REQUEST_PLOT_ID = "plot_id";//剧情理念详情id
 
-    private static String BASE_URL;//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/";//基础url
 
     public static void install(String base_url) {
-        BASE_URL = base_url;
+//        BASE_URL = base_url;
     }
 
     /**
