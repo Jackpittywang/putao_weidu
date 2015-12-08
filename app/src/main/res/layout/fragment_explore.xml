@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -14,7 +14,7 @@
         auto:nav_main_title_color="@color/white"
         auto:nav_main_title_size="@dimen/text_size_8sp"
         auto:nav_right_title="管理"
-        auto:nav_right_title_color="@drawable/text_select" />
+        auto:nav_right_title_color="@drawable/text_select"/>
 
     <!--内容区-->
     <FrameLayout
@@ -25,13 +25,14 @@
         <RelativeLayout
             android:id="@+id/rl_empty"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_explore_empty_arrow"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
-                android:src="@drawable/img_explore_empty_arrow" />
+                android:src="@drawable/img_explore_empty_arrow"/>
 
             <ImageView
                 android:id="@+id/iv_explore_empty_word"
@@ -39,13 +40,95 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="48dp"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/img_explore_empty_word" />
+                android:src="@drawable/img_explore_empty_word"/>
 
             <ImageView
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/img_explore_empty" />
+                android:src="@drawable/img_explore_empty"/>
         </RelativeLayout>
+
+        <!-- 有数据 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_FFE875"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_date_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_date"/>
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:drawablePadding="4dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="2015-11-14"
+                    android:textColor="@color/text_color_red"
+                    android:textSize="@dimen/text_size_18sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:id="@+id/iv_user_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_explore_bulb"/>
+
+                <TextView
+                    android:id="@+id/tv_introduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:drawablePadding="4dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="小朋友昨天花了做多时间挑战淘淘向右走，昨天对空间技能兴趣更浓厚。"
+                    android:textColor="@color/color_313131"
+                    android:textSize="@dimen/text_size_20sp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color"/>
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"/>
+
+        </LinearLayout>
+
     </FrameLayout>
 </LinearLayout>
