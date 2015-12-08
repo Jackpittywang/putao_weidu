@@ -135,7 +135,7 @@
             <!--单位-->
             <LinearLayout
                 android:id="@+id/ll_company"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
@@ -155,6 +155,16 @@
                     android:text="单位"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_size_18sp" />
+                <com.sunnybear.library.view.CleanableEditText
+                    android:id="@+id/et_company"
+                    style="@style/WeiduText.EditText"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:maxLength="1"
+                    android:background="@null"
+                    android:drawableRight="@drawable/close_selector" />
             </LinearLayout>
 
             <TextView

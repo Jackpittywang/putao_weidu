@@ -6,7 +6,10 @@ import android.widget.LinearLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
+
+import java.security.cert.TrustAnchor;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -28,6 +31,8 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     SwitchButton btn_person;//个人
     @Bind(R.id.btn_company)
     SwitchButton btn_company;//单位
+    @Bind(R.id.et_company)
+    CleanableEditText et_company;
     //发票内容
     @Bind(R.id.btn_invoice_info)
     SwitchButton btn_invoice_info;//需要明细
@@ -86,11 +91,14 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
                 btn_need_invoice.setState(false);
                 break;
             case R.id.btn_person://个人
+                btn_person.setState(true);
                 btn_company.setState(false);
+                et_company.setVisibility(View.INVISIBLE);
                 break;
             case R.id.btn_company://单位
                 btn_person.setState(true);
                 btn_person.setState(false);
+                et_company.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_invoice_info://发票明细
                 btn_invoice_info.setState(true);
