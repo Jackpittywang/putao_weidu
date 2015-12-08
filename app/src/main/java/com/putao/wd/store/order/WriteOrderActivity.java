@@ -28,7 +28,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Bind(R.id.iv_reapte_picbar)
     ImageView iv_reapte_picbar;//分割图片
     @Bind(R.id.stickyHeaderLayout_scrollable)
-    BasicRecyclerView brv_write_orderlist;//订单列表
+    BasicRecyclerView stickyHeaderLayout_scrollable;//订单列表
 
     private OrdersAdapter adapter;
 
@@ -47,7 +47,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         //初始化列表数据
         List<OrderListItem> cars = getTestData();
         adapter = new OrdersAdapter(mContext, cars);
-        brv_write_orderlist.setAdapter(adapter);
+        stickyHeaderLayout_scrollable.setAdapter(adapter);
 
     }
 
