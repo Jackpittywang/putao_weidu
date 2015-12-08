@@ -28,7 +28,7 @@
             android:id="@+id/idv_cashier_headicon"
             auto:placeholderImage="@drawable/img_pay_cover"
             auto:actualImageScaleType="focusCrop"
-            auto:placeholderImageScaleType="fitCenter"
+            auto:placeholderImageScaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="133dp" />
         <!--间隔区-->
