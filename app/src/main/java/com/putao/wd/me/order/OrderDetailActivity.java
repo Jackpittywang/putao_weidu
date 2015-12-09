@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.OnClick;
 
 /**
+ * 订单详情
  * Created by yanguoqiang on 15/11/29.
  */
 public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.EquipmentItem;
+import com.putao.wd.dto.UseCountItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
 import com.putao.wd.explore.usecount.adapter.UseCountAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -46,22 +46,22 @@ public class UseCountEveryDayActivity extends PTWDActivity implements View.OnCli
 //        }
 //    }
 
-    private List<EquipmentItem> initDataTest() {
-        EquipmentItem msgitem;
-        msgitem=new EquipmentItem();
+    private List<UseCountItem> initDataTest() {
+        UseCountItem msgitem;
+        msgitem=new UseCountItem();
         msgitem.setName("不限");
-        List<EquipmentItem> list=new ArrayList<>();
+        List<UseCountItem> list=new ArrayList<>();
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseCountItem();
         msgitem.setName("1" + "次");
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseCountItem();
         msgitem.setName("3"+"次");
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseCountItem();
         msgitem.setName("5"+"次");
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseCountItem();
         msgitem.setName("10"+"次");
         list.add(msgitem);
         return list;

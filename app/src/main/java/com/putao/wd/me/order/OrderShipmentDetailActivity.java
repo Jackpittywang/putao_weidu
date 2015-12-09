@@ -17,7 +17,7 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/**物流信息
  * Created by yanguoqiang on 15/11/29.
  */
 public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
