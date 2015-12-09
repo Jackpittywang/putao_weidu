@@ -8,7 +8,7 @@ import com.sunnybear.library.util.Logger;
 import java.io.Serializable;
 
 /**
- * fastjson解析json
+ * FastJson解析json
  * Created by guchenkai on 2015/10/27.
  */
 public abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallback {
@@ -22,7 +22,7 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
     @Override
     public final void onSuccess(String url, JSONObject result) {
         String data = result.getString("data");
-        JsonUtils.JSONTYPE type = JsonUtils.getJSONType(data);
+        JsonUtils.JsonType type = JsonUtils.getJSONType(data);
         switch (type) {
             case JSON_TYPE_OBJECT:
                 onSuccess(url, (T) JSON.parseObject(data, clazz));

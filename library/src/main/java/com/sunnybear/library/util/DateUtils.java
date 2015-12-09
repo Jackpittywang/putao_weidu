@@ -13,10 +13,9 @@ import java.util.TimeZone;
  */
 public final class DateUtils {
     private static final String TAG = DateUtils.class.getSimpleName();
-    private static final String[] weeks = new String[]{};
-    //            ResourcesUtils.getStringArray(BasicApplication.getInstance(), R.array.weeks);
+    private static final String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
     private static final SimpleDateFormat mDataFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat mTimeFormat = new SimpleDateFormat("yyyy-MM-dd mm:HH:ss");
+    private static final SimpleDateFormat mTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 计算两个日期相差的天数，是否取绝对值
@@ -123,15 +122,17 @@ public final class DateUtils {
     }
 
     /**
-     * 毫秒转日期
+     * 秒转日期
      *
-     * @param millisecond 毫秒数
+     * @param second  秒数
+     * @param pattern 正则式
      * @return 日期
      */
-    public static String millisecondToDate(long millisecond) {
-        return millisecondToDate(millisecond, "yyyy-MM-dd");
+    public static String secondToDate(int second, String pattern) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date date = new Date(second * 1000L);
+        return format.format(date);
     }
-
 
     /**
      * 时间计算
@@ -142,7 +143,7 @@ public final class DateUtils {
     public static String timeCalculate(long millisecond) {
         String result = "";
         long diff = System.currentTimeMillis() - millisecond;//时间差
-        if (diff < 1000 * 60)
+        if (diff < 1000 * 60 && diff > 0)
             return "刚刚以前";
         else if (diff >= 1000 * 60 && diff < 1000 * 60 * 60)
             return diff / (1000 * 60) + "分钟以前";
@@ -150,6 +151,8 @@ public final class DateUtils {
             return diff / (1000 * 60 * 60) + "小时以前";
         else if (diff >= 1000 * 60 * 60 * 24)
             return diff / (1000 * 60 * 60 * 24) + "天以前";
+        else if (diff < 0)
+            return "输入时间在当前时间之后,不可以计算";
         return result;
     }
 
@@ -160,20 +163,7 @@ public final class DateUtils {
      * @return 计算后显示的文字
      */
     public static String timeCalculate(int second) {
-        String result = "";
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        int currentSecond = calendar.get(calendar.SECOND);
-        int diff = currentSecond - second;
-        if (diff < 60)
-            return "刚刚以前";
-        else if (diff >= 60 && diff < 60 * 60)
-            return diff / 60 + "分钟以前";
-        else if (diff >= 60 * 60 && diff < 60 * 60 * 24)
-            return diff / (60 * 60) + "小时以前";
-        else if (diff >= 60 * 60 * 24)
-            return diff / (60 * 60 * 24) + "天以前";
-        return result;
+        return timeCalculate(second * 1000L);
     }
 
     /**
@@ -181,8 +171,7 @@ public final class DateUtils {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = format.parse("2015-12-3 19:03:00");
-        System.out.println(timeCalculate((int) (date.getTime() / 1000)));
+        Date date = mTimeFormat.parse("2015-12-8 18:08:00");
+        System.out.print(timeCalculate((int) (date.getTime() / 1000)));
     }
 }
