@@ -2,6 +2,7 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Switch;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
@@ -24,7 +25,7 @@ public class PutaoExploreFragment extends PTWDFragment {
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
 
-    ExploreAdapter adapter;
+    private ExploreAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -49,11 +50,32 @@ public class PutaoExploreFragment extends PTWDFragment {
         startActivity(CaptureActivity.class);
     }
 
-    private List<ExploreItem> getTestData(){
+    private List<ExploreItem> getTestData() {
         List<ExploreItem> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             ExploreItem exploreItem = new ExploreItem();
+            if (i == 1 || i == 3 || i == 5) {
+                exploreItem.setIsMixed(true);
+                switch(i){
+                    case 1:
+                        exploreItem.setIconNum(1);
+                        break;
+                    case 3:
+                        exploreItem.setIconNum(4);
+                        break;
+                    case 5:
+                        exploreItem.setIconNum(9);
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                exploreItem.setIsMixed(false);
+            }
             exploreItem.setSkill_name("技能" + i);
+            exploreItem.setContent("这里显示每个关卡背后的教育理念的主要文字，大概是一句话左右。" +
+                    "完成多个关卡，则以分号隔开显示，一直向下展示。这里显示每个关卡背后的教育理念的主要文字，" +
+                    "大概是一句话左右。完成多个关卡，则以分号隔开显示，一直向下展示。" + i);
             list.add(exploreItem);
         }
         return list;
