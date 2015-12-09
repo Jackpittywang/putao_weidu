@@ -41,6 +41,7 @@ public class ControlledProductActivity extends PTWDActivity implements View.OnCl
         for (int i = 1; i <= 3; i++) {
             ControlProductItem msgitem = new ControlProductItem();
             msgitem.setName("设备名称" + i);
+            msgitem.setUri("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
             list.add(msgitem);
         }
         return list;

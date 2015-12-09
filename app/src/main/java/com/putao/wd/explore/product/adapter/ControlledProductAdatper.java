@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.dto.ControlProductItem;
 import com.putao.wd.dto.EquipmentItem;
+import com.putao.wd.dto.ProductItem;
 import com.sunnybear.library.view.SwitchButton;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -31,7 +33,7 @@ public class ControlledProductAdatper extends BasicAdapter<ControlProductItem,Co
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.layout_equipment_item;
+        return R.layout.layout_controlled_productitem;
     }
 
     @Override
@@ -42,6 +44,7 @@ public class ControlledProductAdatper extends BasicAdapter<ControlProductItem,Co
     @Override
     public void onBindItem(final ControlledProductViewHolder holder, ControlProductItem controlProductItem, int position) {
         holder.iv_select_icon.setVisibility(((int) holder.itemView.getTag()) == selecting_id ? View.VISIBLE : View.GONE);
+        holder.iv_product_icon.setImageURL(controlProductItem.getUri());
         holder.tv_equipment_name.setText(controlProductItem.getName());
         holder.tv_equipment_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,8 @@ public class ControlledProductAdatper extends BasicAdapter<ControlProductItem,Co
      *
      */
     static class ControlledProductViewHolder extends BasicViewHolder {
+        @Bind(R.id.iv_product_icon)
+        ImageDraweeView iv_product_icon;
         @Bind(R.id.tv_equipment_name)
         TextView tv_equipment_name;
         @Bind(R.id.iv_select_icon)
