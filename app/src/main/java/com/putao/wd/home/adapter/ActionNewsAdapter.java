@@ -40,9 +40,9 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNewsItem, BasicView
     public int getLayoutId(int viewType) {
         switch (viewType) {
             case TYPE_ACTION:
-                return R.layout.fragment_start_circle_action;
+                return R.layout.fragment_start_circle_action_item;
             case TYPE_NEWS:
-                return R.layout.fragment_start_circle_news;
+                return R.layout.fragment_start_circle_news_item;
         }
         return 0;
     }

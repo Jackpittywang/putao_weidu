@@ -31,12 +31,13 @@
                 android:orientation="vertical">
 
                 <!--广告位-->
-                <TextView
+                <com.sunnybear.library.view.viewpager.BannerLayout
+                    android:id="@+id/bl_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:text="广告banner" />
+                    auto:fill_color="@color/text_main_color_nor"
+                    auto:intervalTime="2"
+                    auto:page_color="@color/text_color_gray" />
 
                 <View
                     android:layout_width="match_parent"

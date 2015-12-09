@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 活动和新闻列表
  * Created by guchenkai on 2015/12/2.
  */
+@Deprecated
 public class ActionNewsItem implements Serializable {
     private String id;
     private String title;

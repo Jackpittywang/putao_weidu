@@ -126,26 +126,6 @@
         <activity
             android:name=".store.cashier.CashierActivity"
             android:screenOrientation="portrait" />
-        <!--每日使用次数-->
-        <activity
-            android:name=".explore.equipment.UseTimesEveryDayActivity"
-            android:screenOrientation="portrait" />
-        <!--每日使用时间-->
-        <activity
-            android:name=".explore.usetime.UseTimeEveryTimeActivity"
-            android:screenOrientation="portrait" />
-        <!--管理-->
-        <activity
-            android:name=".explore.manage.ManageActivity"
-            android:screenOrientation="portrait" />
-        <!--受控设备-->
-        <activity
-            android:name=".explore.equipment.ControlledEquipmentActivity"
-            android:screenOrientation="portrait" />
-        <!--受控产品-->
-        <activity
-            android:name=".explore.product.ControlledProductActivity"
-            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
@@ -158,8 +138,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter
-                tools:ignore="GoogleAppIndexingDeepLinkError,GoogleAppIndexingWarning">
+            <intent-filter tools:ignore="GoogleAppIndexingDeepLinkError,GoogleAppIndexingWarning">
 
                 <!-- <data android:scheme="tencent" /> -->
 
@@ -178,5 +157,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 地区选择 -->
         <service android:name=".me.address.CityService" />
+
+        <activity android:name=".TestActivity" />
     </application>
 </manifest>

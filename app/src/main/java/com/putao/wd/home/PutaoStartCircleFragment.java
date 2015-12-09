@@ -11,20 +11,22 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ActionNewsItem;
-import com.putao.wd.dto.Banner;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
+import com.putao.wd.model.Banner;
 import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.BannerLayout;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
-import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
-import com.sunnybear.library.view.viewpager.AutoScrollPagerAdapter;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
+import com.sunnybear.library.view.viewpager.BannerAdapter;
+import com.sunnybear.library.view.viewpager.BannerLayout;
+import com.sunnybear.library.view.viewpager.BannerViewPager;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,10 +50,13 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.bl_banner)
     BannerLayout bl_banner;
+    @Bind(R.id.ci_indicator)
+    CirclePageIndicator ci_indicator;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
     private ActionNewsAdapter adapter;
+    private boolean isStop;//广告栏是否被停止
 
     @Override
     protected int getLayoutId() {
@@ -66,27 +71,26 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         adapter = new ActionNewsAdapter(mActivity, getTestData());
         rv_content.setAdapter(adapter);
 
-        bl_banner.setAdapter(new AutoScrollPagerAdapter() {
+        bl_banner.setAdapter(new BannerAdapter() {
             @Override
-            public int getItemCount() {
-                return resIds.length;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup container) {
+            public View getView(int position) {
                 ImageView imageView = new ImageView(mActivity);
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 imageView.setLayoutParams(params);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setImageResource(resIds[position]);
-                container.addView(imageView);
                 return imageView;
+            }
+
+            @Override
+            public int getCount() {
+                return resIds.length;
             }
         });
         refresh();
         addListener();
 
-//        getBannerList();
+        getBannerList();
     }
 
     /**
@@ -98,7 +102,9 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
             @Override
             public void onSuccess(String url, ArrayList<Banner> result) {
                 loading.dismiss();
+                cacheEnterDisk(url, result);
                 Logger.d(result.toString());
+                ToastUtils.showToastShort(mActivity, result.toString());
             }
         });
     }
@@ -124,9 +130,9 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
      * 添加监听器
      */
     private void addListener() {
-        bl_banner.setOnClickItemListener(new AutoScrollPagerAdapter.OnClickItemListener() {
+        bl_banner.setOnPagerClickListenr(new BannerViewPager.OnPagerClickListenr() {
             @Override
-            public void onClickItem(View view, int position) {
+            public void onPagerClick(int position) {
                 ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
             }
         });
@@ -137,7 +143,9 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        rv_content.noMoreLoading();
+                        adapter.addAll(getTestData());
+                        rv_content.loadMoreComplete();
+//                        rv_content.noMoreLoading();
                     }
                 }, 3 * 1000);
             }
@@ -153,9 +161,16 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (isStop)
+            isStop = bl_banner.startAutoScroll();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        bl_banner.stopAutoScroll();
+        isStop = bl_banner.stopAutoScroll();
     }
 
     private List<ActionNewsItem> getTestData() {
@@ -178,7 +193,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{StartApi.URL_BANNER};
     }
 
     @Override
