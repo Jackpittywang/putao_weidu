@@ -18,8 +18,8 @@
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_comment_icon"
-            android:layout_width="81dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/left_icon_width"
+            android:layout_height="@dimen/left_icon_height"
             android:layout_marginLeft="8dp"
             android:background="#959595"
             auto:roundBottomLeft="true"

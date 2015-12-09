@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/distance_8dp">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_skill_icon"
+            android:layout_width="@dimen/left_icon_width"
+            android:layout_height="@dimen/left_icon_height"
+            android:layout_marginLeft="@dimen/distance_8dp"
+            android:background="@drawable/icon_40_08"
+            auto:roundBottomLeft="true"
+            auto:roundBottomRight="true"
+            auto:roundTopLeft="true"
+            auto:roundTopRight="true"
+            auto:roundedCornerRadius="4dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_skill_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/distance_8dp"
+            android:text="淘淘向右走"
+            android:textColor="@color/color_313131"
+            android:textSize="@dimen/text_size_20sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/distance_8dp"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="1dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图1"
+                android:gravity="center"
+
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                android:layout_marginBottom="1dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图2"
+                android:gravity="center"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                android:layout_marginBottom="1dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图3"
+                android:gravity="center"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                android:layout_marginBottom="1dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图4"
+                android:gravity="center"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图5"
+                android:gravity="center"
+                android:layout_marginBottom="1dp"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图6"
+                android:gravity="center"
+                android:layout_marginBottom="1dp"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图7"
+                android:gravity="center"
+                android:textColor="@color/color_313131"
+                android:layout_marginBottom="1dp"
+                android:textSize="@dimen/text_size_20sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/half_transparent_bg"
+                android:text="图8"
+                android:gravity="center"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_20sp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="@dimen/distance_8dp"
+        android:layout_marginRight="@dimen/distance_8dp"
+        android:drawableLeft="@drawable/icon_16_06"
+        android:drawablePadding="4dp"
+        android:text="去炫耀"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/text_size_16sp"
+        />
+
+</LinearLayout>
