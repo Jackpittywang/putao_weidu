@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -15,10 +15,10 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 探索号-每日使用次数
+ * 探索号-每日使用时间
  * Created by wangou on 2015/12/2.
  */
-public class UseTimeEveryTimeFragment extends PTWDFragment implements View.OnClickListener {
+public class UseTimeEveryTimeActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.brv_usertime_everytime)
     BasicRecyclerView brv_usertime_everytime;
 
@@ -28,13 +28,14 @@ public class UseTimeEveryTimeFragment extends PTWDFragment implements View.OnCli
     }
 
     @Override
-    public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavigation();
+    protected void onViewCreateFinish(Bundle saveInstanceState) {
+        addNavgation();
         if(initDataTest().size()!=0) {
-            ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mActivity, initDataTest());
+            ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mContext, initDataTest());
             brv_usertime_everytime.setAdapter(controlledEquipmentAdatper);
         }
     }
+
 
     private List<EquipmentItem> initDataTest() {
         EquipmentItem msgitem;

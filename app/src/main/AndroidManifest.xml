@@ -130,6 +130,10 @@
         <activity
             android:name=".explore.equipment.UseTimesEveryDayActivity"
             android:screenOrientation="portrait" />
+        <!--每日使用时间-->
+        <activity
+            android:name=".explore.usetime.UseTimeEveryTimeActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
