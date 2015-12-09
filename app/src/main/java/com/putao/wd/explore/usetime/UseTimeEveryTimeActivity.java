@@ -6,8 +6,7 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.EquipmentItem;
-import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
-import com.putao.wd.explore.usetime.adapter.UserTimeAdapter;
+import com.putao.wd.explore.usetime.adapter.UseTimeAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class UseTimeEveryTimeActivity extends PTWDActivity implements View.OnCli
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
         if(initDataTest().size()!=0) {
-            UserTimeAdapter userTimeAdapter = new UserTimeAdapter(mContext, initDataTest());
+            UseTimeAdapter userTimeAdapter = new UseTimeAdapter(mContext, initDataTest());
             brv_usertime_everytime.setAdapter(userTimeAdapter);
         }
     }

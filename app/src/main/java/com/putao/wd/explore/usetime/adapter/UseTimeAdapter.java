@@ -17,11 +17,11 @@ import butterknife.Bind;
 /**
  * Created by wango on 2015/12/9.
  */
-public class UserTimeAdapter extends BasicAdapter<EquipmentItem,UserTimeAdapter.UserTimeViewHolder> {
+public class UseTimeAdapter extends BasicAdapter<EquipmentItem,UseTimeAdapter.UserTimeViewHolder> {
     private int selected_id=-1;//上一个选择过的列表tag
     private int selecting_id=-1;//当前选择过的列表tag
 
-    public UserTimeAdapter(Context context, List<EquipmentItem> equipmentItems) {
+    public UseTimeAdapter(Context context, List<EquipmentItem> equipmentItems) {
         super(context, equipmentItems);
     }
 
