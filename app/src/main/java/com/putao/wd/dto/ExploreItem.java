@@ -10,9 +10,11 @@ import java.io.Serializable;
 public class ExploreItem implements Serializable {
 
     private String id;
-    private String status;
     private String iconUrl;
+    private int iconNum;//图文混排排时显示图片张数
+    private boolean isMixed;//状态值 false表示全图片 true表示图文混排
     private String skill_name;
+    private String content;
 
     public String getId() {
         return id;
@@ -20,14 +22,6 @@ public class ExploreItem implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getIconUrl() {
@@ -38,6 +32,22 @@ public class ExploreItem implements Serializable {
         this.iconUrl = iconUrl;
     }
 
+    public int getIconNum() {
+        return iconNum;
+    }
+
+    public void setIconNum(int iconNum) {
+        this.iconNum = iconNum;
+    }
+
+    public boolean isMixed() {
+        return isMixed;
+    }
+
+    public void setIsMixed(boolean isMixed) {
+        this.isMixed = isMixed;
+    }
+
     public String getSkill_name() {
         return skill_name;
     }
@@ -46,14 +56,23 @@ public class ExploreItem implements Serializable {
         this.skill_name = skill_name;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "ExploreItem{" +
                 "id='" + id + '\'' +
-                ", status='" + status + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
+                ", iconNum='" + iconNum + '\'' +
+                ", isMixed=" + isMixed +
                 ", skill_name='" + skill_name + '\'' +
+                ", content='" + content + '\'' +
                 '}';
     }
-
 }
