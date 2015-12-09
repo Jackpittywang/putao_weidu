@@ -28,9 +28,9 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
 
     public static final String KEY_ORDER_UUID = "orderUuid";
     @Bind(R.id.ll_package_list)
-    LinearLayout ll_package_list;
+    LinearLayout ll_package_list;// 放包裹列表的布局
     @Bind(R.id.hsv_package_list)
-    HorizontalScrollView hsv_package_list;
+    HorizontalScrollView hsv_package_list;// 包裹列表的horizontalscrollview
     @Bind(R.id.tv_order_goods_text)
     TextView tv_order_goods_text;
     @Bind(R.id.img_goods)
