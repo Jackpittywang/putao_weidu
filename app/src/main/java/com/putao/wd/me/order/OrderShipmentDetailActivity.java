@@ -17,29 +17,51 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**物流信息
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+/**
+ * 物流信息
  * Created by yanguoqiang on 15/11/29.
  */
 public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER_UUID = "orderUuid";
+    @Bind(R.id.ll_package_list)
+    LinearLayout ll_package_list;
+    @Bind(R.id.hsv_package_list)
+    HorizontalScrollView hsv_package_list;
+    @Bind(R.id.tv_order_goods_text)
+    TextView tv_order_goods_text;
+    @Bind(R.id.img_goods)
+    ImageDraweeView img_goods;
+    @Bind(R.id.tv_name)
+    TextView tv_name;
+    @Bind(R.id.tv_number)
+    TextView tv_number;
+    @Bind(R.id.tv_shipment_text)
+    TextView tv_shipment_text;
+    @Bind(R.id.tv_package_status)
+    TextView tv_package_status;
+    @Bind(R.id.ll_package_shipment)
+    LinearLayout ll_package_shipment;
 
     private String orderUuid = "";
 
-    private ImageDraweeView img_goods;
-
-    private TextView tv_name;
-
-    private TextView tv_number;
-
-    private TextView tv_package_status;
-
-    private LinearLayout ll_package_shipment;
-
-    // 包裹列表的horizontalscrollview
-    private HorizontalScrollView hsv_package_list;
-    // 放包裹列表的布局
-    private LinearLayout ll_package_list;
+//    private ImageDraweeView img_goods;
+//
+//    private TextView tv_name;
+//
+//    private TextView tv_number;
+//
+//    private TextView tv_package_status;
+//
+//    private LinearLayout ll_package_shipment;
+//
+//    // 包裹列表的horizontalscrollview
+//    private HorizontalScrollView hsv_package_list;
+//    // 放包裹列表的布局
+//    private LinearLayout ll_package_list;
 
     @Override
     protected int getLayoutId() {
@@ -81,11 +103,11 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     }
 
     private void initComponent() {
-        img_goods = (ImageDraweeView) findViewById(R.id.img_goods);
-        tv_name = (TextView) findViewById(R.id.tv_name);
-        tv_number = (TextView) findViewById(R.id.tv_number);
-        tv_package_status = (TextView) findViewById(R.id.tv_package_status);
-        ll_package_shipment = (LinearLayout) findViewById(R.id.ll_package_shipment);
+//        img_goods = (ImageDraweeView) findViewById(R.id.img_goods);
+//        tv_name = (TextView) findViewById(R.id.tv_name);
+//        tv_number = (TextView) findViewById(R.id.tv_number);
+//        tv_package_status = (TextView) findViewById(R.id.tv_package_status);
+//        ll_package_shipment = (LinearLayout) findViewById(R.id.ll_package_shipment);
     }
 
     private void refreshView(OrderShipmentDto orderShipmentDto) {
@@ -130,4 +152,10 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
 
     }
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        // TODO: add setContentView(...) invocation
+//        ButterKnife.bind(this);
+//    }
 }
