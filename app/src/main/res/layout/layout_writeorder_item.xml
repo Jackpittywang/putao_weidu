@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="2dp"
                     android:maxLines="2"
+                    android:lines="2"
                     android:singleLine="false"
                     android:text="葡萄探索号.虚拟+现实儿童科技益智玩具"
                     android:textColor="@color/text_color"
@@ -89,7 +90,7 @@
             <!--价格信息-->
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="4dp"
                 android:orientation="vertical">
 
