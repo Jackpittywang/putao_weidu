@@ -28,7 +28,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Bind(R.id.iv_reapte_picbar)
     ImageView iv_reapte_picbar;//分割图片
     @Bind(R.id.stickyHeaderLayout_scrollable)
-    BasicRecyclerView brv_write_orderlist;//订单列表
+    BasicRecyclerView stickyHeaderLayout_scrollable;//订单列表
 
     private OrdersAdapter adapter;
 
@@ -47,22 +47,31 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         //初始化列表数据
         List<OrderListItem> cars = getTestData();
         adapter = new OrdersAdapter(mContext, cars);
-        brv_write_orderlist.setAdapter(adapter);
+        stickyHeaderLayout_scrollable.setAdapter(adapter);
 
     }
 
     private List<OrderListItem> getTestData() {
         List<OrderListItem> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            OrderListItem car = new OrderListItem();
-            car.setTitle("葡萄探索号.虚拟+现实儿童科技益智玩具");
-            car.setColor("塔塔紫");
-            car.setSize("均码");
-            car.setMoney("399.00");
-            car.setCount("2");
-            car.setIsNull(i % 2 == 1);
-            list.add(car);
+            OrderListItem order = new OrderListItem();
+            order.setTitle(i+"葡萄探索号.虚拟+现实儿童科技益智玩具");
+            order.setColor("塔塔紫");
+            order.setSize("均码");
+            order.setMoney("399.00");
+            order.setCount("2");
+            list.add(order);
         }
+        OrderListItem orderfooter=new OrderListItem();
+        orderfooter.setSum_count("3");
+        orderfooter.setCarriage("399.00");
+        orderfooter.setSum("3666.00");
+        orderfooter.setSum_price("8888");
+        list.add(orderfooter);
+//        for (){
+//
+//        }
+
         return list;
     }
 
