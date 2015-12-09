@@ -1,4 +1,4 @@
-package com.putao.wd.explore.equipment.adapter;
+package com.putao.wd.explore.usecount.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -15,14 +15,14 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * ”受控设备“列表适配器
- * Created by wango on 2015/12/2.
+ * “每天使用次数”适配器
+ * Created by wango on 2015/12/9.
  */
-public class ControlledEquipmentAdatper extends BasicAdapter<EquipmentItem,ControlledEquipmentAdatper.ControlledEquipmentViewHolder> {
+public class UseCountAdapter extends BasicAdapter<EquipmentItem,UseCountAdapter.UseCountViewHolder> {
     private int selected_id=-1;//上一个选择过的列表tag
     private int selecting_id=-1;//当前选择过的列表tag
 
-    public ControlledEquipmentAdatper(Context context, List<EquipmentItem> equipmentItems) {
+    public UseCountAdapter(Context context, List<EquipmentItem> equipmentItems) {
         super(context, equipmentItems);
     }
 
@@ -32,12 +32,12 @@ public class ControlledEquipmentAdatper extends BasicAdapter<EquipmentItem,Contr
     }
 
     @Override
-    public ControlledEquipmentViewHolder getViewHolder(View itemView, int viewType) {
-        return new ControlledEquipmentViewHolder(itemView);
+    public UseCountViewHolder getViewHolder(View itemView, int viewType) {
+        return new UseCountViewHolder(itemView);
     }
 
     @Override
-    public void onBindItem(final ControlledEquipmentViewHolder holder, EquipmentItem equipmentItem, int position) {
+    public void onBindItem(final UseCountViewHolder holder, EquipmentItem equipmentItem, int position) {
         holder.tv_equipment_name.setText(equipmentItem.getName());
         holder.iv_select_icon.setVisibility(((int) holder.itemView.getTag()) == selecting_id ? View.VISIBLE : View.GONE);
         holder.tv_equipment_name.setOnClickListener(new View.OnClickListener() {
@@ -56,12 +56,12 @@ public class ControlledEquipmentAdatper extends BasicAdapter<EquipmentItem,Contr
     /**
      *
      */
-    static class ControlledEquipmentViewHolder extends BasicViewHolder {
+    static class UseCountViewHolder extends BasicViewHolder {
         @Bind(R.id.tv_equipment_name)
         TextView tv_equipment_name;
         @Bind(R.id.iv_select_icon)
         ImageView iv_select_icon;
-        public ControlledEquipmentViewHolder(View itemView) {
+        public UseCountViewHolder(View itemView) {
             super(itemView);
         }
     }

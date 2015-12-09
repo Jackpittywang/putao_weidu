@@ -1,4 +1,4 @@
-package com.putao.wd.explore.equipment;
+package com.putao.wd.explore.usecount;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
+import com.putao.wd.explore.usecount.adapter.UseCountAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -18,21 +19,21 @@ import butterknife.Bind;
  * 探索号-每日使用次数
  * Created by wangou on 2015/12/2.
  */
-public class UseTimesEveryDayActivity extends PTWDActivity implements View.OnClickListener {
+public class UseCountEveryDayActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.brv_usertime_everyday)
     BasicRecyclerView brv_usertime_everyday;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_use_times_every_day;
+        return R.layout.activity_use_count_every_day;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         if(initDataTest().size()!=0) {
-            ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mContext, initDataTest());
-            brv_usertime_everyday.setAdapter(controlledEquipmentAdatper);
+            UseCountAdapter useCountAdapter = new UseCountAdapter(mContext, initDataTest());
+            brv_usertime_everyday.setAdapter(useCountAdapter);
         }
     }
 
