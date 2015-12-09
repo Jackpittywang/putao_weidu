@@ -49,11 +49,10 @@ public class ControlledProductAdatper extends BasicAdapter<ControlProductItem,Co
         holder.tv_equipment_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selecting_id = (int) holder.itemView.getTag();
-                notifyItemRangeChanged(selecting_id, 1);//刷新当前选择的状态
-                if(selected_id!=selecting_id && selected_id!=-1) {
-                    notifyItemRangeChanged(selected_id, 1);//取消之前选择过的状态
-                    selected_id = selecting_id;//把"当前选择"的tag标记为"选择过的“
+                if(holder.iv_select_icon.getVisibility()==View.VISIBLE){
+                    holder.iv_select_icon.setVisibility(View.GONE);
+                }else {
+                    holder.iv_select_icon.setVisibility(View.VISIBLE);
                 }
             }
         });
