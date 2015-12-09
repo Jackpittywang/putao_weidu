@@ -9,8 +9,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 
-import java.security.cert.TrustAnchor;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -46,8 +44,8 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         addListener();
     }
 

@@ -27,7 +27,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
 
     }
 

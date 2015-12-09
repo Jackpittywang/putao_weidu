@@ -39,7 +39,7 @@ public class TestActivity extends BasicFragmentActivity {
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         builders = HtmlUtils.getTexts(html);
         tv_1.setText(builders.get(0));
         tv_2.setText(builders.get(1));

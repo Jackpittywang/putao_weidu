@@ -42,9 +42,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 登录注册 -->
+        <!-- 登录 -->
         <activity
             android:name=".user.LoginActivity"
+            android:screenOrientation="portrait" />
+        <!--注册-->
+        <activity
+            android:name=".user.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <!--用户服务协议-->
+        <activity
+            android:name=".user.ProtocolActivity"
+            android:screenOrientation="portrait" />
+        <!--完善用户信息-->
+        <activity
+            android:name=".user.CompleteActivity"
+            android:screenOrientation="portrait" />
+        <!--忘记密码-->
+        <activity
+            android:name=".user.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <!--重置密码-->
+        <activity
+            android:name=".user.ResetPasswordAcitivity"
             android:screenOrientation="portrait" />
         <!-- 收货地址列表 -->
         <activity
@@ -62,12 +82,10 @@
         <activity
             android:name=".store.product.ProductDetailActivity"
             android:screenOrientation="portrait" />
-
         <!-- 订单列表 -->
         <activity
             android:name=".me.order.OrderListActivity"
             android:screenOrientation="portrait" />
-
         <!-- 订单详情页 -->
         <activity
             android:name=".me.order.OrderDetailActivity"

@@ -51,8 +51,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
 

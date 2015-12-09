@@ -28,8 +28,8 @@ public class ControlledProductActivity extends PTWDActivity implements View.OnCl
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         if (initDataTest().size() != 0) {
             ControlledProductAdatper controlledProductAdatper = new ControlledProductAdatper(mContext, initDataTest());
             brv_controlled_product.setAdapter(controlledProductAdatper);

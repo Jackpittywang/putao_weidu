@@ -29,8 +29,8 @@ public class UseCountEveryDayActivity extends PTWDActivity implements View.OnCli
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         if(initDataTest().size()!=0) {
             UseCountAdapter useCountAdapter = new UseCountAdapter(mContext, initDataTest());
             brv_usertime_everyday.setAdapter(useCountAdapter);

@@ -70,8 +70,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         mAddressDBManager = (AddressDBManager) mApp.getDataBaseManager(AddressDBManager.class);
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
         mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);

@@ -53,8 +53,8 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
 
         // 测试数据
         orderList = new ArrayList<OrderDto>();

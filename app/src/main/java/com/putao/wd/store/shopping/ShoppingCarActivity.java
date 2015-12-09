@@ -42,8 +42,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         addListener();
 
         List<ShoppingCar> cars = sort(getTestData());

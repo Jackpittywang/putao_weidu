@@ -17,7 +17,7 @@ public class CitySelectActivity extends BasicFragmentActivity {
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addFragment(ProvinceFragment.class);
     }
 

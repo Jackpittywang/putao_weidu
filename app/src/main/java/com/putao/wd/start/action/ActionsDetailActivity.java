@@ -20,8 +20,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
     }
 
     @Override

@@ -38,7 +38,7 @@ public abstract class PTWDActivity<App extends BasicApplication> extends BasicFr
     /**
      * 添加标题栏
      */
-    protected void addNavgation() {
+    protected void addNavigation() {
         navigation_bar.setActionListener(this);
     }
 

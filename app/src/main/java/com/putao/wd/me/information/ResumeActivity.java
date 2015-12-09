@@ -29,8 +29,8 @@ public class ResumeActivity extends PTWDActivity<GlobalApplication> implements V
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         et_resume.addTextChangedListener(this);
     }
 

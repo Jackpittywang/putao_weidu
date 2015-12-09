@@ -37,8 +37,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         adapter = new CommentAdapter(this, getTestData());
         rv_content.setAdapter(adapter);
         refresh();

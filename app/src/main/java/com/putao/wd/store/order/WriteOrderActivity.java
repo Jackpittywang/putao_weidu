@@ -39,8 +39,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         sticky_layout.canScrollView();
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 

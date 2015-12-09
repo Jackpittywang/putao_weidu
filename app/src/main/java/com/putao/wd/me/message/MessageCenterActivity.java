@@ -50,7 +50,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addListener();
         initNotifyList();
     }

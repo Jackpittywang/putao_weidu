@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.view.CleanableEditText;
 
 import butterknife.Bind;
@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * 重置密码
  * Created by wango on 2015/12/1.
  */
-public class ResetPasswordFragment extends PTWDFragment implements View.OnClickListener,TextWatcher {
+public class ResetPasswordAcitivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
     @Bind(R.id.et_password)
     CleanableEditText et_password;//密码
     @Bind(R.id.iv_lock)
@@ -31,9 +31,10 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
     Button btn_complete;
 
     private boolean isPasswordVisible = false;
+
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_reset_password;
+        return R.layout.activity_reset_password;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_complete://完成
-                 startFragment(LoginFragment.class);
+                startActivity(LoginActivity.class);
                 break;
             case R.id.ll_password_visible://是否显示密码
                 if (isPasswordVisible) { //设置为隐藏
@@ -71,6 +72,7 @@ public class ResetPasswordFragment extends PTWDFragment implements View.OnClickL
 
         }
     }
+
     /**
      * 移动光标到最后
      *
