@@ -27,8 +27,8 @@ public class PersonalInformationActivity  extends PTWDActivity<GlobalApplication
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         mSelectPopupWindow=new SelectPopupWindow(this) {
             @Override
             public void onFirstClick(View v) {

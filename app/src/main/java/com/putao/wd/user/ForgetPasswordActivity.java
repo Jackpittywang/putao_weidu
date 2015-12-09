@@ -11,7 +11,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
@@ -19,11 +19,11 @@ import com.sunnybear.library.view.CleanableEditText;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-/*
-**忘记密码
-**create by wangou
+/**
+ * 忘记密码
+ * create by wangou
  */
-public class ForgetPasswordFragment extends PTWDFragment implements View.OnClickListener ,TextWatcher{
+public class ForgetPasswordActivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
     @Bind(R.id.btn_nextstep)
     Button btn_nextstep;//下一步
     @Bind(R.id.et_mobile)
@@ -33,7 +33,7 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_forget_password;
+        return R.layout.activity_forget_password;
     }
 
     @Override
@@ -54,27 +54,27 @@ public class ForgetPasswordFragment extends PTWDFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_nextstep://下一步
-                if(11!=et_mobile.getText().toString().length() || ""==et_mobile.getText().toString().trim())
-                    ToastUtils.showToastLong(mActivity, "请输入正确手机号码");
+                if (11 != et_mobile.getText().toString().length() || "" == et_mobile.getText().toString().trim())
+                    ToastUtils.showToastLong(mContext, "请输入正确手机号码");
                 else
-                    startFragment(ResetPasswordFragment.class);
+//                    startFragment(ResetPasswordFragment.class);
                 break;
             case R.id.tb_get_verify://获取验证码
                 String mobile = et_mobile.getText().toString();
                 if (StringUtils.isEmpty(mobile)) {
-                    ToastUtils.showToastLong(mActivity, "请输入手机号码");
+                    ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
                 networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER),
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
-                                ToastUtils.showToastLong(mActivity, "验证码发送成功");
+                                ToastUtils.showToastLong(mContext, "验证码发送成功");
                             }
 
                             @Override
                             public void onError(String error_msg) {
-                                ToastUtils.showToastLong(mActivity, error_msg);
+                                ToastUtils.showToastLong(mContext, error_msg);
                             }
                         });
                 break;

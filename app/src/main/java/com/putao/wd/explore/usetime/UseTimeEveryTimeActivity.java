@@ -28,8 +28,8 @@ public class UseTimeEveryTimeActivity extends PTWDActivity implements View.OnCli
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         if(initDataTest().size()!=0) {
             ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mContext, initDataTest());
             brv_usertime_everytime.setAdapter(controlledEquipmentAdatper);

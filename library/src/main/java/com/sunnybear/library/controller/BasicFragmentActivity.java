@@ -63,7 +63,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      *
      * @param saveInstanceState 保存状态
      */
-    protected abstract void onViewCreateFinish(Bundle saveInstanceState);
+    protected abstract void onViewCreatedFinish(Bundle saveInstanceState);
 
     /**
      * 收集本Activity请求时的url
@@ -104,7 +104,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         registerReceiver(mReceiver, Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         EventBusHelper.register(this);//注册EventBus
         //布局初始化完成的回调
-        onViewCreateFinish(savedInstanceState);
+        onViewCreatedFinish(savedInstanceState);
     }
 
     @Override

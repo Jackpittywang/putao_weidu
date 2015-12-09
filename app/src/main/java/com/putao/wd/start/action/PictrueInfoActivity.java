@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.view.NavigationBar;
 
 import butterknife.Bind;
 
@@ -28,8 +27,8 @@ public class PictrueInfoActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         tv_picture_info.setMovementMethod(ScrollingMovementMethod.getInstance());
         setMainTitleColor(Color.WHITE);
     }

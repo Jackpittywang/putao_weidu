@@ -37,8 +37,8 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
         if (addresses == null || addresses.size() == 0) {
             rl_no_address.setVisibility(View.VISIBLE);

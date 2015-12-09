@@ -35,8 +35,8 @@ public class MyActionsActivity extends PTWDActivity<GlobalApplication> implement
         return R.layout.activity_my_actions;
     }
 
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        this.addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        this.addNavigation();
         this.addListener();
         this.initActivityList();
     }

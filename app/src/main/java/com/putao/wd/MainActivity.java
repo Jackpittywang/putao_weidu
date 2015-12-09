@@ -43,7 +43,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addFragment();
         vp_content.setAdapter(new FragmentSwitchAdapter(getSupportFragmentManager(), mFragmentArray));
         vp_content.setOffscreenPageLimit(4);

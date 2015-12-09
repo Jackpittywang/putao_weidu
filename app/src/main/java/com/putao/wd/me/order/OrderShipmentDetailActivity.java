@@ -47,9 +47,9 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
 
-        addNavgation();
+        addNavigation();
 
         orderUuid = args.getString(KEY_ORDER_UUID);
         if (orderUuid == null) orderUuid = "";

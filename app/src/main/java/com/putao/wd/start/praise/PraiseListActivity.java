@@ -35,8 +35,8 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         addListener();
         this.initPraiseList();
     }

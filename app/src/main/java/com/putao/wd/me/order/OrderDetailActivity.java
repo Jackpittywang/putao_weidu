@@ -13,13 +13,10 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderDto;
 import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.dto.OrderShipmentListItemDto;
-import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.me.order.view.OrderShipmentListItem;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.OnClick;
@@ -52,8 +49,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
 
         //获取order数据
         Intent intent = getIntent();

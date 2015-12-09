@@ -79,8 +79,8 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         initViews();
     }
 

@@ -28,8 +28,8 @@ public class ControlledEquipmentActivity extends PTWDActivity implements View.On
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         if(initDataTest().size()!=0) {
             ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mContext, initDataTest());
             brv_equipment.setAdapter(controlledEquipmentAdatper);

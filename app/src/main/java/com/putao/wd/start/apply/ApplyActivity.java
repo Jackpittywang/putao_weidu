@@ -42,8 +42,8 @@ public class ApplyActivity extends PTWDActivity<GlobalApplication> implements Vi
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-            addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+            addNavigation();
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.view.image.ImageDraweeView;
 
 import butterknife.Bind;
 
@@ -26,8 +25,8 @@ public class CashierActivity extends PTWDActivity implements View.OnClickListene
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
     }
 
     @Override

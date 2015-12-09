@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.sunnybear.library.view.CleanableEditText;
 
@@ -16,7 +16,7 @@ import butterknife.OnClick;
  * 完善用户信息
  * Created by guchenkai on 2015/11/29.
  */
-public class CompleteFragment extends PTWDFragment implements View.OnClickListener {
+public class CompleteActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.et_nickname)
@@ -28,13 +28,13 @@ public class CompleteFragment extends PTWDFragment implements View.OnClickListen
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_complete;
+        return R.layout.activity_complete;
     }
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        mSelectPopupWindow=new SelectPopupWindow(mActivity) {
+        mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {
 
@@ -45,12 +45,6 @@ public class CompleteFragment extends PTWDFragment implements View.OnClickListen
 
             }
         };
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override

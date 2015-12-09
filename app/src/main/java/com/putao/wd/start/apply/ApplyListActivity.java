@@ -36,8 +36,8 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     }
 
     @Override
-    protected void onViewCreateFinish(Bundle saveInstanceState) {
-        addNavgation();
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         addListener();
         this.initApplyList();
     }
