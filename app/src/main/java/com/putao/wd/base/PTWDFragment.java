@@ -36,6 +36,17 @@ public abstract class PTWDFragment<App extends BasicApplication> extends BasicFr
     }
 
     /**
+     * 加入磁盘缓存
+     *
+     * @param url    url
+     * @param result 缓存数据
+     * @param <T>    缓存数据的类型
+     */
+    protected <T extends Serializable> void cacheEnterDisk(String url, T result) {
+        mDiskFileCacheHelper.put(url, result);
+    }
+
+    /**
      * 添加标题栏
      */
     protected void addNavigation() {

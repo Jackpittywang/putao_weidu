@@ -2,7 +2,9 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
@@ -15,6 +17,8 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.recycler.RecyclerViewHeader;
+import com.sunnybear.library.view.viewpager.BannerAdapter;
+import com.sunnybear.library.view.viewpager.BannerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +30,18 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStoreFragment extends PTWDFragment {
+    private static final int[] resIds = new int[]{
+            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
+    };
     @Bind(R.id.rvh_header)
     RecyclerViewHeader mHeader;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.tv_header)
-    TextView tv_header;
+    @Bind(R.id.bl_banner)
+    BannerLayout bl_banner;
+    private boolean isStop;//广告栏是否被停止
 
     private ProductAdapter adapter;
     private List<ProductItem> products;
@@ -52,7 +60,23 @@ public class PutaoStoreFragment extends PTWDFragment {
         rv_content.setAdapter(adapter);
         addTestData();//测试假数据
         adapter.addAll(products);
+        //广告位
+        bl_banner.setAdapter(new BannerAdapter() {
+            @Override
+            public View getView(int position) {
+                ImageView imageView = new ImageView(mActivity);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                imageView.setLayoutParams(params);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setImageResource(resIds[position]);
+                return imageView;
+            }
 
+            @Override
+            public int getCount() {
+                return resIds.length;
+            }
+        });
         refresh();
         addListener();
     }
@@ -93,6 +117,19 @@ public class PutaoStoreFragment extends PTWDFragment {
         for (int i = 0; i < 10; i++) {
             products.add(productItem);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isStop)
+            isStop = bl_banner.startAutoScroll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStop = bl_banner.stopAutoScroll();
     }
 
     @Override

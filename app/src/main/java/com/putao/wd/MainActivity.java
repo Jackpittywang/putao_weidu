@@ -5,16 +5,12 @@ import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
-import com.putao.wd.db.CityDBManager;
-import com.putao.wd.db.DistrictDBManager;
-import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.FragmentSwitchAdapter;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
@@ -53,17 +49,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         vp_content.setOffscreenPageLimit(4);
         vp_content.setPageTransformer(false, null);
 
-//        ti_start_circle.show(4);
-//        ti_explore.show(4);
-//        ti_store.show(4);
-//        ti_me.show(4);
+        ti_start_circle.show(4);
+        ti_explore.show(4);
+        ti_store.show(4);
+        ti_me.show(4);
         addListener();
-
-        Logger.d(mApp.getDataBaseManager(ProvinceDBManager.class).getQueryBuilder().count() + "");
-        Logger.d(mApp.getDataBaseManager(CityDBManager.class).getQueryBuilder().count() + "");
-        Logger.d(mApp.getDataBaseManager(DistrictDBManager.class).getQueryBuilder().count() + "");
-//        Logger.d(CityDBManager.getInstance(mApp).getCityNameByProvinceId("330000").toString());
-//        Logger.d(DistrictDBManager.getInstance(mApp).getDistrictNameByCityId("330100").toString());
 
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.fragment_container, mFragmentArray.get(R.id.ti_start_circle)).commit();
@@ -121,10 +111,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 break;
             case R.id.ti_me://我
                 ti_me.hide();
-//                startService(new Intent(this, CityService.class));
+//                startService(CityService.class);
+                startActivity(TestActivity.class);
                 break;
         }
-        vp_content.setCurrentItem(position);
+        vp_content.setCurrentItem(position, false);
     }
 
     @Override

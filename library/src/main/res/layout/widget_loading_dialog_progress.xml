@@ -51,7 +51,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:ellipsize="end"
-            android:text="Loading ..."
+            android:text="@string/loading"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

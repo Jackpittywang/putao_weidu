@@ -2,6 +2,8 @@ package com.putao.wd.store.product;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -10,6 +12,8 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
+import com.sunnybear.library.view.viewpager.BannerAdapter;
+import com.sunnybear.library.view.viewpager.BannerLayout;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -19,6 +23,9 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener {
+    private static final int[] resIds = new int[]{
+            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
+    };
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.sticky_layout)
@@ -31,6 +38,9 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     TextView tv_product_intro;
     @Bind(R.id.tv_product_price)
     TextView tv_product_price;
+    @Bind(R.id.bl_banner)
+    BannerLayout bl_banner;
+    private boolean isStop;//广告栏是否被停止
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
@@ -46,8 +56,39 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
 
+        //广告位
+        bl_banner.setAdapter(new BannerAdapter() {
+            @Override
+            public View getView(int position) {
+                ImageView imageView = new ImageView(mContext);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                imageView.setLayoutParams(params);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setImageResource(resIds[position]);
+                return imageView;
+            }
+
+            @Override
+            public int getCount() {
+                return resIds.length;
+            }
+        });
+
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isStop)
+            isStop = bl_banner.startAutoScroll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isStop = bl_banner.stopAutoScroll();
     }
 
     private void addListener() {

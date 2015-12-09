@@ -142,7 +142,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     public void addAll(List<Item> items) {
         int indexStart = mItems.size();
         mItems.addAll(items);
-        notifyItemRangeInserted(indexStart, mItems.size() - 1);
+        notifyDataSetChanged();
     }
 
     public void replace(Item oldItem, Item newItem) {

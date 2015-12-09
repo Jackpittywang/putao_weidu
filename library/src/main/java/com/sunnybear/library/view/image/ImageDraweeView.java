@@ -87,6 +87,10 @@ public class ImageDraweeView extends SimpleDraweeView {
         mProcessor.addProcessor(processor);
     }
 
+    /**
+     * 加载图片
+     * @param url 图片的url
+     */
     public void setImageURL(String url) {
         if (TextUtils.isEmpty(url))
             return;

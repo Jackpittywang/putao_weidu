@@ -3,6 +3,10 @@ package com.putao.wd;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.putao.wd.account.AccountApi;
+import com.putao.wd.api.ExploreApi;
+import com.putao.wd.api.StartApi;
+import com.putao.wd.api.StoreApi;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.DataBaseManager;
@@ -30,6 +34,17 @@ public class GlobalApplication extends BasicApplication {
         AccountApi.install("1", "1109", "515d7213721042a5ac31c2de95d2c7a7");
 
 //        WechatShareTools.regToWX(getApplicationContext());
+//        installApi();
+    }
+
+    /**
+     * 安装api接口
+     */
+    private void installApi() {
+        StartApi.install(isDebug() ? "http://api.event.start.wang/" : "http://api.event.start.wang/");
+        StoreApi.install(isDebug() ? "http://api.sotre.putao.com/" : "http://api.sotre.putao.com/");
+        ExploreApi.install(isDebug() ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/");
+        UserApi.install(isDebug() ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/");
     }
 
     /**

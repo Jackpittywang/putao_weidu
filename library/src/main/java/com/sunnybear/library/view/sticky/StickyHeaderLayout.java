@@ -53,6 +53,7 @@ public class StickyHeaderLayout extends ScrollableLayout {
 
         setDraggableView(mStickyView);
         setFriction(0.1f);
+//        setMaxScrollY(mHeaderView.getHeight());
 
         setOnScrollChangedListener(new OnScrollChangedListener() {
             @Override
@@ -74,21 +75,6 @@ public class StickyHeaderLayout extends ScrollableLayout {
             maxScrollY = mHeaderView.getMeasuredHeight();
         setMaxScrollY(maxScrollY);
     }
-
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        switch (ev.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                downX = (int) ev.getRawX();
-//                downY = (int) ev.getRawY();
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                int moveY = (int) ev.getRawY();
-//                if (Math.abs(moveY - downY) > mTouchSlop)
-//                    return true;
-//        }
-//        return super.onInterceptTouchEvent(ev);
-//    }
 
     public void canScrollView() {
         setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {

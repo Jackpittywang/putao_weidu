@@ -8,6 +8,7 @@ import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.setting.SettingActivity;
+import com.putao.wd.store.order.WriteOrderActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.select.IndicatorButton;
@@ -70,7 +71,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(MyActionsActivity.class);
                 break;
             case R.id.si_question://我的提问
-
+                startActivity(WriteOrderActivity.class);
                 break;
 //            case R.id.iv_user_icon://个人信息
 //                startActivity(PersonalInformationActivity.class);

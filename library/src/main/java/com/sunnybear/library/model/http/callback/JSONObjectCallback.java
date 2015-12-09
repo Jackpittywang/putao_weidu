@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.util.JsonUtils;
 import com.sunnybear.library.util.Logger;
 
@@ -32,15 +31,16 @@ public abstract class JSONObjectCallback implements Callback {
 
     private static final String KEY_URL = "url";
     private static final String KEY_JSON = "json";
-    private static final String KEY_STATUSCODE = "statusCode";
-    private static final String KEY_FAILUREMSG = "errorMsg";
+    private static final String KEY_STATUS_CODE = "statusCode";
+    private static final String KEY_FAILURE_MSG = "errorMsg";
 
-    private WeakHandler mWeakHandler;//主线程回调
+    private Handler mHandler;//主线程回调
 
     public JSONObjectCallback() {
-        mWeakHandler = new WeakHandler(new Handler.Callback() {
+        mHandler = new Handler() {
+
             @Override
-            public boolean handleMessage(Message msg) {
+            public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case RESULT_SUCCESS://成功
                         Bundle success = (Bundle) msg.obj;
@@ -51,24 +51,13 @@ public abstract class JSONObjectCallback implements Callback {
                     case RESULT_FAILURE://失败
                         Bundle failure = (Bundle) msg.obj;
                         String url_failure = failure.getString(KEY_URL);
-                        int statusCode = failure.getInt(KEY_STATUSCODE);
-                        String failure_msg = failure.getString(KEY_FAILUREMSG);
+                        int statusCode = failure.getInt(KEY_STATUS_CODE);
+                        String failure_msg = failure.getString(KEY_FAILURE_MSG);
                         onFailure(url_failure, statusCode, failure_msg);
                         break;
-//                    case RESULT_FINISH://完成
-//                        boolean isSuccess = (boolean) msg.obj;
-//                        onFinish(isSuccess);
-//                        break;
-//                    case RESULT_ERROR://错误
-//                        Bundle error = (Bundle) msg.obj;
-//                        String url_error = error.getString(KEY_URL);
-//                        String errorMsg = error.getString(KEY_ERRORMSG);
-//                        onError(url_error, errorMsg);
-//                    break;
                 }
-                return true;
             }
-        });
+        };
     }
 
     /**
@@ -101,24 +90,15 @@ public abstract class JSONObjectCallback implements Callback {
                 Bundle bundle = new Bundle();
                 bundle.putString(KEY_URL, url);
                 bundle.putString(KEY_JSON, json);
-
-                Message message = Message.obtain();
-                message.what = RESULT_SUCCESS;
-                message.obj = bundle;
-                mWeakHandler.sendMessage(message);
-//                mWeakHandler.sendMessage(Message.obtain(mWeakHandler.getHandler(), RESULT_FINISH, true));
+                mHandler.sendMessage(Message.obtain(mHandler, RESULT_SUCCESS, bundle));
             }
         } else {
             Bundle bundle = new Bundle();
             bundle.putString(KEY_URL, url);
-            bundle.putInt(KEY_STATUSCODE, statusCode);
-            bundle.putString(KEY_FAILUREMSG, "");
+            bundle.putInt(KEY_STATUS_CODE, statusCode);
+            bundle.putString(KEY_FAILURE_MSG, "");
 
-            Message message = Message.obtain();
-            message.what = RESULT_FAILURE;
-            message.obj = bundle;
-            mWeakHandler.sendMessage(message);
-//            mWeakHandler.sendMessage(Message.obtain(mWeakHandler.getHandler(), RESULT_FINISH, false));
+            mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
         }
     }
 
@@ -135,13 +115,10 @@ public abstract class JSONObjectCallback implements Callback {
         if (e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
             Bundle bundle = new Bundle();
             bundle.putString(KEY_URL, url);
-            bundle.putString(KEY_FAILUREMSG, "请检查网络后重新尝试");
+            bundle.putString(KEY_STATUS_CODE, "500");
+            bundle.putString(KEY_FAILURE_MSG, "请检查网络后重新尝试");
 
-            Message message = Message.obtain();
-            message.what = RESULT_FAILURE;
-            message.obj = bundle;
-            mWeakHandler.sendMessage(message);
+            mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
         }
-//        mWeakHandler.sendMessage(Message.obtain(mWeakHandler.getHandler(), RESULT_FINISH, false));
     }
 }

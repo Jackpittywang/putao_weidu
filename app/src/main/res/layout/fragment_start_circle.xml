@@ -37,13 +37,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|center_horizontal">
 
-                <com.sunnybear.library.view.BannerLayout
+                <com.sunnybear.library.view.viewpager.BannerLayout
                     android:id="@+id/bl_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    auto:banner_fill_color="@color/text_main_color_nor"
-                    auto:banner_interval_time="2"
-                    auto:banner_page_color="@color/text_color_gray" />
+                    auto:fill_color="@color/text_main_color_nor"
+                    auto:intervalTime="2"
+                    auto:page_color="@color/text_color_gray" />
 
                 <View
                     android:id="@+id/divider"

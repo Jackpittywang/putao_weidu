@@ -96,12 +96,7 @@
         <attr name="unclick_background" format="reference" />
     </declare-styleable>
 
-    <!--AutoScrollViewPager-->
-    <declare-styleable name="AutoScrollViewPager">
-        <attr name="interval_time" format="integer" />
-        <attr name="is_auto_scroll" format="boolean" />
-    </declare-styleable>
-
+    <!--TitleItem-->
     <declare-styleable name="TitleItem">
         <attr name="is_active" format="boolean" />
         <attr name="active_color" format="color|reference" />
@@ -162,9 +157,11 @@
         <attr name="tag_text_color_dis" format="color|reference" />
     </declare-styleable>
 
+    <!--BannerLayout-->
     <declare-styleable name="BannerLayout">
-        <attr name="banner_interval_time" format="integer" />
-        <attr name="banner_fill_color" format="color|reference" />
-        <attr name="banner_page_color" format="color|reference" />
+        <attr name="intervalTime" format="integer" />
+        <attr name="isAutoScroll" format="boolean" />
+        <attr name="fill_color" format="color|reference" />
+        <attr name="page_color" format="color|reference" />
     </declare-styleable>
 </resources>

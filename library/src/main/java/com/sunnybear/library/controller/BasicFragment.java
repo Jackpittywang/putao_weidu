@@ -125,7 +125,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     public void onDestroy() {
         super.onDestroy();
         EventBusHelper.unregister(this);//反注册EventBus
-        mApp.getRefWatcher().watch(this);
+//        mApp.getRefWatcher().watch(this);
     }
 
     /**
