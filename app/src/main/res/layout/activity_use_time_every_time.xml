@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ebebeb"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    tools:context="com.putao.wd.explore.equipment.ControlledEquipmentActivity">
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/white"
+        auto:nav_left_icon="@drawable/btn_20_back_p_sel"
+        auto:nav_main_title="每次使用时间"/>
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@+id/brv_usertime_everytime"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:divider_color="#626262"
+        auto:divider_height="1px"
+        auto:has_row_divider="true"/>
+
+</LinearLayout>

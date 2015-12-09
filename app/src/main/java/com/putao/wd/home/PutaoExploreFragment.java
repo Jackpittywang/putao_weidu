@@ -5,13 +5,26 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.dto.ExploreItem;
+import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.qrcode.CaptureActivity;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * 探索号
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoExploreFragment extends PTWDFragment {
+
+    @Bind(R.id.rv_content)
+    BasicRecyclerView rv_content;
+
+    ExploreAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -22,6 +35,8 @@ public class PutaoExploreFragment extends PTWDFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         setMainTitleColor(Color.WHITE);
+        adapter = new ExploreAdapter(mActivity, getTestData());
+        rv_content.setAdapter(adapter);
     }
 
     @Override
@@ -33,4 +48,20 @@ public class PutaoExploreFragment extends PTWDFragment {
     public void onLeftAction() {
         startActivity(CaptureActivity.class);
     }
+
+    private List<ExploreItem> getTestData(){
+        List<ExploreItem> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            ExploreItem exploreItem = new ExploreItem();
+            exploreItem.setSkill_name("技能" + i);
+            list.add(exploreItem);
+        }
+        return list;
+    }
+
 }
+
+
+
+
+

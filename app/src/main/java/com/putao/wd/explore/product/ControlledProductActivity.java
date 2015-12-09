@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ControlProductItem;
 import com.putao.wd.explore.product.adapter.ControlledProductAdatper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -18,21 +18,21 @@ import butterknife.Bind;
  * 探索号-受控产品
  * Created by wangou on 2015/12/2.
  */
-public class ControlledProductFragment extends PTWDFragment implements View.OnClickListener {
-    @Bind(R.id.brv_equipment)
-    BasicRecyclerView brv_equipment;
+public class ControlledProductActivity extends PTWDActivity implements View.OnClickListener {
+    @Bind(R.id.brv_controlled_product)
+    BasicRecyclerView brv_controlled_product;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_controlled_product;
+        return R.layout.activity_controlled_product;
     }
 
     @Override
-    public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavigation();
+    protected void onViewCreateFinish(Bundle saveInstanceState) {
+        addNavgation();
         if (initDataTest().size() != 0) {
-            ControlledProductAdatper controlledProductAdatper = new ControlledProductAdatper(mActivity, initDataTest());
-            brv_equipment.setAdapter(controlledProductAdatper);
+            ControlledProductAdatper controlledProductAdatper = new ControlledProductAdatper(mContext, initDataTest());
+            brv_controlled_product.setAdapter(controlledProductAdatper);
         }
     }
 
@@ -41,6 +41,7 @@ public class ControlledProductFragment extends PTWDFragment implements View.OnCl
         for (int i = 1; i <= 3; i++) {
             ControlProductItem msgitem = new ControlProductItem();
             msgitem.setName("设备名称" + i);
+            msgitem.setUri("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
             list.add(msgitem);
         }
         return list;

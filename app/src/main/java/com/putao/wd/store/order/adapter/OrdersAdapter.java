@@ -104,7 +104,7 @@ public class OrdersAdapter extends BasicAdapter<OrderListItem, BasicViewHolder> 
     }
 
     /**
-     * 订单视图
+     * 订单汇总
      */
     static class SumOrderListViewHolder extends BasicViewHolder {
         @Bind(R.id.tv_order_sumcount)
