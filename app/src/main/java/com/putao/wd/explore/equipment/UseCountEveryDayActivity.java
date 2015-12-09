@@ -18,13 +18,13 @@ import butterknife.Bind;
  * 探索号-每日使用次数
  * Created by wangou on 2015/12/2.
  */
-public class UseTimesEveryDayActivity extends PTWDActivity implements View.OnClickListener {
+public class UseCountEveryDayActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.brv_usertime_everyday)
     BasicRecyclerView brv_usertime_everyday;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_use_times_every_day;
+        return R.layout.activity_use_count_every_day;
     }
 
     @Override
