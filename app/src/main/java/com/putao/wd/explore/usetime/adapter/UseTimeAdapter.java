@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.EquipmentItem;
+import com.putao.wd.dto.UseTimeItem;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -17,12 +17,12 @@ import butterknife.Bind;
 /**
  * Created by wango on 2015/12/9.
  */
-public class UseTimeAdapter extends BasicAdapter<EquipmentItem,UseTimeAdapter.UserTimeViewHolder> {
+public class UseTimeAdapter extends BasicAdapter<UseTimeItem,UseTimeAdapter.UserTimeViewHolder> {
     private int selected_id=-1;//上一个选择过的列表tag
     private int selecting_id=-1;//当前选择过的列表tag
 
-    public UseTimeAdapter(Context context, List<EquipmentItem> equipmentItems) {
-        super(context, equipmentItems);
+    public UseTimeAdapter(Context context, List<UseTimeItem> UseTimeItems) {
+        super(context, UseTimeItems);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class UseTimeAdapter extends BasicAdapter<EquipmentItem,UseTimeAdapter.Us
     }
 
     @Override
-    public void onBindItem(final UserTimeViewHolder holder, EquipmentItem equipmentItem, int position) {
-        holder.tv_equipment_name.setText(equipmentItem.getName());
+    public void onBindItem(final UserTimeViewHolder holder, UseTimeItem UseTimeItem, int position) {
+        holder.tv_equipment_name.setText(UseTimeItem.getName());
         holder.iv_select_icon.setVisibility(((int) holder.itemView.getTag()) == selecting_id ? View.VISIBLE : View.GONE);
         holder.tv_equipment_name.setOnClickListener(new View.OnClickListener() {
             @Override

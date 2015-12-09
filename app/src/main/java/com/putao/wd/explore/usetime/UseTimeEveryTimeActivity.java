@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.EquipmentItem;
+import com.putao.wd.dto.UseTimeItem;
 import com.putao.wd.explore.usetime.adapter.UseTimeAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
@@ -37,22 +37,22 @@ public class UseTimeEveryTimeActivity extends PTWDActivity implements View.OnCli
     }
 
 
-    private List<EquipmentItem> initDataTest() {
-        EquipmentItem msgitem;
-        msgitem=new EquipmentItem();
+    private List<UseTimeItem> initDataTest() {
+        UseTimeItem msgitem;
+        msgitem=new UseTimeItem();
         msgitem.setName("不限");
-        List<EquipmentItem> list=new ArrayList<>();
+        List<UseTimeItem> list=new ArrayList<>();
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseTimeItem();
         msgitem.setName("5" + "分钟");
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseTimeItem();
         msgitem.setName("10"+"分钟");
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseTimeItem();
         msgitem.setName("20"+"分钟");
         list.add(msgitem);
-        msgitem=new EquipmentItem();
+        msgitem=new UseTimeItem();
         msgitem.setName("30"+"分钟");
         list.add(msgitem);
         return list;
