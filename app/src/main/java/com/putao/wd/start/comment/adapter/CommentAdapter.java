@@ -28,7 +28,7 @@ public class CommentAdapter extends LoadMoreAdapter<CommentItem, CommentAdapter.
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.layout_comment_item;
+        return R.layout.activity_comment_item;
     }
 
     @Override
