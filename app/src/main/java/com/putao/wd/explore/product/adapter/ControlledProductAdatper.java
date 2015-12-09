@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * ”受控设备“列表适配器
+ * ”受控产品“列表适配器
  * Created by wango on 2015/12/2.
  */
 public class ControlledProductAdatper extends BasicAdapter<ControlProductItem,ControlledProductAdatper.ControlledProductViewHolder> {
@@ -43,7 +43,6 @@ public class ControlledProductAdatper extends BasicAdapter<ControlProductItem,Co
 
     @Override
     public void onBindItem(final ControlledProductViewHolder holder, ControlProductItem controlProductItem, int position) {
-        holder.iv_select_icon.setVisibility(((int) holder.itemView.getTag()) == selecting_id ? View.VISIBLE : View.GONE);
         holder.iv_product_icon.setImageURL(controlProductItem.getUri());
         holder.tv_equipment_name.setText(controlProductItem.getName());
         holder.tv_equipment_name.setOnClickListener(new View.OnClickListener() {
