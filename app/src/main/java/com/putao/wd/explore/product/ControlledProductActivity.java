@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.R;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ControlProductItem;
 import com.putao.wd.explore.product.adapter.ControlledProductAdatper;
@@ -18,7 +19,7 @@ import butterknife.Bind;
  * 探索号-受控产品
  * Created by wangou on 2015/12/2.
  */
-public class ControlledProductFragment extends PTWDFragment implements View.OnClickListener {
+public class ControlledProductActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.brv_equipment)
     BasicRecyclerView brv_equipment;
 
@@ -28,10 +29,10 @@ public class ControlledProductFragment extends PTWDFragment implements View.OnCl
     }
 
     @Override
-    public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavigation();
+    protected void onViewCreateFinish(Bundle saveInstanceState) {
+        addNavgation();
         if (initDataTest().size() != 0) {
-            ControlledProductAdatper controlledProductAdatper = new ControlledProductAdatper(mActivity, initDataTest());
+            ControlledProductAdatper controlledProductAdatper = new ControlledProductAdatper(mContext, initDataTest());
             brv_equipment.setAdapter(controlledProductAdatper);
         }
     }
