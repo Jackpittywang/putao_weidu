@@ -7,6 +7,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
+import com.putao.wd.explore.usecount.adapter.UseCountAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class UseCountEveryDayActivity extends PTWDActivity implements View.OnCli
     protected void onViewCreateFinish(Bundle saveInstanceState) {
         addNavgation();
         if(initDataTest().size()!=0) {
-            ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mContext, initDataTest());
-            brv_usertime_everyday.setAdapter(controlledEquipmentAdatper);
+            UseCountAdapter useCountAdapter = new UseCountAdapter(mContext, initDataTest());
+            brv_usertime_everyday.setAdapter(useCountAdapter);
         }
     }
 
