@@ -19,8 +19,8 @@ import butterknife.Bind;
  * Created by wangou on 2015/12/2.
  */
 public class ControlledProductActivity extends PTWDActivity implements View.OnClickListener {
-    @Bind(R.id.brv_equipment)
-    BasicRecyclerView brv_equipment;
+    @Bind(R.id.brv_controlled_product)
+    BasicRecyclerView brv_controlled_product;
 
     @Override
     protected int getLayoutId() {
@@ -32,7 +32,7 @@ public class ControlledProductActivity extends PTWDActivity implements View.OnCl
         addNavgation();
         if (initDataTest().size() != 0) {
             ControlledProductAdatper controlledProductAdatper = new ControlledProductAdatper(mContext, initDataTest());
-            brv_equipment.setAdapter(controlledProductAdatper);
+            brv_controlled_product.setAdapter(controlledProductAdatper);
         }
     }
 
