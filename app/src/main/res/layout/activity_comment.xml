@@ -20,7 +20,7 @@
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        auto:refresh_layout="@layout/robot_refresh_header"
+        auto:refresh_layout="@layout/sky_wheel_refresh_header"
         auto:refresh_layout_height="90">
 
         <!--列表-->

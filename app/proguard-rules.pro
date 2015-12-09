@@ -23,6 +23,7 @@
 -keep pubilc class * extends android.app.Service
 #mode配置
 -keep class com.putao.wd.dto.** { *; }
+-keep class com.putao.wd.model.** { *; }
 -keepclasseswithmembers class * implements android.os.Parcelable {
     static android.os.Parcelable$Creator CREATOR;
 }
