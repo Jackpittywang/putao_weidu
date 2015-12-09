@@ -62,4 +62,13 @@ public class AmountSelectLayout extends RelativeLayout {
             }
         });
     }
+
+    /**
+     * 获取当前数量
+     *
+     * @return
+     */
+    public int getCurrentCount() {
+        return mCurrentCount;
+    }
 }
