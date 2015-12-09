@@ -24,7 +24,7 @@ public class UseTimeEveryTimeActivity extends PTWDActivity implements View.OnCli
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_use_time_every_time;
+        return R.layout.activity_use_time_every_time;
     }
 
     @Override

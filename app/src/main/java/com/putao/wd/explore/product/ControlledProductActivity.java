@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ControlProductItem;
 import com.putao.wd.explore.product.adapter.ControlledProductAdatper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -25,7 +24,7 @@ public class ControlledProductActivity extends PTWDActivity implements View.OnCl
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_controlled_product;
+        return R.layout.activity_controlled_product;
     }
 
     @Override

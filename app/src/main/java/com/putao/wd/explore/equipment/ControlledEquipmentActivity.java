@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -25,7 +24,7 @@ public class ControlledEquipmentActivity extends PTWDActivity implements View.On
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_controlled_equipment;
+        return R.layout.activity_controlled_equipment;
     }
 
     @Override

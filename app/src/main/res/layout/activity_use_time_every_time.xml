@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="#ebebeb"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    tools:context="com.putao.wd.explore.equipment.ControlledEquipmentFragment">
+    tools:context="com.putao.wd.explore.equipment.ControlledEquipmentActivity">
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
