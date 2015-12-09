@@ -1,4 +1,4 @@
-package com.putao.wd.explore.equipment;
+package com.putao.wd.explore.usecount;
 
 import android.os.Bundle;
 import android.view.View;

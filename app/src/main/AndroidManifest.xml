@@ -128,7 +128,7 @@
             android:screenOrientation="portrait" />
         <!--每日使用次数-->
         <activity
-            android:name=".explore.equipment.UseCountEveryDayActivity"
+            android:name=".explore.usecount.UseCountEveryDayActivity"
             android:screenOrientation="portrait" />
         <!--每日使用时间-->
         <activity
