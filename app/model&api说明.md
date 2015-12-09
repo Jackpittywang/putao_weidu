@@ -1,8 +1,9 @@
 一.接口api所在的位置是"com.putao.wd.api"
     1.UserApi是用户接口
     2.StartApi是葡星圈接口
-    3.StoreApi是葡商城接口
-    4.ExploreApi是探索号接口
+    3.ExploreApi是探索号接口
+    4.StoreApi是葡商城接口
+    5.OrderApi是订单接口
 二.接口model所在的位置是"com.putao.wd.model",原"com.putao.wd.dto"在接口接入后废止
 三.接口与model简介
     1.UserApi(用户接口)
@@ -113,6 +114,88 @@
             方法名:ExploreApi.getPlotDetails();
             接收model:PlotDetail(剧情理念详情(查询));
             返回类型:object;
+    4.StoreApi(商城接口)
+        (1).商城首页
+            url:StoreApi.URL_STORE_HOME;
+            方法名:StoreApi.getStoreHome();
+            接收model:StoreHome(商城首页);
+            返回类型:array;
+        (2).商品详情
+            url:StoreApi.URL_PRODUCT_DETAIL;
+            方法名:StoreApi.getProductDetail();
+            接收model:ProductDetail(商品详情);
+            返回类型:object;
+        (3).商品规格
+            url:StoreApi.URL_PRODUCT_SPEC;
+            方法名:StoreApi.getProductSpce();
+            接收model:ProductNorms(商品规格)
+            返回类型:object;
+        (4).查看购物车
+            url:StoreApi.URL_VIEW_CART;
+            方法名:StoreApi.getCart();
+            接收model:Cart(购物车);
+            返回类型:array;
+        (5).添加购物车
+            url:StoreApi.URL_CART_ADD;
+            方法名:StoreApi.cartAdd();
+            接收model:Cart(购物车);
+            返回类型:array;
+        (6).编辑购物车
+            url:StoreApi.URL_CART_EDIT;
+            方法名:StoreApi.carteEdit();
+            接收model:Cart(购物车);
+            返回类型:array;
+        (7).编辑购物车
+            url:StoreApi.URL_CART_DELETE;
+            方法名:StoreApi.cartDelete();
+            接收model:Cart(购物车);
+            返回类型:array;
+        (8).更改商品规格购物车
+            url:StoreApi.URL_CART_CHANGE;
+            方法名:StoreApi.cartChange();
+            接收model:Cart(购物车);
+            返回类型:array;
+    5.OrderApi(订单接口)
+        (1).订单列表
+            url:OrderApi.URL_ORDER_LIST;
+            方法名:OrderApi.getOrderLists();
+            接收model:Order(订单);
+            返回类型:array;
+        (2).取消订单
+            url:OrderApi.URL_ORDER_CANCEL;
+            方法名:OrderApi.orderCancel();
+            接收model:String;
+            返回类型:操作是否成功,成功true,错误false
+        (3).订单详情
+            url:OrderApi.URL_ORDER_DETAIL;
+            方法名:OrderApi.getOrderDetail();
+            接收model:OrderDetail(订单详情);
+            返回类型:object;
+        (4).收货地址列表
+            url:OrderApi.URL_ADDRESS_LIST;
+            方法名:OrderApi.getAddressLists();
+            接收model:Address(Address);
+            返回类型:array;
+        (5).添加收货地址
+            url:OrderApi.URL_ADDRESS_ADD;
+            方法名:OrderApi.addressAdd();
+            接收model:暂无;
+            返回类型:暂无;
+        (6).删除收货地址
+            url:OrderApi.URL_ADDRESS_DELETE;
+            方法名:OrderApi.addressDelete();
+            接收model:暂无;
+            返回类型:暂无;
+        (7).更新收货地址
+            url:OrderApi.URL_ADDRESS_UPDATE;
+            方法名:OrderApi.addressUpdate();
+            接收model:暂无;
+            返回类型:暂无;
+        (8).售后列表
+            url:OrderApi.URL_SERVICE_LIST;
+            方法名:OrderApi.getServiceLists();
+            接收model:Service(售后);
+            返回类型:array;
 四.特别说明
     1.AuditType是审核类型
     2.CommentType是回复类型

@@ -1,6 +1,7 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 产品详情
@@ -9,15 +10,15 @@ import java.io.Serializable;
 public class ProductDetail implements Serializable {
     private String id;//商品id
     private String title;//商品标题
-    private String Subtitle;//商品子标题
-    private String Price;//价格
-    private String Describe;//图文混排
-    private String Share;//分享的地址
-    private String Attribute;//属性的值的名称
-    private String Attribute_name;//属性的项目名称
-    private String Services;//售后服务
-    private String Pack;//包装清单
-    private String Pictures;//图片集
+    private String subtitle;//商品子标题
+    private String price;//价格
+    private String describe;//图文混排
+    private String share;//分享的地址
+    private String attribute;//属性的值的名称
+    private String attribute_name;//属性的项目名称
+    private String services;//售后服务
+    private String pack;//包装清单
+    private List<String> pictures;//图片集
 
     public String getId() {
         return id;
@@ -36,75 +37,75 @@ public class ProductDetail implements Serializable {
     }
 
     public String getSubtitle() {
-        return Subtitle;
+        return subtitle;
     }
 
     public void setSubtitle(String subtitle) {
-        Subtitle = subtitle;
+        this.subtitle = subtitle;
     }
 
     public String getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(String price) {
-        Price = price;
+        this.price = price;
     }
 
     public String getDescribe() {
-        return Describe;
+        return describe;
     }
 
     public void setDescribe(String describe) {
-        Describe = describe;
+        this.describe = describe;
     }
 
     public String getShare() {
-        return Share;
+        return share;
     }
 
     public void setShare(String share) {
-        Share = share;
+        this.share = share;
     }
 
     public String getAttribute() {
-        return Attribute;
+        return attribute;
     }
 
     public void setAttribute(String attribute) {
-        Attribute = attribute;
+        this.attribute = attribute;
     }
 
     public String getAttribute_name() {
-        return Attribute_name;
+        return attribute_name;
     }
 
     public void setAttribute_name(String attribute_name) {
-        Attribute_name = attribute_name;
+        this.attribute_name = attribute_name;
     }
 
     public String getServices() {
-        return Services;
+        return services;
     }
 
     public void setServices(String services) {
-        Services = services;
+        this.services = services;
     }
 
     public String getPack() {
-        return Pack;
+        return pack;
     }
 
     public void setPack(String pack) {
-        Pack = pack;
+        this.pack = pack;
     }
 
-    public String getPictures() {
-        return Pictures;
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setPictures(String pictures) {
-        Pictures = pictures;
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
     }
 
     @Override
@@ -112,15 +113,15 @@ public class ProductDetail implements Serializable {
         return "ProductDetail{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", Subtitle='" + Subtitle + '\'' +
-                ", Price='" + Price + '\'' +
-                ", Describe='" + Describe + '\'' +
-                ", Share='" + Share + '\'' +
-                ", Attribute='" + Attribute + '\'' +
-                ", Attribute_name='" + Attribute_name + '\'' +
-                ", Services='" + Services + '\'' +
-                ", Pack='" + Pack + '\'' +
-                ", Pictures='" + Pictures + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", price='" + price + '\'' +
+                ", describe='" + describe + '\'' +
+                ", share='" + share + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", attribute_name='" + attribute_name + '\'' +
+                ", services='" + services + '\'' +
+                ", pack='" + pack + '\'' +
+                ", pictures=" + pictures +
                 '}';
     }
 }

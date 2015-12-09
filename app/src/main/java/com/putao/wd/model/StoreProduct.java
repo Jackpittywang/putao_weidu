@@ -10,8 +10,8 @@ public class StoreProduct implements Serializable {
     private String id;
     private String title;
     private String subtitle;
-    private String Price;
-    private String Icon;
+    private String price;
+    private String icon;
 
     public String getId() {
         return id;
@@ -38,19 +38,19 @@ public class StoreProduct implements Serializable {
     }
 
     public String getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(String price) {
-        Price = price;
+        this.price = price;
     }
 
     public String getIcon() {
-        return Icon;
+        return icon;
     }
 
     public void setIcon(String icon) {
-        Icon = icon;
+        this.icon = icon;
     }
 
     @Override
@@ -59,8 +59,8 @@ public class StoreProduct implements Serializable {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
-                ", Price='" + Price + '\'' +
-                ", Icon='" + Icon + '\'' +
+                ", price='" + price + '\'' +
+                ", icon='" + icon + '\'' +
                 '}';
     }
 }
