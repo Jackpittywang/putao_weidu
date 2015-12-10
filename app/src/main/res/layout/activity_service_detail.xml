@@ -186,31 +186,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:gravity="right"
-                        android:text="------"
+                        android:text="退款申请审核中"
                         android:textColor="#ed5564"
                         android:textSize="@dimen/text_size_16sp" />
 
-                    <TextView
-                        android:id="@+id/tv_service_cost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/tv_service_status"
-                        android:gravity="right"
-                        android:text="¥ -----"
-                        android:textColor="#ed5564"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_service_cost_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_service_status"
-                        android:layout_toLeftOf="@+id/tv_service_cost"
-                        android:gravity="right"
-                        android:text="订单金额: "
-                        android:textColor="#313131"
-                        android:textSize="@dimen/text_size_14sp" />
 
                 </RelativeLayout>
             </RelativeLayout>

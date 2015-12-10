@@ -59,10 +59,6 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_service_purchase_time;
     @Bind(R.id.tv_service_status)
     TextView tv_service_status;
-    @Bind(R.id.tv_service_cost)
-    TextView tv_service_cost;
-    @Bind(R.id.tv_service_cost_text)
-    TextView tv_service_cost_text;
     @Bind(R.id.img_info_icon)
     ImageView img_info_icon;
     @Bind(R.id.tv_service_info)
@@ -193,7 +189,6 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         tv_service_no.setText(serviceDto.getServiceNo());
         tv_service_purchase_time.setText(serviceDto.getPurchaseTime() + "");
         tv_service_status.setText(ServiceCommon.getServiceStatusShowString(serviceDto.getServiceStatus()));
-        tv_service_cost.setText("¥" + serviceDto.getTotalCost());
         tv_service_info.setText("商品信息");
         tv_customer_name.setText(serviceDto.getCustomerName());
         tv_customer_address.setText(serviceDto.getCustomerAddress());
