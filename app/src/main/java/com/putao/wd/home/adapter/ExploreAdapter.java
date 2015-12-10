@@ -1,13 +1,13 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ExploreItem;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -67,6 +67,49 @@ public class ExploreAdapter extends BasicAdapter<ExploreItem, BasicViewHolder> {
 
     @Override
     public void onBindItem(BasicViewHolder holder, ExploreItem exploreItem, int position) {
+        bindTopView(holder, exploreItem, position);
+        bindOtherView(holder, exploreItem, position);
+    }
+
+    /**
+     *Item头部显示控制
+     */
+    private void bindTopView(BasicViewHolder holder, ExploreItem exploreItem, int position) {
+        if (position != 0) {//和上一条比较
+            ExploreItem preExplore = getItem(position - 1);
+            int abs = DateUtils.getDaysUnAbs(preExplore.getDate(), exploreItem.getDate());
+            if (holder instanceof ExploerViewHolder) {
+                ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
+                if (abs == 0){
+                    viewHolder.ll_explore_top.setVisibility(View.GONE);
+                }else{
+                    viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                    viewHolder.tv_date.setText(exploreItem.getDate());
+                }
+            } else if (holder instanceof ExploerMixedViewHolder) {
+                ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
+                if (abs == 0){
+                    viewHolder.ll_explore_top.setVisibility(View.GONE);
+                }else{
+                    viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                    viewHolder.tv_date.setText(exploreItem.getDate());
+                }
+            }
+        }else {
+            if (holder instanceof ExploerViewHolder) {
+                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
+                ((ExploerViewHolder) holder).tv_date.setText(exploreItem.getDate());
+            }else if (holder instanceof ExploerMixedViewHolder){
+                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
+                ((ExploerMixedViewHolder) holder).tv_date.setText(exploreItem.getDate());
+            }
+        }
+    }
+
+    /**
+     * Item其他控件显示
+     */
+    public void bindOtherView(BasicViewHolder holder, ExploreItem exploreItem, int position) {
         if (holder instanceof ExploerViewHolder) {
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
             viewHolder.tv_skill_name.setText(exploreItem.getSkill_name());
@@ -117,6 +160,10 @@ public class ExploreAdapter extends BasicAdapter<ExploreItem, BasicViewHolder> {
      * 全图片
      */
     static class ExploerViewHolder extends BasicViewHolder {
+        @Bind(R.id.ll_explore_top)
+        LinearLayout ll_explore_top;
+        @Bind(R.id.tv_date)
+        TextView tv_date;
         @Bind(R.id.iv_skill_icon)
         ImageDraweeView iv_skill_icon;
         @Bind(R.id.tv_skill_name)
@@ -131,6 +178,10 @@ public class ExploreAdapter extends BasicAdapter<ExploreItem, BasicViewHolder> {
      * 图文混排
      */
     static class ExploerMixedViewHolder extends BasicViewHolder {
+        @Bind(R.id.ll_explore_top)
+        LinearLayout ll_explore_top;
+        @Bind(R.id.tv_date)
+        TextView tv_date;
         @Bind(R.id.iv_skill_icon)
         ImageDraweeView iv_skill_icon;
         @Bind(R.id.iv_picture1)

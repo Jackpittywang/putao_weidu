@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class ExploreItem implements Serializable {
 
     private String id;
+    private String date;
     private String iconUrl;
     private int iconNum;//图文混排排时显示图片张数
     private boolean isMixed;//状态值 false表示全图片 true表示图文混排
@@ -22,6 +23,14 @@ public class ExploreItem implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getIconUrl() {
@@ -68,8 +77,9 @@ public class ExploreItem implements Serializable {
     public String toString() {
         return "ExploreItem{" +
                 "id='" + id + '\'' +
+                ", date='" + date + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
-                ", iconNum='" + iconNum + '\'' +
+                ", iconNum=" + iconNum +
                 ", isMixed=" + isMixed +
                 ", skill_name='" + skill_name + '\'' +
                 ", content='" + content + '\'' +
