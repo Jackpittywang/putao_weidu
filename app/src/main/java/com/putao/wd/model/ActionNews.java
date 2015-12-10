@@ -109,7 +109,7 @@ public class ActionNews implements Serializable {
 
     @Override
     public String toString() {
-        return "ActionList{" +
+        return "ActionNews{" +
                 "id='" + id + '\'' +
                 ", banner_url='" + banner_url + '\'' +
                 ", title='" + title + '\'' +

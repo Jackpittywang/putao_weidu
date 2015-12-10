@@ -52,7 +52,7 @@ public class IndicatorDrawable extends Drawable {
         if (!isShowSize) {
             String text = String.valueOf(mSize);
             mPaint.getTextBounds(text, 0, text.length(), mTextBounds);
-            Logger.d(TAG, "text bounds : " + mTextBounds.width() + ",  " + mTextBounds.height() + "rect : " + mTextBounds);
+//            Logger.d(TAG, "text bounds : " + mTextBounds.width() + ",  " + mTextBounds.height() + "rect : " + mTextBounds);
             mPaint.setColor(0xffffffff);
             canvas.drawText(text, mRadius, mRadius + mTextBounds.height() / 2, mPaint);
         }

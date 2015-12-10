@@ -2,14 +2,15 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Switch;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.qrcode.CaptureActivity;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoExploreFragment extends PTWDFragment {
-
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
 
@@ -35,6 +35,7 @@ public class PutaoExploreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        Logger.d(MainActivity.TAG, "PutaoExploreFragment启动");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, getTestData());
@@ -49,6 +50,11 @@ public class PutaoExploreFragment extends PTWDFragment {
     @Override
     public void onLeftAction() {
         startActivity(CaptureActivity.class);
+    }
+
+    @Override
+    public void onRightAction() {
+        startActivity(ManageActivity.class);
     }
 
     private List<ExploreItem> getTestData() {
@@ -87,11 +93,6 @@ public class PutaoExploreFragment extends PTWDFragment {
             list.add(exploreItem);
         }
         return list;
-    }
-
-    @Override
-    public void onRightAction() {
-        startActivity(ManageActivity.class);
     }
 }
 

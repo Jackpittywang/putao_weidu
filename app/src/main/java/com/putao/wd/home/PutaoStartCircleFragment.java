@@ -3,6 +3,7 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
@@ -58,6 +59,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        Logger.d(MainActivity.TAG, "PutaoStartCircleFragment启动");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         sticky_layout.canScrollView();
@@ -104,6 +106,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                     @Override
                     public void onSuccess(String url, ArrayList<ActionNews> result) {
                         Logger.d(result.toString());
+                        cacheEnterDisk(url, result);
                         if (isRefresh) {
                             adapter.replaceAll(result);
                             ptl_refresh.refreshComplete();

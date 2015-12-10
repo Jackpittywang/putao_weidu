@@ -22,6 +22,6 @@ public abstract class SimpleFastJsonCallback<T extends Serializable> extends Fas
     @Override
     public void onFailure(String url, int statusCode, String msg) {
         Logger.e("请求错误:url=" + url + ",statusCode=" + statusCode + ",错误信息=" + msg);
-        loading.dismiss();
+        if (loading != null) loading.dismiss();
     }
 }

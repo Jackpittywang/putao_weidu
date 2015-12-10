@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--标题栏-->
     <com.sunnybear.library.view.select.TabBar
         android:id="@+id/tb_tab"
         android:layout_width="match_parent"
@@ -41,10 +42,10 @@
             auto:inactiveDrawable="@drawable/tab_bar_me_nor" />
     </com.sunnybear.library.view.select.TabBar>
 
-    <com.sunnybear.library.view.viewpager.UnScrollableViewPager
-        android:id="@+id/vp_content"
+    <!--主页面-->
+    <FrameLayout
+        android:id="@id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tb_tab" />
-
 </RelativeLayout>

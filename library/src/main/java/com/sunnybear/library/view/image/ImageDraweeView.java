@@ -3,12 +3,10 @@ package com.sunnybear.library.view.image;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -49,20 +47,20 @@ public class ImageDraweeView extends SimpleDraweeView {
     private void init(Context context) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
         //淡入淡出
-        hierarchy.setFadeDuration(500);
-        if (placeholderImage != 0)
-            //设置占位图
-            hierarchy.setPlaceholderImage(ContextCompat.getDrawable(context, placeholderImage), ScalingUtils.ScaleType.FIT_CENTER);
-        if (progressBarImage != 0)
-            //设置正在加载图
-            hierarchy.setProgressBarImage(ContextCompat.getDrawable(context, progressBarImage), ScalingUtils.ScaleType.CENTER_INSIDE);
-        if (failureImage != 0)
-            //设置失败图
-            hierarchy.setFailureImage(ContextCompat.getDrawable(context, failureImage), ScalingUtils.ScaleType.CENTER_INSIDE);
-        if (retryImage != 0)
-            //设置重试图
-            hierarchy.setRetryImage(ContextCompat.getDrawable(context, retryImage), ScalingUtils.ScaleType.CENTER_INSIDE);
-        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP);
+        hierarchy.setFadeDuration(300);
+//        if (placeholderImage != 0)
+//            //设置占位图
+//            hierarchy.setPlaceholderImage(ContextCompat.getDrawable(context, placeholderImage), ScalingUtils.ScaleType.FIT_CENTER);
+//        if (progressBarImage != 0)
+//            //设置正在加载图
+//            hierarchy.setProgressBarImage(ContextCompat.getDrawable(context, progressBarImage), ScalingUtils.ScaleType.CENTER_INSIDE);
+//        if (failureImage != 0)
+//            //设置失败图
+//            hierarchy.setFailureImage(ContextCompat.getDrawable(context, failureImage), ScalingUtils.ScaleType.CENTER_INSIDE);
+//        if (retryImage != 0)
+//            //设置重试图
+//            hierarchy.setRetryImage(ContextCompat.getDrawable(context, retryImage), ScalingUtils.ScaleType.CENTER_INSIDE);
+//        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP);
         setHierarchy(hierarchy);
 
         mProcessor = new PictureProcessor();

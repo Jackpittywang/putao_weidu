@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_EBEBEB"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/white"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="每次使用次数" />
+
+    <!--选择区-->
+    <com.sunnybear.library.view.select.RadioBar
+        android:id="@+id/rb_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <com.sunnybear.library.view.select.RadioItem
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            auto:is_select="true"
+            auto:select_drawable="@drawable/icon_20_13"
+            auto:select_text="不限"
+            auto:select_text_color="@color/text_color"
+            auto:select_text_size="@dimen/text_size_6sp" />
+
+        <com.sunnybear.library.view.select.RadioItem
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            auto:select_drawable="@drawable/icon_20_13"
+            auto:select_text="1次"
+            auto:select_text_color="@color/text_color"
+            auto:select_text_size="@dimen/text_size_6sp" />
+
+        <com.sunnybear.library.view.select.RadioItem
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            auto:select_drawable="@drawable/icon_20_13"
+            auto:select_text="3次"
+            auto:select_text_color="@color/text_color"
+            auto:select_text_size="@dimen/text_size_6sp" />
+
+        <com.sunnybear.library.view.select.RadioItem
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            auto:select_drawable="@drawable/icon_20_13"
+            auto:select_text="5次"
+            auto:select_text_color="@color/text_color"
+            auto:select_text_size="@dimen/text_size_6sp" />
+
+        <com.sunnybear.library.view.select.RadioItem
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            auto:select_drawable="@drawable/icon_20_13"
+            auto:select_text="10次"
+            auto:select_text_color="@color/text_color"
+            auto:select_text_size="@dimen/text_size_6sp" />
+    </com.sunnybear.library.view.select.RadioBar>
+</LinearLayout>

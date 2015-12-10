@@ -23,14 +23,9 @@
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/iv_action_icon"
+                style="@style/image_round_4dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#959595"
-                auto:roundBottomLeft="true"
-                auto:roundBottomRight="true"
-                auto:roundTopLeft="true"
-                auto:roundTopRight="true"
-                auto:roundedCornerRadius="4dp" />
+                android:layout_height="match_parent" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

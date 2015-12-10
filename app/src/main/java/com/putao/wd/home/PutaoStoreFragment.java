@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
@@ -57,6 +58,7 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        Logger.d(MainActivity.TAG, "PutaoStoreFragment启动");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         mHeader.attachTo(rv_content, true);
@@ -89,14 +91,15 @@ public class PutaoStoreFragment extends PTWDFragment {
     /**
      * 获取葡商城首页信息
      */
-    private void getStoreHome(){
-        networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<ArrayList<StoreHome>>(StoreHome.class,loading) {
+    private void getStoreHome() {
+        networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<ArrayList<StoreHome>>(StoreHome.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<StoreHome> result) {
                 Logger.d(result.toString());
             }
         });
     }
+
     /**
      * 刷新方法
      */
