@@ -121,6 +121,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void onRightAction() {
         if (adapter.getItemState()) {
             ToastUtils.showToastShort(this, "点击编辑");
+            adapter.updateItem();
         }
     }
 }
