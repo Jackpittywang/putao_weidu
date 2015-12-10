@@ -9,6 +9,8 @@ import android.widget.Button;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.explore.equipment.ControlledEquipmentFragment;
+import com.putao.wd.explore.product.ControlledProductFragment;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementEdit;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -61,10 +63,10 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                         }).show();
                 break;
             case R.id.ll_equipment://受控设备
-
+                addFragment(ControlledEquipmentFragment.class);
                 break;
             case R.id.ll_product://受控产品
-
+                addFragment(ControlledProductFragment.class);
                 break;
             case R.id.ll_usecount://使用次数
                 addFragment(UseCountEveryDayFragment.class);

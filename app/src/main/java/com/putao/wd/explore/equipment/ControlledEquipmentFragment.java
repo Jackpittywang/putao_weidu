@@ -30,7 +30,7 @@ public class ControlledEquipmentFragment extends PTWDFragment implements View.On
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-
+        addNavigation();
         if(initDataTest().size()!=0) {
             ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mActivity, initDataTest());
             brv_equipment.setAdapter(controlledEquipmentAdatper);
@@ -46,6 +46,12 @@ public class ControlledEquipmentFragment extends PTWDFragment implements View.On
             list.add(msgitem);
         }
         return list;
+    }
+
+    @Override
+    public void onRightAction() {
+
+
     }
 
     @Override

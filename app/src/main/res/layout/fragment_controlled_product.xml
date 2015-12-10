@@ -11,7 +11,8 @@
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="受控产品"/>
+        auto:nav_main_title="受控产品"
+        auto:nav_right_title="保存"/>
     <com.sunnybear.library.view.recycler.BasicRecyclerView
         android:id="@+id/brv_controlled_product"
         android:layout_marginTop="10dp"
