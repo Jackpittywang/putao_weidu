@@ -462,27 +462,27 @@
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rl_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_bottom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true">-->
 
-        <Button
-            android:id="@+id/btn_service_cancel"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/btn_service_operation"
-            android:text="取消订单" />
+        <!--<Button-->
+            <!--android:id="@+id/btn_service_cancel"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_toLeftOf="@+id/btn_service_operation"-->
+            <!--android:text="取消订单" />-->
 
-        <Button
-            android:id="@+id/btn_service_operation"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:text="立即支付" />
+        <!--<Button-->
+            <!--android:id="@+id/btn_service_operation"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:text="立即支付" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 </RelativeLayout>

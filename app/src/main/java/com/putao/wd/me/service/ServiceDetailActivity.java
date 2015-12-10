@@ -111,12 +111,12 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     LinearLayout ll_goods_info;
     @Bind(R.id.sv_main)
     ScrollView sv_main;
-    @Bind(R.id.btn_service_cancel)
-    Button btn_service_cancel;
-    @Bind(R.id.btn_service_operation)
-    Button btn_service_operation;
-    @Bind(R.id.rl_bottom)
-    RelativeLayout rl_bottom;
+//    @Bind(R.id.btn_service_cancel)
+//    Button btn_service_cancel;
+//    @Bind(R.id.btn_service_operation)
+//    Button btn_service_operation;
+//    @Bind(R.id.rl_bottom)
+//    RelativeLayout rl_bottom;
 
     private ServiceDto serviceDto;
     @Override
