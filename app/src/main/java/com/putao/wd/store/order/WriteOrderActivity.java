@@ -70,6 +70,19 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         });
     }
 
+    /**
+     * 取消订单
+     */
+    private void orderCancel(){
+        networkRequest(OrderApi.orderCancel(""), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
     private List<OrderListItem> getTestData() {
         List<OrderListItem> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
