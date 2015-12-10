@@ -29,7 +29,7 @@ import butterknife.Bind;
  * 售后列表
  * Created by wangou on 15/12/7.
  */
-public class SoldListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class ServiceListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.rv_order)
     BasicRecyclerView rv_order;
@@ -39,7 +39,7 @@ public class SoldListActivity extends PTWDActivity<GlobalApplication> implements
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
-    private String TAG = SoldListActivity.class.getName();
+    private String TAG = ServiceListActivity.class.getName();
     private OrderListAdapter adapter;
     private List<OrderDto> orderList;
 

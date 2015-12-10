@@ -1,4 +1,4 @@
-package com.putao.wd.me.order;
+package com.putao.wd.me.service;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,13 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
- * 物流信息
- * Created by yanguoqiang on 15/11/29.
+ * 售后物流信息
+ * Created by wangou on 15/11/29.
  */
-public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
+public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER_UUID = "orderUuid";
     @Bind(R.id.ll_package_list)
@@ -55,7 +54,7 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_order_shipment_detail;
+        return R.layout.activity_service_shipment_detail;
     }
 
     @Override
