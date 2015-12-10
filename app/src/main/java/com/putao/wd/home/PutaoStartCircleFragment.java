@@ -3,19 +3,16 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ActionNewsItem;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
+import com.putao.wd.home.adapter.StartBannerAdapater;
 import com.putao.wd.model.Banner;
 import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -23,7 +20,6 @@ import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
-import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
 import com.sunnybear.library.view.viewpager.BannerViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -39,9 +35,9 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.TitleItemSelectedListener {
-    private static final int[] resIds = new int[]{
-            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
-    };
+    //    private static final int[] resIds = new int[]{
+//            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
+//    };
     @Bind(R.id.sticky_layout)
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.ptl_refresh)
@@ -70,23 +66,6 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         sticky_layout.canScrollView();
         adapter = new ActionNewsAdapter(mActivity, getTestData());
         rv_content.setAdapter(adapter);
-
-        bl_banner.setAdapter(new BannerAdapter() {
-            @Override
-            public View getView(int position) {
-                ImageView imageView = new ImageView(mActivity);
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageView.setLayoutParams(params);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                imageView.setImageResource(resIds[position]);
-                return imageView;
-            }
-
-            @Override
-            public int getCount() {
-                return resIds.length;
-            }
-        });
         refresh();
         addListener();
 
@@ -97,14 +76,19 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
      * 获取广告列表
      */
     private void getBannerList() {
-        networkRequestCache(StartApi.getBannerList()
+        networkRequest(StartApi.getBannerList()
                 , new SimpleFastJsonCallback<ArrayList<Banner>>(Banner.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Banner> result) {
-                loading.dismiss();
+            public void onSuccess(String url, final ArrayList<Banner> result) {
                 cacheEnterDisk(url, result);
-                Logger.d(result.toString());
-                ToastUtils.showToastShort(mActivity, result.toString());
+                bl_banner.setAdapter(new StartBannerAdapater(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
+                    @Override
+                    public void onPagerClick(int position) {
+                        ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
+                    }
+                }));
+                bl_banner.setOffscreenPageLimit(result.size());//缓存页面数
+                loading.dismiss();
             }
         });
     }
@@ -130,12 +114,6 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
      * 添加监听器
      */
     private void addListener() {
-        bl_banner.setOnPagerClickListenr(new BannerViewPager.OnPagerClickListenr() {
-            @Override
-            public void onPagerClick(int position) {
-                ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
-            }
-        });
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
