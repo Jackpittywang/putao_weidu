@@ -16,6 +16,7 @@ public class ShoppingCar implements Serializable {
     private String imgUrl;
     private boolean isNull;
     private boolean isSelect;
+    private boolean editable;
 
     public String getId() {
         return id;
@@ -89,6 +90,14 @@ public class ShoppingCar implements Serializable {
         this.isSelect = isSelect;
     }
 
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
     @Override
     public String toString() {
         return "ShoppingCar{" +
@@ -101,6 +110,7 @@ public class ShoppingCar implements Serializable {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", isNull=" + isNull +
                 ", isSelect=" + isSelect +
+                ", editable=" + editable +
                 '}';
     }
 }

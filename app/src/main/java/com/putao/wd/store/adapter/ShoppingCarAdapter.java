@@ -7,12 +7,14 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ShoppingCar;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -24,9 +26,11 @@ import butterknife.Bind;
 public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAdapter.ShoppingCarViewHolder> {
 
     private boolean itemState;//记录当前状态值
+    private HashMap<Integer, ShoppingCar> map;//记录当前商品
 
     public ShoppingCarAdapter(Context context, List<ShoppingCar> shoppingCars) {
         super(context, shoppingCars);
+        map = new HashMap<>();
     }
 
     @Override
@@ -59,11 +63,14 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
         holder.tv_money.setText(shoppingCar.getMoney());
         holder.tv_count.setText(shoppingCar.getCount());
         holder.btn_sel.setState(shoppingCar.isSelect());
+        showEdit(holder, shoppingCar);
         holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
                 shoppingCar.setIsSelect(isSelect);
                 itemState = isSelect;
+                shoppingCar.setEditable(false);
+                map.put(position, shoppingCar);
                 replace(position, shoppingCar);
             }
         });
@@ -82,16 +89,37 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     }
 
     /**
+     * 显示编辑状态Item
+     */
+    private void showEdit(ShoppingCarViewHolder holder, ShoppingCar ShoppingCar) {
+        if(ShoppingCar.isEditable()){
+            if(ShoppingCar.isSelect()){
+                holder.asl_num_sel.setVisibility(View.VISIBLE);
+                holder.ll_info.setVisibility(View.GONE);
+            }
+        }else{
+            holder.asl_num_sel.setVisibility(View.GONE);
+            holder.ll_info.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
      * 获取当前item状态,判断是否是可编辑
-     * @return
      */
     public boolean getItemState(){
         return itemState;
     }
 
-    public void editGoods(ShoppingCarViewHolder holder){
-        holder.asl_num_sel.setVisibility(View.VISIBLE);
-        holder.ll_info.setVisibility(View.GONE);
+    /**
+     * 更新Item显示
+     */
+    public void updateItem(){
+        ToastUtils.showToastShort(context, "updateItem");
+        for (int i = 0; i < map.size(); i++){
+            ShoppingCar shoppingCar =  map.get(i);
+            shoppingCar.setEditable(true);
+            replace(i, shoppingCar);
+        }
     }
 
     /**
