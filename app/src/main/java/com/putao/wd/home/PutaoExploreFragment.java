@@ -72,6 +72,13 @@ public class PutaoExploreFragment extends PTWDFragment {
             } else {
                 exploreItem.setIsMixed(false);
             }
+            if (i < 4) {
+                exploreItem.setDate("2015-12-10");
+            }else if (i >= 4 && i < 7) {
+                exploreItem.setDate("2015-12-09");
+            }else {
+                exploreItem.setDate("2015-12-08");
+            }
             exploreItem.setSkill_name("技能" + i);
             exploreItem.setContent("这里显示每个关卡背后的教育理念的主要文字，大概是一句话左右。" +
                     "完成多个关卡，则以分号隔开显示，一直向下展示。这里显示每个关卡背后的教育理念的主要文字，" +

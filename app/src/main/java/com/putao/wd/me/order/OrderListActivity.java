@@ -7,11 +7,15 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.dto.OrderDto;
+import com.putao.wd.model.Order;
+import com.putao.wd.model.Service;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -178,6 +182,20 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
                 break;
         }
     }
+
+    /**
+     * 订单列表
+     */
+    private void getOrderLists(){
+        networkRequest(OrderApi.getOrderLists("", ""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
 
 
     /**

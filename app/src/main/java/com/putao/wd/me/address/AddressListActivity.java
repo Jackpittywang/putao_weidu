@@ -6,11 +6,16 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
+import com.putao.wd.model.Address;
+import com.putao.wd.model.OrderDetail;
 import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.List;
@@ -55,6 +60,18 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 //        });
     }
 
+    /**
+     * 收货地址列表
+     */
+    private void getAddressLists(){
+        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, Address result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
 
     @Override
     protected String[] getRequestUrls() {

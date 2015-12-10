@@ -5,6 +5,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <include
+        android:id="@+id/ll_explore_top"
+        layout="@layout/fragment_explore_include"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,50 +50,50 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginRight="1dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/half_transparent_bg"
+                android:gravity="center"
+
                 android:text="图1"
-                android:gravity="center"
-
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
-                android:layout_marginBottom="1dp"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/half_transparent_bg"
+                android:gravity="center"
                 android:text="图2"
-                android:gravity="center"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
-                android:layout_marginBottom="1dp"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/half_transparent_bg"
+                android:gravity="center"
                 android:text="图3"
-                android:gravity="center"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
-                android:layout_marginBottom="1dp"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:background="@color/half_transparent_bg"
-                android:text="图4"
                 android:gravity="center"
+                android:text="图4"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
                 />
@@ -105,10 +109,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/half_transparent_bg"
+                android:gravity="center"
                 android:text="图5"
-                android:gravity="center"
-                android:layout_marginBottom="1dp"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
                 />
@@ -116,10 +120,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/half_transparent_bg"
+                android:gravity="center"
                 android:text="图6"
-                android:gravity="center"
-                android:layout_marginBottom="1dp"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
                 />
@@ -127,11 +131,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/half_transparent_bg"
+                android:gravity="center"
                 android:text="图7"
-                android:gravity="center"
                 android:textColor="@color/color_313131"
-                android:layout_marginBottom="1dp"
                 android:textSize="@dimen/text_size_20sp"
                 />
 
@@ -139,8 +143,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:background="@color/half_transparent_bg"
-                android:text="图8"
                 android:gravity="center"
+                android:text="图8"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"
                 />

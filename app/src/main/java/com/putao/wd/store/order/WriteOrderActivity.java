@@ -6,10 +6,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderListItem;
+import com.putao.wd.model.Cart;
+import com.putao.wd.model.Order;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
@@ -49,6 +55,32 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         adapter = new OrdersAdapter(mContext, cars);
         stickyHeaderLayout_scrollable.setAdapter(adapter);
 
+    }
+
+    /**
+     * 订单列表
+     */
+    private void getOrderLists(){
+        networkRequest(OrderApi.getOrderLists("", ""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 取消订单
+     */
+    private void orderCancel(){
+        networkRequest(OrderApi.orderCancel(""), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.d(result.toString());
+            }
+
+        });
     }
 
     private List<OrderListItem> getTestData() {
