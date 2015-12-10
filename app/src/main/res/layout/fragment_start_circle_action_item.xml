@@ -31,19 +31,38 @@
                 auto:roundTopLeft="true"
                 auto:roundTopRight="true"
                 auto:roundedCornerRadius="4dp" />
-            <!--活动类型-->
-            <TextView
-                android:id="@+id/tv_action_type"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/action_ing_background"
-                android:padding="4dp"
-                android:text="活动"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16sp" />
+                android:orientation="horizontal">
+
+                <!--活动标签-->
+                <TextView
+                    android:id="@+id/tv_action_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/action_ing_background"
+                    android:padding="4dp"
+                    android:text="活动"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16sp" />
+
+                <!--活动状态-->
+                <TextView
+                    android:id="@+id/tv_action_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/action_ing_background"
+                    android:padding="4dp"
+                    android:text="报名中"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16sp" />
+            </LinearLayout>
         </FrameLayout>
 
         <!--标题-->
@@ -63,7 +82,7 @@
                 android:textSize="@dimen/text_size_18sp" />
             <!--副标题-->
             <TextView
-                android:id="@+id/tv_action_sub_title"
+                android:id="@+id/tv_action_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

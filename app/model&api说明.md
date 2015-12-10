@@ -36,7 +36,7 @@
         (3).活动列表(查询)
             url:StartApi.URL_ACTION_LIST;
             方法名:StartApi.getActionList();
-            接收model:ActionList(活动列表);
+            接收model:ActionNewsList(活动列表);
             返回类型array;
         (4).活动标签(查询)
             url:StartApi.URL_ACTION_LABEL;

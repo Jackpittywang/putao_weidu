@@ -45,7 +45,7 @@ public class CityService extends Service {
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                String result = ResourcesUtils.getAssetTextFile(GlobalApplication.getInstance(), "city.json");
+                String result = ResourcesUtils.getAssetsTextFile(GlobalApplication.getInstance(), "city.json");
                 list = JSON.parseObject(result);//城市列表
                 Logger.w("城市列表获取完成");
                 insertProvince();

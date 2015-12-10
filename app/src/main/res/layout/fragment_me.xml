@@ -148,6 +148,7 @@
             android:id="@+id/si_message"
             style="@style/style_setting"
             android:layout_marginTop="8dp"
+            auto:setting_divider="bottom"
             auto:setting_icon="@drawable/icon_20_09"
             auto:setting_indicator_background="@drawable/setting_indicator"
             auto:setting_indicator_color="@color/text_main_color_nor"
