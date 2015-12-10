@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ProductItem;
 import com.putao.wd.home.adapter.ProductAdapter;
+import com.putao.wd.model.StoreHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.controller.handler.WeakHandler;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -79,8 +83,20 @@ public class PutaoStoreFragment extends PTWDFragment {
         });
         refresh();
         addListener();
+        getStoreHome();
     }
 
+    /**
+     * 获取葡商城首页信息
+     */
+    private void getStoreHome(){
+        networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<ArrayList<StoreHome>>(StoreHome.class,loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<StoreHome> result) {
+                Logger.d(result.toString());
+            }
+        });
+    }
     /**
      * 刷新方法
      */
