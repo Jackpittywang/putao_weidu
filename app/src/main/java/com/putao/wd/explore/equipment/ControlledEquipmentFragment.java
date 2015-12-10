@@ -8,6 +8,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ import butterknife.Bind;
  * Created by wangou on 2015/12/2.
  */
 public class ControlledEquipmentFragment extends PTWDFragment implements View.OnClickListener{
+    public static final String EVENT_CONTROLLED_EQUIPMENT = "controlled_equipment";
+    private String equipmentname="";
+
     @Bind(R.id.brv_equipment)
     BasicRecyclerView brv_equipment;
 
@@ -50,7 +54,7 @@ public class ControlledEquipmentFragment extends PTWDFragment implements View.On
 
     @Override
     public void onRightAction() {
-
+        EventBusHelper.post(equipmentname, EVENT_CONTROLLED_EQUIPMENT);
 
     }
 

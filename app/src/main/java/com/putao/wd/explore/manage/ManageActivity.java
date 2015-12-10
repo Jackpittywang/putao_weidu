@@ -5,20 +5,27 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.explore.equipment.ControlledEquipmentFragment;
 import com.putao.wd.explore.product.ControlledProductFragment;
+import com.putao.wd.explore.usetime.UseTimeEveryTimeFragment;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementEdit;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -28,6 +35,32 @@ import butterknife.OnClick;
 public class ManageActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.btn_stopuse)
     Button btn_stopuse;
+    @Bind(R.id.tv_equipment_name)
+    TextView tv_equipment_name;
+    @Bind(R.id.iv_equipment_name)
+    ImageView iv_equipment_name;
+    @Bind(R.id.ll_equipment)
+    LinearLayout ll_equipment;
+    @Bind(R.id.tv_product_name)
+    TextView tv_product_name;
+    @Bind(R.id.iv_product_name)
+    ImageView iv_product_name;
+    @Bind(R.id.ll_product)
+    LinearLayout ll_product;
+    @Bind(R.id.tv_usecount_byday)
+    TextView tv_usecount_byday;
+    @Bind(R.id.iv_usecount_byday)
+    ImageView iv_usecount_byday;
+    @Bind(R.id.ll_usecount)
+    LinearLayout ll_usecount;
+    @Bind(R.id.tv_usetime_byday)
+    TextView tv_usetime_byday;
+    @Bind(R.id.iv_usetime_byday)
+    ImageView iv_usetime_byday;
+    @Bind(R.id.usetime)
+    LinearLayout usetime;
+    @Bind(R.id.fragment_container)
+    FrameLayout fragment_container;
 
     @Override
     protected int getLayoutId() {
@@ -72,7 +105,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 addFragment(UseCountEveryDayFragment.class);
                 break;
             case R.id.usetime://使用时间
-
+                addFragment(UseTimeEveryTimeFragment.class);
                 break;
         }
     }
@@ -102,4 +135,25 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             }
         });
     }
+
+    @Subcriber(tag = ControlledEquipmentFragment.EVENT_CONTROLLED_EQUIPMENT)
+    public void eventAddressAdd(String equipmentname) {
+        tv_equipment_name.setText(equipmentname);
+    }
+
+    @Subcriber(tag = ControlledProductFragment.EVENT_CONTROLLED_PRODUCT)
+    public void eventAddressUpdate(String productname) {
+        tv_product_name.setText(productname);
+    }
+
+    @Subcriber(tag = UseTimeEveryTimeFragment.EVENT_USETIME_EVERYTIME)
+    public void eventAddressDelete(String usetime) {
+        tv_usetime_byday.setText(usetime);
+    }
+
+    @Subcriber(tag = UseCountEveryDayFragment.EVENT_USECOUNT_EVERYDAY)
+    public void eventAddressIsDefault(String usecount) {
+        tv_usecount_byday.setText(usecount);
+    }
+
 }

@@ -144,26 +144,7 @@
         <activity
             android:name=".store.cashier.CashierActivity"
             android:screenOrientation="portrait" />
-        <!--每日使用次数-->
-        <activity
-            android:name=".explore.usecount.UseCountEveryDayActivity"
-            android:screenOrientation="portrait" />
-        <!--每日使用时间-->
-        <activity
-            android:name=".explore.usetime.UseTimeEveryTimeActivity"
-            android:screenOrientation="portrait" />
-        <!--管理-->
-        <activity
-            android:name=".explore.manage.ManageActivity"
-            android:screenOrientation="portrait" />
-        <!--受控设备-->
-        <activity
-            android:name=".explore.equipment.ControlledEquipmentFragment"
-            android:screenOrientation="portrait" />
-        <!--受控产品-->
-        <activity
-            android:name=".explore.product.ControlledProductFragment"
-            android:screenOrientation="portrait" />
+
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

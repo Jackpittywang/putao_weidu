@@ -10,7 +10,8 @@
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="每次使用次数" />
+        auto:nav_main_title="每次使用次数"
+        auto:nav_right_title="保存"/>
 
     <!--选择区-->
     <com.sunnybear.library.view.select.RadioBar
