@@ -2,14 +2,17 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Switch;
+import android.util.Log;
 
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.qrcode.CaptureActivity;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -34,7 +37,6 @@ public class PutaoExploreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        Logger.d(MainActivity.TAG, "PutaoExploreFragment启动");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, getTestData());
@@ -60,7 +62,7 @@ public class PutaoExploreFragment extends PTWDFragment {
      * 添加监听器
      */
     private void addListener(){
-        getExploreList(0,"","", false, false);
+        getExploreList(0, "", "", false, false);
     }
 
     /**
@@ -73,7 +75,7 @@ public class PutaoExploreFragment extends PTWDFragment {
             @Override
             public void onSuccess(String url, ArrayList<ExploreItem> result) {
                 Logger.d(result.toString());
-                Log.i("pt","探索号请求成功");
+                Log.i("pt", "探索号请求成功");
                 //adapter.addAll(result);
             }
         });

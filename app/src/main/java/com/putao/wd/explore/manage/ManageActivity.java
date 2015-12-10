@@ -2,14 +2,19 @@ package com.putao.wd.explore.manage;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.controller.BasicFragment;
+import com.putao.wd.model.Management;
+import com.putao.wd.model.ManagementEdit;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -21,6 +26,7 @@ import butterknife.OnClick;
 public class ManageActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.btn_stopuse)
     Button btn_stopuse;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_manage;
@@ -73,11 +79,11 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
      * 获取管理数据
      * by yanghx
      */
-    private void getManagementList(){
+    private void getManagementList() {
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<ArrayList<Management>>(Management.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Management> result) {
-                Log.i("pt", "探索号管理查询请求成功");
+                Logger.i("探索号管理查询请求成功");
             }
         });
     }
@@ -86,14 +92,12 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
      * 保存管理数据
      * by yanghx
      */
-    private void sendManagementList(String edit_list){
+    private void sendManagementList(String edit_list) {
         networkRequest(ExploreApi.managementEdit(edit_list), new SimpleFastJsonCallback<ArrayList<ManagementEdit>>(ManagementEdit.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<ManagementEdit> result) {
-                Log.i("pt", "探索号管理查询请求成功");
+                Logger.i("探索号管理查询请求成功");
             }
         });
     }
-
-
 }

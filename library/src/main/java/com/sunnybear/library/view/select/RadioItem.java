@@ -26,6 +26,7 @@ public class RadioItem extends LinearLayout {
     private View mRootView;
     private TextView mTextView;
     private ImageView mImageView;
+    private View divider;
 
     public RadioItem(Context context) {
         this(context, null, 0);
@@ -56,6 +57,7 @@ public class RadioItem extends LinearLayout {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_radio_item, this);
         mTextView = (TextView) mRootView.findViewById(R.id.tv_name);
         mImageView = (ImageView) mRootView.findViewById(R.id.iv_select_icon);
+        divider = mRootView.findViewById(R.id.divider);
     }
 
     private void init() {
