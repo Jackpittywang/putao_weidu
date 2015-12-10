@@ -14,6 +14,7 @@ import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.dto.OrderDto;
 import com.putao.wd.model.Order;
+import com.putao.wd.model.Service;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -189,6 +190,19 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         networkRequest(OrderApi.getOrderLists("", ""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Order> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 售后列表
+     */
+    private void getServiceLists(){
+        networkRequest(OrderApi.getServiceLists(""), new SimpleFastJsonCallback<ArrayList<Service>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Service> result) {
                 Logger.d(result.toString());
             }
 
