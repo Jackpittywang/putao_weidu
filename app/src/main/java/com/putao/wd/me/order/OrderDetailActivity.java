@@ -9,12 +9,15 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderDto;
 import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.me.order.view.OrderShipmentListItem;
+import com.putao.wd.model.OrderDetail;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
 import java.util.List;
@@ -63,6 +66,20 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         initComponent();
         //刷新界面
         refreshView();
+    }
+
+
+    /**
+     * 取消订单
+     */
+    private void getOrderDetail(){
+        networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
+            @Override
+            public void onSuccess(String url, OrderDetail result) {
+                Logger.d(result.toString());
+            }
+
+        });
     }
 
     @Override
