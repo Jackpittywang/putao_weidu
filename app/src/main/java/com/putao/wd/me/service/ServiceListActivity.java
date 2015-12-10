@@ -33,9 +33,9 @@ import butterknife.Bind;
 public class ServiceListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.rv_service)
-    BasicRecyclerView rv_service;
+    BasicRecyclerView rv_service;//售后列表
     @Bind(R.id.rl_no_service)
-    RelativeLayout rl_no_service;//没有service时的布局
+    RelativeLayout rl_no_service;//没有售后时的布局
 
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;

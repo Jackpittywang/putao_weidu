@@ -9,6 +9,8 @@ import com.putao.wd.R;
 import com.putao.wd.dto.ServiceShipmentListItemDto;
 import com.sunnybear.library.util.Logger;
 
+import butterknife.Bind;
+
 
 /**
  * 售后订单详情页面所有包裹列表的按钮，点击进入包裹详情
@@ -16,11 +18,17 @@ import com.sunnybear.library.util.Logger;
  */
 public class ServiceShipmentListItem extends LinearLayout {
 
+    @Bind(R.id.tv_shipment_title)
+    TextView tv_shipment_title;
+    @Bind(R.id.tv_shipment_status)
+    TextView tv_shipment_status;
+    @Bind(R.id.v_bottom_line)
+    View v_bottom_line;
     private String TAG = ServiceShipmentListItem.class.getName();
 
-    private TextView tv_shipment_title;
-
-    private TextView tv_shipment_status;
+//    private TextView tv_shipment_title;
+//
+//    private TextView tv_shipment_status;
 
     private ServiceShipmentListItemDto serviceShipmentListItemDto;
 
@@ -29,8 +37,8 @@ public class ServiceShipmentListItem extends LinearLayout {
 
         LinearLayout.inflate(context, R.layout.activity_service_shipment_list_item, this);
 
-        tv_shipment_title = (TextView) findViewById(R.id.tv_shipment_title);
-        tv_shipment_status = (TextView) findViewById(R.id.tv_shipment_status);
+//        tv_shipment_title = (TextView) findViewById(R.id.tv_shipment_title);
+//        tv_shipment_status = (TextView) findViewById(R.id.tv_shipment_status);
 
         this.serviceShipmentListItemDto = serviceShipmentListItemDto;
         refreshView(serviceShipmentListItemDto);

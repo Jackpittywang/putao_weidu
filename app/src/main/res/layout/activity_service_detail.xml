@@ -25,6 +25,123 @@
             android:background="#ebebeb"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_details_as_steps_cover"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="47dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:layout_weight="1"
+                            android:background="#00ffffff" />
+
+                        <View
+                            android:id="@+id/v_status_waiting_pay"
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:layout_weight="1"
+                            android:background="#d5acf7" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_status_waiting_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_details_as_steps_01_nor" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/v_status_waiting_shipment"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="47dp"
+                        android:background="#d5acf7" />
+
+                    <ImageView
+                        android:id="@+id/img_status_waiting_shipment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_details_as_steps_02_nor" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/v_status_waiting_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="47dp"
+                        android:background="#d5acf7" />
+
+                    <ImageView
+                        android:id="@+id/img_status_waiting_sign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_details_as_steps_03_nor" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="47dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/v_status_sale_service"
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:layout_weight="1"
+                            android:background="#d5acf7" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:layout_weight="1"
+                            android:background="#00ffffff" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_status_sale_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_details_as_steps_04_nor" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,31 +186,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:gravity="right"
-                        android:text="------"
+                        android:text="退款申请审核中"
                         android:textColor="#ed5564"
                         android:textSize="@dimen/text_size_16sp" />
 
-                    <TextView
-                        android:id="@+id/tv_service_cost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/tv_service_status"
-                        android:gravity="right"
-                        android:text="¥ -----"
-                        android:textColor="#ed5564"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_service_cost_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_service_status"
-                        android:layout_toLeftOf="@+id/tv_service_cost"
-                        android:gravity="right"
-                        android:text="订单金额: "
-                        android:textColor="#313131"
-                        android:textSize="@dimen/text_size_14sp" />
 
                 </RelativeLayout>
             </RelativeLayout>
@@ -106,12 +202,12 @@
                 android:background="#ffffff"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/img_info_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/icon_20_16" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/img_info_icon"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/icon_20_16" />-->
 
                 <TextView
                     android:id="@+id/tv_service_info"
@@ -123,6 +219,34 @@
                     android:textColor="@color/text_color_646464"
                     android:textSize="@dimen/text_size_14sp" />
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="物流状态"
+                android:textColor="#646464"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_shipment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_no_shipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="还没有物流信息"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_16sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -338,27 +462,27 @@
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rl_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_bottom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true">-->
 
-        <Button
-            android:id="@+id/btn_service_cancel"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/btn_service_operation"
-            android:text="取消订单" />
+        <!--<Button-->
+            <!--android:id="@+id/btn_service_cancel"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_toLeftOf="@+id/btn_service_operation"-->
+            <!--android:text="取消订单" />-->
 
-        <Button
-            android:id="@+id/btn_service_operation"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:text="立即支付" />
+        <!--<Button-->
+            <!--android:id="@+id/btn_service_operation"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:text="立即支付" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 </RelativeLayout>
