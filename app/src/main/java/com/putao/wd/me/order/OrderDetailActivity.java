@@ -70,7 +70,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
 
 
     /**
-     * 取消订单
+     * 订单详情
      */
     private void getOrderDetail(){
         networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
