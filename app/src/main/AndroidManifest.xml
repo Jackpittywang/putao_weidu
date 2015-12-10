@@ -144,7 +144,10 @@
         <activity
             android:name=".store.cashier.CashierActivity"
             android:screenOrientation="portrait" />
-
+        <!--管理-->
+        <activity
+            android:name=".explore.manage.ManageActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
