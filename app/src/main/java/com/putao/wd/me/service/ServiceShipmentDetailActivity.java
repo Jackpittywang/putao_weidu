@@ -67,7 +67,12 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
         initComponent();
         //开始请求包裹信息;
 
+        //初始化物流信息
+        initShipmentData();
 
+    }
+
+    private void initShipmentData() {
         // 测试数据
         ServiceShipmentDto serviceShipmentDto = new ServiceShipmentDto();
         serviceShipmentDto.setIconUrl("http://bbs.putao.com/windid/attachment/avatar/000/66/22/662295_small.jpg");
@@ -82,7 +87,6 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
 
         //刷新界面
         refreshView(serviceShipmentDto);
-
     }
 
 
