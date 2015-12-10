@@ -8,12 +8,10 @@ import android.widget.RelativeLayout;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.OrderDto;
-import com.putao.wd.dto.OrderGoodsDto;
-import com.putao.wd.dto.OrderShipmentListItemDto;
-import com.putao.wd.me.order.OrderCommon;
-import com.putao.wd.me.order.OrderDetailActivity;
-import com.putao.wd.me.order.adapter.OrderListAdapter;
+import com.putao.wd.dto.ServiceDto;
+import com.putao.wd.dto.ServiceGoodsDto;
+import com.putao.wd.dto.ServiceShipmentListItemDto;
+import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -31,17 +29,17 @@ import butterknife.Bind;
  */
 public class ServiceListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
-    @Bind(R.id.rv_order)
-    BasicRecyclerView rv_order;
-    @Bind(R.id.rl_no_order)
-    RelativeLayout rl_no_order;//没有order时的布局
+    @Bind(R.id.rv_service)
+    BasicRecyclerView rv_service;
+    @Bind(R.id.rl_no_service)
+    RelativeLayout rl_no_service;//没有service时的布局
 
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
     private String TAG = ServiceListActivity.class.getName();
-    private OrderListAdapter adapter;
-    private List<OrderDto> orderList;
+    private ServiceListAdapter adapter;
+    private List<ServiceDto> serviceList;
 
     // 当前第几个被选中
     private int currentIndex = -1;
@@ -49,7 +47,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_sold_list;
+        return R.layout.activity_service_list;
     }
 
     @Override
@@ -57,28 +55,28 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         addNavigation();
 
         // 测试数据
-        orderList = new ArrayList<OrderDto>();
+        serviceList = new ArrayList<ServiceDto>();
 
         for (int i = 0; i < 10; i++) {
-            OrderDto order = new OrderDto();
-            order.setOrderNo(Math.random() + "");
-            order.setPurchaseTime(System.currentTimeMillis());
-            order.setTotalCost(569);
-            order.setCustomerName("葡萄科技");
-            order.setCustomerAddress("宜山路218号");
-            order.setCustomerPhone("13622222222");
-            if (i == 0) order.setOrderStatus(OrderCommon.ORDER_WAITING_PAY);
-            else if (i == 1) order.setOrderStatus(OrderCommon.ORDER_WAITING_SHIPMENT);
-            else if (i == 2) order.setOrderStatus(OrderCommon.ORDER_WAITING_SIGN);
-            else if (i == 3) order.setOrderStatus(OrderCommon.ORDER_SALE_SERVICE);
-            else if (i == 4) order.setOrderStatus(OrderCommon.ORDER_CANCLED);
-            else if (i == 5) order.setOrderStatus(OrderCommon.ORDER_CLOSED);
-            else order.setOrderStatus(OrderCommon.ORDER_WAITING_PAY);
+            ServiceDto service = new ServiceDto();
+            service.setServiceNo(Math.random() + "");
+            service.setPurchaseTime(System.currentTimeMillis());
+            service.setTotalCost(569);
+            service.setCustomerName("葡萄科技");
+            service.setCustomerAddress("宜山路218号");
+            service.setCustomerPhone("13622222222");
+            if (i == 0) service.setServiceStatus(ServiceCommon.ORDER_WAITING_PAY);
+            else if (i == 1) service.setServiceStatus(ServiceCommon.ORDER_WAITING_SHIPMENT);
+            else if (i == 2) service.setServiceStatus(ServiceCommon.ORDER_WAITING_SIGN);
+            else if (i == 3) service.setServiceStatus(ServiceCommon.ORDER_SALE_SERVICE);
+            else if (i == 4) service.setServiceStatus(ServiceCommon.ORDER_CANCLED);
+            else if (i == 5) service.setServiceStatus(ServiceCommon.ORDER_CLOSED);
+            else service.setServiceStatus(ServiceCommon.ORDER_WAITING_PAY);
 
             int num = (int) (Math.random() * 3);
-            List<OrderGoodsDto> goodsList = new ArrayList<OrderGoodsDto>();
+            List<ServiceGoodsDto> goodsList = new ArrayList<ServiceGoodsDto>();
             for (int j = 0; j < num; j++) {
-                OrderGoodsDto goods = new OrderGoodsDto();
+                ServiceGoodsDto goods = new ServiceGoodsDto();
                 goods.setImageUrl("http://bbs.putao.com/windid/attachment/avatar/000/66/22/662295_small.jpg");
                 goods.setNumber((int) Math.round(Math.random() * 10) + 1);
                 goods.setPrice((int) Math.round(Math.random() * 100) + 1);
@@ -88,44 +86,44 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                 goodsList.add(goods);
 
             }
-            order.setGoodsList(goodsList);
+            service.setGoodsList(goodsList);
 
-            List<OrderShipmentListItemDto> shipmentList = new ArrayList<OrderShipmentListItemDto>();
+            List<ServiceShipmentListItemDto> shipmentList = new ArrayList<ServiceShipmentListItemDto>();
             num = (int) (Math.random() * 3) + 1;
             Logger.i(TAG, "package num is:" + num);
             for (int j = 0; j < num; j++) {
-                OrderShipmentListItemDto orderShipmentListItemDto = new OrderShipmentListItemDto();
-                orderShipmentListItemDto.setTitle("包裹" + j);
-                orderShipmentListItemDto.setStatus((int) (Math.random() * 7));
-                orderShipmentListItemDto.setShipmentId(System.currentTimeMillis() + "");
-                shipmentList.add(orderShipmentListItemDto);
+                ServiceShipmentListItemDto serviceShipmentListItemDto = new ServiceShipmentListItemDto();
+                serviceShipmentListItemDto.setTitle("包裹" + j);
+                serviceShipmentListItemDto.setStatus((int) (Math.random() * 7));
+                serviceShipmentListItemDto.setShipmentId(System.currentTimeMillis() + "");
+                shipmentList.add(serviceShipmentListItemDto);
             }
-            order.setShipmentList(shipmentList);
+            service.setShipmentList(shipmentList);
 
-            orderList.add(order);
+            serviceList.add(service);
 
         }
         // 测试数据结束
-        if (orderList == null || orderList.size() == 0) {
-            rl_no_order.setVisibility(View.VISIBLE);
-            rv_order.setVisibility(View.INVISIBLE);
+        if (serviceList == null || serviceList.size() == 0) {
+            rl_no_service.setVisibility(View.VISIBLE);
+            rv_service.setVisibility(View.INVISIBLE);
             return;
         } else {
-            rl_no_order.setVisibility(View.INVISIBLE);
-            rv_order.setVisibility(View.VISIBLE);
+            rl_no_service.setVisibility(View.INVISIBLE);
+            rv_service.setVisibility(View.VISIBLE);
         }
 
-        adapter = new OrderListAdapter(mContext, orderList);
-        rv_order.setAdapter(adapter);
+        adapter = new ServiceListAdapter(mContext, serviceList);
+        rv_service.setAdapter(adapter);
         //点击item
-        rv_order.setOnItemClickListener(new OnItemClickListener<OrderDto>() {
+        rv_service.setOnItemClickListener(new OnItemClickListener<ServiceDto>() {
 
             @Override
-            public void onItemClick(OrderDto orderDto, int position) {
+            public void onItemClick(ServiceDto serviceDto, int position) {
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(OrderDetailActivity.KEY_ORDER, orderDto);
-                startActivity(OrderDetailActivity.class, bundle);
+                bundle.putSerializable(ServiceDetailActivity.KEY_ORDER, serviceDto);
+                startActivity(ServiceDetailActivity.class, bundle);
             }
         });
 

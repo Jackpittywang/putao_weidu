@@ -29,7 +29,7 @@
 
         <!--有订单时-->
         <com.sunnybear.library.view.recycler.BasicRecyclerView
-            android:id="@+id/rv_order"
+            android:id="@+id/rv_service"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             auto:divider_color="#ebebeb"
@@ -40,7 +40,7 @@
 
         <!--没有订单时-->
         <RelativeLayout
-            android:id="@+id/rl_no_order"
+            android:id="@+id/rl_no_service"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#e1ffffff"

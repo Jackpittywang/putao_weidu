@@ -46,7 +46,7 @@ public class ServiceCommon {
      * @param status
      * @return
      */
-    public static String getOrderStatusShowString(int status) {
+    public static String getServiceStatusShowString(int status) {
         switch (status) {
             case ORDER_WAITING_PAY: {
                 return "等付款";
