@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_order_steps_01_nor" />
+                        android:src="@drawable/img_details_as_steps_01_nor" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_order_steps_02_nor" />
+                        android:src="@drawable/img_details_as_steps_02_nor" />
 
                 </RelativeLayout>
 
@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_order_steps_03_nor" />
+                        android:src="@drawable/img_details_as_steps_03_nor" />
 
                 </RelativeLayout>
 
@@ -137,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_order_steps_04_nor" />
+                        android:src="@drawable/img_details_as_steps_04_nor" />
 
                 </RelativeLayout>
             </LinearLayout>
