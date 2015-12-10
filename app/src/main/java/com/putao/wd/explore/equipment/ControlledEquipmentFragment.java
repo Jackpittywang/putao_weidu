@@ -7,6 +7,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
+import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import butterknife.Bind;
  * 探索号-受控设备
  * Created by wangou on 2015/12/2.
  */
-public class ControlledEquipmentFragment extends PTWDFragment implements View.OnClickListener {
+public class ControlledEquipmentFragment extends BasicFragment implements View.OnClickListener{
     @Bind(R.id.brv_equipment)
     BasicRecyclerView brv_equipment;
 
@@ -29,7 +30,7 @@ public class ControlledEquipmentFragment extends PTWDFragment implements View.On
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavigation();
+
         if(initDataTest().size()!=0) {
             ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mActivity, initDataTest());
             brv_equipment.setAdapter(controlledEquipmentAdatper);
