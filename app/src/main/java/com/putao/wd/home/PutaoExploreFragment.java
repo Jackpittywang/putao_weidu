@@ -7,6 +7,7 @@ import android.widget.Switch;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ExploreItem;
+import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -88,6 +89,10 @@ public class PutaoExploreFragment extends PTWDFragment {
         return list;
     }
 
+    @Override
+    public void onRightAction() {
+        startActivity(ManageActivity.class);
+    }
 }
 
 
