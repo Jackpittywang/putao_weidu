@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.explore.product.ControlledProductActivity;
-import com.putao.wd.explore.usetime.UseTimeEveryTimeActivity;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.order.OrderListActivity;
