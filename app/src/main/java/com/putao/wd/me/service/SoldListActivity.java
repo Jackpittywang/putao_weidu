@@ -1,4 +1,4 @@
-package com.putao.wd.me.sale;
+package com.putao.wd.me.service;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,11 +15,9 @@ import com.putao.wd.me.order.OrderCommon;
 import com.putao.wd.me.order.OrderDetailActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
-import com.sunnybear.library.view.select.TitleItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,7 @@ import butterknife.Bind;
  * 售后列表
  * Created by wangou on 15/12/7.
  */
-public class SaleListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class SoldListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.rv_order)
     BasicRecyclerView rv_order;
@@ -41,7 +39,7 @@ public class SaleListActivity extends PTWDActivity<GlobalApplication> implements
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
-    private String TAG = SaleListActivity.class.getName();
+    private String TAG = SoldListActivity.class.getName();
     private OrderListAdapter adapter;
     private List<OrderDto> orderList;
 
@@ -51,7 +49,7 @@ public class SaleListActivity extends PTWDActivity<GlobalApplication> implements
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_sale_list;
+        return R.layout.activity_sold_list;
     }
 
     @Override
