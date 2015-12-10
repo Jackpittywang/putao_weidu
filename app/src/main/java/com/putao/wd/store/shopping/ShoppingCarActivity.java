@@ -102,6 +102,19 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
+     * 更改商品规格购物车
+     */
+    private void cartChange(){
+        networkRequest(StoreApi.cartChange("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
      * 删除购物车
      */
     private void cartDelete(){
