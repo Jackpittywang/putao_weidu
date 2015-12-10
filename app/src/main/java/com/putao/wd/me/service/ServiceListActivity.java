@@ -7,11 +7,14 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.dto.ServiceGoodsDto;
 import com.putao.wd.dto.ServiceShipmentListItemDto;
 import com.putao.wd.me.service.adapter.ServiceListAdapter;
+import com.putao.wd.model.Service;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -130,6 +133,18 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         refreshViewByType(0);
     }
 
+    /**
+     * 售后列表
+     */
+    private void getServiceLists(){
+        networkRequest(OrderApi.getServiceLists(""), new SimpleFastJsonCallback<ArrayList<Service>>(Service.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Service> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
     @Override
     protected String[] getRequestUrls() {
         return new String[0];

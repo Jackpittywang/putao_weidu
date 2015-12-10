@@ -86,18 +86,6 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
 
     }
 
-    /**
-     * 订单物流信息
-     */
-    private void getExpressOrder(){
-        networkRequest(OrderApi.getExpressOrder(""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
-                Logger.d(result.toString());
-            }
-
-        });
-    }
 
     /**
      * 售后物流信息

@@ -22,6 +22,7 @@ import com.putao.wd.me.order.OrderShipmentDetailActivity;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.me.order.view.OrderShipmentListItem;
 import com.putao.wd.model.OrderDetail;
+import com.putao.wd.model.Service;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
@@ -148,12 +149,12 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 
 
     /**
-     * 订单详情
+     * 售后详情
      */
-    private void getOrderDetail() {
-        networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
+    private void getServiceDetail() {
+        networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<Service>(Service.class, loading) {
             @Override
-            public void onSuccess(String url, OrderDetail result) {
+            public void onSuccess(String url, Service result) {
                 Logger.d(result.toString());
             }
 
