@@ -56,7 +56,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         adapter = new ShoppingCarAdapter(mContext, cars);
         rv_cars.setAdapter(adapter);
 
-        getCart();
+        //getCart();
+        cartAdd();
     }
 
     /**
@@ -72,6 +73,18 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         });
     }
 
+    /**
+     * 添加购物车
+     */
+    private void cartAdd(){
+        networkRequest(StoreApi.cartAdd("",""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
 
     private void addListener() {
         btn_sel_all.setOnSwitchClickListener(this);
