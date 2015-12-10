@@ -200,7 +200,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
      * 售后列表
      */
     private void getServiceLists(){
-        networkRequest(OrderApi.getServiceLists(""), new SimpleFastJsonCallback<ArrayList<Service>>(Order.class, loading) {
+        networkRequest(OrderApi.getServiceLists(""), new SimpleFastJsonCallback<ArrayList<Service>>(Service.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Service> result) {
                 Logger.d(result.toString());
