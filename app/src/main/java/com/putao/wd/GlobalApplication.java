@@ -15,7 +15,9 @@ import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
-import com.sunnybear.library.util.SDCardUtil;
+import com.sunnybear.library.util.SDCardUtils;
+
+import java.io.File;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -104,8 +106,13 @@ public class GlobalApplication extends BasicApplication {
     }
 
     @Override
+    protected String getSdCardPath() {
+        return SDCardUtils.getSDCardPath() + File.separator + getLogTag();
+    }
+
+    @Override
     protected String getNetworkCacheDirectoryPath() {
-        return SDCardUtil.getSDCardPath();
+        return SDCardUtils.getSDCardPath();
     }
 
     @Override

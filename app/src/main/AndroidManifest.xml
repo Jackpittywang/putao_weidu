@@ -195,7 +195,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 地区选择 -->
         <service android:name=".me.address.CityService" />
-
+        <!--表情解析-->
+        <service android:name=".util.EmojiService" />
         <activity android:name=".TestActivity" />
     </application>
 </manifest>

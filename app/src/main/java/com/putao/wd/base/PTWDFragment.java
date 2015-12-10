@@ -5,6 +5,7 @@ import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.FastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.NavigationBar;
 
 import java.io.Serializable;
@@ -29,6 +30,7 @@ public abstract class PTWDFragment<App extends BasicApplication> extends BasicFr
         String url = request.urlString();
         T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
         if (cacheData != null) {
+            Logger.d("缓存请求成功,结果=" + cacheData.toString());
             callback.onSuccess(url, cacheData);
             return;
         }

@@ -2,17 +2,17 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.ActionNewsItem;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.putao.wd.home.adapter.StartBannerAdapater;
+import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
 import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -24,9 +24,7 @@ import com.sunnybear.library.view.viewpager.BannerLayout;
 import com.sunnybear.library.view.viewpager.BannerViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -35,9 +33,6 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.TitleItemSelectedListener {
-    //    private static final int[] resIds = new int[]{
-//            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
-//    };
     @Bind(R.id.sticky_layout)
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.ptl_refresh)
@@ -54,6 +49,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     private ActionNewsAdapter adapter;
     private boolean isStop;//广告栏是否被停止
 
+    private int currentPage = 0;//当前页码
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_start_circle;
@@ -64,12 +61,13 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         addNavigation();
         setMainTitleColor(Color.WHITE);
         sticky_layout.canScrollView();
-        adapter = new ActionNewsAdapter(mActivity, getTestData());
+        adapter = new ActionNewsAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         refresh();
         addListener();
 
         getBannerList();
+        getActionsList(currentPage, false, false);
     }
 
     /**
@@ -94,18 +92,43 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     }
 
     /**
+     * 获得活动列表
+     *
+     * @param page       分页
+     * @param isRefresh  是否刷新
+     * @param isLoadMore 是否加载更多
+     */
+    private void getActionsList(int page, final boolean isRefresh, final boolean isLoadMore) {
+        networkRequestCache(StartApi.getActionList(String.valueOf(page)),
+                new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<ActionNews> result) {
+                        Logger.d(result.toString());
+                        if (isRefresh) {
+                            adapter.replaceAll(result);
+                            ptl_refresh.refreshComplete();
+                            currentPage = 0;
+                        }
+                        adapter.addAll(result);
+                        currentPage++;
+                        if (isLoadMore)
+                            if (result.size() >= 10)
+                                rv_content.loadMoreComplete();
+                            else
+                                rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
      * 刷新方法
      */
     private void refresh() {
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ptl_refresh.refreshComplete();
-                    }
-                }, 3 * 1000);
+                getActionsList(0, true, false);
             }
         });
     }
@@ -117,20 +140,12 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-//                adapter.addAll(getTestData());
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.addAll(getTestData());
-                        rv_content.loadMoreComplete();
-//                        rv_content.noMoreLoading();
-                    }
-                }, 3 * 1000);
+                getActionsList(currentPage, false, true);
             }
         });
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
+        rv_content.setOnItemClickListener(new OnItemClickListener<ActionNews>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
+            public void onItemClick(ActionNews actionNewsList, int position) {
                 startActivity(CommentActivity.class);
             }
         });
@@ -149,24 +164,6 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     public void onStop() {
         super.onStop();
         isStop = bl_banner.stopAutoScroll();
-    }
-
-    private List<ActionNewsItem> getTestData() {
-        List<ActionNewsItem> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            ActionNewsItem actionNewsItem = new ActionNewsItem();
-            actionNewsItem.setId((i + 1) + "");
-            actionNewsItem.setTitle("这是第" + (i + 1) + "个标题");
-            actionNewsItem.setIntro("这是第" + (i + 1) + "个简介");
-            actionNewsItem.setIsAction(i % 2 == 0);
-            actionNewsItem.setType(i % 2 == 0 ? "活动" : "新闻");
-            actionNewsItem.setAddress("上海.莘庄.凯德龙之梦");
-            actionNewsItem.setTime("2015.12.02");
-            actionNewsItem.setJoinCount("100000");
-            actionNewsItem.setImgUrl("http://i1.mopimg.cn/img/tt/2015-11/551/20151124175324870.jpg790x600.jpg");
-            list.add(actionNewsItem);
-        }
-        return list;
     }
 
     @Override

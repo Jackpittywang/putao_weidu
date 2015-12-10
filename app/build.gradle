@@ -12,10 +12,22 @@ android {
         versionCode 1
         versionName "1.0.0"
     }
+    signingConfigs {
+        release {
+            storeFile file("../keystore.jks")
+            storePassword "putao123"
+            keyAlias "putao"
+            keyPassword "putao123"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     //源码集
