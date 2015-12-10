@@ -14,6 +14,8 @@ import com.sunnybear.library.util.hawk.LogLevel;
 import com.sunnybear.library.view.image.ImagePipelineConfigFactory;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import java.util.Map;
+
 import butterknife.ButterKnife;
 import de.greenrobot.dao.query.QueryBuilder;
 
@@ -24,7 +26,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 public abstract class BasicApplication extends Application {
     private static final String KEY_APP_ID = "app_id";
     private static Context mContext;
-//    private static RefWatcher mRefWatcher;//内存泄露检查
+    //    private static RefWatcher mRefWatcher;//内存泄露检查
     private static OkHttpClient mOkHttpClient;//OkHttp
     private static int maxAge;//网络缓存最大时间
 
@@ -32,11 +34,23 @@ public abstract class BasicApplication extends Application {
 
     public static String app_id;
     public static boolean isDebug;
+    public static String sdCardPath;//SdCard路径
+    public static Map<String, String> emojis;//表情包映射
+
+    public static Map<String, String> getEmojis() {
+        return emojis;
+    }
+
+    public static void setEmojis(Map<String, String> emojis) {
+        BasicApplication.emojis = emojis;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        //sdCard缓存路径
+        sdCardPath = getSdCardPath();
         //leakCanary初始化
 //        mRefWatcher = LeakCanary.install(this);
         //ButterKnife的Debug模式
@@ -111,6 +125,13 @@ public abstract class BasicApplication extends Application {
      * @return 调试日志标签名
      */
     protected abstract String getLogTag();
+
+    /**
+     * 设置sdCard路径
+     *
+     * @return sdCard路径
+     */
+    protected abstract String getSdCardPath();
 
     /**
      * 网络缓存文件夹路径
