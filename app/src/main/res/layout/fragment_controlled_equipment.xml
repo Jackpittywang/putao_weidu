@@ -5,15 +5,15 @@
     android:orientation="vertical"
     android:background="#ebebeb"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    tools:context="com.putao.wd.explore.equipment.ControlledEquipmentActivity">
+    tools:context="com.putao.wd.explore.equipment.ControlledEquipmentFragment">
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="受控产品"/>
+        auto:nav_main_title="受控设备"/>
     <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@+id/brv_controlled_product"
+        android:id="@+id/brv_equipment"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.EquipmentItem;
 import com.putao.wd.explore.equipment.adapter.ControlledEquipmentAdatper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -18,20 +18,20 @@ import butterknife.Bind;
  * 探索号-受控设备
  * Created by wangou on 2015/12/2.
  */
-public class ControlledEquipmentActivity extends PTWDActivity implements View.OnClickListener {
+public class ControlledEquipmentFragment extends PTWDFragment implements View.OnClickListener {
     @Bind(R.id.brv_equipment)
     BasicRecyclerView brv_equipment;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_controlled_equipment;
+        return R.layout.fragment_controlled_equipment;
     }
 
     @Override
-    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+    public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         if(initDataTest().size()!=0) {
-            ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mContext, initDataTest());
+            ControlledEquipmentAdatper controlledEquipmentAdatper = new ControlledEquipmentAdatper(mActivity, initDataTest());
             brv_equipment.setAdapter(controlledEquipmentAdatper);
         }
     }
