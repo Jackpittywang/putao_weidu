@@ -67,58 +67,50 @@ public class ExploreAdapter extends BasicAdapter<ExploreItem, BasicViewHolder> {
 
     @Override
     public void onBindItem(BasicViewHolder holder, ExploreItem exploreItem, int position) {
-        bindTopView(holder, exploreItem, position);
-        bindOtherView(holder, exploreItem, position);
-    }
-
-    /**
-     *Item头部显示控制
-     */
-    private void bindTopView(BasicViewHolder holder, ExploreItem exploreItem, int position) {
-        if (position != 0) {//和上一条比较
-            ExploreItem preExplore = getItem(position - 1);
-            int abs = DateUtils.getDaysUnAbs(preExplore.getDate(), exploreItem.getDate());
-            if (holder instanceof ExploerViewHolder) {
-                ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-                if (abs == 0){
-                    viewHolder.ll_explore_top.setVisibility(View.GONE);
-                }else{
-                    viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                    viewHolder.tv_date.setText(exploreItem.getDate());
-                }
-            } else if (holder instanceof ExploerMixedViewHolder) {
-                ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
-                if (abs == 0){
-                    viewHolder.ll_explore_top.setVisibility(View.GONE);
-                }else{
-                    viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                    viewHolder.tv_date.setText(exploreItem.getDate());
-                }
-            }
-        }else {
-            if (holder instanceof ExploerViewHolder) {
-                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
-                ((ExploerViewHolder) holder).tv_date.setText(exploreItem.getDate());
-            }else if (holder instanceof ExploerMixedViewHolder){
-                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
-                ((ExploerMixedViewHolder) holder).tv_date.setText(exploreItem.getDate());
-            }
-        }
-    }
-
-    /**
-     * Item其他控件显示
-     */
-    public void bindOtherView(BasicViewHolder holder, ExploreItem exploreItem, int position) {
         if (holder instanceof ExploerViewHolder) {
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
+            if (position != 0) {
+                doCompare(viewHolder, exploreItem, position);
+            } else {
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                viewHolder.tv_date.setText(exploreItem.getDate());
+            }
             viewHolder.tv_skill_name.setText(exploreItem.getSkill_name());
         } else if (holder instanceof ExploerMixedViewHolder) {
             ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
+            if (position != 0) {
+                doCompare(viewHolder, exploreItem, position);
+            } else {
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                viewHolder.tv_date.setText(exploreItem.getDate());
+            }
             viewHolder.tv_skill_name.setText(exploreItem.getSkill_name());
             viewHolder.tv_content.setText(exploreItem.getContent());
             int iconNum = exploreItem.getIconNum();
             showPiture(viewHolder, iconNum);
+        }
+    }
+
+    /**
+     * 日期比较,控制头部显示
+     */
+    private void doCompare(BasicViewHolder holder, ExploreItem exploreItem, int position) {
+        ExploreItem preExplore = getItem(position - 1);
+        int abs = DateUtils.getDaysUnAbs(preExplore.getDate(), exploreItem.getDate());
+        if (abs == 0) {
+            if (holder instanceof ExploerViewHolder) {
+                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
+            } else if (holder instanceof ExploerMixedViewHolder) {
+                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
+            }
+        } else {
+            if (holder instanceof ExploerViewHolder) {
+                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
+                ((ExploerViewHolder) holder).tv_date.setText(exploreItem.getDate());
+            } else if (holder instanceof ExploerMixedViewHolder) {
+                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
+                ((ExploerMixedViewHolder) holder).tv_date.setText(exploreItem.getDate());
+            }
         }
     }
 
