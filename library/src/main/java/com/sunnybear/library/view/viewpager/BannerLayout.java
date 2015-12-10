@@ -85,4 +85,13 @@ public class BannerLayout extends RelativeLayout {
     public boolean stopAutoScroll() {
         return mViewPager.stopAutoScroll();
     }
+
+    /**
+     * 设置缓存页面数
+     *
+     * @param limit 缓存页面数
+     */
+    public void setOffscreenPageLimit(int limit) {
+        mViewPager.setOffscreenPageLimit(limit);
+    }
 }

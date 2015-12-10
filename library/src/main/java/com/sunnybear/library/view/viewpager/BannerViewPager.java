@@ -7,8 +7,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-import com.sunnybear.library.util.Logger;
-
 /**
  * 广告ViewPager
  * Created by guchenkai on 2015/12/9.
@@ -41,7 +39,7 @@ public class BannerViewPager extends ViewPager {
             @Override
             public void handleMessage(Message msg) {
                 int index = currentItem % mSize;
-                Logger.d(index + "");
+//                Logger.d(index + "");
                 if (index == 0)
                     setCurrentItem(index, false);
                 else
