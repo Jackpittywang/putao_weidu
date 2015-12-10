@@ -82,8 +82,8 @@ public class PutaoStoreFragment extends PTWDFragment {
             }
         });
         refresh();
-        addListener();
-        getStoreHome();
+        //addListener();
+        //getStoreHome();
     }
 
     /**
