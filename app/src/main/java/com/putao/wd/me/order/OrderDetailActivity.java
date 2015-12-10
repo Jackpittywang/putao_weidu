@@ -3,8 +3,11 @@ package com.putao.wd.me.order;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
@@ -22,6 +25,8 @@ import com.sunnybear.library.util.Logger;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -31,22 +36,94 @@ import butterknife.OnClick;
 public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     public static final String KEY_ORDER = "order";
+    @Bind(R.id.v_status_waiting_pay)
+    View v_status_waiting_pay;
+    @Bind(R.id.img_status_waiting_pay)
+    ImageView img_status_waiting_pay;
+    @Bind(R.id.v_status_waiting_shipment)
+    View v_status_waiting_shipment;
+    @Bind(R.id.img_status_waiting_shipment)
+    ImageView img_status_waiting_shipment;
+    @Bind(R.id.v_status_waiting_sign)
+    View v_status_waiting_sign;
+    @Bind(R.id.img_status_waiting_sign)
+    ImageView img_status_waiting_sign;
+    @Bind(R.id.v_status_sale_service)
+    View v_status_sale_service;
+    @Bind(R.id.img_status_sale_service)
+    ImageView img_status_sale_service;
+    @Bind(R.id.tv_order_no_text)
+    TextView tv_order_no_text;
+    @Bind(R.id.tv_order_no)
+    TextView tv_order_no;
+    @Bind(R.id.tv_order_purchase_time)
+    TextView tv_order_purchase_time;
+    @Bind(R.id.tv_order_status)
+    TextView tv_order_status;
+    @Bind(R.id.tv_order_cost)
+    TextView tv_order_cost;
+    @Bind(R.id.tv_order_cost_text)
+    TextView tv_order_cost_text;
+    @Bind(R.id.img_info_icon)
+    ImageView img_info_icon;
+    @Bind(R.id.tv_order_info)
+    TextView tv_order_info;
+    @Bind(R.id.rl_order_info)
+    RelativeLayout rl_order_info;
+    @Bind(R.id.tv_no_shipment)
+    TextView tv_no_shipment;
+    @Bind(R.id.ll_shipment)
+    LinearLayout ll_shipment;
+    @Bind(R.id.tv_customer_name)
+    TextView tv_customer_name;
+    @Bind(R.id.tv_customer_address)
+    TextView tv_customer_address;
+    @Bind(R.id.tv_customer_phone)
+    TextView tv_customer_phone;
+    @Bind(R.id.tv_pay_method)
+    TextView tv_pay_method;
+    @Bind(R.id.tv_shipment_method)
+    TextView tv_shipment_method;
+    @Bind(R.id.tv_receipt_type)
+    TextView tv_receipt_type;
+    @Bind(R.id.tv_receipt_head)
+    TextView tv_receipt_head;
+    @Bind(R.id.tv_receipt_content)
+    TextView tv_receipt_content;
+    @Bind(R.id.ll_order_info)
+    LinearLayout ll_order_info;
+    @Bind(R.id.tv_goods_title)
+    TextView tv_goods_title;
+    @Bind(R.id.ll_goods)
+    LinearLayout ll_goods;
+    @Bind(R.id.tv_goods_total_number)
+    TextView tv_goods_total_number;
+    @Bind(R.id.tv_cost_text)
+    TextView tv_cost_text;
+    @Bind(R.id.tv_cost)
+    TextView tv_cost;
+    @Bind(R.id.tv_shipment_fee_text)
+    TextView tv_shipment_fee_text;
+    @Bind(R.id.tv_shipment_fee)
+    TextView tv_shipment_fee;
+    @Bind(R.id.tv_total_cost_text)
+    TextView tv_total_cost_text;
+    @Bind(R.id.tv_total_cost)
+    TextView tv_total_cost;
+    @Bind(R.id.rl_fee_info)
+    RelativeLayout rl_fee_info;
+    @Bind(R.id.ll_goods_info)
+    LinearLayout ll_goods_info;
+    @Bind(R.id.sv_main)
+    ScrollView sv_main;
+    @Bind(R.id.btn_order_cancel)
+    Button btn_order_cancel;
+    @Bind(R.id.btn_order_operation)
+    Button btn_order_operation;
+    @Bind(R.id.rl_bottom)
+    RelativeLayout rl_bottom;
 
     private OrderDto orderDto;
-    private TextView tv_order_no;
-    private TextView tv_order_purchase_time;
-    private TextView tv_order_status;
-    private TextView tv_order_cost;
-    private TextView tv_order_info;
-    private TextView tv_customer_name;
-    private TextView tv_customer_address;
-    private TextView tv_customer_phone;
-    private TextView tv_shipment_fee;
-    private TextView tv_total_cost;
-    private LinearLayout ll_goods;
-    private TextView tv_goods_total_number;
-    private LinearLayout ll_shipment;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_detail;
@@ -72,7 +149,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 订单详情
      */
-    private void getOrderDetail(){
+    private void getOrderDetail() {
         networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
             @Override
             public void onSuccess(String url, OrderDetail result) {
@@ -108,19 +185,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     private void initComponent() {
-        tv_order_no = (TextView) findViewById(R.id.tv_order_no);
-        tv_order_purchase_time = (TextView) findViewById(R.id.tv_order_purchase_time);
-        tv_order_status = (TextView) findViewById(R.id.tv_order_status);
-        tv_order_cost = (TextView) findViewById(R.id.tv_order_cost);
-        tv_order_info = (TextView) findViewById(R.id.tv_order_info);
-        tv_customer_name = (TextView) findViewById(R.id.tv_customer_name);
-        tv_customer_address = (TextView) findViewById(R.id.tv_customer_address);
-        tv_customer_phone = (TextView) findViewById(R.id.tv_customer_phone);
-        tv_shipment_fee = (TextView) findViewById(R.id.tv_shipment_fee);
-        tv_total_cost = (TextView) findViewById(R.id.tv_total_cost);
-        ll_goods = (LinearLayout) findViewById(R.id.ll_goods);
-        tv_goods_total_number = (TextView) findViewById(R.id.tv_goods_total_number);
-        ll_shipment = (LinearLayout) findViewById(R.id.ll_shipment);
+
     }
 
     private void refreshView() {
