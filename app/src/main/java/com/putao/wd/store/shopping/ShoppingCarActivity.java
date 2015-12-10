@@ -5,9 +5,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
+import com.putao.wd.model.Cart;
+import com.putao.wd.model.ProductNorms;
 import com.putao.wd.store.adapter.ShoppingCarAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -50,7 +55,23 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         List<ShoppingCar> cars = sort(getTestData());
         adapter = new ShoppingCarAdapter(mContext, cars);
         rv_cars.setAdapter(adapter);
+
+        getCart();
     }
+
+    /**
+     * 查看购物车
+     */
+    private void getCart(){
+        networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<Cart>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, Cart result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
 
     private void addListener() {
         btn_sel_all.setOnSwitchClickListener(this);
