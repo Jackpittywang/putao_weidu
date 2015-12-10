@@ -5,9 +5,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
+import com.putao.wd.model.Cart;
+import com.putao.wd.model.ProductNorms;
 import com.putao.wd.store.adapter.ShoppingCarAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -50,6 +55,76 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         List<ShoppingCar> cars = sort(getTestData());
         adapter = new ShoppingCarAdapter(mContext, cars);
         rv_cars.setAdapter(adapter);
+
+        //getCart();
+        //cartAdd();
+        //cartEdit();
+        //cartDelete();
+    }
+
+    /**
+     * 查看购物车
+     */
+    private void getCart(){
+        networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<Cart>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, Cart result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 添加购物车
+     */
+    private void cartAdd(){
+        networkRequest(StoreApi.cartAdd("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 编辑购物车
+     */
+    private void cartEdit(){
+        networkRequest(StoreApi.cartEdit("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 更改商品规格购物车
+     */
+    private void cartChange(){
+        networkRequest(StoreApi.cartChange("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 删除购物车
+     */
+    private void cartDelete(){
+        networkRequest(StoreApi.cartDelete("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
     }
 
     private void addListener() {

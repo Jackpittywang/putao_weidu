@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#e1ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#e1ffffff">
+
+        <TextView
+            android:id="@+id/tv_service_no_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单号"
+            android:textSize="@dimen/text_size_14sp"
+            android:textColor="#313131"
+            />
+
+        <TextView
+            android:id="@+id/tv_service_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_service_no_text"
+            android:text="----------"
+            android:textColor="#313131"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/tv_service_purchase_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_service_no"
+            android:textColor="@color/text_color_gray"
+            android:text="---------- --:--"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <TextView
+            android:id="@+id/tv_service_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="----"
+            android:textSize="@dimen/text_size_16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#e1ffffff"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f5f5f5"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_total_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="#313131"
+            android:text="--件商品 合计：---" />
+
+        <TextView
+            android:id="@+id/tv_shipment_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="#959595"
+            android:text="含运费：---" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_foot"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <Button
+            android:id="@+id/btn_service_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/btn_service_operation"
+            android:layout_toStartOf="@+id/btn_service_operation"
+            android:text="取消订单" />
+
+        <Button
+            android:id="@+id/btn_service_operation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="订单操作" />
+    </RelativeLayout>
+
+</LinearLayout>

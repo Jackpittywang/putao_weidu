@@ -76,7 +76,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
      * 获取广告列表
      */
     private void getBannerList() {
-        networkRequest(StartApi.getBannerList()
+        networkRequestCache(StartApi.getBannerList()
                 , new SimpleFastJsonCallback<ArrayList<Banner>>(Banner.class, loading) {
             @Override
             public void onSuccess(String url, final ArrayList<Banner> result) {

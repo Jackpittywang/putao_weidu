@@ -1,4 +1,4 @@
-package com.putao.wd.me.order;
+package com.putao.wd.me.service;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,23 +17,25 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderDto;
 import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.dto.OrderShipmentListItemDto;
+import com.putao.wd.me.order.OrderCommon;
+import com.putao.wd.me.order.OrderShipmentDetailActivity;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.me.order.view.OrderShipmentListItem;
 import com.putao.wd.model.OrderDetail;
+import com.putao.wd.model.Service;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 订单详情
- * Created by yanguoqiang on 15/11/29.
+ * Created by wangou on 15/11/29.
  */
-public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     public static final String KEY_ORDER = "order";
     @Bind(R.id.v_status_waiting_pay)
@@ -126,7 +128,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     private OrderDto orderDto;
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_order_detail;
+        return R.layout.activity_service_detail;
     }
 
     @Override
@@ -147,12 +149,12 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
 
 
     /**
-     * 订单详情
+     * 售后详情
      */
-    private void getOrderDetail() {
-        networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
+    private void getServiceDetail() {
+        networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<Service>(Service.class, loading) {
             @Override
-            public void onSuccess(String url, OrderDetail result) {
+            public void onSuccess(String url, Service result) {
                 Logger.d(result.toString());
             }
 

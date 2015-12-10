@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.CityDBManager;
@@ -16,9 +17,12 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.fragment.DistrictFragment;
+import com.putao.wd.model.Address;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
@@ -85,6 +89,45 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             initView();
         }
         addListener();
+    }
+
+
+    /**
+     * 添加收货地址
+     */
+    private void addressAdd(){
+        networkRequest(OrderApi.addressAdd("realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, Address result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 更新收货地址
+     */
+    private void addressUpdate(){
+        networkRequest(OrderApi.addressUpdate("address_id","realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, Address result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+    /**
+     * 删除收货地址
+     */
+    private void addressDelete(){
+        networkRequest(OrderApi.addressDelete(""), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, Address result) {
+                Logger.d(result.toString());
+            }
+
+        });
     }
 
     /**
