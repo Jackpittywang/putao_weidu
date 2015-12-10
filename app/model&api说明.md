@@ -196,6 +196,21 @@
             方法名:OrderApi.getServiceLists();
             接收model:Service(售后);
             返回类型:array;
+        (9).售后详情
+            url:OrderApi.URL_SERVICE_DETAIL;
+            方法名:OrderApi.getServiceDetail();
+            接收model:Service(售后);
+            返回类型:object;
+        (10).订单物流信息
+            url:OrderApi.URL_EXPRESS_ORDER;
+            方法名:OrderApi.getExpressOrder();
+            接收model:暂无;
+            返回类型:暂无;
+        (11).售后物流信息
+            url:OrderApi.URL_EXPRESS_SERVICE;
+            方法名:OrderApi.getExpressService();
+            接收model:暂无;
+            返回类型:暂无;
 四.特别说明
     1.AuditType是审核类型
     2.CommentType是回复类型

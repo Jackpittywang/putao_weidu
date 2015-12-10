@@ -206,4 +206,49 @@ public class OrderApi {
                 .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.POST, URL_SERVICE_LIST);
     }
+
+    /**
+     * 售后详情
+     */
+    public static final String URL_SERVICE_DETAIL = BASE_URL + "service/detail";
+
+    /**
+     * 售后详情
+     */
+    public static Request getServiceDetail() {
+        return PTWDRequestHelper.store()
+                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
+    }
+
+    /**
+     * 订单物流信息
+     */
+    public static final String URL_EXPRESS_ORDER = BASE_URL + "express/order";
+
+    /**
+     * 订单物流信息
+     *
+     * @param order_id 订单ID
+     */
+    public static Request getExpressOrder(String order_id) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_EXPRESS_ORDER);
+    }
+
+    /**
+     * 售后物流信息
+     */
+    public static final String URL_EXPRESS_SERVICE = BASE_URL + "express/service";
+
+    /**
+     * 售后物流信息
+     *
+     * @param order_id 订单ID
+     */
+    public static Request getExpressService(String order_id) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
+    }
 }
