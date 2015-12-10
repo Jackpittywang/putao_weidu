@@ -158,11 +158,11 @@
             android:screenOrientation="portrait" />
         <!--受控设备-->
         <activity
-            android:name=".explore.equipment.ControlledEquipmentActivity"
+            android:name=".explore.equipment.ControlledEquipmentFragment"
             android:screenOrientation="portrait" />
         <!--受控产品-->
         <activity
-            android:name=".explore.product.ControlledProductActivity"
+            android:name=".explore.product.ControlledProductFragment"
             android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->

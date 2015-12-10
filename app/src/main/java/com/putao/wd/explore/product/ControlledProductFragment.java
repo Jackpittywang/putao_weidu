@@ -18,7 +18,7 @@ import butterknife.Bind;
  * 探索号-受控产品
  * Created by wangou on 2015/12/2.
  */
-public class ControlledProductActivity extends PTWDFragment implements View.OnClickListener {
+public class ControlledProductFragment extends PTWDFragment implements View.OnClickListener {
     @Bind(R.id.brv_controlled_product)
     BasicRecyclerView brv_controlled_product;
 

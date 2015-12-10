@@ -18,7 +18,7 @@ import butterknife.Bind;
  * 探索号-受控设备
  * Created by wangou on 2015/12/2.
  */
-public class ControlledEquipmentActivity extends PTWDFragment implements View.OnClickListener {
+public class ControlledEquipmentFragment extends PTWDFragment implements View.OnClickListener {
     @Bind(R.id.brv_equipment)
     BasicRecyclerView brv_equipment;
 
