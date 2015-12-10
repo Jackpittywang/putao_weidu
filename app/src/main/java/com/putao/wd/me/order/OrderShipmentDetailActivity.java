@@ -8,10 +8,15 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderShipmentDto;
 import com.putao.wd.dto.OrderShipmentInfoItemDto;
 import com.putao.wd.me.order.view.OrderShipmentInfoItem;
+import com.putao.wd.model.Order;
+import com.putao.wd.model.Service;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.util.ArrayList;
@@ -95,6 +100,32 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
         //刷新界面
         refreshView(orderShipmentDto);
 
+    }
+
+    /**
+     * 订单物流信息
+     */
+    private void getExpressOrder(){
+        networkRequest(OrderApi.getExpressOrder(""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 售后物流信息
+     */
+    private void getExpressService(){
+        networkRequest(OrderApi.getExpressService(""), new SimpleFastJsonCallback<ArrayList<Service>>(Service.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Service> result) {
+                Logger.d(result.toString());
+            }
+
+        });
     }
 
     @Override
