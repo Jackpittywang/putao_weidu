@@ -11,6 +11,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
+import com.putao.wd.model.ProductNorms;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -82,16 +83,30 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
-        getProductDetail();
+        //getProductDetail();
+        getProductSpce();
     }
 
     /**
      * 商品详情
      */
     private void getProductDetail(){
-        networkRequest(StoreApi.getProductDetail("111"), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class,loading) {
+        networkRequest(StoreApi.getProductDetail("111"), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
+    /**
+     * 商品规格
+     */
+    private void getProductSpce(){
+        networkRequest(StoreApi.getProductSpce("111"), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class,loading) {
+            @Override
+            public void onSuccess(String url, ProductNorms result) {
                 Logger.d(result.toString());
             }
 
