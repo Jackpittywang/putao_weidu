@@ -202,12 +202,12 @@
                 android:background="#ffffff"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/img_info_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/icon_20_16" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/img_info_icon"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/icon_20_16" />-->
 
                 <TextView
                     android:id="@+id/tv_service_info"

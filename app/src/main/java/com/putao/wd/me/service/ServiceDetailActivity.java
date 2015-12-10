@@ -59,8 +59,8 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_service_purchase_time;
     @Bind(R.id.tv_service_status)
     TextView tv_service_status;
-    @Bind(R.id.img_info_icon)
-    ImageView img_info_icon;
+//    @Bind(R.id.img_info_icon)
+//    ImageView img_info_icon;
     @Bind(R.id.tv_service_info)
     TextView tv_service_info;
     @Bind(R.id.rl_service_info)
