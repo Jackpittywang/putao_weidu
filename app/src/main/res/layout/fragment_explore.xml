@@ -50,85 +50,13 @@
         </RelativeLayout>
 
         <!-- 有数据 -->
-        <LinearLayout
+        <com.sunnybear.library.view.recycler.BasicRecyclerView
+            android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_FFE875"
-                android:gravity="center_vertical"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp">
-
-                <ImageView
-                    android:id="@+id/iv_date_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_date"/>
-
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:drawablePadding="4dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="2015-11-14"
-                    android:textColor="@color/text_color_red"
-                    android:textSize="@dimen/text_size_18sp"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="12dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="12dp">
-
-                <ImageView
-                    android:id="@+id/iv_user_icon"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_explore_bulb"/>
-
-                <TextView
-                    android:id="@+id/tv_introduct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:drawablePadding="4dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="小朋友昨天花了做多时间挑战淘淘向右走，昨天对空间技能兴趣更浓厚。"
-                    android:textColor="@color/color_313131"
-                    android:textSize="@dimen/text_size_20sp"
-                    />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color"/>
-
-            <com.sunnybear.library.view.recycler.BasicRecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                auto:divider_color="@color/divider_color"
-                auto:divider_height="1px"
-                auto:has_row_divider="true"/>
-
-        </LinearLayout>
+            auto:divider_color="@color/divider_color"
+            auto:divider_height="1px"
+            auto:has_row_divider="true"/>
 
     </FrameLayout>
 </LinearLayout>
