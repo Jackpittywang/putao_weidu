@@ -7,8 +7,17 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/3.
  */
 public class Banner implements Serializable {
+    private String title;//标题
     private String img_url;//Banner 图片地址
-    private int numbering;//排序
+    private String numbering;//排序
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getImg_url() {
         return img_url;
@@ -18,19 +27,20 @@ public class Banner implements Serializable {
         this.img_url = img_url;
     }
 
-    public int getNumbering() {
+    public String getNumbering() {
         return numbering;
     }
 
-    public void setNumbering(int numbering) {
+    public void setNumbering(String numbering) {
         this.numbering = numbering;
     }
 
     @Override
     public String toString() {
         return "Banner{" +
-                "img_url='" + img_url + '\'' +
-                ", numbering=" + numbering +
+                "title='" + title + '\'' +
+                ", img_url='" + img_url + '\'' +
+                ", numbering='" + numbering + '\'' +
                 '}';
     }
 }
