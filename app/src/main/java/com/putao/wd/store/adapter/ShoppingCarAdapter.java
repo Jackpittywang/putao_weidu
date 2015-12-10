@@ -2,10 +2,12 @@ package com.putao.wd.store.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ShoppingCar;
+import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
@@ -20,6 +22,8 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/12/4.
  */
 public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAdapter.ShoppingCarViewHolder> {
+
+    private boolean itemState;//记录当前状态值
 
     public ShoppingCarAdapter(Context context, List<ShoppingCar> shoppingCars) {
         super(context, shoppingCars);
@@ -36,7 +40,7 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     }
 
     @Override
-    public void onBindItem(ShoppingCarViewHolder holder, final ShoppingCar shoppingCar, final int position) {
+    public void onBindItem(final ShoppingCarViewHolder holder, final ShoppingCar shoppingCar, final int position) {
         holder.tv_big_title.setText(!shoppingCar.isNull() ? "商品信息" : "无效商品");
         if (position != 0) {//和上一条信息比较
             ShoppingCar previCar = getItem(position - 1);
@@ -59,6 +63,7 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
                 shoppingCar.setIsSelect(isSelect);
+                itemState = isSelect;
                 replace(position, shoppingCar);
             }
         });
@@ -74,6 +79,19 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
             car.setIsSelect(isSelect);
             replace(index, car);
         }
+    }
+
+    /**
+     * 获取当前item状态,判断是否是可编辑
+     * @return
+     */
+    public boolean getItemState(){
+        return itemState;
+    }
+
+    public void editGoods(ShoppingCarViewHolder holder){
+        holder.asl_num_sel.setVisibility(View.VISIBLE);
+        holder.ll_info.setVisibility(View.GONE);
     }
 
     /**
@@ -98,6 +116,10 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
         TextView tv_count;
         @Bind(R.id.btn_sel)
         SwitchButton btn_sel;
+        @Bind(R.id.ll_info)
+        LinearLayout ll_info;
+        @Bind(R.id.asl_num_sel)
+        AmountSelectLayout asl_num_sel;
 
         public ShoppingCarViewHolder(View itemView) {
             super(itemView);

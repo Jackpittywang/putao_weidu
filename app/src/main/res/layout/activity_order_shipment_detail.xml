@@ -70,7 +70,7 @@
                     android:layout_toRightOf="@+id/img_goods"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="--------------------------------------------------------------------------"
+                    android:text="葡萄探索号"
                     android:textColor="#313131"
                     android:textSize="@dimen/text_size_16sp" />
 
@@ -82,7 +82,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toEndOf="@+id/img_goods"
                     android:layout_toRightOf="@+id/img_goods"
-                    android:text="共 - 件"
+                    android:text="共 2 件"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
             </RelativeLayout>
@@ -105,8 +105,8 @@
                 android:background="#ffffff"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="-------------------"
-                android:textColor="#313131"
+                android:text="您的包裹已被签收"
+                android:textColor="#985ec9"
                 android:textSize="@dimen/text_size_18sp" />
 
             <LinearLayout

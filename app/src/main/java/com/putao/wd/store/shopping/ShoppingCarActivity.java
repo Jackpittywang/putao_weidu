@@ -8,6 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.store.adapter.ShoppingCarAdapter;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
@@ -111,5 +112,15 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
         adapter.selAll(isSelect);
+    }
+
+    /**
+     * 标题右边按钮点击事件
+     */
+    @Override
+    public void onRightAction() {
+        if (adapter.getItemState()) {
+            ToastUtils.showToastShort(this, "点击编辑");
+        }
     }
 }
