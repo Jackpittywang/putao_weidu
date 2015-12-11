@@ -10,6 +10,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.ExploreProduct;
+import com.putao.wd.model.PlotDetail;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -123,6 +124,21 @@ public class PutaoExploreFragment extends PTWDFragment {
 //        }
 //        return list;
 //    }
+
+    /**
+     * 获取剧情理念详情
+     * by yanghx
+     * @param plot_id 剧情理念详情id
+     */
+    private void getPlotDetails(String plot_id) {
+        networkRequest(ExploreApi.getPlotDetails(plot_id), new SimpleFastJsonCallback<ArrayList<PlotDetail>>(PlotDetail.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<PlotDetail> result) {
+                Log.i("pt", "剧情理念详情请求成功");
+            }
+        });
+    }
+
 
 }
 
