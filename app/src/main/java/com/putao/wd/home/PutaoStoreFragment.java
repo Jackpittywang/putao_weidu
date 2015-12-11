@@ -116,9 +116,12 @@ public class PutaoStoreFragment extends PTWDFragment {
         rv_content.setOnItemClickListener(new OnItemClickListener<ProductItem>() {
             @Override
             public void onItemClick(ProductItem productItem, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ProductDetailActivity.PRODUCT_ID, productItem.getId());
                 startActivity(ProductDetailActivity.class);
             }
         });
+
     }
 
 
