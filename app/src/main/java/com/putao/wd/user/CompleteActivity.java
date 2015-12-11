@@ -5,9 +5,16 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
+import com.putao.wd.model.UserInfo;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.CleanableEditText;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -45,6 +52,15 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
 
             }
         };
+        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                Logger.i("js", "获取用户信息");
+                et_nickname.setText(result.getNick_name());
+                et_intro.setText(result.getProfile());
+            }
+        });
+
     }
 
     @Override
@@ -60,5 +76,19 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 mSelectPopupWindow.show(ll_main);
                 break;
         }
+    }
+
+    @Override
+    public void onRightAction() {
+        super.onRightAction();
+        //保存用户信息
+        //String nick_name, String head_img, String profile
+        networkRequest(UserApi.userEdit("", "", ""), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Logger.i("保存用户信息");
+                // ActivityManager.getInstance().finishCurrentActivity();
+            }
+        });
     }
 }

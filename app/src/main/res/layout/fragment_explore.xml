@@ -57,7 +57,7 @@
             auto:divider_color="@color/divider_color"
             auto:divider_height="1px"
             auto:has_row_divider="true"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
     </FrameLayout>
 </LinearLayout>
