@@ -165,11 +165,30 @@
         <attr name="page_color" format="color|reference" />
     </declare-styleable>
 
+    <!--RadioItem-->
     <declare-styleable name="RadioItem">
         <attr name="select_drawable" format="reference" />
         <attr name="select_text" format="string" />
         <attr name="select_text_size" format="dimension" />
         <attr name="select_text_color" format="color|reference" />
         <attr name="is_select" format="boolean" />
+    </declare-styleable>
+
+    <!--CircleIndicator-->
+    <declare-styleable name="CircleIndicator">
+        <attr name="R" format="dimension" />
+        <attr name="margin" format="dimension" />
+        <attr name="none_background" format="color|integer" />
+        <attr name="selected_background" format="color|integer" />
+        <attr name="gravity">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <attr name="mode">
+            <enum name="inside" value="0" />
+            <enum name="outside" value="1" />
+            <enum name="solo" value="2" />
+        </attr>
     </declare-styleable>
 </resources>

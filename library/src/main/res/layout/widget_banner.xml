@@ -9,12 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.viewpagerindicator.CirclePageIndicator
+    <com.sunnybear.library.view.viewpager.CircleIndicator
         android:id="@+id/ci_indicator"
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        auto:radius="5dp"
-        auto:strokeColor="@color/transparent" />
+        auto:R="5dp"
+        auto:margin="8dp"
+        auto:mode="outside" />
 </RelativeLayout>

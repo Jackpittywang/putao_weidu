@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.sunnybear.library.R;
-import com.viewpagerindicator.CirclePageIndicator;
 
 /**
  * 广告栏
@@ -17,7 +16,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 public class BannerLayout extends RelativeLayout {
     private View mRootView;
     private BannerViewPager mViewPager;
-    private CirclePageIndicator mIndicator;
+    private CircleIndicator mIndicator;
 
     private long mIntervalTime;
     private boolean isAutoScroll;
@@ -58,14 +57,14 @@ public class BannerLayout extends RelativeLayout {
     private void initView(Context context) {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_banner, this);
         mViewPager = (BannerViewPager) mRootView.findViewById(R.id.vp_banner);
-        mIndicator = (CirclePageIndicator) mRootView.findViewById(R.id.ci_indicator);
+        mIndicator = (CircleIndicator) mRootView.findViewById(R.id.ci_indicator);
     }
 
     private void init() {
         if (mFillColor != -1)
-            mIndicator.setFillColor(mFillColor);
+            mIndicator.setIndicatorSelectedBackground(mFillColor);
         if (mPageColor != -1)
-            mIndicator.setPageColor(mPageColor);
+            mIndicator.setIndicatorBackground(mPageColor);
     }
 
     public void setAdapter(BannerAdapter adapter) {
