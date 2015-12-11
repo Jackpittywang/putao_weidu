@@ -2,6 +2,7 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
@@ -9,8 +10,13 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.putao.wd.home.adapter.StartBannerAdapater;
+import com.putao.wd.model.ActionEnrollment;
+import com.putao.wd.model.ActionLabel;
 import com.putao.wd.model.ActionNews;
+import com.putao.wd.model.AuditType;
 import com.putao.wd.model.Banner;
+import com.putao.wd.model.MapInfo;
+import com.putao.wd.model.Profile;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -192,4 +198,118 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 break;
         }
     }
+
+    /**
+     * 获取活动标签
+     * by yanghx
+     */
+    private void getActionLabel() {
+        networkRequest(StartApi.getActionLabel(), new SimpleFastJsonCallback<ArrayList<ActionLabel>>(ActionLabel.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<ActionLabel> result) {
+                Log.i("pt", "活动标签请求成功");
+            }
+        });
+    }
+
+    /**
+     * 获取活动报名列表
+     * by yanghx
+     * @param action_id 活动ID
+     */
+    private void getEnrollment(String action_id) {
+        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
+                Log.i("pt", "活动报名列表请求成功");
+            }
+        });
+    }
+
+    /**
+     * model暂无
+     *
+     * 活动报名参加(提交)
+     * by yanghx
+     * @param user_id     用户ID
+     * @param identity    家长身份
+     * @param phone       手机号码
+     * @param nick_name   昵称
+     * @param age         年龄
+     * @param wechat      微信
+     * @param parent_name 家长姓名
+     * @param msg         留言
+     */
+    private void participateAdd(String user_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
+        networkRequest(StartApi.participateAdd(user_id, identity, phone, nick_name, age, wechat, parent_name, msg),
+                new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Log.i("pt", "活动报名参加提交成功");
+            }
+        });
+    }
+
+    /**
+     * 获取个人信息
+     * by yanghx
+     * @param user_id 用户ID
+     */
+    private void getProfile(String user_id) {
+        networkRequest(StartApi.getProfile(user_id), new SimpleFastJsonCallback<ArrayList<Profile>>(Profile.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Profile> result) {
+                Log.i("pt", "个人信息请求成功");
+            }
+        });
+    }
+
+    /**
+     * model暂无
+     *
+     * 审核活动报名用户
+     * by yanghx
+     * @param user_id   用户ID
+     * @param action_id 活动ID
+     * @param type      审核类型
+     */
+    private void auditUser(String user_id, String action_id, AuditType type) {
+        networkRequest(StartApi.auditUser(user_id, action_id, type), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Log.i("pt", "审核活动报名用户提交成功");
+            }
+        });
+    }
+
+    /**
+     * 地图接口查询
+     * by yanghx
+     * @param action_id 活动ID
+     */
+    private void getMap(String action_id) {
+        networkRequest(StartApi.getMap(action_id), new SimpleFastJsonCallback<ArrayList<MapInfo>>(MapInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<MapInfo> result) {
+                Log.i("pt", "地图接口查询请求成功");
+            }
+        });
+    }
+
+    /**
+     * model暂无
+     *
+     * 提交葡萄籽问题
+     * by yanghx
+     * @param msg 问题
+     */
+    private void question(String msg) {
+        networkRequest(StartApi.question(msg), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Log.i("pt", "葡萄籽问题提交成功");
+            }
+        });
+    }
+
 }
