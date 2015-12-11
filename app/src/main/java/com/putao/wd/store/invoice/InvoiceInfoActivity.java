@@ -13,7 +13,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * 填写订单
+ * 发票
  * Created by wangou on 2015/12/08.
  */
 public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
