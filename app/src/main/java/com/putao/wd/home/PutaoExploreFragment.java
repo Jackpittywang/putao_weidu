@@ -3,6 +3,8 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
@@ -17,7 +19,6 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -26,6 +27,8 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoExploreFragment extends PTWDFragment {
+    @Bind(R.id.rl_empty)
+    RelativeLayout rl_empty;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
 
@@ -40,8 +43,11 @@ public class PutaoExploreFragment extends PTWDFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         setMainTitleColor(Color.WHITE);
+        setRightTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
+        getDiaryIndex(3, "", "");
+        addListener();
     }
 
     @Override
@@ -66,7 +72,7 @@ public class PutaoExploreFragment extends PTWDFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getExploreList(0, "", "", false, false);
+                getDiaryIndex(0, "", "");
             }
         });
     }
@@ -74,15 +80,25 @@ public class PutaoExploreFragment extends PTWDFragment {
     /**
      * 获得探索号产品列表
      * by yanghx
+     * @param slave_device_id 关联设备唯一id，无关注设备时不请求
+     * @param start_time      起始时间的时间戳
+     * @param end_time        结束时间的时间戳
      */
-    private void getExploreList(int device_id, String start_time, String end_time, final boolean isRefresh, final boolean isLoadMore) {
-        networkRequest(ExploreApi.getDiaryIndex(String.valueOf(device_id), start_time, end_time),
+    private void getDiaryIndex(int slave_device_id, String start_time, String end_time) {
+        networkRequest(ExploreApi.getDiaryIndex(String.valueOf(slave_device_id), start_time, end_time),
                 new SimpleFastJsonCallback<ArrayList<ExploreProduct>>(ExploreProduct.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ExploreProduct> result) {
                         Logger.d(result.toString());
                         Log.i("pt", "探索号请求成功");
+                        if (null != result) {
+//                            rv_content.setVisibility(View.VISIBLE);
+                            rl_empty.setVisibility(View.VISIBLE);
+                        }else {
+//                            rl_empty.setVisibility(View.VISIBLE);
+                        }
                         //adapter.addAll(result);
+                        loading.dismiss();
                     }
                 });
     }

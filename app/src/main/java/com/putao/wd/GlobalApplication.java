@@ -33,7 +33,7 @@ public class GlobalApplication extends BasicApplication {
         super.onCreate();
         installDataBase();
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
-        AccountApi.install("1", "1109", "515d7213721042a5ac31c2de95d2c7a7");
+        AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");
 
 //        WechatShareTools.regToWX(getApplicationContext());
 //        installApi();

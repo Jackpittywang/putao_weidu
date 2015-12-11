@@ -232,6 +232,8 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     }
 
     /**
+     * model暂无
+     *
      * 扫码关注产品
      * by yanghx
      * @param slave_device_id 受控设备id号

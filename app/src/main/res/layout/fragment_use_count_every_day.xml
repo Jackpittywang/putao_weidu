@@ -23,6 +23,7 @@
         android:orientation="vertical">
 
         <com.sunnybear.library.view.select.RadioItem
+            android:id="@+id/ri_unlimit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             auto:is_select="true"
@@ -38,6 +39,7 @@
             android:paddingLeft="8dp" />
 
         <com.sunnybear.library.view.select.RadioItem
+            android:id="@+id/ri_one"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             auto:select_drawable="@drawable/icon_20_13"
@@ -52,6 +54,7 @@
             android:paddingLeft="8dp" />
 
         <com.sunnybear.library.view.select.RadioItem
+            android:id="@+id/ri_three"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             auto:select_drawable="@drawable/icon_20_13"
@@ -66,6 +69,7 @@
             android:paddingLeft="8dp" />
 
         <com.sunnybear.library.view.select.RadioItem
+            android:id="@+id/ri_five"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             auto:select_drawable="@drawable/icon_20_13"
@@ -80,6 +84,7 @@
             android:paddingLeft="8dp" />
 
         <com.sunnybear.library.view.select.RadioItem
+            android:id="@+id/ri_ten"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             auto:select_drawable="@drawable/icon_20_13"

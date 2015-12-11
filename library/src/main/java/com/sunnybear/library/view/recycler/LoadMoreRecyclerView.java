@@ -15,7 +15,7 @@ public class LoadMoreRecyclerView extends BasicRecyclerView {
     private static final String TAG = LoadMoreRecyclerView.class.getSimpleName();
     private LoadingMoreFooter mFootView;//加载布局
     private boolean isLoading = false;//是否正在加载
-    //    private boolean isNoMore = false;//是否是没有更多加载
+    private boolean isNoMore = false;//是否是没有更多加载
     private int mPreviousTotal = 0;//前一个布局的position
 
     private OnLoadMoreListener mOnLoadMoreListener;
@@ -54,7 +54,7 @@ public class LoadMoreRecyclerView extends BasicRecyclerView {
                         int lastVisibleItem = manager.findLastVisibleItemPosition();
                         int totalItemCount = manager.getItemCount();
                         //判断是否滚动到底部
-                        if (lastVisibleItem == totalItemCount - 1 && isSlidingToLast && !isLoading) {
+                        if (lastVisibleItem == totalItemCount - 1 && isSlidingToLast && !isLoading && !isNoMore) {
                             Logger.d(TAG, "加载更多");
                             mFootView.setState(LoadingMoreFooter.STATE_LOADING);
                             isLoading = true;
@@ -104,7 +104,15 @@ public class LoadMoreRecyclerView extends BasicRecyclerView {
      */
     public void noMoreLoading() {
         isLoading = false;
+        isNoMore = true;
         mFootView.setState(LoadingMoreFooter.STATE_NO_MORE);
+    }
+
+    /**
+     * 重置
+     */
+    public void reset() {
+        isNoMore = false;
     }
 
     /**

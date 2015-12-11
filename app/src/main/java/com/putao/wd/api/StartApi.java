@@ -77,11 +77,15 @@ public class StartApi {
     /**
      * 活动列表（查询）
      *
-     * @param index 获取第几页活动列表
+     * @param index  获取第几页活动列表
+     * @param status 活动状态
+     * @param type   活动新闻类型
      */
-    public static Request getActionList(String index) {
+    public static Request getActionList(String index, String status, String type) {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(REQUEST_INDEX, index)
+                .addParam(REQUEST_STATUS, status)
+                .addParam(REQUEST_TYPE, type)
                 .build(RequestMethod.POST, URL_ACTION_LIST);
     }
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
@@ -119,19 +120,24 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
                 return true;
         } else if (content instanceof StickyHeaderLayout) {
             StickyHeaderLayout layout = (StickyHeaderLayout) content;
-            return isPullForFragment(layout);
+            RecyclerView recyclerView = (RecyclerView) layout.getChildAt(2);
+            if (recyclerView == null)
+                throw new RuntimeException("第一个view不是RecyclerView");
+            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
+            if (firstVisiblePosition == 0 && layout.isScrollTop())
+                return true;
         }
-        return false;
-    }
-
-    private boolean isPullForFragment(StickyHeaderLayout layout) {
-        RecyclerView recyclerView = (RecyclerView) layout.getChildAt(2);
-        if (recyclerView == null)
-            throw new RuntimeException("第一个view不是RecyclerView");
-        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
-        if (firstVisiblePosition == 0 && layout.isScrollTop())
-            return true;
+        else if (content instanceof FrameLayout) {
+            FrameLayout layout = (FrameLayout) content;
+            RecyclerView recyclerView = (RecyclerView) layout.getChildAt(0);
+            if (recyclerView == null)
+                throw new RuntimeException("第一个view不是RecyclerView");
+            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
+            if (firstVisiblePosition == 0)
+                return true;
+        }
         return false;
     }
 

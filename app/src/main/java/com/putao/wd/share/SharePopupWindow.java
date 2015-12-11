@@ -38,10 +38,10 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_wechat://微信
-                ShareTools.showShare(mContext, false, Wechat.NAME);
+                ShareTools.showShare(mContext, Wechat.NAME,"分享文字");
                 break;
             case R.id.ll_wechat_friend_circle://微信朋友圈
-                ShareTools.showShare(mContext, false, WechatMoments.NAME);
+                ShareTools.showShare(mContext, WechatMoments.NAME,"分享文字");
                 break;
             case R.id.ll_qq_friend://QQ好友
 

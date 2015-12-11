@@ -8,14 +8,19 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -58,13 +63,18 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login://登录
-                startActivity(MainActivity.class);
                 networkRequest(AccountApi.login(et_mobile.getText().toString(), et_password.getText().toString()),
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.login(result);
-                                startActivity(MainActivity.class);
+                                networkRequest(UserApi.login(), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+                                    @Override
+                                    public void onSuccess(String url, ArrayList<String> result) {
+                                        Logger.i("登录成功");
+                                        ActivityManager.getInstance().finishCurrentActivity();
+                                    }
+                                });
                             }
 
                             @Override

@@ -14,8 +14,10 @@ import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementEdit;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 
 import java.util.ArrayList;
 
@@ -132,5 +134,19 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 Logger.i("探索号管理查询请求成功");
             }
         });
+    }
+
+    @Subcriber(tag = UseCountEveryDayFragment.EVENT_USECOUNT_EVERYDAY)
+    public void eventUseCount(String useCount) {
+        if (StringUtils.isEmpty(useCount))
+            tv_usecount_byday.setText("不限");
+        tv_usecount_byday.setText(useCount);
+    }
+
+    @Subcriber(tag = UseTimeEveryTimeFragment.EVENT_USETIME_EVERYTIME)
+    public void eventUseTime(String useTime) {
+        if (StringUtils.isEmpty(useTime))
+            tv_usetime_byday.setText("不限");
+        tv_usetime_byday.setText(useTime);
     }
 }
