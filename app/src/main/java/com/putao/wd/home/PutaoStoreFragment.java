@@ -64,8 +64,8 @@ public class PutaoStoreFragment extends PTWDFragment {
         mHeader.attachTo(rv_content, true);
         adapter = new ProductAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        addTestData();//测试假数据
-        adapter.addAll(products);
+        //addTestData();//测试假数据
+        //adapter.addAll(products);
         //广告位
         bl_banner.setAdapter(new BannerAdapter() {
             @Override
@@ -85,17 +85,18 @@ public class PutaoStoreFragment extends PTWDFragment {
         });
         refresh();
         //addListener();
-        //getStoreHome();
+        getStoreHome();
     }
 
     /**
      * 获取葡商城首页信息
      */
     private void getStoreHome() {
-        networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<ArrayList<StoreHome>>(StoreHome.class, loading) {
+        networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<StoreHome> result) {
+            public void onSuccess(String url, StoreHome result) {
                 Logger.d(result.toString());
+                adapter.addAll(result.getProduct());
             }
         });
     }
@@ -126,17 +127,17 @@ public class PutaoStoreFragment extends PTWDFragment {
         });
     }
 
-    private void addTestData() {
-        products = new ArrayList<>();
-        ProductItem productItem = new ProductItem();
-        productItem.setId("1");
-        productItem.setTitle("葡萄探索号");
-        productItem.setIntro("快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)");
-        productItem.setPrice("798.00");
-        for (int i = 0; i < 10; i++) {
-            products.add(productItem);
-        }
-    }
+//    private void addTestData() {
+//        products = new ArrayList<>();
+//        ProductItem productItem = new ProductItem();
+//        productItem.setId("1");
+//        productItem.setTitle("葡萄探索号");
+//        productItem.setIntro("快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)");
+//        productItem.setPrice("798.00");
+//        for (int i = 0; i < 10; i++) {
+//            products.add(productItem);
+//        }
+//    }
 
     @Override
     public void onStart() {
