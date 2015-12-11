@@ -2,7 +2,6 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
@@ -10,15 +9,9 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.putao.wd.home.adapter.StartBannerAdapater;
-import com.putao.wd.model.ActionEnrollment;
-import com.putao.wd.model.ActionLabel;
 import com.putao.wd.model.ActionNews;
-import com.putao.wd.model.AuditType;
 import com.putao.wd.model.Banner;
-import com.putao.wd.model.MapInfo;
-import com.putao.wd.model.Profile;
 import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -41,6 +34,11 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.TitleItemSelectedListener {
+    private static final String STATUS_ONGOING = "ONGOING";//进行中
+    private static final String STATUS_CLOSE = "CLOSE";//截止
+    private static final String TYPE_ACTION = "TEXT";//活动
+    private static final String TYPE_NEWS = "NEWS";//新闻
+
     @Bind(R.id.sticky_layout)
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.ptl_refresh)
@@ -59,6 +57,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     private int currentPage = 0;//当前页码
 
+    private String currentStatus = "";//当前的状态
+    private String currentType = "";//当前的类型
+
+    private int pageCount = 10;//分页的每页条目数
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_start_circle;
@@ -72,11 +75,22 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         sticky_layout.canScrollView();
         adapter = new ActionNewsAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        refresh();
         addListener();
 
-        getBannerList();
-        getActionsList(currentPage, false, false);
+        getBannerList();//获取广告列表
+        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<ActionNews> result) {
+//                        cacheEnterDisk(url, result);
+                adapter.addAll(result);
+                if (result.size() >= pageCount)
+                    currentPage++;
+                else
+                    rv_content.noMoreLoading();
+                loading.dismiss();
+            }
+        });
     }
 
     /**
@@ -101,56 +115,44 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     }
 
     /**
-     * 获得活动列表
-     *
-     * @param page       分页
-     * @param isRefresh  是否刷新
-     * @param isLoadMore 是否加载更多
-     */
-    private void getActionsList(int page, final boolean isRefresh, final boolean isLoadMore) {
-        networkRequestCache(StartApi.getActionList(String.valueOf(page)),
-                new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ArrayList<ActionNews> result) {
-                        Logger.d(result.toString());
-                        cacheEnterDisk(url, result);
-                        if (isRefresh) {
-                            adapter.replaceAll(result);
-                            ptl_refresh.refreshComplete();
-                            currentPage = 0;
-                        }
-                        adapter.addAll(result);
-                        currentPage++;
-                        if (isLoadMore)
-                            if (result.size() >= 10)
-                                rv_content.loadMoreComplete();
-                            else
-                                rv_content.noMoreLoading();
-                        loading.dismiss();
-                    }
-                });
-    }
-
-    /**
-     * 刷新方法
-     */
-    private void refresh() {
-        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getActionsList(0, true, false);
-            }
-        });
-    }
-
-    /**
      * 添加监听器
      */
     private void addListener() {
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currentPage = 0;
+                rv_content.reset();
+                networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                        , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<ActionNews> result) {
+                        adapter.replaceAll(result);
+                        if (result.size() >= pageCount)
+                            currentPage++;
+                        else
+                            rv_content.noMoreLoading();
+                        loading.dismiss();
+                        ptl_refresh.refreshComplete();
+                    }
+                });
+            }
+        });
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getActionsList(currentPage, false, true);
+                networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                        , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<ActionNews> result) {
+                        adapter.addAll(result);
+                        if (result.size() >= pageCount) {
+                            rv_content.loadMoreComplete();
+                            currentPage++;
+                        } else rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
             }
         });
         rv_content.setOnItemClickListener(new OnItemClickListener<ActionNews>() {
@@ -159,7 +161,6 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 startActivity(ActionsDetailActivity.class);
             }
         });
-
         ll_title.setTitleItemSelectedListener(this);
     }
 
@@ -183,133 +184,156 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
+        currentPage = 0;
+        rv_content.reset();
         switch (item.getId()) {
             case R.id.ll_all://全部
-                ToastUtils.showToastLong(mActivity, "全部");
+                currentStatus = "";
+                currentType = "";
                 break;
             case R.id.ll_ing://进行中
-                ToastUtils.showToastLong(mActivity, "进行中");
+                currentStatus = STATUS_ONGOING;
+                currentType = TYPE_ACTION;
                 break;
             case R.id.ll_finish://已结束
-                ToastUtils.showToastLong(mActivity, "已结束");
+                currentStatus = STATUS_CLOSE;
+                currentType = TYPE_ACTION;
                 break;
             case R.id.ll_news://新闻
-                ToastUtils.showToastLong(mActivity, "新闻");
+                currentStatus = "";
+                currentType = TYPE_NEWS;
                 break;
         }
-    }
-
-    /**
-     * 获取活动标签
-     * by yanghx
-     */
-    private void getActionLabel() {
-        networkRequest(StartApi.getActionLabel(), new SimpleFastJsonCallback<ArrayList<ActionLabel>>(ActionLabel.class, loading) {
+        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<ActionLabel> result) {
-                Log.i("pt", "活动标签请求成功");
+            public void onSuccess(String url, ArrayList<ActionNews> result) {
+                adapter.replaceAll(result);
+                if (result.size() >= pageCount)
+                    currentPage++;
+                else
+                    rv_content.noMoreLoading();
+                loading.dismiss();
             }
         });
     }
 
-    /**
-     * 获取活动报名列表
-     * by yanghx
-     * @param action_id 活动ID
-     */
-    private void getEnrollment(String action_id) {
-        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
-                Log.i("pt", "活动报名列表请求成功");
-            }
-        });
-    }
-
-    /**
-     * model暂无
-     *
-     * 活动报名参加(提交)
-     * by yanghx
-     * @param user_id     用户ID
-     * @param identity    家长身份
-     * @param phone       手机号码
-     * @param nick_name   昵称
-     * @param age         年龄
-     * @param wechat      微信
-     * @param parent_name 家长姓名
-     * @param msg         留言
-     */
-    private void participateAdd(String user_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
-        networkRequest(StartApi.participateAdd(user_id, identity, phone, nick_name, age, wechat, parent_name, msg),
-                new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<String> result) {
-                Log.i("pt", "活动报名参加提交成功");
-            }
-        });
-    }
-
-    /**
-     * 获取个人信息
-     * by yanghx
-     * @param user_id 用户ID
-     */
-    private void getProfile(String user_id) {
-        networkRequest(StartApi.getProfile(user_id), new SimpleFastJsonCallback<ArrayList<Profile>>(Profile.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Profile> result) {
-                Log.i("pt", "个人信息请求成功");
-            }
-        });
-    }
-
-    /**
-     * model暂无
-     *
-     * 审核活动报名用户
-     * by yanghx
-     * @param user_id   用户ID
-     * @param action_id 活动ID
-     * @param type      审核类型
-     */
-    private void auditUser(String user_id, String action_id, AuditType type) {
-        networkRequest(StartApi.auditUser(user_id, action_id, type), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<String> result) {
-                Log.i("pt", "审核活动报名用户提交成功");
-            }
-        });
-    }
-
-    /**
-     * 地图接口查询
-     * by yanghx
-     * @param action_id 活动ID
-     */
-    private void getMap(String action_id) {
-        networkRequest(StartApi.getMap(action_id), new SimpleFastJsonCallback<ArrayList<MapInfo>>(MapInfo.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<MapInfo> result) {
-                Log.i("pt", "地图接口查询请求成功");
-            }
-        });
-    }
-
-    /**
-     * model暂无
-     *
-     * 提交葡萄籽问题
-     * by yanghx
-     * @param msg 问题
-     */
-    private void question(String msg) {
-        networkRequest(StartApi.question(msg), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<String> result) {
-                Log.i("pt", "葡萄籽问题提交成功");
-            }
-        });
-    }
-
+//    /**
+//     * 获取活动标签
+//     * by yanghx
+//     */
+//    private void getActionLabel() {
+//        networkRequest(StartApi.getActionLabel(), new SimpleFastJsonCallback<ArrayList<ActionLabel>>(ActionLabel.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<ActionLabel> result) {
+//                Log.i("pt", "活动标签请求成功");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 获取活动报名列表
+//     * by yanghx
+//     *
+//     * @param action_id 活动ID
+//     */
+//    private void getEnrollment(String action_id) {
+//        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
+//                Log.i("pt", "活动报名列表请求成功");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * model暂无
+//     * <p/>
+//     * 活动报名参加(提交)
+//     * by yanghx
+//     *
+//     * @param user_id     用户ID
+//     * @param identity    家长身份
+//     * @param phone       手机号码
+//     * @param nick_name   昵称
+//     * @param age         年龄
+//     * @param wechat      微信
+//     * @param parent_name 家长姓名
+//     * @param msg         留言
+//     */
+//    private void participateAdd(String user_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
+//        networkRequest(StartApi.participateAdd(user_id, identity, phone, nick_name, age, wechat, parent_name, msg),
+//                new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+//                    @Override
+//                    public void onSuccess(String url, ArrayList<String> result) {
+//                        Log.i("pt", "活动报名参加提交成功");
+//                    }
+//                });
+//    }
+//
+//    /**
+//     * 获取个人信息
+//     * by yanghx
+//     *
+//     * @param user_id 用户ID
+//     */
+//    private void getProfile(String user_id) {
+//        networkRequest(StartApi.getProfile(user_id), new SimpleFastJsonCallback<ArrayList<Profile>>(Profile.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<Profile> result) {
+//                Log.i("pt", "个人信息请求成功");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * model暂无
+//     * <p/>
+//     * 审核活动报名用户
+//     * by yanghx
+//     *
+//     * @param user_id   用户ID
+//     * @param action_id 活动ID
+//     * @param type      审核类型
+//     */
+//    private void auditUser(String user_id, String action_id, AuditType type) {
+//        networkRequest(StartApi.auditUser(user_id, action_id, type), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<String> result) {
+//                Log.i("pt", "审核活动报名用户提交成功");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 地图接口查询
+//     * by yanghx
+//     *
+//     * @param action_id 活动ID
+//     */
+//    private void getMap(String action_id) {
+//        networkRequest(StartApi.getMap(action_id), new SimpleFastJsonCallback<ArrayList<MapInfo>>(MapInfo.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<MapInfo> result) {
+//                Log.i("pt", "地图接口查询请求成功");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * model暂无
+//     * <p/>
+//     * 提交葡萄籽问题
+//     * by yanghx
+//     *
+//     * @param msg 问题
+//     */
+//    private void question(String msg) {
+//        networkRequest(StartApi.question(msg), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<String> result) {
+//                Log.i("pt", "葡萄籽问题提交成功");
+//            }
+//        });
+//    }
 }

@@ -43,6 +43,7 @@ public class PutaoExploreFragment extends PTWDFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         setMainTitleColor(Color.WHITE);
+        setRightTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         getDiaryIndex(3, "", "");

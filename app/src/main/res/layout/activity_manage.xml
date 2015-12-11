@@ -53,7 +53,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="全部"
                     android:textColor="#313131"
                     android:textSize="@dimen/text_size_14sp" />
 
@@ -92,7 +91,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="2个，共3个"
                     android:textColor="#313131"
                     android:textSize="@dimen/text_size_14sp" />
 

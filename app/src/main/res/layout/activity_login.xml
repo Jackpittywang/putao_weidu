@@ -96,7 +96,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_toLeftOf="@id/et_graph_verify"
                 android:background="#959595"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/app_icon" />
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"

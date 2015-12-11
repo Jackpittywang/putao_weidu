@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.select.RadioBar;
 import com.sunnybear.library.view.select.RadioItem;
@@ -16,7 +17,7 @@ import butterknife.Bind;
  */
 public class UseCountEveryDayFragment extends PTWDFragment implements RadioBar.OnRadioItemSelectListener {
     public static final String EVENT_USECOUNT_EVERYDAY = "usecount_everyday";
-    private String usecount="";
+    private String useCount = "";
 
     @Bind(R.id.rb_select)
     RadioBar rb_select;
@@ -34,7 +35,8 @@ public class UseCountEveryDayFragment extends PTWDFragment implements RadioBar.O
 
     @Override
     public void onRightAction() {
-        EventBusHelper.post(usecount, EVENT_USECOUNT_EVERYDAY);
+        EventBusHelper.post(useCount, EVENT_USECOUNT_EVERYDAY);
+        ActivityManager.getInstance().finishCurrentActivity();
     }
 
     @Override
@@ -44,12 +46,22 @@ public class UseCountEveryDayFragment extends PTWDFragment implements RadioBar.O
 
     @Override
     public void onRadioItemSelect(RadioItem item, int position) {
-        switch (position){
-            case 0:usecount="不限";break;
-            case 1:usecount="1次";break;
-            case 2:usecount="3次";break;
-            case 3:usecount="5次";break;
-            case 4:usecount="10次";break;
+        switch (item.getId()) {
+            case R.id.ri_unlimit:
+                useCount = "不限";
+                break;
+            case R.id.ri_one:
+                useCount = "1次";
+                break;
+            case R.id.ri_three:
+                useCount = "3次";
+                break;
+            case R.id.ri_five:
+                useCount = "5次";
+                break;
+            case R.id.ri_ten:
+                useCount = "10次";
+                break;
         }
     }
 }

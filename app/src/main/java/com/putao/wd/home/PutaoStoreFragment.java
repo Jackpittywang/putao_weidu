@@ -2,6 +2,7 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +16,6 @@ import com.putao.wd.home.adapter.ProductAdapter;
 import com.putao.wd.model.StoreHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
-import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -84,6 +84,8 @@ public class PutaoStoreFragment extends PTWDFragment {
             }
         });
         refresh();
+        addListener();
+        //getStoreHome();
         //addListener();
         getStoreHome();
     }
@@ -108,7 +110,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new WeakHandler().postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         ptl_refresh.refreshComplete();
