@@ -179,7 +179,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[]{StartApi.URL_BANNER};
+        return new String[]{StartApi.URL_BANNER,StartApi.URL_ACTION_LIST};
     }
 
     @Override
