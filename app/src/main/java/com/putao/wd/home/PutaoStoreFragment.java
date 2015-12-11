@@ -13,6 +13,7 @@ import com.putao.wd.home.adapter.ProductAdapter;
 import com.putao.wd.home.adapter.StoreBannerAdapter;
 import com.putao.wd.model.StoreBanner;
 import com.putao.wd.model.StoreHome;
+import com.putao.wd.model.StoreProduct;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -61,12 +62,12 @@ public class PutaoStoreFragment extends PTWDFragment {
         mHeader.attachTo(rv_content, true);
         adapter = new ProductAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-
+        addListener();
         //广告位
         getStoreHome();
 
         refresh();
-        addListener();
+
     }
 
     /**
@@ -113,12 +114,12 @@ public class PutaoStoreFragment extends PTWDFragment {
     }
 
     private void addListener() {
-        rv_content.setOnItemClickListener(new OnItemClickListener<ProductItem>() {
+        rv_content.setOnItemClickListener(new OnItemClickListener<StoreProduct>() {
             @Override
-            public void onItemClick(ProductItem productItem, int position) {
+            public void onItemClick(StoreProduct storeProduct, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ProductDetailActivity.PRODUCT_ID, productItem.getId());
-                startActivity(ProductDetailActivity.class);
+                bundle.putString(ProductDetailActivity.PRODUCT_ID, storeProduct.getId());
+                startActivity(ProductDetailActivity.class,bundle);
             }
         });
 

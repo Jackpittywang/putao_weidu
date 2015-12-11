@@ -87,7 +87,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         //获取产品详情
         getProductDetail(args.getString(PRODUCT_ID));
         //获取规格参数
-        //getProductSpce();
+        //getProductSpce(args.getString(PRODUCT_ID));
     }
 
     /**
@@ -106,8 +106,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     /**
      * 商品规格
      */
-    private void getProductSpce(){
-        networkRequest(StoreApi.getProductSpce("111"), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class,loading) {
+    private void getProductSpce(String product_id){
+        networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class,loading) {
             @Override
             public void onSuccess(String url, ProductNorms result) {
                 Logger.d(result.toString());
