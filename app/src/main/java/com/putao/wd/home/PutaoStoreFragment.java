@@ -37,9 +37,7 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStoreFragment extends PTWDFragment {
-//    private static final int[] resIds = new int[]{
-//            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
-//    };
+
     @Bind(R.id.rvh_header)
     RecyclerViewHeader mHeader;
     @Bind(R.id.ptl_refresh)
@@ -66,15 +64,12 @@ public class PutaoStoreFragment extends PTWDFragment {
         mHeader.attachTo(rv_content, true);
         adapter = new ProductAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        //addTestData();//测试假数据
-        //adapter.addAll(products);
+
         //广告位
         getStoreHome();
 
         refresh();
         addListener();
-        //getStoreHome();
-        //addListener();
 
     }
 
@@ -134,17 +129,6 @@ public class PutaoStoreFragment extends PTWDFragment {
         });
     }
 
-//    private void addTestData() {
-//        products = new ArrayList<>();
-//        ProductItem productItem = new ProductItem();
-//        productItem.setId("1");
-//        productItem.setTitle("葡萄探索号");
-//        productItem.setIntro("快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)");
-//        productItem.setPrice("798.00");
-//        for (int i = 0; i < 10; i++) {
-//            products.add(productItem);
-//        }
-//    }
 
     @Override
     public void onStart() {
