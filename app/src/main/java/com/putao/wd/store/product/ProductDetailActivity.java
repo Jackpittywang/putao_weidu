@@ -30,6 +30,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener {
+    public static final String PRODUCT_ID = "product_id";
+
     private static final int[] resIds = new int[]{
             R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
     };
@@ -62,7 +64,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-
         //广告位
         bl_banner.setAdapter(new BannerAdapter() {
             @Override
@@ -83,15 +84,17 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
-        //getProductDetail();
-        getProductSpce();
+        //获取产品详情
+        getProductDetail(args.getString(PRODUCT_ID));
+        //获取规格参数
+        //getProductSpce();
     }
 
     /**
      * 商品详情
      */
-    private void getProductDetail(){
-        networkRequest(StoreApi.getProductDetail("111"), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
+    private void getProductDetail(String product_id){
+        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
                 Logger.d(result.toString());
