@@ -3,9 +3,6 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
@@ -13,27 +10,21 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ProductItem;
 import com.putao.wd.home.adapter.ProductAdapter;
-import com.putao.wd.home.adapter.PutaoBannerAdapter;
 import com.putao.wd.home.adapter.StoreBannerAdapter;
-import com.putao.wd.model.Banner;
 import com.putao.wd.model.StoreBanner;
 import com.putao.wd.model.StoreHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.recycler.RecyclerViewHeader;
-import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
 import com.sunnybear.library.view.viewpager.BannerViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -76,7 +67,6 @@ public class PutaoStoreFragment extends PTWDFragment {
 
         refresh();
         addListener();
-
     }
 
     /**

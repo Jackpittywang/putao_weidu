@@ -7,14 +7,17 @@ import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicPopupWindow;
 
 import butterknife.OnClick;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * 分享弹出框
  * Created by guchenkai on 2015/11/27.
  */
 public class SharePopupWindow extends BasicPopupWindow implements View.OnClickListener {
+    private OnShareClickListener mOnShareClickListener;
+
+    public void setOnShareClickListener(OnShareClickListener onShareClickListener) {
+        mOnShareClickListener = onShareClickListener;
+    }
 
     public SharePopupWindow(Context context) {
         super(context);
@@ -36,28 +39,44 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     })
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_wechat://微信
-                ShareTools.showShare(mContext, Wechat.NAME,"分享文字");
-                break;
-            case R.id.ll_wechat_friend_circle://微信朋友圈
-                ShareTools.showShare(mContext, WechatMoments.NAME,"分享文字");
-                break;
-            case R.id.ll_qq_friend://QQ好友
+        if (mOnShareClickListener != null)
+            switch (v.getId()) {
+                case R.id.ll_wechat://微信
+                    mOnShareClickListener.onWechat();
+                    break;
+                case R.id.ll_wechat_friend_circle://微信朋友圈
+                    mOnShareClickListener.onWechatFriend();
+                    break;
+                case R.id.ll_qq_friend://QQ好友
+                    mOnShareClickListener.onQQFriend();
+                    break;
+                case R.id.ll_qq_zone://QQ空间
+                    mOnShareClickListener.onQQZone();
+                    break;
+                case R.id.ll_sina_weibo://新浪微博
+                    mOnShareClickListener.onSinaWeibo();
+                    break;
+                case R.id.ll_copy_url://复制链接
+                    mOnShareClickListener.onCopyUrl();
+                    break;
+            }
+        dismiss();
+    }
 
-                break;
-            case R.id.ll_qq_zone://QQ空间
+    /**
+     * 点击分享框
+     */
+    public interface OnShareClickListener {
+        void onWechat();
 
-                break;
-            case R.id.ll_sina_weibo://新浪微博
+        void onWechatFriend();
 
-                break;
-            case R.id.ll_copy_url://复制链接
+        void onQQFriend();
 
-                break;
-            case R.id.tv_cancel://取消
-                dismiss();
-                break;
-        }
+        void onQQZone();
+
+        void onSinaWeibo();
+
+        void onCopyUrl();
     }
 }
