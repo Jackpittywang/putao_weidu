@@ -23,7 +23,6 @@ import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerLayout;
 import com.sunnybear.library.view.viewpager.BannerViewPager;
-import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
@@ -47,8 +46,6 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.bl_banner)
     BannerLayout bl_banner;
-    @Bind(R.id.ci_indicator)
-    CirclePageIndicator ci_indicator;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
