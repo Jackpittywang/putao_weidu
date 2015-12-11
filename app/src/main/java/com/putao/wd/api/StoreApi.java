@@ -15,7 +15,7 @@ public class StoreApi {
     private static final String REQUEST_OLD_PID = "old_pid";//旧商品id
     private static final String REQUEST_NEW_PID = "new_pid";//新商品id
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.sotre.putao.com/" : "http://api.sotre.putao.com/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
