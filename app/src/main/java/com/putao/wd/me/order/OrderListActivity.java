@@ -59,7 +59,26 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        //getOrderLists("","");
+        //initTestData();
+    }
 
+    /**
+     * 订单列表
+     */
+    private void getOrderLists(String type, String page){
+        networkRequest(OrderApi.getOrderLists(type, page), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+               // Logger.d(result.toString());
+            }
+
+        });
+    }
+
+
+    // 测试数据
+    private void initTestData(){
         // 测试数据
         orderList = new ArrayList<OrderDto>();
 
@@ -137,7 +156,6 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
 
         refreshViewByType(0);
     }
-
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
@@ -183,18 +201,6 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         }
     }
 
-    /**
-     * 订单列表
-     */
-    private void getOrderLists(){
-        networkRequest(OrderApi.getOrderLists("", ""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
-                Logger.d(result.toString());
-            }
-
-        });
-    }
 
 
 
