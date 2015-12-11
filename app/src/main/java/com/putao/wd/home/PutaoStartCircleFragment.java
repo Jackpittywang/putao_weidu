@@ -8,7 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
-import com.putao.wd.home.adapter.PutaoBannerAdapter;
+import com.putao.wd.home.adapter.StartBannerAdapter;
 import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
 import com.putao.wd.start.action.ActionsDetailActivity;
@@ -99,7 +99,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
             @Override
             public void onSuccess(String url, final ArrayList<Banner> result) {
                 cacheEnterDisk(url, result);
-                bl_banner.setAdapter(new PutaoBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
+                bl_banner.setAdapter(new StartBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
                     @Override
                     public void onPagerClick(int position) {
                         ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
