@@ -5,7 +5,6 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ControllItem;
-import com.putao.wd.explore.manage.adapter.ControlledEquipmentAdapter;
 import com.putao.wd.explore.manage.adapter.ControlledProductAdapter;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
