@@ -2,13 +2,20 @@ package com.putao.wd.start.comment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.CommentItem;
+import com.putao.wd.model.Comment;
+import com.putao.wd.model.CommentType;
+import com.putao.wd.model.CoolType;
+import com.putao.wd.model.MapInfo;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
@@ -105,5 +112,57 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         return list;
     }
 
+    /**
+     * model暂无
+     *
+     * 评论与回复提交
+     * by yanghx
+     * @param user_id    用户ID
+     * @param action_id  活动ID
+     * @param msg        评论内容
+     * @param type       评论的类型
+     * @param comment_id 当评论类型为REPLY时comment_id是必须要传的
+     */
+    private void commentAdd(String user_id, String action_id, String msg, CommentType type, String comment_id) {
+        networkRequest(StartApi.commentAdd(user_id, action_id, msg, type, comment_id), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Log.i("pt", "评论与回复提交成功");
+            }
+        });
+    }
+
+    /**
+     * 获取活动评论列表
+     * by yanghx
+     * @param action_id 活动ID
+     */
+    private void getCommentList(String action_id) {
+        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Comment> result) {
+                Log.i("pt", "活动评论列表请求成功");
+            }
+        });
+    }
+
+    /**
+     * model暂无
+     *
+     * 赞
+     * by yanghx
+     * @param user_id    用户ID
+     * @param action_id  活动ID
+     * @param type       赞的类型
+     * @param comment_id 当赞类型为COMMENT时comment_id 是必须要传的
+     */
+    private void coolAdd(String user_id, String action_id, CoolType type, String comment_id) {
+        networkRequest(StartApi.coolAdd(user_id, action_id, type, comment_id), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Log.i("pt", "点赞成功");
+            }
+        });
+    }
 
 }
