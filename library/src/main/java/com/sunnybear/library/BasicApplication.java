@@ -12,7 +12,6 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.hawk.Hawk;
 import com.sunnybear.library.util.hawk.LogLevel;
 import com.sunnybear.library.view.image.ImagePipelineConfigFactory;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Map;
 
@@ -65,7 +64,7 @@ public abstract class BasicApplication extends Application {
         Fresco.initialize(getApplicationContext(),
                 ImagePipelineConfigFactory.getOkhttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));
         //开启bugly
-        CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
+//        CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
         //网络缓存最大时间
         maxAge = getNetworkCacheMaxAgeTime();
         //磁盘文件缓存器

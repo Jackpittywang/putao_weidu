@@ -36,14 +36,22 @@ public class RadioBar extends LinearLayout implements View.OnClickListener {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        int index = 0;
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
-            array.put(child.getId(), i);
-            if (!(child instanceof RadioItem))
-                throw new RuntimeException("RadioBar's child must be subclass of RadioItem!");
-            if (((RadioItem) child).isSelect())
-                mLastSelectedItem = (RadioItem) child;
-            child.setOnClickListener(this);
+//            array.put(child.getId(), i);
+//            if (!(child instanceof RadioItem))
+//                throw new RuntimeException("RadioBar's child must be subclass of RadioItem!");
+//            if (((RadioItem) child).isSelect())
+//                mLastSelectedItem = (RadioItem) child;
+//            child.setOnClickListener(this);
+            if (child instanceof RadioItem) {
+                array.put(child.getId(), index);
+                if (((RadioItem) child).isSelect())
+                    mLastSelectedItem = (RadioItem) child;
+                child.setOnClickListener(this);
+                index++;
+            }
         }
     }
 

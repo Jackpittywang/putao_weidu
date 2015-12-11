@@ -29,7 +29,7 @@ import butterknife.OnClick;
  */
 public class CaptureActivity extends PTWDActivity implements View.OnClickListener {
 
-    private CameraPreview mPreview;
+    private com.putao.wd.qrcode.CameraPreview mPreview;
     private Camera mCamera;
     private Handler autoFocusHandler;
     private CameraManager mCameraManager;
@@ -120,7 +120,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
             e.printStackTrace();
         }
         mCamera = mCameraManager.getCamera();
-        mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
+        mPreview = new com.putao.wd.qrcode.CameraPreview(this, mCamera, previewCb, autoFocusCB);
         scanPreview.addView(mPreview);
     }
 

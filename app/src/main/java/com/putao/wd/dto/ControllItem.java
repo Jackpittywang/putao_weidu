@@ -3,19 +3,13 @@ package com.putao.wd.dto;
 import java.io.Serializable;
 
 /**
- * 设备
+ * 受控Item
  * Created by wango on 2015/12/2.
  */
-public class EquipmentItem implements Serializable {
+@Deprecated
+public class ControllItem implements Serializable {
     private String name;
-
-    public String getSelected() {
-        return selected;
-    }
-
-    public void setSelected(String selected) {
-        this.selected = selected;
-    }
+    private boolean isSelect;
 
     public String getName() {
         return name;
@@ -25,13 +19,19 @@ public class EquipmentItem implements Serializable {
         this.name = name;
     }
 
-    private String selected;
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
 
     @Override
     public String toString() {
-        return "ProductItem{" +
+        return "EquipmentItem{" +
                 "name='" + name + '\'' +
-                ", selected='" + selected + '\'' +
+                ", isSelect=" + isSelect +
                 '}';
     }
 }

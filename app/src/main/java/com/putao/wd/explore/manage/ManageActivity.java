@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,19 +12,14 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.explore.equipment.ControlledEquipmentFragment;
-import com.putao.wd.explore.product.ControlledProductFragment;
-import com.putao.wd.explore.usetime.UseTimeEveryTimeFragment;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementEdit;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -59,17 +53,17 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     ImageView iv_usetime_byday;
     @Bind(R.id.usetime)
     LinearLayout usetime;
-    @Bind(R.id.fragment_container)
-    FrameLayout fragment_container;
+
+    private Bundle bundle;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_manage;
+        return R.layout.activity_manage;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-
+        bundle = new Bundle();
     }
 
     @Override
@@ -96,16 +90,20 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                         }).show();
                 break;
             case R.id.ll_equipment://受控设备
-                addFragment(ControlledEquipmentFragment.class);
+                bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_EQUIPMENT);
+                startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_product://受控产品
-                addFragment(ControlledProductFragment.class);
+                bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_PRODUCT);
+                startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_usecount://使用次数
-                addFragment(UseCountEveryDayFragment.class);
+                bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_USE_COUNT);
+                startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.usetime://使用时间
-                addFragment(UseTimeEveryTimeFragment.class);
+                bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_USE_TIME);
+                startActivity(ManagerSettingsActivity.class, bundle);
                 break;
         }
     }
@@ -135,25 +133,4 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             }
         });
     }
-
-    @Subcriber(tag = ControlledEquipmentFragment.EVENT_CONTROLLED_EQUIPMENT)
-    public void eventAddressAdd(String equipmentname) {
-        tv_equipment_name.setText(equipmentname);
-    }
-
-    @Subcriber(tag = ControlledProductFragment.EVENT_CONTROLLED_PRODUCT)
-    public void eventAddressUpdate(String productname) {
-        tv_product_name.setText(productname);
-    }
-
-    @Subcriber(tag = UseTimeEveryTimeFragment.EVENT_USETIME_EVERYTIME)
-    public void eventAddressDelete(String usetime) {
-        tv_usetime_byday.setText(usetime);
-    }
-
-    @Subcriber(tag = UseCountEveryDayFragment.EVENT_USECOUNT_EVERYDAY)
-    public void eventAddressIsDefault(String usecount) {
-        tv_usecount_byday.setText(usecount);
-    }
-
 }

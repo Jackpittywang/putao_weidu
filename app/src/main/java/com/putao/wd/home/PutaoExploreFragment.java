@@ -61,7 +61,7 @@ public class PutaoExploreFragment extends PTWDFragment {
     /**
      * 添加监听器
      */
-    private void addListener(){
+    private void addListener() {
         getExploreList(0, "", "", false, false);
     }
 
@@ -72,13 +72,13 @@ public class PutaoExploreFragment extends PTWDFragment {
     private void getExploreList(int device_id, String start_time, String end_time, final boolean isRefresh, final boolean isLoadMore) {
         networkRequest(ExploreApi.getDiaryIndex(String.valueOf(device_id), start_time, end_time),
                 new SimpleFastJsonCallback<ArrayList<ExploreItem>>(ExploreItem.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ExploreItem> result) {
-                Logger.d(result.toString());
-                Log.i("pt", "探索号请求成功");
-                //adapter.addAll(result);
-            }
-        });
+                    @Override
+                    public void onSuccess(String url, ArrayList<ExploreItem> result) {
+                        Logger.d(result.toString());
+                        Log.i("pt", "探索号请求成功");
+                        //adapter.addAll(result);
+                    }
+                });
     }
 
 

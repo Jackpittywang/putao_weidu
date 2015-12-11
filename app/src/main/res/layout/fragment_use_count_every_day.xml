@@ -11,7 +11,8 @@
         android:background="@color/white"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="每次使用次数"
-        auto:nav_right_title="保存"/>
+        auto:nav_right_title="保存"
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <!--选择区-->
     <com.sunnybear.library.view.select.RadioBar
@@ -30,6 +31,12 @@
             auto:select_text_color="@color/text_color"
             auto:select_text_size="@dimen/text_size_6sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            android:paddingLeft="8dp" />
+
         <com.sunnybear.library.view.select.RadioItem
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -37,6 +44,12 @@
             auto:select_text="1次"
             auto:select_text_color="@color/text_color"
             auto:select_text_size="@dimen/text_size_6sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            android:paddingLeft="8dp" />
 
         <com.sunnybear.library.view.select.RadioItem
             android:layout_width="match_parent"
@@ -46,6 +59,12 @@
             auto:select_text_color="@color/text_color"
             auto:select_text_size="@dimen/text_size_6sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            android:paddingLeft="8dp" />
+
         <com.sunnybear.library.view.select.RadioItem
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -53,6 +72,12 @@
             auto:select_text="5次"
             auto:select_text_color="@color/text_color"
             auto:select_text_size="@dimen/text_size_6sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            android:paddingLeft="8dp" />
 
         <com.sunnybear.library.view.select.RadioItem
             android:layout_width="match_parent"

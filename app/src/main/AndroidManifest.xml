@@ -27,7 +27,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!-- 分属app_id -->
         <meta-data
             android:name="app_id"
@@ -90,12 +89,10 @@
         <activity
             android:name=".me.order.OrderDetailActivity"
             android:screenOrientation="portrait" />
-
         <!-- 订单物流详情页 -->
         <activity
             android:name=".me.order.OrderShipmentDetailActivity"
             android:screenOrientation="portrait" />
-
         <!-- 关于我们 -->
         <activity
             android:name=".me.address.AboutUsActivity"
@@ -147,6 +144,10 @@
         <!--管理-->
         <activity
             android:name=".explore.manage.ManageActivity"
+            android:screenOrientation="portrait" />
+        <!--管理设置-->
+        <activity
+            android:name=".explore.manage.ManagerSettingsActivity"
             android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->

@@ -1,23 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ebebeb"
-    xmlns:auto="http://schemas.android.com/apk/res-auto">
+    android:background="@color/color_EBEBEB"
+    android:orientation="vertical">
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         android:background="@color/white"
-        auto:nav_left_icon="@drawable/btn_20_back_p_sel"
+        auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="受控设备"
-        auto:nav_right_title="保存"/>
+        auto:nav_right_title="保存"
+        auto:nav_right_title_color="@drawable/text_select"/>
+
     <com.sunnybear.library.view.recycler.BasicRecyclerView
         android:id="@+id/brv_equipment"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        auto:divider_color="#626262"
+        android:layout_marginTop="10dp"
+        auto:divider_color="@color/divider_color"
         auto:divider_height="1px"
-        auto:has_row_divider="true"/>
+        auto:has_row_divider="true" />
 
 </LinearLayout>
