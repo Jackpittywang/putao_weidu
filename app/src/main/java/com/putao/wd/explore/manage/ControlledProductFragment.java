@@ -16,17 +16,17 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 探索号-受控产品
+ * 探索号-受控设备
  * Created by wangou on 2015/12/2.
  */
 public class ControlledProductFragment extends PTWDFragment {
-    public static final String EVENT_CONTROLLED_PRODUCT = "controlled_product";
+    public static final String EVENT_CONTROLLED_PRODUT = "controlled_product";
 
-    @Bind(R.id.brv_controlled_product)
-    BasicRecyclerView brv_controlled_product;
+    @Bind(R.id.brv_product)
+    BasicRecyclerView brv_product;
 
     private ControlledProductAdapter adapter;
-    private List<ControllItem> selectItem;
+    private List<ControllItem> selectItem = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -37,11 +37,12 @@ public class ControlledProductFragment extends PTWDFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         adapter = new ControlledProductAdapter(mActivity, getTestData());
-        brv_controlled_product.setAdapter(adapter);
+        brv_product.setAdapter(adapter);
+        addListener();
     }
 
     private void addListener() {
-        brv_controlled_product.setOnItemClickListener(new OnItemClickListener<ControllItem>() {
+        brv_product.setOnItemClickListener(new OnItemClickListener<ControllItem>() {
             @Override
             public void onItemClick(ControllItem item, int position) {
                 if (!item.isSelect()) {
@@ -78,7 +79,7 @@ public class ControlledProductFragment extends PTWDFragment {
 
     @Override
     public void onRightAction() {
-        EventBusHelper.post(selectItem, EVENT_CONTROLLED_PRODUCT);
+        EventBusHelper.post(selectItem, EVENT_CONTROLLED_PRODUT);
     }
 
     @Override
