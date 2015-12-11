@@ -15,12 +15,16 @@ import com.putao.wd.model.ProductNorms;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
 
-import org.json.JSONObject;
+import org.jsoup.helper.DataUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -53,7 +57,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
-
+    private List<String> banners;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -64,6 +68,12 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
+
+
+        sticky_layout.canScrollView();
+        wv_content.loadUrl("http://www.putao.com");
+        //获取产品详情
+        getProductDetail(args.getString(PRODUCT_ID));
         //广告位
         bl_banner.setAdapter(new BannerAdapter() {
             @Override
@@ -82,10 +92,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             }
         });
 
-        sticky_layout.canScrollView();
-        wv_content.loadUrl("http://www.putao.com");
-        //获取产品详情
-        getProductDetail(args.getString(PRODUCT_ID));
         //获取规格参数
         //getProductSpce(args.getString(PRODUCT_ID));
     }
@@ -94,10 +100,13 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
      * 商品详情
      */
     private void getProductDetail(String product_id){
-        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
+        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ArrayList<ProductDetail>>(ProductDetail.class, loading) {
             @Override
-            public void onSuccess(String url, ProductDetail result) {
+            public void onSuccess(String url, ArrayList<ProductDetail> result) {
                 Logger.d(result.toString());
+                if(result.size()!=0){
+
+                }
             }
 
         });
