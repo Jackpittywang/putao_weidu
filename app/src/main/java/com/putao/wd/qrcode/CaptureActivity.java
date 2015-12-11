@@ -5,6 +5,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,13 +13,16 @@ import android.widget.RelativeLayout;
 
 import com.dtr.zbar.build.ZBarDecoder;
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -226,4 +230,20 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
         }
         return 0;
     }
+
+    /**
+     * 扫码关注产品
+     * by yanghx
+     * @param slave_device_id 受控设备id号
+     * @param product_id      对应产品idc
+     */
+    private void scanAdd(String slave_device_id, String product_id) {
+        networkRequest(ExploreApi.scanAdd(slave_device_id, product_id), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                Log.i("pt", "扫码关注产品成功");
+            }
+        });
+    }
+
 }
