@@ -12,6 +12,8 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
@@ -77,6 +79,16 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                         });
                 break;
             case R.id.btn_next://下一步
+                //String mobile, String password, String code
+                String phone = et_mobile.getText().toString();
+                String sms_verify = et_sms_verify.getText().toString();
+                String password = et_password.getText().toString();
+                networkRequest(AccountApi.register(phone, sms_verify, password), new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.d("js", "注册成功");
+                    }
+                });
 
                 break;
             case R.id.tv_user_protocol://用户服务协议

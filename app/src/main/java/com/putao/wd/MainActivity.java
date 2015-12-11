@@ -136,9 +136,9 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                     mFragmentTransaction.show(mMeFragment);
                 }
 
-//                startService(EmojiService.class);
-//            startActivity(TestActivity.class);
-            break;
+                //startService(EmojiService.class);
+                //startActivity(TestActivity.class);
+                break;
         }
         mFragmentTransaction.commit();
     }
