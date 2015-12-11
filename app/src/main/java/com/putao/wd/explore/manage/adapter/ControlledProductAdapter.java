@@ -36,7 +36,7 @@ public class ControlledProductAdapter extends BasicAdapter<ControllItem, Control
 
     @Override
     public void onBindItem(final ControlledProductViewHolder holder, ControllItem item, int position) {
-        holder.tv_equipment_name.setText(item.getName());
+        holder.tv_product_name.setText(item.getName());
         holder.iv_select_icon.setVisibility(item.isSelect() ? View.VISIBLE : View.GONE);
         switch (position) {
             case 0:
@@ -60,8 +60,8 @@ public class ControlledProductAdapter extends BasicAdapter<ControllItem, Control
     static class ControlledProductViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_product_icon)
         ImageView iv_product_icon;
-        @Bind(R.id.tv_equipment_name)
-        TextView tv_equipment_name;
+        @Bind(R.id.tv_product_name)
+        TextView tv_product_name;
         @Bind(R.id.iv_select_icon)
         ImageView iv_select_icon;
 
