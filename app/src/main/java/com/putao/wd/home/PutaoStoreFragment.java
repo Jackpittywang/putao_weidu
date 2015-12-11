@@ -13,12 +13,17 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ProductItem;
 import com.putao.wd.home.adapter.ProductAdapter;
+import com.putao.wd.home.adapter.PutaoBannerAdapter;
+import com.putao.wd.home.adapter.StoreBannerAdapter;
+import com.putao.wd.model.Banner;
 import com.putao.wd.model.StoreBanner;
 import com.putao.wd.model.StoreHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -26,6 +31,7 @@ import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.recycler.RecyclerViewHeader;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
+import com.sunnybear.library.view.viewpager.BannerViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,21 +91,16 @@ public class PutaoStoreFragment extends PTWDFragment {
                 adapter.addAll(result.getProduct());
                 //初始化广告位
                 banners=result.getBanner();
-                bl_banner.setAdapter(new BannerAdapter() {
-                    @Override
-                    public View getView(int position) {
-                        ImageDraweeView imageView = new ImageDraweeView(mActivity);
-                        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        imageView.setLayoutParams(params);
-                        imageView.setImageURL(banners.get(position).getImage());
-                        return imageView;
-                    }
 
+                bl_banner.setAdapter(new StoreBannerAdapter(mActivity, result.getBanner(), new BannerViewPager.OnPagerClickListenr() {
                     @Override
-                    public int getCount() {
-                        return banners.size();
+                    public void onPagerClick(int position) {
+                        ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
                     }
-                });
+                }));
+
+                bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
+                loading.dismiss();
             }
         });
     }
