@@ -10,7 +10,6 @@ import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
-import com.putao.wd.util.EmojiService;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
@@ -137,9 +136,9 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                     mFragmentTransaction.show(mMeFragment);
                 }
 
-                startService(EmojiService.class);
-                startActivity(TestActivity.class);
-                break;
+//                startService(EmojiService.class);
+//            startActivity(TestActivity.class);
+            break;
         }
         mFragmentTransaction.commit();
     }

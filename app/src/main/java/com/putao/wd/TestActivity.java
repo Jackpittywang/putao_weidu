@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
 
+import com.putao.wd.util.HtmlInfo;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 

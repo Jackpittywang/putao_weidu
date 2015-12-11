@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.ProductItem;
+import com.putao.wd.model.StoreProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -18,9 +18,9 @@ import butterknife.Bind;
  * 商城产品列表适配器
  * Created by guchenkai on 2015/11/30.
  */
-public class ProductAdapter extends LoadMoreAdapter<ProductItem,ProductAdapter.ProductViewHolder> {
+public class ProductAdapter extends LoadMoreAdapter<StoreProduct,ProductAdapter.ProductViewHolder> {
 
-    public ProductAdapter(Context context, List<ProductItem> productItems) {
+    public ProductAdapter(Context context, List<StoreProduct> productItems) {
         super(context, productItems);
     }
 
@@ -35,10 +35,10 @@ public class ProductAdapter extends LoadMoreAdapter<ProductItem,ProductAdapter.P
     }
 
     @Override
-    public void onBindItem(ProductViewHolder holder, ProductItem productItem, int position) {
-        holder.iv_product_icon.setImageURL(productItem.getIconUrl());
+    public void onBindItem(ProductViewHolder holder, StoreProduct productItem, int position) {
+        holder.iv_product_icon.setImageURL(productItem.getIcon());
         holder.tv_product_title.setText(productItem.getTitle());
-        holder.tv_product_intro.setText(productItem.getIntro());
+        holder.tv_product_intro.setText(productItem.getSubtitle());
         holder.tv_product_price.setText(productItem.getPrice());
     }
 

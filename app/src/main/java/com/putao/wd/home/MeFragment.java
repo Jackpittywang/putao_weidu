@@ -45,7 +45,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         if (!PreferenceUtils.getValue("isLogin", false))
             startActivity(LoginActivity.class);
-        Logger.d(MainActivity.TAG, "MeFragment启动");
+        //Logger.d(MainActivity.TAG, "MeFragment启动");
         si_message.show(18);
         btn_pay.show(9);
         btn_deliver.show(10);

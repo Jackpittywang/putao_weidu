@@ -17,12 +17,12 @@ import java.util.List;
  * 葡星圈广告适配器
  * Created by guchenkai on 2015/12/10.
  */
-public class StartBannerAdapater extends BannerAdapter {
+public class PutaoBannerAdapter extends BannerAdapter {
     private Context context;
     private List<Banner> banners;
     private BannerViewPager.OnPagerClickListenr onPagerClickListenr;
 
-    public StartBannerAdapater(Context context, List<Banner> banners, BannerViewPager.OnPagerClickListenr onPagerClickListenr) {
+    public PutaoBannerAdapter(Context context, List<Banner> banners, BannerViewPager.OnPagerClickListenr onPagerClickListenr) {
         this.context = context;
         setBanners(banners);
         setOnPagerClickListenr(onPagerClickListenr);

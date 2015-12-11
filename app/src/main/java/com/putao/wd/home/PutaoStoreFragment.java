@@ -81,7 +81,9 @@ public class PutaoStoreFragment extends PTWDFragment {
             @Override
             public void onSuccess(String url, StoreHome result) {
                 Logger.d(result.toString());
+                //初始化商品列表
                 adapter.addAll(result.getProduct());
+                //初始化广告位
                 banners=result.getBanner();
                 bl_banner.setAdapter(new BannerAdapter() {
                     @Override
@@ -89,7 +91,6 @@ public class PutaoStoreFragment extends PTWDFragment {
                         ImageDraweeView imageView = new ImageDraweeView(mActivity);
                         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         imageView.setLayoutParams(params);
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         imageView.setImageURL(banners.get(position).getImage());
                         return imageView;
                     }

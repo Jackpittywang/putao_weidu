@@ -24,8 +24,8 @@ public class PTWDRequestHelper {
      */
     public static FormEncodingRequestBuilder store() {
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""));
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000277")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, "4907402e527346898fce328ecededc4a");
     }
 
     /**
