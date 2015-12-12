@@ -54,7 +54,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         addListener();
 
         getCart();
-        //cartAdd();
+
         //cartEdit();
         //cartDelete();
     }
@@ -75,18 +75,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         });
     }
 
-    /**
-     * 添加购物车
-     */
-    private void cartAdd(){
-        networkRequest(StoreApi.cartAdd("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
-                Logger.d(result.toString());
-            }
 
-        });
-    }
 
     /**
      * 编辑购物车
