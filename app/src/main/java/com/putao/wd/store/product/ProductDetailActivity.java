@@ -18,6 +18,8 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.select.TitleBar;
+import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
@@ -34,7 +36,7 @@ import butterknife.OnClick;
  * 商品详情
  * Created by guchenkai on 2015/11/30.
  */
-public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener {
+public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener ,TitleBar.TitleItemSelectedListener {
     public static final String PRODUCT_ID = "product_id";
 
 //    private static final int[] resIds = new int[]{
@@ -177,6 +179,24 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 break;
             case R.id.ll_join_car://加入购物车
                 mShoppingCarPopupWindow.show(ll_main);
+                break;
+        }
+    }
+
+    @Override
+    public void onTitleItemSelected(TitleItem item, int position) {
+        switch (item.getId()) {
+            case R.id.ti_summary://概述
+
+                break;
+            case R.id.ti_parameter://规格参数
+
+                break;
+            case R.id.ti_pack://包装清单
+
+                break;
+            case R.id.tv_service://售后
+
                 break;
         }
     }
