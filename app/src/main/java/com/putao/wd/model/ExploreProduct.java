@@ -8,60 +8,50 @@ import java.util.List;
  * Created by guchenkai on 2015/12/8.
  */
 public class ExploreProduct implements Serializable {
-    private int product_id;//游戏id
-    private String product_name;//当前游戏名称
-    private String product_icon;//游戏图标
-    private String product_summary;//当前游戏总结文案
-    private List<ExploreProductData> data_list;//数据的图片地址
+    private int slave_device_id;//游戏id
+    private int time;//时间
+    private String day_summary;//简介
+    private List<ExploreProductData> product_list;
 
-    public int getProduct_id() {
-        return product_id;
+    public int getSlave_device_id() {
+        return slave_device_id;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setSlave_device_id(int slave_device_id) {
+        this.slave_device_id = slave_device_id;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public int getTime() {
+        return time;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public String getProduct_icon() {
-        return product_icon;
+    public String getDay_summary() {
+        return day_summary;
     }
 
-    public void setProduct_icon(String product_icon) {
-        this.product_icon = product_icon;
+    public void setDay_summary(String day_summary) {
+        this.day_summary = day_summary;
     }
 
-    public String getProduct_summary() {
-        return product_summary;
+    public List<ExploreProductData> getProduct_list() {
+        return product_list;
     }
 
-    public void setProduct_summary(String product_summary) {
-        this.product_summary = product_summary;
-    }
-
-    public List<ExploreProductData> getData_list() {
-        return data_list;
-    }
-
-    public void setData_list(List<ExploreProductData> data_list) {
-        this.data_list = data_list;
+    public void setProduct_list(List<ExploreProductData> product_list) {
+        this.product_list = product_list;
     }
 
     @Override
     public String toString() {
         return "ExploreProduct{" +
-                "product_id=" + product_id +
-                ", product_name='" + product_name + '\'' +
-                ", product_icon='" + product_icon + '\'' +
-                ", product_summary='" + product_summary + '\'' +
-                ", data_list=" + data_list +
+                "slave_device_id=" + slave_device_id +
+                ", time=" + time +
+                ", day_summary='" + day_summary + '\'' +
+                ", product_list=" + product_list +
                 '}';
     }
 }

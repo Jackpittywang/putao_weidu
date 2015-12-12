@@ -162,9 +162,11 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);
+                Log.i("pt", picturePath);
                 cursor.close();
 
-                iv_header_icon.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                iv_header_icon.setImageBitmap(bitmap);
             }
         }
     }

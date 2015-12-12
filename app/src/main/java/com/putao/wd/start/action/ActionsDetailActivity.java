@@ -11,7 +11,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ActionDetail;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 
-import java.util.ArrayList;
 
 /**
  * 活动详情
@@ -28,6 +27,12 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        networkRequest(StartApi.getActionDetail("1"), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
+            @Override
+            public void onSuccess(String url, ActionDetail result) {
+                Log.i("pt", "动详情列表请求成功");
+            }
+        });
     }
 
     @Override
@@ -40,18 +45,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
 
     }
 
-    /**
-     * 获取活动详情列表
-     * by yanghx
-     * @param action_id 活动id
-     */
-    private void getActionDetail(String action_id) {
-        networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ArrayList<ActionDetail>>(ActionDetail.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ActionDetail> result) {
-                Log.i("pt", "动详情列表请求成功");
-            }
-        });
-    }
+
+
 
 }
