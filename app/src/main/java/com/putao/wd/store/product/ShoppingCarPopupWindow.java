@@ -54,7 +54,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     RelativeLayout popup_layout;
 
     private int count=1;//总数量
-    private float sumPrice=0;
+    private float Price=0;
     public ShoppingCarPopupWindow(Context context, List<String> colorList,String title,String describe,String price) {
         super(context);
         setUpData(colorList);
@@ -62,7 +62,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         tv_product_title.setText(title);
         tv_product_intro.setText(describe);
         tv_product_price.setText(price);
-        sumPrice=Float.parseFloat(price.substring(1));
+        Price=Float.parseFloat(price.substring(1));
         tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
             public void onTagItemCheck(Tag tag, int position) {
@@ -127,11 +127,11 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 if(1==count)
                     tv_subtract.setEnabled(true);
                 tv_count.setText(++count+"");
-                tv_product_price.setText(sumPrice*count+"");
+                tv_product_price.setText(Price*count+"");
                 break;
             case R.id.tv_subtract:
                 tv_count.setText(--count+"");
-                tv_product_price.setText(sumPrice*count+"");
+                tv_product_price.setText(Price*count+"");
                 if(1==count)
                     tv_subtract.setEnabled(false);
                 break;
