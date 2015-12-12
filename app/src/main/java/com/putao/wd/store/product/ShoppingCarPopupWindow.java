@@ -8,7 +8,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StoreApi;
+import com.putao.wd.model.Cart;
 import com.sunnybear.library.controller.BasicPopupWindow;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.Tag;
@@ -77,6 +81,20 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     }
 
     /**
+     * 添加购物车
+     */
+    private void cartAdd(String product_id, String qt){
+//        networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<Cart> result) {
+//                Logger.d(result.toString());
+//            }
+//
+//        });
+    }
+
+
+    /**
      * 测试数据
      */
     private void setUpData(List<String> colorList) {
@@ -116,7 +134,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 //        mTags.add(tag);
     }
 
-    @OnClick({R.id.iv_close,R.id.tv_add,R.id.tv_subtract})
+    @OnClick({R.id.iv_close,R.id.tv_add,R.id.tv_subtract,R.id.ll_join_car})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -134,6 +152,9 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 tv_product_price.setText(Price*count+"");
                 if(1==count)
                     tv_subtract.setEnabled(false);
+                break;
+            case R.id.ll_join_car:
+                cartAdd(Price+"",count+"");
                 break;
         }
     }
