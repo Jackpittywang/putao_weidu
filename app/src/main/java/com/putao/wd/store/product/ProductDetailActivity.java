@@ -17,6 +17,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
@@ -36,9 +37,9 @@ import butterknife.OnClick;
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener {
     public static final String PRODUCT_ID = "product_id";
 
-    private static final int[] resIds = new int[]{
-            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
-    };
+//    private static final int[] resIds = new int[]{
+//            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
+//    };
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.sticky_layout)
@@ -74,23 +75,23 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         wv_content.loadUrl("http://www.putao.com");
         //获取产品详情
         getProductDetail(args.getString(PRODUCT_ID));
-        //广告位
-        bl_banner.setAdapter(new BannerAdapter() {
-            @Override
-            public View getView(int position) {
-                ImageView imageView = new ImageView(mContext);
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageView.setLayoutParams(params);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                imageView.setImageResource(resIds[position]);
-                return imageView;
-            }
-
-            @Override
-            public int getCount() {
-                return resIds.length;
-            }
-        });
+//        //广告位
+//        bl_banner.setAdapter(new BannerAdapter() {
+//            @Override
+//            public View getView(int position) {
+//                ImageView imageView = new ImageView(mContext);
+//                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                imageView.setLayoutParams(params);
+//                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//                imageView.setImageResource(resIds[position]);
+//                return imageView;
+//            }
+//
+//            @Override
+//            public int getCount() {
+//                return resIds.length;
+//            }
+//        });
 
         //获取规格参数
         //getProductSpce(args.getString(PRODUCT_ID));
@@ -105,7 +106,27 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             public void onSuccess(String url, ArrayList<ProductDetail> result) {
                 Logger.d(result.toString());
                 if(result.size()!=0){
+                    tv_product_title.setText(result.get(0).getTitle());
+                    tv_product_intro.setText(result.get(0).getSubtitle());
+                    tv_product_price.setText(result.get(0).getPrice());
+                    banners=result.get(0).getPictures();
 
+                    //广告位
+                    bl_banner.setAdapter(new BannerAdapter() {
+                        @Override
+                        public View getView(int position) {
+                            ImageDraweeView imageView = new ImageDraweeView(mContext);
+                            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            imageView.setLayoutParams(params);
+                            imageView.setImageURL(banners.get(position));
+                            return imageView;
+                        }
+
+                        @Override
+                        public int getCount() {
+                            return banners.size();
+                        }
+                    });
                 }
             }
 
