@@ -13,6 +13,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
@@ -208,6 +209,11 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 mShoppingCarPopupWindow.show(ll_main);
                 break;
         }
+    }
+
+    @Override
+    public void onRightAction() {
+        startActivity(ShoppingCarActivity.class);
     }
 
     @Override
