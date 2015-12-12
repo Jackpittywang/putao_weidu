@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ShoppingCar;
+import com.putao.wd.model.Cart;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.SwitchButton;
@@ -23,12 +24,12 @@ import butterknife.Bind;
  * 购物车适配器
  * Created by guchenkai on 2015/12/4.
  */
-public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAdapter.ShoppingCarViewHolder> {
+public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.ShoppingCarViewHolder> {
 
     private boolean itemState;//记录当前状态值
-    private HashMap<Integer, ShoppingCar> map;//记录当前商品
+    private HashMap<Integer, Cart> map;//记录当前商品
 
-    public ShoppingCarAdapter(Context context, List<ShoppingCar> shoppingCars) {
+    public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
         map = new HashMap<>();
     }
@@ -44,10 +45,10 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     }
 
     @Override
-    public void onBindItem(final ShoppingCarViewHolder holder, final ShoppingCar shoppingCar, final int position) {
+    public void onBindItem(final ShoppingCarViewHolder holder, final Cart shoppingCar, final int position) {
         holder.tv_big_title.setText(!shoppingCar.isNull() ? "商品信息" : "无效商品");
         if (position != 0) {//和上一条信息比较
-            ShoppingCar previCar = getItem(position - 1);
+            Cart previCar = getItem(position - 1);
             if (previCar.isNull() == shoppingCar.isNull()) {
                 holder.tv_big_title.setVisibility(View.GONE);
                 holder.divider.setVisibility(View.GONE);
@@ -56,12 +57,12 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
             holder.tv_big_title.setVisibility(View.VISIBLE);
             holder.divider.setVisibility(View.GONE);
         }
-        holder.iv_car_icon.setImageURL(shoppingCar.getImgUrl());
+        holder.iv_car_icon.setImageURL(shoppingCar.getIcon());
         holder.tv_title.setText(shoppingCar.getTitle());
         holder.tv_color.setText(shoppingCar.getColor());
-        holder.tv_size.setText(shoppingCar.getSize());
-        holder.tv_money.setText(shoppingCar.getMoney());
-        holder.tv_count.setText(shoppingCar.getCount());
+        holder.tv_size.setText(shoppingCar.getSku());
+        holder.tv_money.setText(shoppingCar.getPrice());
+        holder.tv_count.setText(shoppingCar.getQt());
         holder.btn_sel.setState(shoppingCar.isSelect());
         showEdit(holder, shoppingCar);
         holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
@@ -80,8 +81,8 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
      * 全部选中
      */
     public void selAll(boolean isSelect) {
-        List<ShoppingCar> cars = getItems();
-        for (ShoppingCar car : cars) {
+        List<Cart> cars = getItems();
+        for (Cart car : cars) {
             int index = cars.indexOf(car);
             car.setIsSelect(isSelect);
             replace(index, car);
@@ -91,9 +92,9 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     /**
      * 显示编辑状态Item
      */
-    private void showEdit(ShoppingCarViewHolder holder, ShoppingCar ShoppingCar) {
-        if(ShoppingCar.isEditable()){
-            if(ShoppingCar.isSelect()){
+    private void showEdit(ShoppingCarViewHolder holder, Cart cart) {
+        if(cart.isEditable()){
+            if(cart.isSelect()){
                 holder.asl_num_sel.setVisibility(View.VISIBLE);
                 holder.ll_info.setVisibility(View.GONE);
             }
@@ -116,7 +117,7 @@ public class ShoppingCarAdapter extends BasicAdapter<ShoppingCar, ShoppingCarAda
     public void updateItem(){
         ToastUtils.showToastShort(context, "updateItem");
         for (int i = 0; i < map.size(); i++){
-            ShoppingCar shoppingCar =  map.get(i);
+            Cart shoppingCar =  map.get(i);
             shoppingCar.setEditable(true);
             replace(i, shoppingCar);
         }
