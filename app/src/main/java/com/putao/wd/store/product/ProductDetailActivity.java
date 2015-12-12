@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Attribute;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.model.ProductNorms;
@@ -24,6 +25,10 @@ import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +114,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-
 
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
@@ -154,10 +157,25 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     //tv_parameter.setText(result.get(0).get);
 
                     //包装清单
+                    JSONObject colorObj;
+                    List<String> colorList=new ArrayList<String>();
+                    try{
+                        colorObj=new JSONObject(result.get(0).getAttribute());
+                        JSONArray jsonArray = colorObj.getJSONArray("9");//获取颜色
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            colorList.add(jsonArray.get(i).toString());
+                        }
+                    }catch (JSONException e)
+                    {
+                    }
+
                     tv_pack.setText(result.get(0).getPack());
 
                     //售后
                     tv_service.setText(result.get(0).getServices());
+
+                    //初始化popwindow值
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
                 }
             }
 
@@ -208,7 +226,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 break;
             case R.id.ll_join_car://加入购物车
                 mShoppingCarPopupWindow.show(ll_main);
-                cartAdd("","");
+
                 break;
         }
     }
