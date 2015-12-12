@@ -172,7 +172,7 @@
 
                 <!--售后-->
                 <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ti_sold"
+                    android:id="@+id/ti_service"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -199,6 +199,7 @@
                 <!--规格参数-->
                 <LinearLayout
                     android:id="@+id/ll_parameter"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
@@ -209,6 +210,7 @@
                 <!--包装清单-->
                 <LinearLayout
                     android:id="@+id/ll_pack"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -220,6 +222,7 @@
                 <!--售后-->
                 <LinearLayout
                     android:id="@+id/ll_service"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

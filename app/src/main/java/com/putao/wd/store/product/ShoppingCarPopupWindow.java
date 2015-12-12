@@ -46,31 +46,31 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
      * 测试数据
      */
     private void setUpData() {
-        Tag tag = new Tag();
-        tag.setId(1);
-        tag.setTitle("塔塔紫");
-        mTags.add(tag);
-
-        tag = new Tag();
-        tag.setId(2);
-        tag.setTitle("淘淘粉");
-        mTags.add(tag);
-
-        tag = new Tag();
-        tag.setId(3);
-        tag.setTitle("萌撕拉蓝");
-        tag.setIsEnable(false);
-        mTags.add(tag);
-
-        tag = new Tag();
-        tag.setId(4);
-        tag.setTitle("班得瑞绿");
-        mTags.add(tag);
-
-        tag = new Tag();
-        tag.setId(5);
-        tag.setTitle("魔方橙");
-        mTags.add(tag);
+//        Tag tag = new Tag();
+//        tag.setId(1);
+//        tag.setTitle("塔塔紫");
+//        mTags.add(tag);
+//
+//        tag = new Tag();
+//        tag.setId(2);
+//        tag.setTitle("淘淘粉");
+//        mTags.add(tag);
+//
+//        tag = new Tag();
+//        tag.setId(3);
+//        tag.setTitle("萌撕拉蓝");
+//        tag.setIsEnable(false);
+//        mTags.add(tag);
+//
+//        tag = new Tag();
+//        tag.setId(4);
+//        tag.setTitle("班得瑞绿");
+//        mTags.add(tag);
+//
+//        tag = new Tag();
+//        tag.setId(5);
+//        tag.setTitle("魔方橙");
+//        mTags.add(tag);
     }
 
     @OnClick({R.id.iv_close})
