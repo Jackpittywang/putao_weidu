@@ -91,7 +91,6 @@ public class PutaoStoreFragment extends PTWDFragment {
                 }));
 
                 bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
-                loading.dismiss();
             }
         });
     }
@@ -131,6 +130,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         super.onStart();
         if (isStop)
             isStop = bl_banner.startAutoScroll();
+        loading.dismiss();
     }
 
     @Override
