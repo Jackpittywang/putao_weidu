@@ -89,7 +89,6 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                         Logger.d("js", "注册成功");
                     }
                 });
-
                 break;
             case R.id.tv_user_protocol://用户服务协议
                 startActivity(ProtocolActivity.class);
