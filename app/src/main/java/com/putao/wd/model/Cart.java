@@ -15,6 +15,46 @@ public class Cart implements Serializable {
     private String title;//标题
     private String subtitle;//子标题
 
+    //非接口返回字段
+    private boolean isNull;
+    private boolean isSelect;
+    private boolean editable;
+    private String color;
+
+    public boolean isNull() {
+        return isNull;
+    }
+
+    public void setIsNull(boolean isNull) {
+        this.isNull = isNull;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+
+
     public String getPid() {
         return pid;
     }

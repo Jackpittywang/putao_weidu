@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Cart;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.share.SharePopupWindow;
@@ -207,10 +208,22 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 break;
             case R.id.ll_join_car://加入购物车
                 mShoppingCarPopupWindow.show(ll_main);
+                cartAdd("","");
                 break;
         }
     }
+    /**
+     * 添加购物车
+     */
+    private void cartAdd(String product_id, String qt){
+        networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
 
+        });
+    }
     @Override
     public void onRightAction() {
         startActivity(ShoppingCarActivity.class);

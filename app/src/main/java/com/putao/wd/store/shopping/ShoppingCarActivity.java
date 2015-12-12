@@ -10,6 +10,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.ProductNorms;
+import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.adapter.ShoppingCarAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -52,12 +53,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         addNavigation();
         addListener();
 
-        List<ShoppingCar> cars = sort(getTestData());
-        adapter = new ShoppingCarAdapter(mContext, cars);
-        rv_cars.setAdapter(adapter);
+        getCart();
 
-        //getCart();
-        //cartAdd();
         //cartEdit();
         //cartDelete();
     }
@@ -66,27 +63,19 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 查看购物车
      */
     private void getCart(){
-        networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<Cart>(Cart.class, loading) {
+        networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
-            public void onSuccess(String url, Cart result) {
+            public void onSuccess(String url, ShopCarItem result) {
                 Logger.d(result.toString());
+                List<Cart> cars = sort(result.getUse());
+                adapter = new ShoppingCarAdapter(mContext, cars);
+                rv_cars.setAdapter(adapter);
             }
 
         });
     }
 
-    /**
-     * 添加购物车
-     */
-    private void cartAdd(){
-        networkRequest(StoreApi.cartAdd("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
-                Logger.d(result.toString());
-            }
 
-        });
-    }
 
     /**
      * 编辑购物车
@@ -146,11 +135,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return list;
     }
 
-    private List<ShoppingCar> sort(List<ShoppingCar> cars) {
-        List<ShoppingCar> list = new ArrayList<>();
-        List<ShoppingCar> trueList = new ArrayList<>();
-        List<ShoppingCar> falseList = new ArrayList<>();
-        for (ShoppingCar car : cars) {
+    private List<Cart> sort(List<Cart> cars) {
+        List<Cart> list = new ArrayList<>();
+        List<Cart> trueList = new ArrayList<>();
+        List<Cart> falseList = new ArrayList<>();
+        for (Cart car : cars) {
             if (!car.isNull())
                 trueList.add(car);
             else
