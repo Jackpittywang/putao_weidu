@@ -13,6 +13,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
@@ -114,7 +115,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         wv_content.loadUrl("http://www.putao.com");
         //获取产品详情
         getProductDetail(args.getString(PRODUCT_ID));
-
+        //getProductSpce(args.getString(PRODUCT_ID));//statusCode=500，服务端错误
     }
 
     /**
@@ -166,9 +167,9 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
      * 商品规格
      */
     private void getProductSpce(String product_id) {
-        networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
+        networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ArrayList<ProductNorms>>(ProductNorms.class, loading) {
             @Override
-            public void onSuccess(String url, ProductNorms result) {
+            public void onSuccess(String url, ArrayList<ProductNorms> result) {
                 Logger.d(result.toString());
             }
 
@@ -208,6 +209,11 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 mShoppingCarPopupWindow.show(ll_main);
                 break;
         }
+    }
+
+    @Override
+    public void onRightAction() {
+        startActivity(ShoppingCarActivity.class);
     }
 
     @Override
