@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.CommentItem;
+import com.putao.wd.model.Comment;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -19,11 +19,11 @@ import butterknife.Bind;
  * 评论适配器
  * Created by yanghx on 2015/12/8.
  */
-public class CommentAdapter extends LoadMoreAdapter<CommentItem, CommentAdapter.CommentViewHolder> {
+public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.CommentViewHolder> {
 
 
-    public CommentAdapter(Context context, List<CommentItem> commentItems) {
-        super(context, commentItems);
+    public CommentAdapter(Context context, List<Comment> comments) {
+        super(context, comments);
     }
 
     @Override
@@ -37,13 +37,13 @@ public class CommentAdapter extends LoadMoreAdapter<CommentItem, CommentAdapter.
     }
 
     @Override
-    public void onBindItem(CommentViewHolder holder, CommentItem commentItem, int position) {
-        holder.iv_comment_icon.setImageURL(commentItem.getIconUrl());
-        holder.tv_username.setText(commentItem.getUsername());
-        holder.tv_comment_time.setText(commentItem.getTime());
-        holder.tv_comment_content.setText(commentItem.getComment());
-        holder.tv_comment.setText(commentItem.getComment_count());
-        holder.tv_support.setText(commentItem.getSupport_count());
+    public void onBindItem(CommentViewHolder holder, Comment comment, int position) {
+//        holder.iv_comment_icon.setImageURL(commentItem.getIconUrl());
+//        holder.tv_username.setText(commentItem.getUsername());
+//        holder.tv_comment_time.setText(commentItem.getTime());
+//        holder.tv_comment_content.setText(commentItem.getComment());
+//        holder.tv_comment.setText(commentItem.getComment_count());
+//        holder.tv_support.setText(commentItem.getSupport_count());
 
         holder.sb_support_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override

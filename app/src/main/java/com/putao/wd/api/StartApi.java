@@ -15,7 +15,7 @@ import com.sunnybear.library.util.StringUtils;
  * Created by guchenkai on 2015/12/3.
  */
 public class StartApi {
-    private static final String REQUEST_ACTION_ID = "event_id";//活动id
+    private static final String REQUEST_ACTION_ID = "eventId";//活动id
     private static final String REQUEST_INDEX = "index";//页码
 
     private static final String REQUEST_USER_ID = "user_id";//用户ID
@@ -34,7 +34,7 @@ public class StartApi {
     private static final String REQUEST_UID = "uid";//用户的唯一标识ID
 
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.event.start.wang/" : "http://api.event.start.wang/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.event.start.wang/" : "http://api-event.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;

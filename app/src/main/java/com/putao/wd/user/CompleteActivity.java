@@ -9,8 +9,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
@@ -47,6 +50,8 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     private String img_path;
     private final int CAMERA_REQCODE = 1;
     private final int ALBUM_REQCODE = 2;
+    //=====================上传相关===========================
+    private String uploadToken;//上传token
 
     @Override
     protected int getLayoutId() {
@@ -79,6 +84,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
 //                img_url = result.getHead_img();
 //            }
 //        });
+        getUploadToken();
     }
 
     @Override
@@ -94,6 +100,38 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 mSelectPopupWindow.show(ll_main);
                 break;
         }
+    }
+
+    /**
+     * 获得上传参数
+     */
+    private void getUploadToken() {
+        networkRequest(UserApi.getUploadToken(), new SimpleFastJsonCallback<String>(String.class, null) {
+            @Override
+            public void onSuccess(String url, String result) {
+                JSONObject jsonObject = JSON.parseObject(result);
+                uploadToken = jsonObject.getString("uploadToken");
+                Logger.d(uploadToken);
+                uploadFile(uploadToken, img_path);
+            }
+        });
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param uploadToken    上传token
+     * @param uploadFilePath 上传文件路径
+     */
+    private void uploadFile(String uploadToken, String uploadFilePath) {
+        File file = new File(uploadFilePath);
+        networkRequest(UploadApi.uploadFile(uploadToken, file), new SimpleFastJsonCallback<String>(String.class, null) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.d(result);
+//                JSONObject jsonObject = JSON.parseObject(result);
+            }
+        });
     }
 
     /**

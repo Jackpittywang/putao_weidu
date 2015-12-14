@@ -47,7 +47,7 @@ public class PutaoExploreFragment extends PTWDFragment {
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         getDiaryIndex(3, "", "");
-        addListener();
+//        addListener();
     }
 
     @Override
@@ -69,12 +69,12 @@ public class PutaoExploreFragment extends PTWDFragment {
      * 添加监听器
      */
     private void addListener(){
-        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                getDiaryIndex(0, "", "");
-            }
-        });
+//        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                getDiaryIndex(0, "", "");
+//            }
+//        });
     }
 
     /**
@@ -90,14 +90,15 @@ public class PutaoExploreFragment extends PTWDFragment {
                     @Override
                     public void onSuccess(String url, ArrayList<ExploreProduct> result) {
                         Logger.d(result.toString());
-                        Log.i("pt", "探索号请求成功");
+                        Logger.i("pt", "探索号请求成功");
                         if (null != result) {
+                            rl_empty.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
                         }else {
-//                            rl_empty.setVisibility(View.VISIBLE);
+                            rv_content.setVisibility(View.GONE);
+                            rl_empty.setVisibility(View.VISIBLE);
                         }
-                        //adapter.addAll(result);
                         loading.dismiss();
                     }
                 });

@@ -8,29 +8,31 @@ import java.util.List;
  * Created by guchenkai on 2015/12/8.
  */
 public class ActionDetail implements Serializable {
-    private int id;//活动ID
+    private String id;//活动ID
     private String banner_url;//Banner_url
     private String html_url;//Html5的地址
     private String title;//活动标题
-    private int start_time;//活动开始时间
-    private int end_time;//活动结束时间
-    private String location;//活动地址
+    private String label;//活动标签
+    private String start_time;//活动开始时间
+    private String end_time;//活动结束时间
+    private String location;//线上或线下
     private String description;//活动描述
     private String status;//活动状态
     private int registration_number;//注册号
     private String type;//类型
     private String explanation;//活动说明
     private String site;//活动现场
-    private List<WonderfulReview> wonderful_review;//精彩回顾
+    private String wonderful_review;//精彩回顾
+    private int countCool;//赞的数量
+    private int countComment;//评论的数量
     private List<RegUser> reg_user;//报名用户
-    private int count_cool;//赞的数量
-    private int count_comment;//评论的数量
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -50,6 +52,14 @@ public class ActionDetail implements Serializable {
         this.html_url = html_url;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -58,19 +68,19 @@ public class ActionDetail implements Serializable {
         this.title = title;
     }
 
-    public int getStart_time() {
+    public String getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(int start_time) {
+    public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 
-    public int getEnd_time() {
+    public String getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(int end_time) {
+    public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
 
@@ -90,6 +100,62 @@ public class ActionDetail implements Serializable {
         this.description = description;
     }
 
+    public int getRegistration_number() {
+        return registration_number;
+    }
+
+    public void setRegistration_number(int registration_number) {
+        this.registration_number = registration_number;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public String getWonderful_review() {
+        return wonderful_review;
+    }
+
+    public void setWonderful_review(String wonderful_review) {
+        this.wonderful_review = wonderful_review;
+    }
+
+    public int getCountCool() {
+        return countCool;
+    }
+
+    public void setCountCool(int countCool) {
+        this.countCool = countCool;
+    }
+
+    public int getCountComment() {
+        return countComment;
+    }
+
+    public void setCountComment(int countComment) {
+        this.countComment = countComment;
+    }
+
+    public List<RegUser> getReg_user() {
+        return reg_user;
+    }
+
+    public void setReg_user(List<RegUser> reg_user) {
+        this.reg_user = reg_user;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
     public String getStatus() {
         switch (status) {
             case "ONGOING":
@@ -106,14 +172,6 @@ public class ActionDetail implements Serializable {
         this.status = status;
     }
 
-    public int getRegistration_number() {
-        return registration_number;
-    }
-
-    public void setRegistration_number(int registration_number) {
-        this.registration_number = registration_number;
-    }
-
     public String getType() {
         switch (status) {
             case "TEXT":
@@ -128,61 +186,14 @@ public class ActionDetail implements Serializable {
         this.type = type;
     }
 
-    public String getExplanation() {
-        return explanation;
-    }
-
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
-    public List<WonderfulReview> getWonderful_review() {
-        return wonderful_review;
-    }
-
-    public void setWonderful_review(List<WonderfulReview> wonderful_review) {
-        this.wonderful_review = wonderful_review;
-    }
-
-    public List<RegUser> getReg_user() {
-        return reg_user;
-    }
-
-    public void setReg_user(List<RegUser> reg_user) {
-        this.reg_user = reg_user;
-    }
-
-    public int getCount_cool() {
-        return count_cool;
-    }
-
-    public void setCount_cool(int count_cool) {
-        this.count_cool = count_cool;
-    }
-
-    public int getCount_comment() {
-        return count_comment;
-    }
-
-    public void setCount_comment(int count_comment) {
-        this.count_comment = count_comment;
-    }
-
     @Override
     public String toString() {
         return "ActionDetail{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", banner_url='" + banner_url + '\'' +
                 ", html_url='" + html_url + '\'' +
                 ", title='" + title + '\'' +
+                ", label='" + label + '\'' +
                 ", start_time=" + start_time +
                 ", end_time=" + end_time +
                 ", location='" + location + '\'' +
@@ -192,10 +203,10 @@ public class ActionDetail implements Serializable {
                 ", type='" + type + '\'' +
                 ", explanation='" + explanation + '\'' +
                 ", site='" + site + '\'' +
-                ", wonderful_review=" + wonderful_review +
+                ", wonderful_review='" + wonderful_review + '\'' +
+                ", countCool=" + countCool +
+                ", countComment=" + countComment +
                 ", reg_user=" + reg_user +
-                ", count_cool=" + count_cool +
-                ", count_comment=" + count_comment +
                 '}';
     }
 }
