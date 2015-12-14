@@ -25,7 +25,10 @@ import com.putao.wd.model.OrderProduct;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.Result;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +41,7 @@ import butterknife.OnClick;
 public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     public static final String KEY_ORDER = "order";
+    public static final String KEY_ORDER_ID = "order_id";
     @Bind(R.id.v_status_waiting_pay)
     View v_status_waiting_pay;
     @Bind(R.id.img_status_waiting_pay)
@@ -143,6 +147,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
 
         //初始化布局对象
         initComponent();
+        getOrderDetail();
         //刷新界面
         refreshView();
     }
@@ -152,11 +157,12 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
      * 订单详情
      */
     private void getOrderDetail() {
-        networkRequest(OrderApi.getOrderDetail(""), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
+        networkRequest(OrderApi.getOrderDetail("367"), new SimpleFastJsonCallback<ArrayList<OrderDetail>>(OrderDetail.class, loading) {
             @Override
-            public void onSuccess(String url, OrderDetail result) {
+            public void onSuccess(String url, ArrayList<OrderDetail> result) {
                 Logger.d(result.toString());
             }
+
 
         });
     }

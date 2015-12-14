@@ -94,7 +94,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
                     public void onItemClick(Order order, int position) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable(OrderDetailActivity.KEY_ORDER, order);
+                        bundle.putSerializable(OrderDetailActivity.KEY_ORDER_ID, order.getId());
                         startActivity(OrderDetailActivity.class, bundle);
                     }
                 });
