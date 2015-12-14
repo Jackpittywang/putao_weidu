@@ -10,13 +10,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
-import com.putao.wd.account.AccountConstants;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
+import com.sunnybear.library.view.TimeButton;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -36,6 +35,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     CleanableEditText et_password;
     @Bind(R.id.btn_next)
     Button btn_next;
+    @Bind(R.id.tb_get_verify)
+    TimeButton tb_get_verify;
 
     @Override
     protected int getLayoutId() {
@@ -60,40 +61,54 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tb_get_verify://获取验证码
-                String mobile = et_mobile.getText().toString();
-                if (StringUtils.isEmpty(mobile) || "" == mobile.trim()) {
-                    ToastUtils.showToastLong(mContext, "请输入正确的手机号码");
-                    return;
-                }
-                networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER),
-                        new AccountCallback(loading) {
-                            @Override
-                            public void onSuccess(JSONObject result) {
-                                ToastUtils.showToastLong(mContext, "验证码发送成功");
-                            }
-
-                            @Override
-                            public void onError(String error_msg) {
-                                ToastUtils.showToastLong(mContext, error_msg);
-                            }
-                        });
+                getVerifyCode();
                 break;
             case R.id.btn_next://下一步
                 //String mobile, String password, String code
-                String phone = et_mobile.getText().toString();
-                String sms_verify = et_sms_verify.getText().toString();
-                String password = et_password.getText().toString();
-                networkRequest(AccountApi.register(phone, sms_verify, password), new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        Logger.d("js", "注册成功");
-                    }
-                });
+//                String phone = et_mobile.getText().toString();
+//                String sms_verify = et_sms_verify.getText().toString();
+//                String password = et_password.getText().toString();
+//                networkRequest(AccountApi.register(phone, password, sms_verify), new AccountCallback(loading) {
+//                    @Override
+//                    public void onSuccess(JSONObject result) {
+//                        Logger.d(result.toJSONString());
+//                    }
+//
+//                    @Override
+//                    public void onError(String error_msg) {
+//                        ToastUtils.showToastLong(mContext, error_msg);
+//                    }
+//                });
+                startActivity(CompleteActivity.class);
                 break;
             case R.id.tv_user_protocol://用户服务协议
                 startActivity(ProtocolActivity.class);
                 break;
         }
+    }
+
+    /**
+     * 获取验证码
+     */
+    private void getVerifyCode() {
+        String mobile = et_mobile.getText().toString().trim();
+        if (StringUtils.isEmpty(mobile) || StringUtils.checkMobileFormat(mobile)) {
+            ToastUtils.showToastLong(mContext, "您输入的手机号码有误，请再检查一下吧");
+            tb_get_verify.reset();
+            return;
+        }
+        networkRequest(AccountApi.checkMobile(mobile), new AccountCallback(loading) {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Logger.d(result.toJSONString());
+                ToastUtils.showToastLong(mContext, "1234");
+            }
+
+            @Override
+            public void onError(String error_msg) {
+                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登陆吧");
+            }
+        });
     }
 
     @Override

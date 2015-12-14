@@ -3,18 +3,13 @@ package com.putao.wd.home;
 import android.os.Bundle;
 import android.view.View;
 
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.order.OrderListActivity;
-import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
-import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.select.IndicatorButton;
 
@@ -44,8 +39,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        if (!PreferenceUtils.getValue("isLogin", false))
-            startActivity(LoginActivity.class);
         //Logger.d(MainActivity.TAG, "MeFragment启动");
         si_message.show(18);
         btn_pay.show(9);

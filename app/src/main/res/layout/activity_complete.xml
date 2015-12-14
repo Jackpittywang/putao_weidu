@@ -88,8 +88,7 @@
                     android:id="@+id/iv_header_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/app_icon"
-                    android:scaleType="centerCrop"/>
+                    auto:is_circle="true" />
 
                 <ImageView
                     android:id="@+id/iv_select_icon"

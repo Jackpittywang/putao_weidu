@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
-import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.util.Logger;
 
 import java.util.Timer;
@@ -32,18 +31,14 @@ public class TimeButton extends TextView implements View.OnClickListener {
     private int mClickBackgroundResId;
     private int mUnClickBackgroundResId;
 
-    private WeakHandler mHandler = new WeakHandler(new Handler.Callback() {
+    private Handler mHandler = new Handler() {
         @Override
-        public boolean handleMessage(Message msg) {
+        public void handleMessage(Message msg) {
             TimeButton.this.setText(replace(mTextAfter, (int) (mTime / 1000)));
             mTime -= 1000;
-            if (mTime < 0) {
-                reset();
-                clearTimer();
-            }
-            return true;
+            if (mTime < 0) reset();
         }
-    });
+    };
 
     private String replace(String str, int time) {
         return str.replace("$", String.valueOf(time));
@@ -68,14 +63,14 @@ public class TimeButton extends TextView implements View.OnClickListener {
         mCountdownTime = array.getInt(R.styleable.TimeButton_countdown_time, 0);
         mTextBefore = array.getString(R.styleable.TimeButton_text_before);
         mTextAfter = array.getString(R.styleable.TimeButton_text_after);
-        mClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_click_background, 0);
-        mUnClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_unclick_background, 0);
+        mClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_click_background, -1);
+        mUnClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_unclick_background, -1);
         array.recycle();
     }
 
     private void initView() {
         setText(mTextBefore);
-        if (mClickBackgroundResId != 0)
+        if (mClickBackgroundResId != -1)
             setTextColor(mClickBackgroundResId);
         setOnClickListener(this);
     }
@@ -93,13 +88,14 @@ public class TimeButton extends TextView implements View.OnClickListener {
     }
 
     public void reset() {
+        clearTimer();
         setEnabled(true);
         setText(mTextBefore);
         if (mClickBackgroundResId != 0)
             setTextColor(mClickBackgroundResId);
     }
 
-    public void clearTimer() {
+    private void clearTimer() {
         if (mTt != null) mTt.cancel();
         mTt = null;
         if (mT != null) mT.cancel();
@@ -121,14 +117,13 @@ public class TimeButton extends TextView implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (mL != null)
-            mL.onClick(v);
         initTimer();
         setText(replace(mTextAfter, (int) (mTime / 1000)));
-        if (mUnClickBackgroundResId != 0)
+        if (mUnClickBackgroundResId != -1)
             setTextColor(mUnClickBackgroundResId);
         setEnabled(false);
         mT.schedule(mTt, 0, 1000);
+        if (mL != null) mL.onClick(v);
     }
 
     @Override

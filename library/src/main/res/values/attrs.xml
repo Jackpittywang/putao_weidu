@@ -3,6 +3,7 @@
     <!--ImageDraweeView-->
     <declare-styleable name="ImageDraweeView">
         <attr name="aspect_ratio" format="float" />
+        <attr name="is_circle" format="boolean" />
     </declare-styleable>
 
     <!--BasicRecyclerView-->

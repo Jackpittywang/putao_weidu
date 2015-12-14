@@ -46,10 +46,8 @@ public abstract class SelectPopupWindow extends BasicPopupWindow implements View
             case R.id.ll_second:
                 onSecondClick(v);
                 break;
-            case R.id.ll_cancel:
-                dismiss();
-                break;
         }
+        dismiss();
     }
 
     /**
