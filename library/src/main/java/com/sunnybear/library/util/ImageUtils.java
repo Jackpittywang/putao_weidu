@@ -120,14 +120,16 @@ public class ImageUtils {
      * 根据路径获得图片并压缩，返回bitmap用于显示
      *
      * @param filePath 图片路径
+     * @param width    压缩后的宽
+     * @param height   压缩后的高
      * @return
      */
-    public static Bitmap getSmallBitmap(String filePath) {
+    public static Bitmap getSmallBitmap(String filePath, int width, int height) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, 320, 320);
+        options.inSampleSize = calculateInSampleSize(options, width, height);
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(filePath, options);

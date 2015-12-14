@@ -2,6 +2,7 @@ package com.putao.wd;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.StartApi;
@@ -37,6 +38,9 @@ public class GlobalApplication extends BasicApplication {
 
 //        WechatShareTools.regToWX(getApplicationContext());
 //        installApi();
+
+        //Baidu地图初始化
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     /**
