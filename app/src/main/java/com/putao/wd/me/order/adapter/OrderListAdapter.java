@@ -74,6 +74,12 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
                 mOnCancelOrder.CancelOrder(order.getId());
             }
         });
+        holder.btn_order_operation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnPayOperation.PayOperation("",order.getId());
+            }
+        });
 
         /*boolean isDefault = Order.getIsDefault();
         if (isDefault)
@@ -134,7 +140,7 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
     }
     //支付操作
     public interface OnPayOperation{
-        void PayOperation(String oper,String order_id);
+        void PayOperation(String oper,int order_id);
     }
     private OnPayOperation mOnPayOperation;
     public void setOnPayOperation(OnPayOperation onPayOperation){
