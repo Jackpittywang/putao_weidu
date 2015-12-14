@@ -51,6 +51,11 @@
 -dontwarn com.squareup.okhttp.**
 -keep class com.squareup.okhttp.** { *; }
 -dontwarn okio.**
+#retrofit配置
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
 # fastjson配置
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.** { *; }

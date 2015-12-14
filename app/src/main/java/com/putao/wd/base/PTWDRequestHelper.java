@@ -45,4 +45,14 @@ public class PTWDRequestHelper {
                 .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
+
+    /**
+     * 封装固定请求参数(上传使用)
+     *
+     * @return Request实例
+     */
+    public static FormEncodingRequestBuilder upload() {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, "60000277"));
+    }
 }
