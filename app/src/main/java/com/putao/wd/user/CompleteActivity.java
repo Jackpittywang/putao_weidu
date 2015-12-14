@@ -138,7 +138,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     String picturePath = cursor.getString(columnIndex);
                     Logger.i("pt", picturePath);
                     cursor.close();
-                    bitmap = ImageUtils.getSmallBitmap(picturePath);
+                    bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.resize(320, 320).setImage(bitmap);
                     break;
             }

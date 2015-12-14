@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.putao.wd"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    package="com.putao.wd"
     android:versionCode="1"
     android:versionName="1.0.0">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".GlobalApplication"
@@ -31,17 +34,15 @@
         <!-- 分属app_id -->
         <meta-data
             android:name="app_id"
-            android:value="1109"/>
-        <!-- 主页 -->
             android:value="1109" />
         <!-- 闪屏 -->
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!--主页-->
@@ -52,120 +53,124 @@
         <!-- 登录 -->
         <activity
             android:name=".user.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--注册-->
         <activity
             android:name=".user.RegisterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--用户服务协议-->
         <activity
             android:name=".user.ProtocolActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--完善用户信息-->
         <activity
             android:name=".user.CompleteActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--忘记密码-->
         <activity
             android:name=".user.ForgetPasswordActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--活动详情-->
         <activity
             android:name=".start.action.ActionsDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--重置密码-->
         <activity
             android:name=".user.ResetPasswordAcitivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 收货地址列表 -->
         <activity
             android:name=".me.address.AddressListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 地区选择 -->
         <activity
             android:name=".me.address.CitySelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 收货地址编辑 -->
         <activity
             android:name=".me.address.AddressEditActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 商品详情 -->
         <activity
             android:name=".store.product.ProductDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 订单列表 -->
         <activity
             android:name=".me.order.OrderListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 订单详情页 -->
         <activity
             android:name=".me.order.OrderDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 订单物流详情页 -->
         <activity
             android:name=".me.order.OrderShipmentDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 关于我们 -->
         <activity
             android:name=".me.address.AboutUsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 设置 -->
         <activity
             android:name=".me.setting.SettingActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 消息中心 -->
         <activity
             android:name=".me.message.MessageCenterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 关注成功 -->
         <activity
             android:name=".explore.AttentionSuccessActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 购物车 -->
         <activity
             android:name=".store.shopping.ShoppingCarActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 新闻详情 -->
         <activity
             android:name=".start.news.NewsDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 我要参加 -->
         <activity
             android:name=".start.apply.ApplyActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 评论 -->
         <activity
             android:name=".start.comment.CommentActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--图片介绍-->
         <activity
             android:name=".start.action.PictrueInfoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- 填写订单 -->
         <activity
             android:name=".store.order.WriteOrderActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--发票信息-->
         <activity
             android:name=".store.invoice.InvoiceInfoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--发票信息-->
         <activity
             android:name=".store.cashier.CashierActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--管理-->
         <activity
             android:name=".explore.manage.ManageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!--管理设置-->
         <activity
             android:name=".explore.manage.ManagerSettingsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <!--活动地址-->
+        <activity
+            android:name=".map.MapActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
             android:name=".qrcode.CaptureActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- shareSDK -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -177,10 +182,10 @@
 
                 <!-- <data android:scheme="tencent" /> -->
 
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!-- 微信分享回调 -->
@@ -189,15 +194,19 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--Baidu地图配置-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
         <!-- 地区选择 -->
-        <service android:name=".me.address.CityService"/>
+        <service android:name=".me.address.CityService" />
         <!--表情解析-->
-        <service android:name=".util.EmojiService"/>
+        <service android:name=".util.EmojiService" />
 
-        <activity android:name=".TestActivity"/>
+        <activity android:name=".TestActivity" />
         <activity
             android:name=".JointImageTestActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

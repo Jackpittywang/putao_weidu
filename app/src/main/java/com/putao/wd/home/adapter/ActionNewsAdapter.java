@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.map.MapActivity;
 import com.putao.wd.model.ActionNews;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -23,9 +25,11 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHold
     private static final int TYPE_ACTION = 1;
     private static final int TYPE_NEWS = 2;
 
+    private BasicFragmentActivity mActivity;
 
     public ActionNewsAdapter(Context context, List<ActionNews> actionNewsItems) {
         super(context, actionNewsItems);
+        mActivity = (BasicFragmentActivity) context;
     }
 
     @Override
@@ -74,6 +78,12 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHold
             viewHolder.tv_action_title.setText(actionNews.getTitle());
             viewHolder.tv_action_description.setText(actionNews.getDescription());
             viewHolder.tv_address.setText(actionNews.getLocation());
+            viewHolder.tv_address.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.startActivity(MapActivity.class);
+                }
+            });
             viewHolder.tv_time.setText(DateUtils.secondToDate(Integer.parseInt(actionNews.getStart_time()), "yyyy.MM.dd"));
             viewHolder.tv_people_count.setText(actionNews.getRegistration_number());
             viewHolder.tv_action_label.setText(actionNews.getLabel());

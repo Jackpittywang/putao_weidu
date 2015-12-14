@@ -63,8 +63,8 @@
 -keep class com.antew.redditinpictures.library.imgur.** { *; }
 -keep class com.antew.redditinpictures.library.reddit.** { *; }
 # LeakCanary配置
--keep class org.eclipse.mat.** { *; }
--keep class com.squareup.leakcanary.** { *; }
+#-keep class org.eclipse.mat.** { *; }
+#-keep class com.squareup.leakcanary.** { *; }
 # GreenDao配置
 -keep class de.greenrobot.dao.** { *; }
 -keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
@@ -73,3 +73,7 @@
 -keep class **$Properties
 #bugly配置
 -keep public class com.tencent.bugly.** { *; }
+#Baidu地图配置
+-keep class com.baidu.** { *; }
+-keep class vi.com.** { *; }
+-dontwarn com.baidu.**
