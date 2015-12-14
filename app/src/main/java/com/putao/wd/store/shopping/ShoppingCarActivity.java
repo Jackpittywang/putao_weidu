@@ -15,6 +15,7 @@ import com.putao.wd.store.adapter.ShoppingCarAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.NavigationBar;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
@@ -42,7 +43,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
-
+    private boolean isEditable=true;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_shopping_car;
@@ -80,8 +81,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 编辑购物车
      */
-    private void cartEdit(){
-        networkRequest(StoreApi.cartEdit("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+    private void cartEdit(String product_id, String qt){
+        networkRequest(StoreApi.cartEdit(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Cart> result) {
                 Logger.d(result.toString());
@@ -184,8 +185,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onRightAction() {
         if (adapter.getItemState()) {
-            ToastUtils.showToastShort(this, "点击编辑");
-            adapter.updateItem();
+            if(isEditable) {
+                ToastUtils.showToastShort(this, "点击编辑");
+                adapter.updateItem();
+                setRightTitle("完成");
+            }else {
+                cartEdit("","");
+                setRightTitle("编辑");
+            }
         }
     }
 }
