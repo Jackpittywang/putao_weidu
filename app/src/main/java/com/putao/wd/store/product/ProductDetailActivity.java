@@ -168,7 +168,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     tv_service.setText(result.get(0).getServices());
 
                     //初始化popwindow值
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
                 }
             }
 

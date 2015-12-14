@@ -59,8 +59,9 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     private final List<Tag> mTags = new ArrayList<>();
     private int count = 1;//总数量
     private float Price = 0;
+    private String product_id;
 
-    public ShoppingCarPopupWindow(Context context, List<String> colorList, String title, String describe, String price) {
+    public ShoppingCarPopupWindow(Context context, List<String> colorList, String product_id,String title, String describe, String price) {
         super(context);
         setUpData(colorList);
         tl_color_tag.addTags(mTags);
@@ -68,6 +69,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         tv_product_intro.setText(describe);
         tv_product_price.setText(price);
         Price = Float.parseFloat(price.substring(1));
+        this.product_id=product_id;
         tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
             public void onTagItemCheck(Tag tag, int position) {
@@ -155,7 +157,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                     tv_subtract.setEnabled(false);
                 break;
             case R.id.ll_join_car:
-                cartAdd(Price + "", count + "");
+                cartAdd(product_id, count + "");
                 break;
         }
     }
