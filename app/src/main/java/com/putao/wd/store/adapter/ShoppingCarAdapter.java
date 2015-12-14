@@ -28,7 +28,7 @@ import butterknife.Bind;
 public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.ShoppingCarViewHolder> {
 
     private boolean itemState;//记录当前状态值
-    private HashMap<Integer, Cart> map;//记录当前商品
+    public HashMap<Integer, Cart> map;//记录当前商品
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
