@@ -15,6 +15,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -30,6 +31,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/27.
  */
 public class LoginActivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
+    public static final String EVENT_LOGIN = "login";
+
     @Bind(R.id.et_mobile)
     CleanableEditText et_mobile;
     @Bind(R.id.et_password)
@@ -114,5 +117,11 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
     }
 }

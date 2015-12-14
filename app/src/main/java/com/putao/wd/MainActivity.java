@@ -6,13 +6,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
@@ -36,12 +36,13 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Bind(R.id.ti_me)
     TabItem ti_me;
 
-    private SparseArray<Fragment> mFragmentArray;
-
     private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
     private PutaoExploreFragment mPutaoExploreFragment;//探索号
     private PutaoStoreFragment mPutaoStoreFragment;//葡商城
     private MeFragment mMeFragment;//我
+
+    private SparseArray<Class<? extends Fragment>> mFragments;
+    private int currentItemId;//当前的itemId
 
     @Override
     protected int getLayoutId() {
@@ -51,10 +52,12 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addHome();
-        ti_start_circle.show(4);//显示指示数字
-        ti_explore.show(4);//显示指示数字
-        ti_store.show(4);//显示指示数字
-        ti_me.show(4);//显示指示数字
+        mFragments = new SparseArray<>();
+        addFragment();
+//        ti_start_circle.show(4);//显示指示数字
+//        ti_explore.show(4);//显示指示数字
+//        ti_store.show(4);//显示指示数字
+//        ti_me.show(4);//显示指示数字
         addListener();
     }
 
@@ -67,18 +70,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 .add(R.id.fragment_container, mPutaoStartCircleFragment).commit();
     }
 
-    /**
-     * 隐藏fragment
-     */
-    private void hideFragment(FragmentTransaction fragmentTransaction) {
-        if (mPutaoStartCircleFragment != null)
-            fragmentTransaction.hide(mPutaoStartCircleFragment);
-        if (mPutaoExploreFragment != null)
-            fragmentTransaction.hide(mPutaoExploreFragment);
-        if (mPutaoStoreFragment != null)
-            fragmentTransaction.hide(mPutaoStoreFragment);
-        if (mMeFragment != null)
-            fragmentTransaction.hide(mMeFragment);
+    private void addFragment() {
+        mFragments.put(R.id.ti_start_circle, PutaoStartCircleFragment.class);
+        mFragments.put(R.id.ti_explore, PutaoExploreFragment.class);
+        mFragments.put(R.id.ti_store, PutaoStoreFragment.class);
+        mFragments.put(R.id.ti_me, MeFragment.class);
     }
 
     /**
@@ -100,65 +96,89 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      */
     @Override
     public void onTabItemSelected(TabItem item, int position) {
-//        if (item.getId() != R.id.ti_start_circle) {
-//        goLoginActivity();
-//        }
-        FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-        hideFragment(mFragmentTransaction);
-        switch (item.getId()) {
+        currentItemId = item.getId();
+        switch (currentItemId) {
             case R.id.ti_start_circle://葡星圈
                 ti_start_circle.hide();//关闭指示数字
-                if (mPutaoStartCircleFragment == null) {
-                    mPutaoStartCircleFragment = (PutaoStartCircleFragment) Fragment.instantiate(mContext, PutaoStartCircleFragment.class.getName());
-                    mFragmentTransaction.add(R.id.fragment_container, mPutaoStartCircleFragment);
-                } else {
-                    mFragmentTransaction.show(mPutaoStartCircleFragment);
-                }
+                setCurrentItem(currentItemId);
                 break;
             case R.id.ti_explore://探索号
                 ti_explore.hide();//关闭指示数字
-                if (mPutaoExploreFragment == null) {
-                    mPutaoExploreFragment = (PutaoExploreFragment) Fragment.instantiate(mContext, PutaoExploreFragment.class.getName());
-                    mFragmentTransaction.add(R.id.fragment_container, mPutaoExploreFragment);
-                } else {
-                    mFragmentTransaction.show(mPutaoExploreFragment);
-                }
+                if (PreferenceUtils.getValue("isLogin", false))
+                    setCurrentItem(currentItemId);
+                else
+                    startActivity(LoginActivity.class);
                 break;
             case R.id.ti_store://葡商城
                 ti_store.hide();//关闭指示数字
-                if (mPutaoStoreFragment == null) {
-                    mPutaoStoreFragment = (PutaoStoreFragment) Fragment.instantiate(mContext, PutaoStoreFragment.class.getName());
-                    mFragmentTransaction.add(R.id.fragment_container, mPutaoStoreFragment);
-                } else {
-                    mFragmentTransaction.show(mPutaoStoreFragment);
-                }
+                if (PreferenceUtils.getValue("isLogin", false))
+                    setCurrentItem(currentItemId);
+                else
+                    startActivity(LoginActivity.class);
                 break;
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
-                if (checkLogin()) return;
-                if (mMeFragment == null) {
-                    mMeFragment = (MeFragment) Fragment.instantiate(mContext, MeFragment.class.getName());
-                    mFragmentTransaction.add(R.id.fragment_container, mMeFragment);
-                } else {
-                    mFragmentTransaction.show(mMeFragment);
-                }
-//                startService(EmojiService.class);
-//                startActivity(TestActivity.class);
-//                startActivity(JointImageTestActivity.class);
+                if (PreferenceUtils.getValue("isLogin", false))
+                    setCurrentItem(currentItemId);
+                else
+                    startActivity(LoginActivity.class);
                 break;
         }
-        mFragmentTransaction.commit();
     }
 
     /**
-     * 验证登录
+     * 隐藏fragment
      */
-    private boolean checkLogin() {
-        if (PreferenceUtils.getValue("isLogin", false)) {
-            return true;
+    private void hideFragment(FragmentTransaction fragmentTransaction) {
+        if (mPutaoStartCircleFragment != null)
+            fragmentTransaction.hide(mPutaoStartCircleFragment);
+        if (mPutaoExploreFragment != null)
+            fragmentTransaction.hide(mPutaoExploreFragment);
+        if (mPutaoStoreFragment != null)
+            fragmentTransaction.hide(mPutaoStoreFragment);
+        if (mMeFragment != null)
+            fragmentTransaction.hide(mMeFragment);
+    }
+
+    /**
+     * 选择当前Item
+     *
+     * @param resId
+     */
+    private void setCurrentItem(int resId) {
+        Class<? extends Fragment> fragmentClass = mFragments.get(resId);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(fragmentTransaction);
+        if (PutaoStartCircleFragment.class.equals(fragmentClass))
+            mPutaoStartCircleFragment = (PutaoStartCircleFragment) showFragment(fragmentTransaction, mPutaoStartCircleFragment, PutaoStartCircleFragment.class);
+        else if (PutaoExploreFragment.class.equals(fragmentClass))
+            mPutaoExploreFragment = (PutaoExploreFragment) showFragment(fragmentTransaction, mPutaoExploreFragment, PutaoExploreFragment.class);
+        else if (PutaoStoreFragment.class.equals(fragmentClass))
+            mPutaoStoreFragment = (PutaoStoreFragment) showFragment(fragmentTransaction, mPutaoStoreFragment, PutaoStoreFragment.class);
+        else if (MeFragment.class.equals(fragmentClass))
+            mMeFragment = (MeFragment) showFragment(fragmentTransaction, mMeFragment, MeFragment.class);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    /**
+     * 显示fragment
+     *
+     * @param fragment 目标fragment
+     */
+    private Fragment showFragment(FragmentTransaction fragmentTransaction, Fragment fragment, Class<? extends Fragment> fragmentClass) {
+        if (fragment == null) {
+            fragment = Fragment.instantiate(mContext, fragmentClass.getName());
+            fragmentTransaction.add(R.id.fragment_container, fragment);
+        } else {
+            fragmentTransaction.show(fragment);
         }
-        startActivity(LoginActivity.class);
-        return false;
+        return fragment;
+    }
+
+
+    @Subcriber(tag = LoginActivity.EVENT_LOGIN)
+    public void eventLogin(String tag) {
+        setCurrentItem(currentItemId);
     }
 
     /**
@@ -173,15 +193,5 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return exit();
         return super.onKeyDown(keyCode, event);
-    }
-
-    /**
-     * 除蒲星圈外其他tab点击,未登录则进入登录页
-     */
-    private void goLoginActivity() {
-        if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentUid())) {
-            startActivity(LoginActivity.class);
-            return;
-        }
     }
 }

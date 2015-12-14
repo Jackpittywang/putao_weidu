@@ -35,8 +35,7 @@ public class MapActivity extends PTWDActivity {
 
         mBaiduMap = mv_map.getMap();
         loading.show();
-        MapUtils.searchAddress(mContext, "", address,
-                new MapUtils.OnSearchMapCallback() {
+        MapUtils.searchAddress(mContext, "", address, new MapUtils.OnSearchMapCallback() {
                     @Override
                     public void onSearchMap(LatLng latLng) {
                         mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
