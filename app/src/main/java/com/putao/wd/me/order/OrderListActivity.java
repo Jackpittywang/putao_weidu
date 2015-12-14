@@ -33,7 +33,7 @@ import butterknife.Bind;
  * 订单列表
  * Created by yanguoqiang on 15/11/27.
  */
-public class OrderListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener {
+public class OrderListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener,OrderListAdapter.OnPayOperation,OrderListAdapter.OnCancelOrder {
 
     @Bind(R.id.rv_order)
     BasicRecyclerView rv_order;
@@ -70,7 +70,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         networkRequest(OrderApi.getOrderLists(type, page), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Order> result) {
-               // Logger.d(result.toString());
+                // Logger.d(result.toString());
                 // 测试数据结束
                 if (result == null || result.size() == 0) {
                     rl_no_order.setVisibility(View.VISIBLE);
@@ -101,86 +101,22 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         });
     }
 
+    /**
+     * 取消订单
+     */
+    private void orderCancel(int order_id){
+        networkRequest(OrderApi.orderCancel(order_id+""), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.d(result.toString());
+                ToastUtils.showToastShort(mContext,result.toString());
+            }
 
-    // 测试数据
-    private void initTestData(){
-        // 测试数据
-        orderList = new ArrayList<OrderDto>();
-
-//        for (int i = 0; i < 10; i++) {
-//            OrderDto order = new OrderDto();
-//            order.setOrderNo(Math.random() + "");
-//            order.setPurchaseTime(System.currentTimeMillis());
-//            order.setTotalCost(569);
-//            order.setCustomerName("葡萄科技");
-//            order.setCustomerAddress("宜山路218号");
-//            order.setCustomerPhone("13622222222");
-//            if (i == 0) order.setOrderStatus(OrderCommon.ORDER_WAITING_PAY);
-//            else if (i == 1) order.setOrderStatus(OrderCommon.ORDER_WAITING_SHIPMENT);
-//            else if (i == 2) order.setOrderStatus(OrderCommon.ORDER_WAITING_SIGN);
-//            else if (i == 3) order.setOrderStatus(OrderCommon.ORDER_SALE_SERVICE);
-//            else if (i == 4) order.setOrderStatus(OrderCommon.ORDER_CANCLED);
-//            else if (i == 5) order.setOrderStatus(OrderCommon.ORDER_CLOSED);
-//            else order.setOrderStatus(OrderCommon.ORDER_WAITING_PAY);
-//
-//            int num = (int) (Math.random() * 3);
-//            List<OrderGoodsDto> goodsList = new ArrayList<OrderGoodsDto>();
-//            for (int j = 0; j < num; j++) {
-//                OrderGoodsDto goods = new OrderGoodsDto();
-//                goods.setImageUrl("http://bbs.putao.com/windid/attachment/avatar/000/66/22/662295_small.jpg");
-//                goods.setNumber((int) Math.round(Math.random() * 10) + 1);
-//                goods.setPrice((int) Math.round(Math.random() * 100) + 1);
-//                goods.setName("葡萄探索号" + j);
-//                goods.setSpecification("颜色：紫色");
-//                if (j == 1) goods.setIsPreSale(true);
-//                goodsList.add(goods);
-//
-//            }
-//            order.setGoodsList(goodsList);
-//
-//            List<OrderShipmentListItemDto> shipmentList = new ArrayList<OrderShipmentListItemDto>();
-//            num = (int) (Math.random() * 3) + 1;
-//            Logger.i(TAG, "package num is:" + num);
-//            for (int j = 0; j < num; j++) {
-//                OrderShipmentListItemDto orderShipmentListItemDto = new OrderShipmentListItemDto();
-//                orderShipmentListItemDto.setTitle("包裹" + j);
-//                orderShipmentListItemDto.setStatus((int) (Math.random() * 7));
-//                orderShipmentListItemDto.setShipmentId(System.currentTimeMillis() + "");
-//                shipmentList.add(orderShipmentListItemDto);
-//            }
-//            order.setShipmentList(shipmentList);
-//
-//            orderList.add(order);
-//
-//        }
-//        // 测试数据结束
-//        if (orderList == null || orderList.size() == 0) {
-//            rl_no_order.setVisibility(View.VISIBLE);
-//            rv_order.setVisibility(View.INVISIBLE);
-//            return;
-//        } else {
-//            rl_no_order.setVisibility(View.INVISIBLE);
-//            rv_order.setVisibility(View.VISIBLE);
-//        }
-//
-//        adapter = new OrderListAdapter(mContext, orderList);
-//        rv_order.setAdapter(adapter);
-//        //点击item
-//        rv_order.setOnItemClickListener(new OnItemClickListener<OrderDto>() {
-//
-//            @Override
-//            public void onItemClick(OrderDto orderDto, int position) {
-//
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(OrderDetailActivity.KEY_ORDER, orderDto);
-//                startActivity(OrderDetailActivity.class, bundle);
-//            }
-//        });
-//
-//        ll_title.setTitleItemSelectedListener(this);
-//
-//        refreshViewByType(0);
+        });
     }
+
+
+
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
@@ -243,4 +179,13 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     }
 
 
+    @Override
+    public void CancelOrder(int order_id) {
+        orderCancel(order_id);
+    }
+
+    @Override
+    public void PayOperation(String oper, String product_id) {
+
+    }
 }

@@ -2,6 +2,7 @@ package com.putao.wd.me.order.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
     }
 
     @Override
-    public void onBindItem(OrderListViewHolder holder, Order order, int position) {
+    public void onBindItem(OrderListViewHolder holder, final Order order, int position) {
         holder.tv_order_no.setText(order.getOrder_sn());
         holder.tv_order_purchase_time.setText("2015-10-25 12:55:03");
         holder.ll_goods.removeAllViews();
@@ -67,7 +68,12 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
         holder.tv_total_cost.setText(goodsNumber + "件商品 合计：¥" + order.getTotal_amount());
         holder.tv_shipment_fee.setText("含运费：" + order.getExpress_money());
 
-
+        holder.btn_order_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnCancelOrder.CancelOrder(order.getId());
+            }
+        });
 
         /*boolean isDefault = Order.getIsDefault();
         if (isDefault)
@@ -108,12 +114,30 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
         TextView tv_order_purchase_time;
         @Bind(R.id.tv_order_status)
         TextView tv_order_status;
-
+        @Bind(R.id.btn_order_cancel)
+        Button btn_order_cancel;//取消
+        @Bind(R.id.btn_order_operation)
+        Button btn_order_operation;//订单操作
 
         public OrderListViewHolder(View itemView) {
             super(itemView);
         }
     }
 
-
+    //取消订单回调
+    public interface OnCancelOrder{
+        void CancelOrder(int order_id);
+    }
+    private OnCancelOrder mOnCancelOrder;
+    public void setOnCancelOrder(OnCancelOrder onCancelOrder){
+        this.mOnCancelOrder=onCancelOrder;
+    }
+    //支付操作
+    public interface OnPayOperation{
+        void PayOperation(String oper,String order_id);
+    }
+    private OnPayOperation mOnPayOperation;
+    public void setOnPayOperation(OnPayOperation onPayOperation){
+        this.mOnPayOperation=onPayOperation;
+    }
 }
