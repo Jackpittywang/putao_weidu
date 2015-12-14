@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 商城广告栏
  * Created by wango on 2015/12/11.
  */
 public class StoreBannerAdapter extends BannerAdapter {
