@@ -10,14 +10,14 @@ public class OrderProduct implements Serializable {
     private int id;//id
     private int order_id;//订单id
     private int product_id;//商品id
-    private int product_number;//商品号
+    private String product_number;//商品号
     private String icon;//商品图标
     private String product_name;//商品名称
     private int quantity;//商品数量
     private String price;//商品金额
     private String sku;//商品SKU
-    private int created_time;//创建时间
-    private int updated_time;//更新时间
+    private String created_time;//创建时间
+    private String updated_time;//更新时间
 
     public int getId() {
         return id;
@@ -43,11 +43,11 @@ public class OrderProduct implements Serializable {
         this.product_id = product_id;
     }
 
-    public int getProduct_number() {
+    public String getProduct_number() {
         return product_number;
     }
 
-    public void setProduct_number(int product_number) {
+    public void setProduct_number(String product_number) {
         this.product_number = product_number;
     }
 
@@ -91,19 +91,19 @@ public class OrderProduct implements Serializable {
         this.sku = sku;
     }
 
-    public int getCreated_time() {
+    public String getCreated_time() {
         return created_time;
     }
 
-    public void setCreated_time(int created_time) {
+    public void setCreated_time(String created_time) {
         this.created_time = created_time;
     }
 
-    public int getUpdated_time() {
+    public String getUpdated_time() {
         return updated_time;
     }
 
-    public void setUpdated_time(int updated_time) {
+    public void setUpdated_time(String updated_time) {
         this.updated_time = updated_time;
     }
 
