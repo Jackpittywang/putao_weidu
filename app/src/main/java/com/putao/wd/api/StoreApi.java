@@ -11,6 +11,7 @@ import com.sunnybear.library.model.http.request.RequestMethod;
  */
 public class StoreApi {
     private static final String REQUEST_PRODUCT_ID = "id";//产品id
+    private static final String REQUEST_PRODUCT_PID = "pid";//产品id(添加购物车时用）
     private static final String REQUEST_QT = "qt";//数量
     private static final String REQUEST_OLD_PID = "old_pid";//旧商品id
     private static final String REQUEST_NEW_PID = "new_pid";//新商品id
@@ -92,7 +93,7 @@ public class StoreApi {
      */
     public static Request cartAdd(String product_id, String qt) {
         return PTWDRequestHelper.store()
-                .addParam(REQUEST_PRODUCT_ID, product_id)
+                .addParam(REQUEST_PRODUCT_PID, product_id)
                 .addParam(REQUEST_QT, qt)
                 .build(RequestMethod.POST, URL_CART_ADD);
     }

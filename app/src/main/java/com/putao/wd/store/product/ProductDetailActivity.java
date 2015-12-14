@@ -77,18 +77,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar stickyHeaderLayoutSticky;//概述
-    @Bind(R.id.tv_parameter)//规格参数
-    TextView tv_parameter;
-    @Bind(R.id.ll_parameter)//规格参数
-    LinearLayout ll_parameter;
-    @Bind(R.id.tv_pack)//包装清单
-    TextView tv_pack;
-    @Bind(R.id.ll_pack)//包装清单
-    LinearLayout ll_pack;
-    @Bind(R.id.tv_service)//售后服务
-    TextView tv_service;
-    @Bind(R.id.ll_service)//售后服务
-    LinearLayout ll_service;
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;
 
@@ -161,11 +149,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     }catch (JSONException e)
                     {
                     }
-
-                    tv_pack.setText(result.get(0).getPack());
-
-                    //售后
-                    tv_service.setText(result.get(0).getServices());
 
                     //初始化popwindow值
                     mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
@@ -241,7 +224,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             case R.id.ti_pack://包装清单
                 wv_content.loadUrl("http://www.putao.com");
                 break;
-            case R.id.tv_service://售后
+            case R.id.ti_service://售后
                 wv_content.loadUrl("http://www.putao.com");
                 break;
         }
