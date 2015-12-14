@@ -88,13 +88,13 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
                 adapter.setOnCancelOrder(OrderListActivity.this);
                 rv_order.setAdapter(adapter);
                 //点击item
-                rv_order.setOnItemClickListener(new OnItemClickListener<OrderDto>() {
+                rv_order.setOnItemClickListener(new OnItemClickListener<Order>() {
 
                     @Override
-                    public void onItemClick(OrderDto orderDto, int position) {
+                    public void onItemClick(Order order, int position) {
 
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable(OrderDetailActivity.KEY_ORDER, orderDto);
+                        bundle.putSerializable(OrderDetailActivity.KEY_ORDER, order);
                         startActivity(OrderDetailActivity.class, bundle);
                     }
                 });
