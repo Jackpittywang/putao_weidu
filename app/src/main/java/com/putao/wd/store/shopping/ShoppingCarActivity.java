@@ -43,7 +43,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
-    private boolean isEditable=false;
+    private boolean isEditable=true;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_shopping_car;
@@ -185,12 +185,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onRightAction() {
         if (adapter.getItemState()) {
-            ToastUtils.showToastShort(this, "点击编辑");
-            adapter.updateItem();
-            setRightTitle("完成");
-        }else {
-            cartEdit("","");
-            setRightTitle("编辑");
+            if(isEditable) {
+                ToastUtils.showToastShort(this, "点击编辑");
+                adapter.updateItem();
+                setRightTitle("完成");
+            }else {
+                cartEdit("","");
+                setRightTitle("编辑");
+            }
         }
     }
 }
