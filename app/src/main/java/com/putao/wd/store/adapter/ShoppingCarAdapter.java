@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.SwitchButton;
@@ -27,7 +28,7 @@ import butterknife.Bind;
 public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.ShoppingCarViewHolder> {
 
     private boolean itemState;//记录当前状态值
-    private HashMap<Integer, Cart> map;//记录当前商品
+    public HashMap<Integer, Cart> map;//记录当前商品
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
@@ -62,6 +63,10 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_color.setText(shoppingCar.getColor());
         holder.tv_size.setText(shoppingCar.getSku());
         holder.tv_money.setText(shoppingCar.getPrice());
+        if(!StringUtils.isEmpty(shoppingCar.getQt())){
+            holder.asl_num_sel.setCount(Integer.parseInt(shoppingCar.getQt()));
+        }
+
         holder.tv_count.setText(shoppingCar.getQt());
         holder.btn_sel.setState(shoppingCar.isSelect());
         showEdit(holder, shoppingCar);

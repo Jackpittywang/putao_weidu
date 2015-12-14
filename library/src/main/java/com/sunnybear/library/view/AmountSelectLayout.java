@@ -68,6 +68,7 @@ public class AmountSelectLayout extends RelativeLayout {
      * @param count
      */
     public void setCount(int count) {
+        mCurrentCount = count;
         tv_count.setText(String.valueOf(count));
     }
 

@@ -20,7 +20,10 @@ import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -190,7 +193,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 adapter.updateItem();
                 setRightTitle("完成");
             }else {
-                cartEdit("","");
+                Iterator iter = adapter.map.keySet().iterator();
+                while (iter.hasNext()) {
+                    Object key = iter.next();
+                    Cart cart = adapter.map.get(key);
+                    cartEdit(cart.getPid(),cart.getQt());
+                }
                 setRightTitle("编辑");
             }
         }
