@@ -3,10 +3,14 @@ package com.putao.wd.explore.manage;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ControllItem;
 import com.putao.wd.explore.manage.adapter.ControlledEquipmentAdapter;
+import com.putao.wd.model.ManagementEdit;
 import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
@@ -70,6 +74,13 @@ public class ControlledEquipmentFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_EQUIPMENT);
+        networkRequest(ExploreApi.managementEdit("afdakfakfakfknafaank"), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
+            @Override
+            public void onSuccess(String url, ManagementEdit result) {
+                Logger.i("探索号管理信息保存成功");
+
+            }
+        });
     }
 
     @Override

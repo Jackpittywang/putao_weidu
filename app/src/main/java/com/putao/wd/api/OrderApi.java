@@ -32,7 +32,7 @@ public class OrderApi {
     private static final String REQUEST_STATUS = "status";//是否为默认地址
     private static final String REQUEST_ADDRESS_ID = "id";//收货地址id
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang" : "http://api.store.start.wang";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.store.start.wang/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;

@@ -12,6 +12,8 @@ import com.putao.wd.model.Cart;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.adapter.ShoppingCarAdapter;
+import com.putao.wd.store.cashier.CashierActivity;
+import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -169,7 +171,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 adapter.selAll(isSelectAll);
                 break;
             case R.id.ll_closing://去结算
-
+                startActivity(CashierActivity.class);
                 break;
         }
     }

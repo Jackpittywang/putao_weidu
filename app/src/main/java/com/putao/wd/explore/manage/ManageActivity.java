@@ -18,6 +18,7 @@ import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,19 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         bundle = new Bundle();
+        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
+            @Override
+            public void onSuccess(String url, Management result) {
+                Logger.i("探索号管理查询请求成功");
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                ToastUtils.showToastShort(mContext, msg);
+            }
+        });
+
     }
 
     @Override
@@ -108,32 +122,6 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
         }
-    }
-
-    /**
-     * 获取管理数据
-     * by yanghx
-     */
-    private void getManagementList() {
-        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<ArrayList<Management>>(Management.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Management> result) {
-                Logger.i("探索号管理查询请求成功");
-            }
-        });
-    }
-
-    /**
-     * 保存管理数据
-     * by yanghx
-     */
-    private void sendManagementList(String edit_list) {
-        networkRequest(ExploreApi.managementEdit(edit_list), new SimpleFastJsonCallback<ArrayList<ManagementEdit>>(ManagementEdit.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ManagementEdit> result) {
-                Logger.i("探索号管理查询请求成功");
-            }
-        });
     }
 
     @Subcriber(tag = UseCountEveryDayFragment.EVENT_USECOUNT_EVERYDAY)

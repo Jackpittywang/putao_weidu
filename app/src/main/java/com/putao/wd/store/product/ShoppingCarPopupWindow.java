@@ -1,6 +1,7 @@
 package com.putao.wd.store.product;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.ShopCarItem;
+import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -159,6 +161,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 break;
             case R.id.ll_join_car:
                 cartAdd(product_id, count + "");
+                v.getContext().startActivity(new Intent(v.getContext(),ShoppingCarActivity.class));
                 break;
         }
     }

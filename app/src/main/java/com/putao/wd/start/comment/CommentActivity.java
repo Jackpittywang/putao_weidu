@@ -16,6 +16,7 @@ import com.putao.wd.model.CoolType;
 import com.putao.wd.model.MapInfo;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
@@ -46,7 +47,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        adapter = new CommentAdapter(this, getTestData());
+        adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         refresh();
         addListener();
@@ -84,7 +85,17 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        rv_content.noMoreLoading();
+                        networkRequest(StartApi.getCommentList("action_id"), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
+                            @Override
+                            public void onSuccess(String url, ArrayList<Comment> result) {
+                                Logger.i("活动评论列表请求成功--->"+ result.toString());
+                                if (null != result) {
+                                    adapter.addAll(result);
+                                } else {
+                                    rv_content.noMoreLoading();
+                                }
+                            }
+                        });
                     }
                 }, 3 * 1000);
             }
@@ -95,22 +106,22 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     public void onClick(View v) {
     }
 
-    private List<CommentItem> getTestData() {
-        List<CommentItem> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CommentItem commentItem = new CommentItem();
-            commentItem.setId(i + 1 + "");
-            commentItem.setStatus("0");
-            commentItem.setUsername("用户" + i);
-            commentItem.setTime("12:00");
-            commentItem.setComment("第" + i + "条评论" +
-                    "评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论");
-            commentItem.setComment_count("1234");
-            commentItem.setSupport_count("1000");
-            list.add(commentItem);
-        }
-        return list;
-    }
+//    private List<CommentItem> getTestData() {
+//        List<CommentItem> list = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            CommentItem commentItem = new CommentItem();
+//            commentItem.setId(i + 1 + "");
+//            commentItem.setStatus("0");
+//            commentItem.setUsername("用户" + i);
+//            commentItem.setTime("12:00");
+//            commentItem.setComment("第" + i + "条评论" +
+//                    "评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论");
+//            commentItem.setComment_count("1234");
+//            commentItem.setSupport_count("1000");
+//            list.add(commentItem);
+//        }
+//        return list;
+//    }
 
     /**
      * model暂无
@@ -128,20 +139,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, ArrayList<String> result) {
                 Log.i("pt", "评论与回复提交成功");
-            }
-        });
-    }
-
-    /**
-     * 获取活动评论列表
-     * by yanghx
-     * @param action_id 活动ID
-     */
-    private void getCommentList(String action_id) {
-        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Comment> result) {
-                Log.i("pt", "活动评论列表请求成功");
             }
         });
     }
