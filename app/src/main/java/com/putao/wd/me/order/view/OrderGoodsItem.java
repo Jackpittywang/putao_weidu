@@ -2,16 +2,12 @@ package com.putao.wd.me.order.view;
 
 import android.content.Context;
 import android.text.Html;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.OrderGoodsDto;
+import com.putao.wd.model.OrderProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by yanguoqiang on 15/11/30.
@@ -30,7 +26,7 @@ public class OrderGoodsItem extends LinearLayout {
 
     private ImageDraweeView img_goods;
 
-    public OrderGoodsItem(Context context, OrderGoodsDto orderGoodsDto) {
+    public OrderGoodsItem(Context context, OrderProduct orderProduct) {
         super(context);
 
         this.context = context;
@@ -42,21 +38,22 @@ public class OrderGoodsItem extends LinearLayout {
         tv_price = (TextView) this.findViewById(R.id.tv_price);
         tv_specification = (TextView) this.findViewById(R.id.tv_specification);
 
-        refreshView(orderGoodsDto);
+        refreshView(orderProduct);
     }
 
     /**
      * 刷新界面
-     * @param orderGoodsDto
+     * @param orderProduct
      */
-    private void refreshView(OrderGoodsDto orderGoodsDto) {
-        img_goods.setImageURL(orderGoodsDto.getImageUrl());
-        if (orderGoodsDto.isPreSale())
-            tv_name.setText(Html.fromHtml("<font color=0xed5564>[预售]</font>" + orderGoodsDto.getName()));
-        else tv_name.setText(orderGoodsDto.getName());
-        tv_number.setText("x " + orderGoodsDto.getNumber() + "");
-        tv_price.setText("¥ " + orderGoodsDto.getPrice() + "");
-        tv_specification.setText(orderGoodsDto.getSpecification());
+    private void refreshView(OrderProduct orderProduct) {
+        img_goods.setImageURL(orderProduct.getIcon());
+//        if (orderProduct.isPreSale())
+//            tv_name.setText(Html.fromHtml("<font color=0xed5564>[预售]</font>" + orderProduct.getProduct_name()));
+//        else
+        tv_name.setText(orderProduct.getProduct_name());
+        tv_number.setText("x " + orderProduct.getProduct_number() + "");
+        tv_price.setText("¥ " + orderProduct.getPrice() + "");
+        //tv_specification.setText(orderProduct.getSpecification());
     }
 
 

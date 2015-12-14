@@ -1,19 +1,16 @@
 package com.putao.wd.me.order.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.OrderDto;
 import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.me.order.OrderCommon;
 import com.putao.wd.me.order.view.OrderGoodsItem;
-import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.Logger;
+import com.putao.wd.model.Order;
+import com.putao.wd.model.OrderProduct;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -24,14 +21,14 @@ import butterknife.Bind;
 /**
  * Created by yanguoqiang on 15/11/29.
  */
-public class OrderListAdapter extends BasicAdapter<OrderDto, OrderListAdapter.OrderListViewHolder> {
+public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.OrderListViewHolder> {
 
     private String TAG = OrderListAdapter.class.getName();
 
     private Context context;
 
-    public OrderListAdapter(Context context, List<OrderDto> orderDtoList) {
-        super(context, orderDtoList);
+    public OrderListAdapter(Context context, List<Order> orderList) {
+        super(context, orderList);
         this.context = context;
     }
 
@@ -46,12 +43,12 @@ public class OrderListAdapter extends BasicAdapter<OrderDto, OrderListAdapter.Or
     }
 
     @Override
-    public void onBindItem(OrderListViewHolder holder, OrderDto orderDto, int position) {
-        holder.tv_order_no.setText(orderDto.getOrderNo());
+    public void onBindItem(OrderListViewHolder holder, Order order, int position) {
+        holder.tv_order_no.setText(order.getOrder_sn());
         holder.tv_order_purchase_time.setText("2015-10-25 12:55:03");
         holder.ll_goods.removeAllViews();
 
-        List<OrderGoodsDto> goodsList = orderDto.getGoodsList();
+        List<OrderProduct> goodsList = order.getProduct();
         int goodsNumber = 0;
         if (goodsList != null) {
             goodsNumber = goodsList.size();
@@ -60,25 +57,25 @@ public class OrderListAdapter extends BasicAdapter<OrderDto, OrderListAdapter.Or
                 holder.ll_goods.addView(goodsItem);
             }
         }
-        holder.tv_order_status.setText(OrderCommon.getOrderStatusShowString(orderDto.getOrderStatus()));
-        if(orderDto.getOrderStatus() == OrderCommon.ORDER_WAITING_PAY){
+        holder.tv_order_status.setText(OrderCommon.getOrderStatusShowString(order.getOrderStatusID()));
+        if(order.getOrderStatusID() == OrderCommon.ORDER_WAITING_PAY){
             holder.tv_order_status.setTextColor(0xffed5564);
         }
         else{
             holder.tv_order_status.setTextColor(0xff313131);
         }
-        holder.tv_total_cost.setText(goodsNumber + "件商品 合计：¥" + orderDto.getTotalCost());
-        holder.tv_shipment_fee.setText("含运费：" + orderDto.getShipmentFee());
+        holder.tv_total_cost.setText(goodsNumber + "件商品 合计：¥" + order.getTotal_amount());
+        holder.tv_shipment_fee.setText("含运费：" + order.getExpress_money());
 
 
 
-        /*boolean isDefault = OrderDto.getIsDefault();
+        /*boolean isDefault = Order.getIsDefault();
         if (isDefault)
             holder.iv_default.setVisibility(View.VISIBLE);
         else
             holder.iv_default.setVisibility(View.GONE);
-        holder.tv_address.setText(getAddress(orderDto));
-        holder.tv_mobile.setText(orderDto.getMobile());*/
+        holder.tv_address.setText(getAddress(order));
+        holder.tv_mobile.setText(order.getMobile());*/
     }
 
     /**

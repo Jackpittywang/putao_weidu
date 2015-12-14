@@ -19,7 +19,9 @@ import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.me.order.view.OrderShipmentListItem;
+import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
+import com.putao.wd.model.OrderProduct;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 
@@ -123,7 +125,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     @Bind(R.id.rl_bottom)
     RelativeLayout rl_bottom;
 
-    private OrderDto orderDto;
+    private Order orderDto;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_detail;
@@ -136,7 +138,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         //获取order数据
         Intent intent = getIntent();
         if (intent != null) {
-            orderDto = (OrderDto) intent.getSerializableExtra(KEY_ORDER);
+            orderDto = (Order) intent.getSerializableExtra(KEY_ORDER);
         }
 
         //初始化布局对象
@@ -180,7 +182,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
      */
     private void openShipmentDetailActivity() {
         Bundle bundle = new Bundle();
-        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, orderDto.getOrderNo());
+        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, orderDto.getOrder_sn());
         startActivity(OrderShipmentDetailActivity.class, bundle);
     }
 
@@ -191,38 +193,38 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     private void refreshView() {
         if (orderDto == null) return;
 
-        tv_order_no.setText(orderDto.getOrderNo());
-        tv_order_purchase_time.setText(orderDto.getPurchaseTime() + "");
-        tv_order_status.setText(OrderCommon.getOrderStatusShowString(orderDto.getOrderStatus()));
-        tv_order_cost.setText("¥" + orderDto.getTotalCost());
+        tv_order_no.setText(orderDto.getOrder_sn());
+        tv_order_purchase_time.setText(orderDto.getCreate_time() + "");
+        tv_order_status.setText(OrderCommon.getOrderStatusShowString(orderDto.getShipping_status()));
+        tv_order_cost.setText("¥" + orderDto.getTotal_amount());
         tv_order_info.setText("商品信息");
-        tv_customer_name.setText(orderDto.getCustomerName());
-        tv_customer_address.setText(orderDto.getCustomerAddress());
-        tv_customer_phone.setText(orderDto.getCustomerPhone());
-        tv_shipment_fee.setText("¥" + orderDto.getShipmentFee());
-        tv_total_cost.setText("¥" + orderDto.getTotalCost());
+        tv_customer_name.setText(orderDto.getConsignee());
+        tv_customer_address.setText(orderDto.getAddress());
+        tv_customer_phone.setText(orderDto.getMobile());
+        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());
+        tv_total_cost.setText("¥" + orderDto.getTotal_amount());
 
-        List<OrderShipmentListItemDto> shipmentList = orderDto.getShipmentList();
-        Logger.i("OrderDetailActivity", "package size is:" + shipmentList.size());
-        if (shipmentList.size() > 0) {
-            ll_shipment.removeAllViews();
-            for (int i = 0; i < shipmentList.size(); i++) {
-                OrderShipmentListItem orderShipmentListItem = new OrderShipmentListItem(this, shipmentList.get(i));
-                ll_shipment.addView(orderShipmentListItem);
-            }
-        }
+//        List<OrderShipmentListItemDto> shipmentList = orderDto.getShipmentList();
+//        Logger.i("OrderDetailActivity", "package size is:" + shipmentList.size());
+//        if (shipmentList.size() > 0) {
+//            ll_shipment.removeAllViews();
+//            for (int i = 0; i < shipmentList.size(); i++) {
+//                OrderShipmentListItem orderShipmentListItem = new OrderShipmentListItem(this, shipmentList.get(i));
+//                ll_shipment.addView(orderShipmentListItem);
+//            }
+//        }
 
-        List<OrderGoodsDto> goodsList = orderDto.getGoodsList();
+        List<OrderProduct> goodsList = orderDto.getProduct();
         ll_goods.removeAllViews();
         int goodsTotalNumber = 0;
         int goodsNumber = goodsList.size();
         for (int i = 0; i < goodsNumber; i++) {
             OrderGoodsItem goodsItem = new OrderGoodsItem(this, goodsList.get(i));
             ll_goods.addView(goodsItem);
-            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getNumber();
+            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
         }
         tv_goods_total_number.setText(goodsTotalNumber + "");
-        setOrderStatus(orderDto.getOrderStatus());
+        setOrderStatus(orderDto.getOrderStatusID());
 
 
     }
