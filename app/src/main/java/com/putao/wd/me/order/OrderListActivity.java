@@ -33,7 +33,7 @@ import butterknife.Bind;
  * 订单列表
  * Created by yanguoqiang on 15/11/27.
  */
-public class OrderListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener,OrderListAdapter.OnPayOperation,OrderListAdapter.OnCancelOrder {
+public class OrderListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener,OrderListAdapter.OnCancelOrder {
 
     @Bind(R.id.rv_order)
     BasicRecyclerView rv_order;
@@ -59,7 +59,10 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+//        adapter.setOnCancelOrder(this);
+//        adapter.setOnPayOperation(this);
         getOrderLists("0", "1");
+
         //initTestData();
     }
 
@@ -82,6 +85,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
                 }
 
                 adapter = new OrderListAdapter(mContext, result);
+                adapter.setOnCancelOrder(OrderListActivity.this);
                 rv_order.setAdapter(adapter);
                 //点击item
                 rv_order.setOnItemClickListener(new OnItemClickListener<OrderDto>() {
@@ -181,11 +185,9 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
 
     @Override
     public void CancelOrder(int order_id) {
+        adapter.setOnCancelOrder(this);
         orderCancel(order_id);
-    }
-
-    @Override
-    public void PayOperation(String oper, String product_id) {
 
     }
+
 }
