@@ -42,12 +42,12 @@
         android:paddingLeft="8dp"
         android:paddingTop="12dp">
 
-        <ImageView
+        <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_user_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_explore_bulb"/>
+            android:background="@drawable/icon_explore_bulb"/>
 
         <TextView
             android:id="@+id/tv_introduct"
