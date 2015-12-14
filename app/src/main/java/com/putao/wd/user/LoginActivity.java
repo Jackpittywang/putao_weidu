@@ -68,7 +68,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             @Override
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.login(result);
-                                networkRequest(UserApi.login(), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+                                networkRequest(UserApi.login(), new SimpleFastJsonCallback<ArrayList<String>>(String.class, null) {
                                     @Override
                                     public void onSuccess(String url, ArrayList<String> result) {
                                         Logger.i("登录成功");

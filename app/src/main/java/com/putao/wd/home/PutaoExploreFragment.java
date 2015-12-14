@@ -92,8 +92,8 @@ public class PutaoExploreFragment extends PTWDFragment {
                         Logger.d(result.toString());
                         Log.i("pt", "探索号请求成功");
                         if (null != result) {
-//                            rv_content.setVisibility(View.VISIBLE);
-                            rl_empty.setVisibility(View.VISIBLE);
+                            rv_content.setVisibility(View.VISIBLE);
+                            adapter.replaceAll(result);
                         }else {
 //                            rl_empty.setVisibility(View.VISIBLE);
                         }

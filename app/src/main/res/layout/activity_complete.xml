@@ -84,11 +84,12 @@
                 android:layout_height="96dp"
                 android:layout_centerInParent="true">
 
-                <ImageView
+                <com.sunnybear.library.view.image.ImageDraweeView
                     android:id="@+id/iv_header_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/app_icon" />
+                    android:background="@mipmap/app_icon"
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:id="@+id/iv_select_icon"

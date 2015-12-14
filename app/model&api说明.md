@@ -27,7 +27,7 @@
             url:StartApi.URL_BANNER;
             方法名:StartApi.getBannerList();
             接收model:Banner(广告banner列表)
-            返回类型:array
+            返回类型:array;
         (2).活动详情(查询)
             url:StartApi.URL_ACTION_DETAIL;
             方法名:StartApi.getActionDetail();

@@ -7,6 +7,30 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/8.
  */
 public class ExploreProductDataAll implements Serializable {
-    private String img_url;//链接跳转详情图
+    private String id;//链接跳转详情图
     private String content;//文字介绍
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "ExploreProductDataAll{" +
+                "id='" + id + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

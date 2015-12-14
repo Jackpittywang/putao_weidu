@@ -8,7 +8,9 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.model.ExploreProduct;
+import com.putao.wd.model.ExploreProductData;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -36,7 +38,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     @Override
     public int getMultiItemViewType(int position) {
         ExploreProduct exploreProduct = getItem(position);
-        if (true) {
+        if (false) {
             return TYPE_INSTRUCTION;
         } else {
             return TYPE_USE;
@@ -78,10 +80,20 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, ExploreProduct exploreItem, int position) {
-
-
-
+    public void onBindItem(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
+        if (null != exploreProduct) {
+            Logger.i(exploreProduct.toString());
+            List<ExploreProductData> data_list = exploreProduct.getProduct_list();
+            if (data_list != null) {
+                for (int i = 0; i < data_list.size(); i++) {
+                    ExploreProductData exploreProductData = data_list.get(i);
+                    if (holder instanceof ExploerViewHolder) {
+                        ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
+                        viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
 
 
 //        if (holder instanceof ExploerViewHolder) {

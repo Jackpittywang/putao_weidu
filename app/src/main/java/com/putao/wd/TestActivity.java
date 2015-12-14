@@ -30,7 +30,7 @@ public class TestActivity extends BasicFragmentActivity {
     @Bind(R.id.tv_3)
     TextView tv_3;
 
-    private List<HtmlInfo> htmlInfos = new ArrayList<>();
+//    private List<HtmlInfo> htmlInfos = new ArrayList<>();
 
     private List<SpannableStringBuilder> builders = new ArrayList<>();
 
