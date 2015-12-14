@@ -158,7 +158,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      * @param request  request主体
      * @param callback 请求回调(建议使用SimpleFastJsonCallback)
      */
-    protected void networkRequest(Request request, Callback callback) {
+    public void networkRequest(Request request, Callback callback) {
         if (request == null)
             throw new NullPointerException("request为空");
         loading.show();

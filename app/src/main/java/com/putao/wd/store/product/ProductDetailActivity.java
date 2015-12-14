@@ -40,10 +40,6 @@ import butterknife.OnClick;
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.TitleItemSelectedListener {
     public static final String PRODUCT_ID = "product_id";
-
-    //    private static final int[] resIds = new int[]{
-//            R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test_4, R.drawable.test_5, R.drawable.test_6, R.drawable.test_7
-//    };
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.sticky_layout)

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.sunnybear.library.R;
+import com.sunnybear.library.view.LoadingHUD;
 
 import butterknife.ButterKnife;
 
@@ -23,6 +24,9 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     private View mRootView;
     private ViewGroup mMainLayout;
 
+    protected BasicFragmentActivity mActivity;
+    protected LoadingHUD loading;
+
     /**
      * 设置布局
      *
@@ -33,6 +37,8 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     public BasicPopupWindow(Context context) {
         super(context);
         mContext = context;
+        mActivity = (BasicFragmentActivity) context;
+        this.loading = mActivity.loading;
         int layoutId = getLayoutId();
         if (layoutId == 0)
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");

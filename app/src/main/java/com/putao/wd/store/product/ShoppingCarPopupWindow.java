@@ -31,42 +31,43 @@ import butterknife.OnClick;
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
     @Bind(R.id.tl_color_tag)
     TagBar tl_color_tag;
-    private final List<Tag> mTags = new ArrayList<>();
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
     @Bind(R.id.iv_close)
     ImageView iv_close;
-    @Bind(R.id.tv_product_title)//产品标题
-    TextView tv_product_title;
-    @Bind(R.id.tv_product_intro)//产品副标题
-    TextView tv_product_intro;
+    @Bind(R.id.tv_product_title)
+    TextView tv_product_title;//产品标题
+    @Bind(R.id.tv_product_intro)
+    TextView tv_product_intro;//产品副标题
     @Bind(R.id.rl_product)
     RelativeLayout rl_product;
-    @Bind(R.id.ll_color)//
+    @Bind(R.id.ll_color)
     LinearLayout ll_color;
-    @Bind(R.id.tv_subtract)//减法
-    TextView tv_subtract;
-    @Bind(R.id.tv_count)//总数
-    TextView tv_count;
-    @Bind(R.id.tv_add)//加法
-    TextView tv_add;
-    @Bind(R.id.tv_product_price)//产品价格
-    TextView tv_product_price;
-    @Bind(R.id.ll_join_car)//加入购物车
-    LinearLayout ll_join_car;
+    @Bind(R.id.tv_subtract)
+    TextView tv_subtract;//减法
+    @Bind(R.id.tv_count)
+    TextView tv_count;//总数
+    @Bind(R.id.tv_add)
+    TextView tv_add;//加法
+    @Bind(R.id.tv_product_price)
+    TextView tv_product_price;//产品价格
+    @Bind(R.id.ll_join_car)
+    LinearLayout ll_join_car;//加入购物车
     @Bind(R.id.popup_layout)
     RelativeLayout popup_layout;
 
-    private int count=1;//总数量
-    private float Price=0;
-    public ShoppingCarPopupWindow(Context context, List<String> colorList,String title,String describe,String price) {
+    private final List<Tag> mTags = new ArrayList<>();
+    private int count = 1;//总数量
+    private float Price = 0;
+
+    public ShoppingCarPopupWindow(Context context, List<String> colorList, String title, String describe, String price) {
         super(context);
         setUpData(colorList);
         tl_color_tag.addTags(mTags);
         tv_product_title.setText(title);
         tv_product_intro.setText(describe);
         tv_product_price.setText(price);
-        Price=Float.parseFloat(price.substring(1));
+        Price = Float.parseFloat(price.substring(1));
         tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
             public void onTagItemCheck(Tag tag, int position) {
@@ -83,14 +84,14 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     /**
      * 添加购物车
      */
-    private void cartAdd(String product_id, String qt){
-//        networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<Cart> result) {
-//                Logger.d(result.toString());
-//            }
-//
-//        });
+    private void cartAdd(String product_id, String qt) {
+        mActivity.networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+            }
+
+        });
     }
 
 
@@ -134,7 +135,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 //        mTags.add(tag);
     }
 
-    @OnClick({R.id.iv_close,R.id.tv_add,R.id.tv_subtract,R.id.ll_join_car})
+    @OnClick({R.id.iv_close, R.id.tv_add, R.id.tv_subtract, R.id.ll_join_car})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -142,19 +143,19 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 dismiss();
                 break;
             case R.id.tv_add:
-                if(1==count)
+                if (1 == count)
                     tv_subtract.setEnabled(true);
-                tv_count.setText(++count+"");
-                tv_product_price.setText(Price*count+"");
+                tv_count.setText(++count + "");
+                tv_product_price.setText(Price * count + "");
                 break;
             case R.id.tv_subtract:
-                tv_count.setText(--count+"");
-                tv_product_price.setText(Price*count+"");
-                if(1==count)
+                tv_count.setText(--count + "");
+                tv_product_price.setText(Price * count + "");
+                if (1 == count)
                     tv_subtract.setEnabled(false);
                 break;
             case R.id.ll_join_car:
-                cartAdd(Price+"",count+"");
+                cartAdd(Price + "", count + "");
                 break;
         }
     }
