@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
 
-import com.putao.wd.util.HtmlInfo;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.view.emoji.EmojiTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-
 
 /**
  * Created by guchenkai on 2015/12/8.
@@ -29,6 +28,8 @@ public class TestActivity extends BasicFragmentActivity {
     TextView tv_2;
     @Bind(R.id.tv_3)
     TextView tv_3;
+    @Bind(R.id.tv_emoji)
+    EmojiTextView tv_emoji;
 
 //    private List<HtmlInfo> htmlInfos = new ArrayList<>();
 
@@ -45,6 +46,8 @@ public class TestActivity extends BasicFragmentActivity {
         tv_1.setText(builders.get(0));
         tv_2.setText(builders.get(1));
         tv_3.setText(builders.get(2));
+
+        tv_emoji.setText("[呲牙][呲牙][呲牙]呲牙[大笑][萌]");
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.sunnybear.library.view.image;
 
 import android.content.Context;
-import android.os.Environment;
 
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.internal.Supplier;
@@ -11,6 +10,9 @@ import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
 import com.squareup.okhttp.OkHttpClient;
+import com.sunnybear.library.BasicApplication;
+
+import java.io.File;
 
 /**
  * Fresco图片加载器配置
@@ -69,7 +71,7 @@ public class ImagePipelineConfigFactory {
         };
         //小图片的磁盘配置
         DiskCacheConfig diskSmallCacheConfig = DiskCacheConfig.newBuilder()
-                .setBaseDirectoryPath(context.getApplicationContext().getCacheDir())//缓存图片基路径
+                .setBaseDirectoryPath(new File(BasicApplication.sdCardPath).getAbsoluteFile())//缓存图片基路径
                 .setBaseDirectoryName(ConfigConstants.IMAGE_PIPELINE_SMALL_CACHE_DIR)//文件夹名
 //            .setCacheErrorLogger(cacheErrorLogger)//日志记录器用于日志错误的缓存。
 //            .setCacheEventListener(cacheEventListener)//缓存事件侦听器。
@@ -81,7 +83,7 @@ public class ImagePipelineConfigFactory {
                 .build();
         //默认图片的磁盘配置
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder()
-                .setBaseDirectoryPath(Environment.getExternalStorageDirectory().getAbsoluteFile())//缓存图片基路径
+                .setBaseDirectoryPath(new File(BasicApplication.sdCardPath).getAbsoluteFile())//缓存图片基路径
                 .setBaseDirectoryName(ConfigConstants.IMAGE_PIPELINE_CACHE_DIR)//文件夹名
 //            .setCacheErrorLogger(cacheErrorLogger)//日志记录器用于日志错误的缓存。
 //            .setCacheEventListener(cacheEventListener)//缓存事件侦听器。
@@ -109,7 +111,7 @@ public class ImagePipelineConfigFactory {
 //            .setMemoryTrimmableRegistry(memoryTrimmableRegistry) //内存用量的缩减,有时我们可能会想缩小内存用量。比如应用中有其他数据需要占用内存，不得不把图片缓存清除或者减小 或者我们想检查看看手机是否已经内存不够了。
 //            .setNetworkFetchProducer(networkFetchProducer)//自定的网络层配置：如OkHttp，Volley
 //            .setPoolFactory(poolFactory)//线程池工厂配置
-            .setProgressiveJpegConfig(new SimpleProgressiveJpegConfig())//渐进式JPEG图
+                .setProgressiveJpegConfig(new SimpleProgressiveJpegConfig())//渐进式JPEG图
 //            .setRequestListeners(requestListeners)//图片请求监听
 //            .setResizeAndRotateEnabledForNetwork(boolean resizeAndRotateEnabledForNetwork)//调整和旋转是否支持网络图片
                 .setSmallImageDiskCacheConfig(diskSmallCacheConfig);//磁盘缓存配置(小图片，可选～三级缓存的小图优化缓存)
@@ -131,7 +133,7 @@ public class ImagePipelineConfigFactory {
         public static final int MAX_DISK_CACHE_LOW_SIZE = 30 * ByteConstants.MB;//默认图低磁盘空间缓存的最大值
         public static final int MAX_DISK_CACHE_SIZE = 50 * ByteConstants.MB;//默认图磁盘缓存的最大值
 
-        public static final String IMAGE_PIPELINE_SMALL_CACHE_DIR = "putao_weidu/image_small";//小图所放路径的文件夹名
-        public static final String IMAGE_PIPELINE_CACHE_DIR = "putao_weidu/image";//默认图所放路径的文件夹名
+        public static final String IMAGE_PIPELINE_SMALL_CACHE_DIR = "image_small";//小图所放路径的文件夹名
+        public static final String IMAGE_PIPELINE_CACHE_DIR = "image";//默认图所放路径的文件夹名
     }
 }

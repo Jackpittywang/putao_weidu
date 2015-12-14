@@ -10,7 +10,9 @@ import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 
@@ -129,18 +131,30 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 break;
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
+                if (checkLogin()) return;
                 if (mMeFragment == null) {
                     mMeFragment = (MeFragment) Fragment.instantiate(mContext, MeFragment.class.getName());
                     mFragmentTransaction.add(R.id.fragment_container, mMeFragment);
                 } else {
                     mFragmentTransaction.show(mMeFragment);
                 }
-
-                //startService(EmojiService.class);
-                //startActivity(TestActivity.class);
+//                startService(EmojiService.class);
+//                startActivity(TestActivity.class);
+//                startActivity(JointImageTestActivity.class);
                 break;
         }
         mFragmentTransaction.commit();
+    }
+
+    /**
+     * 验证登录
+     */
+    private boolean checkLogin() {
+        if (PreferenceUtils.getValue("isLogin", false)) {
+            return true;
+        }
+        startActivity(LoginActivity.class);
+        return false;
     }
 
     /**
