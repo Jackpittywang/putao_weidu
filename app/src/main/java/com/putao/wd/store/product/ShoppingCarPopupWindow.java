@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Cart;
+import com.putao.wd.model.ShopCarItem;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -69,7 +70,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         tv_product_intro.setText(describe);
         tv_product_price.setText(price);
         Price = Float.parseFloat(price.substring(1));
-        this.product_id=product_id;
+        this.product_id="9";
         tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
             public void onTagItemCheck(Tag tag, int position) {
@@ -87,9 +88,9 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
      * 添加购物车
      */
     private void cartAdd(String product_id, String qt) {
-        mActivity.networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+        mActivity.networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
+            public void onSuccess(String url, ShopCarItem result) {
                 Logger.d(result.toString());
             }
 
