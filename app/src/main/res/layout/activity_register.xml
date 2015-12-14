@@ -93,8 +93,7 @@
                 android:layout_height="48dp"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
-                android:hint="@string/sms_verify"
-                android:maxLength="4" />
+                android:hint="@string/sms_verify" />
 
             <com.sunnybear.library.view.TimeButton
                 android:id="@+id/tb_get_verify"
@@ -103,11 +102,12 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/text_size_16sp"
-                auto:click_background="@drawable/text_select"
+                auto:click_background="@color/text_main_color_nor"
                 auto:countdown_time="10"
                 auto:text_after="获取验证码($s后重发)"
                 auto:text_before="获取验证码"
                 auto:unclick_background="@color/text_color_gray" />
+
             <!--竖向间隔线-->
             <View
                 android:layout_width="1px"

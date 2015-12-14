@@ -2,11 +2,14 @@ package com.sunnybear.library.view.image;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -25,6 +28,7 @@ public class ImageDraweeView extends SimpleDraweeView {
     public static int failureImage;
     public static int retryImage;
     private float mRatio;
+    private boolean isCircle;
     private ResizeOptions mResizeOptions;
 
     private PictureProcessor mProcessor;
@@ -35,34 +39,19 @@ public class ImageDraweeView extends SimpleDraweeView {
 
     public ImageDraweeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ImageDraweeView);
-        mRatio = a.getFloat(R.styleable.ImageDraweeView_aspect_ratio, -1f);
-        if (mRatio < 0)
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ImageDraweeView);
+        mRatio = array.getFloat(R.styleable.ImageDraweeView_aspect_ratio, -1f);
+        isCircle = array.getBoolean(R.styleable.ImageDraweeView_is_circle, false);
+        if (mRatio != -1f)
             setAspectRatio(mRatio);
-        a.recycle();
-
+        array.recycle();
         init(context);
     }
 
     private void init(Context context) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
-        //淡入淡出
-        hierarchy.setFadeDuration(300);
-//        if (placeholderImage != 0)
-//            //设置占位图
-//            hierarchy.setPlaceholderImage(ContextCompat.getDrawable(context, placeholderImage), ScalingUtils.ScaleType.FIT_CENTER);
-//        if (progressBarImage != 0)
-//            //设置正在加载图
-//            hierarchy.setProgressBarImage(ContextCompat.getDrawable(context, progressBarImage), ScalingUtils.ScaleType.CENTER_INSIDE);
-//        if (failureImage != 0)
-//            //设置失败图
-//            hierarchy.setFailureImage(ContextCompat.getDrawable(context, failureImage), ScalingUtils.ScaleType.CENTER_INSIDE);
-//        if (retryImage != 0)
-//            //设置重试图
-//            hierarchy.setRetryImage(ContextCompat.getDrawable(context, retryImage), ScalingUtils.ScaleType.CENTER_INSIDE);
-//        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP);
+        hierarchy.setFadeDuration(300);//淡入淡出
         setHierarchy(hierarchy);
-
         mProcessor = new PictureProcessor();
     }
 
@@ -85,8 +74,16 @@ public class ImageDraweeView extends SimpleDraweeView {
         mProcessor.addProcessor(processor);
     }
 
+    public void setImage(Bitmap bm) {
+        GenericDraweeHierarchy hierarchy = getHierarchy();
+//        if (isCircle) bm = ImageUtils.createCircleImage(bm, (int) DensityUtil.px2dp(getContext(), 10));
+        hierarchy.setPlaceholderImage(new BitmapDrawable(bm), ScalingUtils.ScaleType.FOCUS_CROP);
+        setHierarchy(hierarchy);
+    }
+
     /**
      * 加载图片
+     *
      * @param url 图片的url
      */
     public void setImageURL(String url) {
