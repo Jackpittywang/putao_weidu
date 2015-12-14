@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
@@ -99,6 +100,9 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      */
     @Override
     public void onTabItemSelected(TabItem item, int position) {
+//        if (item.getId() != R.id.ti_start_circle) {
+//        goLoginActivity();
+//        }
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         hideFragment(mFragmentTransaction);
         switch (item.getId()) {
@@ -169,5 +173,15 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return exit();
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 除蒲星圈外其他tab点击,未登录则进入登录页
+     */
+    private void goLoginActivity() {
+        if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentUid())) {
+            startActivity(LoginActivity.class);
+            return;
+        }
     }
 }

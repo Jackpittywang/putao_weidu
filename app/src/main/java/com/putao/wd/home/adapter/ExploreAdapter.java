@@ -6,16 +6,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductData;
-import com.sunnybear.library.util.DateUtils;
+import com.putao.wd.model.ExploreProductDataDaily;
+import com.putao.wd.model.ExploreProductDataList;
+import com.putao.wd.model.ExploreProductDataPlot;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -30,6 +32,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     private final int TYPE_PICTURE_ONE = 1;
     private final int TYPE_PICTURE_FOUR = 4;
     private final int TYPE_PICTURE_NINE = 9;
+    private final String DATE_PATTERN = "yyyy-MM-dd";
 
     public ExploreAdapter(Context context, List list) {
         super(context, list);
@@ -38,10 +41,10 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     @Override
     public int getMultiItemViewType(int position) {
         ExploreProduct exploreProduct = getItem(position);
-        if (false) {
-            return TYPE_INSTRUCTION;
-        } else {
+        if (true) {
             return TYPE_USE;
+        } else {
+            return TYPE_INSTRUCTION;
         }
     }
 
@@ -82,14 +85,47 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     @Override
     public void onBindItem(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
         if (null != exploreProduct) {
-            Logger.i(exploreProduct.toString());
-            List<ExploreProductData> data_list = exploreProduct.getProduct_list();
-            if (data_list != null) {
-                for (int i = 0; i < data_list.size(); i++) {
-                    ExploreProductData exploreProductData = data_list.get(i);
-                    if (holder instanceof ExploerViewHolder) {
-                        ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-                        viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+            //Logger.i(exploreProduct.toString());
+            ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
+            SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
+            String date = format.format(new Date(exploreProduct.getTime()));
+            viewHolder.tv_date.setText(date);
+            viewHolder.tv_introduct.setText(exploreProduct.getDay_summary());
+
+            List<ExploreProductData> product_list = exploreProduct.getProduct_list();
+            if (null != product_list && product_list.size() > 0) {
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                for (int i = 0; i < product_list.size(); i++) {
+                    ExploreProductData exploreProductData = product_list.get(i);
+                    viewHolder.iv_skill_icon.setImageURL(exploreProductData.getProduct_icon());
+                    viewHolder.tv_skill_name.setText(exploreProductData.getProduct_name());
+
+                    ExploreProductDataList data_list = exploreProductData.getData_list();
+                    if (null != data_list) {
+                        List<ExploreProductDataDaily> daily_list = data_list.getDaily_list();
+                        List<ExploreProductDataPlot> plot_list = data_list.getPlot_list();
+                        if (null != daily_list && daily_list.size() > 0) {
+                            for (int j = 0; j < daily_list.size(); j++) {
+                                ExploreProductDataDaily exploreProductDataDaily = daily_list.get(j);
+                                switch (j) {
+                                    case 0:
+                                        viewHolder.tv_content_head1.setText(exploreProductDataDaily.getContent_head());
+                                        viewHolder.tv_content_center1.setText(exploreProductDataDaily.getContent_center());
+                                        viewHolder.tv_content_footer1.setText(exploreProductDataDaily.getContent_footer());
+                                        break;
+                                    case 1:
+                                        viewHolder.tv_content_head2.setText(exploreProductDataDaily.getContent_head());
+                                        viewHolder.tv_content_center2.setText(exploreProductDataDaily.getContent_center());
+                                        viewHolder.tv_content_footer2.setText(exploreProductDataDaily.getContent_footer());
+                                        break;
+                                    case 2:
+                                        viewHolder.tv_content_head5.setText(exploreProductDataDaily.getContent_head());
+                                        viewHolder.tv_content_center5.setText(exploreProductDataDaily.getContent_center());
+                                        viewHolder.tv_content_footer5.setText(exploreProductDataDaily.getContent_footer());
+                                        break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -149,33 +185,33 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
      * @param holder     ExploerMixedViewHolder类型ViewHolder
      * @param pictureNum 图片张数
      */
-    private void showPiture(ExploerMixedViewHolder holder, int pictureNum) {
-        switch (pictureNum) {
-            case TYPE_PICTURE_ONE:
-                holder.ll_picture78.setVisibility(View.GONE);
-                holder.ll_picture369.setVisibility(View.INVISIBLE);
-                holder.iv_picture9.setVisibility(View.GONE);
-                holder.iv_one_picture.setVisibility(View.VISIBLE);
-                holder.ll_picture1245.setVisibility(View.INVISIBLE);
-                break;
-            case TYPE_PICTURE_FOUR:
-                holder.iv_one_picture.setVisibility(View.GONE);
-                holder.ll_picture1245.setVisibility(View.VISIBLE);
-                holder.ll_picture78.setVisibility(View.GONE);
-                holder.ll_picture369.setVisibility(View.INVISIBLE);
-                holder.iv_picture9.setVisibility(View.GONE);
-                break;
-            case TYPE_PICTURE_NINE:
-                holder.iv_one_picture.setVisibility(View.GONE);
-                holder.ll_picture78.setVisibility(View.VISIBLE);
-                holder.ll_picture369.setVisibility(View.VISIBLE);
-                holder.ll_picture1245.setVisibility(View.VISIBLE);
-                holder.iv_picture9.setVisibility(View.VISIBLE);
-                break;
-            default:
-                break;
-        }
-    }
+//    private void showPiture(ExploerMixedViewHolder holder, int pictureNum) {
+//        switch (pictureNum) {
+//            case TYPE_PICTURE_ONE:
+//                holder.ll_picture78.setVisibility(View.GONE);
+//                holder.ll_picture369.setVisibility(View.INVISIBLE);
+//                holder.iv_picture9.setVisibility(View.GONE);
+//                holder.iv_one_picture.setVisibility(View.VISIBLE);
+//                holder.ll_picture1245.setVisibility(View.INVISIBLE);
+//                break;
+//            case TYPE_PICTURE_FOUR:
+//                holder.iv_one_picture.setVisibility(View.GONE);
+//                holder.ll_picture1245.setVisibility(View.VISIBLE);
+//                holder.ll_picture78.setVisibility(View.GONE);
+//                holder.ll_picture369.setVisibility(View.INVISIBLE);
+//                holder.iv_picture9.setVisibility(View.GONE);
+//                break;
+//            case TYPE_PICTURE_NINE:
+//                holder.iv_one_picture.setVisibility(View.GONE);
+//                holder.ll_picture78.setVisibility(View.VISIBLE);
+//                holder.ll_picture369.setVisibility(View.VISIBLE);
+//                holder.ll_picture1245.setVisibility(View.VISIBLE);
+//                holder.iv_picture9.setVisibility(View.VISIBLE);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     /**
      * 全图片
@@ -185,10 +221,32 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         LinearLayout ll_explore_top;
         @Bind(R.id.tv_date)
         TextView tv_date;
+        @Bind(R.id.iv_user_icon)
+        ImageDraweeView iv_user_icon;
+        @Bind(R.id.tv_introduct)
+        TextView tv_introduct;
         @Bind(R.id.iv_skill_icon)
         ImageDraweeView iv_skill_icon;
         @Bind(R.id.tv_skill_name)
         TextView tv_skill_name;
+        @Bind(R.id.tv_content_head1)
+        TextView tv_content_head1;
+        @Bind(R.id.tv_content_center1)
+        TextView tv_content_center1;
+        @Bind(R.id.tv_content_footer1)
+        TextView tv_content_footer1;
+        @Bind(R.id.tv_content_head2)
+        TextView tv_content_head2;
+        @Bind(R.id.tv_content_center2)
+        TextView tv_content_center2;
+        @Bind(R.id.tv_content_footer2)
+        TextView tv_content_footer2;
+        @Bind(R.id.tv_content_head5)
+        TextView tv_content_head5;
+        @Bind(R.id.tv_content_center5)
+        TextView tv_content_center5;
+        @Bind(R.id.tv_content_footer5)
+        TextView tv_content_footer5;
 
         public ExploerViewHolder(View itemView) {
             super(itemView);
@@ -203,6 +261,10 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         LinearLayout ll_explore_top;
         @Bind(R.id.tv_date)
         TextView tv_date;
+        @Bind(R.id.iv_user_icon)
+        ImageDraweeView iv_user_icon;
+        @Bind(R.id.tv_introduct)
+        TextView tv_introduct;
         @Bind(R.id.iv_skill_icon)
         ImageDraweeView iv_skill_icon;
         @Bind(R.id.iv_picture1)
