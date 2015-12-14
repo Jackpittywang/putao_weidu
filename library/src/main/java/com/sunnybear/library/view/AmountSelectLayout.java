@@ -39,12 +39,11 @@ public class AmountSelectLayout extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        mRootView = LayoutInflater.from(context).inflate(R.layout.widget_amount_select, null);
+        mRootView = LayoutInflater.from(context).inflate(R.layout.widget_amount_select, this);
         mMinusBtn = (Button) mRootView.findViewById(R.id.btn_minus);
         mPlusBtn = (Button) mRootView.findViewById(R.id.btn_plus);
         tv_count = (TextView) mRootView.findViewById(R.id.tv_count);
         tv_count.setText(String.valueOf(mCurrentCount));
-        addView(mRootView);
 
         mMinusBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -61,6 +60,15 @@ public class AmountSelectLayout extends RelativeLayout {
                 tv_count.setText(String.valueOf(mCurrentCount));
             }
         });
+    }
+
+    /**
+     * 设置数量
+     *
+     * @param count
+     */
+    public void setCount(int count) {
+        tv_count.setText(String.valueOf(count));
     }
 
     /**
