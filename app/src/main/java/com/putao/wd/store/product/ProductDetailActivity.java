@@ -168,7 +168,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     tv_service.setText(result.get(0).getServices());
 
                     //初始化popwindow值
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
                 }
             }
 
@@ -233,28 +233,16 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
             case R.id.ti_summary://概述
-                stickyHeaderLayoutSticky.setVisibility(View.VISIBLE);
-                ll_parameter.setVisibility(View.GONE);
-                ll_pack.setVisibility(View.GONE);
-                ll_service.setVisibility(View.GONE);
+                wv_content.loadUrl("http://www.putao.com");
                 break;
             case R.id.ti_parameter://规格参数
-                stickyHeaderLayoutSticky.setVisibility(View.GONE);
-                ll_parameter.setVisibility(View.VISIBLE);
-                ll_pack.setVisibility(View.GONE);
-                ll_service.setVisibility(View.GONE);
+                wv_content.loadUrl("http://www.putao.com");
                 break;
             case R.id.ti_pack://包装清单
-                stickyHeaderLayoutSticky.setVisibility(View.GONE);
-                ll_parameter.setVisibility(View.GONE);
-                ll_pack.setVisibility(View.VISIBLE);
-                ll_service.setVisibility(View.GONE);
+                wv_content.loadUrl("http://www.putao.com");
                 break;
             case R.id.tv_service://售后
-                stickyHeaderLayoutSticky.setVisibility(View.GONE);
-                ll_parameter.setVisibility(View.GONE);
-                ll_pack.setVisibility(View.GONE);
-                ll_service.setVisibility(View.VISIBLE);
+                wv_content.loadUrl("http://www.putao.com");
                 break;
         }
     }

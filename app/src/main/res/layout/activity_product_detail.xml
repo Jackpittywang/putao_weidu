@@ -190,47 +190,12 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!--概述：H5页面-->
+                <!--概述：H5页面：概述、规格参数、包装清单、售后、-->
                 <com.sunnybear.library.view.BasicWebView
                     android:id="@id/stickyHeaderLayout_scrollable"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="48dp" />
-                <!--规格参数-->
-                <LinearLayout
-                    android:id="@+id/ll_parameter"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_parameter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <!--包装清单-->
-                <LinearLayout
-                    android:id="@+id/ll_pack"
-                    android:visibility="gone"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_pack"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-                <!--售后-->
-                <LinearLayout
-                    android:id="@+id/ll_service"
-                    android:visibility="gone"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_service"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
             </FrameLayout>
         </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
