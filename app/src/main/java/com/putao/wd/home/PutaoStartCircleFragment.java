@@ -12,6 +12,7 @@ import com.putao.wd.home.adapter.StartBannerAdapter;
 import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
 import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -155,7 +156,10 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         rv_content.setOnItemClickListener(new OnItemClickListener<ActionNews>() {
             @Override
             public void onItemClick(ActionNews actionNewsList, int position) {
-                startActivity(ActionsDetailActivity.class);
+                Bundle bundle = new Bundle();
+                ActionNews actionNews = adapter.getItem(position);
+                bundle .putString("action_id", actionNews.getId());
+                startActivity(ActionsDetailActivity.class, bundle);
             }
         });
         ll_title.setTitleItemSelectedListener(this);
