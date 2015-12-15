@@ -75,7 +75,7 @@ public final class OkHttpManager {
      *
      * @return OkHttp客户端
      */
-    private OkHttpClient generateOkHttpClient(List<Interceptor> interceptors) {
+    public OkHttpClient generateOkHttpClient(List<Interceptor> interceptors) {
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         okHttpClient.setWriteTimeout(WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);

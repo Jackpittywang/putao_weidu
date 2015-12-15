@@ -53,7 +53,7 @@ public final class JsonUtils {
      * @param json json
      * @return 格式化后的json
      */
-    public static String jsonFormatter(String json) {
+    public static String jsonFormatter(String json) throws NullPointerException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(json);

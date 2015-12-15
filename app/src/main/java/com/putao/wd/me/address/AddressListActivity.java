@@ -12,12 +12,12 @@ import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.Address;
-import com.putao.wd.model.OrderDetail;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -44,13 +44,14 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
-        if (addresses == null || addresses.size() == 0) {
-            rl_no_address.setVisibility(View.VISIBLE);
-            return;
-        }
-        adapter = new AddressAdapter(mContext, addresses);
-        rv_addresses.setAdapter(adapter);
+//        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
+//        if (addresses == null || addresses.size() == 0) {
+//            rl_no_address.setVisibility(View.VISIBLE);
+//            return;
+//        }
+//        adapter = new AddressAdapter(mContext, addresses);
+//        rv_addresses.setAdapter(adapter);
+        getAddressLists();
         //网络请求Demo
 //        networkRequest("自己组合的request", new SimpleFastJsonCallback<"自己的接收model">() {
 //            @Override
@@ -64,10 +65,17 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
      * 收货地址列表
      */
     private void getAddressLists(){
-        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
             @Override
-            public void onSuccess(String url, Address result) {
+            public void onSuccess(String url, ArrayList<Address> result) {
                 Logger.d(result.toString());
+                //addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
+                if (result == null || result.size() == 0) {
+                    rl_no_address.setVisibility(View.VISIBLE);
+                    return;
+                }
+                adapter = new AddressAdapter(mContext, result);
+                rv_addresses.setAdapter(adapter);
             }
 
         });
@@ -91,12 +99,12 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_ADD)
-    public void eventAddressAdd(AddressDB address) {
+    public void eventAddressAdd(Address address) {
         adapter.add(address);
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
-    public void eventAddressUpdate(AddressDB address) {
+    public void eventAddressUpdate(Address address) {
         adapter.replace(adapter.getEditPosition(), address);
     }
 

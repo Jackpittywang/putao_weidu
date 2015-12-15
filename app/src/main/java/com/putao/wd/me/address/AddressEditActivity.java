@@ -95,8 +95,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 添加收货地址
      */
-    private void addressAdd(){
+    private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
         networkRequest(OrderApi.addressAdd("realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+//      测试  networkRequest(OrderApi.addressAdd("realname", "1", "1", "1", "address", "13711111111", "02525458565", "111111", "1"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
@@ -109,7 +110,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 更新收货地址
      */
     private void addressUpdate(){
-        networkRequest(OrderApi.addressUpdate("address_id","realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+        networkRequest(OrderApi.addressUpdate("address_id", "realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
@@ -201,7 +202,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             address.setMobile(et_phone.getText().toString());
             address.setStreet(et_street.getText().toString());
             if (isAdd) {
-                mAddressDBManager.insert(address);
+                addressAdd(et_name.getText().toString(), "city_id", "province_id", "area_id", et_street.getText().toString(), et_phone.getText().toString(), "tel", "postcode", "status");
+                        mAddressDBManager.insert(address);
                 EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
                 mAddressDBManager.update(address);

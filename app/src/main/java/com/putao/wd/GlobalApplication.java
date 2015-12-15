@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -14,6 +15,7 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.me.address.CityService;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.SDCardUtils;
@@ -41,6 +43,8 @@ public class GlobalApplication extends BasicApplication {
 
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
+
+        startService(new Intent(this, CityService.class));
     }
 
     /**

@@ -14,7 +14,9 @@ public class UserApi {
     private static final String REQUEST_HEAD_IMG = "head_img";//头像图片名
     private static final String REQUEST_PROFILE = "profile";//简介
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/";//基础url
+    private static final String REQUEST_TYPE = "type";//类型
+
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -64,5 +66,19 @@ public class UserApi {
     public static Request getUserInfo() {
         return PTWDRequestHelper.explore()
                 .build(RequestMethod.POST, URL_USER_INFO);
+    }
+
+    /**
+     * 获取上传UploadToken
+     */
+    public static final String URL_UPLOAD_TOKEN = BASE_URL + "get/upload/token";
+
+    /**
+     * 获取uploadToken
+     */
+    public static Request getUploadToken() {
+        return PTWDRequestHelper.upload()
+                .addParam(REQUEST_TYPE, "uploadPhotos")
+                .build(RequestMethod.GET, URL_UPLOAD_TOKEN);
     }
 }

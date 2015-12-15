@@ -8,10 +8,10 @@ import com.squareup.okhttp.RequestBody;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.model.http.progress.ProgressRequestBody;
 import com.sunnybear.library.model.http.progress.ProgressRequestListener;
+import com.sunnybear.library.util.Logger;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +23,7 @@ public class MultiPartRequestBuilder {
     private static final String TAG = MultiPartRequestBuilder.class.getSimpleName();
 
     private Map<String, String> headers;//请求头参数
-    private Map<String, Objects> params;//请求参数
+    private Map<String, Object> params;//请求参数
 
     private Request.Builder builder;
 
@@ -70,7 +70,7 @@ public class MultiPartRequestBuilder {
      * @param value value
      * @return RequestHelper实例
      */
-    public MultiPartRequestBuilder addParam(String name, Objects value) {
+    public MultiPartRequestBuilder addParam(String name, Object value) {
         params.put(name, value);
         return this;
     }
@@ -80,16 +80,19 @@ public class MultiPartRequestBuilder {
      *
      * @return 请求体
      */
-    private Request build(String url) {
+    public Request build(String url) {
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         for (String name : params.keySet()) {
             Object value = params.get(name);
             if (value instanceof String)
                 builder.addFormDataPart(name, (String) value);
             else
-                builder.addFormDataPart(name, ((File) value).getName(), RequestBody.create(getMediaType((File) value), (File) value));
+                builder.addFormDataPart(name, null, RequestBody.create(getMediaType((File) value), (File) value));
+//                builder.addPart(Headers.of("Content-Disposition", "multipart/form-data; name=\"" + name + "\";filename=\"" + ((File) value).getName() + "\"")
+//                        , RequestBody.create(getMediaType((File) value), (File) value));
         }
         RequestBody body = builder.build();
+        Logger.d(TAG, "form-data请求,url=" + url + "\n" + "请求 参数:" + "\n" + formatParams(params));
         if (mProgressRequestListener != null)
             return this.builder.url(url).post(new ProgressRequestBody(body, mProgressRequestListener)).tag(url).build();
         else
@@ -110,5 +113,18 @@ public class MultiPartRequestBuilder {
                 return MediaType.parse("audio/mpeg");
         }
         return null;
+    }
+
+    /**
+     * 格式化显示参数信息
+     *
+     * @return 参数信息
+     */
+    private String formatParams(Map<String, Object> params) {
+        StringBuffer sb = new StringBuffer();
+        for (String name : params.keySet()) {
+            sb.append(name).append("=").append(params.get(name)).append("\n");
+        }
+        return sb.delete(sb.length() - 1, sb.length()).toString();
     }
 }
