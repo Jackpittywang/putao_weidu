@@ -26,6 +26,7 @@
         <attr name="divider_color" format="color" />
         <attr name="is_inner" format="boolean" />
         <attr name="process_background" format="reference" />
+        <attr name="is_ban_scroll" format="boolean" />
     </declare-styleable>
 
     <!--LoadMoreRecyclerView-->

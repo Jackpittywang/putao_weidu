@@ -146,4 +146,10 @@
     <style name="image_circle" parent="image_style">
         <item name="roundAsCircle">true</item>
     </style>
+    <!-- 水平线 -->
+    <style name="line_horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/divider_color</item>
+    </style>
 </resources>

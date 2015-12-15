@@ -41,7 +41,7 @@ public class GlobalApplication extends BasicApplication {
         //安装通行证
         AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");
         parseEmoji();//表情解析
-        parseRegions();//解析城市列表
+//        parseRegions();//解析城市列表
         //开启shareSDK
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
