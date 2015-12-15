@@ -13,8 +13,8 @@ import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.TimeButton;
@@ -134,5 +134,11 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
     }
 }

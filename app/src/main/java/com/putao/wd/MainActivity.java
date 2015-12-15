@@ -14,7 +14,6 @@ import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
-import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 
@@ -105,21 +104,21 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 break;
             case R.id.ti_explore://探索号
                 ti_explore.hide();//关闭指示数字
-                if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentToken()))
+                if (AccountHelper.isLogin())
                     startActivity(LoginActivity.class);
                 else
                     setCurrentItem(currentItemId);
                 break;
             case R.id.ti_store://葡商城
                 ti_store.hide();//关闭指示数字
-                if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentToken()))
+                if (AccountHelper.isLogin())
                     startActivity(LoginActivity.class);
                 else
                     setCurrentItem(currentItemId);
                 break;
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
-                if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentToken()))
+                if (AccountHelper.isLogin())
                     startActivity(LoginActivity.class);
                 else
                     setCurrentItem(currentItemId);

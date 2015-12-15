@@ -8,22 +8,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountHelper;
-import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.PreferenceUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -73,7 +64,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             @Override
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.login(result);
-                                ActivityManager.getInstance().finishCurrentActivity();
+                                finish();
                                 loading.dismiss();
                             }
 
@@ -117,8 +108,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onLeftAction() {
-        super.onLeftAction();
+    public void finish() {
+        super.finish();
         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
     }
 }

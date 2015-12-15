@@ -59,4 +59,13 @@ public final class AccountHelper {
     public static String getCurrentToken() {
         return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, "");
     }
+
+    /**
+     * 是否在登录状态
+     *
+     * @return
+     */
+    public static boolean isLogin() {
+        return StringUtils.equals(getCurrentUid(), "") || StringUtils.equals(getCurrentToken(), "");
+    }
 }
