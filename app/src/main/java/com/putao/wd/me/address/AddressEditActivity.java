@@ -96,7 +96,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加收货地址
      */
     private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        networkRequest(OrderApi.addressAdd("realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+        networkRequest(OrderApi.addressAdd(realname, city_id, province_id, area_id, address, mobile, tel, postcode, status), new SimpleFastJsonCallback<Address>(Address.class, loading) {
 //      测试  networkRequest(OrderApi.addressAdd("realname", "1", "1", "1", "address", "13711111111", "02525458565", "111111", "1"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
@@ -202,11 +202,11 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             address.setMobile(et_phone.getText().toString());
             address.setStreet(et_street.getText().toString());
             if (isAdd) {
-                addressAdd(et_name.getText().toString(), "city_id", "province_id", "area_id", et_street.getText().toString(), et_phone.getText().toString(), "tel", "postcode", "status");
-                        mAddressDBManager.insert(address);
-                EventBusHelper.post(address, EVENT_ADDRESS_ADD);
+                addressAdd(et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, address.getIsDefault()?"1":"0");
+                mAddressDBManager.insert(address);//插入本地数据库
+                //EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
-                mAddressDBManager.update(address);
+                mAddressDBManager.update(address);//更新本地数据库
                 EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
             }
             ActivityManager.getInstance().finishCurrentActivity();
