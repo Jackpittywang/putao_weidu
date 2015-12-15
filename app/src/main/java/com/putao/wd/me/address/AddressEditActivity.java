@@ -96,8 +96,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加收货地址
      */
     private void addressAdd(){
-//        networkRequest(OrderApi.addressAdd("realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
-        networkRequest(OrderApi.addressAdd("realname", "1", "1", "1", "address", "13711111111", "02525458565", "111111", "1"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+        networkRequest(OrderApi.addressAdd("realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+//      测试  networkRequest(OrderApi.addressAdd("realname", "1", "1", "1", "address", "13711111111", "02525458565", "111111", "1"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
@@ -197,20 +197,20 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     @Override
     public void onRightAction() {
-        //if (checkData()) {
-//            address.setName(et_name.getText().toString());
-//            address.setMobile(et_phone.getText().toString());
-//            address.setStreet(et_street.getText().toString());
+        if (checkData()) {
+            address.setName(et_name.getText().toString());
+            address.setMobile(et_phone.getText().toString());
+            address.setStreet(et_street.getText().toString());
             if (isAdd) {
                 addressAdd();
-                //mAddressDBManager.insert(address);
-                //EventBusHelper.post(address, EVENT_ADDRESS_ADD);
+                mAddressDBManager.insert(address);
+                EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
                 mAddressDBManager.update(address);
                 EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
             }
             ActivityManager.getInstance().finishCurrentActivity();
-        //}
+        }
     }
 
     /**
