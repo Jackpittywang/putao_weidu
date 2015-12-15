@@ -25,7 +25,6 @@ import de.greenrobot.dao.query.QueryBuilder;
 public abstract class BasicApplication extends Application {
     private static final String KEY_APP_ID = "app_id";
     private static Context mContext;
-    //    private static RefWatcher mRefWatcher;//内存泄露检查
     private static OkHttpClient mOkHttpClient;//OkHttp
     private static int maxAge;//网络缓存最大时间
 
@@ -50,8 +49,6 @@ public abstract class BasicApplication extends Application {
         mContext = getApplicationContext();
         //sdCard缓存路径
         sdCardPath = getSdCardPath();
-        //leakCanary初始化
-//        mRefWatcher = LeakCanary.install(this);
         //ButterKnife的Debug模式
         ButterKnife.setDebug(isDebug());
         //偏好设置文件初始化
@@ -80,10 +77,6 @@ public abstract class BasicApplication extends Application {
     public static Context getInstance() {
         return mContext;
     }
-
-//    public static RefWatcher getRefWatcher() {
-//        return mRefWatcher;
-//    }
 
     public static OkHttpClient getOkHttpClient() {
         return mOkHttpClient;

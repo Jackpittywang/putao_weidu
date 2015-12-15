@@ -21,6 +21,7 @@ import butterknife.Bind;
  * 截屏测试
  * Created by guchenkai on 2015/12/11.
  */
+@Deprecated
 public class JointImageTestActivity extends PTWDActivity {
     @Bind(R.id.root)
     ScrollView root;
@@ -29,7 +30,7 @@ public class JointImageTestActivity extends PTWDActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_joint_image_test;
+        return R.layout.test_activity_joint_image_test;
     }
 
     @Override

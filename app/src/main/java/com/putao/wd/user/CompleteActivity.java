@@ -14,11 +14,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.UploadApi;
-import com.putao.wd.api.UploadTask;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
@@ -129,7 +129,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         new Thread() {
             @Override
             public void run() {
-                UploadApi.uploadFile(uploadToken, file, new UploadTask.UploadCallback() {
+                UploadApi.uploadFile(uploadToken, file, new UploadFileTask.UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());

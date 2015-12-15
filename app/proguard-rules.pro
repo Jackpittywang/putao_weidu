@@ -51,11 +51,6 @@
 -dontwarn com.squareup.okhttp.**
 -keep class com.squareup.okhttp.** { *; }
 -dontwarn okio.**
-#retrofit配置
--dontwarn retrofit.**
--keep class retrofit.** { *; }
--keepattributes Signature
--keepattributes Exceptions
 # fastjson配置
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.** { *; }
@@ -82,3 +77,11 @@
 -keep class com.baidu.** { *; }
 -keep class vi.com.** { *; }
 -dontwarn com.baidu.**
+#shareSDK配置
+-keep class cn.sharesdk.** { *; }
+-keep class com.sina.** { *; }
+-keep class **.R$.* { *; }
+-keep class **.R { *; }
+-dontwarn cn.sharesdk.**
+-dontwarn **.R$*
+-keep class m.framework.** { *; }

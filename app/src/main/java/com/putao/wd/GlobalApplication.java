@@ -1,23 +1,27 @@
 package com.putao.wd;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.putao.wd.account.AccountApi;
-import com.putao.wd.api.UploadApi;
 import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
-import com.putao.wd.me.address.CityService;
+import com.putao.wd.util.RegionUtils;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.FileUtils;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.util.SDCardUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -27,32 +31,21 @@ import cn.sharesdk.framework.ShareSDK;
  */
 public class GlobalApplication extends BasicApplication {
     private DaoMaster.OpenHelper mHelper;
+    private Map<String, String> mEmojis;//表情集合
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mEmojis = new ConcurrentHashMap<>();
         installDataBase();
-        ShareSDK.initSDK(getApplicationContext());//开启shareSDK
+        //安装通行证
         AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");
-
-//        WechatShareTools.regToWX(getApplicationContext());
-        installApi();
-
+        parseEmoji();//表情解析
+        parseRegions();//解析城市列表
+        //开启shareSDK
+        ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
-
-//        startService(new Intent(this, CityService.class));
-    }
-
-    /**
-     * 安装api接口
-     */
-    private void installApi() {
-//        StartApi.install(isDebug() ? "http://api.event.start.wang/" : "http://api.event.start.wang/");
-//        StoreApi.install(isDebug() ? "http://api.sotre.putao.com/" : "http://api.sotre.putao.com/");
-//        ExploreApi.install(isDebug() ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/");
-//        UserApi.install(isDebug() ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/");
-        UploadApi.install(isDebug() ? "http://upload.dev.putaocloud.com" : "http://upload.putaocloud.com");
     }
 
     /**
@@ -91,6 +84,44 @@ public class GlobalApplication extends BasicApplication {
         return null;
     }
 
+    /**
+     * 解析emoji表情
+     */
+    private void parseEmoji() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResourcesUtils.unZip(getApplicationContext(), "emoji.zip", "", true);//解压表情包
+                    Logger.d("表情包解压完成");
+                    File emoji = new File(GlobalApplication.sdCardPath + File.separator + "emoji", "set.txt");
+                    String source = FileUtils.readFile(emoji).replace("\uFEFF", "");
+                    Logger.d(source);
+                    String[] sources = source.split("\\n");
+                    for (String s : sources) {
+                        String[] s1 = s.split(",");
+                        mEmojis.put(s1[0], GlobalApplication.sdCardPath + File.separator + "emoji" + File.separator + s1[1]);
+                    }
+                    GlobalApplication.setEmojis(mEmojis);
+                } catch (IOException e) {
+                    Logger.e("表情包解压完成", e);
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 解析城市列表
+     */
+    private void parseRegions() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RegionUtils.insertRegion();
+            }
+        }).start();
+    }
+
     @Override
     protected String getBuglyKey() {
         return "900013684";
@@ -108,7 +139,7 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected String getLogTag() {
-        return "putao-weidu";
+        return "putao_weidu";
     }
 
     @Override

@@ -16,6 +16,7 @@ import butterknife.Bind;
 /**
  * Created by guchenkai on 2015/12/8.
  */
+@Deprecated
 public class TestActivity extends BasicFragmentActivity {
     String html = "<font color=646464 size=14>昨日30分钟拼完</font>" +
             "<br>" +
@@ -37,7 +38,7 @@ public class TestActivity extends BasicFragmentActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_test;
+        return R.layout.test_activity_test;
     }
 
     @Override

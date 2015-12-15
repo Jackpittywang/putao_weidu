@@ -195,18 +195,26 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--alipay配置-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!--Baidu地图配置-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
-        <!-- 地区选择 -->
-        <service android:name=".me.address.CityService" />
-        <!--表情解析-->
-        <service android:name=".util.EmojiService" />
-
-        <activity android:name=".TestActivity" />
+        <!--================测试Activity======================-->
+        <activity
+            android:name=".TestActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".JointImageTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pay.PayAcitivty"
             android:screenOrientation="portrait" />
     </application>
 </manifest>
