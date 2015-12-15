@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@+id/rv_emojis"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        auto:column_num="7"
+        auto:divider_color="@color/transparent"
+        auto:divider_height="20dp"
+        auto:has_row_divider="true"
+        auto:is_ban_scroll="true"
+        auto:layout_mode="grid" />
+</LinearLayout>

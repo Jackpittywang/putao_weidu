@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.sunnybear.library.R;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -33,6 +34,7 @@ public class BasicRecyclerView extends RecyclerView {
     private int divider_color;//间隔线的颜色
     private int divider_marginLeft, divider_marginRight, divider_marginTop, divider_marginBottom;
     private int mProcessBackground;//点击时背景色
+    private boolean isBanScroll;//是否禁止滚动
 
     public BasicRecyclerView(Context context) {
         this(context, null, 0);
@@ -64,6 +66,7 @@ public class BasicRecyclerView extends RecyclerView {
         divider_marginBottom = (int) array.getDimension(R.styleable.BasicRecyclerView_divider_marginBottom, 0f);
         divider_color = array.getColor(R.styleable.BasicRecyclerView_divider_color, Color.parseColor("#00000000"));
         mProcessBackground = array.getInteger(R.styleable.BasicRecyclerView_process_background, R.drawable.recyclerview_background);
+        isBanScroll = array.getBoolean(R.styleable.BasicRecyclerView_is_ban_scroll, false);
         array.recycle();
     }
 
@@ -165,5 +168,10 @@ public class BasicRecyclerView extends RecyclerView {
         else
             height = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthSpec, height);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        return !isBanScroll;
     }
 }
