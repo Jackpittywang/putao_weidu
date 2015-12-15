@@ -23,14 +23,11 @@ public class PTWDRequestHelper {
      * @return Request实例
      */
     public static FormEncodingRequestBuilder store() {
-//        测试购物车
+
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "661002")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, "putao");
-//        测试订单
-//        return FormEncodingRequestBuilder.newInstance()
-//                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000277")
-//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, "4907402e527346898fce328ecededc4a");
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""));
+
     }
 
     /**

@@ -12,7 +12,8 @@ public class StoreProduct implements Serializable {
     private String subtitle;
     private String price;
     private String icon;
-
+    private String stock;
+    private String lock;
     public String getId() {
         return id;
     }
@@ -53,6 +54,22 @@ public class StoreProduct implements Serializable {
         this.icon = icon;
     }
 
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public String getLock() {
+        return lock;
+    }
+
+    public void setLock(String lock) {
+        this.lock = lock;
+    }
+
     @Override
     public String toString() {
         return "StoreProduct{" +
@@ -60,6 +77,8 @@ public class StoreProduct implements Serializable {
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", price='" + price + '\'' +
+                ", stock='" + stock + '\'' +
+                ", lock='" + lock + '\'' +
                 ", icon='" + icon + '\'' +
                 '}';
     }
