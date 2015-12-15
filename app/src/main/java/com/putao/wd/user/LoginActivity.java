@@ -73,16 +73,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             @Override
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.login(result);
-                                networkRequest(UserApi.login(), new SimpleFastJsonCallback<ArrayList<String>>(String.class, null) {
-                                    @Override
-                                    public void onSuccess(String url, ArrayList<String> result) {
-                                        Logger.i("登录成功");
-                                        Logger.i("登录成功 uid = " + PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, "60000277"));
-                                        Logger.i("登录成功 token = " + PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, "4907402e527346898fce328ecededc4a"));
-                                        ActivityManager.getInstance().finishCurrentActivity();
-                                        loading.dismiss();
-                                    }
-                                });
+                                ActivityManager.getInstance().finishCurrentActivity();
+                                loading.dismiss();
                             }
 
                             @Override
