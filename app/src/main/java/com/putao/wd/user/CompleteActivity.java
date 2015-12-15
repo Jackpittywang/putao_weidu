@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.UploadApi;
+import com.putao.wd.api.UploadTask;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
@@ -112,7 +113,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 JSONObject jsonObject = JSON.parseObject(result);
                 uploadToken = jsonObject.getString("uploadToken");
                 Logger.d(uploadToken);
-                uploadFile(uploadToken, img_path);
+//                uploadFile(uploadToken, img_path);
             }
         });
     }
@@ -123,15 +124,19 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
      * @param uploadToken    上传token
      * @param uploadFilePath 上传文件路径
      */
-    private void uploadFile(String uploadToken, String uploadFilePath) {
-        File file = new File(uploadFilePath);
-        networkRequest(UploadApi.uploadFile(uploadToken, file), new SimpleFastJsonCallback<String>(String.class, null) {
+    private void uploadFile(final String uploadToken, String uploadFilePath) {
+        final File file = new File(uploadFilePath);
+        new Thread() {
             @Override
-            public void onSuccess(String url, String result) {
-                Logger.d(result);
-//                JSONObject jsonObject = JSON.parseObject(result);
+            public void run() {
+                UploadApi.uploadFile(uploadToken, file, new UploadTask.UploadCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        Logger.d(result.toJSONString());
+                    }
+                });
             }
-        });
+        }.start();
     }
 
     /**
