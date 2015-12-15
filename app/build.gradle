@@ -11,8 +11,6 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0.0"
-
-        multiDexEnabled = true
     }
     signingConfigs {
         release {
@@ -48,11 +46,6 @@ android {
         local_debug {
             versionName = "D" + defaultConfig.versionName
         }
-    }
-    packagingOptions {
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
