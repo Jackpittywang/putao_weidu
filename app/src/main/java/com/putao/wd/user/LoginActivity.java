@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
@@ -18,6 +19,7 @@ import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 
@@ -75,7 +77,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                     @Override
                                     public void onSuccess(String url, ArrayList<String> result) {
                                         Logger.i("登录成功");
+                                        Logger.i("登录成功 uid = " + PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, "60000277"));
+                                        Logger.i("登录成功 token = " + PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, "4907402e527346898fce328ecededc4a"));
                                         ActivityManager.getInstance().finishCurrentActivity();
+                                        loading.dismiss();
                                     }
                                 });
                             }
