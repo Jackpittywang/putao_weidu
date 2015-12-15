@@ -202,7 +202,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             address.setMobile(et_phone.getText().toString());
             address.setStreet(et_street.getText().toString());
             if (isAdd) {
-                addressAdd("realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status");
+                addressAdd(et_name.getText().toString(), "city_id", "province_id", "area_id", et_street.getText().toString(), et_phone.getText().toString(), "tel", "postcode", "status");
                         mAddressDBManager.insert(address);
                 EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
