@@ -109,8 +109,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 更新收货地址
      */
-    private void addressUpdate(){
-        networkRequest(OrderApi.addressUpdate("address_id", "realname", "city_id", "province_id", "area_id", "address", "mobile", "tel", "postcode", "status"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+    private void addressUpdate(String address_id,String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
+        networkRequest(OrderApi.addressUpdate(address_id,realname, city_id, province_id, area_id, address, mobile, tel, postcode, status), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
@@ -206,6 +206,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                 mAddressDBManager.insert(address);//插入本地数据库
                 //EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
+                addressUpdate("address_id",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, address.getIsDefault()?"1":"0");
                 mAddressDBManager.update(address);//更新本地数据库
                 EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
             }
