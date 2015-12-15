@@ -118,7 +118,8 @@ public final class DateUtils {
      */
     public static String millisecondToDate(long millisecond, String pattern) {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
-        return format.format(millisecond);
+        Date date = new Date(millisecond);
+        return format.format(date);
     }
 
     /**
