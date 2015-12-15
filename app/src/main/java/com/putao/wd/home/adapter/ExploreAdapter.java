@@ -11,13 +11,11 @@ import com.putao.wd.model.ExploreProductData;
 import com.putao.wd.model.ExploreProductDataDaily;
 import com.putao.wd.model.ExploreProductDataList;
 import com.putao.wd.model.ExploreProductDataPlot;
-import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -87,8 +85,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         if (null != exploreProduct) {
             //Logger.i(exploreProduct.toString());
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-            SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
-            String date = format.format(new Date(exploreProduct.getTime()));
+            String date = DateUtils.secondToDate(exploreProduct.getTime(), DATE_PATTERN);
             viewHolder.tv_date.setText(date);
             viewHolder.tv_introduct.setText(exploreProduct.getDay_summary());
 

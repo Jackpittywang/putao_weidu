@@ -37,7 +37,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     LoadMoreRecyclerView rv_content;
 
     private CommentAdapter adapter;
-
+    private String action_id;
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +50,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         refresh();
+        getCommentList();
         addListener();
     }
 
@@ -85,19 +86,26 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        networkRequest(StartApi.getCommentList("action_id"), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
-                            @Override
-                            public void onSuccess(String url, ArrayList<Comment> result) {
-                                Logger.i("活动评论列表请求成功--->"+ result.toString());
-                                if (null != result) {
-                                    adapter.addAll(result);
-                                } else {
-                                    rv_content.noMoreLoading();
-                                }
-                            }
-                        });
+                        getCommentList();
                     }
                 }, 3 * 1000);
+            }
+        });
+    }
+
+    private void getCommentList() {
+        Bundle bundle = getIntent().getExtras();
+        String action_id = bundle.getString("action_id");
+        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Comment> result) {
+                Logger.i("活动评论列表请求成功");
+                if (null != result) {
+                    adapter.replaceAll(result);
+                } else {
+                    rv_content.noMoreLoading();
+                }
+                loading.dismiss();
             }
         });
     }

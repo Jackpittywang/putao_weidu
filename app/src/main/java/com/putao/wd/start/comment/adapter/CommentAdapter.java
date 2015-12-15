@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Comment;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -20,6 +21,7 @@ import butterknife.Bind;
  * Created by yanghx on 2015/12/8.
  */
 public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.CommentViewHolder> {
+    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
 
 
     public CommentAdapter(Context context, List<Comment> comments) {
@@ -37,18 +39,37 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
     }
 
     @Override
-    public void onBindItem(CommentViewHolder holder, Comment comment, int position) {
-//        holder.iv_comment_icon.setImageURL(commentItem.getIconUrl());
-//        holder.tv_username.setText(commentItem.getUsername());
-//        holder.tv_comment_time.setText(commentItem.getTime());
-//        holder.tv_comment_content.setText(commentItem.getComment());
-//        holder.tv_comment.setText(commentItem.getComment_count());
-//        holder.tv_support.setText(commentItem.getSupport_count());
-
-        holder.sb_support_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
+    public void onBindItem(final CommentViewHolder holder, final Comment comment, int position) {
+        holder.iv_comment_icon.setImageURL(comment.getUser_profile_photo());
+        holder.tv_username.setText(comment.getUser_name());
+        String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getCreate_time()), DATE_PATTERN);
+        holder.tv_comment_time.setText(create_time);
+        holder.tv_comment_content.setText(comment.getContent());
+//        holder.tv_count_comment.setText("1234");
+        if (!"0".equals(comment.getCount_cool())) {
+            holder.tv_count_cool.setText(comment.getCount_cool());
+        } else {
+            holder.tv_count_cool.setText("赞");
+        }
+        holder.sb_cool_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
-
+                String cool = holder.tv_count_cool.getText().toString();
+                int count_cool = 0;
+                if ("赞".equals(cool)) {
+                    count_cool = 0;
+                }else {
+                    count_cool = Integer.parseInt(cool);
+                }
+                if (isSelect) {
+                    holder.tv_count_cool.setText(count_cool+1 + "");
+                } else {
+                    if (count_cool - 1 <= 0) {
+                        holder.tv_count_cool.setText("赞");
+                    } else {
+                        holder.tv_count_cool.setText(count_cool - 1 + "");
+                    }
+                }
             }
         });
     }
@@ -63,12 +84,12 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         TextView tv_comment_time;
         @Bind(R.id.tv_comment_content)
         TextView tv_comment_content;
-        @Bind(R.id.tv_support)
-        TextView tv_support;
-        @Bind(R.id.sb_support_icon)
-        SwitchButton sb_support_icon;
-        @Bind(R.id.tv_comment)
-        TextView tv_comment;
+        @Bind(R.id.tv_count_cool)
+        TextView tv_count_cool;
+        @Bind(R.id.sb_cool_icon)
+        SwitchButton sb_cool_icon;
+        @Bind(R.id.tv_count_comment)
+        TextView tv_count_comment;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
