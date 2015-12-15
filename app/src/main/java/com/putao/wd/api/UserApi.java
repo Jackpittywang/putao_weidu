@@ -1,5 +1,6 @@
 package com.putao.wd.api;
 
+import com.facebook.common.internal.DoNotStrip;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
@@ -25,11 +26,13 @@ public class UserApi {
     /**
      * 登录接口（查询）
      */
+    @Deprecated
     public static final String URL_LOGIN = BASE_URL + "login/verification";
 
     /**
      * 登录接口（查询）
      */
+    @DoNotStrip
     public static Request login() {
         return PTWDRequestHelper.explore()
                 .build(RequestMethod.POST, URL_LOGIN);
