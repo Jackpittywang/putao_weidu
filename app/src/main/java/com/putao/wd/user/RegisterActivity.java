@@ -10,6 +10,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
+import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
@@ -65,21 +67,23 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                 break;
             case R.id.btn_next://下一步
                 //String mobile, String password, String code
-//                String phone = et_mobile.getText().toString();
-//                String sms_verify = et_sms_verify.getText().toString();
-//                String password = et_password.getText().toString();
-//                networkRequest(AccountApi.register(phone, password, sms_verify), new AccountCallback(loading) {
-//                    @Override
-//                    public void onSuccess(JSONObject result) {
-//                        Logger.d(result.toJSONString());
-//                    }
-//
-//                    @Override
-//                    public void onError(String error_msg) {
-//                        ToastUtils.showToastLong(mContext, error_msg);
-//                    }
-//                });
-                startActivity(CompleteActivity.class);
+                String phone = et_mobile.getText().toString();
+                String password = et_password.getText().toString();
+                String sms_verify = et_sms_verify.getText().toString();
+                networkRequest(AccountApi.register(phone, password, sms_verify), new AccountCallback(loading) {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        AccountHelper.login(result);
+                        startActivity(CompleteActivity.class);
+                        loading.dismiss();
+                    }
+
+                    @Override
+                    public void onError(String error_msg) {
+                        loading.dismiss();
+                        ToastUtils.showToastShort(mContext, error_msg);
+                    }
+                });
                 break;
             case R.id.tv_user_protocol://用户服务协议
                 startActivity(ProtocolActivity.class);
@@ -92,12 +96,12 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
      */
     private void getVerifyCode() {
         String mobile = et_mobile.getText().toString().trim();
-        if (StringUtils.isEmpty(mobile) || StringUtils.checkMobileFormat(mobile)) {
-            ToastUtils.showToastLong(mContext, "您输入的手机号码有误，请再检查一下吧");
-            tb_get_verify.reset();
-            return;
-        }
-        networkRequest(AccountApi.checkMobile(mobile), new AccountCallback(loading) {
+//        if (StringUtils.isEmpty(mobile) || StringUtils.checkMobileFormat(mobile)) {
+//            ToastUtils.showToastLong(mContext, "您输入的手机号码有误，请再检查一下吧");
+//            tb_get_verify.reset();
+//            return;
+//        }
+        networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
                 Logger.d(result.toJSONString());

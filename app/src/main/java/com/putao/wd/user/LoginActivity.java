@@ -79,10 +79,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 
                             @Override
                             public void onError(String error_msg) {
-                                ToastUtils.showToastLong(mContext, error_msg);
-                                mErrorCount++;
-                                if (mErrorCount == 3)
-                                    rl_graph_verify.setVisibility(View.VISIBLE);
+//                                ToastUtils.showToastLong(mContext, error_msg);
+//                                mErrorCount++;
+//                                if (mErrorCount == 3)
+//                                    rl_graph_verify.setVisibility(View.VISIBLE);
                             }
                         });
                 break;

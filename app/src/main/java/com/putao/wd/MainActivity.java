@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
@@ -104,24 +105,24 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 break;
             case R.id.ti_explore://探索号
                 ti_explore.hide();//关闭指示数字
-                if (PreferenceUtils.getValue("isLogin", false))
-                    setCurrentItem(currentItemId);
-                else
+                if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentToken()))
                     startActivity(LoginActivity.class);
+                else
+                    setCurrentItem(currentItemId);
                 break;
             case R.id.ti_store://葡商城
                 ti_store.hide();//关闭指示数字
-                if (PreferenceUtils.getValue("isLogin", false))
-                    setCurrentItem(currentItemId);
-                else
+                if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentToken()))
                     startActivity(LoginActivity.class);
+                else
+                    setCurrentItem(currentItemId);
                 break;
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
-                if (PreferenceUtils.getValue("isLogin", false))
-                    setCurrentItem(currentItemId);
-                else
+                if ("".equals(AccountHelper.getCurrentUid()) || "".equals(AccountHelper.getCurrentToken()))
                     startActivity(LoginActivity.class);
+                else
+                    setCurrentItem(currentItemId);
                 break;
         }
     }

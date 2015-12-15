@@ -44,7 +44,7 @@ public class GlobalApplication extends BasicApplication {
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
 
-        startService(new Intent(this, CityService.class));
+//        startService(new Intent(this, CityService.class));
     }
 
     /**

@@ -48,7 +48,8 @@
             android:id="@+id/rl_graph_verify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_phone">
+            android:layout_below="@+id/ll_phone"
+            android:visibility="gone">
 
             <com.sunnybear.library.view.CleanableEditText
                 android:id="@+id/et_graph_verify"

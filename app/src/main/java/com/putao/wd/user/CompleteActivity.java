@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
-import com.putao.wd.api.UploadApi;
+//import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
@@ -125,13 +125,13 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
      */
     private void uploadFile(String uploadToken, String uploadFilePath) {
         File file = new File(uploadFilePath);
-        networkRequest(UploadApi.uploadFile(uploadToken, file), new SimpleFastJsonCallback<String>(String.class, null) {
-            @Override
-            public void onSuccess(String url, String result) {
-                Logger.d(result);
-//                JSONObject jsonObject = JSON.parseObject(result);
-            }
-        });
+//        networkRequest(UploadApi.uploadFile(uploadToken, file), new SimpleFastJsonCallback<String>(String.class, null) {
+//            @Override
+//            public void onSuccess(String url, String result) {
+//                Logger.d(result);
+////                JSONObject jsonObject = JSON.parseObject(result);
+//            }
+//        });
     }
 
     /**
@@ -149,6 +149,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
             public void onSuccess(String url, ArrayList<String> result) {
                 Logger.i("保存用户信息");
                 ActivityManager.getInstance().finishCurrentActivity();
+
             }
         });
     }
