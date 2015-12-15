@@ -252,7 +252,7 @@
                 >
 
                 <com.sunnybear.library.view.SwitchButton
-                    android:id="@+id/sb_support_icon"
+                    android:id="@+id/sb_cool_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -262,7 +262,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/tv_support"
+                    android:id="@+id/tv_count_cool"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"

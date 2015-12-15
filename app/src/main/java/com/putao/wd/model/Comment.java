@@ -7,29 +7,21 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/8.
  */
 public class Comment implements Serializable {
-    private int comment_id;//评论ID
-    private String title;//评论标题
+    private String comment_id;//评论ID
     private String content;//内容
-    private int count_coll;//赞
-    private int count_reply;//回复数
-    private int user_id;//评论归属用户
-    private String user_name;//用户昵称
+    private String count_cool;//赞
+    private String create_time;//创建时间
+    private String user_id;//评论归属用户
+    private String user_name;//归属用户昵称
     private String user_profile_photo;//头像
+    //private CommentReply  reply;//评论回复内容
 
-    public int getComment_id() {
+    public String getComment_id() {
         return comment_id;
     }
 
-    public void setComment_id(int comment_id) {
+    public void setComment_id(String comment_id) {
         this.comment_id = comment_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
@@ -40,27 +32,27 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public int getCount_coll() {
-        return count_coll;
+    public String getCount_cool() {
+        return count_cool;
     }
 
-    public void setCount_coll(int count_coll) {
-        this.count_coll = count_coll;
+    public void setCount_cool(String count_cool) {
+        this.count_cool = count_cool;
     }
 
-    public int getCount_reply() {
-        return count_reply;
+    public String getCreate_time() {
+        return create_time;
     }
 
-    public void setCount_reply(int count_reply) {
-        this.count_reply = count_reply;
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
@@ -83,12 +75,11 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "Comment{" +
-                "comment_id=" + comment_id +
-                ", title='" + title + '\'' +
+                "comment_id='" + comment_id + '\'' +
                 ", content='" + content + '\'' +
-                ", count_coll=" + count_coll +
-                ", count_reply=" + count_reply +
-                ", user_id=" + user_id +
+                ", count_cool='" + count_cool + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", user_id='" + user_id + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", user_profile_photo='" + user_profile_photo + '\'' +
                 '}';

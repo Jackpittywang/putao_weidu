@@ -37,6 +37,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Bind(R.id.ll_comment)
     LinearLayout ll_comment;
 
+    private Bundle bundle;
+
 
     @Override
     protected int getLayoutId() {
@@ -47,7 +49,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
 
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
         String action_id = bundle.getString("action_id");
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
@@ -72,7 +74,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_comment:
-            startActivity(CommentActivity.class);
+            startActivity(CommentActivity.class, bundle);
                 break;
         }
     }
