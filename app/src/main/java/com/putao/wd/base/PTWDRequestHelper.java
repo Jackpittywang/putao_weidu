@@ -25,10 +25,10 @@ public class PTWDRequestHelper {
     public static FormEncodingRequestBuilder store() {
 //        测试购物车
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "661002")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, "putao");
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000277")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, "e8504333dfaa482488c99f3322fd3df3");
 //        测试订单
-//        return FormEncodingRequestBuilder.newInstance()
+//        return FormEncoding   RequestBuilder.newInstance()
 //                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000277")
 //                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, "4907402e527346898fce328ecededc4a");
     }
