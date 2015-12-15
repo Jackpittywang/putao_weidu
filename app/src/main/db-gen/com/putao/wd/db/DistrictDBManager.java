@@ -73,4 +73,14 @@ public class DistrictDBManager extends DataBaseManager<DistrictDB, String> {
         DistrictDB districtDB=getQueryBuilder().where(DistrictDBDao.Properties.Name.eq(districtName)).uniqueOrThrow();
         return districtDB.getDistrict_id();
     }
+
+    /**
+     * 根据城区名称获得城区id
+     * @param districtId 城区名称
+     * @return 城区id
+     */
+    public String getdistrictNameByDistrictId(String districtId){
+        DistrictDB districtDB=getQueryBuilder().where(DistrictDBDao.Properties.District_id.eq(districtId)).uniqueOrThrow();
+        return districtDB.getName();
+    }
 }

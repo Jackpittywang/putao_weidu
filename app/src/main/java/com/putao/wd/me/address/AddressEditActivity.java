@@ -61,8 +61,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
 
     private boolean isAdd = false;//是否是新增地址
 
-    private AddressDB address;//地址model
-
+    private AddressDB address;//地址model,本地数据库
+    private Address addr;//服务端返回model
     private AddressDBManager mAddressDBManager;
     private ProvinceDBManager mProvinceDBManager;
     private CityDBManager mCityDBManager;
@@ -86,6 +86,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             ll_delete_address.setVisibility(View.GONE);
         } else {
             address = (AddressDB) args.getSerializable(KEY_ADDRESS);
+            //address.setId(addr.getId()+"");
+//            address.setName(addr.getRealname());
+//            address.setProvince_id(addr.getProvince_id());
             initView();
         }
         addListener();
@@ -121,8 +124,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 删除收货地址
      */
-    private void addressDelete(){
-        networkRequest(OrderApi.addressDelete(""), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+    private void addressDelete(String address_id){
+        networkRequest(OrderApi.addressDelete(address_id), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
@@ -161,6 +164,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
+                addressDelete(address.getId()+"");
                 mAddressDBManager.delete(address);
                 EventBusHelper.post(address, EVENT_ADDRESS_DELETE);
                 ActivityManager.getInstance().finishCurrentActivity();
@@ -212,7 +216,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                 mAddressDBManager.insert(address);//插入本地数据库
                 //EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
-                addressUpdate("address_id",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, address.getIsDefault()?"1":"0");
+                addressUpdate(address.getId()+"",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, address.getIsDefault()?"1":"0");
                 mAddressDBManager.update(address);//更新本地数据库
                 EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
             }

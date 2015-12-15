@@ -54,4 +54,13 @@ public class ProvinceDBManager extends DataBaseManager<ProvinceDB, String> {
         ProvinceDB provinceDB = getQueryBuilder().where(ProvinceDBDao.Properties.Name.eq(provinceName)).uniqueOrThrow();
         return provinceDB.getProvince_id();
     }
+    /**
+     * 根据省份名称获得省份id
+     * @param provinceId 省份名称
+     * @return 省份id
+     */
+    public String getProvinceNameByProvinceId(String provinceId) {
+        ProvinceDB provinceDB = getQueryBuilder().where(ProvinceDBDao.Properties.Province_id.eq(provinceId)).uniqueOrThrow();
+        return provinceDB.getName();
+    }
 }

@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.AddressEditActivity;
-import com.putao.wd.model.Address;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -20,11 +20,11 @@ import butterknife.Bind;
  * 收货人地址适配器
  * Created by guchenkai on 2015/11/26.
  */
-public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.AddressViewHolder> {
+public class AddressAdapter extends BasicAdapter<AddressDB, AddressAdapter.AddressViewHolder> {
     private int index;
 
-    public AddressAdapter(Context context, List<Address> shippingAddresss) {
-        super(context, shippingAddresss);
+    public AddressAdapter(Context context, List<AddressDB> shippingAddressDBs) {
+        super(context, shippingAddressDBs);
     }
 
     @Override
@@ -38,22 +38,22 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
     }
 
     @Override
-    public void onBindItem(AddressViewHolder holder, final Address address, final int position) {
-        holder.tv_name.setText(address.getRealname());
-        boolean isDefault = address.getStatus()!= 0 ? true : false;
+    public void onBindItem(AddressViewHolder holder, final AddressDB addressDB, final int position) {
+        holder.tv_name.setText(addressDB.getName());
+        boolean isDefault = addressDB.getIsDefault() != null ? addressDB.getIsDefault() : false;
         if (isDefault)
             holder.tv_default.setVisibility(View.VISIBLE);
         else
             holder.tv_default.setVisibility(View.GONE);
-        holder.tv_address.setText(getAddress(address));
-        holder.tv_mobile.setText(address.getMobile());
+        holder.tv_address.setText(getAddress(addressDB));
+        holder.tv_mobile.setText(addressDB.getMobile());
         holder.tv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 index = position;
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(AddressEditActivity.KEY_IS_ADD, false);
-                bundle.putSerializable(AddressEditActivity.KEY_ADDRESS, address);
+                bundle.putSerializable(AddressEditActivity.KEY_ADDRESS, addressDB);
                 ((PTWDActivity) context).startActivity(AddressEditActivity.class, bundle);
             }
         });
@@ -71,14 +71,14 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
     /**
      * 获得收货地址
      *
-     * @param address Address
+     * @param addressDB AddressDB
      * @return 收货地址
      */
-    private String getAddress(Address address) {
-        String province = address.getProvince_id()+"";//省
-        String city = address.getCity_id()+"";//市
-        String district = address.getArea_id()+"";//区;
-        String street = address.getAddress();//街道
+    private String getAddress(AddressDB addressDB) {
+        String province = addressDB.getProvince();//省
+        String city = addressDB.getCity();//市
+        String district = addressDB.getDistrict();//区;
+        String street = addressDB.getStreet();//街道
         return province + province + city + district + street;
     }
 
