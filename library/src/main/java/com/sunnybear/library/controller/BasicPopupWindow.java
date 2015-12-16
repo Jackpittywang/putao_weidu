@@ -45,17 +45,16 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         mRootView = LayoutInflater.from(context).inflate(getLayoutId(), null);
         setContentView(mRootView);//设置布局
         ButterKnife.bind(this, mRootView);
-
         mMainLayout = (ViewGroup) mRootView.findViewById(R.id.popup_layout);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);//设置宽
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);//设置高
-        setFocusable(true);
+        setFocusable(true);// 设置PopupWindow可获得焦点
+        setTouchable(true); // 设置PopupWindow可触摸
+        setOutsideTouchable(true);// 设置非PopupWindow区域可触摸
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         setBackgroundDrawable(dw);//设置背景
-        setFocusable(true);
-        setOutsideTouchable(true);
         //点击PopupWindow之外的区域关闭PopupWindow
-//            mRootView.setOnTouchListener(this);
+        mRootView.setOnTouchListener(this);
         //响应返回键
         mRootView.setOnKeyListener(this);
     }
@@ -74,11 +73,6 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK)
             dismiss();
         return false;
-    }
-
-    @Override
-    public final void showAtLocation(View parent, int gravity, int x, int y) {
-        super.showAtLocation(parent, gravity, x, y);
     }
 
     /**

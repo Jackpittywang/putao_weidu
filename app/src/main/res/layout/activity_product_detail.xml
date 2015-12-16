@@ -187,16 +187,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/divider_color" />
-            <FrameLayout
+
+            <!--概述：H5页面：概述、规格参数、包装清单、售后、-->
+            <com.sunnybear.library.view.BasicWebView
+                android:id="@id/stickyHeaderLayout_scrollable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <!--概述：H5页面：概述、规格参数、包装清单、售后、-->
-                <com.sunnybear.library.view.BasicWebView
-                    android:id="@id/stickyHeaderLayout_scrollable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="48dp" />
-            </FrameLayout>
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp" />
         </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
         <!--价格栏-->
