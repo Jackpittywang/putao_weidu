@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
+import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.controller.BasicPopupWindow;
@@ -19,6 +20,10 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.Tag;
 import com.sunnybear.library.view.select.TagBar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,14 +66,15 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     private float Price = 0;
     private String product_id;
 
-    public ShoppingCarPopupWindow(Context context, List<String> colorList, String product_id, String title, String describe, String price) {
+    public ShoppingCarPopupWindow(Context context, String product_id, String title, String describe) {
         super(context);
-        setUpData(colorList);
+        //getProductSpce(product_id);
+        //setUpData(colorList);
         tl_color_tag.addTags(mTags);
         tv_product_title.setText(title);
         tv_product_intro.setText(describe);
-        tv_product_price.setText(price);
-        Price = Float.parseFloat(price.substring(1));
+        //tv_product_price.setText(price);
+        //Price = Float.parseFloat(price.substring(1));
         this.product_id = "9";
         tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
@@ -81,6 +87,45 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     @Override
     protected int getLayoutId() {
         return R.layout.popup_shopping_car;
+    }
+
+    /**
+     * 商品规格
+     */
+    private void getProductSpce(String product_id) {
+        mActivity.networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
+            @Override
+            public void onSuccess(String url, ProductNorms result) {
+                Logger.d(result.toString());
+                //包装清单
+                //JSONObject specObj;
+                List<String> specList=new ArrayList<String>();
+                List<String> skuList=new ArrayList<String>();
+                try{
+                    //规格信息
+                    //specObj=new JSONObject(result.getSpec().getSpec_item());
+                    JSONArray jsonArray =new  JSONArray(result.getSpec().getSpec_item());//获取颜色
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject colorObj=new JSONObject(jsonArray.get(0).toString());
+                        jsonArray=new JSONArray("18");
+                        specList.add(jsonArray.get(1).toString());
+                    }
+
+                    //规格对应的商品信息
+                    jsonArray =new  JSONArray(result.getSpec().getSpec_name());//获取颜色
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONArray colorArray=new JSONArray(jsonArray.get(0).toString());
+                        for (int j = 0; j < colorArray.length(); j++) {
+                            jsonArray=new JSONArray(colorArray.get(i).toString());
+                            specList.add(jsonArray.get(1).toString());
+                        }
+                    }
+                }catch (JSONException e)
+                {
+                }
+                }
+
+        });
     }
 
     /**
@@ -161,5 +206,11 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 v.getContext().startActivity(new Intent(v.getContext(), ShoppingCarActivity.class));
                 break;
         }
+    }
+
+
+    //计算选择的规则对应的产品信息
+    private void SelectProductInfo(){
+
     }
 }
