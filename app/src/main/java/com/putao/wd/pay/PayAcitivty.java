@@ -100,7 +100,8 @@ public class PayAcitivty extends BasicFragmentActivity implements View.OnClickLi
                 "notify_url=http%3A%2F%2Fstore.test.putao.com%2Ftest.php&" +
                 "out_trade_no=20151215104259306079837&" +
                 "partner=2088911996386684&" +
-                "payment_type=1&seller_id=corporation%40putao.com&" +
+                "payment_type=1&" +
+                "seller_id=corporation%40putao.com&" +
                 "service=mobile.securitypay.pay&" +
                 "subject=%E8%91%A1%E8%90%84%E6%8E%A2%E7%B4%A2%E5%8F%B7&" +
                 "total_fee=0.03&" +
