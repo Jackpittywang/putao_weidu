@@ -1,11 +1,11 @@
-package com.putao.wd;
+package com.sunnybear.library.view.emoji;
 
 import java.io.Serializable;
 
 /**
+ * 表情封装
  * Created by guchenkai on 2015/12/15.
  */
-@Deprecated
 public class Emoji implements Serializable {
     private String name;
     private String path;

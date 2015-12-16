@@ -1,11 +1,13 @@
-package com.putao.wd;
+package com.putao.wd.start.comment.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.putao.wd.R;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -14,18 +16,20 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 表情适配器
  * Created by guchenkai on 2015/12/15.
  */
-@Deprecated
 public class EmojiAdapter extends BasicAdapter<Emoji, EmojiAdapter.EmojiViewHolder> {
+    private int mDeleteDrawable;
 
-    public EmojiAdapter(Context context, List<Emoji> emojis) {
+    public EmojiAdapter(Context context, List<Emoji> emojis, int deleteDrawable) {
         super(context, emojis);
+        mDeleteDrawable = deleteDrawable;
     }
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.test_fragment_emoji_item;
+        return R.layout.fragment_emoji_item;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class EmojiAdapter extends BasicAdapter<Emoji, EmojiAdapter.EmojiViewHold
         if (!StringUtils.equals(emoji.getName(), "end"))
             holder.iv_emoji.setImageBitmap(BitmapFactory.decodeFile(emoji.getPath()));
         else
-            holder.iv_emoji.setImageResource(R.drawable.btn_emoji_del_select);
+            holder.iv_emoji.setImageResource(mDeleteDrawable);
     }
 
     /**
