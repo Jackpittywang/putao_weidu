@@ -12,6 +12,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Comment;
+import com.putao.wd.model.CommentType;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -50,6 +51,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private List<Emoji> emojis;
     private String action_id;
     private boolean isShowEmoji = false;
+    private int position;
 
     @Override
     protected int getLayoutId() {
@@ -71,8 +73,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
         vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
-
-        hideCommentEdit();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
 
     private void getCommentList() {
         Bundle bundle = getIntent().getExtras();
-        String action_id = bundle.getString("action_id");
+        action_id = bundle.getString("action_id");
         networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Comment> result) {
@@ -131,19 +131,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         });
     }
 
-    /**
-     * 滑动隐藏评论编辑
-     */
-    private void hideCommentEdit() {
-        rv_content.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ll_comment_edit.setVisibility(View.GONE);
-                return false;
-            }
-        });
-    }
-
     @OnClick({R.id.tv_emojis, R.id.tv_send})
     @Override
     public void onClick(View v) {
@@ -153,15 +140,34 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send:
-                ll_comment_edit.setVisibility(View.GONE);
+                Comment comment = adapter.getItem(position);
+                String msg = et_msg.getText().toString();
+                //type 值为"COMMENT"或"REPLY"
+                networkRequest(StartApi.commentAdd(action_id, comment.getUser_name(), msg, "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                Logger.i("评论与回复提交成功");
+                                getCommentList();
+                            }
+                        });
                 break;
         }
     }
 
-    //评论编辑及处理
+//    /**
+//     * comment_id 是必须要传的
+//     *
+//     * @param user_id    用户ID
+//     * @param action_id  活动ID
+//     * @param msg        评论内容
+//     * @param type       评论的类型
+//     * @param comment_id 当评论类型为REPLY时comment_id是必须要传的
+//     */
+    //编辑评论
     @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
     public void eventUseTime(int currPosition) {
-        ll_comment_edit.setVisibility(View.VISIBLE);
+        position = currPosition;
     }
 
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
@@ -191,25 +197,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
 //        return list;
 //    }
 
-//    /**
-//     * model暂无
-//     *
-//     * 评论与回复提交
-//     * by yanghx
-//     * @param user_id    用户ID
-//     * @param action_id  活动ID
-//     * @param msg        评论内容
-//     * @param type       评论的类型
-//     * @param comment_id 当评论类型为REPLY时comment_id是必须要传的
-//     */
-//    private void commentAdd(String user_id, String action_id, String msg, CommentType type, String comment_id) {
-//        networkRequest(StartApi.commentAdd(user_id, action_id, msg, type, comment_id), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<String> result) {
-//                Log.i("pt", "评论与回复提交成功");
-//            }
-//        });
-//    }
+
 //
 //    /**
 //     * model暂无

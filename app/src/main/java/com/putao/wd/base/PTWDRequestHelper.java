@@ -13,8 +13,10 @@ public class PTWDRequestHelper {
     //===================request key================================
     public static final String REQUEST_KEY_UID = "uid";
     public static final String REQUEST_KEY_TOKEN = "token";
-    public static final String REQUEST_KEY_DEVICE_ID = "masterSlaveDeviceId";
+    public static final String REQUEST_KEY_DEVICE_ID = "master_device_id";
     public static final String REQUEST_KEY_APP_ID = "appid";
+
+    public static final String REQUEST_KEY_START_DEVICE_ID = "deviceid";
 
 
     /**
