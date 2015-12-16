@@ -1,16 +1,14 @@
 package com.putao.wd.start.comment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
-import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.emoji.EmojiTextView;
@@ -53,21 +51,7 @@ public class EmojiActivity extends BasicFragmentActivity implements View.OnClick
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
 
-        vp_emojis.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                int start = position * 20;
-                int end = position * 20 + 20 > emojis.size() ? emojis.size() : position * 20 + 20;
-                List<Emoji> list = ListUtils.cutOutList(emojis, start, end);
-                list.add(new Emoji("end"));
-                return new EmojiFragment(list, R.drawable.btn_emoji_del_select);
-            }
-
-            @Override
-            public int getCount() {
-                return emojis.size() / 20 + 1;
-            }
-        });
+        vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
     }
 
     @Override
