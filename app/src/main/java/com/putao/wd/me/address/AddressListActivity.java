@@ -97,15 +97,16 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                 AddressDB addressDB;
                 for (int i = 0; i < result.size(); i++) {
                     addressDB=new AddressDB();
-                    addressDB.setProvince_id(result.get(0).getProvince_id() + "");
-                    addressDB.setProvince(mProvinceDBManager.getProvinceNameByProvinceId(result.get(0).getProvince_id() + ""));
-                    addressDB.setCity_id(result.get(0).getCity_id() + "");
-                    addressDB.setCity(mCityDBManager.getCityNameByCityId(result.get(0).getCity_id() + ""));
-                    addressDB.setDistrict_id(result.get(0).getArea_id() + "");
-                    addressDB.setDistrict(result.get(0).getAddress());
-                    addressDB.setMobile(result.get(0).getMobile());
-                    addressDB.setName(result.get(0).getRealname());
-                    addressDB.setIsDefault(result.get(0).getStatus() == 1 ? true : false);
+                    addressDB.setId(Long.parseLong(result.get(i).getId()+""));
+                    addressDB.setProvince_id(result.get(i).getProvince_id() + "");
+                    addressDB.setProvince(mProvinceDBManager.getProvinceNameByProvinceId(result.get(i).getProvince_id() + ""));
+                    addressDB.setCity_id(result.get(i).getCity_id() + "");
+                    addressDB.setCity(mCityDBManager.getCityNameByCityId(result.get(i).getCity_id() + ""));
+                    addressDB.setDistrict_id(result.get(i).getArea_id() + "");
+                    addressDB.setStreet(result.get(i).getAddress());
+                    addressDB.setMobile(result.get(i).getMobile());
+                    addressDB.setName(result.get(i).getRealname());
+                    addressDB.setIsDefault(result.get(i).getStatus() == 1 ? true : false);
                     addressDBs.add(addressDB);
                     mAddressDBManager.insert(addressDB);
                 }

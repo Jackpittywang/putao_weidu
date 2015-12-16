@@ -170,9 +170,9 @@ public class BasicRecyclerView extends RecyclerView {
         super.onMeasure(widthSpec, height);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent e) {
-        if (isBanScroll) return !isBanScroll;
-        return super.onInterceptTouchEvent(e);
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent e) {
+//        if (isBanScroll) return !isBanScroll;
+//        return super.onInterceptTouchEvent(e);
+//    }
 }
