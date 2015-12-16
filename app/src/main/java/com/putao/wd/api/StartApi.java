@@ -2,12 +2,16 @@ package com.putao.wd.api;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.base.PTWDRequestHelper;
 import com.putao.wd.model.AuditType;
 import com.putao.wd.model.CommentType;
 import com.putao.wd.model.CoolType;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
 
 /**
@@ -21,14 +25,15 @@ public class StartApi {
     private static final String REQUEST_USER_ID = "user_id";//用户ID
     private static final String REQUEST_IDENTITY = "identity";//家长身份
     private static final String REQUEST_PHONE = "phone";//手机号码
-    private static final String REQUEST_NICK_NAME = "nick_name";//昵称
+    private static final String REQUEST_NICK_NAME = "nickName";//昵称
     private static final String REQUEST_AGE = "age";//年龄
     private static final String REQUEST_WECHAT = "wechat";//微信
     private static final String REQUEST_PARENT_NAME = "parent_name";//家长姓名
-    private static final String REQUEST_MSG = "msg";//留言
+    private static final String REQUEST_MSG = "message";//留言
 
     private static final String REQUEST_TYPE = "type";//类型
-    private static final String REQUEST_COMMENT_ID = "comment_id";//当评论类型为REPLY时comment_id是必须要传的
+    private static final String REQUEST_COMMENT_ID = "commentId";//当评论类型为REPLY时comment_id是必须要传的
+    private static final String REQUEST_USERPROFILEPHOTO = "userProfilePhoto";//用户头像
 
     private static final String REQUEST_STATUS = "status";//状态
     private static final String REQUEST_UID = "uid";//用户的唯一标识ID
@@ -172,22 +177,27 @@ public class StartApi {
     /**
      * comment_id 是必须要传的
      *
-     * @param user_id    用户ID
      * @param action_id  活动ID
      * @param msg        评论内容
      * @param type       评论的类型
      * @param comment_id 当评论类型为REPLY时comment_id是必须要传的
      */
-    public static Request commentAdd(String user_id, String action_id, String msg, CommentType type, String comment_id) {
+    public static Request commentAdd(String action_id, String nickname, String msg, String type, String comment_id, String userProfilePhoto) {
         FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
-                .addParam(REQUEST_USER_ID, user_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
                 .addParam(REQUEST_ACTION_ID, action_id)
+                .addParam(REQUEST_NICK_NAME, nickname)
                 .addParam(REQUEST_MSG, msg)
-                .addParam(REQUEST_TYPE, type.name());
-        if (type == CommentType.REPLY && StringUtils.isEmpty(comment_id))
-            throw new RuntimeException("当前评论类型为回复,comment_id必须传递");
-        if (!StringUtils.isEmpty(comment_id))
-            builder.addParam(REQUEST_COMMENT_ID, comment_id);
+                .addParam(REQUEST_TYPE, type)
+                .addParam(REQUEST_USERPROFILEPHOTO, userProfilePhoto);
+//        if (type == CommentType.REPLY && StringUtils.isEmpty(comment_id))
+//            throw new RuntimeException("当前评论类型为回复,comment_id必须传递");
+//        if (!StringUtils.isEmpty(comment_id))
+//            builder.addParam(REQUEST_COMMENT_ID, comment_id);
+        builder.addParam(REQUEST_COMMENT_ID, comment_id);
         return builder.build(RequestMethod.POST, URL_COMMENT_ADD);
     }
 
