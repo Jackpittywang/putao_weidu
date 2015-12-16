@@ -28,14 +28,14 @@
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/btn_emoji_select" />
 
-            <EditText
+            <com.sunnybear.library.view.emoji.EmojiEditText
                 android:id="@+id/et_msg"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="0.7"
-                android:gravity="bottom"
+                android:gravity="center_vertical"
                 android:hint="发表评论"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/color_C2C2C2"

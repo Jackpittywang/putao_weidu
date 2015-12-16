@@ -17,11 +17,11 @@ public class EmojiEditText extends EditText {
     private int end;
 
     public EmojiEditText(Context context) {
-        this(context, null, 0);
+        super(context);
     }
 
     public EmojiEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public EmojiEditText(Context context, AttributeSet attrs, int defStyleAttr) {

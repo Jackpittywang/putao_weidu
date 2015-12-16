@@ -5,9 +5,9 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.putao.wd.Emoji;
 import com.putao.wd.R;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 

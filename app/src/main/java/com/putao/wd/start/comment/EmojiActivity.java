@@ -5,14 +5,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.EditText;
 
-import com.putao.wd.Emoji;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.util.ListUtils;
+import com.sunnybear.library.view.emoji.Emoji;
+import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class EmojiActivity extends BasicFragmentActivity implements View.OnClick
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
     @Bind(R.id.et_msg)
-    EditText et_msg;
+    EmojiEditText et_msg;
     @Bind(R.id.tv_emoji)
     EmojiTextView tv_emoji;
 
@@ -96,6 +96,6 @@ public class EmojiActivity extends BasicFragmentActivity implements View.OnClick
 
     @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
     public void eventDeleteEmoji(Emoji emoji) {
-
+        et_msg.delete();
     }
 }
