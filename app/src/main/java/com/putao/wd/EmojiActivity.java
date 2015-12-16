@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.EditText;
 
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.util.ListUtils;
+import com.sunnybear.library.view.emoji.EmojiTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,10 @@ import butterknife.OnClick;
 public class EmojiActivity extends BasicFragmentActivity implements View.OnClickListener {
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
+    @Bind(R.id.et_msg)
+    EditText et_msg;
+    @Bind(R.id.tv_emoji)
+    EmojiTextView tv_emoji;
 
     private Map<String, String> emojiMap;
     private List<Emoji> emojis;
@@ -64,7 +71,7 @@ public class EmojiActivity extends BasicFragmentActivity implements View.OnClick
         return new String[0];
     }
 
-    @OnClick(R.id.tv_emojis)
+    @OnClick({R.id.tv_emojis, R.id.tv_send})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -72,6 +79,19 @@ public class EmojiActivity extends BasicFragmentActivity implements View.OnClick
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
+            case R.id.tv_send:
+                tv_emoji.setText(et_msg.getText().toString());
+                break;
         }
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
+    public void eventClickEmoji(Emoji emoji) {
+        et_msg.append(emoji.getName());
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
+    public void eventDeleteEmoji(Emoji emoji) {
+
     }
 }
