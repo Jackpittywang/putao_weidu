@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class StoreHome implements Serializable {
     private List<StoreBanner> banner;//Banner列表
-    private StoreProductHome product_home;//商品列表
+    private StoreProductHome product;//商品列表
 
     public List<StoreBanner> getBanner() {
         return banner;
@@ -19,19 +19,19 @@ public class StoreHome implements Serializable {
         this.banner = banner;
     }
 
-    public StoreProductHome getProduct_home() {
-        return product_home;
+    public StoreProductHome getProduct() {
+        return product;
     }
 
-    public void setProduct_home(StoreProductHome product_home) {
-        this.product_home = product_home;
+    public void setProduct(StoreProductHome product) {
+        this.product = product;
     }
 
     @Override
     public String toString() {
         return "StoreHome{" +
                 "banner=" + banner +
-                ", product_home=" + product_home +
+                ", product=" + product +
                 '}';
     }
 }
