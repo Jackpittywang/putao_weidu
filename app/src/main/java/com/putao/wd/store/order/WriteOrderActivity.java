@@ -11,8 +11,10 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderListItem;
 import com.putao.wd.dto.ShoppingCar;
+import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.Order;
+import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 填写订单
@@ -115,8 +118,16 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         return new String[0];
     }
 
+    @OnClick({R.id.ll_receiving_address,R.id.ll_need_invoice,})
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.ll_receiving_address:
+                startActivity(AddressListActivity.class);
+                break;
+            case R.id.ll_need_invoice:
+                startActivity(InvoiceInfoActivity.class);
+                break;
+        }
     }
 }
