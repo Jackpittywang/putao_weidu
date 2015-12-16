@@ -2,6 +2,7 @@ package com.putao.wd;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.WindowManager;
 
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
@@ -18,6 +19,7 @@ public class SplashActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

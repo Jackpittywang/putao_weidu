@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
+import com.sunnybear.library.R;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,73 +50,6 @@ public class ImageUtils {
             canvas.drawBitmap(src, idx * src.getWidth(), 0, null);
         }
         return bitmap;
-    }
-
-    /**
-     * 获得圆形图片
-     *
-     * @param source 图片源
-     * @param radius 半径
-     * @return 圆形图片
-     */
-    public static Bitmap createCircleImage(Bitmap source, int radius) {
-        Bitmap scaledSrcBmp;
-        int diameter = radius * 2;
-
-        // 为了防止宽高不相等，造成圆形图片变形，因此截取长方形中处于中间位置最大的正方形图片
-        int bmpWidth = source.getWidth();
-        int bmpHeight = source.getHeight();
-        int squareWidth = 0, squareHeight = 0;
-        int x = 0, y = 0;
-        Bitmap squareBitmap;
-        if (bmpHeight > bmpWidth) {// 高大于宽
-            squareWidth = squareHeight = bmpWidth;
-            x = 0;
-            y = (bmpHeight - bmpWidth) / 2;
-            // 截取正方形图片
-            squareBitmap = Bitmap.createBitmap(source, x, y, squareWidth,
-                    squareHeight);
-        } else if (bmpHeight < bmpWidth) {// 宽大于高
-            squareWidth = squareHeight = bmpHeight;
-            x = (bmpWidth - bmpHeight) / 2;
-            y = 0;
-            squareBitmap = Bitmap.createBitmap(source, x, y, squareWidth,
-                    squareHeight);
-        } else {
-            squareBitmap = source;
-        }
-        if (squareBitmap.getWidth() != diameter
-                || squareBitmap.getHeight() != diameter) {
-            scaledSrcBmp = Bitmap.createScaledBitmap(squareBitmap, diameter,
-                    diameter, true);
-        } else {
-            scaledSrcBmp = squareBitmap;
-        }
-        Bitmap output = Bitmap.createBitmap(scaledSrcBmp.getWidth(),
-                scaledSrcBmp.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        Paint paint = new Paint();
-        Rect rect = new Rect(0, 0, scaledSrcBmp.getWidth(),
-                scaledSrcBmp.getHeight());
-
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        canvas.drawCircle(scaledSrcBmp.getWidth() / 2,
-                scaledSrcBmp.getHeight() / 2, scaledSrcBmp.getWidth() / 2,
-                paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(scaledSrcBmp, rect, rect, paint);
-        // bitmap回收(recycle导致在布局文件XML看不到效果)
-        // bmp.recycle();
-        // squareBitmap.recycle();
-        // scaledSrcBmp.recycle();
-        source = null;
-        squareBitmap = null;
-        scaledSrcBmp = null;
-        return output;
     }
 
     /**
@@ -176,6 +112,34 @@ public class ImageUtils {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    /**
+     * 截取滚动屏画面保存到图片
+     *
+     * @param view     view源
+     * @param savePath 保存路径
+     */
+    public static void cutOutViewToImage(ScrollView view, String savePath) {
+        int mSrollViewHeight = 0;
+        for (int i = 0; i < view.getChildCount(); i++) {
+            View child = view.getChildAt(i);
+            if (child instanceof LinearLayout || child instanceof RelativeLayout) {
+                child.setBackgroundResource(R.color.white);
+                mSrollViewHeight += child.getHeight();
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), mSrollViewHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        File file = new File(savePath);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            Logger.d(isSuccess ? "保存图片成功" : "保存图片成功");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -11,6 +11,7 @@ import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -119,7 +120,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
                 if (AccountHelper.isLogin())
-                    startActivity(LoginActivity.class);
+                    startActivity(CompleteActivity.class);
                 else
                     setCurrentItem(currentItemId);
                 break;

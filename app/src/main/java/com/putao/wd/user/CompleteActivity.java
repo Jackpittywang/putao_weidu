@@ -166,7 +166,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 case CAMERA_REQCODE:
                     Bundle bundle = data.getExtras();
                     bitmap = (Bitmap) bundle.get("data");
-                    iv_header_icon.setImage(bitmap);
+                    iv_header_icon.setDefaultImage(bitmap);
                     ImageUtils.bitmapOutSdCard(bitmap, img_path);
                     break;
                 case ALBUM_REQCODE:
@@ -182,7 +182,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     Logger.i("pt", picturePath);
                     cursor.close();
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
-                    iv_header_icon.resize(320, 320).setImage(bitmap);
+                    iv_header_icon.resize(320, 320).setDefaultImage(bitmap);
                     break;
             }
         }

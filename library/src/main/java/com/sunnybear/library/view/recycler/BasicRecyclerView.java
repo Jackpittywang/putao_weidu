@@ -71,6 +71,7 @@ public class BasicRecyclerView extends RecyclerView {
      * 初始化view
      */
     private void initView(Context context) {
+        setOverScrollMode(OVER_SCROLL_NEVER);
         switch (layout_mode) {
             case BasicRecyclerView.HORIZONTAL:
                 if (!is_inner)
@@ -155,15 +156,5 @@ public class BasicRecyclerView extends RecyclerView {
 
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         getBasicAdapter().setOnItemLongClickListener(onItemLongClickListener);
-    }
-
-    @Override
-    protected void onMeasure(int widthSpec, int heightSpec) {
-        int height = 0;
-        if (!is_inner)
-            height = heightSpec;
-        else
-            height = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-        super.onMeasure(widthSpec, height);
     }
 }

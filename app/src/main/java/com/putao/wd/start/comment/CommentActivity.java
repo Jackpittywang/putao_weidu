@@ -2,9 +2,8 @@ package com.putao.wd.start.comment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -14,9 +13,9 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Comment;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
+import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
@@ -71,22 +70,9 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
+        vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
 
-        vp_emojis.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                int start = position * 20;
-                int end = position * 20 + 20 > emojis.size() ? emojis.size() : position * 20 + 20;
-                List<Emoji> list = ListUtils.cutOutList(emojis, start, end);
-                list.add(new Emoji("end"));
-                return new EmojiFragment(list, R.drawable.btn_emoji_del_select);
-            }
-
-            @Override
-            public int getCount() {
-                return emojis.size() / 20 + 1;
-            }
-        });
+        hideCommentEdit();
     }
 
     @Override
@@ -145,6 +131,19 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         });
     }
 
+    /**
+     * 滑动隐藏评论编辑
+     */
+    private void hideCommentEdit() {
+        rv_content.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ll_comment_edit.setVisibility(View.GONE);
+                return false;
+            }
+        });
+    }
+
     @OnClick({R.id.tv_emojis, R.id.tv_send})
     @Override
     public void onClick(View v) {
@@ -153,9 +152,9 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
-//            case R.id.tv_send:
-//                tv_emoji.setText(et_msg.getText().toString());
-//                break;
+            case R.id.tv_send:
+                ll_comment_edit.setVisibility(View.GONE);
+                break;
         }
     }
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
-import com.putao.wd.model.Cart;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.controller.BasicPopupWindow;
@@ -56,15 +55,13 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     TextView tv_product_price;//产品价格
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;//加入购物车
-    @Bind(R.id.popup_layout)
-    RelativeLayout popup_layout;
 
     private final List<Tag> mTags = new ArrayList<>();
     private int count = 1;//总数量
     private float Price = 0;
     private String product_id;
 
-    public ShoppingCarPopupWindow(Context context, List<String> colorList, String product_id,String title, String describe, String price) {
+    public ShoppingCarPopupWindow(Context context, List<String> colorList, String product_id, String title, String describe, String price) {
         super(context);
         setUpData(colorList);
         tl_color_tag.addTags(mTags);
@@ -72,7 +69,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         tv_product_intro.setText(describe);
         tv_product_price.setText(price);
         Price = Float.parseFloat(price.substring(1));
-        this.product_id="9";
+        this.product_id = "9";
         tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
             @Override
             public void onTagItemCheck(Tag tag, int position) {
@@ -161,7 +158,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 break;
             case R.id.ll_join_car:
                 cartAdd(product_id, count + "");
-                v.getContext().startActivity(new Intent(v.getContext(),ShoppingCarActivity.class));
+                v.getContext().startActivity(new Intent(v.getContext(), ShoppingCarActivity.class));
                 break;
         }
     }

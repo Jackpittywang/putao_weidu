@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/popup_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/popup_background"
@@ -9,6 +8,7 @@
     android:focusableInTouchMode="true">
 
     <FrameLayout
+        android:id="@+id/popup_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -130,46 +130,50 @@
                     android:background="@color/divider_color" />
                 <!--选择数量-->
                 <LinearLayout
-                    android:padding="10dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="选择数量"
                         android:textColor="#646464"
-                        android:textSize="@dimen/text_size_14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/text_size_14sp" />
+
                     <TextView
                         android:id="@+id/tv_subtract"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_C2C2C2"
+                        android:editable="false"
                         android:gravity="center"
                         android:text="-"
-                        android:editable="false"
                         android:textColor="#646464"
-                        android:background="@color/color_C2C2C2"
-                        android:textSize="@dimen/text_size_16sp"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/text_size_16sp" />
+
                     <TextView
                         android:id="@+id/tv_count"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="#646464"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginRight="1dp"
                         android:background="@color/color_C2C2C2"
-                        android:textSize="@dimen/text_size_16sp"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content" />
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="#646464"
+                        android:textSize="@dimen/text_size_16sp" />
+
                     <TextView
                         android:id="@+id/tv_add"
-                        android:text="+"
-                        android:gravity="center"
-                        android:background="@color/color_C2C2C2"
-                        android:textSize="@dimen/text_size_16sp"
                         android:layout_width="40dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_C2C2C2"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textSize="@dimen/text_size_16sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

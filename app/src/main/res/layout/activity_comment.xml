@@ -39,12 +39,13 @@
 
         <LinearLayout
             android:id="@+id/ll_comment_edit"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <!--发送栏-->
             <LinearLayout
@@ -58,7 +59,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
-                    android:background="@drawable/btn_emoji_select"/>
+                    android:background="@drawable/btn_emoji_select" />
 
                 <com.sunnybear.library.view.emoji.EmojiEditText
                     android:id="@+id/et_msg"
@@ -67,11 +68,11 @@
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="0.7"
-                    android:gravity="bottom"
+                    android:gravity="center_vertical"
                     android:hint="发表评论"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/color_C2C2C2"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
                     android:id="@+id/tv_send"
@@ -81,7 +82,7 @@
                     android:layout_marginRight="8dp"
                     android:gravity="center"
                     android:text="发送"
-                    android:textSize="@dimen/text_size_18sp"/>
+                    android:textSize="@dimen/text_size_18sp" />
             </LinearLayout>
 
             <!--表情栏-->
@@ -89,7 +90,8 @@
                 android:id="@+id/vp_emojis"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:visibility="gone"/>
+                android:overScrollMode="never"
+                android:visibility="gone" />
         </LinearLayout>
 
     </FrameLayout>
