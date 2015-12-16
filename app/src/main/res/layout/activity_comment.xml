@@ -5,7 +5,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
@@ -15,25 +14,84 @@
         auto:nav_main_title_size="@dimen/text_size_8sp"
         />
 
-    <!--下拉刷新-->
-    <com.sunnybear.library.view.PullToRefreshLayout
-        android:id="@+id/ptl_refresh"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        auto:refresh_layout="@layout/sky_wheel_refresh_header"
-        auto:refresh_layout_height="120">
+        android:layout_height="match_parent">
 
-        <!--列表-->
-        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/rv_content"
+        <!--下拉刷新-->
+        <com.sunnybear.library.view.PullToRefreshLayout
+            android:id="@+id/ptl_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            auto:divider_color="@color/divider_color"
-            auto:divider_height="1px"
-            auto:has_row_divider="true"/>
+            auto:refresh_layout="@layout/sky_wheel_refresh_header"
+            auto:refresh_layout_height="120">
 
+            <!--列表-->
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"/>
 
-    </com.sunnybear.library.view.PullToRefreshLayout>
+        </com.sunnybear.library.view.PullToRefreshLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_comment_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!--发送栏-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_emojis"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/btn_emoji_select"/>
+
+                <com.sunnybear.library.view.emoji.EmojiEditText
+                    android:id="@+id/et_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="0.7"
+                    android:gravity="bottom"
+                    android:hint="发表评论"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/color_C2C2C2"
+                    android:textSize="@dimen/text_size_16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textSize="@dimen/text_size_18sp"/>
+            </LinearLayout>
+
+            <!--表情栏-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_emojis"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

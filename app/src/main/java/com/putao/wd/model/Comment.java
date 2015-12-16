@@ -14,7 +14,7 @@ public class Comment implements Serializable {
     private String user_id;//评论归属用户
     private String user_name;//归属用户昵称
     private String user_profile_photo;//头像
-    //private CommentReply  reply;//评论回复内容
+    // 待定   //评论回复内容
 
     public String getComment_id() {
         return comment_id;
