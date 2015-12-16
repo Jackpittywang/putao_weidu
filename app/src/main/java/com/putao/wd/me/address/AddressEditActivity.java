@@ -61,8 +61,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
 
     private boolean isAdd = false;//是否是新增地址
 
-    private AddressDB address;//地址model
-
+    private AddressDB address;//地址model,本地数据库
+    private Address addr;//服务端返回model
     private AddressDBManager mAddressDBManager;
     private ProvinceDBManager mProvinceDBManager;
     private CityDBManager mCityDBManager;
@@ -86,6 +86,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             ll_delete_address.setVisibility(View.GONE);
         } else {
             address = (AddressDB) args.getSerializable(KEY_ADDRESS);
+            //address.setId(addr.getId()+"");
+//            address.setName(addr.getRealname());
+//            address.setProvince_id(addr.getProvince_id());
             initView();
         }
         addListener();
@@ -110,9 +113,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 更新收货地址
      */
     private void addressUpdate(String address_id,String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+        networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, Address result) {
+            public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
             }
 
@@ -121,10 +124,10 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 删除收货地址
      */
-    private void addressDelete(){
-        networkRequest(OrderApi.addressDelete(""), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+    private void addressDelete(String address_id){
+        networkRequest(OrderApi.addressDelete(address_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, Address result) {
+            public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
             }
 
@@ -161,6 +164,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
+                addressDelete(address.getId()+"");
                 mAddressDBManager.delete(address);
                 EventBusHelper.post(address, EVENT_ADDRESS_DELETE);
                 ActivityManager.getInstance().finishCurrentActivity();
@@ -201,18 +205,19 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             address.setName(et_name.getText().toString());
             address.setMobile(et_phone.getText().toString());
             address.setStreet(et_street.getText().toString());
+            String status;
+            if(address.getIsDefault()!=null) {
+                status = address.getIsDefault() ? "1" : "0";
+            }else{
+                status="0";
+            }
             if (isAdd) {
-                String status;
-                if(address.getIsDefault()!=null) {
-                    status = address.getIsDefault() ? "1" : "0";
-                }else{
-                    status="0";
-                }
+
                 addressAdd(et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
                 mAddressDBManager.insert(address);//插入本地数据库
                 //EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
-                addressUpdate("address_id",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, address.getIsDefault()?"1":"0");
+                addressUpdate(address.getId()+"",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
                 mAddressDBManager.update(address);//更新本地数据库
                 EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
             }

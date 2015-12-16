@@ -9,6 +9,9 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.AddressDBManager;
+import com.putao.wd.db.CityDBManager;
+import com.putao.wd.db.DistrictDBManager;
+import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.Address;
@@ -36,6 +39,11 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     private AddressAdapter adapter;
     private List<AddressDB> addresses;
 
+    private AddressDBManager mAddressDBManager;
+    private ProvinceDBManager mProvinceDBManager;
+    private CityDBManager mCityDBManager;
+    private DistrictDBManager mDistrictDBManager;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_list;
@@ -43,6 +51,11 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        mAddressDBManager = (AddressDBManager) mApp.getDataBaseManager(AddressDBManager.class);
+        mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
+        mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
+        mDistrictDBManager = (DistrictDBManager) mApp.getDataBaseManager(DistrictDBManager.class);
+
         addNavigation();
 //        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
 //        if (addresses == null || addresses.size() == 0) {
@@ -51,7 +64,13 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 //        }
 //        adapter = new AddressAdapter(mContext, addresses);
 //        rv_addresses.setAdapter(adapter);
-        getAddressLists();
+        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
+        if(addresses.size()==0)
+            getAddressLists();
+        else{
+            adapter = new AddressAdapter(mContext, addresses);
+            rv_addresses.setAdapter(adapter);
+        }
         //网络请求Demo
 //        networkRequest("自己组合的request", new SimpleFastJsonCallback<"自己的接收model">() {
 //            @Override
@@ -69,12 +88,30 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, ArrayList<Address> result) {
                 Logger.d(result.toString());
-                //addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
+
                 if (result == null || result.size() == 0) {
                     rl_no_address.setVisibility(View.VISIBLE);
                     return;
                 }
-                adapter = new AddressAdapter(mContext, result);
+                List<AddressDB> addressDBs=new ArrayList<AddressDB>();
+                AddressDB addressDB;
+                for (int i = 0; i < result.size(); i++) {
+                    addressDB=new AddressDB();
+                    addressDB.setId(Long.parseLong(result.get(i).getId()+""));
+                    addressDB.setProvince_id(result.get(i).getProvince_id() + "");
+                    addressDB.setProvince(mProvinceDBManager.getProvinceNameByProvinceId(result.get(i).getProvince_id() + ""));
+                    addressDB.setCity_id(result.get(i).getCity_id() + "");
+                    addressDB.setCity(mCityDBManager.getCityNameByCityId(result.get(i).getCity_id() + ""));
+                    addressDB.setDistrict_id(result.get(i).getArea_id() + "");
+                    addressDB.setStreet(result.get(i).getAddress());
+                    addressDB.setMobile(result.get(i).getMobile());
+                    addressDB.setName(result.get(i).getRealname());
+                    addressDB.setIsDefault(result.get(i).getStatus() == 1 ? true : false);
+                    addressDBs.add(addressDB);
+                    mAddressDBManager.insert(addressDB);
+                }
+
+                adapter = new AddressAdapter(mContext, addressDBs);
                 rv_addresses.setAdapter(adapter);
             }
 
@@ -99,12 +136,12 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_ADD)
-    public void eventAddressAdd(Address address) {
+    public void eventAddressAdd(AddressDB address) {
         adapter.add(address);
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
-    public void eventAddressUpdate(Address address) {
+    public void eventAddressUpdate(AddressDB address) {
         adapter.replace(adapter.getEditPosition(), address);
     }
 
