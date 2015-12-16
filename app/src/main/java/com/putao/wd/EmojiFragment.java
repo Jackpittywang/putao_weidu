@@ -3,8 +3,8 @@ package com.putao.wd;
 import android.os.Bundle;
 
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
@@ -17,6 +17,9 @@ import butterknife.Bind;
  */
 @Deprecated
 public class EmojiFragment extends BasicFragment {
+    public static final String EVENT_CLICK_EMOJI = "click_emoji";
+    public static final String EVENT_DELETE_EMOJI = "delete_emoji";
+
     @Bind(R.id.rv_emojis)
     BasicRecyclerView rv_emojis;
 
@@ -39,12 +42,11 @@ public class EmojiFragment extends BasicFragment {
         rv_emojis.setOnItemClickListener(new OnItemClickListener<Emoji>() {
             @Override
             public void onItemClick(Emoji emoji, int position) {
-                String name = emoji.getName();
-                if (StringUtils.equals(name, "end")) {
-                    ToastUtils.showToastShort(mActivity, "删除");
+                if (StringUtils.equals(emoji.getName(), "end")) {
+                    EventBusHelper.post(emoji, EVENT_DELETE_EMOJI);
                     return;
                 }
-                ToastUtils.showToastShort(mActivity, name);
+                EventBusHelper.post(emoji, EVENT_CLICK_EMOJI);
             }
         });
     }
