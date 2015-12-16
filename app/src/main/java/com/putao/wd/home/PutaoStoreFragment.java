@@ -79,9 +79,9 @@ public class PutaoStoreFragment extends PTWDFragment {
             public void onSuccess(String url, StoreHome result) {
                 Logger.d(result.toString());
                 //初始化商品列表
-                if(result.getProduct_home()!=null)
-                    if(result.getProduct_home().getData()!=null)
-                        adapter.addAll(result.getProduct_home().getData());
+                if(result.getProduct()!=null)
+                    if(result.getProduct().getData()!=null)
+                        adapter.addAll(result.getProduct().getData());
                 //初始化广告位
                 banners=result.getBanner();
 
