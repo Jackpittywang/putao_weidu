@@ -112,7 +112,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         wv_content.loadUrl("http://www.putao.com");
         //获取产品详情
         getProductDetail(args.getString(PRODUCT_ID));
-        //getProductSpce(args.getString(PRODUCT_ID));//statusCode=500，服务端错误
+        getProductSpce(args.getString(PRODUCT_ID));//statusCode=500，服务端错误
     }
 
     /**
@@ -179,9 +179,9 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
      * 商品规格
      */
     private void getProductSpce(String product_id) {
-        networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ArrayList<ProductNorms>>(ProductNorms.class, loading) {
+        networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<ProductNorms> result) {
+            public void onSuccess(String url, ProductNorms result) {
                 Logger.d(result.toString());
             }
 
