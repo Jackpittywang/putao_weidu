@@ -4,13 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.putao.wd.R;
-import com.putao.wd.dto.OrderListItem;
-import com.putao.wd.model.Cart;
+import com.putao.wd.dto.ShoppingCar;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+
 
 import java.util.List;
 
@@ -20,14 +19,14 @@ import butterknife.Bind;
  * 填写订单的订单列表适配器
  * Created by wango on 2015/12/7.
  */
-public class OrdersAdapter extends BasicAdapter<Cart, BasicViewHolder> {
+public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
     private int size;
     private static final int TYPE_ORDER = 1;
     private static final int TYPE_SUM = 2;
 
-    public OrdersAdapter(Context context, List<Cart> carts) {
-        super(context, carts);
-        size = carts.size();
+    public OrdersAdapter(Context context, List<ShoppingCar> shoppingCars) {
+        super(context, shoppingCars);
+        size = shoppingCars.size();
     }
 
     @Override
@@ -61,21 +60,21 @@ public class OrdersAdapter extends BasicAdapter<Cart, BasicViewHolder> {
 
 
     @Override
-    public void onBindItem(BasicViewHolder holder, final Cart orderListItem, final int position) {
+    public void onBindItem(BasicViewHolder holder, final ShoppingCar orderListItem, final int position) {
         if(holder instanceof OrderListViewHolder) {
             OrderListViewHolder viewHolder= (OrderListViewHolder) holder;
-            viewHolder.iv_car_icon.setImageURL(orderListItem.getIcon());
+            viewHolder.iv_car_icon.setImageURL(orderListItem.getImgUrl());
             viewHolder.tv_title.setText(orderListItem.getTitle());
             viewHolder.tv_color.setText(orderListItem.getColor());
-            viewHolder.tv_size.setText(orderListItem.getSku());
-            viewHolder.tv_money.setText(orderListItem.getPrice());
-            viewHolder.tv_count.setText(orderListItem.getQt());
-        }else if(holder instanceof SumOrderListViewHolder){
+            viewHolder.tv_size.setText(orderListItem.getSize());
+            viewHolder.tv_money.setText(orderListItem.getMoney());
+            viewHolder.tv_count.setText(orderListItem.getColor());
+        }else if(holder instanceof SumOrderListViewHolder){//列表底部汇总
             SumOrderListViewHolder sumviewHolder= (SumOrderListViewHolder) holder;
-            sumviewHolder.tv_order_sumcount.setText(orderListItem.getQt());
-            sumviewHolder.tv_product_summoney.setText(orderListItem.getPrice());
-            sumviewHolder.tv_carriage.setText(orderListItem.getPrice());
-            sumviewHolder.tv_sum_noney.setText(orderListItem.getTitle());//在返回的list中，再添加一个item保存汇总值，其中title保存总价
+            sumviewHolder.tv_order_sumcount.setText(orderListItem.getCount());
+            sumviewHolder.tv_product_summoney.setText(orderListItem.getMoney());
+            sumviewHolder.tv_carriage.setText(orderListItem.getImgUrl());//在返回的list中，再添加一个item保存汇总值，其中ImgUrl保存总价
+            sumviewHolder.tv_sum_noney.setText(orderListItem.getTitle());//在返回的list中，再添加一个item保存汇总值，其中Title保存总价
         }
 
     }

@@ -10,6 +10,7 @@ import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderListItem;
+import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.Order;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
@@ -61,9 +62,9 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
      * 订单列表
      */
     private void getOrderLists(){
-        networkRequest(OrderApi.getOrderLists("0", "1"), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+        networkRequest(OrderApi.getOrderLists("0", "1"), new SimpleFastJsonCallback<ArrayList<ShoppingCar>>(ShoppingCar.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
+            public void onSuccess(String url, ArrayList<ShoppingCar> result) {
                 Logger.d(result.toString());
                 adapter = new OrdersAdapter(mContext, result);
                 stickyHeaderLayout_scrollable.setAdapter(adapter);
