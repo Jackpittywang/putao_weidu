@@ -1,7 +1,9 @@
-package com.putao.wd;
+package com.putao.wd.start.comment;
 
 import android.os.Bundle;
 
+import com.putao.wd.Emoji;
+import com.putao.wd.R;
 import com.putao.wd.start.comment.adapter.EmojiAdapter;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.EventBusHelper;
@@ -14,9 +16,9 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 表情框
  * Created by guchenkai on 2015/12/15.
  */
-@Deprecated
 public class EmojiFragment extends BasicFragment {
     public static final String EVENT_CLICK_EMOJI = "click_emoji";
     public static final String EVENT_DELETE_EMOJI = "delete_emoji";
@@ -26,19 +28,21 @@ public class EmojiFragment extends BasicFragment {
 
     private EmojiAdapter adapter;
     private List<Emoji> emojis;
+    private int mDeleteDrawable;
 
-    public EmojiFragment(List<Emoji> emojis) {
+    public EmojiFragment(List<Emoji> emojis, int deleteDrawable) {
         this.emojis = emojis;
+        mDeleteDrawable = deleteDrawable;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.test_fragment_emoji;
+        return R.layout.fragment_emoji;
     }
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        adapter = new EmojiAdapter(mActivity, emojis);
+        adapter = new EmojiAdapter(mActivity, emojis, mDeleteDrawable);
         rv_emojis.setAdapter(adapter);
         rv_emojis.setOnItemClickListener(new OnItemClickListener<Emoji>() {
             @Override

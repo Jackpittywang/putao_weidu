@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.putao.wd.Emoji;
-import com.putao.wd.EmojiFragment;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragmentActivity;
@@ -24,6 +23,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
+ * 表情框测试
  * Created by guchenkai on 2015/12/15.
  */
 @Deprecated
@@ -60,7 +60,7 @@ public class EmojiActivity extends BasicFragmentActivity implements View.OnClick
                 int end = position * 20 + 20 > emojis.size() ? emojis.size() : position * 20 + 20;
                 List<Emoji> list = ListUtils.cutOutList(emojis, start, end);
                 list.add(new Emoji("end"));
-                return new EmojiFragment(list);
+                return new EmojiFragment(list, R.drawable.btn_emoji_del_select);
             }
 
             @Override
