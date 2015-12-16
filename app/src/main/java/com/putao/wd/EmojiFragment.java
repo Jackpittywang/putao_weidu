@@ -2,6 +2,7 @@ package com.putao.wd;
 
 import android.os.Bundle;
 
+import com.putao.wd.start.comment.adapter.EmojiAdapter;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;

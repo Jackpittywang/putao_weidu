@@ -1,4 +1,4 @@
-package com.putao.wd;
+package com.putao.wd.start.comment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 
+import com.putao.wd.Emoji;
+import com.putao.wd.EmojiFragment;
+import com.putao.wd.GlobalApplication;
+import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.util.ListUtils;
