@@ -10,6 +10,7 @@ import com.putao.wd.model.Comment;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.SwitchButton;
+import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -25,7 +26,6 @@ import butterknife.Bind;
 public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.CommentViewHolder> {
     public static final String EVENT_COMMENT_EDIT = "event_comment_edit";
     private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
-
 
     public CommentAdapter(Context context, List<Comment> comments) {
         super(context, comments);
@@ -93,7 +93,7 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         @Bind(R.id.tv_comment_time)
         TextView tv_comment_time;
         @Bind(R.id.tv_comment_content)
-        TextView tv_comment_content;
+        EmojiTextView tv_comment_content;
         @Bind(R.id.tv_count_cool)
         TextView tv_count_cool;
         @Bind(R.id.sb_cool_icon)
