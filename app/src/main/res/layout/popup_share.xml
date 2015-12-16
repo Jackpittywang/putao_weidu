@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/popup_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/popup_background"
@@ -8,6 +7,7 @@
     android:focusableInTouchMode="true">
 
     <LinearLayout
+        android:id="@+id/popup_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -140,13 +140,13 @@
                     style="@style/style_share_button"
                     android:visibility="invisible" />
             </LinearLayout>
-            
+
             <!--间隔线-->
             <View
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
-                android:background="@color/layout_background"/>
+                android:layout_marginTop="20dp"
+                android:background="@color/layout_background" />
 
             <!--取消-->
             <TextView

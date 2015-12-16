@@ -8,17 +8,17 @@ import java.util.List;
  * Created by guchenkai on 2015/12/9.
  */
 public class ProductNormsSku implements Serializable {
-    private List<String> params;//规格值名称ID
+    private String params;//规格值名称ID
     private String pid;//商品id
     private String quantity;//剩余库存数量
     private String price;//价格
-    private List<String> picture;//图片集
+    private String picture;//图片集
 
-    public List<String> getParams() {
+    public String getParams() {
         return params;
     }
 
-    public void setParams(List<String> params) {
+    public void setParams(String params) {
         this.params = params;
     }
 
@@ -46,22 +46,22 @@ public class ProductNormsSku implements Serializable {
         this.price = price;
     }
 
-    public List<String> getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(List<String> picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
     @Override
     public String toString() {
         return "ProductNormsSku{" +
-                "params=" + params +
+                "params='" + params + '\'' +
                 ", pid='" + pid + '\'' +
                 ", quantity='" + quantity + '\'' +
                 ", price='" + price + '\'' +
-                ", picture=" + picture +
+                ", picture='" + picture + '\'' +
                 '}';
     }
 }

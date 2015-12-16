@@ -112,7 +112,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         wv_content.loadUrl("http://www.putao.com");
         //获取产品详情
         getProductDetail(args.getString(PRODUCT_ID));
-        //getProductSpce(args.getString(PRODUCT_ID));//statusCode=500，服务端错误
+
     }
 
     /**
@@ -149,18 +149,18 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     //规格参数
                     //tv_parameter.setText(result.get(0).get);
 
-                    //包装清单
-                    JSONObject colorObj;
-                    List<String> colorList=new ArrayList<String>();
-                    try{
-                        colorObj=new JSONObject(result.get(0).getAttribute());
-                        JSONArray jsonArray = colorObj.getJSONArray("9");//获取颜色
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            colorList.add(jsonArray.get(i).toString());
-                        }
-                    }catch (JSONException e)
-                    {
-                    }
+//                    //包装清单
+//                    JSONObject colorObj;
+//                    List<String> colorList=new ArrayList<String>();
+//                    try{
+//                        colorObj=new JSONObject(result.get(0).getAttribute());
+//                        JSONArray jsonArray = colorObj.getJSONArray("9");//获取颜色
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            colorList.add(jsonArray.get(i).toString());
+//                        }
+//                    }catch (JSONException e)
+//                    {
+//                    }
 
 //                    tv_pack.setText(result.get(0).getPack());
 //
@@ -168,25 +168,14 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 //                    tv_service.setText(result.get(0).getServices());
 
                     //初始化popwindow值
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,colorList,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe(),result.get(0).getPrice());
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe());
                 }
             }
 
         });
     }
 
-    /**
-     * 商品规格
-     */
-    private void getProductSpce(String product_id) {
-        networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ArrayList<ProductNorms>>(ProductNorms.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ProductNorms> result) {
-                Logger.d(result.toString());
-            }
 
-        });
-    }
 
     @Override
     public void onStart() {
