@@ -207,7 +207,12 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             address.setStreet(et_street.getText().toString());
             String status;
             if(address.getIsDefault()!=null) {
-                status = address.getIsDefault() ? "1" : "0";
+                if(address.getIsDefault()) {
+                    status = "1";
+                    EventBusHelper.post(address, EVENT_ADDRESS_IS_DEFAULT);
+                }
+                else
+                    status="0";
             }else{
                 status="0";
             }
@@ -215,7 +220,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
 
                 addressAdd(et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
                 mAddressDBManager.insert(address);//插入本地数据库
-                //EventBusHelper.post(address, EVENT_ADDRESS_ADD);
+                EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
                 addressUpdate(address.getId()+"",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
                 mAddressDBManager.update(address);//更新本地数据库

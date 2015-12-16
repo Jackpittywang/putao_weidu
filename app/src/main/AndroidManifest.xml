@@ -166,6 +166,10 @@
         <activity
             android:name=".map.MapActivity"
             android:screenOrientation="portrait" />
+        <!--我参与的活动-->
+        <activity
+            android:name=".me.actions.MyActionsActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

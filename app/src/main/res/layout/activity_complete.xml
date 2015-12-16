@@ -86,10 +86,10 @@
 
                 <com.sunnybear.library.view.image.ImageDraweeView
                     android:id="@+id/iv_header_icon"
+                    style="@style/image_circle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/image_circle"
-                    auto:is_circle="true" />
+                    auto:placeholderImage="@drawable/img_head_signup" />
 
                 <ImageView
                     android:id="@+id/iv_select_icon"

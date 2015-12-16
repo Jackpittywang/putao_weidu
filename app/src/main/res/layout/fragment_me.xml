@@ -13,12 +13,13 @@
         android:layout_height="200dp"
         android:background="@color/text_main_color_nor">
 
-        <ImageView
+        <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_user_icon"
+            style="@style/image_circle"
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/app_icon" />
+            auto:placeholderImage="@drawable/img_head_default" />
 
         <TextView
             android:id="@+id/tv_user_nickname"

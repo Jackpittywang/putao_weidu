@@ -28,7 +28,6 @@ public class ImageDraweeView extends SimpleDraweeView {
     public static int failureImage;
     public static int retryImage;
     private float mRatio;
-    private boolean isCircle;
     private ResizeOptions mResizeOptions;
 
     private PictureProcessor mProcessor;
@@ -41,7 +40,6 @@ public class ImageDraweeView extends SimpleDraweeView {
         super(context, attrs);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ImageDraweeView);
         mRatio = array.getFloat(R.styleable.ImageDraweeView_aspect_ratio, -1f);
-        isCircle = array.getBoolean(R.styleable.ImageDraweeView_is_circle, false);
         if (mRatio != -1f)
             setAspectRatio(mRatio);
         array.recycle();
@@ -74,10 +72,14 @@ public class ImageDraweeView extends SimpleDraweeView {
         mProcessor.addProcessor(processor);
     }
 
-    public void setImage(Bitmap bm) {
+    /**
+     * 设置默认图片
+     *
+     * @param bitmap 默认图片
+     */
+    public void setDefaultImage(Bitmap bitmap) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
-//        if (isCircle) bm = ImageUtils.createCircleImage(bm, (int) DensityUtil.px2dp(getContext(), 10));
-        hierarchy.setPlaceholderImage(new BitmapDrawable(bm), ScalingUtils.ScaleType.FOCUS_CROP);
+        hierarchy.setPlaceholderImage(new BitmapDrawable(bitmap), ScalingUtils.ScaleType.FOCUS_CROP);
         setHierarchy(hierarchy);
     }
 
