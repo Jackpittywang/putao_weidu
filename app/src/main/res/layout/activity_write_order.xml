@@ -33,6 +33,7 @@
 
                 <!--收货地址-->
                 <LinearLayout
+                    android:id="@+id/ll_receiving_address"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical">
@@ -74,6 +75,7 @@
 
                 <!--是否需要发票-->
                 <LinearLayout
+                    android:id="@+id/ll_need_invoice"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical">

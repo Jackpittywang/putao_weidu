@@ -36,11 +36,7 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
                 break;
             case JSON_TYPE_ERROR:
                 onFailure(url, -200, "json格式错误");
-                try {
-                    Logger.e(JSONObjectCallback.TAG, "json格式错误,json=" + JsonUtils.jsonFormatter(data));
-                } catch (NullPointerException e) {
-                    Logger.e(e);
-                }
+                Logger.e(JSONObjectCallback.TAG, "json格式错误,json=" + data);
                 break;
         }
     }

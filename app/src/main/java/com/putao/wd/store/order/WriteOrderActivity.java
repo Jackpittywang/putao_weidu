@@ -10,8 +10,11 @@ import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.OrderListItem;
+import com.putao.wd.dto.ShoppingCar;
+import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.Order;
+import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 填写订单
@@ -51,9 +55,9 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
         //初始化列表数据
-        List<OrderListItem> cars = getTestData();
-        adapter = new OrdersAdapter(mContext, cars);
-        stickyHeaderLayout_scrollable.setAdapter(adapter);
+//        List<OrderListItem> cars = getTestData();
+//        adapter = new OrdersAdapter(mContext, cars);
+//        stickyHeaderLayout_scrollable.setAdapter(adapter);
 
     }
 
@@ -61,10 +65,12 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
      * 订单列表
      */
     private void getOrderLists(){
-        networkRequest(OrderApi.getOrderLists("", ""), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+        networkRequest(OrderApi.getOrderLists("0", "1"), new SimpleFastJsonCallback<ArrayList<ShoppingCar>>(ShoppingCar.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
+            public void onSuccess(String url, ArrayList<ShoppingCar> result) {
                 Logger.d(result.toString());
+                adapter = new OrdersAdapter(mContext, result);
+                stickyHeaderLayout_scrollable.setAdapter(adapter);
             }
 
         });
@@ -112,8 +118,16 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         return new String[0];
     }
 
+    @OnClick({R.id.ll_receiving_address,R.id.ll_need_invoice,})
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.ll_receiving_address:
+                startActivity(AddressListActivity.class);
+                break;
+            case R.id.ll_need_invoice:
+                startActivity(InvoiceInfoActivity.class);
+                break;
+        }
     }
 }
