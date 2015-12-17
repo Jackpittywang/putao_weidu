@@ -82,6 +82,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="20dp"
+                    android:minWidth="28dp"
                     android:text="赞"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_16sp"
