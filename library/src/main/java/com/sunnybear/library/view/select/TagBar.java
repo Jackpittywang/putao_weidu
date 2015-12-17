@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.SparseIntArray;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.sunnybear.library.R;
-import com.sunnybear.library.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +27,10 @@ public class TagBar extends FlowLayout implements OnClickListener {
     private int mTextDisColor;//不可选择的文字颜色
 
     private TagItem mLastCheckItem = null;
-    private SparseIntArray array;
-    private TagItemCheckListener mTagItemCheckListener;
+    private SparseArray<TagItem> array;
+    private OnTagItemCheckListener mTagItemCheckListener;
 
-    public void setTagItemCheckListener(TagItemCheckListener tagItemCheckListener) {
+    public void setonTagItemCheckListener(OnTagItemCheckListener tagItemCheckListener) {
         this.mTagItemCheckListener = tagItemCheckListener;
     }
 
@@ -46,7 +45,7 @@ public class TagBar extends FlowLayout implements OnClickListener {
     public TagBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initStyleable(context, attrs);
-        array = new SparseIntArray();
+        array = new SparseArray<>();
     }
 
     private void initStyleable(Context context, AttributeSet attrs) {
@@ -56,6 +55,7 @@ public class TagBar extends FlowLayout implements OnClickListener {
         mTextSelColor = array.getColor(R.styleable.TagBar_tag_text_color_sel, -1);
         mTextNorColor = array.getColor(R.styleable.TagBar_tag_text_color_nor, -1);
         mTextDisColor = array.getColor(R.styleable.TagBar_tag_text_color_dis, -1);
+        array.recycle();
     }
 
     private void inflateTagView(Tag tag) {
@@ -75,28 +75,9 @@ public class TagBar extends FlowLayout implements OnClickListener {
     }
 
     @Override
-    protected void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        if (visibility == VISIBLE) {
-            Logger.d(getChildCount() + "");
-            for (int i = 0; i < getChildCount(); i++) {
-                View child = getChildAt(i);
-                array.put(child.getId(), i);
-                if (!(child instanceof TagItem))
-                    throw new RuntimeException("TagBar's child must be subclass of TagItem!");
-                if (((TagItem) child).isState())
-                    mLastCheckItem = (TagItem) child;
-                if (((TagItem) child).getTags().isEnable())
-                    child.setOnClickListener(this);
-            }
-        }
-    }
-
-    @Override
     public void onClick(View v) {
         checkTagItem((TagItem) v);
     }
-
 
     /**
      * 选择TagItem
@@ -113,26 +94,68 @@ public class TagBar extends FlowLayout implements OnClickListener {
             item.setState(true);
             mLastCheckItem = item;
         }
-        int position = array.get(item.getId());
+//        int position = array.get(item.getId());
         if (mTagItemCheckListener != null)
-            mTagItemCheckListener.onTagItemCheck(item.getTags(), position);
+            mTagItemCheckListener.onTagItemCheck(item.getTags(), mTags.indexOf(item.getTags()));
     }
 
-    public void addTag(Tag tag) {
+    /**
+     * 默认选中项目
+     *
+     * @param position 项目标号
+     */
+    private void setCheckItemPosition(int position) {
+        mLastCheckItem = array.get(position);
+        mLastCheckItem.setState(true);
+    }
+
+    private void addTag(Tag tag) {
         mTags.add(tag);
         inflateTagView(tag);
     }
 
-    public void addTags(List<Tag> lists) {
-        for (int i = 0; i < lists.size(); i++) {
-            addTag(lists.get(i));
+    /**
+     * 添加标签zu
+     *
+     * @param tags            标签组
+     * @param defaultPosition 默认选中项
+     */
+    public void addTags(List<Tag> tags, Integer defaultPosition) {
+        for (int i = 0; i < tags.size(); i++) {
+            addTag(tags.get(i));
         }
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            array.put(i, (TagItem) child);
+            if (!(child instanceof TagItem))
+                throw new RuntimeException("TagBar's child must be subclass of TagItem!");
+            if (((TagItem) child).isState())
+                mLastCheckItem = (TagItem) child;
+            if (((TagItem) child).getTags().isEnable())
+                child.setOnClickListener(this);
+        }
+        if (defaultPosition != null)
+            setCheckItemPosition(defaultPosition);
+    }
+
+    public void addTags(List<Tag> tags) {
+        addTags(tags, null);
+    }
+
+    /**
+     * 获得tag
+     *
+     * @param position 标号
+     * @return tag
+     */
+    public Tag getTag(int position) {
+        return mTags.get(position);
     }
 
     /**
      * TabItem选择监听器
      */
-    public interface TagItemCheckListener {
+    public interface OnTagItemCheckListener {
 
         void onTagItemCheck(Tag tag, int position);
     }

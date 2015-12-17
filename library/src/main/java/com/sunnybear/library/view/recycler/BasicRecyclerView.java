@@ -126,7 +126,8 @@ public class BasicRecyclerView extends RecyclerView {
     @Override
     public void setAdapter(Adapter adapter) {
         BasicAdapter basicAdapter = getBasicAdapter(adapter);
-        basicAdapter.setProcessDrawable(mProcessBackground);
+        if (mProcessBackground != -1)
+            basicAdapter.setProcessDrawable(mProcessBackground);
         super.setAdapter(basicAdapter);
     }
 

@@ -11,7 +11,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
-import com.putao.wd.model.ProductNorms;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -23,10 +22,6 @@ import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,17 +62,17 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     //选项栏
     @Bind(R.id.ti_summary)//概述
-    TitleItem ti_summary;
+            TitleItem ti_summary;
     @Bind(R.id.ti_parameter)//规格参数
-    TitleItem ti_parameter;
+            TitleItem ti_parameter;
     @Bind(R.id.ti_pack)//包装清单
-    TitleItem ti_pack;
+            TitleItem ti_pack;
     @Bind(R.id.ti_service)//售后服务
-    TitleItem ti_service;
+            TitleItem ti_service;
 
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar stickyHeaderLayoutSticky;//概述
-//    @Bind(R.id.tv_parameter)//规格参数
+    //    @Bind(R.id.tv_parameter)//规格参数
 //    TextView tv_parameter;
 //    @Bind(R.id.ll_parameter)//规格参数
 //    LinearLayout ll_parameter;
@@ -111,7 +106,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
         //获取产品详情
-        getProductDetail(args.getString(PRODUCT_ID));
+//        getProductDetail(args.getString(PRODUCT_ID));
+        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext/*,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe()*/);
 
     }
 
@@ -168,13 +164,11 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 //                    tv_service.setText(result.get(0).getServices());
 
                     //初始化popwindow值
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe());
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext/*,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe()*/);
                 }
             }
-
         });
     }
-
 
 
     @Override

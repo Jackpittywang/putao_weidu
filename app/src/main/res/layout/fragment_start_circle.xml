@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     auto:fill_color="@color/text_main_color_nor"
-                    auto:intervalTime="2"
+                    auto:intervalTime="5"
                     auto:page_color="@color/text_color_gray" />
 
                 <View

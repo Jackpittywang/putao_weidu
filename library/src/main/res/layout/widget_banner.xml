@@ -7,7 +7,8 @@
     <com.sunnybear.library.view.viewpager.BannerViewPager
         android:id="@+id/vp_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never"/>
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/ci_indicator"

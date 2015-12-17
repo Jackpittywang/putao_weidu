@@ -1,17 +1,15 @@
-package com.sunnybear.library.view.select;
+package com.putao.wd.model;
 
 import java.io.Serializable;
 
 /**
- * 标签实体
- * Created by guchenkai on 2015/12/4.
+ * 规格名称
+ * Created by guchenkai on 2015/12/17.
  */
-public class Tag implements Serializable {
+public class SpecName implements Serializable {
     private String id;
-    private String parent_id;
     private String text;
     private String icon;
-    private boolean isEnable = true;
 
     public String getId() {
         return id;
@@ -19,14 +17,6 @@ public class Tag implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getParent_id() {
-        return parent_id;
-    }
-
-    public void setParent_id(String parent_id) {
-        this.parent_id = parent_id;
     }
 
     public String getText() {
@@ -45,22 +35,12 @@ public class Tag implements Serializable {
         this.icon = icon;
     }
 
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean enable) {
-        isEnable = enable;
-    }
-
     @Override
     public String toString() {
-        return "Tag{" +
+        return "SpecName{" +
                 "id='" + id + '\'' +
-                ", parent_id='" + parent_id + '\'' +
                 ", text='" + text + '\'' +
                 ", icon='" + icon + '\'' +
-                ", isEnable=" + isEnable +
                 '}';
     }
 }

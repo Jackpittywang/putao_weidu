@@ -24,7 +24,7 @@
         <attr name="divider_marginBottom" format="dimension" />
         <attr name="divider_color" format="color" />
         <attr name="is_inner" format="boolean" />
-        <attr name="process_background" format="reference" />
+        <attr name="process_background" format="integer|reference" />
     </declare-styleable>
 
     <!--LoadMoreRecyclerView-->
@@ -174,21 +174,13 @@
         <attr name="is_select" format="boolean" />
     </declare-styleable>
 
-    <!--CircleIndicator-->
-    <declare-styleable name="CircleIndicator">
-        <attr name="R" format="dimension" />
-        <attr name="margin" format="dimension" />
-        <attr name="none_background" format="color|integer" />
-        <attr name="selected_background" format="color|integer" />
-        <attr name="gravity">
-            <enum name="left" value="0" />
-            <enum name="center" value="1" />
-            <enum name="right" value="2" />
-        </attr>
-        <attr name="mode">
-            <enum name="inside" value="0" />
-            <enum name="outside" value="1" />
-            <enum name="solo" value="2" />
-        </attr>
+    <!--AmountSelectLayout-->
+    <declare-styleable name="AmountSelectLayout">
+        <attr name="btn_background" format="reference" />
+        <attr name="edit_background" format="reference" />
+        <attr name="isEditable" format="boolean" />
+        <attr name="edit_text_colot" format="color|reference" />
+        <attr name="dis_color" format="color|reference" />
+        <attr name="nor_color" format="color|reference" />
     </declare-styleable>
 </resources>

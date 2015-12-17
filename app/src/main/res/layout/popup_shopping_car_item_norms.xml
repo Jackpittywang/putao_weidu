@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="颜色选择"
+        android:textColor="@color/text_color_646464"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <com.sunnybear.library.view.select.TagBar
+        android:id="@+id/tb_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        auto:horizontalSpacing="8dp"
+        auto:orientation="horizontal"
+        auto:tag_background_nor="@drawable/btn_norms_nor"
+        auto:tag_background_sel="@drawable/btn_norms_sel"
+        auto:tag_text_color_dis="@color/color_C2C2C2"
+        auto:tag_text_color_nor="@color/text_color_646464"
+        auto:tag_text_color_sel="@color/text_color_F5F5F5"
+        auto:verticalSpacing="8dp" />
+</LinearLayout>
+

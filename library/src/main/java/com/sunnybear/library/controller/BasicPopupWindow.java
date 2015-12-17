@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.sunnybear.library.R;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.LoadingHUD;
 
 import butterknife.ButterKnife;
@@ -57,6 +58,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         mRootView.setOnTouchListener(this);
         //响应返回键
         mRootView.setOnKeyListener(this);
+        EventBusHelper.register(this);
     }
 
     @Override
@@ -82,5 +84,11 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
      */
     public void show(View target) {
         showAtLocation(target, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    @Override
+    public void dismiss() {
+        EventBusHelper.unregister(this);
+        super.dismiss();
     }
 }

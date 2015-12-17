@@ -1,29 +1,26 @@
 package com.putao.wd.store.product;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
+import com.putao.wd.model.Norms;
 import com.putao.wd.model.ProductNorms;
-import com.putao.wd.model.ShopCarItem;
-import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.putao.wd.model.ProductNormsSku;
+import com.putao.wd.store.product.adapter.NormsSelectAdapter;
+import com.putao.wd.store.product.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.select.Tag;
-import com.sunnybear.library.view.select.TagBar;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +33,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
-    @Bind(R.id.tl_color_tag)
-    TagBar tl_color_tag;
+    /*   @Bind(R.id.tl_color_tag)
+       TagBar tl_color_tag;*/
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
     @Bind(R.id.iv_close)
@@ -46,42 +43,30 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     TextView tv_product_title;//产品标题
     @Bind(R.id.tv_product_intro)
     TextView tv_product_intro;//产品副标题
-    @Bind(R.id.rl_product)
-    RelativeLayout rl_product;
-    @Bind(R.id.ll_color)
-    LinearLayout ll_color;
-    @Bind(R.id.tv_subtract)
-    TextView tv_subtract;//减法
-    @Bind(R.id.tv_count)
-    TextView tv_count;//总数
-    @Bind(R.id.tv_add)
-    TextView tv_add;//加法
+    @Bind(R.id.rv_norms)
+    BasicRecyclerView rv_norms;//产品规格
     @Bind(R.id.tv_product_price)
     TextView tv_product_price;//产品价格
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;//加入购物车
 
-    private final List<Tag> mTags = new ArrayList<>();
+    private NormsSelectAdapter adapter;
+
     private int count = 1;//总数量
     private float Price = 0;
     private String product_id;
 
-    public ShoppingCarPopupWindow(Context context, String product_id, String title, String describe) {
+    private List<Tag> mSelTags = new ArrayList<>();
+    private int mSpecItemCount;
+    private List<ProductNormsSku> skus;
+    private ProductNormsSku sku;//选中的商品
+
+    public ShoppingCarPopupWindow(Context context) {
         super(context);
-        //getProductSpce(product_id);
-        //setUpData(colorList);
-        tl_color_tag.addTags(mTags);
-        tv_product_title.setText(title);
-        tv_product_intro.setText(describe);
-        //tv_product_price.setText(price);
-        //Price = Float.parseFloat(price.substring(1));
-        this.product_id = "9";
-        tl_color_tag.setTagItemCheckListener(new TagBar.TagItemCheckListener() {
-            @Override
-            public void onTagItemCheck(Tag tag, int position) {
-                ToastUtils.showToastLong(mContext, tag.toString());
-            }
-        });
+        ll_join_car.setClickable(false);
+        adapter = new NormsSelectAdapter(mActivity, null);
+        rv_norms.setAdapter(adapter);
+        getProductSpec("9");
     }
 
     @Override
@@ -90,127 +75,83 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     }
 
     /**
-     * 商品规格
+     * 获取商品规格
+     *
+     * @param product_id 产品id
      */
-    private void getProductSpce(String product_id) {
-        mActivity.networkRequest(StoreApi.getProductSpce(product_id), new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
-            @Override
-            public void onSuccess(String url, ProductNorms result) {
-                Logger.d(result.toString());
-                //包装清单
-                //JSONObject specObj;
-                List<String> specList=new ArrayList<String>();
-                List<String> skuList=new ArrayList<String>();
-                try{
-                    //规格信息
-                    //specObj=new JSONObject(result.getSpec().getSpec_item());
-                    JSONArray jsonArray =new  JSONArray(result.getSpec().getSpec_item());//获取颜色
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject colorObj=new JSONObject(jsonArray.get(0).toString());
-                        jsonArray=new JSONArray("18");
-                        specList.add(jsonArray.get(1).toString());
+    private void getProductSpec(String product_id) {
+        mActivity.networkRequest(StoreApi.getProductSpce(product_id),
+                new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ProductNorms result) {
+                        mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
+                        skus = result.getSku();
+                        List<Norms> normses = SpecUtils.getNormses(result.getSpec());
+                        normses.add(new Norms());
+                        adapter.addAll(normses);
                     }
-
-                    //规格对应的商品信息
-                    jsonArray =new  JSONArray(result.getSpec().getSpec_name());//获取颜色
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONArray colorArray=new JSONArray(jsonArray.get(0).toString());
-                        for (int j = 0; j < colorArray.length(); j++) {
-                            jsonArray=new JSONArray(colorArray.get(i).toString());
-                            specList.add(jsonArray.get(1).toString());
-                        }
-                    }
-                }catch (JSONException e)
-                {
-                }
-                }
-
-        });
+                });
     }
 
-    /**
-     * 添加购物车
-     */
-    private void cartAdd(String product_id, String qt) {
-        mActivity.networkRequest(StoreApi.cartAdd(product_id, qt), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
-            @Override
-            public void onSuccess(String url, ShopCarItem result) {
-                Logger.d(result.toString());
-            }
+//    /**
+//     * 添加购物车
+//     */
+//    private void cartAdd(String product_id, String qt) {
+//        mActivity.networkRequest(StoreApi.cartAdd(product_id, qt),
+//                new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+//                    @Override
+//                    public void onSuccess(String url, ShopCarItem result) {
+//                        Logger.d(result.toString());
+//                    }
+//                });
+//    }
 
-        });
-    }
-
-
-    /**
-     * 测试数据
-     */
-    private void setUpData(List<String> colorList) {
-        Tag tag;
-        for (int i = 0; i < colorList.size(); i++) {
-            tag = new Tag();
-            tag.setId(i);
-            tag.setTitle(colorList.get(i));
-            mTags.add(tag);
-        }
-
-
-//        Tag tag = new Tag();
-//        tag.setId(1);
-//        tag.setTitle("塔塔紫");
-//        mTags.add(tag);
-//
-//        tag = new Tag();
-//        tag.setId(2);
-//        tag.setTitle("淘淘粉");
-//        mTags.add(tag);
-//
-//        tag = new Tag();
-//        tag.setId(3);
-//        tag.setTitle("萌撕拉蓝");
-//        tag.setIsEnable(false);
-//        mTags.add(tag);
-//
-//        tag = new Tag();
-//        tag.setId(4);
-//        tag.setTitle("班得瑞绿");
-//        mTags.add(tag);
-//
-//        tag = new Tag();
-//        tag.setId(5);
-//        tag.setTitle("魔方橙");
-//        mTags.add(tag);
-    }
-
-    @OnClick({R.id.iv_close, R.id.tv_add, R.id.tv_subtract, R.id.ll_join_car})
+    @OnClick({R.id.iv_close, R.id.ll_join_car})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_close:
-                dismiss();
+            case R.id.ll_join_car://加入购物车
+                ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
                 break;
-            case R.id.tv_add:
-                if (1 == count)
-                    tv_subtract.setEnabled(true);
-                tv_count.setText(++count + "");
-                tv_product_price.setText(Price * count + "");
-                break;
-            case R.id.tv_subtract:
-                tv_count.setText(--count + "");
-                tv_product_price.setText(Price * count + "");
-                if (1 == count)
-                    tv_subtract.setEnabled(false);
-                break;
-            case R.id.ll_join_car:
-                cartAdd(product_id, count + "");
-                v.getContext().startActivity(new Intent(v.getContext(), ShoppingCarActivity.class));
-                break;
+        }
+        dismiss();
+    }
+
+    @Subcriber(tag = NormsSelectAdapter.EVENT_DEFAULT_TAG)
+    public void eventDefaultTag(Tag tag) {
+        getProductSku(tag);
+    }
+
+    @Subcriber(tag = NormsSelectAdapter.EVENT_SEL_TAG)
+    public void eventSelTag(Tag tag) {
+        getProductSku(tag);
+    }
+
+    /**
+     * 获取商品规格对应的商品信息
+     *
+     * @param tag 标签
+     */
+    private void getProductSku(Tag tag) {
+        SpecUtils.addTag(mSelTags, tag, mSpecItemCount);
+        if (mSelTags.size() == mSpecItemCount) {
+            sku = SpecUtils.getProductSku(skus, mSelTags);
+            if (sku != null) {
+                iv_product_icon.setImageURL(sku.getIcon());
+                ll_join_car.setBackgroundResource(R.color.text_main_color_nor);
+                ll_join_car.setClickable(true);
+                tv_product_price.setText(sku.getPrice());
+                adapter.resetAmount();
+            } else {
+                ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
+                ll_join_car.setClickable(false);
+            }
         }
     }
 
-
-    //计算选择的规则对应的产品信息
-    private void SelectProductInfo(){
-
+    @Subcriber(tag = NormsSelectAdapter.EVENT_COUNT)
+    public void eventCount(int count) {
+        String string = MathUtils.multiplication(sku.getPrice(), count);
+        tv_product_price.setText(string);
     }
 }

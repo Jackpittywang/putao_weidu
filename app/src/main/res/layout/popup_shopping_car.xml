@@ -31,9 +31,9 @@
                 <!--产品图标-->
                 <com.sunnybear.library.view.image.ImageDraweeView
                     android:id="@+id/iv_product_icon"
+                    style="@style/image_round_4dp"
                     android:layout_width="88dp"
-                    android:layout_height="88dp"
-                    android:background="#CCCCCC" />
+                    android:layout_height="88dp" />
 
                 <!--产品介绍-->
                 <RelativeLayout
@@ -84,98 +84,23 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/divider_color" />
 
             <!--选择规格-->
-            <LinearLayout
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_norms"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
-                android:orientation="vertical">
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1px"
+                auto:divider_marginLeft="8dp"
+                auto:divider_marginRight="8dp"
+                auto:has_row_divider="true"
+                auto:process_background="-1" />
 
-                <!--选择颜色-->
-                <LinearLayout
-                    android:id="@+id/ll_color"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="选择颜色"
-                        android:textColor="@color/text_color_646464"
-                        android:textSize="@dimen/text_size_18sp" />
-
-                    <com.sunnybear.library.view.select.TagBar
-                        android:id="@+id/tl_color_tag"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        auto:horizontalSpacing="8dp"
-                        auto:orientation="horizontal"
-                        auto:tag_background_nor="@drawable/btn_norms_nor"
-                        auto:tag_background_sel="@drawable/btn_norms_sel"
-                        auto:tag_text_color_dis="@color/color_C2C2C2"
-                        auto:tag_text_color_nor="@color/text_color_646464"
-                        auto:tag_text_color_sel="@color/text_color_F5F5F5"
-                        auto:verticalSpacing="8dp" />
-                </LinearLayout>
-                <!--间隔线-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/divider_color" />
-                <!--选择数量-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="选择数量"
-                        android:textColor="#646464"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_subtract"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/color_C2C2C2"
-                        android:editable="false"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#646464"
-                        android:textSize="@dimen/text_size_16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_count"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginRight="1dp"
-                        android:background="@color/color_C2C2C2"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="#646464"
-                        android:textSize="@dimen/text_size_16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_add"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/color_C2C2C2"
-                        android:gravity="center"
-                        android:text="+"
-                        android:textSize="@dimen/text_size_16sp" />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
 
         <!--加入购物车-->
@@ -214,7 +139,7 @@
                     android:id="@+id/tv_product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="399.00"
+                    android:text="0.00"
                     android:textColor="@color/text_color_red"
                     android:textSize="@dimen/text_size_20sp" />
             </LinearLayout>
@@ -224,7 +149,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
-                android:background="@color/text_main_color_sel"
+                android:background="@color/color_C2C2C2"
+                android:clickable="false"
                 android:orientation="horizontal">
 
                 <TextView

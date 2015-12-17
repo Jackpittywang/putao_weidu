@@ -1,7 +1,13 @@
 package com.sunnybear.library.util;
 
+import android.support.v4.util.ArrayMap;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,5 +30,52 @@ public class ListUtils {
             result.add(source.get(i));
         }
         return result;
+    }
+
+    /**
+     * 判断两个集合是否相等
+     *
+     * @param a   第一个集合
+     * @param b   第二个集合
+     * @param <T>
+     * @return 是否相等
+     */
+    public static <T extends Serializable> boolean equals(Collection<T> a, Collection<T> b) {
+        if (a == null) return false;
+        if (b == null) return false;
+        if (a.isEmpty() && b.isEmpty()) return true;
+        if (a.size() != b.size()) return false;
+        List<T> alist = new ArrayList<>(a);
+        List<T> blist = new ArrayList<>(b);
+        Collections.sort(alist, new Comparator<T>() {
+            public int compare(T o1, T o2) {
+                return o1.hashCode() - o2.hashCode();
+            }
+
+        });
+        Collections.sort(blist, new Comparator<T>() {
+            public int compare(T o1, T o2) {
+                return o1.hashCode() - o2.hashCode();
+            }
+
+        });
+        return alist.equals(blist);
+    }
+
+    /**
+     * ArrayMap按照Key排序
+     *
+     * @param map
+     * @param <K>
+     * @param <V>
+     */
+    public static <K, V> ArrayMap<K, V> sortByKey(ArrayMap<K, V> map) {
+        ArrayMap<K, V> arrayMap = new ArrayMap<>();
+        K[] keys = (K[]) map.keySet().toArray();
+        Arrays.sort(keys);
+        for (K key : keys) {
+            arrayMap.put(key, map.get(key));
+        }
+        return arrayMap;
     }
 }
