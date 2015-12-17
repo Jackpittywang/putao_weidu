@@ -11,7 +11,6 @@ import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
-import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -62,6 +61,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         addListener();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     /**
      * 设置主页
      */
@@ -105,22 +109,22 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 break;
             case R.id.ti_explore://探索号
                 ti_explore.hide();//关闭指示数字
-                if (AccountHelper.isLogin())
+                if (!AccountHelper.isLogin())
                     startActivity(LoginActivity.class);
                 else
                     setCurrentItem(currentItemId);
                 break;
             case R.id.ti_store://葡商城
                 ti_store.hide();//关闭指示数字
-                if (AccountHelper.isLogin())
+                if (!AccountHelper.isLogin())
                     startActivity(LoginActivity.class);
                 else
                     setCurrentItem(currentItemId);
                 break;
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
-                if (AccountHelper.isLogin())
-                    startActivity(CompleteActivity.class);
+                if (!AccountHelper.isLogin())
+                    startActivity(LoginActivity.class);
                 else
                     setCurrentItem(currentItemId);
                 break;
