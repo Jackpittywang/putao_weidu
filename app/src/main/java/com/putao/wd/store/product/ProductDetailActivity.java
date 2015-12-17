@@ -62,29 +62,31 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     LinearLayout stickyHeaderLayoutHeader;
 
     //选项栏
-    @Bind(R.id.ti_summary)//概述
-            TitleItem ti_summary;
-    @Bind(R.id.ti_parameter)//规格参数
-            TitleItem ti_parameter;
-    @Bind(R.id.ti_pack)//包装清单
-            TitleItem ti_pack;
-    @Bind(R.id.ti_service)//售后服务
-            TitleItem ti_service;
+    @Bind(R.id.ti_summary)
+    TitleItem ti_summary;//概述
+    @Bind(R.id.ti_parameter)
+    TitleItem ti_parameter;//规格参数
+    @Bind(R.id.ti_pack)
+    TitleItem ti_pack;//包装清单
+    @Bind(R.id.ti_service)
+    TitleItem ti_service;//售后服务
 
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar stickyHeaderLayoutSticky;//概述
-    //    @Bind(R.id.tv_parameter)//规格参数
-//    TextView tv_parameter;
-//    @Bind(R.id.ll_parameter)//规格参数
-//    LinearLayout ll_parameter;
-//    @Bind(R.id.tv_pack)//包装清单
-//    TextView tv_pack;
-//    @Bind(R.id.ll_pack)//包装清单
-//    LinearLayout ll_pack;
-//    @Bind(R.id.tv_service)//售后服务
-//    TextView tv_service;
-//    @Bind(R.id.ll_service)//售后服务
-    LinearLayout ll_service;
+
+//    @Bind(R.id.tv_parameter)
+//    TextView tv_parameter;//规格参数
+//    @Bind(R.id.ll_parameter)
+//    LinearLayout ll_parameter;//规格参数
+//    @Bind(R.id.tv_pack)
+//    TextView tv_pack;//包装清单
+//    @Bind(R.id.ll_pack)
+//    LinearLayout ll_pack;//包装清单
+//    @Bind(R.id.tv_service)
+//    TextView tv_service;//售后服务
+//    @Bind(R.id.ll_service)
+//    LinearLayout ll_service;//售后服务
+
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;
 
