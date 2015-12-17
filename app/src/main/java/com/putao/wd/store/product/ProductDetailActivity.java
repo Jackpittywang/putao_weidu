@@ -13,6 +13,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
@@ -105,10 +106,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
-        //获取产品详情
-//        getProductDetail(args.getString(PRODUCT_ID));
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext/*,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe()*/);
-
+        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
+        getProductDetail("9");
     }
 
     /**
@@ -141,30 +140,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                             return banners.size();
                         }
                     });
-
-                    //规格参数
-                    //tv_parameter.setText(result.get(0).get);
-
-//                    //包装清单
-//                    JSONObject colorObj;
-//                    List<String> colorList=new ArrayList<String>();
-//                    try{
-//                        colorObj=new JSONObject(result.get(0).getAttribute());
-//                        JSONArray jsonArray = colorObj.getJSONArray("9");//获取颜色
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            colorList.add(jsonArray.get(i).toString());
-//                        }
-//                    }catch (JSONException e)
-//                    {
-//                    }
-
-//                    tv_pack.setText(result.get(0).getPack());
-//
-//                    //售后
-//                    tv_service.setText(result.get(0).getServices());
-
-                    //初始化popwindow值
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext/*,args.getString(PRODUCT_ID),result.get(0).getId(),result.get(0).getDescribe()*/);
                 }
             }
         });
@@ -202,9 +177,13 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 break;
             case R.id.ll_join_car://加入购物车
                 mShoppingCarPopupWindow.show(ll_main);
-
                 break;
         }
+    }
+
+    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
+    public void eventJoinCar(String tag){
+        mShoppingCarPopupWindow=new ShoppingCarPopupWindow(mContext);
     }
 
     @Override

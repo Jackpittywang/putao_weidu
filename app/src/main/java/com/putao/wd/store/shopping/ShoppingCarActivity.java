@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * 购物车
  * Created by guchenkai on 2015/12/4.
  */
-public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
+public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener,ShoppingCarAdapter.OnDeleteShopCartItem {
     //    @Bind(R.id.rv_cars_info)
 //    BasicRecyclerView rv_cars_info;
 //    @Bind(R.id.rv_cars_null)
@@ -77,6 +77,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 List<Cart> cars = sort(result.getUse());
                 adapter = new ShoppingCarAdapter(mContext, cars);
                 rv_cars.setAdapter(adapter);
+                adapter.setOnDeleteShopCartItem(ShoppingCarActivity.this);
+                adapter.notifyDataSetChanged();
             }
 
         });
@@ -113,11 +115,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 删除购物车
      */
-    private void cartDelete(){
-        networkRequest(StoreApi.cartDelete(""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+    private void cartDelete(String pid){
+        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Cart> result) {
                 Logger.d(result.toString());
+                getCart();
             }
 
         });
@@ -213,5 +216,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 setRightTitle("编辑");
             }
         }
+    }
+
+    @Override
+    public void DeleteShopCartItem(String pid) {
+        cartDelete(pid);
     }
 }
