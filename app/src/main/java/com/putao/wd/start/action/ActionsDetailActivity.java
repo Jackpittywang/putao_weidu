@@ -2,7 +2,6 @@ package com.putao.wd.start.action;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
@@ -12,7 +11,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TitleBar;
@@ -37,8 +35,10 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_actionsdetail_resume;
     @Bind(R.id.wb_html_content)
     BasicWebView wb_html_content;
-    @Bind(R.id.ll_comment)
-    LinearLayout ll_comment;
+    @Bind(R.id.tv_count_cool)
+    TextView tv_count_cool;
+    @Bind(R.id.tv_count_comment)
+    TextView tv_count_comment;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
 
@@ -64,11 +64,12 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
-                Logger.i("动详情列表请求成功" + result.toString());
                 iv_actionssdetail_header.setImageURL(result.getBanner_url());
                 tv_actionsdetail_status.setText(result.getStatus());
                 tv_actionsdetail_title.setText(result.getLabel());
                 tv_actionsdetail_resume.setText(result.getTitle());
+                tv_count_cool.setText(result.getCountCool()+"");
+                tv_count_comment.setText(result.getCountComment()+"");
                 loadHtml(action_id, action_type);
                 loading.dismiss();
             }
