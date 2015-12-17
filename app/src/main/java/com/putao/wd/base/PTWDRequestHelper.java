@@ -1,9 +1,9 @@
 package com.putao.wd.base;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.util.AppUtils;
-import com.sunnybear.library.util.PreferenceUtils;
 
 /**
  * 继承固定请求参数
@@ -25,10 +25,9 @@ public class PTWDRequestHelper {
      * @return Request实例
      */
     public static FormEncodingRequestBuilder store() {
-
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""));
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken());
 
     }
 
@@ -39,9 +38,9 @@ public class PTWDRequestHelper {
      */
     public static FormEncodingRequestBuilder shopCar() {
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, "1109");
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
 
     /**
@@ -51,8 +50,8 @@ public class PTWDRequestHelper {
      */
     public static FormEncodingRequestBuilder explore() {
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
                 .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
@@ -64,6 +63,6 @@ public class PTWDRequestHelper {
      */
     public static FormEncodingRequestBuilder upload() {
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, "60000277"));
+                .addParam(REQUEST_KEY_UID, AccountHelper.getCurrentUid());
     }
 }

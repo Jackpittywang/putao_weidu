@@ -12,8 +12,11 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.CleanableEditText;
 
 import butterknife.Bind;
@@ -63,9 +66,9 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
-                                AccountHelper.login(result);
-                                finish();
-                                loading.dismiss();
+                                AccountHelper.setCurrentUid(result.getString("uid"));
+                                AccountHelper.setCurrentToken(result.getString("token"));
+                                checkLogin();
                             }
 
                             @Override
@@ -84,6 +87,20 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 startActivity(ForgetPasswordActivity.class);
                 break;
         }
+    }
+
+    /**
+     * 验证登录
+     */
+    private void checkLogin() {
+        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                AccountHelper.setUserInfo(result);
+                loading.dismiss();
+                finish();
+            }
+        });
     }
 
     @Override
