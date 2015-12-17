@@ -1,9 +1,13 @@
 package com.putao.wd.api;
 
+import com.alibaba.fastjson.JSON;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
+import com.putao.wd.model.EditShopCart;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.RequestMethod;
+
+import java.util.List;
 
 /**
  * 葡商城接口
@@ -15,6 +19,7 @@ public class StoreApi {
     private static final String REQUEST_QT = "qt";//数量
     private static final String REQUEST_OLD_PID = "old_pid";//旧商品id
     private static final String REQUEST_NEW_PID = "new_pid";//新商品id
+    private static final String REQUEST_PRODUCTS = "products";//产品(批量编辑购物车用）
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
 
@@ -101,18 +106,16 @@ public class StoreApi {
     /**
      * 编辑购物车
      */
-    public static final String URL_CART_EDIT = BASE_URL + "cart/edit";
+    public static final String URL_CART_EDIT = BASE_URL + "cart/multiManage";
 
     /**
      * 编辑购物车
      *
-     * @param product_id 产品id
-     * @param qt         数量(默认是1)
+     * @param products 产品id
      */
-    public static Request cartEdit(String product_id, String qt) {
+    public static Request multiManage(List<EditShopCart> products) {
         return PTWDRequestHelper.store()
-                .addParam(REQUEST_PRODUCT_ID, product_id)
-                .addParam(REQUEST_QT, qt)
+                .addParam(REQUEST_PRODUCTS, JSON.toJSONString(products))
                 .build(RequestMethod.POST, URL_CART_EDIT);
     }
 
@@ -125,12 +128,10 @@ public class StoreApi {
      * 删除购物车
      *
      * @param product_id 产品id
-     * @param qt         数量(默认是1)
      */
-    public static Request cartDelete(String product_id, String qt) {
+    public static Request cartDelete(String product_id) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_PRODUCT_ID, product_id)
-                .addParam(REQUEST_QT, qt)
                 .build(RequestMethod.POST, URL_CART_DELETE);
     }
 
