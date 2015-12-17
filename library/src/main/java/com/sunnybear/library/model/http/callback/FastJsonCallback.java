@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sunnybear.library.util.JsonUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 
 import java.io.Serializable;
 
@@ -22,8 +23,8 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
     @Override
     public final void onSuccess(String url, JSONObject result) {
         String data = result.getString("data");
-        if (data == null) {
-            onSuccess(url, (T) JSON.parseObject("", clazz));
+        if (StringUtils.isEmpty(data)) {
+            onSuccess(url, (T) new String());
             return;
         }
         JsonUtils.JsonType type = JsonUtils.getJSONType(data);
