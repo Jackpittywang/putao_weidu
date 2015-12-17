@@ -114,33 +114,31 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
      * 商品详情
      */
     private void getProductDetail(String product_id) {
-        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ArrayList<ProductDetail>>(ProductDetail.class, loading) {
+        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<ProductDetail> result) {
+            public void onSuccess(String url, ProductDetail result) {
                 Logger.d(result.toString());
-                if (result.size() != 0) {
-                    tv_product_title.setText(result.get(0).getTitle());//标题
-                    tv_product_intro.setText(result.get(0).getSubtitle());//副标题
-                    tv_product_price.setText(result.get(0).getPrice());//菜单
+                tv_product_title.setText(result.getTitle());//标题
+                tv_product_intro.setText(result.getSubtitle());//副标题
+                tv_product_price.setText(result.getPrice());//菜单
 
-                    //广告栏
-                    banners = result.get(0).getPictures();
-                    bl_banner.setAdapter(new BannerAdapter() {
-                        @Override
-                        public View getView(int position) {
-                            ImageDraweeView imageView = new ImageDraweeView(mContext);
-                            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            imageView.setLayoutParams(params);
-                            imageView.setImageURL(banners.get(position));
-                            return imageView;
-                        }
+                //广告栏
+                banners = result.getPictures();
+                bl_banner.setAdapter(new BannerAdapter() {
+                    @Override
+                    public View getView(int position) {
+                        ImageDraweeView imageView = new ImageDraweeView(mContext);
+                        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        imageView.setLayoutParams(params);
+                        imageView.setImageURL(banners.get(position));
+                        return imageView;
+                    }
 
-                        @Override
-                        public int getCount() {
-                            return banners.size();
-                        }
-                    });
-                }
+                    @Override
+                    public int getCount() {
+                        return banners.size();
+                    }
+                });
             }
         });
     }
@@ -182,8 +180,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
-    public void eventJoinCar(String tag){
-        mShoppingCarPopupWindow=new ShoppingCarPopupWindow(mContext);
+    public void eventJoinCar(String tag) {
+        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
     }
 
     @Override
