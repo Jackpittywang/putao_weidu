@@ -197,6 +197,7 @@
                     android:gravity="center"
                     android:background="@color/text_color_red"
                     android:text="删除"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:layout_width="40dp"
                     android:layout_height="match_parent" />
