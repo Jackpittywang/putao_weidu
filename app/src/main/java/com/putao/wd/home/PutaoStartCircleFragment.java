@@ -11,8 +11,8 @@ import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.putao.wd.home.adapter.StartBannerAdapter;
 import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
+import com.putao.wd.pay.PayAcitivty;
 import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -78,17 +78,17 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         getBannerList();//获取广告列表
         networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
                 , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ActionNews> result) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<ActionNews> result) {
 //                        cacheEnterDisk(url, result);
-                adapter.addAll(result);
-                if (result.size() >= pageCount)
-                    currentPage++;
-                else
-                    rv_content.noMoreLoading();
-                loading.dismiss();
-            }
-        });
+                        adapter.addAll(result);
+                        if (result.size() >= pageCount)
+                            currentPage++;
+                        else
+                            rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
     }
 
     /**
@@ -97,19 +97,19 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     private void getBannerList() {
         networkRequestCache(StartApi.getBannerList()
                 , new SimpleFastJsonCallback<ArrayList<Banner>>(Banner.class, loading) {
-            @Override
-            public void onSuccess(String url, final ArrayList<Banner> result) {
-                cacheEnterDisk(url, result);
-                bl_banner.setAdapter(new StartBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
                     @Override
-                    public void onPagerClick(int position) {
-                        ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
+                    public void onSuccess(String url, final ArrayList<Banner> result) {
+                        cacheEnterDisk(url, result);
+                        bl_banner.setAdapter(new StartBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
+                            @Override
+                            public void onPagerClick(int position) {
+                                ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
+                            }
+                        }));
+                        bl_banner.setOffscreenPageLimit(result.size());//缓存页面数
+                        loading.dismiss();
                     }
-                }));
-                bl_banner.setOffscreenPageLimit(result.size());//缓存页面数
-                loading.dismiss();
-            }
-        });
+                });
     }
 
     /**
@@ -123,17 +123,17 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 rv_content.reset();
                 networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
                         , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ArrayList<ActionNews> result) {
-                        adapter.replaceAll(result);
-                        if (result.size() >= pageCount)
-                            currentPage++;
-                        else
-                            rv_content.noMoreLoading();
-                        loading.dismiss();
-                        ptl_refresh.refreshComplete();
-                    }
-                });
+                            @Override
+                            public void onSuccess(String url, ArrayList<ActionNews> result) {
+                                adapter.replaceAll(result);
+                                if (result.size() >= pageCount)
+                                    currentPage++;
+                                else
+                                    rv_content.noMoreLoading();
+                                loading.dismiss();
+                                ptl_refresh.refreshComplete();
+                            }
+                        });
             }
         });
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
@@ -141,16 +141,16 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
             public void onLoadMore() {
                 networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
                         , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ArrayList<ActionNews> result) {
-                        adapter.addAll(result);
-                        if (result.size() >= pageCount) {
-                            rv_content.loadMoreComplete();
-                            currentPage++;
-                        } else rv_content.noMoreLoading();
-                        loading.dismiss();
-                    }
-                });
+                            @Override
+                            public void onSuccess(String url, ArrayList<ActionNews> result) {
+                                adapter.addAll(result);
+                                if (result.size() >= pageCount) {
+                                    rv_content.loadMoreComplete();
+                                    currentPage++;
+                                } else rv_content.noMoreLoading();
+                                loading.dismiss();
+                            }
+                        });
             }
         });
         rv_content.setOnItemClickListener(new OnItemClickListener<ActionNews>() {
@@ -158,7 +158,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
             public void onItemClick(ActionNews actionNewsList, int position) {
                 Bundle bundle = new Bundle();
                 ActionNews actionNews = adapter.getItem(position);
-                bundle .putString("action_id", actionNews.getId());
+                bundle.putString("action_id", actionNews.getId());
                 startActivity(ActionsDetailActivity.class, bundle);
             }
         });
@@ -180,7 +180,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[]{StartApi.URL_BANNER,StartApi.URL_ACTION_LIST};
+        return new String[]{StartApi.URL_BANNER, StartApi.URL_ACTION_LIST};
     }
 
     @Override
@@ -207,19 +207,24 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         }
         networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
                 , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ActionNews> result) {
-                adapter.replaceAll(result);
-                if (result.size() >= pageCount)
-                    currentPage++;
-                else
-                    rv_content.noMoreLoading();
-                loading.dismiss();
-            }
-        });
+                    @Override
+                    public void onSuccess(String url, ArrayList<ActionNews> result) {
+                        adapter.replaceAll(result);
+                        if (result.size() >= pageCount)
+                            currentPage++;
+                        else
+                            rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
     }
 
-//    /**
+    @Override
+    public void onLeftAction() {
+        startActivity(PayAcitivty.class);
+    }
+
+    //    /**
 //     * 获取活动标签
 //     * by yanghx
 //     */

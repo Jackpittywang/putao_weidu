@@ -40,6 +40,9 @@ import butterknife.OnClick;
  * Created by yanghx on 2015/12/7.
  */
 public class CommentActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+    public static final String EVENT_COUNT_COMMENT = "event_count_comment";
+    public static final String EVENT_COUNT_COOL = "event_count_cool";
+
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.ptl_refresh)
@@ -53,8 +56,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
 
-    public static final String EVENT_COUNT_COMMENT = "event_count_comment";
-    public static final String EVENT_COUNT_COOL = "event_count_cool";
     private SelectPopupWindow mSelectPopupWindow;
     private CommentAdapter adapter;
     private Map<String, String> emojiMap;
@@ -63,6 +64,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private boolean isShowEmoji = false;
     private int position;
     private boolean isReply;
+    private boolean hasComment;
 
     @Override
     protected int getLayoutId() {
@@ -165,9 +167,29 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 break;
             case R.id.tv_send:
                 if (isReply) {
-                    sendComment(position, "REPLY");
+                    Comment comment = adapter.getItem(position);
+                    String msg = et_msg.getText().toString();
+                    networkRequest(StartApi.commentAdd(action_id, comment.getUser_name(), msg, "REPLY", comment.getComment_id(), comment.getUser_profile_photo()),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                    Logger.i("评论与回复提交成功");
+                                    getCommentList();
+                                    EventBusHelper.post(true, EVENT_COUNT_COMMENT);
+                                }
+                            });
                 }else {
-                    sendComment(position, "COMMENT");
+                    String msg = et_msg.getText().toString();
+                    // 用户名 commdId 未定
+                    networkRequest(StartApi.commentAdd(action_id, "nick_young", msg, "COMMENT", "10000", "hfgsagg"),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                    Logger.i("评论与回复提交成功");
+                                    getCommentList();
+                                    EventBusHelper.post(true, EVENT_COUNT_COMMENT);
+                                }
+                            });
                 }
                 isReply = false;
                 et_msg.setText("");
@@ -185,33 +207,16 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, ArrayList<Comment> result) {
                 Logger.i("活动评论列表请求成功");
-                if (null != result) {
+                if (result.size() != 0) {
                     adapter.replaceAll(result);
+                    hasComment = true;
                 } else {
                     rv_content.noMoreLoading();
+                    hasComment = false;
                 }
                 loading.dismiss();
             }
         });
-    }
-
-    /**
-     * 发表/回复评论
-     * type 值为"COMMENT"或"REPLY"
-     * 对应发表或回复
-     */
-    private void sendComment(int position, String type) {
-        Comment comment = adapter.getItem(position);
-        String msg = et_msg.getText().toString();
-        networkRequest(StartApi.commentAdd(action_id, comment.getUser_name(), msg, type, comment.getComment_id(), comment.getUser_profile_photo()),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        Logger.i("评论与回复提交成功");
-                        getCommentList();
-                        EventBusHelper.post(true, EVENT_COUNT_COMMENT);
-                    }
-                });
     }
 
     @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)

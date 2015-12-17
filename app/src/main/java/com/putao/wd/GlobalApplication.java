@@ -171,4 +171,5 @@ public class GlobalApplication extends BasicApplication {
     public static final String PREFERENCE_KEY_NICKNAME = "nickname";
     public static final String PREFERENCE_KEY_EXPIRE_TIME = "expire_tim";
     public static final String PREFERENCE_KEY_REFRESH_TOKEN = "refresh_token";
+    public static final String PREFERENCE_KEY_USER_INFO = "user_info";
 }

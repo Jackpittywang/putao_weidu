@@ -2,6 +2,7 @@ package com.putao.wd.account;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
 
@@ -52,6 +53,15 @@ public final class AccountHelper {
     }
 
     /**
+     * 保存当前Uid
+     *
+     * @param uid
+     */
+    public static void setCurrentUid(String uid) {
+        PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_UID, uid);
+    }
+
+    /**
      * 获取当前的token
      *
      * @return 当前登录的Uid
@@ -61,11 +71,38 @@ public final class AccountHelper {
     }
 
     /**
+     * 保存当前Token
+     *
+     * @param token
+     */
+    public static void setCurrentToken(String token) {
+        PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_TOKEN, token);
+    }
+
+    /**
      * 是否在登录状态
      *
      * @return
      */
     public static boolean isLogin() {
-        return StringUtils.equals(getCurrentUid(), "") && StringUtils.equals(getCurrentToken(), "");
+        return !StringUtils.isEmpty(getCurrentUid()) && !StringUtils.isEmpty(getCurrentToken());
+    }
+
+    /**
+     * 设置当前userInfo
+     *
+     * @param userInfo
+     */
+    public static void setUserInfo(UserInfo userInfo) {
+        PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_USER_INFO, userInfo);
+    }
+
+    /**
+     * 获取当前userInfo
+     *
+     * @return
+     */
+    public static UserInfo getCurrentUserInfo() {
+        return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_USER_INFO, null);
     }
 }
