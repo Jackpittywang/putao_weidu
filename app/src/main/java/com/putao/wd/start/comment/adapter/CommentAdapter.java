@@ -1,7 +1,6 @@
 package com.putao.wd.start.comment.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,6 +24,7 @@ import butterknife.Bind;
  */
 public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.CommentViewHolder> {
     public static final String EVENT_COMMENT_EDIT = "event_comment_edit";
+    public static final String EVENT_COMMIT_COOL = "event_commit_cool";
     private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
 
     public CommentAdapter(Context context, List<Comment> comments) {
@@ -48,6 +48,12 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getCreate_time()), DATE_PATTERN);
         holder.tv_comment_time.setText(create_time);
         holder.tv_comment_content.setText(comment.getContent());
+        if (!"0".equals(comment.getCount_cool())) {
+            holder.tv_count_cool.setText(comment.getCount_cool());
+        } else {
+            holder.tv_count_cool.setText("赞");
+        }
+
         holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,35 +61,16 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
                 EventBusHelper.post(position, EVENT_COMMENT_EDIT);
             }
         });
-//        holder.tv_count_comment.setText("1234");
-        if (!"0".equals(comment.getCount_cool())) {
-            holder.tv_count_cool.setText(comment.getCount_cool());
-        } else {
-            holder.tv_count_cool.setText("赞");
-        }
         holder.sb_cool_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
-                String cool = holder.tv_count_cool.getText().toString();
-                int count_cool = 0;
-                if ("赞".equals(cool)) {
-                    count_cool = 0;
-                }else {
-                    count_cool = Integer.parseInt(cool);
-                }
                 if (isSelect) {
-                    holder.tv_count_cool.setText(count_cool+1 + "");
-                } else {
-                    if (count_cool - 1 <= 0) {
-                        holder.tv_count_cool.setText("赞");
-                    } else {
-                        holder.tv_count_cool.setText(count_cool - 1 + "");
-                    }
+                    //使用EventBus提交点赞
+                    EventBusHelper.post(position, EVENT_COMMIT_COOL);
                 }
             }
         });
     }
-
 
     static class CommentViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_comment_icon)

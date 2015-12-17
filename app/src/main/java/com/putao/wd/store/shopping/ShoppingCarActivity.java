@@ -9,6 +9,7 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
+import com.putao.wd.model.EditShopCart;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.adapter.ShoppingCarAdapter;
@@ -86,10 +87,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 编辑购物车
      */
-    private void cartEdit(String product_id, String qt){
-        networkRequest(StoreApi.cartEdit(product_id, qt), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+    private void multiManage(List products){
+        networkRequest(StoreApi.multiManage(products), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
+            public void onSuccess(String url, ShopCarItem result) {
                 Logger.d(result.toString());
             }
 
@@ -113,7 +114,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 删除购物车
      */
     private void cartDelete(){
-        networkRequest(StoreApi.cartDelete("", ""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+        networkRequest(StoreApi.cartDelete(""), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Cart> result) {
                 Logger.d(result.toString());
@@ -194,13 +195,21 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 ToastUtils.showToastShort(this, "点击编辑");
                 adapter.updateItem();
                 setRightTitle("完成");
+                isEditable=false;
             }else {
                 Iterator iter = adapter.map.keySet().iterator();
+                List<EditShopCart> products=new ArrayList<>();
+                EditShopCart editShopCart;
                 while (iter.hasNext()) {
                     Object key = iter.next();
+                    editShopCart=new EditShopCart();
                     Cart cart = adapter.map.get(key);
-                    cartEdit(cart.getPid(),cart.getQt());
+                    editShopCart.setPid(cart.getPid());
+                    editShopCart.setQt(cart.getQt());
+                    products.add(editShopCart);
                 }
+                multiManage(products);
+                isEditable=true;
                 setRightTitle("编辑");
             }
         }
