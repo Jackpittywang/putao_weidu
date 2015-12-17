@@ -11,7 +11,7 @@
         android:layout_height="32dp"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="颜色选择"
+        android:text="选择数量"
         android:textColor="@color/text_color_646464"
         android:textSize="@dimen/text_size_18sp" />
 
@@ -21,7 +21,6 @@
         android:layout_height="32dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/tv_title"
         auto:btn_background="@drawable/btn_count_sel"
         auto:dis_color="@color/color_C2C2C2"
         auto:edit_background="@drawable/btn_count_sel"
