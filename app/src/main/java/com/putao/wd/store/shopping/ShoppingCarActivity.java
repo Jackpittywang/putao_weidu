@@ -59,7 +59,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         addNavigation();
         addListener();
 
-        //getCart();
+        getCart();
 
         //cartEdit();
         //cartDelete();

@@ -33,6 +33,18 @@ public class PTWDRequestHelper {
     }
 
     /**
+     * 封装固定请求参数(购物车使用)
+     *
+     * @return Request实例
+     */
+    public static FormEncodingRequestBuilder shopCar() {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, "1109");
+    }
+
+    /**
      * 封装固定请求参数(探索号使用)
      *
      * @return Request实例

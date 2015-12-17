@@ -76,7 +76,7 @@ public class StoreApi {
      * 查看购物车
      */
     public static Request getCart() {
-        return PTWDRequestHelper.store()
+        return PTWDRequestHelper.shopCar()
                 .build(RequestMethod.GET, URL_VIEW_CART);
     }
 
