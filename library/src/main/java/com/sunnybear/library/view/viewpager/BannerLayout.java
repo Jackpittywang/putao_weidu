@@ -2,6 +2,7 @@ package com.sunnybear.library.view.viewpager;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class BannerLayout extends RelativeLayout {
     private int mPageColor;
 
     private BannerViewPager.OnPagerClickListenr mOnPagerClickListenr;
+    private FixedSpeedScroller mFixedSpeedScroller;
 
     public void setOnPagerClickListenr(BannerViewPager.OnPagerClickListenr onPagerClickListenr) {
         BannerAdapter adapter = (BannerAdapter) mViewPager.getAdapter();
@@ -68,7 +70,7 @@ public class BannerLayout extends RelativeLayout {
             mIndicator.setPageColor(mPageColor);
     }
 
-    public void setAdapter(BannerAdapter adapter) {
+    public void setAdapter(PagerAdapter adapter) {
         if (isAutoScroll) mViewPager.startAutoScroll(mIntervalTime);
         mViewPager.setAdapter(adapter);
         mIndicator.setViewPager(mViewPager);

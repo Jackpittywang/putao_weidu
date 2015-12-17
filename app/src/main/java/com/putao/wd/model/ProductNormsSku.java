@@ -8,19 +8,12 @@ import java.util.List;
  * Created by guchenkai on 2015/12/9.
  */
 public class ProductNormsSku implements Serializable {
-    private String params;//规格值名称ID
     private String pid;//商品id
     private String quantity;//剩余库存数量
     private String price;//价格
-    private String picture;//图片集
-
-    public String getParams() {
-        return params;
-    }
-
-    public void setParams(String params) {
-        this.params = params;
-    }
+    private String icon;//商品icon
+    private List<String> params;//规格值名称ID
+    private List<String> picture;//图片集
 
     public String getPid() {
         return pid;
@@ -46,22 +39,39 @@ public class ProductNormsSku implements Serializable {
         this.price = price;
     }
 
-    public String getPicture() {
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public List<String> getParams() {
+        return params;
+    }
+
+    public void setParams(List<String> params) {
+        this.params = params;
+    }
+
+    public List<String> getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(List<String> picture) {
         this.picture = picture;
     }
 
     @Override
     public String toString() {
         return "ProductNormsSku{" +
-                "params='" + params + '\'' +
-                ", pid='" + pid + '\'' +
+                "pid='" + pid + '\'' +
                 ", quantity='" + quantity + '\'' +
                 ", price='" + price + '\'' +
-                ", picture='" + picture + '\'' +
+                ", icon='" + icon + '\'' +
+                ", params=" + params +
+                ", picture=" + picture +
                 '}';
     }
 }

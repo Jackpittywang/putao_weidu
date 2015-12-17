@@ -16,9 +16,9 @@ import butterknife.OnClick;
  */
 public abstract class SelectPopupWindow extends BasicPopupWindow implements View.OnClickListener {
     @Bind(R.id.tv_first)
-    TextView tv_first;
+    public TextView tv_first;
     @Bind(R.id.tv_second)
-    TextView tv_second;
+    public TextView tv_second;
 
     public SelectPopupWindow(Context context) {
         super(context);

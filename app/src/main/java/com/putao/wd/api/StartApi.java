@@ -178,9 +178,11 @@ public class StartApi {
      * comment_id 是必须要传的
      *
      * @param action_id  活动ID
+     * @param nickname   昵称
      * @param msg        评论内容
      * @param type       评论的类型
-     * @param comment_id 当评论类型为REPLY时comment_id是必须要传的
+     * @param comment_id 当评论类型为REPLY或COMMENT
+     * @param userProfilePhoto 头像url
      */
     public static Request commentAdd(String action_id, String nickname, String msg, String type, String comment_id, String userProfilePhoto) {
         FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
@@ -192,13 +194,28 @@ public class StartApi {
                 .addParam(REQUEST_NICK_NAME, nickname)
                 .addParam(REQUEST_MSG, msg)
                 .addParam(REQUEST_TYPE, type)
+                .addParam(REQUEST_COMMENT_ID, comment_id)
                 .addParam(REQUEST_USERPROFILEPHOTO, userProfilePhoto);
 //        if (type == CommentType.REPLY && StringUtils.isEmpty(comment_id))
 //            throw new RuntimeException("当前评论类型为回复,comment_id必须传递");
 //        if (!StringUtils.isEmpty(comment_id))
 //            builder.addParam(REQUEST_COMMENT_ID, comment_id);
-        builder.addParam(REQUEST_COMMENT_ID, comment_id);
         return builder.build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+
+    /**
+     * 评论删除
+     */
+    public static final String URL_COMMENT_REMOVE = BASE_URL + "comment/remove";
+
+    /**
+     * @param comment_id
+     */
+    public static Request commentRemove(String comment_id) {
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(REQUEST_COMMENT_ID, comment_id);
+        return builder.build(RequestMethod.POST, URL_COMMENT_REMOVE);
     }
 
     /**
@@ -225,20 +242,27 @@ public class StartApi {
     /**
      * 赞（提交）
      *
-     * @param user_id    用户ID
      * @param action_id  活动ID
-     * @param type       赞的类型
+     * @param nickname   昵称
+     * @param type       赞的类型 EVENT或COMMENT 活动/评论
      * @param comment_id 当赞类型为COMMENT时comment_id 是必须要传的
+     * @param userProfilePhoto 头像url
      */
-    public static Request coolAdd(String user_id, String action_id, CoolType type, String comment_id) {
+    public static Request coolAdd(String action_id, String nickname, String type, String comment_id, String userProfilePhoto) {
         FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
-                .addParam(REQUEST_USER_ID, user_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
                 .addParam(REQUEST_ACTION_ID, action_id)
-                .addParam(REQUEST_TYPE, type.name());
-        if (type == CoolType.COMMENT && StringUtils.isEmpty(comment_id))
-            throw new RuntimeException("当前赞类型为评论,comment_id必须传递");
-        if (!StringUtils.isEmpty(comment_id))
-            builder.addParam(REQUEST_COMMENT_ID, comment_id);
+                .addParam(REQUEST_NICK_NAME, nickname)
+                .addParam(REQUEST_TYPE, type)
+                .addParam(REQUEST_COMMENT_ID, comment_id)
+                .addParam(REQUEST_USERPROFILEPHOTO, userProfilePhoto);
+//        if (type == CoolType.COMMENT && StringUtils.isEmpty(comment_id))
+//            throw new RuntimeException("当前赞类型为评论,comment_id必须传递");
+//        if (!StringUtils.isEmpty(comment_id))
+//            builder.addParam(REQUEST_COMMENT_ID, comment_id);
         return builder.build(RequestMethod.POST, URL_COOL_ADD);
     }
 

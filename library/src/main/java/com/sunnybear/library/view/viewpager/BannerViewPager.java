@@ -7,6 +7,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+
+import java.lang.reflect.Field;
 
 /**
  * 广告ViewPager
@@ -26,16 +29,18 @@ public class BannerViewPager extends ViewPager {
 
     private OnPagerClickListenr mOnPagerClickListenr;
 
+    private FixedSpeedScroller mFixedSpeedScroller;
+
     public BannerViewPager(Context context) {
         this(context, null);
     }
 
     public BannerViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -99,6 +104,21 @@ public class BannerViewPager extends ViewPager {
                 }
             }
         });
+        controllViewPagerSpeed(context);
+    }
+
+    /**
+     * 控制ViewPager滚动速度
+     */
+    private void controllViewPagerSpeed(Context context) {
+        try {
+            Field field = this.getClass().getSuperclass().getDeclaredField("mScroller");
+            field.setAccessible(true);
+            mFixedSpeedScroller = new FixedSpeedScroller(context, new AccelerateDecelerateInterpolator());
+            field.set(this, mFixedSpeedScroller);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean startAutoScroll() {

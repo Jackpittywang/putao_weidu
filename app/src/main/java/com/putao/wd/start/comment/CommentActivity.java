@@ -3,7 +3,9 @@ package com.putao.wd.start.comment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -11,10 +13,11 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.Comment;
-import com.putao.wd.model.CommentType;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -22,7 +25,9 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +40,8 @@ import butterknife.OnClick;
  * Created by yanghx on 2015/12/7.
  */
 public class CommentActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+    @Bind(R.id.ll_main)
+    LinearLayout ll_main;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
@@ -46,12 +53,16 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
 
+    public static final String EVENT_COUNT_COMMENT = "event_count_comment";
+    public static final String EVENT_COUNT_COOL = "event_count_cool";
+    private SelectPopupWindow mSelectPopupWindow;
     private CommentAdapter adapter;
     private Map<String, String> emojiMap;
     private List<Emoji> emojis;
     private String action_id;
     private boolean isShowEmoji = false;
     private int position;
+    private boolean isReply;
 
     @Override
     protected int getLayoutId() {
@@ -73,6 +84,29 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
         vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
+
+        mSelectPopupWindow = new SelectPopupWindow(mContext) {
+            @Override
+            public void onFirstClick(View v) {
+                //删除评论
+                String comment_id = adapter.getItem(position).getComment_id();
+                networkRequest(StartApi.commentRemove(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        getCommentList();
+                        EventBusHelper.post(false, EVENT_COUNT_COMMENT);
+                    }
+                });
+            }
+
+            @Override
+            public void onSecondClick(View v) {
+                et_msg.setText("");
+            }
+        };
+        mSelectPopupWindow.tv_first.setText("删除");
+        mSelectPopupWindow.tv_second.setText("回复");
     }
 
     @Override
@@ -112,8 +146,38 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 }, 3 * 1000);
             }
         });
+        rv_content.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Serializable serializable, int position) {
+                mSelectPopupWindow.show(ll_main);
+
+            }
+        });
     }
 
+    @OnClick({R.id.tv_emojis, R.id.tv_send})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_emojis:
+                isShowEmoji = isShowEmoji ? false : true;
+                vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
+                break;
+            case R.id.tv_send:
+                if (isReply) {
+                    sendComment(position, "REPLY");
+                }else {
+                    sendComment(position, "COMMENT");
+                }
+                isReply = false;
+                et_msg.setText("");
+                break;
+        }
+    }
+
+    /**
+     * 获取评论列表
+     */
     private void getCommentList() {
         Bundle bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
@@ -131,43 +195,48 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         });
     }
 
-    @OnClick({R.id.tv_emojis, R.id.tv_send})
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_emojis:
-                isShowEmoji = isShowEmoji ? false : true;
-                vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
-                break;
-            case R.id.tv_send:
-                Comment comment = adapter.getItem(position);
-                String msg = et_msg.getText().toString();
-                //type 值为"COMMENT"或"REPLY"
-                networkRequest(StartApi.commentAdd(action_id, comment.getUser_name(), msg, "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
-                        new SimpleFastJsonCallback<String>(String.class, loading) {
-                            @Override
-                            public void onSuccess(String url, String result) {
-                                Logger.i("评论与回复提交成功");
-                                getCommentList();
-                            }
-                        });
-                break;
-        }
+    /**
+     * 发表/回复评论
+     * type 值为"COMMENT"或"REPLY"
+     * 对应发表或回复
+     */
+    private void sendComment(int position, String type) {
+        Comment comment = adapter.getItem(position);
+        String msg = et_msg.getText().toString();
+        networkRequest(StartApi.commentAdd(action_id, comment.getUser_name(), msg, type, comment.getComment_id(), comment.getUser_profile_photo()),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.i("评论与回复提交成功");
+                        getCommentList();
+                        EventBusHelper.post(true, EVENT_COUNT_COMMENT);
+                    }
+                });
     }
 
-//    /**
-//     * comment_id 是必须要传的
-//     *
-//     * @param user_id    用户ID
-//     * @param action_id  活动ID
-//     * @param msg        评论内容
-//     * @param type       评论的类型
-//     * @param comment_id 当评论类型为REPLY时comment_id是必须要传的
-//     */
-    //编辑评论
     @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
-    public void eventUseTime(int currPosition) {
+    public void eventClickComment(int currPosition) {
         position = currPosition;
+        Comment comment = adapter.getItem(position);
+        String username = comment.getUser_name() + ": ";
+        SpannableString ss = new SpannableString("回复 " + username);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length()+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        et_msg.setText(ss);
+        isReply = true;
+    }
+
+    //点赞提交
+    @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
+    public void eventClickCool(int currPosition) {
+        Comment comment = adapter.getItem(currPosition);
+        networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
+                new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<String> result) {
+                getCommentList();
+                EventBusHelper.post(true, EVENT_COUNT_COOL);
+            }
+        });
     }
 
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
@@ -179,43 +248,5 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     public void eventDeleteEmoji(Emoji emoji) {
         et_msg.delete();
     }
-
-//    private List<CommentItem> getTestData() {
-//        List<CommentItem> list = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            CommentItem commentItem = new CommentItem();
-//            commentItem.setId(i + 1 + "");
-//            commentItem.setStatus("0");
-//            commentItem.setUsername("用户" + i);
-//            commentItem.setTime("12:00");
-//            commentItem.setComment("第" + i + "条评论" +
-//                    "评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论");
-//            commentItem.setComment_count("1234");
-//            commentItem.setSupport_count("1000");
-//            list.add(commentItem);
-//        }
-//        return list;
-//    }
-
-
-//
-//    /**
-//     * model暂无
-//     *
-//     * 赞
-//     * by yanghx
-//     * @param user_id    用户ID
-//     * @param action_id  活动ID
-//     * @param type       赞的类型
-//     * @param comment_id 当赞类型为COMMENT时comment_id 是必须要传的
-//     */
-//    private void coolAdd(String user_id, String action_id, CoolType type, String comment_id) {
-//        networkRequest(StartApi.coolAdd(user_id, action_id, type, comment_id), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<String> result) {
-//                Log.i("pt", "点赞成功");
-//            }
-//        });
-//    }
 
 }

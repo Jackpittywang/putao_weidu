@@ -33,7 +33,7 @@ class TagItem extends TextView {
     }
 
     private void init(Tag tag) {
-        setText(tag.getTitle());
+        setText(tag.getText());
         setTextColor(!tag.isEnable() ? mTextDisColor : mTextNorColor);
         if (!tag.isEnable())
             getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

@@ -335,6 +335,7 @@
                     android:textSize="@dimen/text_size_20sp"/>
 
             </LinearLayout>
+            <View style="@style/line_vertical"/>
 
             <LinearLayout
                 android:id="@+id/ll_comment"
@@ -351,6 +352,7 @@
                     android:src="@drawable/btn_comment"/>
 
                 <TextView
+                    android:id="@+id/tv_count_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="4dp"
@@ -361,6 +363,8 @@
                     android:textSize="@dimen/text_size_20sp"/>
 
             </LinearLayout>
+
+            <View style="@style/line_vertical"/>
 
             <TextView
                 android:id="@+id/tv_join"

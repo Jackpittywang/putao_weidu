@@ -66,6 +66,6 @@ public final class AccountHelper {
      * @return
      */
     public static boolean isLogin() {
-        return StringUtils.equals(getCurrentUid(), "") || StringUtils.equals(getCurrentToken(), "");
+        return StringUtils.equals(getCurrentUid(), "") && StringUtils.equals(getCurrentToken(), "");
     }
 }
