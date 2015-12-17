@@ -17,6 +17,7 @@ import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.Comment;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -94,6 +95,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     @Override
                     public void onSuccess(String url, String result) {
                         getCommentList();
+                        EventBusHelper.post(false, EVENT_COUNT_COMMENT);
                     }
                 });
             }
@@ -207,6 +209,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     public void onSuccess(String url, String result) {
                         Logger.i("评论与回复提交成功");
                         getCommentList();
+                        EventBusHelper.post(true, EVENT_COUNT_COMMENT);
                     }
                 });
     }
@@ -231,6 +234,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, ArrayList<String> result) {
                 getCommentList();
+                EventBusHelper.post(true, EVENT_COUNT_COOL);
             }
         });
     }
