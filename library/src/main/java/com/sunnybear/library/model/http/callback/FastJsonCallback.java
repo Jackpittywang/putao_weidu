@@ -23,7 +23,7 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
     @Override
     public final void onSuccess(String url, JSONObject result) {
         String data = result.getString("data");
-        if (StringUtils.isEmpty(data)) {
+        if (StringUtils.isEmpty(data) && StringUtils.equals(result.getString("http_code"), "200")) {
             onSuccess(url, (T) new String(""));
             return;
         }
@@ -36,8 +36,8 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
                 onSuccess(url, (T) JSON.parseArray(data, clazz));
                 break;
             case JSON_TYPE_ERROR:
-                onFailure(url, -200, "json格式错误");
-                Logger.e(JSONObjectCallback.TAG, "json格式错误,json=" + data);
+                onFailure(url, -200, "data数据返回错误");
+                Logger.e(JSONObjectCallback.TAG, "result=" + result.toJSONString());
                 break;
         }
     }
