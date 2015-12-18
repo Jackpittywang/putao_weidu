@@ -18,6 +18,7 @@ import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 
@@ -36,7 +37,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         super(context, shoppingCars);
         map = new HashMap<>();
         selectedmap = new HashMap<>();
-        this.ShoppingCarts=shoppingCars;
+        this.ShoppingCarts = shoppingCars;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_color.setText(shoppingCar.getColor());
         holder.tv_size.setText(shoppingCar.getSku());
         holder.tv_money.setText(shoppingCar.getPrice());
-        if(!StringUtils.isEmpty(shoppingCar.getQt())){
+        if (!StringUtils.isEmpty(shoppingCar.getQt())) {
             holder.asl_num_sel.setCount(Integer.parseInt(shoppingCar.getQt()));
         }
 
@@ -93,20 +94,22 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override
             public void onAmountSelected(int count, boolean isPlus) {
-                shoppingCar.setQt(holder.asl_num_sel.getCurrentCount()+"");
-                ShoppingCarts.set(position,shoppingCar);
+                shoppingCar.setQt(holder.asl_num_sel.getCurrentCount() + "");
+                ShoppingCarts.set(position, shoppingCar);
             }
         });
 
     }
 
     //删除回调
-    public interface OnDeleteShopCartItem{
+    public interface OnDeleteShopCartItem {
         void DeleteShopCartItem(String pid);
     }
+
     private OnDeleteShopCartItem mOnDeleteShopCartItem;
-    public void setOnDeleteShopCartItem(OnDeleteShopCartItem item){
-        this.mOnDeleteShopCartItem=item;
+
+    public void setOnDeleteShopCartItem(OnDeleteShopCartItem item) {
+        this.mOnDeleteShopCartItem = item;
     }
 
 
@@ -126,12 +129,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      * 显示编辑状态Item
      */
     private void showEdit(ShoppingCarViewHolder holder, Cart cart) {
-        if(cart.isEditable()){
-            if(cart.isSelect()){
+        if (cart.isEditable()) {
+            if (cart.isSelect()) {
                 holder.asl_num_sel.setVisibility(View.VISIBLE);
                 holder.ll_info.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             holder.asl_num_sel.setVisibility(View.GONE);
             holder.ll_info.setVisibility(View.VISIBLE);
         }
@@ -140,31 +143,33 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     /**
      * 获取当前item状态,判断是否是可编辑
      */
-    public boolean getItemState(){
+    public boolean getItemState() {
         return itemState;
     }
 
     /**
      * 更新Item显示编辑
      */
-    public void updateItem(){
+    public void updateItem() {
         ToastUtils.showToastShort(context, "updateItem");
-        for (int i = 0; i < map.size(); i++){
-            Cart shoppingCar =  map.get(i);
+        Set<Integer> keys = map.keySet();
+        for (Integer key : keys) {
+            Cart shoppingCar = map.get(key);
             shoppingCar.setEditable(true);
-            replace(i, shoppingCar);
+            replace(key, shoppingCar);
         }
     }
 
     /**
      * 更新Item显示恢复不可编辑状态
      */
-    public void recoverItem(){
+    public void recoverItem() {
         ToastUtils.showToastShort(context, "recoverItem");
-        for (int i = 0; i < selectedmap.size(); i++){
-            Cart shoppingCar =  selectedmap.get(i);
+        Set<Integer> keys=selectedmap.keySet();
+        for (Integer key :keys) {
+            Cart shoppingCar = selectedmap.get(key);
             shoppingCar.setEditable(false);
-            replace(i, shoppingCar);
+            replace(key, shoppingCar);
         }
     }
 
@@ -196,6 +201,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         AmountSelectLayout asl_num_sel;
         @Bind(R.id.tv_delete_shopcart)
         TextView tv_delete_shopcart;//删除购物车
+
         public ShoppingCarViewHolder(View itemView) {
             super(itemView);
         }
