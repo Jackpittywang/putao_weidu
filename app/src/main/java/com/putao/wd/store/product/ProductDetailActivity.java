@@ -13,7 +13,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
@@ -24,7 +23,6 @@ import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -36,6 +34,7 @@ import butterknife.OnClick;
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.TitleItemSelectedListener {
     public static final String PRODUCT_ID = "product_id";
+
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.sticky_layout)
@@ -62,31 +61,15 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     LinearLayout stickyHeaderLayoutHeader;
 
     //选项栏
-    @Bind(R.id.ti_summary)
-    TitleItem ti_summary;//概述
-    @Bind(R.id.ti_parameter)
-    TitleItem ti_parameter;//规格参数
-    @Bind(R.id.ti_pack)
-    TitleItem ti_pack;//包装清单
-    @Bind(R.id.ti_service)
-    TitleItem ti_service;//售后服务
-
-    @Bind(R.id.stickyHeaderLayout_sticky)
-    TitleBar stickyHeaderLayoutSticky;//概述
-
-//    @Bind(R.id.tv_parameter)
-//    TextView tv_parameter;//规格参数
-//    @Bind(R.id.ll_parameter)
-//    LinearLayout ll_parameter;//规格参数
-//    @Bind(R.id.tv_pack)
-//    TextView tv_pack;//包装清单
-//    @Bind(R.id.ll_pack)
-//    LinearLayout ll_pack;//包装清单
-//    @Bind(R.id.tv_service)
-//    TextView tv_service;//售后服务
-//    @Bind(R.id.ll_service)
-//    LinearLayout ll_service;//售后服务
-
+//    @Bind(R.id.ti_summary)
+//    TitleItem ti_summary;//概述
+//    @Bind(R.id.ti_parameter)
+//    TitleItem ti_parameter;//规格参数
+//    @Bind(R.id.ti_pack)
+//    TitleItem ti_pack;//包装清单
+//    @Bind(R.id.ti_service)
+//    TitleItem ti_service;//售后服务
+    LinearLayout ll_service;
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;
 
@@ -109,7 +92,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-        getProductDetail("9");
+//        getProductDetail("9");
     }
 
     /**
@@ -144,7 +127,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             }
         });
     }
-
 
     @Override
     public void onStart() {
@@ -181,10 +163,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         }
     }
 
-    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
-    public void eventJoinCar(String tag) {
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-    }
+//    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
+//    public void eventJoinCar(String tag) {
+//        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
+//    }
 
     @Override
     public void onRightAction() {

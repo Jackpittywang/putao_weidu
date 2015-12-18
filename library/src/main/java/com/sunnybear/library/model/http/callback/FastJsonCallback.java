@@ -24,7 +24,7 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
     public final void onSuccess(String url, JSONObject result) {
         String data = result.getString("data");
         if (StringUtils.isEmpty(data)) {
-            onSuccess(url, (T) new String());
+            onSuccess(url, (T) new String(""));
             return;
         }
         JsonUtils.JsonType type = JsonUtils.getJSONType(data);

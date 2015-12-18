@@ -58,7 +58,6 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         mRootView.setOnTouchListener(this);
         //响应返回键
         mRootView.setOnKeyListener(this);
-        EventBusHelper.register(this);
     }
 
     @Override
@@ -83,6 +82,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
      * @param target 目标view
      */
     public void show(View target) {
+        EventBusHelper.register(this);
         showAtLocation(target, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
