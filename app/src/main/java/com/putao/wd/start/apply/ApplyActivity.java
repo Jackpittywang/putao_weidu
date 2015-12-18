@@ -9,8 +9,15 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -29,12 +36,16 @@ public class ApplyActivity extends PTWDActivity<GlobalApplication> implements Vi
     EditText et_nickname;//孩子昵称
     @Bind(R.id.tv_childage)
     TextView tv_childage;//孩子年龄
-    @Bind(R.id.et_activitytimes)
-    EditText et_activitytimes;//活动场次
+//    @Bind(R.id.et_activitytimes)    ========== 赞未使用 ==========
+//    EditText et_activitytimes;//活动场次
     @Bind(R.id.et_QQorWX)
     EditText et_QQorWX;//QQ/微信
     @Bind(R.id.et_parentname)
     EditText et_parentname;//家长姓名
+    @Bind(R.id.et_message)
+    EditText et_message;//留言
+
+    private String action_id;
 
     @Override
     protected int getLayoutId() {
@@ -43,7 +54,9 @@ public class ApplyActivity extends PTWDActivity<GlobalApplication> implements Vi
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-            addNavigation();
+        addNavigation();
+        Bundle bundle = getIntent().getExtras();
+        action_id = bundle.getString("action_id");
     }
 
     @Override
@@ -105,4 +118,25 @@ public class ApplyActivity extends PTWDActivity<GlobalApplication> implements Vi
                 break;
         }
     }
+
+    @Override
+    public void onRightAction() {
+        String parentRelation = tv_parent_relation.getText().toString();
+        String phone = et_phone.getText().toString();
+        String childNickName = et_nickname.getText().toString();
+        String childAge = tv_childage.getText().toString();
+        //String activityTimes = et_activitytimes.getText().toString();
+        String wechat = et_QQorWX.getText().toString();
+        String parentName = et_parentname.getText().toString();
+        String message = et_message.getText().toString();
+        networkRequest(StartApi.participateAdd(action_id, parentRelation, phone, childNickName, childAge, wechat, parentName, message),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        ToastUtils.showToastShort(mContext, "参加成功");
+                        loading.dismiss();
+                    }
+                });
+    }
+
 }

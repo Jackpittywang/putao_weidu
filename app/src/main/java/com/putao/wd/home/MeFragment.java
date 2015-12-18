@@ -12,6 +12,7 @@ import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.store.order.WriteOrderActivity;
+import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SettingItem;
@@ -74,14 +75,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         return new String[0];
     }
 
-    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question//,R.id.iv_user_icon
-            , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
+    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
+              , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_setting://设置
                 startActivity(SettingActivity.class);
-//                startActivity(CompleteActivity.class);
                 break;
             case R.id.si_order://我的订单
                 startActivity(OrderListActivity.class);
@@ -94,6 +94,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
             case R.id.si_question://我的提问
                 startActivity(WriteOrderActivity.class);
+                break;
+            case R.id.iv_user_icon://完善用户信息
+                startActivity(CompleteActivity.class);
                 break;
             case R.id.si_message://消息中心
 //                startActivity(MessageCenterActivity.class);

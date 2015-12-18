@@ -130,8 +130,8 @@ public class StoreApi {
      * @param product_id 产品id
      */
     public static Request cartDelete(String product_id) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_PRODUCT_ID, product_id)
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_PRODUCT_PID, product_id)
                 .build(RequestMethod.POST, URL_CART_DELETE);
     }
 
