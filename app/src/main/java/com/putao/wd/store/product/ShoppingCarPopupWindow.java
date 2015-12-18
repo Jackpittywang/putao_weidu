@@ -99,6 +99,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         mActivity.networkRequest(StoreApi.cartAdd(pid, qt), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "添加成功！");
                 Logger.d(result.toString());
             }
         });
