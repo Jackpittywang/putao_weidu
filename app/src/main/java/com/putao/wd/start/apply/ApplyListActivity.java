@@ -35,33 +35,24 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     LinearLayout ll_applylist;//报名列表layout区域
 
     private ApplyListAdapter adapter;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_apply_list;
-    }
+    private String action_id;
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+
         adapter = new ApplyListAdapter(mContext, null);
         brv_applylist.setAdapter(adapter);
-
         Bundle bundle = getIntent().getExtras();
-        String action_id = bundle.getString("action_id");
-        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
-                Logger.i("报名列表请求成功");
-                if (result.size() != 0) {
-                    adapter.replaceAll(result);
-                }else {
-                    brv_applylist.noMoreLoading();
-                }
-                loading.dismiss();
-            }
-        });
+        action_id = bundle.getString("action_id");
+
+        getEnrollment();
         addListener();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_apply_list;
     }
 
     private void addListener() {
@@ -69,11 +60,39 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
             public void onLoadMore() {
                 (new Handler()).postDelayed(new Runnable() {
                     public void run() {
-                        ApplyListActivity.this.brv_applylist.noMoreLoading();
+                        getEnrollment();
                     }
                 }, 3000L);
             }
         });
+    }
+
+    /**
+     * 获取报名列表
+     */
+    private void getEnrollment() {
+        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
+                Logger.i("报名列表请求成功");
+                if (result.size() != 0) {
+                    adapter.replaceAll(result);
+                } else {
+                    brv_applylist.noMoreLoading();
+                }
+                loading.dismiss();
+            }
+        });
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
 //    //初始化报名列表数据
@@ -89,14 +108,4 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
 //        }
 //    }
 
-
-    @Override
-    protected String[] getRequestUrls() {
-        return new String[0];
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
 }
