@@ -9,6 +9,32 @@ import java.math.BigDecimal;
 public final class MathUtils {
 
     /**
+     * 加法
+     *
+     * @param num1 被加数
+     * @param num2 加数
+     * @return 和
+     */
+    public static String add(String num1, String num2) {
+        BigDecimal b1 = new BigDecimal(num1);
+        BigDecimal b2 = new BigDecimal(num2);
+        return b1.add(b2).toString();
+    }
+
+    /**
+     * 减法
+     *
+     * @param num1 被减数
+     * @param num2 减数
+     * @return 差
+     */
+    public static String subtract(String num1, String num2) {
+        BigDecimal b1 = new BigDecimal(num1);
+        BigDecimal b2 = new BigDecimal(num2);
+        return b1.subtract(b2).toString();
+    }
+
+    /**
      * 乘法
      *
      * @param figure      数字
