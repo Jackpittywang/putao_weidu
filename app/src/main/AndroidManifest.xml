@@ -189,10 +189,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter tools:ignore="GoogleAppIndexingDeepLinkError,GoogleAppIndexingWarning">
-
-                <!-- <data android:scheme="tencent" /> -->
-
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />

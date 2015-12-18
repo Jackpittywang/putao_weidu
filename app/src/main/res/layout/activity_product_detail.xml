@@ -65,7 +65,6 @@
                             android:id="@+id/tv_product_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="葡萄探索号"
                             android:textColor="@color/text_color"
                             android:textSize="@dimen/text_size_20sp" />
 
@@ -77,7 +76,6 @@
                             android:layout_marginTop="2dp"
                             android:maxLines="2"
                             android:singleLine="false"
-                            android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
                             android:textColor="@color/text_color_gray" />
                     </LinearLayout>
 

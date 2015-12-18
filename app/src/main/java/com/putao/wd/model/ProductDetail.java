@@ -18,7 +18,7 @@ public class ProductDetail implements Serializable {
     private String attribute_name;//属性的项目名称
     private String services;//售后服务
     private String pack;//包装清单
-    private List<String> pictures;//图片集
+    private List<String> picture;//图片集
 
     public String getId() {
         return id;
@@ -100,12 +100,12 @@ public class ProductDetail implements Serializable {
         this.pack = pack;
     }
 
-    public List<String> getPictures() {
-        return pictures;
+    public List<String> getPicture() {
+        return picture;
     }
 
-    public void setPictures(List<String> pictures) {
-        this.pictures = pictures;
+    public void setPicture(List<String> picture) {
+        this.picture = picture;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ProductDetail implements Serializable {
                 ", attribute_name='" + attribute_name + '\'' +
                 ", services='" + services + '\'' +
                 ", pack='" + pack + '\'' +
-                ", pictures=" + pictures +
+                ", picture=" + picture +
                 '}';
     }
 }

@@ -49,6 +49,7 @@ public class PutaoStoreFragment extends PTWDFragment {
     private ProductAdapter adapter;
     private List<ProductItem> products;
     private List<StoreBanner> banners;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_store;
@@ -79,19 +80,17 @@ public class PutaoStoreFragment extends PTWDFragment {
             public void onSuccess(String url, StoreHome result) {
                 Logger.d(result.toString());
                 //初始化商品列表
-                if(result.getProduct()!=null)
-                    if(result.getProduct().getData()!=null)
+                if (result.getProduct() != null)
+                    if (result.getProduct().getData() != null)
                         adapter.addAll(result.getProduct().getData());
                 //初始化广告位
-                banners=result.getBanner();
-
+                banners = result.getBanner();
                 bl_banner.setAdapter(new StoreBannerAdapter(mActivity, result.getBanner(), new BannerViewPager.OnPagerClickListenr() {
                     @Override
                     public void onPagerClick(int position) {
                         ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
                     }
                 }));
-
                 bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
             }
         });
@@ -120,7 +119,7 @@ public class PutaoStoreFragment extends PTWDFragment {
             public void onItemClick(StoreProduct storeProduct, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ProductDetailActivity.PRODUCT_ID, storeProduct.getId());
-                startActivity(ProductDetailActivity.class,bundle);
+                startActivity(ProductDetailActivity.class, bundle);
             }
         });
 

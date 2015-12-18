@@ -2,8 +2,6 @@ package com.putao.wd.store.product;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,21 +10,23 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.share.ShareTools;
+import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
-import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
-import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
-
-import java.util.List;
+import com.sunnybear.library.view.viewpager.BannerViewPager;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * 商品详情
@@ -49,35 +49,17 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     TextView tv_product_price;
     @Bind(R.id.bl_banner)
     BannerLayout bl_banner;
-    @Bind(R.id.ll_intro)
-    LinearLayout llIntro;
-    @Bind(R.id.divider)
-    View divider;
-    @Bind(R.id.iv_share)
-    ImageView ivShare;
-    @Bind(R.id.ll_share)
-    LinearLayout llShare;
-    @Bind(R.id.stickyHeaderLayout_header)
-    LinearLayout stickyHeaderLayoutHeader;
-
-    //选项栏
-//    @Bind(R.id.ti_summary)
-//    TitleItem ti_summary;//概述
-//    @Bind(R.id.ti_parameter)
-//    TitleItem ti_parameter;//规格参数
-//    @Bind(R.id.ti_pack)
-//    TitleItem ti_pack;//包装清单
-//    @Bind(R.id.ti_service)
-//    TitleItem ti_service;//售后服务
-    LinearLayout ll_service;
     @Bind(R.id.ll_join_car)
-    LinearLayout ll_join_car;
+    LinearLayout ll_join_car;//加入购物车
 
     private boolean isStop;//广告栏是否被停止
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
-    private List<String> banners;
+
+    private String product_id;//产品id
+
+    private String shareUrl;//分享的Url
 
     @Override
     protected int getLayoutId() {
@@ -87,12 +69,15 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        mSharePopupWindow = new SharePopupWindow(mContext);
+        product_id = args.getString(PRODUCT_ID);
 
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
+        mSharePopupWindow = new SharePopupWindow(mContext);
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-//        getProductDetail("9");
+        addListener();
+
+        getProductDetail(product_id);
     }
 
     /**
@@ -103,27 +88,19 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             @Override
             public void onSuccess(String url, ProductDetail result) {
                 Logger.d(result.toString());
-                tv_product_title.setText(result.getTitle());//标题
-                tv_product_intro.setText(result.getSubtitle());//副标题
-                tv_product_price.setText(result.getPrice());//菜单
-
-                //广告栏
-                banners = result.getPictures();
-                bl_banner.setAdapter(new BannerAdapter() {
+                shareUrl = result.getShare();
+                tv_product_title.setText(result.getTitle());
+                tv_product_intro.setText(result.getSubtitle());
+                tv_product_price.setText(result.getPrice());
+                //广告列表
+                bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPicture(), new BannerViewPager.OnPagerClickListenr() {
                     @Override
-                    public View getView(int position) {
-                        ImageDraweeView imageView = new ImageDraweeView(mContext);
-                        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        imageView.setLayoutParams(params);
-                        imageView.setImageURL(banners.get(position));
-                        return imageView;
+                    public void onPagerClick(int position) {
+                        ToastUtils.showToastLong(mContext, "点击第" + position + "项");
                     }
-
-                    @Override
-                    public int getCount() {
-                        return banners.size();
-                    }
-                });
+                }));
+                bl_banner.setOffscreenPageLimit(result.getPicture().size());//缓存页面数
+                loading.dismiss();
             }
         });
     }
@@ -142,7 +119,43 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     private void addListener() {
+        mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {
+            @Override
+            public void onWechat() {
+                ShareTools.newInstance(Wechat.NAME)
+                        .setTitle("葡萄纬度")
+                        .setText("葡萄纬度分享给您")
+                        .setUrl(shareUrl).execute(mContext);
+            }
 
+            @Override
+            public void onWechatFriend() {
+                ShareTools.newInstance(WechatMoments.NAME)
+                        .setTitle("葡萄纬度")
+                        .setText("葡萄纬度分享给您")
+                        .setUrl(shareUrl).execute(mContext);
+            }
+
+            @Override
+            public void onQQFriend() {
+
+            }
+
+            @Override
+            public void onQQZone() {
+
+            }
+
+            @Override
+            public void onSinaWeibo() {
+
+            }
+
+            @Override
+            public void onCopyUrl() {
+
+            }
+        });
     }
 
     @Override
@@ -163,11 +176,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         }
     }
 
-//    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
-//    public void eventJoinCar(String tag) {
-//        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-//    }
-
     @Override
     public void onRightAction() {
         startActivity(ShoppingCarActivity.class);
@@ -185,10 +193,9 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             case R.id.ti_pack://包装清单
                 wv_content.loadUrl("http://www.putao.com");
                 break;
-//            case R.id.tv_service://售后
-//                wv_content.loadUrl("http://www.putao.com");
-//                break;
+            case R.id.ti_service://售后
+                wv_content.loadUrl("http://www.putao.com");
+                break;
         }
     }
-
 }

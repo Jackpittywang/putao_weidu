@@ -53,7 +53,7 @@ public class StoreApi {
     public static Request getProductDetail(String product_id) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_PRODUCT_ID, product_id)
-                .build(RequestMethod.POST, URL_PRODUCT_DETAIL);
+                .build(RequestMethod.GET, URL_PRODUCT_DETAIL);
     }
 
     /**
