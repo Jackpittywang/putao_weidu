@@ -13,7 +13,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
@@ -24,7 +23,6 @@ import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
 import com.sunnybear.library.view.viewpager.BannerLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -36,6 +34,7 @@ import butterknife.OnClick;
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.TitleItemSelectedListener {
     public static final String PRODUCT_ID = "product_id";
+
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.sticky_layout)
@@ -62,28 +61,14 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     LinearLayout stickyHeaderLayoutHeader;
 
     //选项栏
-    @Bind(R.id.ti_summary)//概述
-            TitleItem ti_summary;
-    @Bind(R.id.ti_parameter)//规格参数
-            TitleItem ti_parameter;
-    @Bind(R.id.ti_pack)//包装清单
-            TitleItem ti_pack;
-    @Bind(R.id.ti_service)//售后服务
-            TitleItem ti_service;
-
-    @Bind(R.id.stickyHeaderLayout_sticky)
-    TitleBar stickyHeaderLayoutSticky;//概述
-    //    @Bind(R.id.tv_parameter)//规格参数
-//    TextView tv_parameter;
-//    @Bind(R.id.ll_parameter)//规格参数
-//    LinearLayout ll_parameter;
-//    @Bind(R.id.tv_pack)//包装清单
-//    TextView tv_pack;
-//    @Bind(R.id.ll_pack)//包装清单
-//    LinearLayout ll_pack;
-//    @Bind(R.id.tv_service)//售后服务
-//    TextView tv_service;
-//    @Bind(R.id.ll_service)//售后服务
+//    @Bind(R.id.ti_summary)
+//    TitleItem ti_summary;//概述
+//    @Bind(R.id.ti_parameter)
+//    TitleItem ti_parameter;//规格参数
+//    @Bind(R.id.ti_pack)
+//    TitleItem ti_pack;//包装清单
+//    @Bind(R.id.ti_service)
+//    TitleItem ti_service;//售后服务
     LinearLayout ll_service;
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;
@@ -107,44 +92,41 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
-        getProductDetail("9");
+//        getProductDetail("9");
     }
 
     /**
      * 商品详情
      */
     private void getProductDetail(String product_id) {
-        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ArrayList<ProductDetail>>(ProductDetail.class, loading) {
+        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<ProductDetail> result) {
+            public void onSuccess(String url, ProductDetail result) {
                 Logger.d(result.toString());
-                if (result.size() != 0) {
-                    tv_product_title.setText(result.get(0).getTitle());//标题
-                    tv_product_intro.setText(result.get(0).getSubtitle());//副标题
-                    tv_product_price.setText(result.get(0).getPrice());//菜单
+                tv_product_title.setText(result.getTitle());//标题
+                tv_product_intro.setText(result.getSubtitle());//副标题
+                tv_product_price.setText(result.getPrice());//菜单
 
-                    //广告栏
-                    banners = result.get(0).getPictures();
-                    bl_banner.setAdapter(new BannerAdapter() {
-                        @Override
-                        public View getView(int position) {
-                            ImageDraweeView imageView = new ImageDraweeView(mContext);
-                            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            imageView.setLayoutParams(params);
-                            imageView.setImageURL(banners.get(position));
-                            return imageView;
-                        }
+                //广告栏
+                banners = result.getPictures();
+                bl_banner.setAdapter(new BannerAdapter() {
+                    @Override
+                    public View getView(int position) {
+                        ImageDraweeView imageView = new ImageDraweeView(mContext);
+                        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        imageView.setLayoutParams(params);
+                        imageView.setImageURL(banners.get(position));
+                        return imageView;
+                    }
 
-                        @Override
-                        public int getCount() {
-                            return banners.size();
-                        }
-                    });
-                }
+                    @Override
+                    public int getCount() {
+                        return banners.size();
+                    }
+                });
             }
         });
     }
-
 
     @Override
     public void onStart() {
@@ -181,10 +163,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         }
     }
 
-    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
-    public void eventJoinCar(String tag){
-        mShoppingCarPopupWindow=new ShoppingCarPopupWindow(mContext);
-    }
+//    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_JOIN_CAR)
+//    public void eventJoinCar(String tag) {
+//        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
+//    }
 
     @Override
     public void onRightAction() {

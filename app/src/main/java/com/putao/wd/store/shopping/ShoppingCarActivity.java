@@ -116,9 +116,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 删除购物车
      */
     private void cartDelete(String pid){
-        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
+            public void onSuccess(String url, ArrayList<String> result) {
                 Logger.d(result.toString());
                 getCart();
             }

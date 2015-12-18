@@ -14,7 +14,6 @@ import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.store.product.adapter.NormsSelectAdapter;
 import com.putao.wd.store.product.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
-import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.MathUtils;
@@ -34,7 +33,7 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
-    public static final String EVENT_JOIN_CAR = "join_car";
+//    public static final String EVENT_JOIN_CAR = "join_car";
 
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
@@ -67,7 +66,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         ll_join_car.setClickable(false);
         adapter = new NormsSelectAdapter(mActivity, null);
         rv_norms.setAdapter(adapter);
-//        getProductSpec("9");
+        getProductSpec("9");
     }
 
     @Override
@@ -100,7 +99,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
                 ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
-                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
+//                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
                 break;
         }
         dismiss();
