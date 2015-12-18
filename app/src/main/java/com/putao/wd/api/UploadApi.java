@@ -1,9 +1,10 @@
 package com.putao.wd.api;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
+import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.UploadFileTask;
-import com.sunnybear.library.util.FileUtils;
-import com.sunnybear.library.util.PreferenceUtils;
+import com.sunnybear.library.model.http.request.MultiPartRequestBuilder;
 
 import java.io.File;
 
@@ -28,6 +29,22 @@ public class UploadApi {
     }
 
     /**
+     * 校检sha1
+     */
+    public static final String URL_CHECK_SHA1 = BASE_URL + "fileinfo";
+
+    /**
+     * 校检sha1
+     *
+     * @param sha1 sha1
+     */
+    public static Request checkSha1(String sha1) {
+        return MultiPartRequestBuilder.newInstance()
+                .addParam(REQUEST_SHA1, sha1)
+                .build(URL_CHECK_SHA1);
+    }
+
+    /**
      * 上传文件
      */
     public static final String URL_UPLOAD_FILE = BASE_URL + "upload";
@@ -39,13 +56,11 @@ public class UploadApi {
      * @param file        上传文件
      * @return
      */
-    public static void uploadFile(String uploadToken, File file, UploadFileTask.UploadCallback callback) {
-        String sha1 = FileUtils.getSHA1ByFile(file);
+    public static void uploadFile(String uploadToken, String sha1, File file, UploadFileTask.UploadCallback callback) {
         UploadFileTask.newInstance()
                 .addParam(REQUEST_APP_ID, UPLOAD_APP_ID)
                 .addParam(REQUEST_UPLOAD_TOKEN, uploadToken)
-                .addParam(REQUEST_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, "60000277"))
-                .addParam(REQUEST_TYPE, "uploadPhotos")
+                .addParam(REQUEST_UID, AccountHelper.getCurrentUid())
                 .addParam(REQUEST_FILENAME, sha1)
                 .addParam(REQUEST_SHA1, sha1)
                 .addParam(REQUEST_FILE, file)

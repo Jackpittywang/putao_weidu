@@ -2,15 +2,20 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.order.OrderListActivity;
+import com.putao.wd.model.UserInfo;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SettingItem;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.IndicatorButton;
 
 import butterknife.Bind;
@@ -31,6 +36,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     IndicatorButton btn_take_deliver;
     @Bind(R.id.btn_after_sale)
     IndicatorButton btn_after_sale;
+    @Bind(R.id.iv_user_icon)
+    ImageDraweeView iv_user_icon;
+    @Bind(R.id.tv_user_nickname)
+    TextView tv_user_nickname;
 
     @Override
     protected int getLayoutId() {
@@ -47,6 +56,18 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         btn_after_sale.show(12);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                iv_user_icon.setImageURL(result.getHead_img());
+                tv_user_nickname.setText(result.getNick_name());
+                loading.dismiss();
+            }
+        });
+    }
 
     @Override
     protected String[] getRequestUrls() {
@@ -74,9 +95,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             case R.id.si_question://我的提问
                 startActivity(WriteOrderActivity.class);
                 break;
-//            case R.id.iv_user_icon://个人信息
-//                startActivity(PersonalInformationActivity.class);
-//                break;
             case R.id.si_message://消息中心
 //                startActivity(MessageCenterActivity.class);
                 si_message.hide();
