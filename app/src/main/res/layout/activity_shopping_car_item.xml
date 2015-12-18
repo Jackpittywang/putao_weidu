@@ -199,15 +199,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_delete_shopcart"
-                android:gravity="center"
-                android:background="@color/text_color_red"
-                android:text="删除"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:layout_width="40dp"
-                android:layout_height="match_parent" />
         </LinearLayout>
 
     </LinearLayout>

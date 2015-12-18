@@ -92,13 +92,16 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 tv_product_intro.setText(result.getSubtitle());
                 tv_product_price.setText(result.getPrice());
                 //广告列表
-                bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPicture(), new BannerViewPager.OnPagerClickListenr() {
-                    @Override
-                    public void onPagerClick(int position) {
-                        ToastUtils.showToastLong(mContext, "点击第" + position + "项");
-                    }
-                }));
-                bl_banner.setOffscreenPageLimit(result.getPicture().size());//缓存页面数
+
+                if(result.getPictures()!=null) {
+                    bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), new BannerViewPager.OnPagerClickListenr() {
+                        @Override
+                        public void onPagerClick(int position) {
+                            ToastUtils.showToastLong(mContext, "点击第" + position + "项");
+                        }
+                    }));
+                    bl_banner.setOffscreenPageLimit(result.getPictures().size());//缓存页面数
+                }
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,result.getId());
                 loading.dismiss();
             }
