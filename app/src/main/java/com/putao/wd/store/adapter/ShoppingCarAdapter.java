@@ -30,8 +30,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     private boolean itemState;//记录当前状态值
     public HashMap<Integer, Cart> map;//记录进入编辑状态前选中的商品
     public HashMap<Integer, Cart> selectedmap;//记录进入编辑状态后选中的商品
-    public HashMap<Integer, Cart> editedmap;//记录编辑过的商品
-    public List<Cart> ShoppingCarts;//编辑过的商品
+    public List<Cart> ShoppingCarts;//商品
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
