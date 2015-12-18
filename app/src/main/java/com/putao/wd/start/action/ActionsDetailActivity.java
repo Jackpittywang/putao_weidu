@@ -133,19 +133,19 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     //赞或取消赞时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
     public void eventClickComment(boolean isCool) {
-        if (isCool) {
-            tv_count_comment.setText(actionDetail.getCountCool()+1 + "");
-        }else {
-            tv_count_comment.setText(actionDetail.getCountCool()-1 + "");
-        }
+//        if (isCool) {
+//            tv_count_comment.setText(actionDetail.getCountCool()+1 + "");
+//        }else {
+//            tv_count_comment.setText(actionDetail.getCountCool()-1 + "");
+//        }
     }
     //添加或删除评论时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COMMENT)
     public void eventClickCoool(boolean isComment) {
-        if (isComment) {
-            tv_count_comment.setText(actionDetail.getCountComment()+1 + "");
-        }else {
-            tv_count_comment.setText(actionDetail.getCountComment()-1 + "");
-        }
+//        if (isComment) {
+//            tv_count_comment.setText(actionDetail.getCountComment()+1 + "");
+//        }else {
+//            tv_count_comment.setText(actionDetail.getCountComment()-1 + "");
+//        }
     }
 }
