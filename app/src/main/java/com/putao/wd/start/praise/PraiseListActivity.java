@@ -8,9 +8,14 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.PraiseListItem;
+import com.putao.wd.model.Cool;
+import com.putao.wd.model.CoolList;
 import com.putao.wd.start.praise.adapter.PraiseListAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -29,6 +34,9 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
     TextView tv_nomore;
     @Bind(R.id.ll_praiselist)
     LinearLayout ll_praiselist;
+
+    private PraiseListAdapter adapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_praise_list;
@@ -38,7 +46,22 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         addListener();
-        this.initPraiseList();
+
+        adapter = new PraiseListAdapter(mContext, null);
+        brv_praiselist.setAdapter(adapter);
+
+        Bundle bundle = getIntent().getExtras();
+        String action_id = bundle.getString("action_id");
+        networkRequest(StartApi.getCoolList(action_id), new SimpleFastJsonCallback<Cool>(Cool.class, loading) {
+            @Override
+            public void onSuccess(String url, Cool result) {
+                //Logger.i("mmmmmmmmmm"+result.toString());
+                ArrayList<CoolList> user_list = result.getUser_list();
+                adapter.replaceAll(user_list);
+                Logger.i("赞列表获取成功");
+                loading.dismiss();
+            }
+        });
     }
 
     private void addListener() {
@@ -46,24 +69,24 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
             public void onLoadMore() {
                 (new Handler()).postDelayed(new Runnable() {
                     public void run() {
-                        PraiseListActivity.this.brv_praiselist.noMoreLoading();
+                        brv_praiselist.noMoreLoading();
                     }
                 }, 3000L);
             }
         });
     }
 
-    private void initPraiseList(){
-        if(this.initPraiseListData().size() != 0) {
-            this.ll_praiselist.setVisibility(View.VISIBLE);
-            this.tv_nomore.setVisibility(View.GONE);
-            PraiseListAdapter praiseListAdapter = new PraiseListAdapter(mContext, this.initPraiseListData());
-            this.brv_praiselist.setAdapter(praiseListAdapter);
-        } else {
-            this.ll_praiselist.setVisibility(View.GONE);
-            this.tv_nomore.setVisibility(View.VISIBLE);
-        }
-    }
+//    private void initPraiseList(){
+//        if(this.initPraiseListData().size() != 0) {
+//            this.ll_praiselist.setVisibility(View.VISIBLE);
+//            this.tv_nomore.setVisibility(View.GONE);
+//            PraiseListAdapter praiseListAdapter = new PraiseListAdapter(mContext, this.initPraiseListData());
+//            this.brv_praiselist.setAdapter(praiseListAdapter);
+//        } else {
+//            this.ll_praiselist.setVisibility(View.GONE);
+//            this.tv_nomore.setVisibility(View.VISIBLE);
+//        }
+//    }
 
     private List<PraiseListItem> initPraiseListData(){
         List<PraiseListItem> praiseList=new ArrayList<>();
