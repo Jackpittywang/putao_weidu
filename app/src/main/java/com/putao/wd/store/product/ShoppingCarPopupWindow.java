@@ -16,6 +16,7 @@ import com.putao.wd.store.product.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -93,12 +94,24 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 });
     }
 
+    private void carAdd(String pid,String qt){
+        mActivity.networkRequest(StoreApi.cartAdd(pid, qt), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.d(result.toString());
+            }
+
+        });
+    }
+
     @OnClick({R.id.iv_close, R.id.ll_join_car})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
-                ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
+                ProductNormsSku sku=SpecUtils.getProductSku(skus, mSelTags);
+                carAdd(sku.getPid(),count+"");
+                //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
 //                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
                 break;
         }
@@ -140,6 +153,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     @Subcriber(tag = NormsSelectAdapter.EVENT_COUNT)
     public void eventCount(int count) {
         String string = MathUtils.multiplication(sku.getPrice(), count);
+        this.count=count;
         tv_product_price.setText(string);
     }
 }
