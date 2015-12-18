@@ -113,6 +113,10 @@
         <activity
             android:name=".me.setting.SettingActivity"
             android:screenOrientation="portrait" />
+        <!-- 修改密码 -->
+        <activity
+            android:name=".me.setting.ModifyPasswardActivity"
+            android:screenOrientation="portrait" />
         <!-- 消息中心 -->
         <activity
             android:name=".me.message.MessageCenterActivity"

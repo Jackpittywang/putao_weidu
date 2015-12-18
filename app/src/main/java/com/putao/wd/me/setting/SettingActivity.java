@@ -74,14 +74,14 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.si_about_us:
+            case R.id.si_about_us://关于我们
                 startActivity(AboutUsActivity.class);
-                break;//关于我们
-            case R.id.si_modify_password:
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("isresetpass", true);
-                startActivity(LoginActivity.class, bundle);
-                break;//修改密码
+                break;
+            case R.id.si_modify_password://修改密码
+//                Bundle bundle = new Bundle();
+//                bundle.putBoolean("isresetpass", true);
+                startActivity(ModifyPasswardActivity.class);
+                break;
             case R.id.tv_exit:
                 AccountHelper.logout();
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
