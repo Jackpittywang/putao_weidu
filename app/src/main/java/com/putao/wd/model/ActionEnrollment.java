@@ -7,16 +7,16 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/8.
  */
 public class ActionEnrollment implements Serializable {
-    private int user_id;//用户ID
+    private String user_id;//用户ID
     private String user_name;//用户名字
     private String user_profile_photo;//用户头像
     private String status;//审核状态
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
@@ -55,7 +55,7 @@ public class ActionEnrollment implements Serializable {
     @Override
     public String toString() {
         return "ActionEnrollment{" +
-                "user_id=" + user_id +
+                "user_id='" + user_id + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", user_profile_photo='" + user_profile_photo + '\'' +
                 ", status='" + status + '\'' +
