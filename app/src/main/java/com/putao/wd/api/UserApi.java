@@ -12,8 +12,10 @@ import com.sunnybear.library.model.http.request.RequestMethod;
  */
 public class UserApi {
     private static final String REQUEST_NICK_NAME = "nick_name";//昵称
-    private static final String REQUEST_HEAD_IMG = "head_img";//头像图片名
     private static final String REQUEST_PROFILE = "profile";//简介
+    private static final String REQUEST_EXT = "ext";
+    private static final String REQUEST_FILENAME = "file_name";
+    private static final String REQUEST_FILEHASH = "hash";
 
     private static final String REQUEST_TYPE = "type";//类型
 
@@ -47,14 +49,18 @@ public class UserApi {
      * 完善用户信息（更新）
      *
      * @param nick_name 昵称
-     * @param head_img  头像图片名
      * @param profile   简介
+     * @param ext       图片后缀
+     * @param filename  文件名
+     * @param filehash  文件hash
      */
-    public static Request userEdit(String nick_name, String head_img, String profile) {
+    public static Request userEdit(String nick_name, String profile, String ext, String filename, String filehash) {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_NICK_NAME, nick_name)
-                .addParam(REQUEST_HEAD_IMG, head_img)
                 .addParam(REQUEST_PROFILE, profile)
+                .addParam(REQUEST_EXT, ext)
+                .addParam(REQUEST_FILENAME, filename)
+                .addParam(REQUEST_FILEHASH, filehash)
                 .build(RequestMethod.POST, URL_USER_EDIT);
     }
 

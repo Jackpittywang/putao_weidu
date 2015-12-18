@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,15 +21,17 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.UploadFileTask;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -47,12 +51,25 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     CleanableEditText et_intro;
 
     private SelectPopupWindow mSelectPopupWindow;
-    private String img_url;
-    private String img_path;
     private final int CAMERA_REQCODE = 1;
     private final int ALBUM_REQCODE = 2;
     //=====================上传相关===========================
     private String uploadToken;//上传token
+    private File uploadFile;//上传文件
+    private String sha1;//上传文件sha1
+
+    private String filePath;//头像文件路径
+    private String nick_name;//用户昵称
+    private String profile;//个人简介
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = (Bundle) msg.obj;
+            //上传PHP服务器
+            upload(bundle.getString("ext"), bundle.getString("filename"), bundle.getString("hash"));
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -62,7 +79,8 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        img_path = GlobalApplication.sdCardPath + File.separator + "head_icon.png";
+        filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
+
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {
@@ -76,16 +94,6 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 startActivityForResult(intent, ALBUM_REQCODE);
             }
         };
-//        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
-//            @Override
-//            public void onSuccess(String url, UserInfo result) {
-//                Logger.i("获取用户信息");
-//                et_nickname.setText(result.getNick_name());
-//                et_intro.setText(result.getProfile());
-//                img_url = result.getHead_img();
-//            }
-//        });
-        getUploadToken();
     }
 
     @Override
@@ -113,30 +121,71 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 JSONObject jsonObject = JSON.parseObject(result);
                 uploadToken = jsonObject.getString("uploadToken");
                 Logger.d(uploadToken);
-//                uploadFile(uploadToken, img_path);
+                uploadFile();
+            }
+        });
+    }
+
+    /**
+     * 校检sha1
+     *
+     * @param uploadFilePath 上传文件路径
+     */
+    private void checkSha1(String uploadFilePath) {
+        uploadFile = new File(uploadFilePath);
+        sha1 = FileUtils.getSHA1ByFile(uploadFile);
+        networkRequest(UploadApi.checkSha1(sha1), new JSONObjectCallback() {
+            @Override
+            public void onSuccess(String url, JSONObject result) {
+                String hash = result.getString("hash");
+                if (StringUtils.isEmpty(hash))
+                    getUploadToken();
+                else
+                    upload("jpg", hash, hash);
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+
             }
         });
     }
 
     /**
      * 上传文件
-     *
-     * @param uploadToken    上传token
-     * @param uploadFilePath 上传文件路径
      */
-    private void uploadFile(final String uploadToken, String uploadFilePath) {
-        final File file = new File(uploadFilePath);
-        new Thread() {
+    private void uploadFile() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                UploadApi.uploadFile(uploadToken, file, new UploadFileTask.UploadCallback() {
+                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadFileTask.UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ext", result.getString("ext"));
+                        bundle.putString("filename", result.getString("filename"));
+                        bundle.putString("hash", result.getString("hash"));
+                        //上传PHP服务器
+                        mHandler.sendMessage(Message.obtain(mHandler, 0x01, bundle));
                     }
                 });
             }
-        }.start();
+        }).start();
+    }
+
+    /**
+     * 上传PHP服务器
+     */
+    private void upload(String ext, String filename, String filehash) {
+        networkRequest(UserApi.userEdit(nick_name, profile, ext, filename, filehash),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.i("保存用户信息");
+                        ActivityManager.getInstance().finishCurrentActivity();
+                    }
+                });
     }
 
     /**
@@ -147,15 +196,9 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void onRightAction() {
         super.onRightAction();
-        String nick_name = et_nickname.getText().toString();
-        String profile = et_intro.getText().toString();
-        networkRequest(UserApi.userEdit(nick_name, img_url, profile), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<String> result) {
-                Logger.i("保存用户信息");
-                ActivityManager.getInstance().finishCurrentActivity();
-            }
-        });
+        nick_name = et_nickname.getText().toString();
+        profile = et_intro.getText().toString();
+        checkSha1(filePath);
     }
 
     @Override
@@ -163,26 +206,29 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         if (resultCode == RESULT_OK) {
             Bitmap bitmap = null;
             switch (requestCode) {
-                case CAMERA_REQCODE:
+                case CAMERA_REQCODE://相机选择
                     Bundle bundle = data.getExtras();
                     bitmap = (Bitmap) bundle.get("data");
+//                    bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.setDefaultImage(bitmap);
-                    ImageUtils.bitmapOutSdCard(bitmap, img_path);
+                    ImageUtils.bitmapOutSdCard(bitmap, filePath);
                     break;
-                case ALBUM_REQCODE:
+                case ALBUM_REQCODE://相册选择
                     ToastUtils.showToastShort(this, "系统图库返回");
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
                     Cursor cursor = getContentResolver().query(selectedImage,
                             filePathColumn, null, null, null);
                     cursor.moveToFirst();
+
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String picturePath = cursor.getString(columnIndex);
-                    Logger.i("pt", picturePath);
+
+                    Logger.d(picturePath);
                     cursor.close();
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.resize(320, 320).setDefaultImage(bitmap);
+                    ImageUtils.bitmapOutSdCard(bitmap, filePath);
                     break;
             }
         }

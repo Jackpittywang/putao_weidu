@@ -81,7 +81,7 @@ public class UploadFileTask {
                 if (value instanceof String)
                     builder.addPart(name, new StringBody((String) value, Consts.UTF_8));
                 else if (value instanceof File)
-                    builder.addPart(name, new FileBody((File) value, ContentType.create("image/*").getMimeType()));
+                    builder.addPart(name, new FileBody((File) value, ContentType.create("image/*"), ((File) value).getName()));
             }
 
             HttpPost post = new HttpPost(url);

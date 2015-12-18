@@ -101,7 +101,7 @@ public class ImageUtils {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(outPath);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
