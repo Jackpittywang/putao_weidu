@@ -53,7 +53,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
     private NormsSelectAdapter adapter;
 
-    private int count = 1;//总数量
+    private String count = "1";//总数量
     private float Price = 0;
     private String product_id;
 
@@ -62,12 +62,13 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     private List<ProductNormsSku> skus;
     private ProductNormsSku sku;//选中的商品
 
-    public ShoppingCarPopupWindow(Context context) {
+    public ShoppingCarPopupWindow(Context context, String pid) {
         super(context);
+        product_id = pid;
         ll_join_car.setClickable(false);
         adapter = new NormsSelectAdapter(mActivity, null);
         rv_norms.setAdapter(adapter);
-        getProductSpec("9");
+        getProductSpec(pid);
     }
 
     @Override
@@ -94,13 +95,12 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 });
     }
 
-    private void carAdd(String pid,String qt){
+    private void carAdd(String pid, String qt) {
         mActivity.networkRequest(StoreApi.cartAdd(pid, qt), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
             }
-
         });
     }
 
@@ -109,8 +109,11 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
-                ProductNormsSku sku=SpecUtils.getProductSku(skus, mSelTags);
-                carAdd(sku.getPid(),count+"");
+                ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
+                if (!MathUtils.compare(count, sku.getQuantity()))
+                    carAdd(sku.getPid(), count);
+                else
+                    ToastUtils.showToastShort(mContext, "库存不足！");
                 //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
 //                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
                 break;
@@ -153,7 +156,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     @Subcriber(tag = NormsSelectAdapter.EVENT_COUNT)
     public void eventCount(int count) {
         String string = MathUtils.multiplication(sku.getPrice(), count);
-        this.count=count;
+        this.count = string;
         tv_product_price.setText(string);
     }
 }

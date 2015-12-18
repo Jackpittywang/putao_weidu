@@ -97,7 +97,7 @@ public class StoreApi {
      * @param qt         数量(默认是1)
      */
     public static Request cartAdd(String product_id, String qt) {
-        return PTWDRequestHelper.store()
+        return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_PRODUCT_PID, product_id)
                 .addParam(REQUEST_QT, qt)
                 .build(RequestMethod.POST, URL_CART_ADD);
@@ -114,7 +114,7 @@ public class StoreApi {
      * @param products 产品id
      */
     public static Request multiManage(List<EditShopCart> products) {
-        return PTWDRequestHelper.store()
+        return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_PRODUCTS, JSON.toJSONString(products))
                 .build(RequestMethod.POST, URL_CART_EDIT);
     }
@@ -147,7 +147,7 @@ public class StoreApi {
      * @param new_pid 新商品id
      */
     public static Request cartChange(String old_pid, String new_pid) {
-        return PTWDRequestHelper.store()
+        return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_OLD_PID, old_pid)
                 .addParam(REQUEST_NEW_PID, new_pid)
                 .build(RequestMethod.POST, URL_CART_CHANGE);
