@@ -38,6 +38,7 @@
         android:background="@color/color_EBEBEB" />
 
     <TextView
+        android:id="@+id/tv_exit"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="#fff"

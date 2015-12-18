@@ -38,6 +38,11 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     private String action_id;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_apply_list;
+    }
+
+    @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
 
@@ -48,11 +53,6 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
 
         getEnrollment();
         addListener();
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_apply_list;
     }
 
     private void addListener() {

@@ -11,6 +11,7 @@ import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -184,6 +185,12 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
         setCurrentItem(currentItemId);
+    }
+
+    @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
+    public void eventLogout(String tag) {
+        setCurrentItem(R.id.ti_start_circle);
+        ti_start_circle.setSelected(true);
     }
 
     /**

@@ -66,7 +66,6 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                 getVerifyCode();
                 break;
             case R.id.btn_next://下一步
-                //String mobile, String password, String code
                 String phone = et_mobile.getText().toString();
                 String password = et_password.getText().toString();
                 String sms_verify = et_sms_verify.getText().toString();

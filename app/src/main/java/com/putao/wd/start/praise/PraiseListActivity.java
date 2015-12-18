@@ -39,6 +39,11 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
     private String action_id;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_praise_list;
+    }
+
+    @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
 
@@ -49,11 +54,6 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
 
         getCoolList();
         addListener();
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_praise_list;
     }
 
     private void addListener() {

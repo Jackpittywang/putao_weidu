@@ -14,6 +14,7 @@ import com.putao.wd.model.UserInfo;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -27,6 +28,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class MeFragment extends BasicFragment implements View.OnClickListener {
+    public static final String EVENT_EDIT_USER_INFO = "edit_user_info";
+
     @Bind(R.id.si_message)
     SettingItem si_message;
     @Bind(R.id.btn_pay)
@@ -55,11 +58,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         btn_deliver.show(10);
         btn_take_deliver.show(11);
         btn_after_sale.show(12);
+        getUserInfo();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
         networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
             @Override
             public void onSuccess(String url, UserInfo result) {
@@ -75,8 +80,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         return new String[0];
     }
 
+    @Subcriber(tag = EVENT_EDIT_USER_INFO)
+    public void EventEditUserInfo(String tag) {
+        getUserInfo();
+    }
+
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
-              , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
+            , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
