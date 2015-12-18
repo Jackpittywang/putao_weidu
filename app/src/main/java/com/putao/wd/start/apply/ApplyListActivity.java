@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ApplyListItem;
+import com.putao.wd.model.ActionEnrollment;
 import com.putao.wd.start.apply.adapter.ApplyListAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -21,7 +25,6 @@ import butterknife.Bind;
 /**
  * 报名列表
  * Created by wango on 2015/12/4.
- *
  */
 public class ApplyListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.brv_applylist)
@@ -30,6 +33,9 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     TextView tv_nomore;//没有更多
     @Bind(R.id.ll_applylist)
     LinearLayout ll_applylist;//报名列表layout区域
+
+    private ApplyListAdapter adapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_apply_list;
@@ -38,8 +44,24 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        adapter = new ApplyListAdapter(mContext, null);
+        brv_applylist.setAdapter(adapter);
+
+        Bundle bundle = getIntent().getExtras();
+        String action_id = bundle.getString("action_id");
+        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
+                Logger.i("报名列表请求成功");
+                if (result.size() != 0) {
+                    adapter.replaceAll(result);
+                }else {
+                    brv_applylist.noMoreLoading();
+                }
+                loading.dismiss();
+            }
+        });
         addListener();
-        this.initApplyList();
     }
 
     private void addListener() {
@@ -54,40 +76,19 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
         });
     }
 
-    //初始化报名列表数据
-    private void initApplyList(){
-        if(this.initApplyListData().size() != 0) {
-            this.ll_applylist.setVisibility(View.VISIBLE);
-            this.tv_nomore.setVisibility(View.GONE);
-            ApplyListAdapter applyListAdapter = new ApplyListAdapter(mContext, this.initApplyListData());
-            this.brv_applylist.setAdapter(applyListAdapter);
-        } else {
-            this.ll_applylist.setVisibility(View.GONE);
-            this.tv_nomore.setVisibility(View.VISIBLE);
-        }
-    }
+//    //初始化报名列表数据
+//    private void initApplyList(){
+//        if(this.initApplyListData().size() != 0) {
+//            this.ll_applylist.setVisibility(View.VISIBLE);
+//            this.tv_nomore.setVisibility(View.GONE);
+//            ApplyListAdapter applyListAdapter = new ApplyListAdapter(mContext, this.initApplyListData());
+//            this.brv_applylist.setAdapter(applyListAdapter);
+//        } else {
+//            this.ll_applylist.setVisibility(View.GONE);
+//            this.tv_nomore.setVisibility(View.VISIBLE);
+//        }
+//    }
 
-    private List<ApplyListItem> initApplyListData(){
-        List<ApplyListItem> applyList=new ArrayList<>();
-        ApplyListItem item;
-
-        for (int i = 0; i < 20; i++) {
-            item=new ApplyListItem();
-            item.setUserIconUrl("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
-            item.setUsername("username" + i);
-            if(i%2==0)
-                item.setUserattr("游客");
-            else if(i==9){
-                item.setUserattr("用户本人");
-            }
-            else{
-                item.setUserattr("普通用户");
-            }
-            applyList.add(item);
-        }
-
-        return applyList;
-    }
 
     @Override
     protected String[] getRequestUrls() {

@@ -196,24 +196,26 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         if (adapter.getItemState()) {
             if(isEditable) {
                 ToastUtils.showToastShort(this, "点击编辑");
-                adapter.updateItem();
+                adapter.updateItem();//变成可编辑
                 setRightTitle("完成");
                 isEditable=false;
             }else {
+                adapter.selectedmap=adapter.map;
                 Iterator iter = adapter.map.keySet().iterator();
                 List<EditShopCart> products=new ArrayList<>();
                 EditShopCart editShopCart;
                 while (iter.hasNext()) {
                     Object key = iter.next();
                     editShopCart=new EditShopCart();
-                    Cart cart = adapter.map.get(key);
-                    editShopCart.setPid(cart.getPid());
-                    editShopCart.setQt(cart.getQt());
+                    //Cart cart = adapter.map.get(key);
+                    editShopCart.setPid((adapter.ShoppingCarts.get((int)key).getPid()));
+                    editShopCart.setQt((adapter.ShoppingCarts.get((int)key).getQt()));
                     products.add(editShopCart);
                 }
                 multiManage(products);
                 isEditable=true;
                 setRightTitle("编辑");
+                adapter.recoverItem();//变成不可编辑
             }
         }
     }

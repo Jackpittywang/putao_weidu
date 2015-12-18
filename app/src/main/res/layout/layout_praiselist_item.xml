@@ -5,14 +5,14 @@
     android:gravity="center_vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_praise_headericon"
+        android:id="@+id/iv_user_icon"
         app:roundAsCircle="true"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="10dp"
         app:placeholderImage="@drawable/tab_bar_me_sel"/>
     <TextView
-        android:id="@+id/tv_praise_usernickname"
+        android:id="@+id/tv_nickname"
         android:textColor="#313131"
         android:layout_weight="1"
         android:textSize="@dimen/text_size_16sp"
