@@ -235,9 +235,9 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     public void eventClickCool(int currPosition) {
         Comment comment = adapter.getItem(currPosition);
         networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
-                new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+                new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<String> result) {
+            public void onSuccess(String url, String result) {
                 getCommentList();
                 EventBusHelper.post(true, EVENT_COUNT_COOL);
             }

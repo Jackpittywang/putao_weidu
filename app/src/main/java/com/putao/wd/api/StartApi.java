@@ -28,7 +28,8 @@ public class StartApi {
     private static final String REQUEST_NICK_NAME = "nickName";//昵称
     private static final String REQUEST_AGE = "age";//年龄
     private static final String REQUEST_WECHAT = "wechat";//微信
-    private static final String REQUEST_PARENT_NAME = "parent_name";//家长姓名
+    private static final String REQUEST_PARENT_NAME = "parentName";//家长姓名
+    private static final String REQUEST_CHILD_NAME = "nick_name";//宝宝昵称
     private static final String REQUEST_MSG = "message";//留言
 
     private static final String REQUEST_TYPE = "type";//类型
@@ -131,21 +132,27 @@ public class StartApi {
     /**
      * 活动报名参加（提交）
      *
-     * @param user_id     用户ID
+     * @param action_id   活动ID
      * @param identity    家长身份
      * @param phone       手机号码
-     * @param nick_name   昵称
+     * @param nick_name   宝宝昵称
      * @param age         年龄
      * @param wechat      微信
      * @param parent_name 家长姓名
      * @param msg         留言
      */
-    public static Request participateAdd(String user_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
+    public static Request participateAdd(String action_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(REQUEST_USER_ID, user_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
+                .addParam(REQUEST_NICK_NAME, AccountHelper.getCurrentUserInfo().getNick_name())
+                .addParam(REQUEST_USERPROFILEPHOTO, AccountHelper.getCurrentUserInfo().getHead_img())
+                .addParam(REQUEST_ACTION_ID, action_id)
                 .addParam(REQUEST_IDENTITY, identity)
                 .addParam(REQUEST_PHONE, phone)
-                .addParam(REQUEST_NICK_NAME, nick_name)
+                .addParam(REQUEST_CHILD_NAME, nick_name)
                 .addParam(REQUEST_AGE, age)
                 .addParam(REQUEST_WECHAT, wechat)
                 .addParam(REQUEST_PARENT_NAME, parent_name)

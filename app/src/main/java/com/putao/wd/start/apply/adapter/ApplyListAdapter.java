@@ -25,7 +25,7 @@ public class ApplyListAdapter extends LoadMoreAdapter<ActionEnrollment, ApplyLis
     }
 
     public int getLayoutId(int viewType) {
-        return R.layout.layout_praiselist_item;
+        return R.layout.layout_apply_list_item;
     }
 
     public ApplyListAdapter.ApplyListViewHolder getViewHolder(View itemView, int viewType) {

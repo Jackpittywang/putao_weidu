@@ -25,7 +25,7 @@ public class PraiseListAdapter  extends LoadMoreAdapter<PraiseListItem, PraiseLi
     }
 
     public int getLayoutId(int viewType) {
-        return R.layout.layout_praiselist_item;
+        return R.layout.layout_apply_list_item;
     }
 
     public PraiseListAdapter.PraiseListViewHolder getViewHolder(View itemView, int viewType) {
