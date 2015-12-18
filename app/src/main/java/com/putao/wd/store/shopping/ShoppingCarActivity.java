@@ -2,6 +2,7 @@ package com.putao.wd.store.shopping;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -21,6 +22,8 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.NavigationBar;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,10 +49,17 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     SwitchButton btn_sel_all;
     @Bind(R.id.tv_money)
     TextView tv_money;
+    @Bind(R.id.ll_money)
+    LinearLayout ll_money;//金额区域
+    @Bind(R.id.ll_closing)
+    LinearLayout ll_closing;//结算区域
+    @Bind(R.id.tv_closing)
+    TextView tv_closing;//结算
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
     private boolean isEditable=true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_shopping_car;
@@ -116,9 +126,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 删除购物车
      */
     private void cartDelete(String pid){
-        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
+        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<String> result) {
+            public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
                 getCart();
             }
@@ -174,8 +184,20 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 btn_sel_all.setState(isSelectAll);
                 adapter.selAll(isSelectAll);
                 break;
-            case R.id.ll_closing://去结算
-                startActivity(CashierActivity.class);
+            case R.id.ll_closing://去结算/删除
+                if(isEditable) {
+                    startActivity(CashierActivity.class);
+                }
+                else{
+                    Iterator iter = adapter.map.keySet().iterator();
+                    while (iter.hasNext()) {
+                        Object key = iter.next();
+                        Cart cart = adapter.map.get(key);
+                        cartDelete(cart.getPid());
+                    }
+
+                }
+
                 break;
         }
     }
@@ -194,12 +216,15 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onRightAction() {
         if (adapter.getItemState()) {
-            if(isEditable) {
+            if(isEditable) {//编辑
                 ToastUtils.showToastShort(this, "点击编辑");
                 adapter.updateItem();//变成可编辑
                 setRightTitle("完成");
                 isEditable=false;
-            }else {
+
+                ll_money.setVisibility(View.INVISIBLE);
+                tv_closing.setText("删除");
+            }else {//完成
                 adapter.selectedmap=adapter.map;
                 Iterator iter = adapter.map.keySet().iterator();
                 List<EditShopCart> products=new ArrayList<>();
@@ -216,6 +241,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 isEditable=true;
                 setRightTitle("编辑");
                 adapter.recoverItem();//变成不可编辑
+
+                ll_money.setVisibility(View.VISIBLE);
+                tv_closing.setText("结算");
             }
         }
     }
