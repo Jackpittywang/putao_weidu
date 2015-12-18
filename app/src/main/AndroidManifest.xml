@@ -130,9 +130,17 @@
         <activity
             android:name=".start.news.NewsDetailActivity"
             android:screenOrientation="portrait" />
+        <!-- 报名列表 -->
+        <activity
+            android:name=".start.apply.ApplyListActivity"
+            android:screenOrientation="portrait" />
         <!-- 我要参加 -->
         <activity
             android:name=".start.apply.ApplyActivity"
+            android:screenOrientation="portrait" />
+        <!-- 点赞列表 -->
+        <activity
+            android:name=".start.praise.PraiseListActivity"
             android:screenOrientation="portrait" />
         <!-- 评论 -->
         <activity

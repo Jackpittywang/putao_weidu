@@ -9,7 +9,10 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ActionDetail;
+import com.putao.wd.start.apply.ApplyActivity;
+import com.putao.wd.start.apply.ApplyListActivity;
 import com.putao.wd.start.comment.CommentActivity;
+import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
@@ -94,12 +97,21 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         return new String[0];
     }
 
-    @OnClick({R.id.ll_comment})
+    @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_join_list:
+                startActivity(ApplyListActivity.class, bundle);
+                break;
+            case R.id.ll_cool:
+                startActivity(PraiseListActivity.class, bundle);
+                break;
             case R.id.ll_comment:
                 startActivity(CommentActivity.class, bundle);
+                break;
+            case R.id.tv_join:
+                startActivity(ApplyActivity.class, bundle);
                 break;
         }
     }
