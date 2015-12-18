@@ -22,7 +22,6 @@
             android:layout_width="@dimen/left_icon_width"
             android:layout_height="@dimen/left_icon_height"
             android:layout_marginLeft="8dp"
-            android:background="#959595"
             auto:placeholderImage="@drawable/img_head_q"/>
 
         <LinearLayout
