@@ -14,7 +14,7 @@ import java.util.List;
  * list工具类
  * Created by guchenkai on 2015/12/15.
  */
-public class ListUtils {
+public final class ListUtils {
 
     /**
      * 截取list

@@ -21,7 +21,7 @@ import java.io.IOException;
  * 图片处理工具
  * Created by guchenkai on 2015/12/8.
  */
-public class ImageUtils {
+public final class ImageUtils {
 
     /**
      * 将小图片x轴循环填充进imageView中

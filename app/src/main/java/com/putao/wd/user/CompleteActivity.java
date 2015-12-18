@@ -19,6 +19,7 @@ import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
+import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -80,6 +81,16 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
+
+        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                iv_header_icon.setImageURL(result.getHead_img());
+                et_nickname.setText(result.getNick_name());
+                et_intro.setText(result.getProfile());
+                loading.dismiss();
+            }
+        });
 
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
