@@ -8,6 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.message.MessageCenterActivity;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
@@ -99,7 +100,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(CompleteActivity.class);
                 break;
             case R.id.si_message://消息中心
-//                startActivity(MessageCenterActivity.class);
+                startActivity(MessageCenterActivity.class);
                 si_message.hide();
                 break;
             case R.id.btn_pay://待付款
