@@ -101,7 +101,6 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
             }
-
         });
     }
 
@@ -111,7 +110,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
                 ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
-                if (MathUtils.compare(count, sku.getQuantity()))
+                if (!MathUtils.compare(count, sku.getQuantity()))
                     carAdd(sku.getPid(), count);
                 else
                     ToastUtils.showToastShort(mContext, "库存不足！");
