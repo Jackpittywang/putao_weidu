@@ -105,15 +105,19 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
             case R.id.btn_pay://待付款
                 btn_pay.hide();
+                startActivity(OrderListActivity.class);
                 break;
             case R.id.btn_deliver://待发货
                 btn_deliver.hide();
+                startActivity(OrderListActivity.class);
                 break;
             case R.id.btn_take_deliver://待收货
                 btn_take_deliver.hide();
+                startActivity(OrderListActivity.class);
                 break;
             case R.id.btn_after_sale://售后
                 btn_after_sale.hide();
+                startActivity(OrderListActivity.class);
                 break;
         }
     }
