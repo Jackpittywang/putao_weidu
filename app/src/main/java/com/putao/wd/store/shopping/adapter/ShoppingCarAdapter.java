@@ -1,4 +1,4 @@
-package com.putao.wd.store.adapter;
+package com.putao.wd.store.shopping.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;

@@ -11,25 +11,18 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.EditShopCart;
-import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ShopCarItem;
-import com.putao.wd.store.adapter.ShoppingCarAdapter;
 import com.putao.wd.store.cashier.CashierActivity;
-import com.putao.wd.store.invoice.InvoiceInfoActivity;
+import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.NavigationBar;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
