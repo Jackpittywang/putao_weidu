@@ -78,21 +78,26 @@
                 <View
                     style="@style/line_horizontal"/>
                 <!--报名相关信息-->
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_join_list"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    >
 
                     <com.sunnybear.library.view.recycler.BasicRecyclerView
                         android:id="@+id/tv_actionsdetail_applyusers"
                         android:layout_width="100dp"
-                        android:layout_height="50dp"/>
+                        android:layout_height="50dp"
+                        auto:layout_mode="horizontal"
+                        android:visibility="gone"
+                        android:layout_centerVertical="true"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/distance_8dp"
+                        android:layout_toLeftOf="@+id/iv_icon_arrow"
                         android:layout_weight="1"
                         android:gravity="left">
 
@@ -116,11 +121,14 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/iv_icon_arrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/btn_arrow"/>
-                </LinearLayout>
+                </RelativeLayout>
 
                 <View
                     style="@style/line_horizontal"/>
@@ -303,8 +311,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_gravity="bottom"
+            android:background="@color/white"
             android:padding="8dp">
 
             <LinearLayout
@@ -337,6 +345,7 @@
                     android:textSize="@dimen/text_size_20sp"/>
 
             </LinearLayout>
+
             <View style="@style/line_vertical"/>
 
             <LinearLayout

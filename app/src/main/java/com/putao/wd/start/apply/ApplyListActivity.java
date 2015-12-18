@@ -12,6 +12,7 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ApplyListItem;
 import com.putao.wd.model.ActionEnrollment;
+import com.putao.wd.model.ActionEnrollmentList;
 import com.putao.wd.start.apply.adapter.ApplyListAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -71,12 +72,13 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
      * 获取报名列表
      */
     private void getEnrollment() {
-        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
+        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ActionEnrollmentList>(ActionEnrollmentList.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
+            public void onSuccess(String url, ActionEnrollmentList result) {
                 Logger.i("报名列表请求成功");
-                if (result.size() != 0) {
-                    adapter.replaceAll(result);
+                List<ActionEnrollment> actionEnrollmentList = result.getComment();
+                if (actionEnrollmentList.size() != 0) {
+                    adapter.replaceAll(actionEnrollmentList);
                 } else {
                     brv_applylist.noMoreLoading();
                 }
