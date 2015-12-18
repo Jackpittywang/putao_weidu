@@ -9,9 +9,9 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.order.OrderListActivity;
+import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.store.order.WriteOrderActivity;
-import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SettingItem;
@@ -80,8 +80,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_setting://设置
-//                startActivity(SettingActivity.class);
-                startActivity(CompleteActivity.class);
+                startActivity(SettingActivity.class);
+//                startActivity(CompleteActivity.class);
                 break;
             case R.id.si_order://我的订单
                 startActivity(OrderListActivity.class);

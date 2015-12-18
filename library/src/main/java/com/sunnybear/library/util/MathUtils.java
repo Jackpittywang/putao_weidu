@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * 数学工具
  * Created by guchenkai on 2015/12/17.
  */
-public class MathUtils {
+public final class MathUtils {
 
     /**
      * 乘法

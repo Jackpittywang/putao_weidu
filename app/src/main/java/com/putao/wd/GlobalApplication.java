@@ -15,7 +15,6 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.util.SDCardUtils;
 
 import java.io.File;
@@ -92,7 +91,7 @@ public class GlobalApplication extends BasicApplication {
             @Override
             public void run() {
                 try {
-                    ResourcesUtils.unZip(getApplicationContext(), "emoji.zip", "", true);//解压表情包
+                    FileUtils.unZipInAsset(getApplicationContext(), "emoji.zip", "", true);//解压表情包
                     Logger.d("表情包解压完成");
                     File emoji = new File(GlobalApplication.sdCardPath + File.separator + "emoji", "set.txt");
                     String source = FileUtils.readFile(emoji).replace("\uFEFF", "");
