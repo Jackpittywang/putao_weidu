@@ -74,7 +74,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         sticky_layout.canScrollView();
         wv_content.loadUrl("http://www.putao.com");
         mSharePopupWindow = new SharePopupWindow(mContext);
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext);
         addListener();
 
         getProductDetail(product_id);
@@ -100,6 +99,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     }
                 }));
                 bl_banner.setOffscreenPageLimit(result.getPicture().size());//缓存页面数
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,result.getId());
                 loading.dismiss();
             }
         });
