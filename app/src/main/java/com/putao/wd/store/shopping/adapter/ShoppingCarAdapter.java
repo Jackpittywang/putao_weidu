@@ -85,12 +85,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 replace(position, shoppingCar);
             }
         });
-        holder.tv_delete_shopcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnDeleteShopCartItem.DeleteShopCartItem(shoppingCar.getPid());
-            }
-        });
+
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override
             public void onAmountSelected(int count, boolean isPlus) {
@@ -100,18 +95,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         });
 
     }
-
-    //删除回调
-    public interface OnDeleteShopCartItem {
-        void DeleteShopCartItem(String pid);
-    }
-
-    private OnDeleteShopCartItem mOnDeleteShopCartItem;
-
-    public void setOnDeleteShopCartItem(OnDeleteShopCartItem item) {
-        this.mOnDeleteShopCartItem = item;
-    }
-
 
     /**
      * 全部选中
@@ -199,8 +182,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         LinearLayout ll_info;
         @Bind(R.id.asl_num_sel)
         AmountSelectLayout asl_num_sel;
-        @Bind(R.id.tv_delete_shopcart)
-        TextView tv_delete_shopcart;//删除购物车
 
         public ShoppingCarViewHolder(View itemView) {
             super(itemView);

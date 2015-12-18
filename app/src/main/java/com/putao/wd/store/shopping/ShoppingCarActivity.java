@@ -16,6 +16,7 @@ import com.putao.wd.store.cashier.CashierActivity;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
  * 购物车
  * Created by guchenkai on 2015/12/4.
  */
-public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener,ShoppingCarAdapter.OnDeleteShopCartItem {
+public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener{
     //    @Bind(R.id.rv_cars_info)
 //    BasicRecyclerView rv_cars_info;
 //    @Bind(R.id.rv_cars_null)
@@ -65,8 +66,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
         getCart();
 
-        //cartEdit();
-        //cartDelete();
     }
 
     /**
@@ -80,13 +79,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 List<Cart> cars = sort(result.getUse());
                 adapter = new ShoppingCarAdapter(mContext, cars);
                 rv_cars.setAdapter(adapter);
-                adapter.setOnDeleteShopCartItem(ShoppingCarActivity.this);
                 adapter.notifyDataSetChanged();
+                tv_money.setText(caculateSumMoney());
             }
 
         });
     }
-
 
 
     /**
@@ -100,6 +98,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             }
 
         });
+    }
+
+    private String caculateSumMoney(){
+        String sum="0";
+        for(Cart cart:adapter.ShoppingCarts){
+            sum=MathUtils.add(sum,MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+        }
+        return sum;
     }
 
     /**
@@ -124,6 +130,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
                 getCart();
+
             }
 
         });
@@ -187,7 +194,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         Object key = iter.next();
                         Cart cart = adapter.map.get(key);
                         cartDelete(cart.getPid());
+                        tv_money.setText(caculateSumMoney());
                     }
+                    setRightTitle("编辑");
+                    isEditable=true;
 
                 }
 
@@ -230,6 +240,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                     editShopCart.setQt((adapter.ShoppingCarts.get((int)key).getQt()));
                     products.add(editShopCart);
                 }
+                getCart();
                 multiManage(products);
                 isEditable=true;
                 setRightTitle("编辑");
@@ -241,8 +252,4 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    public void DeleteShopCartItem(String pid) {
-        cartDelete(pid);
-    }
 }
