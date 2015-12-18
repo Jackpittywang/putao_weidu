@@ -79,6 +79,7 @@
                     style="@style/line_horizontal"/>
                 <!--报名相关信息-->
                 <LinearLayout
+                    android:id="@+id/ll_join_list"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical"
@@ -307,6 +308,7 @@
             android:padding="8dp">
 
             <LinearLayout
+                android:id="@+id/ll_cool"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

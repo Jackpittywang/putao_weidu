@@ -9,7 +9,10 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ActionDetail;
+import com.putao.wd.start.apply.ApplyActivity;
+import com.putao.wd.start.apply.ApplyListActivity;
 import com.putao.wd.start.comment.CommentActivity;
+import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
@@ -94,12 +97,21 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         return new String[0];
     }
 
-    @OnClick({R.id.ll_comment})
+    @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_join_list:
+                startActivity(ApplyListActivity.class, bundle);
+                break;
+            case R.id.ll_cool:
+                startActivity(PraiseListActivity.class, bundle);
+                break;
             case R.id.ll_comment:
                 startActivity(CommentActivity.class, bundle);
+                break;
+            case R.id.tv_join:
+                startActivity(ApplyActivity.class, bundle);
                 break;
         }
     }
@@ -121,19 +133,19 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     //赞或取消赞时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
     public void eventClickComment(boolean isCool) {
-        if (isCool) {
-            tv_count_comment.setText(actionDetail.getCountCool()+1 + "");
-        }else {
-            tv_count_comment.setText(actionDetail.getCountCool()-1 + "");
-        }
+//        if (isCool) {
+//            tv_count_comment.setText(actionDetail.getCountCool()+1 + "");
+//        }else {
+//            tv_count_comment.setText(actionDetail.getCountCool()-1 + "");
+//        }
     }
     //添加或删除评论时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COMMENT)
     public void eventClickCoool(boolean isComment) {
-        if (isComment) {
-            tv_count_comment.setText(actionDetail.getCountComment()+1 + "");
-        }else {
-            tv_count_comment.setText(actionDetail.getCountComment()-1 + "");
-        }
+//        if (isComment) {
+//            tv_count_comment.setText(actionDetail.getCountComment()+1 + "");
+//        }else {
+//            tv_count_comment.setText(actionDetail.getCountComment()-1 + "");
+//        }
     }
 }
