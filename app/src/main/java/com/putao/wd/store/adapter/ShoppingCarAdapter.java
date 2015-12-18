@@ -28,11 +28,16 @@ import butterknife.Bind;
 public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.ShoppingCarViewHolder> {
 
     private boolean itemState;//记录当前状态值
-    public HashMap<Integer, Cart> map;//记录当前商品
+    public HashMap<Integer, Cart> map;//记录进入编辑状态前选中的商品
+    public HashMap<Integer, Cart> selectedmap;//记录进入编辑状态后选中的商品
+    public HashMap<Integer, Cart> editedmap;//记录编辑过的商品
+    public List<Cart> ShoppingCarts;//编辑过的商品
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
         map = new HashMap<>();
+        selectedmap = new HashMap<>();
+        this.ShoppingCarts=shoppingCars;
     }
 
     @Override
@@ -86,6 +91,14 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 mOnDeleteShopCartItem.DeleteShopCartItem(shoppingCar.getPid());
             }
         });
+        holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
+            @Override
+            public void onAmountSelected(int count, boolean isPlus) {
+                shoppingCar.setQt(holder.asl_num_sel.getCurrentCount()+"");
+                ShoppingCarts.set(position,shoppingCar);
+            }
+        });
+
     }
 
     //删除回调
@@ -133,13 +146,25 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     }
 
     /**
-     * 更新Item显示
+     * 更新Item显示编辑
      */
     public void updateItem(){
         ToastUtils.showToastShort(context, "updateItem");
         for (int i = 0; i < map.size(); i++){
             Cart shoppingCar =  map.get(i);
             shoppingCar.setEditable(true);
+            replace(i, shoppingCar);
+        }
+    }
+
+    /**
+     * 更新Item显示恢复不可编辑状态
+     */
+    public void recoverItem(){
+        ToastUtils.showToastShort(context, "recoverItem");
+        for (int i = 0; i < selectedmap.size(); i++){
+            Cart shoppingCar =  selectedmap.get(i);
+            shoppingCar.setEditable(false);
             replace(i, shoppingCar);
         }
     }
