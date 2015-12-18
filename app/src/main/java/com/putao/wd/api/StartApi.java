@@ -242,6 +242,22 @@ public class StartApi {
     }
 
     /**
+     * 活动赞列表（查询）
+     */
+    public static final String URL_COOL_LIST = BASE_URL + "event/cool/list";
+
+    /**
+     * 活动赞列表（查询）
+     *
+     * @param action_id 活动ID
+     */
+    public static Request getCoolList(String action_id) {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(REQUEST_ACTION_ID, action_id)
+                .build(RequestMethod.POST, URL_COOL_LIST);
+    }
+
+    /**
      * 赞（提交）
      */
     public static final String URL_COOL_ADD = BASE_URL + "cool/add";
