@@ -148,4 +148,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
 //            tv_count_comment.setText(actionDetail.getCountComment()-1 + "");
 //        }
     }
+
+    //class UserIconAdapter extends
+
+
 }
