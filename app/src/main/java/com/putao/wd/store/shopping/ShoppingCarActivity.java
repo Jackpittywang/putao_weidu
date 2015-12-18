@@ -240,8 +240,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                     editShopCart.setQt((adapter.ShoppingCarts.get((int)key).getQt()));
                     products.add(editShopCart);
                 }
-                getCart();
                 multiManage(products);
+                tv_money.setText(caculateSumMoney());
+                //getCart();
                 isEditable=true;
                 setRightTitle("编辑");
                 adapter.recoverItem();//变成不可编辑
