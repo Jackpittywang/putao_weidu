@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#fff"
+              android:orientation="vertical">
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_user_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:roundAsCircle="true"/>
+
+</LinearLayout>

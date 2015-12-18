@@ -89,7 +89,7 @@
                         android:layout_width="100dp"
                         android:layout_height="50dp"
                         auto:layout_mode="horizontal"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_centerVertical="true"/>
 
                     <LinearLayout

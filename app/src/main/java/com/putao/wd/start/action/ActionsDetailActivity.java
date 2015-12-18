@@ -1,5 +1,6 @@
 package com.putao.wd.start.action;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ActionDetail;
+import com.putao.wd.model.RegUser;
 import com.putao.wd.start.apply.ApplyActivity;
 import com.putao.wd.start.apply.ApplyListActivity;
 import com.putao.wd.start.comment.CommentActivity;
@@ -17,8 +19,14 @@ import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -45,8 +53,11 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_count_comment;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
+    @Bind(R.id.tv_actionsdetail_applyusers)
+    BasicRecyclerView tv_actionsdetail_applyusers;
 
     private ActionDetail actionDetail;
+    private UserIconAdapter adapter;
     private Bundle bundle;
     private String action_id;
     //H5请求URL:http://static.uzu.wang/weidu_event/view/active_info.html?id=1&device=m&nav=0
@@ -64,8 +75,12 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
 
+        adapter = new UserIconAdapter(mContext, null);
+        tv_actionsdetail_applyusers.setAdapter(adapter);
         bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
+
+
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
@@ -75,7 +90,9 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_actionsdetail_title.setText(result.getLabel());
                 tv_actionsdetail_resume.setText(result.getTitle());
                 tv_count_cool.setText(result.getCountCool()+"");
-                tv_count_comment.setText(result.getCountComment()+"");
+                tv_count_comment.setText(result.getCountComment() + "");
+                List<RegUser> reg_user = result.getReg_user();
+                adapter.replaceAll(reg_user);
                 loadHtml(action_id, action_type);
                 loading.dismiss();
             }
@@ -149,7 +166,35 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
 //        }
     }
 
-    //class UserIconAdapter extends
+    class UserIconAdapter extends BasicAdapter<RegUser, UserIconViewHolder> {
 
+        public UserIconAdapter(Context context, List<RegUser> regUsers) {
+            super(context, regUsers);
+        }
+
+        @Override
+        public int getLayoutId(int viewType) {
+            return R.layout.activity_actions_detail_item;
+        }
+
+        @Override
+        public UserIconViewHolder getViewHolder(View itemView, int viewType) {
+            return new UserIconViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindItem(UserIconViewHolder holder, RegUser regUser, int position) {
+            holder.iv_user_icon.setImageURL(regUser.getUser_profile_photo());
+        }
+    }
+
+    static class UserIconViewHolder extends BasicViewHolder {
+        @Bind(R.id.iv_user_icon)
+        ImageDraweeView iv_user_icon;
+
+        public UserIconViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
 
 }
