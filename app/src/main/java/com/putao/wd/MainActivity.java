@@ -181,7 +181,6 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         return fragment;
     }
 
-
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
         setCurrentItem(currentItemId);
@@ -190,7 +189,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
         setCurrentItem(R.id.ti_start_circle);
-        ti_start_circle.setSelected(true);
+        tb_tab.setTabItemSelected(R.id.ti_start_circle);
     }
 
     /**

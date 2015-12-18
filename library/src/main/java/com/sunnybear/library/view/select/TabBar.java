@@ -2,6 +2,7 @@ package com.sunnybear.library.view.select;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
     private TabItem mLastSelectedItem = null;
 
     private SparseIntArray array;
+    private SparseArray<TabItem> mTabItemArray;
 
     public TabBar(Context context) {
         this(context, null, 0);
@@ -30,6 +32,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
     public TabBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         array = new SparseIntArray();
+        mTabItemArray = new SparseArray<>();
     }
 
     public void setTabItemSelectedListener(TabItemSelectedListener tabItemSelectedListener) {
@@ -42,6 +45,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             array.put(child.getId(), i);
+            mTabItemArray.put(child.getId(), (TabItem) child);
             if (!(child instanceof TabItem))
                 throw new RuntimeException("TabBar's child must be subclass of TabItem!");
             if (((TabItem) child).getActive())
@@ -60,7 +64,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
      *
      * @param item 选中的TabItem
      */
-    public void selectTabItem(TabItem item) {
+    private void selectTabItem(TabItem item) {
         if (mLastSelectedItem == item) {
             mLastSelectedItem.setActive(true);
             return;
@@ -74,6 +78,16 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
         int position = array.get(item.getId());
         if (mTabItemSelectedListener != null)
             mTabItemSelectedListener.onTabItemSelected(item, position);
+    }
+
+    /**
+     * 选择当前选中项
+     *
+     * @param resId 资源id
+     */
+    public void setTabItemSelected(int resId) {
+        TabItem tabItem = mTabItemArray.get(resId);
+        selectTabItem(tabItem);
     }
 
     public TabItem getSelectedItem() {

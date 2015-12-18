@@ -9,6 +9,7 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.putao.wd.home.adapter.StartBannerAdapter;
+import com.putao.wd.model.AcitonNewsList;
 import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
 import com.putao.wd.pay.PayAcitivty;
@@ -77,12 +78,12 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
         getBannerList();//获取广告列表
         networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<ActionNews> result) {
+                    public void onSuccess(String url, AcitonNewsList result) {
 //                        cacheEnterDisk(url, result);
-                        adapter.addAll(result);
-                        if (result.size() >= pageCount)
+                        adapter.addAll(result.getGetEventList());
+                        if (result.getCurrent_page() != result.getTotal_page())
                             currentPage++;
                         else
                             rv_content.noMoreLoading();
@@ -122,11 +123,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 currentPage = 0;
                 rv_content.reset();
                 networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                        , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                        , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
                             @Override
-                            public void onSuccess(String url, ArrayList<ActionNews> result) {
-                                adapter.replaceAll(result);
-                                if (result.size() >= pageCount)
+                            public void onSuccess(String url, AcitonNewsList result) {
+                                adapter.replaceAll(result.getGetEventList());
+                                if (result.getCurrent_page() != result.getTotal_page())
                                     currentPage++;
                                 else
                                     rv_content.noMoreLoading();
@@ -140,11 +141,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
             @Override
             public void onLoadMore() {
                 networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                        , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                        , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
                             @Override
-                            public void onSuccess(String url, ArrayList<ActionNews> result) {
-                                adapter.addAll(result);
-                                if (result.size() >= pageCount) {
+                            public void onSuccess(String url, AcitonNewsList result) {
+                                adapter.addAll(result.getGetEventList());
+                                if (result.getCurrent_page() != result.getTotal_page()) {
                                     rv_content.loadMoreComplete();
                                     currentPage++;
                                 } else rv_content.noMoreLoading();
@@ -206,11 +207,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 break;
         }
         networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<ArrayList<ActionNews>>(ActionNews.class, loading) {
+                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<ActionNews> result) {
-                        adapter.replaceAll(result);
-                        if (result.size() >= pageCount)
+                    public void onSuccess(String url, AcitonNewsList result) {
+                        adapter.replaceAll(result.getGetEventList());
+                        if (result.getCurrent_page() != result.getTotal_page())
                             currentPage++;
                         else
                             rv_content.noMoreLoading();

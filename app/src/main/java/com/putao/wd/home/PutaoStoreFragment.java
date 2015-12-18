@@ -68,7 +68,6 @@ public class PutaoStoreFragment extends PTWDFragment {
         getStoreHome();
 
         refresh();
-
     }
 
     /**
