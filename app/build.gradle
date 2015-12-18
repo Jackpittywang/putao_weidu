@@ -4,7 +4,6 @@ apply plugin: 'bugly'
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
-
     defaultConfig {
         applicationId "com.putao.wd"
         minSdkVersion 14
@@ -22,13 +21,17 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
             signingConfig signingConfigs.release
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
     //源码集
     sourceSets {
@@ -57,4 +60,20 @@ bugly {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
+}
+
+//编译结束后删除unaligned包
+android.applicationVariants.all { variant ->
+    variant.assemble.doLast {
+        variant.outputs.each { output ->
+            println "aligned " + output.outputFile
+            println "unaligned " + output.packageApplication.outputFile
+
+            File file = output.packageApplication.outputFile;
+            if (variant.buildType.zipAlignEnabled && file.getName().contains("unaligned")) {
+                println "deleting " + file.getName()
+                file.delete()
+            }
+        }
+    }
 }
