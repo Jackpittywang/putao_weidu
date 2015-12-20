@@ -8,12 +8,14 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
+import com.putao.wd.model.Cart;
 import com.putao.wd.model.Norms;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.store.product.adapter.NormsSelectAdapter;
 import com.putao.wd.store.product.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -35,6 +37,7 @@ import butterknife.OnClick;
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
 //    public static final String EVENT_JOIN_CAR = "join_car";
+    public static final String EVENT_UPDATE_NORMS="update_norms";
 
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
@@ -50,6 +53,11 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     TextView tv_product_price;//产品价格
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;//加入购物车
+    @Bind(R.id.ll_add_shopcart)
+    LinearLayout ll_add_shopcart;//加入购物车布局区域
+    @Bind(R.id.tv_confirm_update)
+    TextView tv_confirm_update;//确认修改
+
 
     private NormsSelectAdapter adapter;
 
@@ -61,10 +69,18 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     private int mSpecItemCount;
     private List<ProductNormsSku> skus;
     private ProductNormsSku sku;//选中的商品
+    private String operateType;//添加、修改
 
-    public ShoppingCarPopupWindow(Context context, String pid) {
+    public ShoppingCarPopupWindow(Context context, String pid,String operateType) {
         super(context);
         product_id = pid;
+        //this.operateType=operateType;
+        switch (operateType){
+            case "add":
+                ll_add_shopcart.setVisibility(View.VISIBLE);break;
+            case "update":
+                tv_confirm_update.setVisibility(View.VISIBLE);break;
+        }
         ll_join_car.setClickable(false);
         adapter = new NormsSelectAdapter(mActivity, null);
         rv_norms.setAdapter(adapter);
@@ -105,18 +121,36 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         });
     }
 
-    @OnClick({R.id.iv_close, R.id.ll_join_car})
+    /**
+     * 更改商品规格购物车
+     */
+    private void cartChange(String old_pid,String new_pid){
+        mActivity.networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+
+            }
+
+        });
+    }
+
+    @OnClick({R.id.iv_close, R.id.ll_join_car,R.id.tv_confirm_update})
     @Override
     public void onClick(View v) {
+        ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
-                ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
                 if (!MathUtils.compare(count, sku.getQuantity()))
                     carAdd(sku.getPid(), count);
                 else
                     ToastUtils.showToastShort(mContext, "库存不足！");
                 //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
 //                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
+                break;
+            case R.id.tv_confirm_update://修改购物车产品规格参数
+                cartChange(product_id,sku.getPid());
+                EventBusHelper.post(sku, EVENT_UPDATE_NORMS);
                 break;
         }
         dismiss();
