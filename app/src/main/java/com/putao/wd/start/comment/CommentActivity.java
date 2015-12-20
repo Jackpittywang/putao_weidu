@@ -15,6 +15,7 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.Comment;
+import com.putao.wd.model.CommentList;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.eventbus.EventBusHelper;
@@ -203,12 +204,13 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private void getCommentList() {
         Bundle bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
-        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
+        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Comment> result) {
+            public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
-                if (result.size() != 0) {
-                    adapter.replaceAll(result);
+                List<Comment> comment = result.getComment();
+                if (comment.size() != 0) {
+                    adapter.replaceAll(comment);
                     hasComment = true;
                 } else {
                     rv_content.noMoreLoading();

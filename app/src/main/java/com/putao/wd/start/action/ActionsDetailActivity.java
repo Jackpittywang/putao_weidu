@@ -17,12 +17,12 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
@@ -80,7 +80,6 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
 
-
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
@@ -92,6 +91,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_count_cool.setText(result.getCountCool()+"");
                 tv_count_comment.setText(result.getCountComment() + "");
                 List<RegUser> reg_user = result.getReg_user();
+                Logger.i("reg_user = "+reg_user.toString());
                 adapter.replaceAll(reg_user);
                 loadHtml(action_id, action_type);
                 loading.dismiss();
