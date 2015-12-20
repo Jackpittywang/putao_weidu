@@ -20,6 +20,11 @@ public class StoreApi {
     private static final String REQUEST_OLD_PID = "old_pid";//旧商品id
     private static final String REQUEST_NEW_PID = "new_pid";//新商品id
     private static final String REQUEST_PRODUCTS = "products";//产品(批量编辑购物车用）
+    //发票相关
+    private static final String REQUEST_iNVOICE_ID="id";//发票ID
+    private static final String REQUEST_INVOICE_TYPE="type";//旧商品id
+    private static final String REQUEST_INVOICE_CONTENT="Content";//发票内容
+    private static final String REQUEST_INVOICE_TITLE="title";//发票抬头
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
 
@@ -151,5 +156,51 @@ public class StoreApi {
                 .addParam(REQUEST_OLD_PID, old_pid)
                 .addParam(REQUEST_NEW_PID, new_pid)
                 .build(RequestMethod.POST, URL_CART_CHANGE);
+    }
+
+    public static final String URL_INVOICE_LIST=BASE_URL+" invoices/list";
+
+    /**
+     * 编辑发票
+     *
+     * @param invoice_id 发票的id
+     * @param invoice_type 旧商品id
+     * @param invoice_content 发票内容
+     * @param invoice_title 发票抬头
+     */
+    public static Request InvoiceList(String invoice_id,String invoice_type,String invoice_content,String invoice_title){
+        return PTWDRequestHelper.shopCar()
+                .build(RequestMethod.POST, URL_INVOICE_LIST);
+    }
+
+    public static final String URL_EDIT_INVOICE=BASE_URL+" invoices/edit";
+
+    /**
+     * 编辑发票
+     *
+     * @param invoice_id 发票的id
+     * @param invoice_type 旧商品id
+     * @param invoice_content 发票内容
+     * @param invoice_title 发票抬头
+     */
+    public static Request editInvoice(String invoice_id,String invoice_type,String invoice_content,String invoice_title){
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_iNVOICE_ID, invoice_id)
+                .addParam(REQUEST_INVOICE_TYPE,invoice_type)
+                .addParam(REQUEST_INVOICE_CONTENT,invoice_content)
+                .addParam(REQUEST_INVOICE_TITLE,invoice_title)
+                .build(RequestMethod.POST, URL_EDIT_INVOICE);
+    }
+
+    public static final String URL_DELETE_INVOICE=BASE_URL+" invoices/delete";
+    /**
+     * 编辑发票
+     *
+     * @param invoice_id 发票的id
+     */
+    public static Request deleteInvoice(String invoice_id){
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_iNVOICE_ID, invoice_id)
+                .build(RequestMethod.POST, URL_DELETE_INVOICE);
     }
 }
