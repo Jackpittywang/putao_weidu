@@ -82,7 +82,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 tv_confirm_update.setVisibility(View.VISIBLE);break;
         }
         ll_join_car.setClickable(false);
-        adapter = new NormsSelectAdapter(mActivity, null);
+        adapter = new NormsSelectAdapter(mActivity, null,operateType);
         rv_norms.setAdapter(adapter);
         getProductSpec(pid);
     }
