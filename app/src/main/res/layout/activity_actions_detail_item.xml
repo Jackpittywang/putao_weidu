@@ -1,15 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:auto="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#fff"
-              android:orientation="vertical">
+<com.sunnybear.library.view.image.ImageDraweeView
+    android:id="@+id/iv_user_icon"
+    style="@style/image_circle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    auto:placeholderImage="@drawable/icon_20_17"/>
 
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_user_icon"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/icon_20_17"
-        auto:roundAsCircle="true"/>
-
-</LinearLayout>

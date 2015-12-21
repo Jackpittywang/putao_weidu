@@ -142,12 +142,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getCommentList();
-                    }
-                }, 3 * 1000);
+                getCommentList();
             }
         });
         rv_content.setOnItemClickListener(new OnItemClickListener() {
@@ -180,7 +175,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                     EventBusHelper.post(true, EVENT_COUNT_COMMENT);
                                 }
                             });
-                }else {
+                } else {
                     String msg = et_msg.getText().toString();
                     // 用户名 commdId 未定
                     networkRequest(StartApi.commentAdd(action_id, "nick_young", msg, "COMMENT", "10000", "hfgsagg"),
@@ -209,10 +204,10 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
-                List<Comment> comment = result.getComment();
-                if (comment.size() != 0) {
-                    adapter.replaceAll(comment);
+                if (result.getCurrent_page() != result.getTotal_page()) {
+                    adapter.replaceAll(result.getComment());
                     hasComment = true;
+                    rv_content.loadMoreComplete();
                 } else {
                     rv_content.noMoreLoading();
                     hasComment = false;
@@ -228,7 +223,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         Comment comment = adapter.getItem(position);
         String username = comment.getUser_name() + ": ";
         SpannableString ss = new SpannableString("回复 " + username);
-        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length()+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         et_msg.setText(ss);
         isReply = true;
     }
@@ -239,12 +234,12 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         Comment comment = adapter.getItem(currPosition);
         networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                getCommentList();
-                EventBusHelper.post(true, EVENT_COUNT_COOL);
-            }
-        });
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        getCommentList();
+                        EventBusHelper.post(true, EVENT_COUNT_COOL);
+                    }
+                });
     }
 
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
