@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -44,8 +45,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     public static final String EVENT_COUNT_COMMENT = "event_count_comment";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
-    @Bind(R.id.ll_main)
-    LinearLayout ll_main;
+    @Bind(R.id.rl_main)
+    RelativeLayout rl_main;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
@@ -152,7 +153,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         rv_content.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Serializable serializable, int position) {
-                mSelectPopupWindow.show(ll_main);
+                mSelectPopupWindow.show(rl_main);
 
             }
         });

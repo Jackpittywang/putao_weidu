@@ -12,14 +12,12 @@
         auto:nav_main_title="活动详情"
         auto:nav_right_icon="@drawable/btn_20_share_p_nor"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/navigation_bar">
         <!--内容区域-->
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_tab_bottom"
+            android:layout_below="@id/navigation_bar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,6 +88,7 @@
                         android:layout_height="50dp"
                         auto:layout_mode="horizontal"
                         android:visibility="visible"
+                        android:layout_margin="@dimen/distance_8dp"
                         android:layout_centerVertical="true"/>
 
                     <LinearLayout
@@ -205,7 +204,7 @@
                 <!--剩余时间-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="wrap_content"
                     android:background="#fff"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -218,13 +217,13 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
                             android:text="报名剩余时间"
                             android:textColor="#959595"
@@ -233,7 +232,7 @@
                         <TextView
                             android:id="@+id/tv_personinfo_resttime"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
                             android:text="9天15小时32分钟"
@@ -309,6 +308,8 @@
         </ScrollView>
 
         <LinearLayout
+            android:id="@+id/ll_tab_bottom"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -326,7 +327,6 @@
                     android:id="@+id/sb_cool_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     auto:isSelect="false"
                     auto:norDrawable="@drawable/btn_support_nor"
                     auto:selDrawable="@drawable/btn_support_sel"
@@ -336,9 +336,7 @@
                     android:id="@+id/tv_count_cool"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="8dp"
                     android:gravity="center"
                     android:text="赞"
                     android:textColor="@color/text_color_gray"
@@ -366,8 +364,7 @@
                     android:id="@+id/tv_count_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="8dp"
                     android:gravity="center"
                     android:text="评论"
                     android:textColor="@color/text_color_gray"
@@ -375,13 +372,10 @@
 
             </LinearLayout>
 
-            <View style="@style/line_vertical"/>
-
             <TextView
                 android:id="@+id/tv_join"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@color/color_rectangle_sel"
                 android:gravity="center"
@@ -390,5 +384,4 @@
                 android:textSize="@dimen/text_size_18sp"/>
 
         </LinearLayout>
-    </FrameLayout>
 </RelativeLayout>
