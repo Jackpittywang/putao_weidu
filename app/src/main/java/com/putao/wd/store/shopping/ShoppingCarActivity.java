@@ -255,7 +255,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void updateNorms(String pid,int position) {
         this.update_position=position;
-        mShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext,pid,"update");
+        mShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext,pid);
         mShoppingCarPopupWindow.show(rl_shopping_car);
     }
 

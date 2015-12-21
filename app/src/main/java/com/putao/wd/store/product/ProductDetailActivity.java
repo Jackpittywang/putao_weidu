@@ -9,18 +9,14 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
-import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
-import com.putao.wd.store.product.adapter.NormsSelectAdapter;
 import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
-import com.sunnybear.library.view.select.Tag;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
@@ -97,7 +93,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 tv_product_price.setText(result.getPrice());
                 //广告列表
 
-                if (result.getPictures() != null) {
+                if(result.getPictures()!=null) {
                     bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), new BannerViewPager.OnPagerClickListenr() {
                         @Override
                         public void onPagerClick(int position) {
@@ -106,7 +102,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     }));
                     bl_banner.setOffscreenPageLimit(result.getPictures().size());//缓存页面数
                 }
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), "add");
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,result.getId());
                 loading.dismiss();
             }
         });
@@ -124,8 +120,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         super.onStop();
         isStop = bl_banner.stopAutoScroll();
     }
-
-
 
     private void addListener() {
         mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {

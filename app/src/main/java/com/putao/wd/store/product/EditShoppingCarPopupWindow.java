@@ -50,12 +50,6 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     TextView tv_product_intro;//产品副标题
     @Bind(R.id.rv_norms)
     BasicRecyclerView rv_norms;//产品规格
-    @Bind(R.id.tv_product_price)
-    TextView tv_product_price;//产品价格
-    @Bind(R.id.ll_join_car)
-    LinearLayout ll_join_car;//加入购物车
-    @Bind(R.id.ll_add_shopcart)
-    LinearLayout ll_add_shopcart;//加入购物车布局区域
     @Bind(R.id.tv_confirm_update)
     TextView tv_confirm_update;//确认修改
 
@@ -70,21 +64,11 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     private int mSpecItemCount;
     private List<ProductNormsSku> skus;
     private ProductNormsSku sku;//选中的商品
-    private String operateType;//添加、修改
 
-    public EditShoppingCarPopupWindow(Context context, String pid, String operateType) {
+    public EditShoppingCarPopupWindow(Context context, String pid) {
         super(context);
         product_id = pid;
-        //this.operateType=operateType;
-        switch (operateType){
-            case "add":
-                ll_add_shopcart.setVisibility(View.VISIBLE);break;
-            case "update":
-                tv_confirm_update.setVisibility(View.VISIBLE);break;
-        }
-        ll_join_car.setClickable(false);
-        adapter = new EditNormsSelectAdapter(mActivity, null,operateType);
-        rv_norms.setAdapter(adapter);
+
         getProductSpec(pid);
     }
 
@@ -106,21 +90,12 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
                         mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
                         skus = result.getSku();
                         List<Norms> normses = SpecUtils.getNormses(result.getSpec());
-                        normses.add(new Norms());
-                        adapter.addAll(normses);
+                        adapter = new EditNormsSelectAdapter(mActivity, normses);
+                        rv_norms.setAdapter(adapter);
                     }
                 });
     }
 
-    private void carAdd(String pid, String qt) {
-        mActivity.networkRequest(StoreApi.cartAdd(pid, qt), new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                ToastUtils.showToastShort(mContext, "添加成功！");
-                Logger.d(result.toString());
-            }
-        });
-    }
 
     /**
      * 更改商品规格购物车
@@ -136,19 +111,11 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         });
     }
 
-    @OnClick({R.id.iv_close, R.id.ll_join_car,R.id.tv_confirm_update})
+    @OnClick({R.id.iv_close,R.id.tv_confirm_update})
     @Override
     public void onClick(View v) {
         ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
         switch (v.getId()) {
-            case R.id.ll_join_car://加入购物车
-                if (!MathUtils.compare(count, sku.getQuantity()))
-                    carAdd(sku.getPid(), count);
-                else
-                    ToastUtils.showToastShort(mContext, "库存不足！");
-                //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
-//                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
-                break;
             case R.id.tv_confirm_update://修改购物车产品规格参数
                 cartChange(product_id,sku.getPid());
                 EventBusHelper.post(sku, EVENT_UPDATE_NORMS);
@@ -157,12 +124,12 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         dismiss();
     }
 
-    @Subcriber(tag = NormsSelectAdapter.EVENT_DEFAULT_TAG)
+    @Subcriber(tag = EditNormsSelectAdapter.EVENT_DEFAULT_TAG)
     public void eventDefaultTag(Tag tag) {
         getProductSku(tag);
     }
 
-    @Subcriber(tag = NormsSelectAdapter.EVENT_SEL_TAG)
+    @Subcriber(tag = EditNormsSelectAdapter.EVENT_SEL_TAG)
     public void eventSelTag(Tag tag) {
         getProductSku(tag);
     }
@@ -178,21 +145,10 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
             sku = SpecUtils.getProductSku(skus, mSelTags);
             if (sku != null) {
                 iv_product_icon.setImageURL(sku.getIcon());
-                ll_join_car.setBackgroundResource(R.color.text_main_color_nor);
-                ll_join_car.setClickable(true);
-                tv_product_price.setText(sku.getPrice());
                 adapter.resetAmount();
             } else {
-                ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
-                ll_join_car.setClickable(false);
             }
         }
     }
 
-    @Subcriber(tag = NormsSelectAdapter.EVENT_COUNT)
-    public void eventCount(int count) {
-        String string = MathUtils.multiplication(sku.getPrice(), count);
-        this.count = string;
-        tv_product_price.setText(string);
-    }
 }
