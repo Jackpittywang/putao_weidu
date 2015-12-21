@@ -37,6 +37,7 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
 
     private ApplyListAdapter adapter;
     private String action_id;
+    private int page;
 
     @Override
     protected int getLayoutId() {

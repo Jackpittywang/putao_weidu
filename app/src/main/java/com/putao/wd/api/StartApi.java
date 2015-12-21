@@ -21,6 +21,7 @@ import com.sunnybear.library.util.StringUtils;
 public class StartApi {
     private static final String REQUEST_ACTION_ID = "eventId";//活动id
     private static final String REQUEST_INDEX = "index";//页码
+    private static final String REQUEST_PAGE = "page";//页码
 
     private static final String REQUEST_USER_ID = "user_id";//用户ID
     private static final String REQUEST_IDENTITY = "identity";//家长身份
@@ -235,8 +236,9 @@ public class StartApi {
      *
      * @param action_id 活动ID
      */
-    public static Request getCommentList(String action_id) {
+    public static Request getCommentList(String page, String action_id) {
         return FormEncodingRequestBuilder.newInstance()
+                .addParam(REQUEST_PAGE, page)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_COMMENT_LIST);
     }

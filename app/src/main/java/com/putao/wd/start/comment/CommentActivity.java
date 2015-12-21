@@ -67,6 +67,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private int position;
     private boolean isReply;
     private boolean hasComment;
+    private int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -78,7 +79,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         addNavigation();
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
-        refresh();
+        Bundle bundle = getIntent().getExtras();
+        action_id = bundle.getString("action_id");
         getCommentList();
         addListener();
 
@@ -125,12 +127,24 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
+                page = 1;
+                rv_content.reset();
+                networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
                     @Override
-                    public void run() {
+                    public void onSuccess(String url, CommentList result) {
+                        if (result.getCurrent_page() != result.getTotal_page()) {
+                            adapter.replaceAll(result.getComment());
+                            hasComment = true;
+                            rv_content.loadMoreComplete();
+                            page++;
+                        } else {
+                            rv_content.noMoreLoading();
+                            hasComment = false;
+                        }
+                        loading.dismiss();
                         ptl_refresh.refreshComplete();
                     }
-                }, 3 * 1000);
+                });
             }
         });
     }
@@ -139,6 +153,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
      * 添加监听器
      */
     private void addListener() {
+        refresh();
+
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -198,9 +214,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
      * 获取评论列表
      */
     private void getCommentList() {
-        Bundle bundle = getIntent().getExtras();
-        action_id = bundle.getString("action_id");
-        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
+        networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
@@ -208,6 +222,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     adapter.replaceAll(result.getComment());
                     hasComment = true;
                     rv_content.loadMoreComplete();
+                    page++;
                 } else {
                     rv_content.noMoreLoading();
                     hasComment = false;
