@@ -23,54 +23,27 @@ import butterknife.Bind;
  * 编辑产品规格选择适配器
  * Created by wangou on 2015/11/30.
  */
-public class EditNormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
+public class EditNormsSelectAdapter extends BasicAdapter<Norms, EditNormsSelectAdapter.NormsSelectViewHolder> {
     public static final String EVENT_SEL_TAG = "sel_tag";
     public static final String EVENT_DEFAULT_TAG = "default_tag";
-    public static final String EVENT_COUNT = "count";
 
-    private static final int TYPE_NORMS = 1;
-    private static final int TYPE_COUNT = 2;
-
-    private String operateType;//操作类型（添加、修改）
-
-    public EditNormsSelectAdapter(Context context, List<Norms> normses, String operateType) {
+    public EditNormsSelectAdapter(Context context, List<Norms> normses) {
         super(context, normses);
-        this.operateType=operateType;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1)
-            return TYPE_COUNT;
-        return TYPE_NORMS;
-    }
 
     @Override
     public int getLayoutId(int viewType) {
-        switch (viewType) {
-            case TYPE_NORMS:
-                return R.layout.popup_shopping_car_item_norms;
-            case TYPE_COUNT:
-                return R.layout.popup_shopping_car_item_count;
-        }
-        return 0;
+        return R.layout.popup_shopping_car_item_norms;
     }
 
     @Override
-    public BasicViewHolder getViewHolder(View itemView, int viewType) {
-        switch (viewType) {
-            case TYPE_NORMS:
-                return new NormsSelectViewHolder(itemView);
-            case TYPE_COUNT:
-                return new CountSelectViewHolder(itemView);
-        }
-        return null;
+    public NormsSelectViewHolder getViewHolder(View itemView, int viewType) {
+        return new NormsSelectViewHolder(itemView);
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, Norms norms, int position) {
-        if (holder instanceof NormsSelectViewHolder) {
-            NormsSelectViewHolder viewHolder = (NormsSelectViewHolder) holder;
+    public void onBindItem(NormsSelectViewHolder viewHolder, Norms norms, int position) {
             viewHolder.tv_title.setText(norms.getTitle());
             viewHolder.tb_tag.addTags(norms.getTags(), 0);
             EventBusHelper.post(viewHolder.tb_tag.getTag(0), EVENT_DEFAULT_TAG);//传递默认选中值
@@ -80,21 +53,7 @@ public class EditNormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder>
                     EventBusHelper.post(tag, EVENT_SEL_TAG);
                 }
             });
-        } else if (holder instanceof CountSelectViewHolder) {
-            CountSelectViewHolder viewHolder = (CountSelectViewHolder) holder;
-            if("update".equals(operateType)) {
-                viewHolder.rl_count.setVisibility(View.GONE);//当为修改产品规格时，隐藏编辑产品数量
-            }else{
-                if (StringUtils.equals("reset", norms.getTitle()))
-                    viewHolder.al_count.reset();
-                viewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
-                    @Override
-                    public void onAmountSelected(int count, boolean isPlus) {
-                        EventBusHelper.post(count, EVENT_COUNT);
-                    }
-                });
-            }
-        }
+
     }
 
     public void resetAmount() {
@@ -117,17 +76,4 @@ public class EditNormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder>
         }
     }
 
-    /**
-     * 数量选择
-     */
-    static class CountSelectViewHolder extends BasicViewHolder {
-        @Bind(R.id.rl_count)
-        RelativeLayout rl_count;
-        @Bind(R.id.al_count)
-        AmountSelectLayout al_count;
-
-        public CountSelectViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 }
