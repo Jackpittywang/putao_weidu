@@ -31,11 +31,8 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
     private static final int TYPE_NORMS = 1;
     private static final int TYPE_COUNT = 2;
 
-    private String operateType;//操作类型（添加、修改）
-
-    public NormsSelectAdapter(Context context, List<Norms> normses,String operateType) {
+    public NormsSelectAdapter(Context context, List<Norms> normses) {
         super(context, normses);
-        this.operateType=operateType;
     }
 
     @Override
@@ -82,18 +79,14 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
             });
         } else if (holder instanceof CountSelectViewHolder) {
             CountSelectViewHolder viewHolder = (CountSelectViewHolder) holder;
-            if("update".equals(operateType)) {
-                viewHolder.rl_count.setVisibility(View.GONE);//当为修改产品规格时，隐藏编辑产品数量
-            }else{
-                if (StringUtils.equals("reset", norms.getTitle()))
-                    viewHolder.al_count.reset();
-                viewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
-                    @Override
-                    public void onAmountSelected(int count, boolean isPlus) {
-                        EventBusHelper.post(count, EVENT_COUNT);
-                    }
-                });
-            }
+            if (StringUtils.equals("reset", norms.getTitle()))
+                viewHolder.al_count.reset();
+            viewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
+                @Override
+                public void onAmountSelected(int count, boolean isPlus) {
+                    EventBusHelper.post(count, EVENT_COUNT);
+                }
+            });
         }
     }
 
