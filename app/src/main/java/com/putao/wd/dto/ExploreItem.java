@@ -1,88 +1,31 @@
 package com.putao.wd.dto;
 
-import java.io.Serializable;
+import com.putao.wd.model.ExploreProduct;
+import com.putao.wd.model.Page;
+
+import java.util.List;
 
 /**
  * 探索号bean文件
  * Created by yanghx on 2015/12/8.
  */
 @Deprecated
-public class ExploreItem implements Serializable {
+public class ExploreItem extends Page {
 
-    private String id;
-    private String date;
-    private String iconUrl;
-    private int iconNum;//图文混排排时显示图片张数
-    private boolean isMixed;//状态值 false表示全图片 true表示图文混排
-    private String skill_name;
-    private String content;
+   private List<ExploreProduct> data;
 
-    public String getId() {
-        return id;
+    public List<ExploreProduct> getData() {
+        return data;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
-    public int getIconNum() {
-        return iconNum;
-    }
-
-    public void setIconNum(int iconNum) {
-        this.iconNum = iconNum;
-    }
-
-    public boolean isMixed() {
-        return isMixed;
-    }
-
-    public void setIsMixed(boolean isMixed) {
-        this.isMixed = isMixed;
-    }
-
-    public String getSkill_name() {
-        return skill_name;
-    }
-
-    public void setSkill_name(String skill_name) {
-        this.skill_name = skill_name;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setData(List<ExploreProduct> data) {
+        this.data = data;
     }
 
     @Override
     public String toString() {
         return "ExploreItem{" +
-                "id='" + id + '\'' +
-                ", date='" + date + '\'' +
-                ", iconUrl='" + iconUrl + '\'' +
-                ", iconNum=" + iconNum +
-                ", isMixed=" + isMixed +
-                ", skill_name='" + skill_name + '\'' +
-                ", content='" + content + '\'' +
+                "data=" + data +
                 '}';
     }
 }

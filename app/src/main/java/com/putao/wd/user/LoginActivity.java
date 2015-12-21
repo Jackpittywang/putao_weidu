@@ -17,6 +17,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 
 import butterknife.Bind;
@@ -73,7 +74,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 
                             @Override
                             public void onError(String error_msg) {
-//                                ToastUtils.showToastLong(mContext, error_msg);
+                                ToastUtils.showToastLong(mContext, error_msg);
 //                                mErrorCount++;
 //                                if (mErrorCount == 3)
 //                                    rl_graph_verify.setVisibility(View.VISIBLE);

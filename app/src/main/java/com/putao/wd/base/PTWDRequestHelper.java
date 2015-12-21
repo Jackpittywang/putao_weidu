@@ -28,7 +28,19 @@ public class PTWDRequestHelper {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
                 .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken());
+    }
 
+    /**
+     * 封装固定请求参数(葡商城使用)
+     *
+     * @return Request实例
+     */
+    public static FormEncodingRequestBuilder start() {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
 
     /**
