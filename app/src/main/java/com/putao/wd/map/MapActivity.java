@@ -9,6 +9,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.MapInfo;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 
@@ -35,36 +36,35 @@ public class MapActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        mBaiduMap = mv_map.getMap();
+
         action_id = args.getString(KEY_ACTION_ID);
         networkRequest(StartApi.getMap(action_id),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
+                new SimpleFastJsonCallback<MapInfo>(MapInfo.class, loading) {
                     @Override
-                    public void onSuccess(String url, String result) {
-
+                    public void onSuccess(String url, final MapInfo result) {
+                        MapUtils.searchAddress(mContext, "", result.getVenue(), new MapUtils.OnSearchMapCallback() {
+                            @Override
+                            public void onSearchMap(LatLng latLng) {
+                                mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
+                                mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
+                                mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+                                        ToastUtils.showToastLong(mContext, marker.getTitle());
+                                        return true;
+                                    }
+                                });
+                                loading.dismiss();
+                            }
+                        });
                     }
                 });
-//        mBaiduMap = mv_map.getMap();
-//        loading.show();
-//        MapUtils.searchAddress(mContext, "", address, new MapUtils.OnSearchMapCallback() {
-//            @Override
-//            public void onSearchMap(LatLng latLng) {
-//                mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
-//                mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, address, R.drawable.icon_logistics_flow_latest));
-//                mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-//                    @Override
-//                    public boolean onMarkerClick(Marker marker) {
-//                        ToastUtils.showToastLong(mContext, marker.getTitle());
-//                        return true;
-//                    }
-//                });
-//                loading.dismiss();
-//            }
-//        });
     }
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{StartApi.URL_MAP};
     }
 
     @Override
