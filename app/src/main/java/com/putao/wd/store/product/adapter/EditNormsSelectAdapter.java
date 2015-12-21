@@ -56,12 +56,6 @@ public class EditNormsSelectAdapter extends BasicAdapter<Norms, EditNormsSelectA
 
     }
 
-    public void resetAmount() {
-        Norms norms = new Norms();
-        norms.setTitle("reset");
-        replace(getItemCount() - 1, norms);
-    }
-
     /**
      * 规格选择
      */

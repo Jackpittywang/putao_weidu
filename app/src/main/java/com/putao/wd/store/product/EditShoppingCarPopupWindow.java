@@ -145,8 +145,6 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
             sku = SpecUtils.getProductSku(skus, mSelTags);
             if (sku != null) {
                 iv_product_icon.setImageURL(sku.getIcon());
-                adapter.resetAmount();
-            } else {
             }
         }
     }
