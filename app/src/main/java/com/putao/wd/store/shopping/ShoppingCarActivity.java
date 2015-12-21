@@ -16,6 +16,7 @@ import com.putao.wd.model.EditShopCart;
 import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.cashier.CashierActivity;
+import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.product.EditShoppingCarPopupWindow;
 import com.putao.wd.store.product.ShoppingCarPopupWindow;
 import com.putao.wd.store.product.adapter.NormsSelectAdapter;
@@ -185,7 +186,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 break;
             case R.id.ll_closing://去结算/删除
                 if(isEditable) {
-                    startActivity(CashierActivity.class);
+                    startActivity(WriteOrderActivity.class);
                 }
                 else{
                     Iterator iter = adapter.map.keySet().iterator();
