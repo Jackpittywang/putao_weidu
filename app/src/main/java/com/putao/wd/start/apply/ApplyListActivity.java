@@ -28,8 +28,8 @@ import butterknife.Bind;
  * Created by wango on 2015/12/4.
  */
 public class ApplyListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
-    @Bind(R.id.brv_applylist)
-    LoadMoreRecyclerView brv_applylist;//报名列表
+    @Bind(R.id.rv_content)
+    LoadMoreRecyclerView rv_content;//报名列表
     @Bind(R.id.tv_nomore)
     TextView tv_nomore;//没有更多
     @Bind(R.id.ll_applylist)
@@ -49,7 +49,7 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
         addNavigation();
 
         adapter = new ApplyListAdapter(mContext, null);
-        brv_applylist.setAdapter(adapter);
+        rv_content.setAdapter(adapter);
         Bundle bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
 
@@ -58,13 +58,9 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     }
 
     private void addListener() {
-        this.brv_applylist.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             public void onLoadMore() {
-                (new Handler()).postDelayed(new Runnable() {
-                    public void run() {
-                        getEnrollment();
-                    }
-                }, 3000L);
+                getEnrollment();
             }
         });
     }
@@ -73,15 +69,16 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
      * 获取报名列表
      */
     private void getEnrollment() {
-        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ActionEnrollmentList>(ActionEnrollmentList.class, loading) {
+        networkRequest(StartApi.getEnrollment(String.valueOf(page), action_id), new SimpleFastJsonCallback<ActionEnrollmentList>(ActionEnrollmentList.class, loading) {
             @Override
             public void onSuccess(String url, ActionEnrollmentList result) {
                 Logger.i("报名列表请求成功");
-                List<ActionEnrollment> actionEnrollmentList = result.getComment();
-                if (actionEnrollmentList.size() != 0) {
-                    adapter.replaceAll(actionEnrollmentList);
+                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
+                    adapter.replaceAll(result.getComment());
+                    rv_content.loadMoreComplete();
+                    page++;
                 } else {
-                    brv_applylist.noMoreLoading();
+                    rv_content.noMoreLoading();
                 }
                 loading.dismiss();
             }

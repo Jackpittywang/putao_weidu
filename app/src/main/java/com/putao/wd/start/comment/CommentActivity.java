@@ -132,7 +132,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
                     @Override
                     public void onSuccess(String url, CommentList result) {
-                        if (result.getCurrent_page() != result.getTotal_page()) {
+                        if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
                             adapter.replaceAll(result.getComment());
                             hasComment = true;
                             rv_content.loadMoreComplete();
