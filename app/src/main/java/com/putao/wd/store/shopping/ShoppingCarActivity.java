@@ -16,6 +16,7 @@ import com.putao.wd.model.EditShopCart;
 import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.cashier.CashierActivity;
+import com.putao.wd.store.product.EditShoppingCarPopupWindow;
 import com.putao.wd.store.product.ShoppingCarPopupWindow;
 import com.putao.wd.store.product.adapter.NormsSelectAdapter;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
@@ -36,8 +37,8 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * 购物车
- * Created by guchenkai on 2015/12/4.
+ * 编辑购物车规格
+ * Created by wangou on 2015/12/4.
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener,ShoppingCarAdapter.OnUpdateNorms{
     //    @Bind(R.id.rv_cars_info)
@@ -62,7 +63,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
     private boolean isEditable=true;
-    private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
+    private EditShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
     private int update_position=-1;
     @Override
     protected int getLayoutId() {
@@ -254,11 +255,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void updateNorms(String pid,int position) {
         this.update_position=position;
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,pid,"update");
+        mShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext,pid,"update");
         mShoppingCarPopupWindow.show(rl_shopping_car);
     }
 
-    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
+    @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
     public void eventUpdateNorms(ProductNormsSku sku) {
         adapter.updateUINorm(update_position,sku);
     }
