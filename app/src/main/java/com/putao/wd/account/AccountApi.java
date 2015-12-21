@@ -1,10 +1,12 @@
 package com.putao.wd.account;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.PreferenceUtils;
 
 import java.security.MessageDigest;
 import java.util.Comparator;
@@ -157,22 +159,21 @@ public class AccountApi {
     /**
      * 修改密码
      *
-     * @param uid           账号
      * @param oldPassword   旧密码
-     * @param resetPassword 新密码确认
-     * @param token         令牌
+     * @param newPassword   新密码
+     * @param repeatPassword 新密码确认
      */
-    public static Request updatePassword(String uid, String oldPassword, String newPassword, String resetPassword, String token) {
+    public static Request updatePassword(String oldPassword, String newPassword, String repeatPassword) {
         return FormEncodingRequestBuilder.newInstance()
-                .addParam(AccountConstants.Parameter.PARAM_UID, uid)
-                .addParam(AccountConstants.Parameter.PARAM_OLD_PASSWD, oldPassword)
-                .addParam(AccountConstants.Parameter.PARAM_PASSWD_ONCE, newPassword)
-                .addParam(AccountConstants.Parameter.PARAM_PASSWD_TWICE, resetPassword)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION)
                 .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
-                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
-                .addParam(AccountConstants.Parameter.PARAM_TOKEN, token)
-                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
+                .addParam(AccountConstants.Parameter.PARAM_OLD_PASSWD, oldPassword)
+                .addParam(AccountConstants.Parameter.PARAM_PASSWD_ONCE, newPassword)
+                .addParam(AccountConstants.Parameter.PARAM_PASSWD_TWICE, repeatPassword)
                 .build(RequestMethod.POST, URL_UPDATE_PASSWORD);
     }
 
