@@ -67,8 +67,9 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         }
         holder.iv_car_icon.setImageURL(shoppingCar.getIcon());
         holder.tv_title.setText(shoppingCar.getTitle());
-        holder.tv_color.setText(shoppingCar.getColor());
-        holder.tv_size.setText(shoppingCar.getSku());
+        holder.tv_sku.setText(shoppingCar.getSku());
+//        holder.tv_color.setText(shoppingCar.getColor());
+//        holder.tv_size.setText(shoppingCar.getSku());
         holder.tv_money.setText(shoppingCar.getPrice());
         if (!StringUtils.isEmpty(shoppingCar.getQt())) {
             holder.asl_num_sel.setCount(Integer.parseInt(shoppingCar.getQt()));
@@ -203,10 +204,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         ImageDraweeView iv_car_icon;
         @Bind(R.id.tv_title)
         TextView tv_title;
-        @Bind(R.id.tv_color)
-        TextView tv_color;
-        @Bind(R.id.tv_size)
-        TextView tv_size;
+        @Bind(R.id.tv_sku)
+        TextView tv_sku;
+//        @Bind(R.id.tv_color)
+//        TextView tv_color;
+//        @Bind(R.id.tv_size)
+//        TextView tv_size;
         @Bind(R.id.tv_money)
         TextView tv_money;
         @Bind(R.id.tv_count)
