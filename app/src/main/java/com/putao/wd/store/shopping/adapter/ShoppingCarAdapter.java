@@ -10,6 +10,7 @@ import com.putao.wd.R;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.ProductNormsSku;
+import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
@@ -185,10 +186,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      */
     public void updateUINorm(int position,Cart updateCart){
         Cart cart=ShoppingCarts.get(position);
-        cart.setColor(updateCart.getPid());
+        cart.setPid(updateCart.getPid());
         cart.setPrice(updateCart.getPrice());
         cart.setSku(updateCart.getSku());
-        replace(position,cart);
+        replace(position, cart);
+        ShoppingCarts.set(position, cart);
+        map.put(position, cart);
     }
 
 
