@@ -57,7 +57,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 if (11 != et_mobile.getText().toString().length() || "" == et_mobile.getText().toString().trim())
                     ToastUtils.showToastLong(mContext, "请输入正确手机号码");
                 else
-//                    startFragment(ResetPasswordFragment.class);
+                    startActivity(ResetPasswordAcitivity.class);
                 break;
             case R.id.tb_get_verify://获取验证码
                 String mobile = et_mobile.getText().toString();

@@ -12,6 +12,7 @@ import com.putao.wd.account.AccountCallback;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -58,6 +59,7 @@ public class ModifyPasswardActivity extends PTWDActivity<GlobalApplication> {
 
             @Override
             public void onError(String error_msg) {
+                ToastUtils.showToastLong(mContext, error_msg);
             }
         });
     }
