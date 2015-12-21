@@ -260,7 +260,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
-    public void eventUpdateNorms(ProductNormsSku sku) {
-        adapter.updateUINorm(update_position,sku);
+    public void eventUpdateNorms(Cart cart) {
+        adapter.updateUINorm(update_position,cart);
     }
 }

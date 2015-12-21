@@ -57,6 +57,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     private int mSpecItemCount;
     private List<ProductNormsSku> skus;
     private ProductNormsSku sku;//选中的商品
+    private List<Norms> normses;//规格列表
 
     public EditShoppingCarPopupWindow(Context context, String pid) {
         super(context);
@@ -82,7 +83,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
                     public void onSuccess(String url, ProductNorms result) {
                         mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
                         skus = result.getSku();
-                        List<Norms> normses = SpecUtils.getNormses(result.getSpec());
+                        normses = SpecUtils.getNormses(result.getSpec());
                         adapter = new EditNormsSelectAdapter(mActivity, normses);
                         rv_norms.setAdapter(adapter);
                     }
@@ -110,8 +111,17 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
         switch (v.getId()) {
             case R.id.tv_confirm_update://修改购物车产品规格参数
-                cartChange(product_id,sku.getPid());
-                EventBusHelper.post(sku, EVENT_UPDATE_NORMS);
+                cartChange(product_id, sku.getPid());
+                String strSku=null;
+                for (int i = 0; i < normses.size(); i++) {
+                    strSku=strSku+normses.get(i).getTitle().substring(2)+":"+mSelTags.get(i).getText()+" ";
+                }
+                Cart cart=new Cart();
+                cart.setPrice(sku.getPrice());
+                cart.setSku(strSku);
+                cart.setPid(sku.getPid());
+                sku.setQuantity(strSku);//临时保存返回到购物车主界面的规格
+                EventBusHelper.post(cart, EVENT_UPDATE_NORMS);
                 break;
         }
         dismiss();
