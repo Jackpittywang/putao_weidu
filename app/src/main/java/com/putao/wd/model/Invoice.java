@@ -3,6 +3,7 @@ package com.putao.wd.model;
 import java.io.Serializable;
 
 /**
+ * 发票
  * Created by wango on 2015/12/20.
  */
 public class Invoice implements Serializable {
