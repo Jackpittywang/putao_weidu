@@ -3,20 +3,27 @@ package com.putao.wd.store.shopping;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ShoppingCar;
+import com.putao.wd.explore.manage.UseCountEveryDayFragment;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.EditShopCart;
+import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.cashier.CashierActivity;
+import com.putao.wd.store.product.ShoppingCarPopupWindow;
+import com.putao.wd.store.product.adapter.NormsSelectAdapter;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -32,7 +39,7 @@ import butterknife.OnClick;
  * 购物车
  * Created by guchenkai on 2015/12/4.
  */
-public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener{
+public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener,ShoppingCarAdapter.OnUpdateNorms{
     //    @Bind(R.id.rv_cars_info)
 //    BasicRecyclerView rv_cars_info;
 //    @Bind(R.id.rv_cars_null)
@@ -49,11 +56,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     LinearLayout ll_closing;//结算区域
     @Bind(R.id.tv_closing)
     TextView tv_closing;//结算
+    @Bind(R.id.rl_shopping_car)
+    RelativeLayout rl_shopping_car;//购物车布局
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
     private boolean isEditable=true;
-
+    private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
+    private int update_position=-1;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_shopping_car;
@@ -63,7 +73,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         addListener();
-
         getCart();
 
     }
@@ -79,13 +88,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 List<Cart> cars = sort(result.getUse());
                 adapter = new ShoppingCarAdapter(mContext, cars);
                 rv_cars.setAdapter(adapter);
+                adapter.setOnUpdateNorms(ShoppingCarActivity.this);
                 adapter.notifyDataSetChanged();
                 tv_money.setText(caculateSumMoney());
             }
 
         });
     }
-
 
     /**
      * 编辑购物车
@@ -108,18 +117,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return sum;
     }
 
-    /**
-     * 更改商品规格购物车
-     */
-    private void cartChange(String old_pid,String new_pid){
-        networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
-                Logger.d(result.toString());
-            }
 
-        });
-    }
 
     /**
      * 删除购物车
@@ -219,12 +217,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onRightAction() {
         if (adapter.getItemState()) {
-            if(isEditable) {//编辑
+            if(isEditable && adapter.map.size()!=0) {//编辑
                 ToastUtils.showToastShort(this, "点击编辑");
                 adapter.updateItem();//变成可编辑
                 setRightTitle("完成");
                 isEditable=false;
-
                 ll_money.setVisibility(View.INVISIBLE);
                 tv_closing.setText("删除");
             }else {//完成
@@ -253,4 +250,16 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         }
     }
 
+    //修改规格参数
+    @Override
+    public void updateNorms(String pid,int position) {
+        this.update_position=position;
+        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,pid,"update");
+        mShoppingCarPopupWindow.show(rl_shopping_car);
+    }
+
+    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
+    public void eventUpdateNorms(ProductNormsSku sku) {
+        adapter.updateUINorm(update_position,sku);
+    }
 }

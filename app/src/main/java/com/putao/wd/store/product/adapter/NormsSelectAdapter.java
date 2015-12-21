@@ -2,6 +2,7 @@ package com.putao.wd.store.product.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -30,8 +31,11 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
     private static final int TYPE_NORMS = 1;
     private static final int TYPE_COUNT = 2;
 
-    public NormsSelectAdapter(Context context, List<Norms> normses) {
+    private String operateType;//操作类型（添加、修改）
+
+    public NormsSelectAdapter(Context context, List<Norms> normses,String operateType) {
         super(context, normses);
+        this.operateType=operateType;
     }
 
     @Override
@@ -78,14 +82,18 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
             });
         } else if (holder instanceof CountSelectViewHolder) {
             CountSelectViewHolder viewHolder = (CountSelectViewHolder) holder;
-            if (StringUtils.equals("reset", norms.getTitle()))
-                viewHolder.al_count.reset();
-            viewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
-                @Override
-                public void onAmountSelected(int count, boolean isPlus) {
-                    EventBusHelper.post(count, EVENT_COUNT);
-                }
-            });
+            if("update".equals(operateType)) {
+                viewHolder.rl_count.setVisibility(View.GONE);//当为修改产品规格时，隐藏编辑产品数量
+            }else{
+                if (StringUtils.equals("reset", norms.getTitle()))
+                    viewHolder.al_count.reset();
+                viewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
+                    @Override
+                    public void onAmountSelected(int count, boolean isPlus) {
+                        EventBusHelper.post(count, EVENT_COUNT);
+                    }
+                });
+            }
         }
     }
 
@@ -113,6 +121,8 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
      * 数量选择
      */
     static class CountSelectViewHolder extends BasicViewHolder {
+        @Bind(R.id.rl_count)
+        RelativeLayout rl_count;
         @Bind(R.id.al_count)
         AmountSelectLayout al_count;
 

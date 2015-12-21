@@ -2,12 +2,14 @@ package com.putao.wd.store.shopping.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.model.Cart;
+import com.putao.wd.model.ProductNormsSku;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
@@ -86,6 +88,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
             }
         });
 
+        //修改购买数量
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override
             public void onAmountSelected(int count, boolean isPlus) {
@@ -94,7 +97,25 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
             }
         });
 
+        //修改规格参数
+        holder.iv_update_norms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUpdateNorms.updateNorms(shoppingCar.getPid(),position);
+            }
+        });
+
     }
+
+    //定义修改购物车商品规格参数回调函数
+    public interface OnUpdateNorms{
+        void updateNorms(String pid,int position);
+    }
+    private OnUpdateNorms onUpdateNorms;
+    public void setOnUpdateNorms(OnUpdateNorms onUpdateNorms){
+        this.onUpdateNorms=onUpdateNorms;
+    }
+
 
     /**
      * 全部选中
@@ -116,10 +137,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
             if (cart.isSelect()) {
                 holder.asl_num_sel.setVisibility(View.VISIBLE);
                 holder.ll_info.setVisibility(View.GONE);
+                holder.iv_update_norms.setVisibility(View.VISIBLE);
             }
         } else {
             holder.asl_num_sel.setVisibility(View.GONE);
             holder.ll_info.setVisibility(View.VISIBLE);
+            holder.iv_update_norms.setVisibility(View.GONE);
         }
     }
 
@@ -157,6 +180,18 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     }
 
     /**
+     * 根据修改操作实时更新UI的规格参数
+     */
+    public void updateUINorm(int position,ProductNormsSku sku){
+        Cart cart=ShoppingCarts.get(position);
+        cart.setColor(sku.getPid());
+        cart.setPrice(sku.getPrice());
+        cart.setSku("hello");
+        replace(position,cart);
+    }
+
+
+    /**
      * 购物车视图
      */
     static class ShoppingCarViewHolder extends BasicViewHolder {
@@ -182,6 +217,8 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         LinearLayout ll_info;
         @Bind(R.id.asl_num_sel)
         AmountSelectLayout asl_num_sel;
+        @Bind(R.id.iv_update_norms)
+        ImageView iv_update_norms;
 
         public ShoppingCarViewHolder(View itemView) {
             super(itemView);

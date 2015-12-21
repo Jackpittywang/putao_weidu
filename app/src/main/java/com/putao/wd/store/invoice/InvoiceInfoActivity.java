@@ -5,9 +5,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Cart;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -75,6 +81,25 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onRightAction() {
+
+
+    }
+
+    /**
+     * 编辑发票
+     */
+    private void editInvoice(String invoice_id,String invoice_type,String invoice_content,String invoice_title){
+        networkRequest(StoreApi.editInvoice(invoice_id,invoice_type,invoice_content,invoice_title), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Cart> result) {
+                Logger.d(result.toString());
+
+            }
+
+        });
+    }
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
         switch (v.getId()){

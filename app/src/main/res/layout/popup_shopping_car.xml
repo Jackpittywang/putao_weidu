@@ -103,15 +103,22 @@
 
         </LinearLayout>
 
-        <!--加入购物车-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:background="@color/background_F5F5F5"
-            android:orientation="horizontal">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+            <!--加入购物车-->
             <LinearLayout
+                android:id="@+id/ll_add_shopcart"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom"
+                android:visibility="gone"
+                android:background="@color/background_F5F5F5"
+                android:orientation="horizontal">
+
+                <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.6"
@@ -144,7 +151,7 @@
                     android:textSize="@dimen/text_size_20sp" />
             </LinearLayout>
 
-            <LinearLayout
+                <LinearLayout
                 android:id="@+id/ll_join_car"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -161,6 +168,18 @@
                     android:textColor="@color/text_color_white"
                     android:textSize="@dimen/text_size_20sp" />
             </LinearLayout>
-        </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_confirm_update"
+                android:text="确认"
+                android:textSize="@dimen/text_size_18sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@color/color_rectangle_sel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom"/>
+        </FrameLayout>
     </FrameLayout>
 </RelativeLayout>
