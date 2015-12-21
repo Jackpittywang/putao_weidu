@@ -11,7 +11,11 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.UserInfo;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
@@ -30,6 +34,8 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
     CleanableEditText et_mobile;//手机号
     @Bind(R.id.et_sms_verify)
     CleanableEditText et_sms_verify;//获取验证码
+    @Bind(R.id.et_password)
+    CleanableEditText et_password;//密码
 
     @Override
     protected int getLayoutId() {
@@ -52,20 +58,48 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
     @OnClick({R.id.btn_nextstep, R.id.tb_get_verify})
     @Override
     public void onClick(View v) {
+        final String mobile = et_mobile.getText().toString();
         switch (v.getId()) {
             case R.id.btn_nextstep://下一步
-                if (11 != et_mobile.getText().toString().length() || "" == et_mobile.getText().toString().trim())
+                if (11 != et_mobile.getText().toString().length() || "" == et_mobile.getText().toString().trim()) {
                     ToastUtils.showToastLong(mContext, "请输入正确手机号码");
-                else
-                    startActivity(ResetPasswordAcitivity.class);
+                } else {
+                    String smsCode = et_sms_verify.getText().toString();
+                    final String password = et_password.getText().toString();
+                    networkRequest(AccountApi.forget(mobile, smsCode, password), new AccountCallback(loading) {
+
+                        @Override
+                        public void onSuccess(JSONObject result) {
+                            networkRequest(AccountApi.login(mobile, password),
+                                    new AccountCallback(loading) {
+                                        @Override
+                                        public void onSuccess(JSONObject result) {
+                                            AccountHelper.setCurrentUid(result.getString("uid"));
+                                            AccountHelper.setCurrentToken(result.getString("token"));
+                                            checkLogin();
+                                        }
+
+                                        @Override
+                                        public void onError(String error_msg) {
+                                        }
+                                    });
+                        }
+
+                        @Override
+                        public void onError(String error_msg) {
+                            ToastUtils.showToastLong(mContext, error_msg);
+                        }
+                    });
+                }
+//                    startActivity(ResetPasswordAcitivity.class);
+
                 break;
             case R.id.tb_get_verify://获取验证码
-                String mobile = et_mobile.getText().toString();
                 if (StringUtils.isEmpty(mobile)) {
                     ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
-                networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER),
+                networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET),
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
@@ -100,5 +134,19 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    /**
+     * 验证登录
+     */
+    private void checkLogin() {
+        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                AccountHelper.setUserInfo(result);
+                loading.dismiss();
+                finish();
+            }
+        });
     }
 }
