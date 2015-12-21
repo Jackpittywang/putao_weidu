@@ -2,7 +2,6 @@ package com.putao.wd.store.product.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -114,8 +113,6 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
      * 数量选择
      */
     static class CountSelectViewHolder extends BasicViewHolder {
-        @Bind(R.id.rl_count)
-        RelativeLayout rl_count;
         @Bind(R.id.al_count)
         AmountSelectLayout al_count;
 
