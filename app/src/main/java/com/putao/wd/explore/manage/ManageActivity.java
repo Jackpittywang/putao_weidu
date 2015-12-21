@@ -67,9 +67,9 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         bundle = new Bundle();
-        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
+        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, Management result) {
+            public void onSuccess(String url, String result) {
                 Logger.i("探索号管理查询请求成功");
             }
 

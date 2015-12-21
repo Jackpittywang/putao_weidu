@@ -33,6 +33,7 @@ public class PutaoExploreFragment extends PTWDFragment {
     LoadMoreRecyclerView rv_content;
 
     private ExploreAdapter adapter;
+    private int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -46,8 +47,8 @@ public class PutaoExploreFragment extends PTWDFragment {
         setRightTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        getDiaryIndex(3, "", "");
-//        addListener();
+        getDiaryIndex();
+        addListener();
     }
 
     @Override
@@ -69,29 +70,25 @@ public class PutaoExploreFragment extends PTWDFragment {
      * 添加监听器
      */
     private void addListener(){
-//        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                getDiaryIndex(0, "", "");
-//            }
-//        });
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                //getDiaryIndex(0, "", "");
+            }
+        });
     }
 
     /**
      * 获得探索号产品列表
-     * by yanghx
-     * @param slave_device_id 关联设备唯一id，无关注设备时不请求
-     * @param start_time      起始时间的时间戳
-     * @param end_time        结束时间的时间戳
      */
-    private void getDiaryIndex(int slave_device_id, String start_time, String end_time) {
-        networkRequest(ExploreApi.getDiaryIndex(String.valueOf(slave_device_id), start_time, end_time),
+    private void getDiaryIndex() {
+        networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
                 new SimpleFastJsonCallback<ArrayList<ExploreProduct>>(ExploreProduct.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ExploreProduct> result) {
                         Logger.d(result.toString());
-                        Logger.i("pt", "探索号请求成功");
-                        if (null != result) {
+                        Logger.i("探索号请求成功");
+                        if (result.size() != 0) {
                             rl_empty.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
@@ -103,44 +100,6 @@ public class PutaoExploreFragment extends PTWDFragment {
                     }
                 });
     }
-
-//    private List<ExploreItem> getTestData() {
-//        List<ExploreItem> list = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            ExploreItem exploreItem = new ExploreItem();
-//            if (i == 1 || i == 3 || i == 5) {
-//                exploreItem.setIsMixed(true);
-//                switch (i) {
-//                    case 1:
-//                        exploreItem.setIconNum(1);
-//                        break;
-//                    case 3:
-//                        exploreItem.setIconNum(4);
-//                        break;
-//                    case 5:
-//                        exploreItem.setIconNum(9);
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            } else {
-//                exploreItem.setIsMixed(false);
-//            }
-//            if (i < 4) {
-//                exploreItem.setDate("2015-12-10");
-//            } else if (i >= 4 && i < 7) {
-//                exploreItem.setDate("2015-12-09");
-//            } else {
-//                exploreItem.setDate("2015-12-08");
-//            }
-//            exploreItem.setSkill_name("技能" + i);
-//            exploreItem.setContent("这里显示每个关卡背后的教育理念的主要文字，大概是一句话左右。" +
-//                    "完成多个关卡，则以分号隔开显示，一直向下展示。这里显示每个关卡背后的教育理念的主要文字，" +
-//                    "大概是一句话左右。完成多个关卡，则以分号隔开显示，一直向下展示。" + i);
-//            list.add(exploreItem);
-//        }
-//        return list;
-//    }
 
     /**
      * 获取剧情理念详情
