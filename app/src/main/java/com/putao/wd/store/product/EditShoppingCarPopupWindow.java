@@ -112,7 +112,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         switch (v.getId()) {
             case R.id.tv_confirm_update://修改购物车产品规格参数
                 cartChange(product_id, sku.getPid());
-                String strSku=null;
+                String strSku="";
                 for (int i = 0; i < normses.size(); i++) {
                     strSku=strSku+normses.get(i).getTitle().substring(2)+":"+mSelTags.get(i).getText()+" ";
                 }
