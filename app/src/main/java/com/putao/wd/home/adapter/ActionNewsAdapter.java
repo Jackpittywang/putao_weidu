@@ -1,6 +1,7 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -71,7 +72,7 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHold
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, ActionNews actionNews, int position) {
+    public void onBindItem(BasicViewHolder holder, final ActionNews actionNews, int position) {
         if (holder instanceof ActionViewHolder) {
             ActionViewHolder viewHolder = (ActionViewHolder) holder;
             viewHolder.iv_action_icon.setImageURL(actionNews.getBanner_url());
@@ -81,7 +82,9 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHold
             viewHolder.tv_address.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.startActivity(MapActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MapActivity.KEY_ACTION_ID, actionNews.getId());
+                    mActivity.startActivity(MapActivity.class, bundle);
                 }
             });
             viewHolder.tv_time.setText(DateUtils.secondToDate(Integer.parseInt(actionNews.getStart_time()), "yyyy.MM.dd"));

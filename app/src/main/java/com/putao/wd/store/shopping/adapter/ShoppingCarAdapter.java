@@ -183,11 +183,11 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     /**
      * 根据修改操作实时更新UI的规格参数
      */
-    public void updateUINorm(int position,ProductNormsSku sku){
+    public void updateUINorm(int position,Cart updateCart){
         Cart cart=ShoppingCarts.get(position);
-        cart.setColor(sku.getPid());
-        cart.setPrice(sku.getPrice());
-        cart.setSku("hello");
+        cart.setColor(updateCart.getPid());
+        cart.setPrice(updateCart.getPrice());
+        cart.setSku(updateCart.getSku());
         replace(position,cart);
     }
 
