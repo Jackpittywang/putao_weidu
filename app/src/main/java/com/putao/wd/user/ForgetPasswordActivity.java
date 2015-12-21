@@ -15,6 +15,8 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -145,8 +147,15 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
                 loading.dismiss();
+                ActivityManager.getInstance().finishActivity(LoginActivity.class);
                 finish();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
     }
 }
