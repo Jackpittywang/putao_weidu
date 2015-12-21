@@ -46,16 +46,6 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         }
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        ExploreItem exploreItem = getItem(position);
-//        if (exploreItem.isMixed()) {
-//            return TYPE_INSTRUCTION;
-//        } else {
-//            return TYPE_USE;
-//        }
-//    }
-
     @Override
     public int getLayoutId(int viewType) {
         switch (viewType) {
@@ -85,47 +75,48 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         if (null != exploreProduct) {
             //Logger.i(exploreProduct.toString());
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-            String date = DateUtils.secondToDate(exploreProduct.getTime(), DATE_PATTERN);
-            viewHolder.tv_date.setText(date);
-            viewHolder.tv_introduct.setText(exploreProduct.getDay_summary());
+//            String date = DateUtils.secondToDate(exploreProduct.getTime(), DATE_PATTERN);
+            viewHolder.tv_date.setText(exploreProduct.getTime());
+            viewHolder.tv_introduct.setText(exploreProduct.getSummary());
+            viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
 
-            List<ExploreProductData> product_list = exploreProduct.getProduct_list();
-            if (null != product_list && product_list.size() > 0) {
-                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                for (int i = 0; i < product_list.size(); i++) {
-                    ExploreProductData exploreProductData = product_list.get(i);
-                    viewHolder.iv_skill_icon.setImageURL(exploreProductData.getProduct_icon());
-                    viewHolder.tv_skill_name.setText(exploreProductData.getProduct_name());
-
-                    ExploreProductDataList data_list = exploreProductData.getData_list();
-                    if (null != data_list) {
-                        List<ExploreProductDataDaily> daily_list = data_list.getDaily_list();
-                        List<ExploreProductDataPlot> plot_list = data_list.getPlot_list();
-                        if (null != daily_list && daily_list.size() > 0) {
-                            for (int j = 0; j < daily_list.size(); j++) {
-                                ExploreProductDataDaily exploreProductDataDaily = daily_list.get(j);
-                                switch (j) {
-                                    case 0:
-                                        viewHolder.tv_content_head1.setText(exploreProductDataDaily.getContent_head());
-                                        viewHolder.tv_content_center1.setText(exploreProductDataDaily.getContent_center());
-                                        viewHolder.tv_content_footer1.setText(exploreProductDataDaily.getContent_footer());
-                                        break;
-                                    case 1:
-                                        viewHolder.tv_content_head2.setText(exploreProductDataDaily.getContent_head());
-                                        viewHolder.tv_content_center2.setText(exploreProductDataDaily.getContent_center());
-                                        viewHolder.tv_content_footer2.setText(exploreProductDataDaily.getContent_footer());
-                                        break;
-                                    case 2:
-                                        viewHolder.tv_content_head5.setText(exploreProductDataDaily.getContent_head());
-                                        viewHolder.tv_content_center5.setText(exploreProductDataDaily.getContent_center());
-                                        viewHolder.tv_content_footer5.setText(exploreProductDataDaily.getContent_footer());
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+//            List<ExploreProductData> product_list = exploreProduct.getData();
+//            if (null != product_list && product_list.size() > 0) {
+//                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+//                for (int i = 0; i < product_list.size(); i++) {
+//                    ExploreProductData exploreProductData = product_list.get(i);
+//                    viewHolder.iv_skill_icon.setImageURL(exploreProductData.getProduct_icon());
+//                    viewHolder.tv_skill_name.setText(exploreProductData.getProduct_name());
+//
+//                    ExploreProductDataList data_list = exploreProductData.getData_list();
+//                    if (null != data_list) {
+//                        List<ExploreProductDataDaily> daily_list = data_list.getDaily_list();
+//                        List<ExploreProductDataPlot> plot_list = data_list.getPlot_list();
+//                        if (null != daily_list && daily_list.size() > 0) {
+//                            for (int j = 0; j < daily_list.size(); j++) {
+//                                ExploreProductDataDaily exploreProductDataDaily = daily_list.get(j);
+//                                switch (j) {
+//                                    case 0:
+//                                        viewHolder.tv_content_head1.setText(exploreProductDataDaily.getContent_head());
+//                                        viewHolder.tv_content_center1.setText(exploreProductDataDaily.getContent_center());
+//                                        viewHolder.tv_content_footer1.setText(exploreProductDataDaily.getContent_footer());
+//                                        break;
+//                                    case 1:
+//                                        viewHolder.tv_content_head2.setText(exploreProductDataDaily.getContent_head());
+//                                        viewHolder.tv_content_center2.setText(exploreProductDataDaily.getContent_center());
+//                                        viewHolder.tv_content_footer2.setText(exploreProductDataDaily.getContent_footer());
+//                                        break;
+//                                    case 2:
+//                                        viewHolder.tv_content_head5.setText(exploreProductDataDaily.getContent_head());
+//                                        viewHolder.tv_content_center5.setText(exploreProductDataDaily.getContent_center());
+//                                        viewHolder.tv_content_footer5.setText(exploreProductDataDaily.getContent_footer());
+//                                        break;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
 
 

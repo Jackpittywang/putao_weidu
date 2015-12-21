@@ -56,7 +56,7 @@ public class StartApi {
      * 广告图片url请求
      */
     public static Request getBannerList() {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .build(RequestMethod.GET, URL_BANNER);
     }
 
@@ -71,7 +71,7 @@ public class StartApi {
      * @param action_id 活动ID
      */
     public static Request getActionDetail(String action_id) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_ACTION_DETAIL);
     }
@@ -89,11 +89,11 @@ public class StartApi {
      * @param type   活动新闻类型
      */
     public static Request getActionList(String index, String status, String type) {
-        return FormEncodingRequestBuilder.newInstance()
-                .addParam(REQUEST_INDEX, index)
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, index)
                 .addParam(REQUEST_STATUS, status)
                 .addParam(REQUEST_TYPE, type)
-                .build(RequestMethod.POST, URL_ACTION_LIST);
+                .build(RequestMethod.GET, URL_ACTION_LIST);
     }
 
     /**
@@ -120,7 +120,7 @@ public class StartApi {
      * @param action_id 活动ID
      */
     public static Request getEnrollment(String page, String action_id) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_ENROLLMENT);
@@ -144,7 +144,7 @@ public class StartApi {
      * @param msg         留言
      */
     public static Request participateAdd(String action_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
                 .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
@@ -173,7 +173,7 @@ public class StartApi {
      * @param user_id 用户ID
      */
     public static Request getProfile(String user_id) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_USER_ID, user_id)
                 .build(RequestMethod.POST, URL_PROFILE);
     }
@@ -186,15 +186,15 @@ public class StartApi {
     /**
      * comment_id 是必须要传的
      *
-     * @param action_id  活动ID
-     * @param nickname   昵称
-     * @param msg        评论内容
-     * @param type       评论的类型
-     * @param comment_id 当评论类型为REPLY或COMMENT
+     * @param action_id        活动ID
+     * @param nickname         昵称
+     * @param msg              评论内容
+     * @param type             评论的类型
+     * @param comment_id       当评论类型为REPLY或COMMENT
      * @param userProfilePhoto 头像url
      */
     public static Request commentAdd(String action_id, String nickname, String msg, String type, String comment_id, String userProfilePhoto) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+        FormEncodingRequestBuilder builder = PTWDRequestHelper.start()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
                 .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
@@ -221,7 +221,7 @@ public class StartApi {
      * @param comment_id
      */
     public static Request commentRemove(String comment_id) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+        FormEncodingRequestBuilder builder = PTWDRequestHelper.start()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
                 .addParam(REQUEST_COMMENT_ID, comment_id);
         return builder.build(RequestMethod.POST, URL_COMMENT_REMOVE);
@@ -238,7 +238,7 @@ public class StartApi {
      * @param action_id 活动ID
      */
     public static Request getCommentList(String page, String action_id) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_COMMENT_LIST);
@@ -255,7 +255,7 @@ public class StartApi {
      * @param action_id 活动ID
      */
     public static Request getCoolList(String page, String action_id) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_COOL_LIST);
@@ -269,14 +269,14 @@ public class StartApi {
     /**
      * 赞（提交）
      *
-     * @param action_id  活动ID
-     * @param nickname   昵称
-     * @param type       赞的类型 EVENT或COMMENT 活动/评论
-     * @param comment_id 当赞类型为COMMENT时comment_id 是必须要传的
+     * @param action_id        活动ID
+     * @param nickname         昵称
+     * @param type             赞的类型 EVENT或COMMENT 活动/评论
+     * @param comment_id       当赞类型为COMMENT时comment_id 是必须要传的
      * @param userProfilePhoto 头像url
      */
     public static Request coolAdd(String action_id, String nickname, String type, String comment_id, String userProfilePhoto) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+        FormEncodingRequestBuilder builder = PTWDRequestHelper.start()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
                 .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
@@ -306,7 +306,7 @@ public class StartApi {
      * @param type      审核类型
      */
     public static Request auditUser(String user_id, String action_id, AuditType type) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_USER_ID, user_id)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .addParam(REQUEST_STATUS, type.name())
@@ -324,7 +324,7 @@ public class StartApi {
      * @param action_id 活动ID
      */
     public static Request getMap(String action_id) {
-        return FormEncodingRequestBuilder.newInstance()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_MAP);
     }
@@ -340,7 +340,7 @@ public class StartApi {
      * @param msg 问题
      */
     public static Request question(String msg) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+        FormEncodingRequestBuilder builder = PTWDRequestHelper.start()
                 .addParam(REQUEST_MSG, msg);
         String uid = AccountHelper.getCurrentUid();
         if (!StringUtils.isEmpty(uid))

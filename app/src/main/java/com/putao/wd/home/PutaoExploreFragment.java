@@ -9,9 +9,11 @@ import android.widget.RelativeLayout;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.ExploreProduct;
+import com.putao.wd.model.ExploreProductData;
 import com.putao.wd.model.PlotDetail;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -19,6 +21,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -83,19 +86,20 @@ public class PutaoExploreFragment extends PTWDFragment {
      */
     private void getDiaryIndex() {
         networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
-                new SimpleFastJsonCallback<ArrayList<ExploreProduct>>(ExploreProduct.class, loading) {
+                new SimpleFastJsonCallback<ExploreItem>(ExploreItem.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<ExploreProduct> result) {
-                        Logger.d(result.toString());
+                    public void onSuccess(String url, ExploreItem result) {
                         Logger.i("探索号请求成功");
-                        if (result.size() != 0) {
-                            rl_empty.setVisibility(View.GONE);
-                            rv_content.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(result);
-                        }else {
-                            rv_content.setVisibility(View.GONE);
-                            rl_empty.setVisibility(View.VISIBLE);
-                        }
+                        Logger.i("探索号请求结果 = " + result.toString());
+//                        result.get();
+//                        if (true) {
+//                            rl_empty.setVisibility(View.GONE);
+//                            rv_content.setVisibility(View.VISIBLE);
+//                            adapter.replaceAll(result);
+//                        }else {
+//                            rv_content.setVisibility(View.GONE);
+//                            rl_empty.setVisibility(View.VISIBLE);
+//                        }
                         loading.dismiss();
                     }
                 });
