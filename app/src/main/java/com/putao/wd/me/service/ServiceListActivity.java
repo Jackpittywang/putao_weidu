@@ -1,6 +1,7 @@
 package com.putao.wd.me.service;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -37,7 +38,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     @Bind(R.id.rl_no_service)
     RelativeLayout rl_no_service;//没有售后时的布局
 
-    @Bind(R.id.stickyHeaderLayout_sticky)
+    @Nullable
     TitleBar ll_title;
 
     private String TAG = ServiceListActivity.class.getName();
