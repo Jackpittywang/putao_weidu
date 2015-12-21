@@ -10,6 +10,7 @@ import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.message.MessageCenterActivity;
 import com.putao.wd.me.order.OrderListActivity;
+import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.store.order.WriteOrderActivity;
@@ -132,7 +133,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             case R.id.btn_after_sale://售后
                 btn_after_sale.hide();
                 bundle.putInt("current_Index",3);
-                startActivity(OrderListActivity.class, bundle);
+                startActivity(ServiceListActivity.class, bundle);
                 break;
         }
     }
