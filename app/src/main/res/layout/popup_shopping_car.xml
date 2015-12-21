@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_gravity="bottom"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@color/background_F5F5F5"
                 android:orientation="horizontal">
 
@@ -169,17 +169,7 @@
                     android:textSize="@dimen/text_size_20sp" />
             </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:id="@+id/tv_confirm_update"
-                android:text="确认"
-                android:textSize="@dimen/text_size_18sp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:visibility="gone"
-                android:background="@color/color_rectangle_sel"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_gravity="bottom"/>
+
         </FrameLayout>
     </FrameLayout>
 </RelativeLayout>

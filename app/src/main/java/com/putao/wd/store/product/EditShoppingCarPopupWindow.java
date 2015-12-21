@@ -95,9 +95,9 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
      * 更改商品规格购物车
      */
     private void cartChange(String old_pid,String new_pid){
-        mActivity.networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+        mActivity.networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
+            public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
 
             }
@@ -111,8 +111,8 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
         switch (v.getId()) {
             case R.id.tv_confirm_update://修改购物车产品规格参数
-                cartChange(product_id, sku.getPid());
-                String strSku=null;
+                //cartChange(product_id, sku.getPid());
+                String strSku="";
                 for (int i = 0; i < normses.size(); i++) {
                     strSku=strSku+normses.get(i).getTitle().substring(2)+":"+mSelTags.get(i).getText()+" ";
                 }
