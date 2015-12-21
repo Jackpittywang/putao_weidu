@@ -12,6 +12,7 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.PraiseListItem;
 import com.putao.wd.model.Cool;
+import com.putao.wd.model.CoolEventList;
 import com.putao.wd.model.CoolList;
 import com.putao.wd.start.praise.adapter.PraiseListAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -76,7 +77,8 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
             @Override
             public void onSuccess(String url, Cool result) {
                 Logger.i("赞列表获取成功");
-                ArrayList<CoolList> user_list = result.getUser_list();
+                CoolEventList eventCoolList = result.getEventCoolList();
+                ArrayList<CoolList> user_list = eventCoolList.getUser_list();
                 if (user_list.size() != 0) {
                     adapter.replaceAll(user_list);
                 } else {

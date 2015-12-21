@@ -17,12 +17,12 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
@@ -55,6 +55,9 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     TitleBar ll_title;
     @Bind(R.id.tv_actionsdetail_applyusers)
     BasicRecyclerView tv_actionsdetail_applyusers;
+    @Bind(R.id.tv_join)
+    TextView tv_join;
+
 
     private ActionDetail actionDetail;
     private UserIconAdapter adapter;
@@ -80,7 +83,6 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
 
-
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
@@ -89,15 +91,18 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_actionsdetail_status.setText(result.getStatus());
                 tv_actionsdetail_title.setText(result.getLabel());
                 tv_actionsdetail_resume.setText(result.getTitle());
-                tv_count_cool.setText(result.getCountCool()+"");
+                tv_count_cool.setText(result.getCountCool() + "");
                 tv_count_comment.setText(result.getCountComment() + "");
                 List<RegUser> reg_user = result.getReg_user();
+                Logger.i("reg_user = " + reg_user.toString());
                 adapter.replaceAll(reg_user);
                 loadHtml(action_id, action_type);
+                hideJoin(actionDetail);
                 loading.dismiss();
             }
         });
         ll_title.setTitleItemSelectedListener(this);
+
     }
 
     /**
@@ -147,24 +152,47 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         }
     }
 
+    /**
+     * 我要参加按钮的显示控制
+     */
+    private void hideJoin(ActionDetail actionDetail){
+//        actionDetail.getStatus();  //ONGOING  LOOKBACK
+        if ("进行中".equals(actionDetail.getStatus())) {
+            tv_join.setVisibility(View.VISIBLE);
+        } else if("截止".equals(actionDetail.getStatus())) {
+            tv_join.setVisibility(View.GONE);
+        } else if("回顾".equals(actionDetail.getStatus())) {
+            tv_join.setVisibility(View.GONE);
+        }
+    }
+
     //赞或取消赞时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
     public void eventClickComment(boolean isCool) {
-//        if (isCool) {
-//            tv_count_comment.setText(actionDetail.getCountCool()+1 + "");
-//        }else {
-//            tv_count_comment.setText(actionDetail.getCountCool()-1 + "");
-//        }
+        if (isCool) {
+            actionDetail.setCountCool(actionDetail.getCountCool()+1);
+            tv_count_comment.setText(actionDetail.getCountCool() + "");
+        }else {
+            actionDetail.setCountCool(actionDetail.getCountCool()-1);
+            tv_count_comment.setText(actionDetail.getCountCool() + "");
+        }
     }
     //添加或删除评论时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COMMENT)
     public void eventClickCoool(boolean isComment) {
-//        if (isComment) {
-//            tv_count_comment.setText(actionDetail.getCountComment()+1 + "");
-//        }else {
-//            tv_count_comment.setText(actionDetail.getCountComment()-1 + "");
-//        }
+        if (isComment) {
+            actionDetail.setCountCool(actionDetail.getCountComment()+1);
+            tv_count_comment.setText(actionDetail.getCountComment() + "");
+        }else {
+            actionDetail.setCountCool(actionDetail.getCountComment()-1);
+            tv_count_comment.setText(actionDetail.getCountComment() + "");
+        }
     }
+
+
+
+
+//    ==============  报名列表适配器 ===============
 
     class UserIconAdapter extends BasicAdapter<RegUser, UserIconViewHolder> {
 

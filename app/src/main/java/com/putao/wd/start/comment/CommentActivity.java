@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -15,6 +16,7 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.Comment;
+import com.putao.wd.model.CommentList;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.eventbus.EventBusHelper;
@@ -43,8 +45,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     public static final String EVENT_COUNT_COMMENT = "event_count_comment";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
-    @Bind(R.id.ll_main)
-    LinearLayout ll_main;
+    @Bind(R.id.rl_main)
+    RelativeLayout rl_main;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
@@ -140,18 +142,13 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getCommentList();
-                    }
-                }, 3 * 1000);
+                getCommentList();
             }
         });
         rv_content.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Serializable serializable, int position) {
-                mSelectPopupWindow.show(ll_main);
+                mSelectPopupWindow.show(rl_main);
 
             }
         });
@@ -178,7 +175,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                     EventBusHelper.post(true, EVENT_COUNT_COMMENT);
                                 }
                             });
-                }else {
+                } else {
                     String msg = et_msg.getText().toString();
                     // 用户名 commdId 未定
                     networkRequest(StartApi.commentAdd(action_id, "nick_young", msg, "COMMENT", "10000", "hfgsagg"),
@@ -203,13 +200,14 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private void getCommentList() {
         Bundle bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
-        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<ArrayList<Comment>>(Comment.class, loading) {
+        networkRequest(StartApi.getCommentList(action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<Comment> result) {
+            public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
-                if (result.size() != 0) {
-                    adapter.replaceAll(result);
+                if (result.getCurrent_page() != result.getTotal_page()) {
+                    adapter.replaceAll(result.getComment());
                     hasComment = true;
+                    rv_content.loadMoreComplete();
                 } else {
                     rv_content.noMoreLoading();
                     hasComment = false;
@@ -225,7 +223,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         Comment comment = adapter.getItem(position);
         String username = comment.getUser_name() + ": ";
         SpannableString ss = new SpannableString("回复 " + username);
-        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length()+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         et_msg.setText(ss);
         isReply = true;
     }
@@ -236,12 +234,12 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         Comment comment = adapter.getItem(currPosition);
         networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                getCommentList();
-                EventBusHelper.post(true, EVENT_COUNT_COOL);
-            }
-        });
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        getCommentList();
+                        EventBusHelper.post(true, EVENT_COUNT_COOL);
+                    }
+                });
     }
 
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
