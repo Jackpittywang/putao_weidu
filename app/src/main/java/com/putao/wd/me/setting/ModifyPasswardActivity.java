@@ -64,8 +64,4 @@ public class ModifyPasswardActivity extends PTWDActivity<GlobalApplication> {
         });
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-    }
 }

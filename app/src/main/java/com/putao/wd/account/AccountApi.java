@@ -108,13 +108,13 @@ public class AccountApi {
      * @param password 密码
      * @param code     验证码
      */
-    public static Request forget(String mobile, String password, String code) {
+    public static Request forget(String mobile, String code, String password) {
         return FormEncodingRequestBuilder.newInstance()
+                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
+                .addParam(AccountConstants.Parameter.PARAM_CODE, code)
                 .addParam(AccountConstants.Parameter.PARAM_PASSWD_ONCE, password)
                 .addParam(AccountConstants.Parameter.PARAM_PASSWD_TWICE, password)
-                .addParam(AccountConstants.Parameter.PARAM_CODE, code)
-                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .build(RequestMethod.POST, URL_FORGET);
     }
 
