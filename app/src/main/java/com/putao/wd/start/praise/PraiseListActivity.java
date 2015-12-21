@@ -14,6 +14,7 @@ import com.putao.wd.dto.PraiseListItem;
 import com.putao.wd.model.Cool;
 import com.putao.wd.model.CoolEventList;
 import com.putao.wd.model.CoolList;
+import com.putao.wd.model.Page;
 import com.putao.wd.start.praise.adapter.PraiseListAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -29,8 +30,8 @@ import butterknife.Bind;
  * Created by wangou on 2015/12/4.
  */
 public class PraiseListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
-    @Bind(R.id.rv_praiselist)
-    LoadMoreRecyclerView rv_praiselist;
+    @Bind(R.id.rv_content)
+    LoadMoreRecyclerView rv_content;
     @Bind(R.id.tv_nomore)
     TextView tv_nomore;
     @Bind(R.id.ll_praiselist)
@@ -38,6 +39,7 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
 
     private PraiseListAdapter adapter;
     private String action_id;
+    private int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -49,7 +51,7 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
         addNavigation();
 
         adapter = new PraiseListAdapter(mContext, null);
-        rv_praiselist.setAdapter(adapter);
+        rv_content.setAdapter(adapter);
         Bundle bundle = getIntent().getExtras();
         action_id = bundle.getString("action_id");
 
@@ -58,13 +60,9 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
     }
 
     private void addListener() {
-        rv_praiselist.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             public void onLoadMore() {
-                (new Handler()).postDelayed(new Runnable() {
-                    public void run() {
-                        getCoolList();
-                    }
-                }, 3000L);
+                getCoolList();
             }
         });
     }
@@ -73,16 +71,16 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
      * 获取赞列表
      */
     private void getCoolList() {
-        networkRequest(StartApi.getCoolList(action_id), new SimpleFastJsonCallback<Cool>(Cool.class, loading) {
+        networkRequest(StartApi.getCoolList(String.valueOf(page), action_id), new SimpleFastJsonCallback<Cool>(Cool.class, loading) {
             @Override
             public void onSuccess(String url, Cool result) {
                 Logger.i("赞列表获取成功");
-                CoolEventList eventCoolList = result.getEventCoolList();
-                ArrayList<CoolList> user_list = eventCoolList.getUser_list();
-                if (user_list.size() != 0) {
-                    adapter.replaceAll(user_list);
+                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
+                    adapter.replaceAll(result.getEventCoolList().getUser_list());
+                    rv_content.loadMoreComplete();
+                    page++;
                 } else {
-                    rv_praiselist.noMoreLoading();
+                    rv_content.noMoreLoading();
                 }
                 loading.dismiss();
             }

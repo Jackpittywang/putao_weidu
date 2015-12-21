@@ -27,7 +27,7 @@
             android:layout_height="match_parent">
 
             <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                android:id="@+id/rv_praiselist"
+                android:id="@+id/rv_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 auto:divider_height="1sp"

@@ -119,8 +119,9 @@ public class StartApi {
      *
      * @param action_id 活动ID
      */
-    public static Request getEnrollment(String action_id) {
+    public static Request getEnrollment(String page, String action_id) {
         return FormEncodingRequestBuilder.newInstance()
+                .addParam(REQUEST_PAGE, page)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_ENROLLMENT);
     }
@@ -253,8 +254,9 @@ public class StartApi {
      *
      * @param action_id 活动ID
      */
-    public static Request getCoolList(String action_id) {
+    public static Request getCoolList(String page, String action_id) {
         return FormEncodingRequestBuilder.newInstance()
+                .addParam(REQUEST_PAGE, page)
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .build(RequestMethod.POST, URL_COOL_LIST);
     }
