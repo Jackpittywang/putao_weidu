@@ -3,9 +3,7 @@ package com.putao.wd.store.product;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Cart;
@@ -13,22 +11,17 @@ import com.putao.wd.model.Norms;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.store.product.adapter.EditNormsSelectAdapter;
-import com.putao.wd.store.product.adapter.NormsSelectAdapter;
 import com.putao.wd.store.product.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.MathUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.select.Tag;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 

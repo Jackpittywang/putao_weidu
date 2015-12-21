@@ -2,21 +2,15 @@ package com.putao.wd.store.product.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.putao.wd.R;
 import com.putao.wd.model.Norms;
 import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.select.Tag;
 import com.sunnybear.library.view.select.TagBar;
-
 import java.util.List;
-
 import butterknife.Bind;
 
 /**
