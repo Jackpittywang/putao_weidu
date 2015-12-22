@@ -14,6 +14,7 @@ import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
 import com.putao.wd.pay.PayAcitivty;
 import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -224,6 +225,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     @Override
     public void onLeftAction() {
         startActivity(PayAcitivty.class);
+    }
+
+    @Override
+    public void onRightAction() {
+        startActivity(GrapestoneActivity.class);
     }
 
     //    /**
