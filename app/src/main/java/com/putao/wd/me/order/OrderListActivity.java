@@ -10,6 +10,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.PTWDRequestHelper;
 import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
@@ -169,22 +170,26 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     private void initCurrentItem(int position){
         switch (position) {
             case 0://全部
-                getOrderLists("0","1");
+                getOrderLists("0", "1");
                 refreshViewByType(0);
+                ll_title.selectTitleItem(R.id.ll_all);
 //                ToastUtils.showToastLong(this, "全部");
                 break;
             case 1://待付款
-                getOrderLists("1","1");
+                getOrderLists("1", "1");
+                ll_title.selectTitleItem(R.id.ll_waiting_pay);
                 refreshViewByType(1);
 //                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(1));
                 break;
             case 2://待发货
                 getOrderLists("2","1");
+                ll_title.selectTitleItem(R.id.ll_waiting_shipment);
                 refreshViewByType(2);
 //                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(2));
                 break;
             case 3://等待签收
                 getOrderLists("3","1");
+                ll_title.selectTitleItem(R.id.ll_waiting_sign);
                 refreshViewByType(3);
 //                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(3));
                 break;
