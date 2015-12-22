@@ -4,14 +4,12 @@ import android.os.Bundle;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.model.LatLng;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.MapInfo;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.ToastUtils;
 
 import butterknife.Bind;
 
@@ -43,21 +41,24 @@ public class MapActivity extends PTWDActivity {
                 new SimpleFastJsonCallback<MapInfo>(MapInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, final MapInfo result) {
-                        MapUtils.searchAddress(mContext, "", result.getVenue(), new MapUtils.OnSearchMapCallback() {
-                            @Override
-                            public void onSearchMap(LatLng latLng) {
-                                mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
-                                mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
-                                mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-                                    @Override
-                                    public boolean onMarkerClick(Marker marker) {
-                                        ToastUtils.showToastLong(mContext, marker.getTitle());
-                                        return true;
-                                    }
-                                });
-                                loading.dismiss();
-                            }
-                        });
+//                        MapUtils.searchAddress(mContext, "", result.getVenue(), new MapUtils.OnSearchMapCallback() {
+//                            @Override
+//                            public void onSearchMap(LatLng latLng) {
+//                                mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
+//                                mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
+//                                mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+//                                    @Override
+//                                    public boolean onMarkerClick(Marker marker) {
+//                                        ToastUtils.showToastLong(mContext, marker.getTitle());
+//                                        return true;
+//                                    }
+//                                });
+//                            }
+//                        });
+                        LatLng latLng = new LatLng(result.getLatitude(), result.getLongitude());
+                        mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
+                        mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
+                        loading.dismiss();
                     }
                 });
     }
@@ -86,6 +87,6 @@ public class MapActivity extends PTWDActivity {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mv_map.onDestroy();
-        MapUtils.destroy();
+//        MapUtils.destroy();
     }
 }
