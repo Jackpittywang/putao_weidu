@@ -85,7 +85,7 @@ public abstract class JSONObjectCallback implements Callback {
 
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
         if (response.isSuccessful()) {
-            Logger.d(TAG, "请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
+            Logger.d(TAG, "请求url:\n" + url + "\n" + "请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
             if (!TextUtils.isEmpty(json)) {
                 Bundle bundle = new Bundle();
                 bundle.putString(KEY_URL, url);

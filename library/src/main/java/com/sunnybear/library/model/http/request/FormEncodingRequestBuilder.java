@@ -77,11 +77,7 @@ public final class FormEncodingRequestBuilder {
                 for (String name : headers.keySet()) {
                     builder.addHeader(name, headers.get(name));
                 }
-                StringBuffer sb = new StringBuffer(url + "?");
-                for (String name : params.keySet()) {
-                    sb.append(name).append("=").append(params.get(name)).append("&");
-                }
-                url = sb.delete(sb.length() - 1, sb.length()).toString();
+                url = jointUrl(url, params);
                 Logger.d(TAG, "get请求,url=" + url);
                 request = builder.url(url).get().tag(url).build();
                 break;
@@ -93,11 +89,27 @@ public final class FormEncodingRequestBuilder {
                 for (String name : params.keySet()) {
                     param.add(name, params.get(name));
                 }
-                Logger.d(TAG, "post请求,url=" + url + "\n" + "请求 参数:" + "\n" + formatParams(params));
+                Logger.d(TAG, "post请求,url=" + jointUrl(url, params) + "\n" + "请求 参数:" + "\n" + formatParams(params));
                 request = builder.url(url).post(param.build()).tag(url).build();
                 break;
         }
         return request;
+    }
+
+    /**
+     * 拼接参数
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    private String jointUrl(String url, Map<String, String> params) {
+        StringBuffer sb = new StringBuffer(url + "?");
+        for (String name : params.keySet()) {
+            sb.append(name).append("=").append(params.get(name)).append("&");
+        }
+        url = sb.delete(sb.length() - 1, sb.length()).toString();
+        return url;
     }
 
     /**
