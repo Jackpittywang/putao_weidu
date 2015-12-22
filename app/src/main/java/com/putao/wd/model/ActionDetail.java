@@ -25,6 +25,7 @@ public class ActionDetail implements Serializable {
     private String wonderful_review;//精彩回顾
     private int countCool;//赞的数量
     private int countComment;//评论的数量
+    private boolean isParticipate;//是否报名参加
     private List<RegUser> reg_user;//报名用户
 
 
@@ -184,6 +185,14 @@ public class ActionDetail implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isParticipate() {
+        return isParticipate;
+    }
+
+    public void setIsParticipate(boolean isParticipate) {
+        this.isParticipate = isParticipate;
     }
 
     @Override

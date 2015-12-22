@@ -1,6 +1,7 @@
 package com.putao.wd.start.action;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -157,12 +158,22 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
      */
     private void hideJoin(ActionDetail actionDetail){
 //        actionDetail.getStatus();  //ONGOING  LOOKBACK
-        if ("进行中".equals(actionDetail.getStatus())) {
-            tv_join.setVisibility(View.VISIBLE);
-        } else if("截止".equals(actionDetail.getStatus())) {
-            tv_join.setVisibility(View.GONE);
-        } else if("回顾".equals(actionDetail.getStatus())) {
-            tv_join.setVisibility(View.GONE);
+        switch (actionDetail.getStatus()) {
+            case "进行中":
+                tv_join.setVisibility(View.VISIBLE);
+                if (actionDetail.isParticipate()) {
+                    tv_join.setEnabled(false);
+                    tv_join.setBackgroundResource(getResources().getColor(R.color.text_color_gray));
+//                    tv_join.setBackgroundColor();
+                    tv_join.setText("已报名");
+                }
+                break;
+            case "截止":
+                tv_join.setVisibility(View.GONE);
+                break;
+            case "回顾":
+                tv_join.setVisibility(View.GONE);
+                break;
         }
     }
 
