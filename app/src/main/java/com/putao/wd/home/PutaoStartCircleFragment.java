@@ -198,7 +198,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 currentType = TYPE_ACTION;
                 break;
             case R.id.ll_finish://已结束
-                currentStatus = STATUS_CLOSE;
+//                currentStatus = STATUS_CLOSE;
+                currentStatus = "LOOKBACK"; // 暂用LOOKBACK列表内容代替已结束
                 currentType = TYPE_ACTION;
                 break;
             case R.id.ll_news://新闻
