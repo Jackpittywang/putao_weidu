@@ -3,17 +3,18 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
+import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductData;
+import com.putao.wd.model.ExploreProductDataPlot;
+import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.PlotDetail;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -72,7 +73,7 @@ public class PutaoExploreFragment extends PTWDFragment {
     /**
      * 添加监听器
      */
-    private void addListener(){
+    private void addListener() {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -86,20 +87,24 @@ public class PutaoExploreFragment extends PTWDFragment {
      */
     private void getDiaryIndex() {
         networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
-                new SimpleFastJsonCallback<ExploreItem>(ExploreItem.class, loading) {
+                new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
-                    public void onSuccess(String url, ExploreItem result) {
+                    public void onSuccess(String url, Explore result) {
                         Logger.i("探索号请求成功");
                         Logger.i("探索号请求结果 = " + result.toString());
-//                        result.get();
-//                        if (true) {
-//                            rl_empty.setVisibility(View.GONE);
-//                            rv_content.setVisibility(View.VISIBLE);
-//                            adapter.replaceAll(result);
-//                        }else {
-//                            rv_content.setVisibility(View.GONE);
-//                            rl_empty.setVisibility(View.VISIBLE);
-//                        }
+                        List<ExploreProduct> datas = result.getData();
+                        for (ExploreProduct data : datas) {
+                            switch (data.getType()) {
+                                case 1:
+                                    List<ExploreProductDetail> detail = JSON.parseArray(data.getData(), ExploreProductDetail.class);
+
+                                    break;
+                                default:
+                                    ExploreProductDataPlot plot = JSON.parseObject(data.getData(), ExploreProductDataPlot.class);
+
+                                    break;
+                            }
+                        }
                         loading.dismiss();
                     }
                 });
@@ -108,6 +113,7 @@ public class PutaoExploreFragment extends PTWDFragment {
     /**
      * 获取剧情理念详情
      * by yanghx
+     *
      * @param plot_id 剧情理念详情id
      */
     private void getPlotDetails(String plot_id) {
@@ -119,7 +125,13 @@ public class PutaoExploreFragment extends PTWDFragment {
         });
     }
 
+    private void parseDetail() {
 
+    }
+
+    private void parsePlot() {
+
+    }
 }
 
 

@@ -1,10 +1,12 @@
 package com.putao.wd.api;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.StringUtils;
 
 /**
@@ -33,13 +35,13 @@ public class ExploreApi {
 
     /**
      * 成长日记首页接口（查询）
-     *
-     * @param slave_device_id 关联设备唯一id，无关注设备时不请求
-     * @param start_time      起始时间的时间戳
-     * @param end_time        结束时间的时间戳
      */
     public static Request getDiaryIndex(String page) {
-        FormEncodingRequestBuilder builder = PTWDRequestHelper.explore()
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000265")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
                 .addParam(REQUEST_PAGE, page);
 //                .addParam(REQUEST_START_TIME, start_time)
 //                .addParam(REQUEST_END_TIME, end_time);

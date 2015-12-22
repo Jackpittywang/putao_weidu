@@ -6,12 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductData;
-import com.putao.wd.model.ExploreProductDataDaily;
-import com.putao.wd.model.ExploreProductDataList;
-import com.putao.wd.model.ExploreProductDataPlot;
-import com.sunnybear.library.util.DateUtils;
+import com.putao.wd.model.Explore;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -24,7 +19,7 @@ import butterknife.Bind;
  * 探索号适配器
  * Created by yanghx on 2015/12/9.
  */
-public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHolder> {
+public class ExploreAdapter extends LoadMoreAdapter<Explore, BasicViewHolder> {
     private static final int TYPE_USE = 1;
     private static final int TYPE_INSTRUCTION = 2;
     private final int TYPE_PICTURE_ONE = 1;
@@ -38,7 +33,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 
     @Override
     public int getMultiItemViewType(int position) {
-        ExploreProduct exploreProduct = getItem(position);
+        Explore exploreProduct = getItem(position);
         if (true) {
             return TYPE_USE;
         } else {
@@ -71,20 +66,20 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
+    public void onBindItem(BasicViewHolder holder, Explore exploreProduct, int position) {
         if (null != exploreProduct) {
             //Logger.i(exploreProduct.toString());
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
 //            String date = DateUtils.secondToDate(exploreProduct.getTime(), DATE_PATTERN);
-            viewHolder.tv_date.setText(exploreProduct.getTime());
-            viewHolder.tv_introduct.setText(exploreProduct.getSummary());
+//            viewHolder.tv_date.setText(exploreProduct.getTime());
+//            viewHolder.tv_introduct.setText(exploreProduct.getSummary());
             viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
 
-//            List<ExploreProductData> product_list = exploreProduct.getData();
+//            List<ExploreProduct> product_list = exploreProduct.getData();
 //            if (null != product_list && product_list.size() > 0) {
 //                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
 //                for (int i = 0; i < product_list.size(); i++) {
-//                    ExploreProductData exploreProductData = product_list.get(i);
+//                    ExploreProata exploreProductData = product_list.get(i);
 //                    viewHolder.iv_skill_icon.setImageURL(exploreProductData.getProduct_icon());
 //                    viewHolder.tv_skill_name.setText(exploreProductData.getProduct_name());
 //

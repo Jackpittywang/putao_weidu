@@ -226,6 +226,8 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
+        <!--推送-->
+        <service android:name="com.putao.push.PushService"/>
         <!--================测试Activity======================-->
         <activity
             android:name=".TestActivity"

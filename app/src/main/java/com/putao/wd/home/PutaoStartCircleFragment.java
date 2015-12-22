@@ -54,7 +54,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
     private ActionNewsAdapter adapter;
     private boolean isStop;//广告栏是否被停止
 
-    private int currentPage = 0;//当前页码
+    private int currentPage = 1;//当前页码
 
     private String currentStatus = "";//当前的状态
     private String currentType = "";//当前的类型
@@ -120,7 +120,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currentPage = 0;
+                currentPage = 1;
                 rv_content.reset();
                 networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
                         , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
@@ -186,7 +186,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
-        currentPage = 0;
+        currentPage = 1;
         rv_content.reset();
         switch (item.getId()) {
             case R.id.ll_all://全部

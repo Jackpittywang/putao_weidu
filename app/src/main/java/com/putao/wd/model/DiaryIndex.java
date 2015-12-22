@@ -12,7 +12,7 @@ public class DiaryIndex implements Serializable {
     private String device_name;//关联的设备名称
     private int time;//当前数据产生的日期
     private String day_summary;//当日总结文案
-    private List<ExploreProduct> product_list;//产品列表
+    private List<Explore> product_list;//产品列表
 
     public int getSlave_device_id() {
         return slave_device_id;
@@ -46,11 +46,11 @@ public class DiaryIndex implements Serializable {
         this.day_summary = day_summary;
     }
 
-    public List<ExploreProduct> getProduct_list() {
+    public List<Explore> getProduct_list() {
         return product_list;
     }
 
-    public void setProduct_list(List<ExploreProduct> product_list) {
+    public void setProduct_list(List<Explore> product_list) {
         this.product_list = product_list;
     }
 

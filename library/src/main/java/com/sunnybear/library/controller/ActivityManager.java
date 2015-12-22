@@ -83,7 +83,7 @@ public class ActivityManager {
      */
     public void finishActivity(Class<? extends Activity> activityClass) {
         for (Activity activity : activityStack) {
-            if (activityClass.equals(activityClass.getClass()))
+            if (activityClass.equals(activity.getClass()))
                 finishActivity(activity);
         }
     }
