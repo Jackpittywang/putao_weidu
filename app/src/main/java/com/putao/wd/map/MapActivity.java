@@ -46,16 +46,22 @@ public class MapActivity extends PTWDActivity {
                         MapUtils.searchAddress(mContext, "", result.getVenue(), new MapUtils.OnSearchMapCallback() {
                             @Override
                             public void onSearchMap(LatLng latLng) {
-                                mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
-                                mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
-                                mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-                                    @Override
-                                    public boolean onMarkerClick(Marker marker) {
-                                        ToastUtils.showToastLong(mContext, marker.getTitle());
-                                        return true;
-                                    }
-                                });
-                                loading.dismiss();
+
+                                try {
+                                    mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
+                                    mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
+                                    mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+                                        @Override
+                                        public boolean onMarkerClick(Marker marker) {
+                                            ToastUtils.showToastLong(mContext, marker.getTitle());
+                                            return true;
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    finish();
+                                }finally {
+                                    loading.dismiss();
+                                }
                             }
                         });
                     }
@@ -86,6 +92,5 @@ public class MapActivity extends PTWDActivity {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mv_map.onDestroy();
-        MapUtils.destroy();
     }
 }
