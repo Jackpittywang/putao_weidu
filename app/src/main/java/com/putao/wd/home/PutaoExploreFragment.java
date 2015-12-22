@@ -3,6 +3,7 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -13,7 +14,7 @@ import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductDataPlot;
+import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.PlotDetail;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -77,7 +78,7 @@ public class PutaoExploreFragment extends PTWDFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                //getDiaryIndex(0, "", "");
+                //getDiaryIndex();
             }
         });
     }
@@ -90,48 +91,67 @@ public class PutaoExploreFragment extends PTWDFragment {
                 new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
                     public void onSuccess(String url, Explore result) {
-                        Logger.i("探索号请求成功");
                         Logger.i("探索号请求结果 = " + result.toString());
-                        List<ExploreProduct> datas = result.getData();
-                        for (ExploreProduct data : datas) {
-                            switch (data.getType()) {
-                                case 1:
-                                    List<ExploreProductDetail> detail = JSON.parseArray(data.getData(), ExploreProductDetail.class);
 
-                                    break;
-                                default:
-                                    ExploreProductDataPlot plot = JSON.parseObject(data.getData(), ExploreProductDataPlot.class);
-
-                                    break;
+                        if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
+                            List<ExploreProduct> datas = result.getData();
+                            for (ExploreProduct data : datas) {
+                                switch (data.getType()) {
+                                    case 1:
+                                        data.setDetails(parseDetail(data.getData()));
+                                        break;
+                                    default:
+                                        data.setPlot(parsePlot(data.getData()));
+                                        break;
+                                }
                             }
+                            rl_empty.setVisibility(View.GONE);
+                            rv_content.setVisibility(View.VISIBLE);
+                            adapter.replaceAll(datas);
+                            rv_content.loadMoreComplete();
+                            page++;
+                        }else {
+                            rv_content.noMoreLoading();
                         }
                         loading.dismiss();
+
+//                        else {
+//                            rv_content.setVisibility(View.GONE);
+//                            rl_empty.setVisibility(View.VISIBLE);
+//                        }
                     }
                 });
     }
 
     /**
-     * 获取剧情理念详情
-     * by yanghx
-     *
-     * @param plot_id 剧情理念详情id
+     * 解析详情
      */
-    private void getPlotDetails(String plot_id) {
-        networkRequest(ExploreApi.getPlotDetails(plot_id), new SimpleFastJsonCallback<ArrayList<PlotDetail>>(PlotDetail.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<PlotDetail> result) {
-                Log.i("pt", "剧情理念详情请求成功");
-            }
-        });
+    private List<ExploreProductDetail> parseDetail(String json) {
+        return JSON.parseArray(json, ExploreProductDetail.class);
     }
 
-    private void parseDetail() {
-
+    /**
+     * 解析情节
+     */
+    private ExploreProductPlot parsePlot(String json) {
+        return JSON.parseObject(json, ExploreProductPlot.class);
     }
 
-    private void parsePlot() {
+//    /**
+//     * 获取剧情理念详情
+//     * by yanghx
+//     *
+//     * @param plot_id 剧情理念详情id
+//     */
+//    private void getPlotDetails(String plot_id) {
+//        networkRequest(ExploreApi.getPlotDetails(plot_id), new SimpleFastJsonCallback<ArrayList<PlotDetail>>(PlotDetail.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<PlotDetail> result) {
+//                Log.i("pt", "剧情理念详情请求成功");
+//            }
+//        });
+//    }
 
-    }
 }
 
 
