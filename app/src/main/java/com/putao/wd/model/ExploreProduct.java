@@ -14,7 +14,8 @@ public class ExploreProduct implements Serializable {
     private String product_icon;
     private int type;
     private String img_url;
-//    private List<ExploreProductDetail> data;
+    private List<ExploreProductDetail> dataList;
+    private ExploreProduct dataObject;
 
     public String getSummary() {
         return summary;

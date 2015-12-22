@@ -8,10 +8,10 @@ import android.widget.RelativeLayout;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.ExploreItem;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.Explore;
+import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.PlotDetail;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -19,6 +19,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -88,7 +89,30 @@ public class PutaoExploreFragment extends PTWDFragment {
                     public void onSuccess(String url, Explore result) {
                         Logger.i("探索号请求成功");
                         Logger.i("探索号请求结果 = " + result.toString());
-//                        result.get();
+                        List<ExploreProduct> exploreProductList = result.getData();
+                        if (null != exploreProductList && exploreProductList.size() != 0) {
+
+                            for (int i = 0; i < exploreProductList.size(); i++) {
+                                ExploreProduct exploreProduct = exploreProductList.get(i);
+                                // type = 1,2,3; data类型分别对应Array,Object,Object
+                                switch (exploreProduct.getType()){
+                                    case 1:
+
+                                        break;
+                                    case 2:
+                                        break;
+                                    case 3:
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+
+                            }
+                        }
+
+
+
 //                        if (true) {
 //                            rl_empty.setVisibility(View.GONE);
 //                            rv_content.setVisibility(View.VISIBLE);
