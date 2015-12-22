@@ -7,23 +7,23 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/8.
  */
 public class MapInfo implements Serializable {
-    private String latitude;//纬度
-    private String longitude;//经度
+    private double latitude;//纬度
+    private double longitude;//经度
     private String venue;//地名
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -38,8 +38,8 @@ public class MapInfo implements Serializable {
     @Override
     public String toString() {
         return "MapInfo{" +
-                "latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
                 ", venue='" + venue + '\'' +
                 '}';
     }
