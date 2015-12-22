@@ -1,5 +1,6 @@
 package com.putao.wd.me.service;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.LoadingHUD;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
@@ -48,7 +50,8 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     // 当前第几个被选中
     private int currentIndex = -1;
     private List<Button> buttonList;
-
+    public static ServiceListActivity mActivity;
+    public static LoadingHUD mLoading;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_service_list;
@@ -57,7 +60,8 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-
+        mActivity = this;
+        mLoading = loading;
         // 测试数据
         serviceList = new ArrayList<ServiceDto>();
 

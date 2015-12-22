@@ -181,9 +181,13 @@
         <activity
             android:name=".me.actions.MyActionsActivity"
             android:screenOrientation="portrait" />
-        <!--售后-->
+        <!--售后列表-->
         <activity
             android:name=".me.service.ServiceListActivity"
+            android:screenOrientation="portrait" />
+        <!--售后详情-->
+        <activity
+            android:name=".me.service.ServiceDetailActivity"
             android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->

@@ -9,6 +9,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.map.MapActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
 import com.putao.wd.start.apply.ApplyActivity;
@@ -57,6 +58,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     BasicRecyclerView tv_actionsdetail_applyusers;
     @Bind(R.id.tv_join)
     TextView tv_join;
+    @Bind(R.id.tv_personinfo_address)
+    TextView tv_personinfo_address;
 
 
     private ActionDetail actionDetail;
@@ -93,6 +96,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_actionsdetail_resume.setText(result.getTitle());
                 tv_count_cool.setText(result.getCountCool() + "");
                 tv_count_comment.setText(result.getCountComment() + "");
+                tv_personinfo_address.setText(result.getLocation());
                 List<RegUser> reg_user = result.getReg_user();
                 Logger.i("reg_user = " + reg_user.toString());
                 adapter.replaceAll(reg_user);
@@ -119,7 +123,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         return new String[0];
     }
 
-    @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join})
+    @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join,R.id.tv_personinfo_address})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -134,6 +138,9 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 break;
             case R.id.tv_join:
                 startActivity(ApplyActivity.class, bundle);
+                break;
+            case R.id.tv_personinfo_address:
+                startActivity(MapActivity.class, bundle);
                 break;
         }
     }
