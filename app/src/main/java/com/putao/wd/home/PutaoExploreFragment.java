@@ -78,7 +78,7 @@ public class PutaoExploreFragment extends PTWDFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                //getDiaryIndex();
+                getDiaryIndex();
             }
         });
     }

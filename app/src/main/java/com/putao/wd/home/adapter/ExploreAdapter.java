@@ -9,7 +9,9 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
+import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.util.HtmlUtils;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -75,75 +77,46 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     @Override
     public void onBindItem(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
         Logger.w("ExploreProduct === " + exploreProduct.toString());
-
         if (holder instanceof ExploerViewHolder) {
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-//            String date = DateUtils.secondToDate(exploreProduct.getTime(), DATE_PATTERN);
-            viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-            viewHolder.tv_date.setText(exploreProduct.getTime());
-            viewHolder.tv_introduct.setText(exploreProduct.getSummary());
-            viewHolder.iv_user_icon.setImageURL(exploreProduct.getImg_url());
+            if (position != 0) {
+                doCompare(holder, exploreProduct, position);
+            } else {
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                viewHolder.tv_date.setText(exploreProduct.getTime());
+            }
+            viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
             viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
 
             List<ExploreProductDetail> details = exploreProduct.getDetails();
             if (null != details && details.size() > 0) {
-
                 for (int i = 0; i < details.size(); i++) {
                     ExploreProductDetail productDetail = details.get(i);
 //                    viewHolder.iv_skill_icon.setImageURL(productDetail.getIcon());
                     builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
                     Logger.w("builders 长度 = " + builders.size());
-                    switch (i) {
-                        case 0:
-                            viewHolder.tv_content_head1.setText(builders.get(0));
-                            viewHolder.tv_content_center1.setText(builders.get(1));
-                            viewHolder.tv_content_footer1.setText(builders.get(2));
-                            break;
-                        case 1:
-                            viewHolder.tv_content_head5.setText(builders.get(0));
-                            viewHolder.tv_content_center5.setText(builders.get(1));
-                            viewHolder.tv_content_footer5.setText(builders.get(2));
-                            break;
-                        case 2:
-                            viewHolder.tv_content_head2.setText(builders.get(0));
-                            viewHolder.tv_content_center2.setText(builders.get(1));
-                            viewHolder.tv_content_footer2.setText(builders.get(2));
-                            break;
-                        case 3:
-                            viewHolder.tv_content_head6.setText(builders.get(0));
-                            viewHolder.tv_content_center6.setText(builders.get(1));
-                            viewHolder.tv_content_footer6.setText(builders.get(2));
-                            break;
-                    }
+                    setContent(viewHolder, i);
                 }
             }
 
         } else if (holder instanceof ExploerMixedViewHolder) {
             ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
+            if (position != 0) {
+                doCompare(holder, exploreProduct, position);
+            } else {
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                viewHolder.tv_date.setText(exploreProduct.getTime());
+            }
+            viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
+            viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
+            ExploreProductPlot plot = exploreProduct.getPlot();
+            viewHolder.tv_content.setText(plot.getContent());
+            setPlotImage(viewHolder, plot);
+            showPiture(viewHolder, 1);
         }
-//        if (holder instanceof ExploerViewHolder) {
-//            ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-//            if (position != 0) {
-//                doCompare(viewHolder, exploreItem, position);
-//            } else {
-//                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-//                viewHolder.tv_date.setText(exploreItem.getDate());
-//            }
-//            viewHolder.tv_skill_name.setText(exploreItem.getSkill_name());
-//        } else if (holder instanceof ExploerMixedViewHolder) {
-//            ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
-//            if (position != 0) {
-//                doCompare(viewHolder, exploreItem, position);
-//            } else {
-//                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-//                viewHolder.tv_date.setText(exploreItem.getDate());
-//            }
-//            viewHolder.tv_skill_name.setText(exploreItem.getSkill_name());
-//            viewHolder.tv_content.setText(exploreItem.getContent());
-//            int iconNum = exploreItem.getIconNum();
-//            showPiture(viewHolder, iconNum);
-//        }
+
     }
+
 
     /**
      * 替换html中的<param>标签
@@ -159,28 +132,70 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         return html;
     }
 
+    private void setContent(ExploerViewHolder viewHolder,int index) {
+        switch (index) {
+            case 0:
+                viewHolder.tv_content_head1.setText(builders.get(0));
+                viewHolder.tv_content_center1.setText(builders.get(1));
+//                viewHolder.tv_content_footer1.setText(builders.get(2));
+                break;
+            case 1:
+                viewHolder.tv_content_head5.setText(builders.get(0));
+                viewHolder.tv_content_center5.setText(builders.get(1));
+//                viewHolder.tv_content_footer5.setText(builders.get(2));
+                break;
+            case 2:
+                viewHolder.tv_content_head2.setText(builders.get(0));
+                viewHolder.tv_content_center2.setText(builders.get(1));
+//                viewHolder.tv_content_footer2.setText(builders.get(2));
+                break;
+            case 3:
+                viewHolder.tv_content_head6.setText(builders.get(0));
+                viewHolder.tv_content_center6.setText(builders.get(1));
+//                viewHolder.tv_content_footer6.setText(builders.get(2));
+                break;
+        }
+    }
+
     /**
      * 日期比较,控制头部显示
      */
-//    private void doCompare(BasicViewHolder holder, ExploreItem exploreItem, int position) {
-//        ExploreItem preExplore = getItem(position - 1);
-//        int abs = DateUtils.getDaysUnAbs(preExplore.getDate(), exploreItem.getDate());
-//        if (abs == 0) {
-//            if (holder instanceof ExploerViewHolder) {
-//                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
-//            } else if (holder instanceof ExploerMixedViewHolder) {
-//                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
-//            }
-//        } else {
-//            if (holder instanceof ExploerViewHolder) {
-//                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
-//                ((ExploerViewHolder) holder).tv_date.setText(exploreItem.getDate());
-//            } else if (holder instanceof ExploerMixedViewHolder) {
-//                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.VISIBLE);
-//                ((ExploerMixedViewHolder) holder).tv_date.setText(exploreItem.getDate());
-//            }
-//        }
-//    }
+    private void doCompare(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
+        ExploreProduct preExplore = getItem(position - 1);
+        int abs = DateUtils.getDaysUnAbs(preExplore.getTime(), exploreProduct.getTime());
+        if (abs == 0) {
+            if (holder instanceof ExploerViewHolder) {
+                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
+            } else if (holder instanceof ExploerMixedViewHolder) {
+                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
+            }
+        } else {
+            if (holder instanceof ExploerViewHolder) {
+                ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                viewHolder.tv_date.setText(exploreProduct.getTime());
+                viewHolder.tv_introduct.setText(exploreProduct.getSummary());
+                viewHolder.iv_user_icon.setImageURL(exploreProduct.getImg_url());
+            } else if (holder instanceof ExploerMixedViewHolder) {
+                ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
+                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
+                viewHolder.tv_date.setText(exploreProduct.getTime());
+                viewHolder.tv_introduct.setText(exploreProduct.getSummary());
+                viewHolder.iv_user_icon.setImageURL(exploreProduct.getImg_url());
+            }
+        }
+    }
+
+    /**
+     * 设置plot中教育理念下面的显示图片
+     */
+    private void setPlotImage(ExploerMixedViewHolder viewHolder, ExploreProductPlot plot) {
+        if (plot.getImg_list() == null) {
+            viewHolder.iv_one_picture.setImageURL(plot.getImg_url());
+        } else {
+            viewHolder.iv_one_picture.setImageURL(plot.getImg_list());
+        }
+    }
 
     /**
      * 根据图片张数显示图片
