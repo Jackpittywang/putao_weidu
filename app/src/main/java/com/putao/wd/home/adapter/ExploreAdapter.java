@@ -7,17 +7,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
-import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,28 +91,28 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
                 for (int i = 0; i < details.size(); i++) {
                     ExploreProductDetail productDetail = details.get(i);
 //                    viewHolder.iv_skill_icon.setImageURL(productDetail.getIcon());
-                    builders = HtmlUtils.getTexts(productDetail.getHtml());
+                    builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
                     Logger.w("builders 长度 = " + builders.size());
                     switch (i) {
                         case 0:
                             viewHolder.tv_content_head1.setText(builders.get(0));
                             viewHolder.tv_content_center1.setText(builders.get(1));
-//                            viewHolder.tv_content_footer1.setText(builders.get(2));
+                            viewHolder.tv_content_footer1.setText(builders.get(2));
                             break;
                         case 1:
                             viewHolder.tv_content_head5.setText(builders.get(0));
                             viewHolder.tv_content_center5.setText(builders.get(1));
-//                            viewHolder.tv_content_footer5.setText(builders.get(2));
+                            viewHolder.tv_content_footer5.setText(builders.get(2));
                             break;
                         case 2:
                             viewHolder.tv_content_head2.setText(builders.get(0));
                             viewHolder.tv_content_center2.setText(builders.get(1));
-//                            viewHolder.tv_content_footer2.setText(builders.get(2));
+                            viewHolder.tv_content_footer2.setText(builders.get(2));
                             break;
                         case 3:
                             viewHolder.tv_content_head6.setText(builders.get(0));
                             viewHolder.tv_content_center6.setText(builders.get(1));
-//                            viewHolder.tv_content_footer6.setText(builders.get(2));
+                            viewHolder.tv_content_footer6.setText(builders.get(2));
                             break;
                     }
                 }
@@ -123,17 +120,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 
         } else if (holder instanceof ExploerMixedViewHolder) {
             ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
-
-
-
-
-
-
-
-
         }
-
-
 //        if (holder instanceof ExploerViewHolder) {
 //            ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
 //            if (position != 0) {
@@ -156,7 +143,20 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 //            int iconNum = exploreItem.getIconNum();
 //            showPiture(viewHolder, iconNum);
 //        }
+    }
 
+    /**
+     * 替换html中的<param>标签
+     *
+     * @param data
+     * @param html
+     * @return
+     */
+    private String replaceHtml(List<String> data, String html) {
+        for (int i = 0; i < data.size(); i++) {
+            html = html.replace("<param" + i + ">", data.get(i));
+        }
+        return html;
     }
 
     /**
