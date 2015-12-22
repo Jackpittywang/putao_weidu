@@ -97,6 +97,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
+                bundle.putInt("current_Index",0);
                 startActivity(OrderListActivity.class);
                 break;
             case R.id.si_address://收货地址
@@ -117,22 +118,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
             case R.id.btn_pay://待付款
                 btn_pay.hide();
-                bundle.putInt("current_Index",0);
+                bundle.putInt("current_Index",1);
                 startActivity(OrderListActivity.class,bundle);
                 break;
             case R.id.btn_deliver://待发货
                 btn_deliver.hide();
-                bundle.putInt("current_Index", 1);
+                bundle.putInt("current_Index", 2);
                 startActivity(OrderListActivity.class,bundle);
                 break;
             case R.id.btn_take_deliver://待收货
                 btn_take_deliver.hide();
-                bundle.putInt("current_Index",2);
+                bundle.putInt("current_Index",3);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_after_sale://售后
                 btn_after_sale.hide();
-                bundle.putInt("current_Index",3);
                 startActivity(ServiceListActivity.class, bundle);
                 break;
         }

@@ -171,22 +171,22 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
             case 0://全部
                 getOrderLists("0","1");
                 refreshViewByType(0);
-                ToastUtils.showToastLong(this, "全部");
+//                ToastUtils.showToastLong(this, "全部");
                 break;
             case 1://待付款
                 getOrderLists("1","1");
                 refreshViewByType(1);
-                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(1));
+//                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(1));
                 break;
             case 2://待发货
                 getOrderLists("2","1");
                 refreshViewByType(2);
-                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(2));
+//                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(2));
                 break;
             case 3://等待签收
                 getOrderLists("3","1");
                 refreshViewByType(3);
-                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(3));
+//                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(3));
                 break;
         }
     }

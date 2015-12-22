@@ -10,6 +10,7 @@ import com.putao.wd.dto.ServiceShipmentListItemDto;
 import com.sunnybear.library.util.Logger;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -35,9 +36,9 @@ public class ServiceShipmentListItem extends LinearLayout {
     public ServiceShipmentListItem(Context context, final ServiceShipmentListItemDto serviceShipmentListItemDto) {
         super(context);
 
-        LinearLayout.inflate(context, R.layout.activity_service_shipment_list_item, this);
+        View view = LinearLayout.inflate(context, R.layout.activity_service_shipment_list_item, this);
+        ButterKnife.bind(view, this);
 
-//        tv_shipment_title = (TextView) findViewById(R.id.tv_shipment_title);
 //        tv_shipment_status = (TextView) findViewById(R.id.tv_shipment_status);
 
         this.serviceShipmentListItemDto = serviceShipmentListItemDto;
