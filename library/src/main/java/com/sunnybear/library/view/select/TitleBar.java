@@ -2,6 +2,7 @@ package com.sunnybear.library.view.select;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
     private TitleItem mLastSelectedItem = null;
 
     private SparseIntArray array;
+    private SparseArray<TitleItem> mTitleItemArray;
 
     public void setTitleItemSelectedListener(TitleItemSelectedListener titleItemSelectedListener) {
         mTitleItemSelectedListener = titleItemSelectedListener;
@@ -31,6 +33,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
     public TitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         array = new SparseIntArray();
+        mTitleItemArray = new SparseArray<>();
     }
 
     @Override
@@ -39,6 +42,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             array.put(child.getId(), i);
+            mTitleItemArray.put(child.getId(), (TitleItem) child);
             if (!(child instanceof TitleItem))
                 throw new RuntimeException("TitleBar's child must be subclass of TitleItem!");
             if (((TitleItem) child).isActive())
@@ -57,7 +61,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
      *
      * @param item 选中的TabItem
      */
-    public void selectTitleItem(TitleItem item) {
+    private void selectTitleItem(TitleItem item) {
         if (mLastSelectedItem == item) {
             mLastSelectedItem.setActive(true);
             return;
@@ -70,6 +74,15 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
         int position = array.get(item.getId());
         if (mTitleItemSelectedListener != null)
             mTitleItemSelectedListener.onTitleItemSelected(item, position);
+    }
+
+    /**
+     * 选择TabItem
+     *
+     * @param resId 資源id
+     */
+    public void selectTitleItem(int resId) {
+        selectTitleItem(mTitleItemArray.get(resId));
     }
 
     /**
