@@ -188,6 +188,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
             tv_count_comment.setText(actionDetail.getCountCool() + "");
         }
     }
+
     //添加或删除评论时更新此页显示
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COMMENT)
     public void eventClickCoool(boolean isComment) {

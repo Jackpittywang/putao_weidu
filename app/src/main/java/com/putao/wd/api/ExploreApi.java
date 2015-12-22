@@ -79,6 +79,12 @@ public class ExploreApi {
     public static Request getManagement() {
         return PTWDRequestHelper.explore()
                 .build(RequestMethod.POST, URL_MANAGEMENT_LIST);
+//        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "661390") // 暂用固定uid
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
+//        return builder.build(RequestMethod.POST, URL_MANAGEMENT_LIST);
     }
 
     /**

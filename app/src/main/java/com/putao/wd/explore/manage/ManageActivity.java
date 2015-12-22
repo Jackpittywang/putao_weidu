@@ -56,6 +56,10 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     ImageView iv_usetime_byday;
     @Bind(R.id.usetime)
     LinearLayout usetime;
+    @Bind(R.id.ll_empty)
+    LinearLayout ll_empty;
+    @Bind(R.id.ll_content)
+    LinearLayout ll_content;
 
     private Bundle bundle;
 
@@ -67,10 +71,16 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         bundle = new Bundle();
+//        Management
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                Logger.i("探索号管理查询请求成功");
+                Logger.i("管理查询请求成功 = " + result.toString());
+                if (null != result && !"".equals(result)) {
+                    ll_empty.setVisibility(View.GONE);
+                    ll_content.setVisibility(View.VISIBLE);
+                }
+                loading.dismiss();
             }
 
             @Override
@@ -79,7 +89,6 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 ToastUtils.showToastShort(mContext, msg);
             }
         });
-
     }
 
     @Override

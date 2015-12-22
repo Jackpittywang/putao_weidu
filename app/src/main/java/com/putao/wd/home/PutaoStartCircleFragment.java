@@ -239,46 +239,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
 //        });
 //    }
 //
-//    /**
-//     * 获取活动报名列表
-//     * by yanghx
-//     *
-//     * @param action_id 活动ID
-//     */
-//    private void getEnrollment(String action_id) {
-//        networkRequest(StartApi.getEnrollment(action_id), new SimpleFastJsonCallback<ArrayList<ActionEnrollment>>(ActionEnrollment.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<ActionEnrollment> result) {
-//                Log.i("pt", "活动报名列表请求成功");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * model暂无
-//     * <p/>
-//     * 活动报名参加(提交)
-//     * by yanghx
-//     *
-//     * @param user_id     用户ID
-//     * @param identity    家长身份
-//     * @param phone       手机号码
-//     * @param nick_name   昵称
-//     * @param age         年龄
-//     * @param wechat      微信
-//     * @param parent_name 家长姓名
-//     * @param msg         留言
-//     */
-//    private void participateAdd(String user_id, String identity, String phone, String nick_name, String age, String wechat, String parent_name, String msg) {
-//        networkRequest(StartApi.participateAdd(user_id, identity, phone, nick_name, age, wechat, parent_name, msg),
-//                new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-//                    @Override
-//                    public void onSuccess(String url, ArrayList<String> result) {
-//                        Log.i("pt", "活动报名参加提交成功");
-//                    }
-//                });
-//    }
-//
+
 //    /**
 //     * 获取个人信息
 //     * by yanghx
