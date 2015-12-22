@@ -218,7 +218,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
-                if (result.getCurrent_page() != result.getTotal_page()) {
+                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
                     adapter.replaceAll(result.getComment());
                     hasComment = true;
                     rv_content.loadMoreComplete();

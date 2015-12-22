@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 剧情+教育--数据的图片地址--探索号产品--成长日记首页
  * Created by guchenkai on 2015/12/8.
  */
-public class ExploreProductDataPlot implements Serializable {
+public class ExploreProductPlot implements Serializable {
     private String content;//一句话介绍
     private String img_url;//背景图
     private String img_list;//
@@ -37,7 +37,7 @@ public class ExploreProductDataPlot implements Serializable {
 
     @Override
     public String toString() {
-        return "ExploreProductDataPlot{" +
+        return "ExploreProductPlot{" +
                 "content='" + content + '\'' +
                 ", img_url='" + img_url + '\'' +
                 ", img_list='" + img_list + '\'' +

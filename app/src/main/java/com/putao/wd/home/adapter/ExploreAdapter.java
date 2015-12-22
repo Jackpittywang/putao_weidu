@@ -7,10 +7,12 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Explore;
+import com.putao.wd.model.ExploreProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
+import java.text.BreakIterator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,34 +21,35 @@ import butterknife.Bind;
  * 探索号适配器
  * Created by yanghx on 2015/12/9.
  */
-public class ExploreAdapter extends LoadMoreAdapter<Explore, BasicViewHolder> {
-    private static final int TYPE_USE = 1;
-    private static final int TYPE_INSTRUCTION = 2;
+public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHolder> {
+    private static final int TYPE_DETAIL = 1;
+    private static final int TYPE_PLOT = 2;
     private final int TYPE_PICTURE_ONE = 1;
     private final int TYPE_PICTURE_FOUR = 4;
     private final int TYPE_PICTURE_NINE = 9;
     private final String DATE_PATTERN = "yyyy-MM-dd";
 
-    public ExploreAdapter(Context context, List list) {
-        super(context, list);
+    public ExploreAdapter(Context context, List<ExploreProduct> exploreProducts) {
+        super(context, exploreProducts);
     }
 
     @Override
     public int getMultiItemViewType(int position) {
-        Explore exploreProduct = getItem(position);
-        if (true) {
-            return TYPE_USE;
-        } else {
-            return TYPE_INSTRUCTION;
+        ExploreProduct exploreProduct = getItem(position);
+        switch (exploreProduct.getType()) {
+            case 1:
+                return TYPE_DETAIL;
+            default:
+                return TYPE_PLOT;
         }
     }
 
     @Override
     public int getLayoutId(int viewType) {
         switch (viewType) {
-            case TYPE_USE:
+            case TYPE_DETAIL:
                 return R.layout.fragment_explore_item;
-            case TYPE_INSTRUCTION:
+            case TYPE_PLOT:
                 return R.layout.fragment_explore_mixed_item;
             default:
                 return 0;
@@ -56,9 +59,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Explore, BasicViewHolder> {
     @Override
     public BasicViewHolder getViewHolder(View itemView, int viewType) {
         switch (viewType) {
-            case TYPE_USE:
+            case TYPE_DETAIL:
                 return new ExploerViewHolder(itemView);
-            case TYPE_INSTRUCTION:
+            case TYPE_PLOT:
                 return new ExploerMixedViewHolder(itemView);
             default:
                 return null;
@@ -66,13 +69,13 @@ public class ExploreAdapter extends LoadMoreAdapter<Explore, BasicViewHolder> {
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, Explore exploreProduct, int position) {
+    public void onBindItem(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
         if (null != exploreProduct) {
             //Logger.i(exploreProduct.toString());
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
 //            String date = DateUtils.secondToDate(exploreProduct.getTime(), DATE_PATTERN);
-//            viewHolder.tv_date.setText(exploreProduct.getTime());
-//            viewHolder.tv_introduct.setText(exploreProduct.getSummary());
+            viewHolder.tv_date.setText(exploreProduct.getTime());
+            viewHolder.tv_introduct.setText(exploreProduct.getSummary());
             viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
 
 //            List<ExploreProduct> product_list = exploreProduct.getData();
@@ -86,7 +89,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Explore, BasicViewHolder> {
 //                    ExploreProductDataList data_list = exploreProductData.getData_list();
 //                    if (null != data_list) {
 //                        List<ExploreProductDataDaily> daily_list = data_list.getDaily_list();
-//                        List<ExploreProductDataPlot> plot_list = data_list.getPlot_list();
+//                        List<ExploreProductPlot> plot_list = data_list.getPlot_list();
 //                        if (null != daily_list && daily_list.size() > 0) {
 //                            for (int j = 0; j < daily_list.size(); j++) {
 //                                ExploreProductDataDaily exploreProductDataDaily = daily_list.get(j);

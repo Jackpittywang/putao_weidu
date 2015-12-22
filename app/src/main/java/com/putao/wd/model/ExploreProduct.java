@@ -1,6 +1,7 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 数据的图片地址--探索号产品--成长日记首页
@@ -14,6 +15,10 @@ public class ExploreProduct implements Serializable {
     private int type;
     private String img_url;
     private String data;
+
+    // 以下两个field用作data类型不确定时，分步解析保存
+    private List<ExploreProductDetail> details;//保存array data
+    private ExploreProductPlot plot;//保存object data
 
     public String getSummary() {
         return summary;
@@ -71,6 +76,22 @@ public class ExploreProduct implements Serializable {
         this.data = data;
     }
 
+    public List<ExploreProductDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<ExploreProductDetail> details) {
+        this.details = details;
+    }
+
+    public ExploreProductPlot getPlot() {
+        return plot;
+    }
+
+    public void setPlot(ExploreProductPlot plot) {
+        this.plot = plot;
+    }
+
     @Override
     public String toString() {
         return "ExploreProduct{" +
@@ -81,6 +102,8 @@ public class ExploreProduct implements Serializable {
                 ", type=" + type +
                 ", img_url='" + img_url + '\'' +
                 ", data='" + data + '\'' +
+                ", details=" + details +
+                ", plot=" + plot +
                 '}';
     }
 }
