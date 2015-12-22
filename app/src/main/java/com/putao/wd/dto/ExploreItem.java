@@ -1,6 +1,5 @@
 package com.putao.wd.dto;
 
-import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.Page;
 
 import java.util.List;
@@ -12,13 +11,13 @@ import java.util.List;
 @Deprecated
 public class ExploreItem extends Page {
 
-   private List<ExploreProduct> data;
+   private List<CommentItem> data;
 
-    public List<ExploreProduct> getData() {
+    public List<CommentItem> getData() {
         return data;
     }
 
-    public void setData(List<ExploreProduct> data) {
+    public void setData(List<CommentItem> data) {
         this.data = data;
     }
 
