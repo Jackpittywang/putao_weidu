@@ -1,7 +1,5 @@
 package com.putao.wd.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +7,6 @@ import java.util.List;
  * Created by yanghx on 2015/12/22.
  */
 public class Explore extends Page {
-
     private List<ExploreProduct> data;
 
     public List<ExploreProduct> getData() {

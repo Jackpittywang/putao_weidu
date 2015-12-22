@@ -1,7 +1,6 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 数据的图片地址--探索号产品--成长日记首页
@@ -14,8 +13,7 @@ public class ExploreProduct implements Serializable {
     private String product_icon;
     private int type;
     private String img_url;
-    private List<ExploreProductDetail> dataList;
-    private ExploreProduct dataObject;
+    private String data;
 
     public String getSummary() {
         return summary;
@@ -65,6 +63,14 @@ public class ExploreProduct implements Serializable {
         this.img_url = img_url;
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "ExploreProduct{" +
@@ -74,6 +80,7 @@ public class ExploreProduct implements Serializable {
                 ", product_icon='" + product_icon + '\'' +
                 ", type=" + type +
                 ", img_url='" + img_url + '\'' +
+                ", data='" + data + '\'' +
                 '}';
     }
 }

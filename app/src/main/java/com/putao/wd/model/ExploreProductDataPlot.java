@@ -8,7 +8,8 @@ import java.io.Serializable;
  */
 public class ExploreProductDataPlot implements Serializable {
     private String content;//一句话介绍
-    private String background_img;//背景图
+    private String img_url;//背景图
+    private String img_list;//
 
     public String getContent() {
         return content;
@@ -18,19 +19,28 @@ public class ExploreProductDataPlot implements Serializable {
         this.content = content;
     }
 
-    public String getBackground_img() {
-        return background_img;
+    public String getImg_url() {
+        return img_url;
     }
 
-    public void setBackground_img(String background_img) {
-        this.background_img = background_img;
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
+    }
+
+    public String getImg_list() {
+        return img_list;
+    }
+
+    public void setImg_list(String img_list) {
+        this.img_list = img_list;
     }
 
     @Override
     public String toString() {
-        return "ExlporeProductDataPlot{" +
+        return "ExploreProductDataPlot{" +
                 "content='" + content + '\'' +
-                ", background_img='" + background_img + '\'' +
+                ", img_url='" + img_url + '\'' +
+                ", img_list='" + img_list + '\'' +
                 '}';
     }
 }

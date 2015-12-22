@@ -10,7 +10,7 @@ import java.util.List;
 public class ExploreProductDetail implements Serializable {
     private String html;
     private String icon;
-    private List<ExploreProductDataDaily> data;
+    private List<String> data;
 
     public String getHtml() {
         return html;
@@ -28,11 +28,11 @@ public class ExploreProductDetail implements Serializable {
         this.icon = icon;
     }
 
-    public List<ExploreProductDataDaily> getData() {
+    public List<String> getData() {
         return data;
     }
 
-    public void setData(List<ExploreProductDataDaily> data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 
