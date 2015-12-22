@@ -90,21 +90,28 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-        <Button
+        <!--<Button
             android:id="@+id/btn_service_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/btn_service_operation"
             android:layout_toStartOf="@+id/btn_service_operation"
-            android:text="取消订单" />
+            android:text="取消订单" />-->
+
+
 
         <Button
             android:id="@+id/btn_service_operation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="订单操作" />
+            android:background="@drawable/btn_shape"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textSize="16sp"
+            android:textColor="#985CC9"
+            android:text="申请售后" />
     </RelativeLayout>
 
 </LinearLayout>

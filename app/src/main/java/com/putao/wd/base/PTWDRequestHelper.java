@@ -27,7 +27,8 @@ public class PTWDRequestHelper {
     public static FormEncodingRequestBuilder store() {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken());
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
 
     /**
