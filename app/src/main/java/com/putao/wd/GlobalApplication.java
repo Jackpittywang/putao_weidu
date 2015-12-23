@@ -29,6 +29,8 @@ import cn.sharesdk.framework.ShareSDK;
  * Created by guchenkai on 2015/11/25.
  */
 public class GlobalApplication extends BasicApplication {
+    public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
+
     private DaoMaster.OpenHelper mHelper;
     private Map<String, String> mEmojis;//表情集合
 
@@ -45,6 +47,8 @@ public class GlobalApplication extends BasicApplication {
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
+        //启动推送
+//        startService(new Intent(ACTION_PUSH_SERVICE));
     }
 
     /**
