@@ -8,6 +8,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.explore.manage.adapter.ControlledEquipmentAdapter;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementDevice;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -46,6 +47,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
             public void onSuccess(String url, Management result) {
                 if (null != result) {
                     adapter.replaceAll(result.getSlave_device_list());
+                    selectItem = result.getSlave_device_list();
                 }
                 loading.dismiss();
             }
@@ -83,6 +85,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_EQUIPMENT);
+        ActivityManager.getInstance().finishCurrentActivity();
 //        networkRequest(ExploreApi.managementEdit(""), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
 //            @Override
 //            public void onSuccess(String url, ManagementEdit result) {
