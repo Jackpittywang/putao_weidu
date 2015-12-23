@@ -232,7 +232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/distance_8dp"
-                android:text="数据查询错误"/>
+                android:text="加载失败，点击屏幕刷新"/>
 
         </LinearLayout>
 
