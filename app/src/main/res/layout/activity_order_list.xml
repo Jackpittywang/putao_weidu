@@ -111,11 +111,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_no_data"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="40dp"
-                android:text="还没有相关订单"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_20sp" />
+
         </RelativeLayout>
     </FrameLayout>
 
