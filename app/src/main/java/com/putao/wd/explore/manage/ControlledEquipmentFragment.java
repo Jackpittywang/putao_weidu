@@ -92,12 +92,12 @@ public class ControlledEquipmentFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_EQUIPMENT);
-        networkRequest(ExploreApi.managementEdit("afdakfakfakfknafaank"), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
-            @Override
-            public void onSuccess(String url, ManagementEdit result) {
-                Logger.i("探索号管理信息保存成功");
-            }
-        });
+//        networkRequest(ExploreApi.managementEdit("afdakfakfakfknafaank"), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ManagementEdit result) {
+//                Logger.i("探索号管理信息保存成功");
+//            }
+//        });
     }
 
     @Override
