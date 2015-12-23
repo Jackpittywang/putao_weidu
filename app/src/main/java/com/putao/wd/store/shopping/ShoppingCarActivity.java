@@ -44,6 +44,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     TextView tv_closing;//结算
     @Bind(R.id.rl_shopping_car)
     RelativeLayout rl_shopping_car;//购物车布局
+    @Bind(R.id.rl_empty)
+    RelativeLayout rl_empty;//空页面
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;

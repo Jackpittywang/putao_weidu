@@ -13,10 +13,17 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Management;
+import com.putao.wd.model.ManagementDevice;
+import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -59,6 +66,8 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
 
     private Bundle bundle;
     private Management management;
+    private int deviceNum;
+    private int productNum;
 
     @Override
     protected int getLayoutId() {
@@ -75,9 +84,14 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             @Override
             public void onSuccess(String url, Management result) {
                 if (null != result) {
-                    management = result;
                     ll_empty.setVisibility(View.GONE);
                     ll_content.setVisibility(View.VISIBLE);
+                    management = result;
+
+                    setDeviceText(result.getSlave_device_list(), false);
+                    setProductText(result.getProduct_list(), false);
+                    tv_usecount_byday.setText(result.getUse_num());
+                    tv_usetime_byday.setText(result.getUse_time());
                 }
                 loading.dismiss();
             }
@@ -141,6 +155,52 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
         }
+    }
+
+    /**
+     * 设备数量显示
+     */
+    private void setDeviceText(List<ManagementDevice> devices, boolean fromEvent) {
+        int count = 0;
+        if (fromEvent) {
+            count = devices.size();
+        }else {
+            deviceNum = devices.size();
+            for (ManagementDevice device : devices) {
+                if (device.getStatus().equals("1")) {
+                    count++;
+                }
+            }
+        }
+        tv_equipment_name.setText(count + "个，共" + deviceNum + "个");
+    }
+
+    /**
+     * 产品数量显示
+     */
+    private void setProductText(List<ManagementProduct> products, boolean fromEvent) {
+        int count = 0;
+        if (fromEvent) {
+         count = products.size();
+        }else {
+            productNum = products.size();
+            for (ManagementProduct product : products) {
+                if (product.getStatus() == 1) {
+                    count++;
+                }
+            }
+        }
+        tv_product_name.setText(count + "个，共" + productNum + "个");
+    }
+
+    @Subcriber(tag = ControlledEquipmentFragment.EVENT_CONTROLLED_EQUIPMENT)
+    public void eventControlledEquipment(List<ManagementDevice> devices) {
+        setDeviceText(devices, true);
+    }
+
+    @Subcriber(tag = ControlledProductFragment.EVENT_CONTROLLED_PRODUT)
+    public void eventControlledProduct(List<ManagementProduct> products) {
+        setProductText(products, true);
     }
 
     @Subcriber(tag = UseCountEveryDayFragment.EVENT_USECOUNT_EVERYDAY)
