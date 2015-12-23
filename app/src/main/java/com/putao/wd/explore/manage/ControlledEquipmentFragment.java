@@ -5,8 +5,9 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.ControllItem;
 import com.putao.wd.explore.manage.adapter.ControlledEquipmentAdapter;
+import com.putao.wd.model.Management;
+import com.putao.wd.model.ManagementDevice;
 import com.putao.wd.model.ManagementEdit;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -30,7 +31,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
     BasicRecyclerView brv_equipment;
 
     private ControlledEquipmentAdapter adapter;
-    private List<ControllItem> selectItem = new ArrayList<>();
+    private List<ManagementDevice> selectItem = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -40,20 +41,37 @@ public class ControlledEquipmentFragment extends PTWDFragment {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        adapter = new ControlledEquipmentAdapter(mActivity, getTestData());
+        adapter = new ControlledEquipmentAdapter(mActivity, null);
         brv_equipment.setAdapter(adapter);
+        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
+            @Override
+            public void onSuccess(String url, Management result) {
+                if (null != result) {
+                    adapter.replaceAll(result.getSlave_device_list());
+                }
+                loading.dismiss();
+            }
+//            @Override
+//            public void onSuccess(String url, String result) {
+//                Logger.i("管理查询请求成功 = " + result.toString());
+//                if (null != result && !"".equals(result)) {
+//                }
+//                loading.dismiss();
+//            }
+        });
+
         addListener();
     }
 
     private void addListener() {
-        brv_equipment.setOnItemClickListener(new OnItemClickListener<ControllItem>() {
+        brv_equipment.setOnItemClickListener(new OnItemClickListener<ManagementDevice>() {
             @Override
-            public void onItemClick(ControllItem item, int position) {
-                if (!item.isSelect()) {
-                    item.setIsSelect(true);
+            public void onItemClick(ManagementDevice item, int position) {
+                if (!"1".equals(item.getStatus())) {
+                    item.setStatus("1");
                     selectItem.add(item);
                 } else {
-                    item.setIsSelect(false);
+                    item.setStatus("0");
                     selectItem.remove(item);
                 }
                 adapter.replace(position, item);
@@ -61,15 +79,15 @@ public class ControlledEquipmentFragment extends PTWDFragment {
         });
     }
 
-    private List<ControllItem> getTestData() {
-        List<ControllItem> list = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
-            ControllItem msgitem = new ControllItem();
-            msgitem.setName("设备名称" + i);
-            list.add(msgitem);
-        }
-        return list;
-    }
+//    private List<ControllItem> getTestData() {
+//        List<ControllItem> list = new ArrayList<>();
+//        for (int i = 1; i <= 3; i++) {
+//            ControllItem msgitem = new ControllItem();
+//            msgitem.setName("设备名称" + i);
+//            list.add(msgitem);
+//        }
+//        return list;
+//    }
 
     @Override
     public void onRightAction() {

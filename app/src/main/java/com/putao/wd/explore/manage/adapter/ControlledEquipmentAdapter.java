@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.ControllItem;
+import com.putao.wd.model.ManagementDevice;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -18,10 +19,10 @@ import butterknife.Bind;
  * ”受控设备“列表适配器
  * Created by wango on 2015/12/2.
  */
-public class ControlledEquipmentAdapter extends BasicAdapter<ControllItem, ControlledEquipmentAdapter.ControlledEquipmentViewHolder> {
+public class ControlledEquipmentAdapter extends BasicAdapter<ManagementDevice, ControlledEquipmentAdapter.ControlledEquipmentViewHolder> {
 
-    public ControlledEquipmentAdapter(Context context, List<ControllItem> equipmentItems) {
-        super(context, equipmentItems);
+    public ControlledEquipmentAdapter(Context context, List<ManagementDevice> managementDevices) {
+        super(context, managementDevices);
     }
 
     @Override
@@ -35,9 +36,9 @@ public class ControlledEquipmentAdapter extends BasicAdapter<ControllItem, Contr
     }
 
     @Override
-    public void onBindItem(final ControlledEquipmentViewHolder holder, ControllItem item, int position) {
-        holder.tv_equipment_name.setText(item.getName());
-        holder.iv_select_icon.setVisibility(item.isSelect() ? View.VISIBLE : View.GONE);
+    public void onBindItem(final ControlledEquipmentViewHolder holder, ManagementDevice item, int position) {
+        holder.tv_equipment_name.setText(item.getSlave_device_name());
+        holder.iv_select_icon.setVisibility("1".equals(item.getStatus()) ? View.VISIBLE : View.GONE);
     }
 
     /**

@@ -2,7 +2,6 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -16,13 +15,11 @@ import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.model.ExploreProductDetail;
-import com.putao.wd.model.PlotDetail;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -78,7 +75,7 @@ public class PutaoExploreFragment extends PTWDFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                //getDiaryIndex();
+                getDiaryIndex();
             }
         });
     }

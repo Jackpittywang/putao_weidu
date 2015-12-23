@@ -8,34 +8,34 @@ import java.util.List;
  * Created by guchenkai on 2015/12/8.
  */
 public class Management implements Serializable {
-    private int master_id;//控制设备id
-    private int use_num;//每天使用次数（次）,0为不限
-    private int use_time;//每天使用时间（分钟）,0为不限
+    private String use_num;//每天使用次数（次）,0为不限
+    private String use_time;//每天使用时间（分钟）,0为不限
+    private String status;
     private List<ManagementDevice> slave_device_list;//受控设备列表
     private List<ManagementProduct> product_list;//产品列表
 
-    public int getMaster_id() {
-        return master_id;
-    }
-
-    public void setMaster_id(int master_id) {
-        this.master_id = master_id;
-    }
-
-    public int getUse_num() {
+    public String getUse_num() {
         return use_num;
     }
 
-    public void setUse_num(int use_num) {
+    public void setUse_num(String use_num) {
         this.use_num = use_num;
     }
 
-    public int getUse_time() {
+    public String getUse_time() {
         return use_time;
     }
 
-    public void setUse_time(int use_time) {
+    public void setUse_time(String use_time) {
         this.use_time = use_time;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<ManagementDevice> getSlave_device_list() {
@@ -57,9 +57,9 @@ public class Management implements Serializable {
     @Override
     public String toString() {
         return "Management{" +
-                "master_id=" + master_id +
-                ", use_num=" + use_num +
-                ", use_time=" + use_time +
+                "use_num='" + use_num + '\'' +
+                ", use_time='" + use_time + '\'' +
+                ", status='" + status + '\'' +
                 ", slave_device_list=" + slave_device_list +
                 ", product_list=" + product_list +
                 '}';

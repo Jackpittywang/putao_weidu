@@ -1,211 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/text_color_F5F5F5"
-    android:orientation="vertical">
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/text_color_F5F5F5"
+              android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-        auto:nav_main_title="@string/manager" />
+        auto:nav_main_title="@string/manager"/>
 
-    <!--间隔线-->
-    <View
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#EBEBEB" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_EBEBEB"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/ll_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
+            android:layout_height="match_parent"
+            android:background="@color/color_EBEBEB"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:visibility="gone">
 
-            <!--受控设备-->
-            <LinearLayout
-                android:id="@+id/ll_equipment"
+            <!--间隔线-->
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="10dp"
+                android:background="#EBEBEB"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <!--受控设备-->
+                <LinearLayout
+                    android:id="@+id/ll_equipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
-                    android:text="受控设备"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_equipment_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="受控设备"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_equipment_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_equipment_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/btn_arrow"/>
+                </LinearLayout>
+
+                <!--间隔线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_color"/>
+
+                <!--受控产品-->
+                <LinearLayout
+                    android:id="@+id/ll_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_equipment_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/btn_arrow" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="受控产品"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/btn_arrow"/>
+                </LinearLayout>
+
+                <!--间隔线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_color"/>
+
+                <!--使用次数-->
+                <LinearLayout
+                    android:id="@+id/ll_usecount"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="每日使用次数"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_usecount_byday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="不限"
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_usecount_byday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/btn_arrow"/>
+                </LinearLayout>
+
+                <!--间隔线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_color"/>
+
+                <!--使用时间-->
+                <LinearLayout
+                    android:id="@+id/usetime"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="每日使用时间"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_usetime_byday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="不限"
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_14sp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_usetime_byday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/btn_arrow"/>
+                </LinearLayout>
+                <!--间隔线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_color"/>
             </LinearLayout>
 
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color" />
+                android:layout_height="20dp"
+                android:background="#EBEBEB"/>
 
-            <!--受控产品-->
-            <LinearLayout
-                android:id="@+id/ll_product"
+            <Button
+                android:id="@+id/btn_stopuse"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:background="#fff"
+                android:text="立即让宝宝停止使用产品"
+                android:textColor="#cd5564"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="受控产品"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <ImageView
-                    android:id="@+id/iv_product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/btn_arrow" />
-            </LinearLayout>
-
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color" />
-
-            <!--使用次数-->
-            <LinearLayout
-                android:id="@+id/ll_usecount"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="每日使用次数"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <TextView
-                    android:id="@+id/tv_usecount_byday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="不限"
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <ImageView
-                    android:id="@+id/iv_usecount_byday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/btn_arrow" />
-            </LinearLayout>
-
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color" />
-
-            <!--使用时间-->
-            <LinearLayout
-                android:id="@+id/usetime"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="每日使用时间"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <TextView
-                    android:id="@+id/tv_usetime_byday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="不限"
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <ImageView
-                    android:id="@+id/iv_usetime_byday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/btn_arrow" />
-            </LinearLayout>
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="使用此功能需宝宝使用的iPad联网喔！"
+                android:textSize="14sp"/>
         </LinearLayout>
 
-        <!--间隔线-->
-        <View
+        <LinearLayout
+            android:id="@+id/ll_empty"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="#EBEBEB" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_stopuse"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="#fff"
-            android:text="立即让宝宝停止使用产品"
-            android:textColor="#cd5564" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_page_empty"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="使用此功能需宝宝使用的iPad联网喔！"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/distance_8dp"
+                android:text="加载失败，点击屏幕刷新"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 </LinearLayout>
+
+
+
+

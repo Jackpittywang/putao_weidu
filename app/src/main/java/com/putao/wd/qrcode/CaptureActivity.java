@@ -1,28 +1,32 @@
 package com.putao.wd.qrcode;
 
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dtr.zbar.build.ZBarDecoder;
 import com.putao.wd.R;
-import com.putao.wd.api.ExploreApi;
+import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.controller.ActivityManager;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.putao.wd.user.WebLoginActivity;
+import com.putao.wd.util.ScanUrlParseUtils;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -32,18 +36,19 @@ import butterknife.OnClick;
  * Created by riven_chris on 2015/11/4.
  */
 public class CaptureActivity extends PTWDActivity implements View.OnClickListener {
-
-    private com.putao.wd.qrcode.CameraPreview mPreview;
+    private CameraPreview mPreview;
     private Camera mCamera;
     private Handler autoFocusHandler;
     private CameraManager mCameraManager;
 
     @Bind(R.id.capture_preview)
-    public FrameLayout scanPreview;
+    FrameLayout scanPreview;
     @Bind(R.id.capture_container)
-    public RelativeLayout scanContainer;
+    RelativeLayout scanContainer;
     @Bind(R.id.capture_crop_view)
-    public ImageView scanCropView;
+    ImageView scanCropView;
+    @Bind(R.id.scan_line)
+    ImageView scan_line;
 
     private Rect mCropRect = null;
     private boolean barcodeScanned = false;
@@ -52,7 +57,6 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     private Camera.PreviewCallback previewCb = new Camera.PreviewCallback() {
         public void onPreviewFrame(byte[] data, Camera camera) {
             Camera.Size size = camera.getParameters().getPreviewSize();
-
             // 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
             byte[] rotatedData = new byte[data.length];
             for (int y = 0; y < size.height; y++) {
@@ -66,7 +70,8 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
 
             initCrop();
             ZBarDecoder zBarDecoder = new ZBarDecoder();
-            String result = zBarDecoder.decodeCrop(rotatedData, size.width, size.height, mCropRect.left, mCropRect.top, mCropRect.width(), mCropRect.height());
+            String result = zBarDecoder
+                    .decodeCrop(rotatedData, size.width, size.height, mCropRect.left, mCropRect.top, mCropRect.width(), mCropRect.height());
             if (!TextUtils.isEmpty(result)) {
                 previewing = false;
                 mCamera.setPreviewCallback(null);
@@ -76,6 +81,20 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
             }
         }
     };
+    private Runnable doAutoFocus = new Runnable() {
+        public void run() {
+            if (previewing)
+                mCamera.autoFocus(autoFocusCB);
+        }
+    };
+    // Mimic continuous auto-focusing
+    private Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
+        public void onAutoFocus(boolean success, Camera camera) {
+            autoFocusHandler.postDelayed(doAutoFocus, 1000);
+        }
+    };
+    //扫面线动画
+    private TranslateAnimation animation;
 
     @Override
     protected int getLayoutId() {
@@ -85,23 +104,22 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        setMainTitleColor(Color.WHITE);
         initViews();
+//        initAnimation();
+//        scan_line.startAnimation(animation);
+    }
+
+    private void initAnimation() {
+        animation = new TranslateAnimation(0, 0, -DensityUtil.dp2px(mContext, 225), DensityUtil.dp2px(mContext, 225));
+        animation.setDuration(3000);
+        animation.setRepeatCount(Integer.MAX_VALUE);
+        animation.setInterpolator(new LinearInterpolator());
     }
 
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
-    }
-
-    /**
-     * 处理结果
-     *
-     * @param result 扫描结果
-     */
-    private void processor(String result) {
-        Logger.d(result);
-        ToastUtils.showToastLong(mContext, result);
-        ActivityManager.getInstance().finishCurrentActivity();
     }
 
     @OnClick({R.id.left_title,})
@@ -115,7 +133,6 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     }
 
     private void initViews() {
-//        Loger.d("init preview .............................");
         autoFocusHandler = new Handler();
         mCameraManager = new CameraManager(this);
         try {
@@ -144,6 +161,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         mCameraManager.closeDriver();
+        scan_line.clearAnimation();
     }
 
     private void releaseCamera() {
@@ -168,20 +186,6 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
             }
         }
     }
-
-    private Runnable doAutoFocus = new Runnable() {
-        public void run() {
-            if (previewing)
-                mCamera.autoFocus(autoFocusCB);
-        }
-    };
-
-    // Mimic continuous auto-focusing
-    Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
-        public void onAutoFocus(boolean success, Camera camera) {
-            autoFocusHandler.postDelayed(doAutoFocus, 1000);
-        }
-    };
 
     /**
      * 初始化截取的矩形区域
@@ -232,20 +236,39 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     }
 
     /**
-     * model暂无
+     * 处理结果
      *
-     * 扫码关注产品
-     * by yanghx
-     * @param slave_device_id 受控设备id号
-     * @param product_id      对应产品idc
+     * @param result 扫描结果
      */
-    private void scanAdd(String slave_device_id, String product_id) {
-        networkRequest(ExploreApi.scanAdd(slave_device_id, product_id), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<String> result) {
-                Log.i("pt", "扫码关注产品成功");
-            }
-        });
-    }
+    private void processor(String result) {
+        Logger.d(result);
+        String scheme = ScanUrlParseUtils.getScheme(result);
+        Logger.d("scheme:" + scheme);
+        switch (scheme) {
+            case ScanUrlParseUtils.Scheme.PUTAO_LOGIN://扫描登录
+                String url = ScanUrlParseUtils.getRequestUrl(result);
+                Logger.d("url:" + url);
+                networkRequest(ScanApi.scanLogin(url), new JSONObjectCallback() {
+                    @Override
+                    public void onSuccess(String url, JSONObject result) {
+                        int error_code = result.getInteger("error_code");
+                        if (error_code == 0) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(WebLoginActivity.URL_LOGIN, url);
+                            startActivity(WebLoginActivity.class, bundle);
+                        } else {
+                            ToastUtils.showToastLong(mContext, "登录失败");
+                        }
+                        loading.dismiss();
+                        finish();
+                    }
 
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        loading.dismiss();
+                    }
+                });
+                break;
+        }
+    }
 }

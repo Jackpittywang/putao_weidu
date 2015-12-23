@@ -44,6 +44,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--引导页-->
+        <activity
+            android:name=".GuidanceActivity"
+            android:screenOrientation="portrait" />
         <!--主页-->
         <activity
             android:name=".MainActivity"
@@ -52,6 +56,10 @@
         <!-- 登录 -->
         <activity
             android:name=".user.LoginActivity"
+            android:screenOrientation="portrait" />
+        <!--网页登录-->
+        <activity
+            android:name=".user.WebLoginActivity"
             android:screenOrientation="portrait" />
         <!--注册-->
         <activity
@@ -149,6 +157,10 @@
         <activity
             android:name=".start.comment.CommentActivity"
             android:screenOrientation="portrait" />
+        <!-- 葡萄籽 -->
+        <activity
+            android:name=".start.putaozi.GrapestoneActivity"
+            android:screenOrientation="portrait" />
         <!--图片介绍-->
         <activity
             android:name=".start.action.PictrueInfoActivity"
@@ -227,7 +239,14 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
         <!--推送-->
-        <service android:name="com.putao.push.PushService"/>
+        <service
+            android:name="com.putao.push.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.putao.wd.PUSH" />
+            </intent-filter>
+        </service>
         <!--================测试Activity======================-->
         <activity
             android:name=".TestActivity"

@@ -13,14 +13,10 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Management;
-import com.putao.wd.model.ManagementEdit;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -56,8 +52,13 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     ImageView iv_usetime_byday;
     @Bind(R.id.usetime)
     LinearLayout usetime;
+    @Bind(R.id.ll_empty)
+    LinearLayout ll_empty;
+    @Bind(R.id.ll_content)
+    LinearLayout ll_content;
 
     private Bundle bundle;
+    private Management management;
 
     @Override
     protected int getLayoutId() {
@@ -66,12 +67,29 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
         bundle = new Bundle();
-        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<String>(String.class, loading) {
+
+//        Management
+        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
-            public void onSuccess(String url, String result) {
-                Logger.i("探索号管理查询请求成功");
+            public void onSuccess(String url, Management result) {
+                if (null != result) {
+                    management = result;
+                    ll_empty.setVisibility(View.GONE);
+                    ll_content.setVisibility(View.VISIBLE);
+                }
+                loading.dismiss();
             }
+//            @Override
+//            public void onSuccess(String url, String result) {
+//                Logger.i("管理查询请求成功 = " + result.toString());
+//                if (null != result && !"".equals(result)) {
+//                    ll_empty.setVisibility(View.GONE);
+//                    ll_content.setVisibility(View.VISIBLE);
+//                }
+//                loading.dismiss();
+//            }
 
             @Override
             public void onFailure(String url, int statusCode, String msg) {
@@ -79,7 +97,6 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 ToastUtils.showToastShort(mContext, msg);
             }
         });
-
     }
 
     @Override
@@ -107,10 +124,12 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                 break;
             case R.id.ll_equipment://受控设备
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_EQUIPMENT);
+                bundle.putSerializable(ManagerSettingsActivity.KEY_MANAGER, management);
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_product://受控产品
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_PRODUCT);
+                bundle.putSerializable(ManagerSettingsActivity.KEY_MANAGER, management);
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_usecount://使用次数
