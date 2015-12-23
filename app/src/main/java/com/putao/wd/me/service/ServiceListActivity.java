@@ -67,19 +67,19 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
         for (int i = 0; i < 10; i++) {
             ServiceDto service = new ServiceDto();
-            service.setServiceNo(Math.random() + "");
+            service.setServiceNo(new String(Math.random() + "").substring(3));
             service.setPurchaseTime(System.currentTimeMillis());
             service.setTotalCost(569);
             service.setCustomerName("葡萄科技");
             service.setCustomerAddress("宜山路218号");
             service.setCustomerPhone("13622222222");
-            if (i == 0) service.setServiceStatus(ServiceCommon.ORDER_WAITING_PAY);
-            else if (i == 1) service.setServiceStatus(ServiceCommon.ORDER_WAITING_SHIPMENT);
-            else if (i == 2) service.setServiceStatus(ServiceCommon.ORDER_WAITING_SIGN);
-            else if (i == 3) service.setServiceStatus(ServiceCommon.ORDER_SALE_SERVICE);
-            else if (i == 4) service.setServiceStatus(ServiceCommon.ORDER_CANCLED);
-            else if (i == 5) service.setServiceStatus(ServiceCommon.ORDER_CLOSED);
-            else service.setServiceStatus(ServiceCommon.ORDER_WAITING_PAY);
+            if (i == 0) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_CHECK);
+            else if (i == 1) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_OVER);
+            else if (i == 2) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_AGREE);
+            else if (i == 3) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_SEND);
+            else if (i == 4) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_RECEIVE);
+            else if (i == 5) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_FINISH);
+            else service.setServiceStatus(ServiceCommon.SERVICE_EXCHANGE_CHECK);
 
             int num = (int) (Math.random() * 3);
             List<ServiceGoodsDto> goodsList = new ArrayList<ServiceGoodsDto>();
