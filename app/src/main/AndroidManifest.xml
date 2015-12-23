@@ -57,6 +57,10 @@
         <activity
             android:name=".user.LoginActivity"
             android:screenOrientation="portrait" />
+        <!--网页登录-->
+        <activity
+            android:name=".user.WebLoginActivity"
+            android:screenOrientation="portrait" />
         <!--注册-->
         <activity
             android:name=".user.RegisterActivity"
