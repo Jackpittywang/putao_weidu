@@ -92,7 +92,6 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             if (null != details && details.size() > 0) {
                 for (int i = 0; i < details.size(); i++) {
                     ExploreProductDetail productDetail = details.get(i);
-//                    viewHolder.iv_skill_icon.setImageURL(productDetail.getIcon());
                     builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
                     Logger.w("builders 长度 = " + builders.size());
                     setContent(viewHolder, i);
@@ -117,7 +116,6 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 
     }
 
-
     /**
      * 替换html中的<param>标签
      *
@@ -140,19 +138,19 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 //                viewHolder.tv_content_footer1.setText(builders.get(2));
                 break;
             case 1:
-                viewHolder.tv_content_head5.setText(builders.get(0));
-                viewHolder.tv_content_center5.setText(builders.get(1));
-//                viewHolder.tv_content_footer5.setText(builders.get(2));
-                break;
-            case 2:
                 viewHolder.tv_content_head2.setText(builders.get(0));
                 viewHolder.tv_content_center2.setText(builders.get(1));
 //                viewHolder.tv_content_footer2.setText(builders.get(2));
                 break;
+            case 2:
+                viewHolder.tv_content_head3.setText(builders.get(0));
+                viewHolder.tv_content_center3.setText(builders.get(1));
+//                viewHolder.tv_content_footer3.setText(builders.get(2));
+                break;
             case 3:
-                viewHolder.tv_content_head6.setText(builders.get(0));
-                viewHolder.tv_content_center6.setText(builders.get(1));
-//                viewHolder.tv_content_footer6.setText(builders.get(2));
+                viewHolder.tv_content_head4.setText(builders.get(0));
+                viewHolder.tv_content_center4.setText(builders.get(1));
+//                viewHolder.tv_content_footer4.setText(builders.get(2));
                 break;
         }
     }
@@ -259,18 +257,18 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         TextView tv_content_center2;
         @Bind(R.id.tv_content_footer2)
         TextView tv_content_footer2;
-        @Bind(R.id.tv_content_head5)
-        TextView tv_content_head5;
-        @Bind(R.id.tv_content_center5)
-        TextView tv_content_center5;
-        @Bind(R.id.tv_content_footer5)
-        TextView tv_content_footer5;
-        @Bind(R.id.tv_content_head6)
-        TextView tv_content_head6;
-        @Bind(R.id.tv_content_center6)
-        TextView tv_content_center6;
-        @Bind(R.id.tv_content_footer6)
-        TextView tv_content_footer6;
+        @Bind(R.id.tv_content_head3)
+        TextView tv_content_head3;
+        @Bind(R.id.tv_content_center3)
+        TextView tv_content_center3;
+        @Bind(R.id.tv_content_footer3)
+        TextView tv_content_footer3;
+        @Bind(R.id.tv_content_head4)
+        TextView tv_content_head4;
+        @Bind(R.id.tv_content_center4)
+        TextView tv_content_center4;
+        @Bind(R.id.tv_content_footer4)
+        TextView tv_content_footer4;
 
         public ExploerViewHolder(View itemView) {
             super(itemView);
