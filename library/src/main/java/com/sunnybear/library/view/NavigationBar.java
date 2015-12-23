@@ -29,6 +29,9 @@ public class NavigationBar extends RelativeLayout {
     private int mLeftTitleSize;
     private int mRightTitleSize;
 
+    private boolean isMainAction = true;
+    private boolean isLeftAction = true;
+    private boolean isRightAction = true;
 
     private Drawable mLeftDrawable;
     private Drawable mRightDrawable;
@@ -148,6 +151,18 @@ public class NavigationBar extends RelativeLayout {
         mRightView = view;
     }
 
+    public void setMainAction(boolean mainAction) {
+        isMainAction = mainAction;
+    }
+
+    public void setLeftAction(boolean leftAction) {
+        isLeftAction = leftAction;
+    }
+
+    public void setRightAction(boolean rightAction) {
+        isRightAction = rightAction;
+    }
+
     /**
      * convenience method for set left drawable
      */
@@ -192,11 +207,11 @@ public class NavigationBar extends RelativeLayout {
 
                 @Override
                 public void onClick(View v) {
-                    if (v == mMainView) {
+                    if (v == mMainView && isMainAction) {
                         mListener.onMainAction();
-                    } else if (v == mLeftView) {
+                    } else if (v == mLeftView && isLeftAction) {
                         mListener.onLeftAction();
-                    } else if (v == mRightView) {
+                    } else if (v == mRightView && isRightAction) {
                         mListener.onRightAction();
                     }
                 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Cart;
@@ -20,8 +21,10 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.select.Tag;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -30,8 +33,7 @@ import butterknife.OnClick;
  * Created by wangou on 2015/11/30.
  */
 public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
-//    public static final String EVENT_JOIN_CAR = "join_car";
-    public static final String EVENT_UPDATE_NORMS="update_norms";
+    public static final String EVENT_UPDATE_NORMS = "update_norms";
 
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
@@ -51,7 +53,6 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
 
     private String count = "1";//总数量
     private float Price = 0;
-    private String product_id;
 
     private List<Tag> mSelTags = new ArrayList<>();
     private int mSpecItemCount;
@@ -59,10 +60,11 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     private ProductNormsSku sku;//选中的商品
     private List<Norms> normses;//规格列表
 
-    public EditShoppingCarPopupWindow(Context context, String pid) {
-        super(context);
-        product_id = pid;
+    private Cart mCart;//当前修改的购物车项目
 
+    public EditShoppingCarPopupWindow(Context context, String pid, Cart cart) {
+        super(context);
+        mCart = cart;
         getProductSpec(pid);
     }
 
@@ -94,29 +96,28 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     /**
      * 更改商品规格购物车
      */
-    private void cartChange(String old_pid,String new_pid){
+    private void cartChange(String old_pid, String new_pid) {
         mActivity.networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
 
             }
-
         });
     }
 
-    @OnClick({R.id.iv_close,R.id.tv_confirm_update})
+    @OnClick({R.id.iv_close, R.id.tv_confirm_update})
     @Override
     public void onClick(View v) {
         ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
         switch (v.getId()) {
             case R.id.tv_confirm_update://修改购物车产品规格参数
                 //cartChange(product_id, sku.getPid());
-                String strSku="";
+                String strSku = "";
                 for (int i = 0; i < normses.size(); i++) {
-                    strSku=strSku+normses.get(i).getTitle().substring(2)+":"+mSelTags.get(i).getText()+" ";
+                    strSku = strSku + normses.get(i).getTitle().substring(2) + ":" + mSelTags.get(i).getText() + " ";
                 }
-                Cart cart=new Cart();
+                Cart cart = new Cart();
                 cart.setPrice(sku.getPrice());
                 cart.setSku(strSku);
                 cart.setPid(sku.getPid());
@@ -151,5 +152,4 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
             }
         }
     }
-
 }
