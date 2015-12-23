@@ -93,8 +93,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
                 for (int i = 0; i < details.size(); i++) {
                     ExploreProductDetail productDetail = details.get(i);
                     builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
-                    Logger.w("builders 长度 = " + builders.size());
-                    setContent(viewHolder, i);
+                    setContent(viewHolder, i, builders.size());
                 }
             }
 
@@ -130,27 +129,43 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         return html;
     }
 
-    private void setContent(ExploerViewHolder viewHolder,int index) {
+    private void setContent(ExploerViewHolder viewHolder, int index, int builderSize) {
         switch (index) {
             case 0:
                 viewHolder.tv_content_head1.setText(builders.get(0));
                 viewHolder.tv_content_center1.setText(builders.get(1));
-//                viewHolder.tv_content_footer1.setText(builders.get(2));
+                if (builderSize == 2) {
+                    viewHolder.tv_content_footer1.setVisibility(View.GONE);
+                } else {
+                    viewHolder.tv_content_footer1.setText(builders.get(2));
+                }
                 break;
             case 1:
                 viewHolder.tv_content_head2.setText(builders.get(0));
                 viewHolder.tv_content_center2.setText(builders.get(1));
-//                viewHolder.tv_content_footer2.setText(builders.get(2));
+                if (builderSize == 2) {
+                    viewHolder.tv_content_footer2.setVisibility(View.GONE);
+                } else {
+                    viewHolder.tv_content_footer2.setText(builders.get(2));
+                }
                 break;
             case 2:
                 viewHolder.tv_content_head3.setText(builders.get(0));
                 viewHolder.tv_content_center3.setText(builders.get(1));
-//                viewHolder.tv_content_footer3.setText(builders.get(2));
+                if (builderSize == 2) {
+                    viewHolder.tv_content_footer3.setVisibility(View.GONE);
+                } else {
+                    viewHolder.tv_content_footer3.setText(builders.get(2));
+                }
                 break;
             case 3:
                 viewHolder.tv_content_head4.setText(builders.get(0));
                 viewHolder.tv_content_center4.setText(builders.get(1));
-//                viewHolder.tv_content_footer4.setText(builders.get(2));
+                if (builderSize == 2) {
+                    viewHolder.tv_content_footer4.setVisibility(View.GONE);
+                } else {
+                    viewHolder.tv_content_footer4.setText(builders.get(2));
+                }
                 break;
         }
     }

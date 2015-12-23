@@ -42,14 +42,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/distance_8dp">
+        android:layout_marginTop="@dimen/distance_8dp"
+        android:paddingLeft="@dimen/distance_8dp"
+        android:paddingRight="@dimen/distance_8dp">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="1dp"
             android:layout_weight="1"
             android:background="@color/half_transparent_bg"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -68,7 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="nunber"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"/>
@@ -77,10 +81,12 @@
                 android:id="@+id/tv_content_footer1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="speed"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_18sp"/>
@@ -89,11 +95,12 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="1dp"
             android:layout_weight="1"
             android:background="@color/half_transparent_bg"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -112,7 +119,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="nunber"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"/>
@@ -121,10 +129,12 @@
                 android:id="@+id/tv_content_footer2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="speed"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_18sp"/>
@@ -135,21 +145,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/distance_8dp"
+        android:paddingRight="@dimen/distance_8dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="1dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/half_transparent_bg">
+            android:background="@color/half_transparent_bg"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_content_head3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="summary"
@@ -160,10 +172,10 @@
                 android:id="@+id/tv_content_center3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_head3"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="nunber"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"/>
@@ -172,31 +184,32 @@
                 android:id="@+id/tv_content_footer3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_center3"
+                android:layout_gravity="bottom"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="speed"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_18sp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="1dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/half_transparent_bg">
+            android:background="@color/half_transparent_bg"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_content_head4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="summary"
@@ -207,10 +220,10 @@
                 android:id="@+id/tv_content_center4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_head4"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="nunber"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_20sp"/>
@@ -219,213 +232,18 @@
                 android:id="@+id/tv_content_footer4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_center4"
+                android:layout_gravity="bottom"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="speed"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:background="@color/half_transparent_bg"
-            android:minHeight="180dp">
-
-            <TextView
-                android:id="@+id/tv_content_head5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="summary"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_center5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_head5"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:lines="2"
-                android:text="nunber"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_20sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_footer5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_center5"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:lines="2"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
                 android:text="speed"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_18sp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_weight="1"
-            android:background="@color/half_transparent_bg"
-            android:minHeight="180dp">
-
-            <TextView
-                android:id="@+id/tv_content_head6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="summary"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_center6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_head6"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="nunber"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_20sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_footer6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_center6"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="speed"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:background="@color/half_transparent_bg"
-            android:minHeight="180dp">
-
-            <TextView
-                android:id="@+id/tv_content_head7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="summary"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_center7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_head7"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="nunber"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_20sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_footer7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_center7"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="speed"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_weight="1"
-            android:background="@color/half_transparent_bg"
-            android:minHeight="180dp">
-
-            <TextView
-                android:id="@+id/tv_content_head8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="summary"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_center8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_head8"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="nunber"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_20sp"/>
-
-            <TextView
-                android:id="@+id/tv_content_footer8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content_center8"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:lines="2"
-                android:text="speed"
-                android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"/>
-        </RelativeLayout>
     </LinearLayout>
 
     <TextView
@@ -433,8 +251,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginBottom="@dimen/distance_8dp"
-        android:layout_marginRight="@dimen/distance_8dp"
+        android:layout_margin="@dimen/distance_8dp"
         android:drawableLeft="@drawable/icon_16_06"
         android:drawablePadding="4dp"
         android:text="去炫耀"
