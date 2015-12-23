@@ -79,6 +79,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                     ll_empty.setVisibility(View.GONE);
                     ll_content.setVisibility(View.VISIBLE);
                 }
+                loading.dismiss();
             }
 //            @Override
 //            public void onSuccess(String url, String result) {

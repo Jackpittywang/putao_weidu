@@ -49,6 +49,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
                 if (null != result) {
                     adapter.replaceAll(result.getSlave_device_list());
                 }
+                loading.dismiss();
             }
 //            @Override
 //            public void onSuccess(String url, String result) {
