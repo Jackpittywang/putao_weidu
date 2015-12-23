@@ -59,6 +59,27 @@ public class MapActivity extends PTWDActivity {
                         mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
                         mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
                         loading.dismiss();
+                        MapUtils.searchAddress(mContext, "", result.getVenue(), new MapUtils.OnSearchMapCallback() {
+                            @Override
+                            public void onSearchMap(LatLng latLng) {
+
+                                try {
+                                    mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
+                                    mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
+                                    mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+                                        @Override
+                                        public boolean onMarkerClick(Marker marker) {
+                                            ToastUtils.showToastLong(mContext, marker.getTitle());
+                                            return true;
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    finish();
+                                }finally {
+                                    loading.dismiss();
+                                }
+                            }
+                        });
                     }
                 });
     }

@@ -11,7 +11,7 @@
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="售后列表"
+        auto:nav_main_title="售后订单"
         android:background="@color/white"
         auto:nav_has_divider="true"/>
 
@@ -51,7 +51,7 @@
                 android:id="@+id/img_no_data"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@drawable/tab_bar_me_sel"
+                android:src="@drawable/img_me_order_empty"
                 android:layout_marginTop="100dp"
                 android:layout_centerHorizontal="true" />
 
@@ -63,7 +63,7 @@
                 android:layout_below="@+id/img_no_data"
                 android:layout_marginTop="40dp"
                 android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_18sp" />
 
         </RelativeLayout>
     </FrameLayout>

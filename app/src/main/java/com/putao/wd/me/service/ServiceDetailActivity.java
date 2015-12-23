@@ -59,7 +59,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_service_purchase_time;
     @Bind(R.id.tv_service_status)
     TextView tv_service_status;
-//    @Bind(R.id.img_info_icon)
+    //    @Bind(R.id.img_info_icon)
 //    ImageView img_info_icon;
     @Bind(R.id.tv_service_info)
     TextView tv_service_info;
@@ -119,6 +119,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 //    RelativeLayout rl_bottom;
 
     private ServiceDto serviceDto;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_service_detail;
@@ -230,29 +231,40 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         String statusStr = ServiceCommon.getServiceStatusShowString(status);
         TextView tv_service_status = (TextView) findViewById(R.id.tv_service_status);
         tv_service_status.setText(statusStr);
-        if (status == ServiceCommon.ORDER_WAITING_PAY || status == ServiceCommon.ORDER_WAITING_SHIPMENT || status == ServiceCommon.ORDER_WAITING_SIGN || status == ServiceCommon.ORDER_SALE_SERVICE) {
+        if (status == ServiceCommon.SERVICE_REFUND_CHECK || status == ServiceCommon.SERVICE_REFUND_AGREE ||
+                status == ServiceCommon.SERVICE_REFUND_SEND || status == ServiceCommon.SERVICE_REFUND_RECEIVE ||
+                status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_CHECK ||
+                status == ServiceCommon.SERVICE_EXCHANGE_AGREE || status == ServiceCommon.SERVICE_EXCHANGE_SEND ||
+                status == ServiceCommon.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommon.SERVICE_EXCHANGE_BACK ||
+                status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
             View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
             v_status_waiting_pay.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);
-            img_status_waiting_pay.setImageResource(R.drawable.img_details_order_steps_01_sel);
+            img_status_waiting_pay.setImageResource(R.drawable.img_details_as_steps_01_sel);
         }
-        if (status == ServiceCommon.ORDER_WAITING_SHIPMENT || status == ServiceCommon.ORDER_WAITING_SIGN || status == ServiceCommon.ORDER_SALE_SERVICE) {
+        if (status == ServiceCommon.SERVICE_REFUND_AGREE || status == ServiceCommon.SERVICE_REFUND_SEND || status == ServiceCommon.SERVICE_REFUND_RECEIVE ||
+                status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_AGREE || status == ServiceCommon.SERVICE_EXCHANGE_SEND ||
+                status == ServiceCommon.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommon.SERVICE_EXCHANGE_BACK ||
+                status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
             View v_status_waiting_shipment = findViewById(R.id.v_status_waiting_shipment);
             v_status_waiting_shipment.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_shipment = (ImageView) findViewById(R.id.img_status_waiting_shipment);
-            img_status_waiting_shipment.setImageResource(R.drawable.img_details_order_steps_02_sel);
+            img_status_waiting_shipment.setImageResource(R.drawable.img_details_as_steps_02_sel);
         }
-        if (status == ServiceCommon.ORDER_WAITING_SIGN || status == ServiceCommon.ORDER_SALE_SERVICE) {
+        if (status == ServiceCommon.SERVICE_REFUND_SEND || status == ServiceCommon.SERVICE_REFUND_RECEIVE ||
+                status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_SEND ||
+                status == ServiceCommon.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommon.SERVICE_EXCHANGE_BACK ||
+                status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
             View v_status_waiting_sign = findViewById(R.id.v_status_waiting_sign);
             v_status_waiting_sign.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_sign = (ImageView) findViewById(R.id.img_status_waiting_sign);
-            img_status_waiting_sign.setImageResource(R.drawable.img_details_order_steps_03_sel);
+            img_status_waiting_sign.setImageResource(R.drawable.img_details_as_steps_03_sel);
         }
-        if (status == ServiceCommon.ORDER_SALE_SERVICE) {
+        if (status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
             View v_status_sale_service = findViewById(R.id.v_status_sale_service);
             v_status_sale_service.setBackgroundColor(0xffffffff);
             ImageView img_status_sale_service = (ImageView) findViewById(R.id.img_status_sale_service);
-            img_status_sale_service.setImageResource(R.drawable.img_details_order_steps_04_sel);
+            img_status_sale_service.setImageResource(R.drawable.img_details_as_steps_04_sel);
         }
     }
 

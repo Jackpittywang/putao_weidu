@@ -1,6 +1,8 @@
 package com.putao.wd.me.service;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -16,6 +18,7 @@ import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.LoadingHUD;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
@@ -37,7 +40,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     @Bind(R.id.rl_no_service)
     RelativeLayout rl_no_service;//没有售后时的布局
 
-    @Bind(R.id.stickyHeaderLayout_sticky)
+    @Nullable
     TitleBar ll_title;
 
     private String TAG = ServiceListActivity.class.getName();
@@ -47,7 +50,8 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     // 当前第几个被选中
     private int currentIndex = -1;
     private List<Button> buttonList;
-
+    public static ServiceListActivity mActivity;
+    public static LoadingHUD mLoading;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_service_list;
@@ -56,25 +60,26 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-
+        mActivity = this;
+        mLoading = loading;
         // 测试数据
-        serviceList = new ArrayList<ServiceDto>();
+        /*serviceList = new ArrayList<ServiceDto>();
 
         for (int i = 0; i < 10; i++) {
             ServiceDto service = new ServiceDto();
-            service.setServiceNo(Math.random() + "");
+            service.setServiceNo(new String(Math.random() + "").substring(3));
             service.setPurchaseTime(System.currentTimeMillis());
             service.setTotalCost(569);
             service.setCustomerName("葡萄科技");
             service.setCustomerAddress("宜山路218号");
             service.setCustomerPhone("13622222222");
-            if (i == 0) service.setServiceStatus(ServiceCommon.ORDER_WAITING_PAY);
-            else if (i == 1) service.setServiceStatus(ServiceCommon.ORDER_WAITING_SHIPMENT);
-            else if (i == 2) service.setServiceStatus(ServiceCommon.ORDER_WAITING_SIGN);
-            else if (i == 3) service.setServiceStatus(ServiceCommon.ORDER_SALE_SERVICE);
-            else if (i == 4) service.setServiceStatus(ServiceCommon.ORDER_CANCLED);
-            else if (i == 5) service.setServiceStatus(ServiceCommon.ORDER_CLOSED);
-            else service.setServiceStatus(ServiceCommon.ORDER_WAITING_PAY);
+            if (i == 0) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_CHECK);
+            else if (i == 1) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_OVER);
+            else if (i == 2) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_AGREE);
+            else if (i == 3) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_SEND);
+            else if (i == 4) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_RECEIVE);
+            else if (i == 5) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_FINISH);
+            else service.setServiceStatus(ServiceCommon.SERVICE_EXCHANGE_CHECK);
 
             int num = (int) (Math.random() * 3);
             List<ServiceGoodsDto> goodsList = new ArrayList<ServiceGoodsDto>();
@@ -105,7 +110,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
             serviceList.add(service);
 
-        }
+        }*/
         // 测试数据结束
         if (serviceList == null || serviceList.size() == 0) {
             rl_no_service.setVisibility(View.VISIBLE);

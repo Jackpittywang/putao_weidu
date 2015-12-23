@@ -2,6 +2,7 @@ package com.putao.wd.me.service.view;
 
 import android.content.Context;
 import android.text.Html;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.putao.wd.dto.ServiceGoodsDto;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by yanguoqiang on 15/11/30.
@@ -42,8 +44,8 @@ public class ServiceGoodsItem extends LinearLayout {
         super(context);
 
         this.context = context;
-        LinearLayout.inflate(context, R.layout.activity_service_list_item_goods, this);
-
+        View view = LinearLayout.inflate(context, R.layout.activity_service_list_item_goods, this);
+        ButterKnife.bind(view, this);
 //        img_goods = (ImageDraweeView) this.findViewById(R.id.img_goods);
 //        tv_name = (TextView) this.findViewById(R.id.tv_name);
 //        tv_number = (TextView) this.findViewById(R.id.tv_number);
