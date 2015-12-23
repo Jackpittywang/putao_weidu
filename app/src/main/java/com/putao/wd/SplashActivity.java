@@ -6,6 +6,7 @@ import android.view.WindowManager;
 
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.util.PreferenceUtils;
 
 /**
  * 闪屏页面
@@ -23,7 +24,10 @@ public class SplashActivity extends BasicFragmentActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(MainActivity.class);
+                if (!PreferenceUtils.getValue(GuidanceActivity.PREFERENCE_KEY_IS_FIRST, false))
+                    startActivity(GuidanceActivity.class);
+                else
+                    startActivity(MainActivity.class);
                 ActivityManager.getInstance().finishCurrentActivity();
             }
         }, 3 * 1000);

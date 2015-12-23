@@ -44,6 +44,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--引导页-->
+        <activity
+            android:name=".GuidanceActivity"
+            android:screenOrientation="portrait" />
         <!--主页-->
         <activity
             android:name=".MainActivity"
@@ -223,7 +227,14 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
         <!--推送-->
-        <service android:name="com.putao.push.PushService"/>
+        <service
+            android:name="com.putao.push.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.putao.wd.PUSH" />
+            </intent-filter>
+        </service>
         <!--================测试Activity======================-->
         <activity
             android:name=".TestActivity"

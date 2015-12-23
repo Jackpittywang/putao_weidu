@@ -110,26 +110,27 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
                 break;
             case R.id.ti_explore://探索号
                 ti_explore.hide();//关闭指示数字
-                if (!AccountHelper.isLogin())
-                    startActivity(LoginActivity.class);
-                else
-                    setCurrentItem(currentItemId);
+                checkLogin();
                 break;
             case R.id.ti_store://葡商城
                 ti_store.hide();//关闭指示数字
-                if (!AccountHelper.isLogin())
-                    startActivity(LoginActivity.class);
-                else
-                    setCurrentItem(currentItemId);
+                checkLogin();
                 break;
             case R.id.ti_me://我
                 ti_me.hide();//关闭指示数字
-                if (!AccountHelper.isLogin())
-                    startActivity(LoginActivity.class);
-                else
-                    setCurrentItem(currentItemId);
+                checkLogin();
                 break;
         }
+    }
+
+    /**
+     * 验证登录状态
+     */
+    private void checkLogin() {
+        if (!AccountHelper.isLogin())
+            startActivity(LoginActivity.class);
+        else
+            setCurrentItem(currentItemId);
     }
 
     /**
@@ -201,8 +202,10 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            stopService(new Intent(GlobalApplication.ACTION_PUSH_SERVICE));
             return exit();
+        }
         return super.onKeyDown(keyCode, event);
     }
 }
