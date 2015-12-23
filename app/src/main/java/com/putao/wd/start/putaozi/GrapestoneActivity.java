@@ -5,13 +5,25 @@ import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.BasicWebView;
+
+import java.util.ArrayList;
+
+import butterknife.Bind;
 
 /**
  * 葡萄籽
  * Created by yanghx on 2015/12/22.
  */
 public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+    public static final String URL_GRAPESTONE = "http://static.uzu.wang/weidu_event/view/QA.html";
+    @Bind(R.id.wv_content)
+    BasicWebView wv_content;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_grapestone;
@@ -20,7 +32,7 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-
+        wv_content.loadUrl(URL_GRAPESTONE);
     }
 
     @Override
@@ -32,4 +44,5 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     public void onClick(View v) {
 
     }
+
 }
