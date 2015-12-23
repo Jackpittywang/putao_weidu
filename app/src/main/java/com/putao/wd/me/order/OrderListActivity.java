@@ -35,8 +35,8 @@ import butterknife.Bind;
  * 订单列表
  * Created by yanguoqiang on 15/11/27.
  */
-public class OrderListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener,OrderListAdapter.OnCancelOrder {
-    private static final String PAGE_INDEX="page_index";
+public class OrderListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener, OrderListAdapter.OnCancelOrder {
+    private static final String PAGE_INDEX = "page_index";
     @Bind(R.id.rv_order)
     BasicRecyclerView rv_order;
     @Bind(R.id.rl_no_order)
@@ -63,9 +63,9 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         addNavigation();
 //        adapter.setOnCancelOrder(this);
 //        adapter.setOnPayOperation(this);
-        Intent intent=getIntent();
-        if(intent!=null)
-            currentIndex=intent.getIntExtra("current_Index",0);
+        Intent intent = getIntent();
+        if (intent != null)
+            currentIndex = intent.getIntExtra("current_Index", 0);
         //getOrderLists(currentIndex+"", "1");
         initCurrentItem(currentIndex);
         //initTestData();
@@ -74,7 +74,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     /**
      * 订单列表
      */
-    private void getOrderLists(String type, String page){
+    private void getOrderLists(String type, String page) {
         networkRequest(OrderApi.getOrderLists(type, page), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Order> result) {
@@ -113,17 +113,16 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     /**
      * 取消订单
      */
-    private void orderCancel(int order_id){
-        networkRequest(OrderApi.orderCancel(order_id+""), new SimpleFastJsonCallback<String>(String.class, loading) {
+    private void orderCancel(int order_id) {
+        networkRequest(OrderApi.orderCancel(order_id + ""), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
-                ToastUtils.showToastShort(mContext,result.toString());
+                ToastUtils.showToastShort(mContext, result.toString());
             }
 
         });
     }
-
 
 
     @Override
@@ -167,7 +166,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         }
     }
 
-    private void initCurrentItem(int position){
+    private void initCurrentItem(int position) {
         switch (position) {
             case 0://全部
                 getOrderLists("0", "1");
@@ -182,13 +181,13 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
 //                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(1));
                 break;
             case 2://待发货
-                getOrderLists("2","1");
+                getOrderLists("2", "1");
                 ll_title.selectTitleItem(R.id.ll_waiting_shipment);
                 refreshViewByType(2);
 //                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(2));
                 break;
             case 3://等待签收
-                getOrderLists("3","1");
+                getOrderLists("3", "1");
                 ll_title.selectTitleItem(R.id.ll_waiting_sign);
                 refreshViewByType(3);
 //                ToastUtils.showToastLong(this, OrderCommon.getOrderStatusShowString(3));
