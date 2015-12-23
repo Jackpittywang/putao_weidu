@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_wt_bg"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_guidance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+
+    <!--立即体验-->
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_get_focus"
+        android:text="立即体验"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp"
+        android:visibility="gone" />
+
+    <!--原点指示-->
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/ci_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        auto:fillColor="@color/text_main_color_nor"
+        auto:pageColor="@color/text_color_gray"
+        auto:radius="5dp"
+        auto:strokeColor="@color/transparent" />
+</RelativeLayout>
