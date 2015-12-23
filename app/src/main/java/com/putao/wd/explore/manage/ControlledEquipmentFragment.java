@@ -96,7 +96,6 @@ public class ControlledEquipmentFragment extends PTWDFragment {
             @Override
             public void onSuccess(String url, ManagementEdit result) {
                 Logger.i("探索号管理信息保存成功");
-
             }
         });
     }
