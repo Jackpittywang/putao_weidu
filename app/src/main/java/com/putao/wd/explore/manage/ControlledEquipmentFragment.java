@@ -47,7 +47,11 @@ public class ControlledEquipmentFragment extends PTWDFragment {
             public void onSuccess(String url, Management result) {
                 if (null != result) {
                     adapter.replaceAll(result.getSlave_device_list());
-                    selectItem = result.getSlave_device_list();
+                    for (ManagementDevice device : result.getSlave_device_list()) {
+                        if (device.getStatus().equals("1")) {
+                            selectItem.add(device);
+                        }
+                    }
                 }
                 loading.dismiss();
             }

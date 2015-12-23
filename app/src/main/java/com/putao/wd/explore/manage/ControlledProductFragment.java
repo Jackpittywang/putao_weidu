@@ -48,7 +48,11 @@ public class ControlledProductFragment extends PTWDFragment {
             public void onSuccess(String url, Management result) {
                 if (null != result) {
                     adapter.replaceAll(result.getProduct_list());
-                    selectItem = result.getProduct_list();
+                    for (ManagementProduct product : result.getProduct_list()) {
+                        if (product.getStatus() == 1) {
+                            selectItem.add(product);
+                        }
+                    }
                 }
                 loading.dismiss();
             }
