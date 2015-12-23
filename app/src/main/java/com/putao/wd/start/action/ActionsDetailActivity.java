@@ -163,8 +163,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_join.setVisibility(View.VISIBLE);
                 if (actionDetail.isParticipate()) {
                     tv_join.setEnabled(false);
-                    tv_join.setBackgroundResource(getResources().getColor(R.color.text_color_gray));
-//                    tv_join.setBackgroundColor();
+                    tv_join.setBackgroundColor(R.color.text_color_gray);
                     tv_join.setText("已报名");
                 }
                 break;
