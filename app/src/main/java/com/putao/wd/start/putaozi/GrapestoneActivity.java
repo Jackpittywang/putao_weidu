@@ -5,13 +5,8 @@ import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
-import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 
