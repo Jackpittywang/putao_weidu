@@ -49,6 +49,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     TextView tv_product_price;
     @Bind(R.id.bl_banner)
     BannerLayout bl_banner;
+    @Bind(R.id.stickyHeaderLayout_sticky)
+    TitleBar stickyHeaderLayout_sticky;
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;//加入购物车
 
@@ -72,11 +74,14 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         product_id = args.getString(PRODUCT_ID);
 
         sticky_layout.canScrollView();
+        wv_content.loadUrl("http://wap.baidu.com");
         wv_content.loadUrl("http://www.putao.com");
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
 
         getProductDetail(product_id);
+
+        stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
     }
 
     /**
