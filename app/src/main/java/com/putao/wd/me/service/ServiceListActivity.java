@@ -63,7 +63,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         mActivity = this;
         mLoading = loading;
         // 测试数据
-        /*serviceList = new ArrayList<ServiceDto>();
+        serviceList = new ArrayList<ServiceDto>();
 
         for (int i = 0; i < 10; i++) {
             ServiceDto service = new ServiceDto();
@@ -110,7 +110,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
             serviceList.add(service);
 
-        }*/
+        }
         // 测试数据结束
         if (serviceList == null || serviceList.size() == 0) {
             rl_no_service.setVisibility(View.VISIBLE);

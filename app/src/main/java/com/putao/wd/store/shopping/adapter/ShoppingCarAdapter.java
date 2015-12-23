@@ -159,7 +159,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      * 更新Item显示编辑
      */
     public void updateItem() {
-        ToastUtils.showToastShort(context, "updateItem");
+//        ToastUtils.showToastShort(context, "updateItem");
         Set<Integer> keys = map.keySet();
         for (Integer key : keys) {
             Cart shoppingCar = map.get(key);
@@ -172,7 +172,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      * 更新Item显示恢复不可编辑状态
      */
     public void recoverItem() {
-        ToastUtils.showToastShort(context, "recoverItem");
+//        ToastUtils.showToastShort(context, "recoverItem");
         Set<Integer> keys=selectedmap.keySet();
         for (Integer key :keys) {
             Cart shoppingCar = selectedmap.get(key);
