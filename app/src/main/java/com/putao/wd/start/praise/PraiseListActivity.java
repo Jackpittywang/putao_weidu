@@ -1,7 +1,6 @@
 package com.putao.wd.start.praise;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,18 +9,12 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.PraiseListItem;
 import com.putao.wd.model.Cool;
-import com.putao.wd.model.CoolEventList;
-import com.putao.wd.model.CoolList;
-import com.putao.wd.model.Page;
+import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.praise.adapter.PraiseListAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -53,7 +46,7 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
         adapter = new PraiseListAdapter(mContext, null);
         rv_content.setAdapter(adapter);
         Bundle bundle = getIntent().getExtras();
-        action_id = bundle.getString("action_id");
+        action_id = bundle.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
 
         getCoolList();
         addListener();
@@ -75,8 +68,8 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
             @Override
             public void onSuccess(String url, Cool result) {
                 Logger.i("赞列表获取成功");
-                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                    adapter.replaceAll(result.getEventCoolList().getUser_list());
+                adapter.addAll(result.getEventCoolList().getUser_list());
+                if (result.getCurrent_page() != result.getTotal_page()) {
                     rv_content.loadMoreComplete();
                     page++;
                 } else {

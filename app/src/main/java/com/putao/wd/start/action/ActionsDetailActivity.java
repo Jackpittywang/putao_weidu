@@ -18,6 +18,7 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -38,6 +39,8 @@ import butterknife.OnClick;
  * Created by wango on 2015/12/4.
  */
 public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
+    public static final String BUNDLE_ACTION_ID = "action_id";
+
     @Bind(R.id.iv_actionssdetail_header)
     ImageDraweeView iv_actionssdetail_header;
     @Bind(R.id.tv_actionsdetail_status)
@@ -54,8 +57,10 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_count_comment;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
-    @Bind(R.id.tv_actionsdetail_applyusers)
-    BasicRecyclerView tv_actionsdetail_applyusers;
+    @Bind(R.id.rv_actionsdetail_applyusers)
+    BasicRecyclerView rv_actionsdetail_applyusers;
+    @Bind(R.id.tv_actionsdetail_applycount)
+    TextView tv_actionsdetail_applycount;
     @Bind(R.id.tv_join)
     TextView tv_join;
     @Bind(R.id.tv_personinfo_address)
@@ -64,7 +69,6 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
 
     private ActionDetail actionDetail;
     private UserIconAdapter adapter;
-    private Bundle bundle;
     private String action_id;
     //H5请求URL:http://static.uzu.wang/weidu_event/view/active_info.html?id=1&device=m&nav=0
     //id和nav值分别对应活动ID和活动类型
@@ -82,9 +86,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         addNavigation();
 
         adapter = new UserIconAdapter(mContext, null);
-        tv_actionsdetail_applyusers.setAdapter(adapter);
-        bundle = getIntent().getExtras();
-        action_id = bundle.getString("action_id");
+        rv_actionsdetail_applyusers.setAdapter(adapter);
+        action_id = args.getString(BUNDLE_ACTION_ID);
 
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
@@ -98,8 +101,11 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_count_comment.setText(result.getCountComment() + "");
                 tv_personinfo_address.setText(result.getLocation());
                 List<RegUser> reg_user = result.getReg_user();
+                if (reg_user.size() > 4)
+                    reg_user = ListUtils.cutOutList(reg_user, 0, 4);
                 Logger.i("reg_user = " + reg_user.toString());
                 adapter.replaceAll(reg_user);
+                tv_actionsdetail_applycount.setText(result.getRegistration_number() + "");
                 loadHtml(action_id, action_type);
                 hideJoin(actionDetail);
                 loading.dismiss();
@@ -110,7 +116,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     }
 
     /**
-     * @param action_id 活动ID
+     * @param action_id   活动ID
      * @param action_type 活动分类
      */
     private void loadHtml(String action_id, int action_type) {
@@ -123,24 +129,24 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         return new String[0];
     }
 
-    @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join,R.id.tv_personinfo_address})
+    @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join, R.id.tv_personinfo_address})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_join_list:
-                startActivity(ApplyListActivity.class, bundle);
+                startActivity(ApplyListActivity.class, args);
                 break;
             case R.id.ll_cool:
-                startActivity(PraiseListActivity.class, bundle);
+                startActivity(PraiseListActivity.class, args);
                 break;
             case R.id.ll_comment:
-                startActivity(CommentActivity.class, bundle);
+                startActivity(CommentActivity.class, args);
                 break;
             case R.id.tv_join:
-                startActivity(ApplyActivity.class, bundle);
+                startActivity(ApplyActivity.class, args);
                 break;
             case R.id.tv_personinfo_address:
-                startActivity(MapActivity.class, bundle);
+                startActivity(MapActivity.class, args);
                 break;
         }
     }
@@ -148,21 +154,23 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
-            case R.id.ll_all://活动说明
+            case R.id.ll_action_instruct://活动说明
                 action_type = 0;
-                loadHtml(action_id, action_type);
                 break;
-            case R.id.ll_ing://活动现场
+            case R.id.ll_action_location://活动现场
                 action_type = 1;
-                loadHtml("2", 0);
+                break;
+            case R.id.ll_finish://精彩回顾
+
                 break;
         }
+        loadHtml(action_id, action_type);
     }
 
     /**
      * 我要参加按钮的显示控制
      */
-    private void hideJoin(ActionDetail actionDetail){
+    private void hideJoin(ActionDetail actionDetail) {
 //        actionDetail.getStatus();  //ONGOING  LOOKBACK
         switch (actionDetail.getStatus()) {
             case "进行中":
@@ -186,10 +194,10 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
     public void eventClickComment(boolean isCool) {
         if (isCool) {
-            actionDetail.setCountCool(actionDetail.getCountCool()+1);
+            actionDetail.setCountCool(actionDetail.getCountCool() + 1);
             tv_count_comment.setText(actionDetail.getCountCool() + "");
-        }else {
-            actionDetail.setCountCool(actionDetail.getCountCool()-1);
+        } else {
+            actionDetail.setCountCool(actionDetail.getCountCool() - 1);
             tv_count_comment.setText(actionDetail.getCountCool() + "");
         }
     }
@@ -198,20 +206,19 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COMMENT)
     public void eventClickCoool(boolean isComment) {
         if (isComment) {
-            actionDetail.setCountCool(actionDetail.getCountComment()+1);
+            actionDetail.setCountCool(actionDetail.getCountComment() + 1);
             tv_count_comment.setText(actionDetail.getCountComment() + "");
-        }else {
-            actionDetail.setCountCool(actionDetail.getCountComment()-1);
+        } else {
+            actionDetail.setCountCool(actionDetail.getCountComment() - 1);
             tv_count_comment.setText(actionDetail.getCountComment() + "");
         }
     }
 
 
-
-
-//    ==============  报名列表适配器 ===============
-
-    class UserIconAdapter extends BasicAdapter<RegUser, UserIconViewHolder> {
+    /**
+     * 报名列表适配器
+     */
+    static class UserIconAdapter extends BasicAdapter<RegUser, UserIconViewHolder> {
 
         public UserIconAdapter(Context context, List<RegUser> regUsers) {
             super(context, regUsers);
@@ -241,5 +248,4 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
             super(itemView);
         }
     }
-
 }
