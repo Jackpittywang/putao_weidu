@@ -1,7 +1,6 @@
 package com.putao.wd.start.action;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -38,7 +37,7 @@ import butterknife.OnClick;
  * 活动详情
  * Created by wango on 2015/12/4.
  */
-public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.TitleItemSelectedListener {
+public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     @Bind(R.id.iv_actionssdetail_header)
     ImageDraweeView iv_actionssdetail_header;
     @Bind(R.id.tv_actionsdetail_status)
@@ -106,7 +105,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 loading.dismiss();
             }
         });
-        ll_title.setTitleItemSelectedListener(this);
+        ll_title.setOnTitleItemSelectedListener(this);
 
     }
 

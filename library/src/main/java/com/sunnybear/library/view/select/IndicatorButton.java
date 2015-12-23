@@ -93,7 +93,7 @@ public class IndicatorButton extends LinearLayout {
     }
 
     public void hide() {
-        if (mIndicator.isShown())
+        if (mIndicator != null && mIndicator.isShown())
             mIndicator.hide();
     }
 }

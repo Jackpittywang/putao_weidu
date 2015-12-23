@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.OrderGoodsDto;
 import com.putao.wd.me.order.OrderCommon;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.model.Order;
@@ -20,10 +19,10 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 订单列表适配器
  * Created by yanguoqiang on 15/11/29.
  */
 public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.OrderListViewHolder> {
-
     private String TAG = OrderListAdapter.class.getName();
 
     private Context context;
@@ -59,10 +58,9 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
             }
         }
         holder.tv_order_status.setText(OrderCommon.getOrderStatusShowString(order.getOrderStatusID()));
-        if(order.getOrderStatusID() == OrderCommon.ORDER_WAITING_PAY){
+        if (order.getOrderStatusID() == OrderCommon.ORDER_WAITING_PAY) {
             holder.tv_order_status.setTextColor(0xffed5564);
-        }
-        else{
+        } else {
             holder.tv_order_status.setTextColor(0xff313131);
         }
         holder.tv_total_cost.setText(goodsNumber + "件商品 合计：¥" + order.getTotal_amount());
@@ -77,7 +75,7 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
         holder.btn_order_operation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnPayOperation.PayOperation("",order.getId());
+                mOnPayOperation.PayOperation("", order.getId());
             }
         });
 
@@ -131,19 +129,24 @@ public class OrderListAdapter extends BasicAdapter<Order, OrderListAdapter.Order
     }
 
     //取消订单回调
-    public interface OnCancelOrder{
+    public interface OnCancelOrder {
         void CancelOrder(int order_id);
     }
+
     private OnCancelOrder mOnCancelOrder;
-    public void setOnCancelOrder(OnCancelOrder onCancelOrder){
-        this.mOnCancelOrder=onCancelOrder;
+
+    public void setOnCancelOrder(OnCancelOrder onCancelOrder) {
+        this.mOnCancelOrder = onCancelOrder;
     }
+
     //支付操作
-    public interface OnPayOperation{
-        void PayOperation(String oper,int order_id);
+    public interface OnPayOperation {
+        void PayOperation(String oper, int order_id);
     }
+
     private OnPayOperation mOnPayOperation;
-    public void setOnPayOperation(OnPayOperation onPayOperation){
-        this.mOnPayOperation=onPayOperation;
+
+    public void setOnPayOperation(OnPayOperation onPayOperation) {
+        this.mOnPayOperation = onPayOperation;
     }
 }

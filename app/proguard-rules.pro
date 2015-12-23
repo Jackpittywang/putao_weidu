@@ -15,38 +15,54 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class com.android.vending.licensing.ILicensingService
+#保持自定义控件类不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
 #保持注解类不被混淆
 -keepattributes *Annotation*
-#保持不被混淆
--keep public class * extends android.app.Activity
--keep pubilc class * extends android.app.Application
--keep pubilc class * extends android.app.Service
 #mode配置
 -keep class com.putao.wd.dto.** { *; }
--keep class com.putao.wd.model.** { *; }
--keepclasseswithmembers class * implements android.os.Parcelable {
-    static android.os.Parcelable$Creator CREATOR;
+-keep class com.putao.wd.model.* { *; }
+# facebook fresco
+-keep allowobfuscation @interface com.facebook.common.internal.DoNotStrip
+# Do not strip any method/class that is annotated with @DoNotStrip
+-keep @com.facebook.common.internal.DoNotStrip class *
+-keepclassmembers class * {
+    @com.facebook.common.internal.DoNotStrip *;
 }
--keepclasseswithmembers class * implemnts java.io.Serializable {
-    public *;
-}
-#保持自定义控件类不被混淆
--keepclasseswithmembers class * {
-    public <init>(android.content.Context);
-}
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
--keepclasseswithmembers class * {
-    public <init>(android.context.Context,android.util.AttributeSet,int);
-}
--keepclassmembers class * extends android.app.Activity {
-    public void *(android.view.View);
-}
-# 保持自定义控件类不被混淆
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
+-dontwarn okio.**
+-dontwarn javax.annotation.**
 # OkHttp配置
 -dontwarn com.squareup.okhttp.**
 -keep class com.squareup.okhttp.** { *; }

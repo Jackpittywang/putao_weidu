@@ -58,16 +58,13 @@ public class ServiceListAdapter extends BasicAdapter<ServiceDto, ServiceListAdap
             }
         }
         holder.tv_service_status.setText(ServiceCommon.getServiceStatusShowString(serviceDto.getServiceStatus()));
-        if(serviceDto.getServiceStatus() == ServiceCommon.ORDER_WAITING_PAY){
-            holder.tv_service_status.setTextColor(0xffed5564);
-        }
-        else{
-            holder.tv_service_status.setTextColor(0xff313131);
-        }
-        holder.tv_total_cost.setText(goodsNumber + "件商品 合计：¥" + serviceDto.getTotalCost());
-        holder.tv_shipment_fee.setText("含运费：" + serviceDto.getShipmentFee());
-
-
+//        if (serviceDto.getServiceStatus() == ServiceCommon.ORDER_WAITING_PAY) {
+//            holder.tv_service_status.setTextColor(0xffed5564);
+//        } else {
+//            holder.tv_service_status.setTextColor(0xff313131);
+//        }
+//        holder.tv_total_cost.setText(goodsNumber + "件商品 合计：¥" + serviceDto.getTotalCost());
+//        holder.tv_shipment_fee.setText("含运费：" + serviceDto.getShipmentFee());
     }
 
 
@@ -93,6 +90,4 @@ public class ServiceListAdapter extends BasicAdapter<ServiceDto, ServiceListAdap
             super(itemView);
         }
     }
-
-
 }

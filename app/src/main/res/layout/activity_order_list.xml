@@ -3,25 +3,24 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#e1ffffff"
-    >
+    android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
-        auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="我的订单"
         android:background="@color/white"
-        auto:nav_has_divider="true"/>
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="我的订单" />
+
     <!--标题栏-->
     <com.sunnybear.library.view.select.TitleBar
         android:id="@id/stickyHeaderLayout_sticky"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         android:padding="6dp">
 
         <com.sunnybear.library.view.select.TitleItem
@@ -74,53 +73,49 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#c2c2c2"
-        />
+        android:background="@color/divider_color" />
+
     <!--内容区-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e1ffffff"
-        >
+        android:background="@color/white">
 
         <!--有订单时-->
         <com.sunnybear.library.view.recycler.BasicRecyclerView
             android:id="@+id/rv_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             auto:divider_color="#ebebeb"
             auto:divider_height="5dp"
-            android:background="#e1ffffff"
-            auto:has_row_divider="true"
-            />
+            auto:has_row_divider="true" />
 
         <!--没有订单时-->
         <RelativeLayout
             android:id="@+id/rl_no_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#e1ffffff"
-
-            >
+            android:background="@color/color_EBEBEB"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/img_no_data"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@drawable/tab_bar_me_sel"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="100dp"
-                android:layout_centerHorizontal="true" />
+                android:src="@drawable/img_me_order_empty" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="还没有相关订单"
                 android:layout_below="@+id/img_no_data"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="40dp"
+                android:text="还没有相关订单"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_20sp" />
-
         </RelativeLayout>
     </FrameLayout>
 

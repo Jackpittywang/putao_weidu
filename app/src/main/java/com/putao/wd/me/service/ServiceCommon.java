@@ -22,7 +22,7 @@ public class ServiceCommon {
     /**
      * 您已发货
      */
-    public static final int SERVICE_REFUND_SEND  = 4;
+    public static final int SERVICE_REFUND_SEND = 4;
 
     /**
      * 退货已收到
@@ -52,7 +52,7 @@ public class ServiceCommon {
     /**
      * 您已发货
      */
-    public static final int SERVICE_EXCHANGE_SEND  = 14;
+    public static final int SERVICE_EXCHANGE_SEND = 14;
 
     /**
      * 换货商品已收到
@@ -83,7 +83,6 @@ public class ServiceCommon {
      * 退款已成功
      */
     public static final int SERVICE_DRAWBACK_FINISH = 23;
-
 
 
     /**
@@ -148,5 +147,4 @@ public class ServiceCommon {
         }
 
     }
-
 }

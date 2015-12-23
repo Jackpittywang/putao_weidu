@@ -105,6 +105,12 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        loading.dismiss();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         //Fragment停止时取消所有请求

@@ -32,7 +32,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  * 商品详情
  * Created by guchenkai on 2015/11/30.
  */
-public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.TitleItemSelectedListener {
+public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     public static final String PRODUCT_ID = "product_id";
 
     @Bind(R.id.ll_main)

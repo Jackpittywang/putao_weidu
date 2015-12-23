@@ -12,13 +12,13 @@ import android.widget.LinearLayout;
  * Created by guchenkai on 2015/12/2.
  */
 public class TitleBar extends LinearLayout implements View.OnClickListener {
-    private TitleItemSelectedListener mTitleItemSelectedListener;
+    private OnTitleItemSelectedListener mTitleItemSelectedListener;
     private TitleItem mLastSelectedItem = null;
 
     private SparseIntArray array;
     private SparseArray<TitleItem> mTitleItemArray;
 
-    public void setTitleItemSelectedListener(TitleItemSelectedListener titleItemSelectedListener) {
+    public void setOnTitleItemSelectedListener(OnTitleItemSelectedListener titleItemSelectedListener) {
         mTitleItemSelectedListener = titleItemSelectedListener;
     }
 
@@ -88,7 +88,7 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
     /**
      * TabItem选择监听器
      */
-    public interface TitleItemSelectedListener {
+    public interface OnTitleItemSelectedListener {
 
         void onTitleItemSelected(TitleItem item, int position);
     }

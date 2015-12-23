@@ -6,154 +6,163 @@
     android:background="@color/layout_background"
     android:orientation="vertical">
 
-    <!--用户头像昵称栏-->
-    <RelativeLayout
-        android:id="@+id/user"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/text_main_color_nor">
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/text_main_color_nor"
+        auto:nav_right_icon="@drawable/setting_selector"
+        auto:nav_right_title_size="@dimen/text_size_20sp" />
 
-        <com.sunnybear.library.view.image.ImageDraweeView
-            android:id="@+id/iv_user_icon"
-            style="@style/image_circle"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
-            android:layout_centerInParent="true"
-            auto:placeholderImage="@drawable/img_head_q" />
-
-        <TextView
-            android:id="@+id/tv_user_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_user_icon"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="这里显示用户的昵称"
-            android:textColor="@color/text_color_white"
-            android:textSize="@dimen/text_size_18sp" />
-
-        <ImageView
-            android:id="@+id/iv_setting"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/setting_selector" />
-    </RelativeLayout>
-
-    <!--我的订单-->
-    <LinearLayout
-        android:id="@+id/order"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical">
-
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_order"
-            style="@style/style_setting"
-            auto:setting_icon="@drawable/icon_20_01"
-            auto:setting_text="@string/order" />
-
-        <!--付款售后栏-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <!--待付款-->
-            <com.sunnybear.library.view.select.IndicatorButton
-                android:id="@+id/btn_pay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                auto:indicator_drawable="@drawable/icon_20_02"
-                auto:indicator_text_color="@color/text_main_color_nor"
-                auto:indicator_title="待付款"
-                auto:indicator_title_color="@color/text_color" />
-
-            <!--待发货-->
-            <com.sunnybear.library.view.select.IndicatorButton
-                android:id="@+id/btn_deliver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                auto:indicator_drawable="@drawable/icon_20_03"
-                auto:indicator_text_color="@color/text_main_color_nor"
-                auto:indicator_title="待发货"
-                auto:indicator_title_color="@color/text_color" />
-
-            <!--待收货-->
-            <com.sunnybear.library.view.select.IndicatorButton
-                android:id="@+id/btn_take_deliver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                auto:indicator_drawable="@drawable/icon_20_04"
-                auto:indicator_text_color="@color/text_main_color_nor"
-                auto:indicator_title="待收货"
-                auto:indicator_title_color="@color/text_color" />
-
-            <!--售后-->
-            <com.sunnybear.library.view.select.IndicatorButton
-                android:id="@+id/btn_after_sale"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                auto:indicator_drawable="@drawable/icon_20_05"
-                auto:indicator_text_color="@color/text_main_color_nor"
-                auto:indicator_title="售后"
-                auto:indicator_title_color="@color/text_color" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!--设置区-->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/order"
-        android:orientation="vertical">
+        android:overScrollMode="never">
 
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_address"
-            style="@style/style_setting"
-            android:layout_marginTop="8dp"
-            auto:setting_icon="@drawable/icon_20_06"
-            auto:setting_text="@string/address" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_action"
-            style="@style/style_setting"
-            android:layout_marginTop="8dp"
-            auto:setting_icon="@drawable/icon_20_07"
-            auto:setting_text="@string/action" />
+            <!--用户头像昵称栏-->
+            <RelativeLayout
+                android:id="@+id/user"
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:background="@color/text_main_color_nor">
 
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_question"
-            style="@style/style_setting"
-            auto:setting_icon="@drawable/icon_20_08"
-            auto:setting_text="@string/question" />
+                <com.sunnybear.library.view.image.ImageDraweeView
+                    android:id="@+id/iv_user_icon"
+                    style="@style/image_circle"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:layout_centerHorizontal="true"
+                    auto:placeholderImage="@drawable/img_head_q" />
 
-        <com.sunnybear.library.view.SettingItem
-            android:id="@+id/si_message"
-            style="@style/style_setting"
-            android:layout_marginTop="8dp"
-            auto:setting_divider="bottom"
-            auto:setting_icon="@drawable/icon_20_09"
-            auto:setting_indicator_background="@drawable/setting_indicator"
-            auto:setting_indicator_color="@color/text_main_color_nor"
-            auto:setting_text="@string/message" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_user_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_user_icon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="这里显示用户的昵称"
+                    android:textColor="@color/text_color_white"
+                    android:textSize="@dimen/text_size_18sp" />
+            </RelativeLayout>
 
+            <!--我的订单-->
+            <LinearLayout
+                android:id="@+id/order"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <com.sunnybear.library.view.SettingItem
+                    android:id="@+id/si_order"
+                    style="@style/style_setting"
+                    auto:setting_icon="@drawable/icon_20_01"
+                    auto:setting_text="@string/order" />
+
+                <!--付款售后栏-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <!--待付款-->
+                    <com.sunnybear.library.view.select.IndicatorButton
+                        android:id="@+id/btn_pay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        auto:indicator_drawable="@drawable/icon_20_02"
+                        auto:indicator_text_color="@color/text_main_color_nor"
+                        auto:indicator_title="待付款"
+                        auto:indicator_title_color="@color/text_color" />
+
+                    <!--待发货-->
+                    <com.sunnybear.library.view.select.IndicatorButton
+                        android:id="@+id/btn_deliver"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        auto:indicator_drawable="@drawable/icon_20_03"
+                        auto:indicator_text_color="@color/text_main_color_nor"
+                        auto:indicator_title="待发货"
+                        auto:indicator_title_color="@color/text_color" />
+
+                    <!--待收货-->
+                    <com.sunnybear.library.view.select.IndicatorButton
+                        android:id="@+id/btn_take_deliver"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        auto:indicator_drawable="@drawable/icon_20_04"
+                        auto:indicator_text_color="@color/text_main_color_nor"
+                        auto:indicator_title="待收货"
+                        auto:indicator_title_color="@color/text_color" />
+
+                    <!--售后-->
+                    <com.sunnybear.library.view.select.IndicatorButton
+                        android:id="@+id/btn_after_sale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        auto:indicator_drawable="@drawable/icon_20_05"
+                        auto:indicator_text_color="@color/text_main_color_nor"
+                        auto:indicator_title="售后"
+                        auto:indicator_title_color="@color/text_color" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--设置区-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/order"
+                android:orientation="vertical">
+
+                <com.sunnybear.library.view.SettingItem
+                    android:id="@+id/si_address"
+                    style="@style/style_setting"
+                    android:layout_marginTop="8dp"
+                    auto:setting_icon="@drawable/icon_20_06"
+                    auto:setting_text="@string/address" />
+
+                <com.sunnybear.library.view.SettingItem
+                    android:id="@+id/si_action"
+                    style="@style/style_setting"
+                    android:layout_marginTop="8dp"
+                    auto:setting_icon="@drawable/icon_20_07"
+                    auto:setting_text="@string/action" />
+
+                <com.sunnybear.library.view.SettingItem
+                    android:id="@+id/si_question"
+                    style="@style/style_setting"
+                    auto:setting_icon="@drawable/icon_20_08"
+                    auto:setting_text="@string/question" />
+
+                <com.sunnybear.library.view.SettingItem
+                    android:id="@+id/si_message"
+                    style="@style/style_setting"
+                    android:layout_marginTop="8dp"
+                    auto:setting_divider="bottom"
+                    auto:setting_icon="@drawable/icon_20_09"
+                    auto:setting_indicator_background="@drawable/setting_indicator"
+                    auto:setting_indicator_color="@color/text_main_color_nor"
+                    auto:setting_text="@string/message" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

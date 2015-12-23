@@ -30,7 +30,7 @@ import butterknife.OnClick;
  * 消息中心
  * Created by wangou on 2015/12/1.
  */
-public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener,TitleBar.TitleItemSelectedListener {
+public class MessageCenterActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener,TitleBar.OnTitleItemSelectedListener {
     @Bind(R.id.brv_messagelist)
     LoadMoreRecyclerView brv_messagelist;//消息列表
     @Bind(R.id.ll_msgnotify)
@@ -72,7 +72,7 @@ public class MessageCenterActivity extends PTWDActivity<GlobalApplication> imple
                 }, 3 * 1000);
             }
         });
-        ll_title.setTitleItemSelectedListener(this);
+        ll_title.setOnTitleItemSelectedListener(this);
     }
 
     @Override
