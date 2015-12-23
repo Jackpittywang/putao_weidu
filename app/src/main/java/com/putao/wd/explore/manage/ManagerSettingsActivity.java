@@ -11,6 +11,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
  */
 public class ManagerSettingsActivity extends BasicFragmentActivity {
     public static final String KEY_MANAGER_SETTINGS = "manager_settings";
+    public static final String KEY_MANAGER = "manager";
 
     public static final String TYPE_SETTING_EQUIPMENT = "setting_equipment";
     public static final String TYPE_SETTING_PRODUCT = "setting_product";
