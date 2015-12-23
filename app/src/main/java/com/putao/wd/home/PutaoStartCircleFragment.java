@@ -37,7 +37,8 @@ import butterknife.Bind;
  */
 public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.TitleItemSelectedListener {
     private static final String STATUS_ONGOING = "ONGOING";//进行中
-    private static final String STATUS_CLOSE = "CLOSE";//截止
+//    private static final String STATUS_CLOSE = "CLOSE";//截止
+    private static final String STATUS_CLOSE = "LOOKBACK";// 暂用LOOKBACK列表内容代替截止
     private static final String TYPE_ACTION = "TEXT";//活动
     private static final String TYPE_NEWS = "NEWS";//新闻
 
@@ -199,8 +200,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
                 currentType = TYPE_ACTION;
                 break;
             case R.id.ll_finish://已结束
-//                currentStatus = STATUS_CLOSE;
-                currentStatus = "LOOKBACK"; // 暂用LOOKBACK列表内容代替已结束
+                currentStatus = STATUS_CLOSE;
                 currentType = TYPE_ACTION;
                 break;
             case R.id.ll_news://新闻
@@ -232,83 +232,4 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.T
         startActivity(GrapestoneActivity.class);
     }
 
-    //    /**
-//     * 获取活动标签
-//     * by yanghx
-//     */
-//    private void getActionLabel() {
-//        networkRequest(StartApi.getActionLabel(), new SimpleFastJsonCallback<ArrayList<ActionLabel>>(ActionLabel.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<ActionLabel> result) {
-//                Log.i("pt", "活动标签请求成功");
-//            }
-//        });
-//    }
-//
-
-//    /**
-//     * 获取个人信息
-//     * by yanghx
-//     *
-//     * @param user_id 用户ID
-//     */
-//    private void getProfile(String user_id) {
-//        networkRequest(StartApi.getProfile(user_id), new SimpleFastJsonCallback<ArrayList<Profile>>(Profile.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<Profile> result) {
-//                Log.i("pt", "个人信息请求成功");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * model暂无
-//     * <p/>
-//     * 审核活动报名用户
-//     * by yanghx
-//     *
-//     * @param user_id   用户ID
-//     * @param action_id 活动ID
-//     * @param type      审核类型
-//     */
-//    private void auditUser(String user_id, String action_id, AuditType type) {
-//        networkRequest(StartApi.auditUser(user_id, action_id, type), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<String> result) {
-//                Log.i("pt", "审核活动报名用户提交成功");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 地图接口查询
-//     * by yanghx
-//     *
-//     * @param action_id 活动ID
-//     */
-//    private void getMap(String action_id) {
-//        networkRequest(StartApi.getMap(action_id), new SimpleFastJsonCallback<ArrayList<MapInfo>>(MapInfo.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<MapInfo> result) {
-//                Log.i("pt", "地图接口查询请求成功");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * model暂无
-//     * <p/>
-//     * 提交葡萄籽问题
-//     * by yanghx
-//     *
-//     * @param msg 问题
-//     */
-//    private void question(String msg) {
-//        networkRequest(StartApi.question(msg), new SimpleFastJsonCallback<ArrayList<String>>(String.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<String> result) {
-//                Log.i("pt", "葡萄籽问题提交成功");
-//            }
-//        });
-//    }
 }
