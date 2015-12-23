@@ -3,10 +3,14 @@ package com.putao.wd.explore.manage;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.dto.ControllItem;
 import com.putao.wd.explore.manage.adapter.ControlledProductAdapter;
+import com.putao.wd.model.Management;
+import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
@@ -26,7 +30,7 @@ public class ControlledProductFragment extends PTWDFragment {
     BasicRecyclerView brv_product;
 
     private ControlledProductAdapter adapter;
-    private List<ControllItem> selectItem = new ArrayList<>();
+    private List<ManagementProduct> selectItem = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -36,20 +40,30 @@ public class ControlledProductFragment extends PTWDFragment {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        adapter = new ControlledProductAdapter(mActivity, getTestData());
+        adapter = new ControlledProductAdapter(mActivity, null);
         brv_product.setAdapter(adapter);
+        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
+            @Override
+            public void onSuccess(String url, Management result) {
+                if (null != result) {
+                    adapter.replaceAll(result.getProduct_list());
+                }
+                loading.dismiss();
+            }
+        });
+
         addListener();
     }
 
     private void addListener() {
-        brv_product.setOnItemClickListener(new OnItemClickListener<ControllItem>() {
+        brv_product.setOnItemClickListener(new OnItemClickListener<ManagementProduct>() {
             @Override
-            public void onItemClick(ControllItem item, int position) {
-                if (!item.isSelect()) {
-                    item.setIsSelect(true);
+            public void onItemClick(ManagementProduct item, int position) {
+                if (item.getStatus() != 1) {
+                    item.setStatus(1);
                     selectItem.add(item);
                 } else {
-                    item.setIsSelect(false);
+                    item.setStatus(0);
                     selectItem.remove(item);
                 }
                 adapter.replace(position, item);
@@ -57,25 +71,25 @@ public class ControlledProductFragment extends PTWDFragment {
         });
     }
 
-    private List<ControllItem> getTestData() {
-        List<ControllItem> list = new ArrayList<>();
-        ControllItem msgitem = new ControllItem();
-        msgitem.setName("淘淘向右走");
-        list.add(msgitem);
-
-        msgitem = new ControllItem();
-        msgitem.setName("班得瑞的奇幻花园");
-        list.add(msgitem);
-
-        msgitem = new ControllItem();
-        msgitem.setName("旋转吧,魔方");
-        list.add(msgitem);
-
-        msgitem = new ControllItem();
-        msgitem.setName("萌撕拉");
-        list.add(msgitem);
-        return list;
-    }
+//    private List<ControllItem> getTestData() {
+//        List<ControllItem> list = new ArrayList<>();
+//        ControllItem msgitem = new ControllItem();
+//        msgitem.setName("淘淘向右走");
+//        list.add(msgitem);
+//
+//        msgitem = new ControllItem();
+//        msgitem.setName("班得瑞的奇幻花园");
+//        list.add(msgitem);
+//
+//        msgitem = new ControllItem();
+//        msgitem.setName("旋转吧,魔方");
+//        list.add(msgitem);
+//
+//        msgitem = new ControllItem();
+//        msgitem.setName("萌撕拉");
+//        list.add(msgitem);
+//        return list;
+//    }
 
     @Override
     public void onRightAction() {

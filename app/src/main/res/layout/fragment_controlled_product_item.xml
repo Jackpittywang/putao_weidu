@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="0dp">
 
-    <ImageView
+    <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_product_icon"
         android:background="@color/white"
         android:layout_width="60dp"
