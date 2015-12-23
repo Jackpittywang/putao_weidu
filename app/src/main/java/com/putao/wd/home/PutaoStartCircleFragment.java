@@ -37,7 +37,7 @@ import butterknife.Bind;
  */
 public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.OnTitleItemSelectedListener {
     private static final String STATUS_ONGOING = "ONGOING";//进行中
-//    private static final String STATUS_CLOSE = "CLOSE";//截止
+    //    private static final String STATUS_CLOSE = "CLOSE";//截止
     private static final String STATUS_CLOSE = "LOOKBACK";// 暂用LOOKBACK列表内容代替截止
     private static final String TYPE_ACTION = "TEXT";//活动
     private static final String TYPE_NEWS = "NEWS";//新闻
@@ -128,7 +128,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
                         , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
                             @Override
                             public void onSuccess(String url, AcitonNewsList result) {
-                                adapter.replaceAll(result.getGetEventList());
+                                adapter.addAll(result.getGetEventList());
                                 if (result.getCurrent_page() != result.getTotal_page())
                                     currentPage++;
                                 else
@@ -161,7 +161,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
             public void onItemClick(ActionNews actionNewsList, int position) {
                 Bundle bundle = new Bundle();
                 ActionNews actionNews = adapter.getItem(position);
-                bundle.putString("action_id", actionNews.getId());
+                bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, actionNews.getId());
                 startActivity(ActionsDetailActivity.class, bundle);
             }
         });

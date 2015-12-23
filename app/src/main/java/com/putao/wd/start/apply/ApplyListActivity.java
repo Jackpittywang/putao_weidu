@@ -1,7 +1,6 @@
 package com.putao.wd.start.apply;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,16 +9,12 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.ApplyListItem;
-import com.putao.wd.model.ActionEnrollment;
 import com.putao.wd.model.ActionEnrollmentList;
+import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.apply.adapter.ApplyListAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -50,8 +45,7 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
 
         adapter = new ApplyListAdapter(mContext, null);
         rv_content.setAdapter(adapter);
-        Bundle bundle = getIntent().getExtras();
-        action_id = bundle.getString("action_id");
+        action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
 
         getEnrollment();
         addListener();
@@ -73,8 +67,8 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
             @Override
             public void onSuccess(String url, ActionEnrollmentList result) {
                 Logger.i("报名列表请求成功");
-                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                    adapter.replaceAll(result.getComment());
+                adapter.addAll(result.getComment());
+                if (result.getCurrent_page() != result.getTotal_page()) {
                     rv_content.loadMoreComplete();
                     page++;
                 } else {

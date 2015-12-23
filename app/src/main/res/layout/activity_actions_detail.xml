@@ -83,7 +83,7 @@
                 >
 
                 <com.sunnybear.library.view.recycler.BasicRecyclerView
-                    android:id="@+id/tv_actionsdetail_applyusers"
+                    android:id="@+id/rv_actionsdetail_applyusers"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
