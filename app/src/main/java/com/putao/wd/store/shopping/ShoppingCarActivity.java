@@ -60,6 +60,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     TextView tv_closing;//结算
     @Bind(R.id.rl_shopping_car)
     RelativeLayout rl_shopping_car;//购物车布局
+    @Bind(R.id.rl_empty)
+    RelativeLayout rl_empty;//空页面
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
@@ -88,6 +90,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
                 Logger.d(result.toString());
                 List<Cart> cars = sort(result.getUse());
+                if(cars.size()<=0)
+                    rl_empty.setVisibility(View.VISIBLE);//是否显示空页面
                 adapter = new ShoppingCarAdapter(mContext, cars);
                 rv_cars.setAdapter(adapter);
                 adapter.setOnUpdateNorms(ShoppingCarActivity.this);
@@ -196,6 +200,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         cartDelete(cart.getPid());
                         tv_money.setText(caculateSumMoney());
                     }
+                    getCart();
                     setRightTitle("编辑");
                     isEditable=true;
 

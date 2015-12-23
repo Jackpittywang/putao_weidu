@@ -18,7 +18,6 @@ import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -47,6 +46,7 @@ public class PutaoStoreFragment extends PTWDFragment {
     private boolean isStop;//广告栏是否被停止
 
     private ProductAdapter adapter;
+    private StoreBannerAdapter bannerAdapter;
     private List<ProductItem> products;
     private List<StoreBanner> banners;
 
@@ -70,6 +70,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         refresh();
     }
 
+
     /**
      * 获取葡商城首页信息
      */
@@ -82,15 +83,18 @@ public class PutaoStoreFragment extends PTWDFragment {
                 if (result.getProduct() != null)
                     if (result.getProduct().getData() != null)
                         adapter.addAll(result.getProduct().getData());
-                //初始化广告位
-                banners = result.getBanner();
-                bl_banner.setAdapter(new StoreBannerAdapter(mActivity, result.getBanner(), new BannerViewPager.OnPagerClickListenr() {
-                    @Override
-                    public void onPagerClick(int position) {
-                        ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
-                    }
-                }));
-                bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
+                if (banners == null) {
+                    //初始化广告位
+                    banners = result.getBanner();
+                    bannerAdapter = new StoreBannerAdapter(mActivity, result.getBanner(), new BannerViewPager.OnPagerClickListenr() {
+                        @Override
+                        public void onPagerClick(int position) {
+                            //ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
+                        }
+                    });
+                    bl_banner.setAdapter(bannerAdapter);
+                    bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
+                }
             }
         });
     }
@@ -102,12 +106,10 @@ public class PutaoStoreFragment extends PTWDFragment {
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ptl_refresh.refreshComplete();
-                    }
-                }, 3 * 1000);
+                adapter.clear();
+                getStoreHome();
+                loading.dismiss();
+                ptl_refresh.refreshComplete();
             }
         });
     }
