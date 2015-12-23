@@ -154,15 +154,17 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
-            case R.id.ll_all://活动说明
+            case R.id.ll_action_instruct://活动说明
                 action_type = 0;
-                loadHtml(action_id, action_type);
                 break;
-            case R.id.ll_ing://活动现场
+            case R.id.ll_action_location://活动现场
                 action_type = 1;
-                loadHtml("2", 0);
+                break;
+            case R.id.ll_finish://精彩回顾
+
                 break;
         }
+        loadHtml(action_id, action_type);
     }
 
     /**
