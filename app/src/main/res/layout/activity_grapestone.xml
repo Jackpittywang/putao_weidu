@@ -12,7 +12,8 @@
         android:visibility="visible"
         auto:nav_left_icon="@drawable/btn_20_back_p_sel"
         auto:nav_main_title="葡萄籽"
-        auto:nav_right_title="我要提问"/>
+        auto:nav_right_title="我要提问"
+        auto:nav_right_title_color="@drawable/text_select"/>
 
     <com.sunnybear.library.view.BasicWebView
         android:id="@+id/wv_content"
