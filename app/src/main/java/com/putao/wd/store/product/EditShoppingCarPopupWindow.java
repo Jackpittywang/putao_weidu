@@ -117,12 +117,13 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
                 for (int i = 0; i < normses.size(); i++) {
                     strSku = strSku + normses.get(i).getTitle().substring(2) + ":" + mSelTags.get(i).getText() + " ";
                 }
-                Cart cart = new Cart();
-                cart.setPrice(sku.getPrice());
-                cart.setSku(strSku);
-                cart.setPid(sku.getPid());
+//                Cart cart = new Cart();
+                mCart.setPrice(sku.getPrice());
+                mCart.setSku(strSku);
+                mCart.setPid(sku.getPid());
+//                mCart.setEditable(false);
                 sku.setQuantity(strSku);//临时保存返回到购物车主界面的规格
-                EventBusHelper.post(cart, EVENT_UPDATE_NORMS);
+                EventBusHelper.post(mCart, EVENT_UPDATE_NORMS);
                 break;
         }
         dismiss();
@@ -146,11 +147,9 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         sku = SpecUtils.getProductSku(skus, mSelTags);
         if (sku == null) {
             tv_confirm_update.setEnabled(false);
-            tv_confirm_update.setText("抱歉,无此组合");
             tv_confirm_update.setBackgroundResource(R.color.text_color_646464);
         } else {
             tv_confirm_update.setEnabled(true);
-            tv_confirm_update.setText("确认");
             tv_confirm_update.setBackgroundResource(R.color.color_rectangle_sel);
         }
     }
