@@ -1,6 +1,8 @@
 package com.putao.wd.me.actions;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
@@ -22,8 +24,8 @@ import butterknife.Bind;
 public class MyActionsActivity extends PTWDActivity {
     @Bind(R.id.rv_acitions)
     LoadMoreRecyclerView rv_acitions;
-//    @Bind(R.id.rl_no_action)
-//    RelativeLayout rl_no_action;
+    @Bind(R.id.rl_no_action)
+    RelativeLayout rl_no_action;
 
     private MyActionsAdapter adapter;
     private UserInfo userInfo;
@@ -65,7 +67,7 @@ public class MyActionsActivity extends PTWDActivity {
                     @Override
                     public void onSuccess(String url, MeActions result) {
                         if (result.getCurrent_page() != result.getTotal_page()) {
-
+                            rl_no_action.setVisibility(View.GONE);
                             currentPage++;
                             rv_acitions.loadMoreComplete();
                         } else rv_acitions.noMoreLoading();
