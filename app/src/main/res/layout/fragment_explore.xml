@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/img_explore_empty_bg"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/iv_explore_empty_arrow"

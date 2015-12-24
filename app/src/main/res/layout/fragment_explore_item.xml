@@ -40,6 +40,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_content1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/distance_8dp"
@@ -144,6 +145,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_content2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/distance_8dp"
