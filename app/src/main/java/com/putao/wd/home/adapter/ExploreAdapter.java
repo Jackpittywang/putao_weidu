@@ -108,9 +108,11 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
             viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
             ExploreProductPlot plot = exploreProduct.getPlot();
-            viewHolder.tv_content.setText(plot.getContent());
-            setPlotImage(viewHolder, plot);
-            showPiture(viewHolder, 1);
+            if (plot != null) {
+                viewHolder.tv_content.setText(plot.getContent());
+                setPlotImage(viewHolder, plot);
+                showPiture(viewHolder, 1);
+            }
         }
 
     }
