@@ -10,7 +10,6 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
-import com.putao.wd.util.RegionUtils;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
@@ -19,7 +18,6 @@ import com.sunnybear.library.util.SDCardUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -32,7 +30,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
 
     private DaoMaster.OpenHelper mHelper;
-    private Map<String, String> mEmojis;//表情集合
+    public static ConcurrentHashMap<String, String> mEmojis;//表情集合
 
     @Override
     public void onCreate() {
@@ -42,7 +40,6 @@ public class GlobalApplication extends BasicApplication {
         //安装通行证
         AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");
         parseEmoji();//表情解析
-//        parseRegions();//解析城市列表
         //开启shareSDK
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
@@ -91,38 +88,31 @@ public class GlobalApplication extends BasicApplication {
      * 解析emoji表情
      */
     private void parseEmoji() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    FileUtils.unZipInAsset(getApplicationContext(), "emoji.zip", "", true);//解压表情包
-                    Logger.d("表情包解压完成");
-                    File emoji = new File(GlobalApplication.sdCardPath + File.separator + "emoji", "set.txt");
-                    String source = FileUtils.readFile(emoji).replace("\uFEFF", "");
-                    Logger.d(source);
-                    String[] sources = source.split("\\n");
-                    for (String s : sources) {
-                        String[] s1 = s.split(",");
-                        mEmojis.put(s1[0], GlobalApplication.sdCardPath + File.separator + "emoji" + File.separator + s1[1]);
+        mEmojis = (ConcurrentHashMap<String, String>) getDiskFileCacheHelper().getAsSerializable(MAP_EMOJI);
+        if (mEmojis == null)
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FileUtils.unZipInAsset(getApplicationContext(), "emoji.zip", "", true);//解压表情包
+                        Logger.d("表情包解压完成");
+                        File emoji = new File(GlobalApplication.sdCardPath + File.separator + "emoji", "set.txt");
+                        String source = FileUtils.readFile(emoji).replace("\uFEFF", "");
+                        Logger.d(source);
+                        String[] sources = source.split("\\n");
+                        for (String s : sources) {
+                            String[] s1 = s.split(",");
+                            mEmojis.put(s1[0], GlobalApplication.sdCardPath + File.separator + "emoji" + File.separator + s1[1]);
+                        }
+                        GlobalApplication.setEmojis(mEmojis);
+                        getDiskFileCacheHelper().put(MAP_EMOJI, mEmojis);
+                    } catch (IOException e) {
+                        Logger.e("表情包解压失败", e);
                     }
-                    GlobalApplication.setEmojis(mEmojis);
-                } catch (IOException e) {
-                    Logger.e("表情包解压完成", e);
                 }
-            }
-        }).start();
-    }
-
-    /**
-     * 解析城市列表
-     */
-    private void parseRegions() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RegionUtils.insertRegion();
-            }
-        }).start();
+            }).start();
+        else
+            GlobalApplication.setEmojis(mEmojis);
     }
 
     @Override
@@ -168,11 +158,14 @@ public class GlobalApplication extends BasicApplication {
     /**
      * 有此至下为常量定义
      */
-    //===================preference key============================
+    private static final String MAP_EMOJI = "map_emoji";
+    //===================preference key===========================
     public static final String PREFERENCE_KEY_UID = "uid";
     public static final String PREFERENCE_KEY_TOKEN = "token";
     public static final String PREFERENCE_KEY_NICKNAME = "nickname";
     public static final String PREFERENCE_KEY_EXPIRE_TIME = "expire_tim";
     public static final String PREFERENCE_KEY_REFRESH_TOKEN = "refresh_token";
     public static final String PREFERENCE_KEY_USER_INFO = "user_info";
+
+    public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
 }
