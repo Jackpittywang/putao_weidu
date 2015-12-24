@@ -205,6 +205,10 @@
         <activity
             android:name=".start.browse.PictrueBrowseActivity"
             android:screenOrientation="portrait" />
+        <!--用户详情-->
+        <activity
+            android:name=".start.user.UserDetailActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
