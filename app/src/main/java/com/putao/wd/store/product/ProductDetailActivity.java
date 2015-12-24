@@ -143,26 +143,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                         .setText("葡萄纬度分享给您")
                         .setUrl(shareUrl).execute(mContext);
             }
-
-            @Override
-            public void onQQFriend() {
-
-            }
-
-            @Override
-            public void onQQZone() {
-
-            }
-
-            @Override
-            public void onSinaWeibo() {
-
-            }
-
-            @Override
-            public void onCopyUrl() {
-
-            }
         });
     }
 

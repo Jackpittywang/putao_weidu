@@ -44,6 +44,7 @@ public class BannerViewPager extends ViewPager {
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                if (mSize == 0) return;
                 int index = currentItem % mSize;
 //                Logger.d(index + "");
                 if (index == 0)

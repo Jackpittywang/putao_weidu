@@ -1,7 +1,6 @@
 package com.putao.wd.start.comment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -127,24 +126,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 1;
-                rv_content.reset();
-                networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
-                    @Override
-                    public void onSuccess(String url, CommentList result) {
-                        if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                            adapter.replaceAll(result.getComment());
-                            hasComment = true;
-                            rv_content.loadMoreComplete();
-                            page++;
-                        } else {
-                            rv_content.noMoreLoading();
-                            hasComment = false;
-                        }
-                        loading.dismiss();
-                        ptl_refresh.refreshComplete();
-                    }
-                });
+                refreshCommentList();
             }
         });
     }
@@ -174,11 +156,11 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_emojis:
+            case R.id.tv_emojis://点击表情栏
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
-            case R.id.tv_send:
+            case R.id.tv_send://点击发送
                 if (isReply) {
                     Comment comment = adapter.getItem(position);
                     String msg = et_msg.getText().toString();
@@ -187,7 +169,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                 @Override
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
-                                    getCommentList();
+                                    refreshCommentList();
                                     EventBusHelper.post(true, EVENT_COUNT_COMMENT);
                                 }
                             });
@@ -199,15 +181,40 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                 @Override
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
-                                    getCommentList();
+                                    refreshCommentList();
                                     EventBusHelper.post(true, EVENT_COUNT_COMMENT);
                                 }
                             });
                 }
                 isReply = false;
                 et_msg.setText("");
+                vp_emojis.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    /**
+     * 刷新评论列表
+     */
+    private void refreshCommentList() {
+        page = 1;
+        rv_content.reset();
+        networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
+            @Override
+            public void onSuccess(String url, CommentList result) {
+                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
+                    adapter.replaceAll(result.getComment());
+                    hasComment = true;
+                    rv_content.loadMoreComplete();
+                    page++;
+                } else {
+                    rv_content.noMoreLoading();
+                    hasComment = false;
+                }
+                loading.dismiss();
+                ptl_refresh.refreshComplete();
+            }
+        });
     }
 
     /**
@@ -218,8 +225,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
-                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                    adapter.replaceAll(result.getComment());
+                adapter.addAll(result.getComment());
+                if (result.getCurrent_page() != result.getTotal_page()) {
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;

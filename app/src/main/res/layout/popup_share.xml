@@ -13,6 +13,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical">
+
         <!--标题栏-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +70,8 @@
                 <LinearLayout
                     android:id="@+id/ll_qq_friend"
                     style="@style/style_share_button"
-                    android:paddingRight="8dp">
+                    android:paddingRight="8dp"
+                    android:visibility="gone">
 
                     <ImageView
                         style="@style/style_share_icon"
@@ -84,7 +86,8 @@
                 <LinearLayout
                     android:id="@+id/ll_qq_zone"
                     style="@style/style_share_button"
-                    android:paddingRight="8dp">
+                    android:paddingRight="8dp"
+                    android:visibility="gone">
 
                     <ImageView
                         style="@style/style_share_icon"
@@ -98,7 +101,8 @@
             </LinearLayout>
 
             <!--第二排-->
-            <LinearLayout style="@style/style_share_row">
+            <LinearLayout style="@style/style_share_row"
+                android:visibility="gone">
 
                 <!--新浪微博-->
                 <LinearLayout
