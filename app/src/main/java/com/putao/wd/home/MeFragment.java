@@ -2,11 +2,11 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.UserApi;
-import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.message.MessageCenterActivity;
@@ -16,6 +16,7 @@ import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
+import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SettingItem;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
  * 我
  * Created by guchenkai on 2015/11/25.
  */
-public class MeFragment extends PTWDFragment implements View.OnClickListener {
+public class MeFragment extends BasicFragment implements View.OnClickListener {
     public static final String EVENT_EDIT_USER_INFO = "edit_user_info";
 
     @Bind(R.id.si_message)
@@ -46,6 +47,8 @@ public class MeFragment extends PTWDFragment implements View.OnClickListener {
     ImageDraweeView iv_user_icon;
     @Bind(R.id.tv_user_nickname)
     TextView tv_user_nickname;
+    @Bind(R.id.rl_user_head_icon)
+    RelativeLayout rl_user_head_icon;
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +57,6 @@ public class MeFragment extends PTWDFragment implements View.OnClickListener {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        addNavigation();
         //Logger.d(MainActivity.TAG, "MeFragment启动");
 //        si_message.show(18);
 //        btn_pay.show(9);
@@ -79,11 +81,6 @@ public class MeFragment extends PTWDFragment implements View.OnClickListener {
     }
 
     @Override
-    public void onRightAction() {
-        startActivity(SettingActivity.class);
-    }
-
-    @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
@@ -93,12 +90,15 @@ public class MeFragment extends PTWDFragment implements View.OnClickListener {
         getUserInfo();
     }
 
-    @OnClick({R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
+    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
             , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
+            case R.id.iv_setting:
+                startActivity(SettingActivity.class);
+                break;
             case R.id.si_order://我的订单
                 bundle.putInt("current_Index", 0);
                 startActivity(OrderListActivity.class);
