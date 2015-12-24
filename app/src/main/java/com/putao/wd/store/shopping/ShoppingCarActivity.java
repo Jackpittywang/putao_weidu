@@ -171,6 +171,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     @Override
     public void onRightAction() {
+        setRightTitle("完成");
+//        setRightTitle("编辑");
         adapter.startEdit();
 //        if (adapter.getItemState()) {
 //            if (isEditable && adapter.map.size() != 0) {//编辑
