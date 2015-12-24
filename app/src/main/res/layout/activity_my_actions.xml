@@ -10,7 +10,8 @@
         style="@style/style_navigation_bar"
         android:visibility="visible"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="我参加的活动" />
+        auto:nav_main_title="我参加的活动"
+        auto:nav_has_divider="true"/>
 
     <!--内容区-->
     <FrameLayout
@@ -30,7 +31,8 @@
             android:id="@+id/rl_no_action"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background">
+            android:background="@color/layout_background"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_action_empty"
