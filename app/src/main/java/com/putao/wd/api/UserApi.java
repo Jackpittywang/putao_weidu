@@ -23,7 +23,7 @@ public class UserApi {
     private static final String REQUEST_NICKNAME = "nickName";
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
-    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/user" : "http://api-event-dev.putao.com/user";//活动,消息,提问使用的地址
+    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/user/" : "http://api-event-dev.putao.com/user/";//活动,消息,提问使用的地址
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -108,7 +108,7 @@ public class UserApi {
      * @param page      页码
      */
     public static Request getMeActions(String nick_name, String head_icon, String page) {
-        return PTWDRequestHelper.explore()
+        return PTWDRequestHelper.user()
                 .addParam(REQUEST_NICKNAME, nick_name)
                 .addParam(REQUEST_HEAD_ICON, head_icon)
                 .addParam(REQUEST_PAGE, page)

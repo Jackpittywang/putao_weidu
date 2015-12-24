@@ -1,8 +1,8 @@
 package com.putao.wd.me.actions;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RelativeLayout;
+import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
@@ -66,8 +66,11 @@ public class MyActionsActivity extends PTWDActivity {
                 new SimpleFastJsonCallback<MeActions>(MeActions.class, loading) {
                     @Override
                     public void onSuccess(String url, MeActions result) {
+                        if (result.getTotal_page() == 0) {
+                            rl_no_action.setVisibility(View.VISIBLE);
+                            return;
+                        }
                         if (result.getCurrent_page() != result.getTotal_page()) {
-                            rl_no_action.setVisibility(View.GONE);
                             currentPage++;
                             rv_acitions.loadMoreComplete();
                         } else rv_acitions.noMoreLoading();
@@ -77,6 +80,6 @@ public class MyActionsActivity extends PTWDActivity {
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{UserApi.URL_GET_ME_ACTIONS};
     }
 }
