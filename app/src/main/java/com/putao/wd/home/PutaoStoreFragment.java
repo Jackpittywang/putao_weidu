@@ -2,18 +2,17 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.ProductItem;
 import com.putao.wd.home.adapter.ProductAdapter;
 import com.putao.wd.home.adapter.StoreBannerAdapter;
 import com.putao.wd.model.StoreBanner;
 import com.putao.wd.model.StoreHome;
 import com.putao.wd.model.StoreProduct;
+import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -47,8 +46,8 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     private ProductAdapter adapter;
     private StoreBannerAdapter bannerAdapter;
-    private List<ProductItem> products;
-    private List<StoreBanner> banners;
+
+    private int currentPage = 1;
 
     @Override
     protected int getLayoutId() {
@@ -78,23 +77,26 @@ public class PutaoStoreFragment extends PTWDFragment {
         networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
             @Override
             public void onSuccess(String url, StoreHome result) {
-                Logger.d(result.toString());
-                //初始化商品列表
-                if (result.getProduct() != null)
-                    if (result.getProduct().getData() != null)
-                        adapter.addAll(result.getProduct().getData());
-                if (banners == null) {
-                    //初始化广告位
-                    banners = result.getBanner();
+                List<StoreBanner> banners = result.getBanner();
+                //初始化广告位
+                if (banners != null && banners.size() > 0) {
                     bannerAdapter = new StoreBannerAdapter(mActivity, result.getBanner(), new BannerViewPager.OnPagerClickListenr() {
                         @Override
                         public void onPagerClick(int position) {
-                            //ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
+
                         }
                     });
                     bl_banner.setAdapter(bannerAdapter);
                     bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
                 }
+                //初始化商品列表
+                StoreProductHome productHome = result.getProduct();
+                adapter.addAll(productHome.getData());
+                if (productHome.getCurrent_page() != productHome.getTotal_page()) {
+                    rv_content.loadMoreComplete();
+                    currentPage++;
+                } else rv_content.noMoreLoading();
+                loading.dismiss();
             }
         });
     }

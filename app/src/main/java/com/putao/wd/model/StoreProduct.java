@@ -14,6 +14,7 @@ public class StoreProduct implements Serializable {
     private String icon;
     private String stock;
     private String lock;
+
     public String getId() {
         return id;
     }

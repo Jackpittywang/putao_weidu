@@ -89,7 +89,6 @@ public class PutaoExploreFragment extends PTWDFragment {
                     @Override
                     public void onSuccess(String url, Explore result) {
                         Logger.i("探索号请求结果 = " + result.toString());
-
                         if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
                             List<ExploreProduct> datas = result.getData();
                             for (ExploreProduct data : datas) {
@@ -111,11 +110,6 @@ public class PutaoExploreFragment extends PTWDFragment {
                             rv_content.noMoreLoading();
                         }
                         loading.dismiss();
-
-//                        else {
-//                            rv_content.setVisibility(View.GONE);
-//                            rl_empty.setVisibility(View.VISIBLE);
-//                        }
                     }
                 });
     }
