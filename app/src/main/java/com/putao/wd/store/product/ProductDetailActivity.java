@@ -74,7 +74,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         product_id = args.getString(PRODUCT_ID);
 
         sticky_layout.canScrollView();
-        wv_content.loadUrl("http://wap.baidu.com");
         wv_content.loadUrl("http://www.putao.com");
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();

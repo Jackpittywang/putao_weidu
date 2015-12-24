@@ -46,6 +46,16 @@ public class ScanUrlParseUtils {
     }
 
     /**
+     * 获得添加设备请求url
+     *
+     * @param scanUrl 扫描出的url
+     * @return 可请求url
+     */
+    public static String getDeviceRequestUrl(String scanUrl) {
+        return getUrl(scanUrl);
+    }
+
+    /**
      * 获取参数
      *
      * @param url
@@ -66,5 +76,6 @@ public class ScanUrlParseUtils {
      */
     public static final class Scheme {
         public static final String PUTAO_LOGIN = "ptlogin";
+        public static final String PUTAO_DEVICE = "ptdevicecontrol";
     }
 }
