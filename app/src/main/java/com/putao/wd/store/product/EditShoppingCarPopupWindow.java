@@ -65,6 +65,9 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     public EditShoppingCarPopupWindow(Context context, String pid, Cart cart) {
         super(context);
         mCart = cart;
+        adapter = new EditNormsSelectAdapter(mActivity, null, cart);
+        rv_norms.setAdapter(adapter);
+
         getProductSpec(pid);
     }
 
@@ -86,8 +89,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
                         mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
                         skus = result.getSku();
                         normses = SpecUtils.getNormses(result.getSpec());
-                        adapter = new EditNormsSelectAdapter(mActivity, normses);
-                        rv_norms.setAdapter(adapter);
+                        adapter.addAll(normses);
                     }
                 });
     }

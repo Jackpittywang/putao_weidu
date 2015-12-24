@@ -91,7 +91,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     }
 
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
-            , R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
+            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -102,6 +102,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             case R.id.si_order://我的订单
                 bundle.putInt("current_Index", 0);
                 startActivity(OrderListActivity.class);
+                break;
+            case R.id.si_child_info://孩子信息
+
                 break;
             case R.id.si_address://收货地址
                 startActivity(AddressListActivity.class);
@@ -116,8 +119,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(CompleteActivity.class);
                 break;
             case R.id.si_message://消息中心
-                startActivity(MessageCenterActivity.class);
                 si_message.hide();
+                startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
                 btn_pay.hide();

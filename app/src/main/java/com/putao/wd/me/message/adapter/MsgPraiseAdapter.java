@@ -5,10 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.MessageNotifyItem;
 import com.putao.wd.dto.MessagePraiseItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
@@ -21,7 +19,6 @@ import butterknife.Bind;
  * Created by wango on 2015/12/3.
  */
 public class MsgPraiseAdapter  extends LoadMoreAdapter<MessagePraiseItem,MsgPraiseAdapter.MsgPraiseViewHolder> {
-        //BasicAdapter<MessagePraiseItem,MsgPraiseAdapter.MsgPraiseViewHolder> {
 
     public MsgPraiseAdapter(Context context, List<MessagePraiseItem> messagePraiseItems) {
         super(context, messagePraiseItems);
@@ -42,8 +39,6 @@ public class MsgPraiseAdapter  extends LoadMoreAdapter<MessagePraiseItem,MsgPrai
         holder.iv_praise_headericon.setImageURL(messagePraiseItem.getHeadIconUrl());
         holder.tv_praise_usernickname.setText(messagePraiseItem.getPraiseUserNickname());
         holder.tv_praise_date.setText(messagePraiseItem.getDate());
-        //holder.tv_reply_content.setText(messagePraiseItem.getComment());
-        //holder.tv_praised_username.setText(messagePraiseItem.getPraisedUserName());
         holder.tv_praised_content.setText(messagePraiseItem.getPraisedUserName() + "：" + messagePraiseItem.getPraisedcontent());
     }
 
@@ -57,10 +52,6 @@ public class MsgPraiseAdapter  extends LoadMoreAdapter<MessagePraiseItem,MsgPrai
         TextView tv_praise_usernickname;
         @Bind(R.id.tv_praise_date)
         TextView tv_praise_date;
-//        @Bind(R.id.tv_praised_content)
-////        TextView tv_reply_content;
-//        @Bind(R.id.tv_praised_username)
-//        TextView tv_praised_username;
         @Bind(R.id.tv_praised_content)
         TextView tv_praised_content;
 

@@ -13,7 +13,8 @@ public class ExploreProduct implements Serializable {
     private String product_name;
     private String product_icon;
     private int type;
-    private String img_url;
+    private String base_img_url;
+    private String base_data_copies;
     private String data;
 
     // 以下两个field用作data类型不确定时，分步解析保存
@@ -60,12 +61,20 @@ public class ExploreProduct implements Serializable {
         this.type = type;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getBase_img_url() {
+        return base_img_url;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setBase_img_url(String base_img_url) {
+        this.base_img_url = base_img_url;
+    }
+
+    public String getBase_data_copies() {
+        return base_data_copies;
+    }
+
+    public void setBase_data_copies(String base_data_copies) {
+        this.base_data_copies = base_data_copies;
     }
 
     public String getData() {
@@ -100,10 +109,12 @@ public class ExploreProduct implements Serializable {
                 ", product_name='" + product_name + '\'' +
                 ", product_icon='" + product_icon + '\'' +
                 ", type=" + type +
-                ", img_url='" + img_url + '\'' +
+                ", base_img_url='" + base_img_url + '\'' +
+                ", base_data_copies='" + base_data_copies + '\'' +
                 ", data='" + data + '\'' +
                 ", details=" + details +
                 ", plot=" + plot +
                 '}';
     }
+
 }

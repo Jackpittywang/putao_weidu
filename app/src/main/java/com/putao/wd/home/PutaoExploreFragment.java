@@ -2,8 +2,10 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -31,6 +33,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoExploreFragment extends PTWDFragment implements View.OnClickListener {
+    @Bind(R.id.ll_content)
+    LinearLayout ll_content;
     @Bind(R.id.rl_empty)
     RelativeLayout rl_empty;
     @Bind(R.id.rv_content)
@@ -53,8 +57,8 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         setRightTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-//        getDiaryIndex();
-//        addListener();
+        getDiaryIndex();
+        addListener();
     }
 
     @Override
@@ -79,7 +83,21 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getDiaryIndex();
+                networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
+                        new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
+                            @Override
+                            public void onSuccess(String url, Explore result) {
+                                Logger.i("探索号请求结果 = " + result.toString());
+                                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
+                                    adapter.addAll(parseExplore(result));
+                                    rv_content.loadMoreComplete();
+                                    page++;
+                                } else {
+                                    rv_content.noMoreLoading();
+                                }
+                                loading.dismiss();
+                            }
+                        });
             }
         });
     }
@@ -94,30 +112,35 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                     public void onSuccess(String url, Explore result) {
                         Logger.i("探索号请求结果 = " + result.toString());
                         if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                            List<ExploreProduct> datas = result.getData();
-                            for (ExploreProduct data : datas) {
-                                switch (data.getType()) {
-                                    case 1:
-                                        data.setDetails(parseDetail(data.getData()));
-                                        break;
-                                    default:
-                                        data.setPlot(parsePlot(data.getData()));
-                                        break;
-                                }
-                            }
-                            if (false) {
-                                rl_empty.setVisibility(View.GONE);
-                                rv_content.setVisibility(View.VISIBLE);
-                                adapter.replaceAll(datas);
-                                rv_content.loadMoreComplete();
-                                page++;
-                            }
+                            rl_empty.setVisibility(View.GONE);
+                            ll_content.setVisibility(View.VISIBLE);
+                            adapter.replaceAll(parseExplore(result));
+                            rv_content.loadMoreComplete();
+                            page++;
                         } else {
-                            rv_content.noMoreLoading();
+                            rl_empty.setVisibility(View.VISIBLE);
                         }
                         loading.dismiss();
                     }
                 });
+    }
+
+    /**
+     * 解析数据
+     */
+    private List<ExploreProduct> parseExplore(Explore result) {
+        List<ExploreProduct> datas = result.getData();
+        for (ExploreProduct data : datas) {
+            switch (data.getType()) {
+                case 1:
+                    data.setDetails(parseDetail(data.getData()));
+                    break;
+                default:
+                    data.setPlot(parsePlot(data.getData()));
+                    break;
+            }
+        }
+        return datas;
     }
 
     /**

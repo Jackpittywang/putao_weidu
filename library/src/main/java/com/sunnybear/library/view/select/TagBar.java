@@ -115,7 +115,7 @@ public class TagBar extends FlowLayout implements OnClickListener {
     }
 
     /**
-     * 添加标签zu
+     * 添加标签组
      *
      * @param tags            标签组
      * @param defaultPosition 默认选中项

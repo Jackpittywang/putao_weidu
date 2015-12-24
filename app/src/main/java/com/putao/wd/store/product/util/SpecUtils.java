@@ -203,4 +203,23 @@ public class SpecUtils {
             tags.add(tag);
         }
     }
+
+    /**
+     * 解析商品规格信息
+     *
+     * @param sku 商品规格信息
+     * @return 商品规格信息集合
+     */
+    public static List<String> parseSku(String sku) {
+        List<String> list = new ArrayList<>();
+        String[] skus = sku.split(" ");
+        for (String s : skus) {
+            list.add(s.split(":")[1]);
+        }
+        return list;
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(parseSku("颜色:淘淘粉 套餐:豪华装"));
+    }
 }

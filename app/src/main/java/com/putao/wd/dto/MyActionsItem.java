@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by wango on 2015/12/3.
  */
-
+@Deprecated
 public class MyActionsItem implements Serializable {
     private String id;
     private String title;

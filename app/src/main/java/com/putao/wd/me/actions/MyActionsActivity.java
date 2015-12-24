@@ -1,95 +1,85 @@
 package com.putao.wd.me.actions;
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.widget.RelativeLayout;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import butterknife.Bind;
-import com.putao.wd.GlobalApplication;
+
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.MyActionsItem;
 import com.putao.wd.me.actions.adapter.MyActionsAdapter;
+import com.putao.wd.model.MeActions;
+import com.putao.wd.model.UserInfo;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView.OnLoadMoreListener;
-import java.util.ArrayList;
-import java.util.List;
+
+import butterknife.Bind;
+
 /**
  * 我参加的活动
  * Created by wangou on 2015/12/4.
  */
-public class MyActionsActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
-    @Bind(R.id.brv_acitionlist)
-    LoadMoreRecyclerView brv_acitionlist;
-    @Bind(R.id.tv_nomore)
-    TextView tv_nomore;
-    @Bind(R.id.ll_acitions)
-    LinearLayout ll_acitions;
+public class MyActionsActivity extends PTWDActivity {
+    @Bind(R.id.rv_acitions)
+    LoadMoreRecyclerView rv_acitions;
+    @Bind(R.id.rl_no_action)
+    RelativeLayout rl_no_action;
 
-    public MyActionsActivity() {
-    }
+    private MyActionsAdapter adapter;
+    private UserInfo userInfo;
 
+    private int currentPage = 1;//当前页
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_my_actions;
     }
 
+    @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        this.addNavigation();
-        this.addListener();
-        this.initActivityList();
+        addNavigation();
+        adapter = new MyActionsAdapter(mContext, null);
+        rv_acitions.setAdapter(adapter);
+        addListener();
+
+        userInfo = AccountHelper.getCurrentUserInfo();
+        getAcitons(userInfo);
     }
 
     private void addListener() {
-        this.brv_acitionlist.setOnLoadMoreListener(new OnLoadMoreListener() {
+        rv_acitions.setOnLoadMoreListener(new OnLoadMoreListener() {
             public void onLoadMore() {
-                (new Handler()).postDelayed(new Runnable() {
-                    public void run() {
-                        MyActionsActivity.this.brv_acitionlist.noMoreLoading();
-                    }
-                }, 3000L);
+                getAcitons(userInfo);
             }
         });
     }
 
-    private void initActivityList() {
-        if(this.initActivityData().size() != 0) {
-            this.ll_acitions.setVisibility(View.VISIBLE);
-            this.tv_nomore.setVisibility(View.GONE);
-            MyActionsAdapter myActivitiesAdapter = new MyActionsAdapter(mContext, this.initActivityData());
-            this.brv_acitionlist.setAdapter(myActivitiesAdapter);
-        } else {
-            this.ll_acitions.setVisibility(View.GONE);
-            this.tv_nomore.setVisibility(View.VISIBLE);
-        }
-
+    /**
+     * 获得我参与的活动列表
+     *
+     * @param userInfo
+     */
+    private void getAcitons(UserInfo userInfo) {
+        networkRequest(UserApi.getMeActions(userInfo.getNick_name(), userInfo.getHead_img(), String.valueOf(currentPage)),
+                new SimpleFastJsonCallback<MeActions>(MeActions.class, loading) {
+                    @Override
+                    public void onSuccess(String url, MeActions result) {
+                        if (result.getTotal_page() == 0) {
+                            rl_no_action.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        if (result.getCurrent_page() != result.getTotal_page()) {
+                            currentPage++;
+                            rv_acitions.loadMoreComplete();
+                        } else rv_acitions.noMoreLoading();
+                    }
+                });
     }
 
-    private List<MyActionsItem> initActivityData() {
-        ArrayList list = new ArrayList();
-
-        for(int i = 0; i < 10; ++i) {
-            MyActionsItem item = new MyActionsItem();
-            if(i % 2 == 1) {
-                item.setStatus("体验");
-            } else {
-                item.setStatus("聚会");
-            }
-
-            item.setActionIcon("https://static.pexels.com/photos/5854/sea-woman-legs-water-medium.jpg");
-            item.setIntroduction(i + "活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行");
-            item.setTitle(i + "活动标题最多15个汉字限制2行活动简介字数限制为四十字，这里完整显示全部简介的信息这里是两行");
-            list.add(item);
-        }
-
-        return list;
-    }
-
+    @Override
     protected String[] getRequestUrls() {
-        return new String[0];
-    }
-
-    public void onClick(View v) {
+        return new String[]{UserApi.URL_GET_ME_ACTIONS};
     }
 }
