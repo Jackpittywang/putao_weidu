@@ -121,7 +121,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 adapter.replaceAll(reg_user);
                 tv_actionsdetail_applycount.setText(result.getRegistration_number() + "");
                 loadHtml(action_id, action_type);
-                hideJoin(actionDetail);
+                setJoinStyle(actionDetail);
                 loading.dismiss();
             }
         });
@@ -223,14 +223,14 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     /**
      * 我要参加按钮的显示控制
      */
-    private void hideJoin(ActionDetail actionDetail) {
+    private void setJoinStyle(ActionDetail actionDetail) {
 //        actionDetail.getStatus();  //ONGOING  LOOKBACK
         switch (actionDetail.getStatus()) {
             case "进行中":
                 tv_join.setVisibility(View.VISIBLE);
                 if (actionDetail.isParticipate()) {
                     tv_join.setEnabled(false);
-                    tv_join.setBackgroundColor(R.color.text_color_gray);
+                    tv_join.setBackgroundResource(R.color.text_color_646464);
                     tv_join.setText("已报名");
                 }
                 break;

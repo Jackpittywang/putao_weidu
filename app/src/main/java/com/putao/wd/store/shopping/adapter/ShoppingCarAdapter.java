@@ -141,6 +141,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      */
     public void editNorms(int positon, Cart cart) {
         selected.put(positon, cart);
+        replace(positon, cart);
     }
 
     /**

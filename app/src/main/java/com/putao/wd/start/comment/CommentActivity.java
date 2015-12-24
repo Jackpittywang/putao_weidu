@@ -11,11 +11,13 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.Comment;
 import com.putao.wd.model.CommentList;
+import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.eventbus.EventBusHelper;
@@ -175,8 +177,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                             });
                 } else {
                     String msg = et_msg.getText().toString();
-                    // 用户名 commdId 未定
-                    networkRequest(StartApi.commentAdd(action_id, "nick_young", msg, "COMMENT", "10000", "hfgsagg"),
+                    UserInfo userInfo = AccountHelper.getCurrentUserInfo();
+                    networkRequest(StartApi.commentAdd(action_id, userInfo.getNick_name(), msg, "COMMENT", AccountHelper.getCurrentUid(), userInfo.getHead_img()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {

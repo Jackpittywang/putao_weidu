@@ -109,7 +109,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     @OnClick({R.id.iv_close, R.id.tv_confirm_update})
     @Override
     public void onClick(View v) {
-        ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
+//        ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
         switch (v.getId()) {
             case R.id.tv_confirm_update://修改购物车产品规格参数
                 //cartChange(product_id, sku.getPid());
@@ -136,6 +136,23 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
     @Subcriber(tag = EditNormsSelectAdapter.EVENT_SEL_TAG)
     public void eventSelTag(Tag tag) {
         getProductSku(tag);
+        setButtonStyle();
+    }
+
+    /**
+     * 根据商品组合设置Button是否可编辑
+     */
+    private void setButtonStyle() {
+        sku = SpecUtils.getProductSku(skus, mSelTags);
+        if (sku == null) {
+            tv_confirm_update.setEnabled(false);
+            tv_confirm_update.setText("抱歉,无此组合");
+            tv_confirm_update.setBackgroundResource(R.color.text_color_646464);
+        } else {
+            tv_confirm_update.setEnabled(true);
+            tv_confirm_update.setText("确认");
+            tv_confirm_update.setBackgroundResource(R.color.color_rectangle_sel);
+        }
     }
 
     /**
