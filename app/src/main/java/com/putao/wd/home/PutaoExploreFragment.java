@@ -3,6 +3,7 @@ package com.putao.wd.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -23,16 +24,19 @@ import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 探索号
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoExploreFragment extends PTWDFragment {
+public class PutaoExploreFragment extends PTWDFragment implements View.OnClickListener {
     @Bind(R.id.rl_empty)
     RelativeLayout rl_empty;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
+    @Bind(R.id.btn_explore_empty)
+    Button btn_explore_empty;
 
     private ExploreAdapter adapter;
     private int page = 1;
@@ -49,8 +53,8 @@ public class PutaoExploreFragment extends PTWDFragment {
         setRightTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        getDiaryIndex();
-        addListener();
+//        getDiaryIndex();
+//        addListener();
     }
 
     @Override
@@ -101,12 +105,14 @@ public class PutaoExploreFragment extends PTWDFragment {
                                         break;
                                 }
                             }
-                            rl_empty.setVisibility(View.GONE);
-                            rv_content.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(datas);
-                            rv_content.loadMoreComplete();
-                            page++;
-                        }else {
+                            if (false) {
+                                rl_empty.setVisibility(View.GONE);
+                                rv_content.setVisibility(View.VISIBLE);
+                                adapter.replaceAll(datas);
+                                rv_content.loadMoreComplete();
+                                page++;
+                            }
+                        } else {
                             rv_content.noMoreLoading();
                         }
                         loading.dismiss();
@@ -128,6 +134,17 @@ public class PutaoExploreFragment extends PTWDFragment {
         return JSON.parseObject(json, ExploreProductPlot.class);
     }
 
+    @OnClick({R.id.btn_explore_empty})
+    @Override
+    public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        switch (v.getId()) {
+            case R.id.btn_explore_empty://扫描二维码
+                startActivity(CaptureActivity.class);
+                break;
+        }
+    }
+
 //    /**
 //     * 获取剧情理念详情
 //     * by yanghx
@@ -143,8 +160,8 @@ public class PutaoExploreFragment extends PTWDFragment {
 //        });
 //    }
 
-}
 
+}
 
 
 

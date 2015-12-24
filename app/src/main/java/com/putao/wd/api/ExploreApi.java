@@ -22,6 +22,9 @@ public class ExploreApi {
     private static final String REQUEST_PLOT_ID = "plot_id";//剧情理念详情id
     private static final String REQUEST_PAGE = "page";//页码
 
+    private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
+    private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
+
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/";//基础url
 
     public static void install(String base_url) {
@@ -65,6 +68,18 @@ public class ExploreApi {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id)
                 .addParam(REQUEST_PRODUCT_ID, product_id)
+                .build(RequestMethod.POST, URL_SCAN_ADD);
+    }
+
+    /**
+     * 扫码关注产品（维度客户端添加）
+     *
+     * @param captcha_token 受控设备id号
+     */
+    public static Request addDevice(String captcha_token) {
+        return PTWDRequestHelper.explore()
+                .addParam(CAPTCHA_TOKEN, captcha_token)
+                .addParam(REQUEST_MASTER_DEVICE_NAME, "")
                 .build(RequestMethod.POST, URL_SCAN_ADD);
     }
 

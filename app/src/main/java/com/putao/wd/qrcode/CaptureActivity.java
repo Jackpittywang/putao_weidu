@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSONObject;
 import com.dtr.zbar.build.ZBarDecoder;
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.user.WebLoginActivity;
@@ -266,6 +267,29 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
+                    }
+                });
+                break;
+            case ScanUrlParseUtils.Scheme.PUTAO_DEVICE:// 扫描添加设备
+                String deviceUrl = ScanUrlParseUtils.getDeviceRequestUrl(result);
+                Logger.d("proUrl:" + deviceUrl);
+                networkRequest(ExploreApi.addDevice(deviceUrl), new JSONObjectCallback() {
+                    @Override
+                    public void onSuccess(String url, JSONObject result) {
+                        Logger.d(result.toString());
+                        int http_code = result.getInteger("http_code");
+                        if (http_code == 200) {
+                            ToastUtils.showToastLong(mContext, "添加成功");
+                        } else {
+                            ToastUtils.showToastLong(mContext, "添加失败");
+                        }
+                        loading.dismiss();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        //loading.dismiss();
                     }
                 });
                 break;
