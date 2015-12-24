@@ -12,6 +12,7 @@ import com.putao.wd.me.actions.adapter.MyActionsAdapter;
 import com.putao.wd.model.MeActions;
 import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView.OnLoadMoreListener;
 
@@ -24,6 +25,8 @@ import butterknife.Bind;
 public class MyActionsActivity extends PTWDActivity {
     @Bind(R.id.rv_acitions)
     LoadMoreRecyclerView rv_acitions;
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rl_no_action)
     RelativeLayout rl_no_action;
 
@@ -45,23 +48,27 @@ public class MyActionsActivity extends PTWDActivity {
         addListener();
 
         userInfo = AccountHelper.getCurrentUserInfo();
-        getAcitons(userInfo);
+        getAcitons();
     }
 
     private void addListener() {
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshActions();
+            }
+        });
         rv_acitions.setOnLoadMoreListener(new OnLoadMoreListener() {
             public void onLoadMore() {
-                getAcitons(userInfo);
+                getAcitons();
             }
         });
     }
 
     /**
      * 获得我参与的活动列表
-     *
-     * @param userInfo
      */
-    private void getAcitons(UserInfo userInfo) {
+    private void getAcitons() {
         networkRequest(UserApi.getMeActions(userInfo.getNick_name(), userInfo.getHead_img(), String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<MeActions>(MeActions.class, loading) {
                     @Override
@@ -74,6 +81,31 @@ public class MyActionsActivity extends PTWDActivity {
                             currentPage++;
                             rv_acitions.loadMoreComplete();
                         } else rv_acitions.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 刷新活动列表
+     */
+    private void refreshActions() {
+        currentPage = 1;
+        rv_acitions.reset();
+        networkRequest(UserApi.getMeActions(userInfo.getNick_name(), userInfo.getHead_img(), String.valueOf(currentPage)),
+                new SimpleFastJsonCallback<MeActions>(MeActions.class, loading) {
+                    @Override
+                    public void onSuccess(String url, MeActions result) {
+                        if (result.getTotal_page() == 0) {
+                            rl_no_action.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        if (result.getCurrent_page() != result.getTotal_page()) {
+                            currentPage++;
+                            rv_acitions.loadMoreComplete();
+                        } else rv_acitions.noMoreLoading();
+                        ptl_refresh.refreshComplete();
+                        loading.dismiss();
                     }
                 });
     }
