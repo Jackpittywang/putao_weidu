@@ -2,48 +2,88 @@ package com.putao.wd.start.question.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.CoolList;
-import com.sunnybear.library.view.image.ImageDraweeView;
+import com.putao.wd.model.UserQuestion;
+import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
-
-import butterknife.Bind;
 
 /**
  * 点赞列表适配器
  * Created by wango on 2015/12/4.
  */
-public class QuestionAdapter extends LoadMoreAdapter<CoolList, QuestionAdapter.PraiseListViewHolder> {
-    public QuestionAdapter(Context context, List<CoolList> coolLists) {
-        super(context, coolLists);
+public class QuestionAdapter extends BasicAdapter<UserQuestion, BasicViewHolder> {
+    private static final int TYPE_ASK = 1;
+    private static final int TYPE_ANSWER = 2;
+
+    public QuestionAdapter(Context context, List<UserQuestion> questions) {
+        super(context, questions);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        UserQuestion question = getItem(position);
+        //判断questtion状态
+        switch (0) {
+            case 0:
+                return TYPE_ASK;
+            case 1:
+                return TYPE_ANSWER;
+        }
+        return -1;
+    }
+
+    @Override
     public int getLayoutId(int viewType) {
-        return R.layout.layout_apply_list_item;
+        switch (viewType) {
+            case TYPE_ASK:
+                return R.layout.activity_question_item_ask;
+            case TYPE_ANSWER:
+                return R.layout.activity_question_item_answer;
+        }
+        return 0;
     }
 
-    public QuestionAdapter.PraiseListViewHolder getViewHolder(View itemView, int viewType) {
-        return new QuestionAdapter.PraiseListViewHolder(itemView);
+    @Override
+    public BasicViewHolder getViewHolder(View itemView, int viewType) {
+        switch (viewType) {
+            case TYPE_ASK:
+                return new QuestionAskViewHolder(itemView);
+            case TYPE_ANSWER:
+                return new QuestionAnswerViewHolder(itemView);
+        }
+        return null;
     }
 
-    public void onBindItem(QuestionAdapter.PraiseListViewHolder holder, CoolList coolList, int position) {
-        holder.iv_user_icon.setImageURL(coolList.getUser_profile_photo());
-        holder.tv_nickname.setText(coolList.getUser_name());
+    @Override
+    public void onBindItem(BasicViewHolder holder, UserQuestion question, int position) {
+        if (holder instanceof QuestionAskViewHolder) {//提问
+            QuestionAskViewHolder viewHolder = (QuestionAskViewHolder) holder;
 
+        } else if (holder instanceof QuestionAnswerViewHolder) {//回答
+            QuestionAnswerViewHolder viewHolder = (QuestionAnswerViewHolder) holder;
+
+        }
     }
 
-    static class PraiseListViewHolder extends BasicViewHolder {
-        @Bind(R.id.iv_user_icon)
-        ImageDraweeView iv_user_icon;//用户头像
-        @Bind(R.id.tv_nickname)
-        TextView tv_nickname;//用户昵称
+    /**
+     *
+     */
+    static class QuestionAskViewHolder extends BasicViewHolder {
 
-        public PraiseListViewHolder(View itemView) {
+        public QuestionAskViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    /**
+     *
+     */
+    static class QuestionAnswerViewHolder extends BasicViewHolder {
+
+        public QuestionAnswerViewHolder(View itemView) {
             super(itemView);
         }
     }

@@ -54,6 +54,7 @@
     <!--提问-->
     <string name="myquestion">我的提问</string>
     <string name="question_empty">还没有任何提问</string>
+    <string name="question_hint">在这里输入问题，20字以内</string>
 
 
 <!-- TODO: Remove or change this placeholder text -->
