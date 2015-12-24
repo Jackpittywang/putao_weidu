@@ -10,6 +10,7 @@ public class ExploreProductPlot implements Serializable {
     private String content;//一句话介绍
     private String img_url;//背景图
     private String img_list;//
+    private String plot_id;//情节id
 
     public String getContent() {
         return content;
@@ -35,12 +36,21 @@ public class ExploreProductPlot implements Serializable {
         this.img_list = img_list;
     }
 
+    public String getPlot_id() {
+        return plot_id;
+    }
+
+    public void setPlot_id(String plot_id) {
+        this.plot_id = plot_id;
+    }
+
     @Override
     public String toString() {
         return "ExploreProductPlot{" +
                 "content='" + content + '\'' +
                 ", img_url='" + img_url + '\'' +
                 ", img_list='" + img_list + '\'' +
+                ", plot_id='" + plot_id + '\'' +
                 '}';
     }
 }

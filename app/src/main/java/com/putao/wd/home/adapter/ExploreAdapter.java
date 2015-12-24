@@ -123,8 +123,22 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
      * @return
      */
     private String replaceHtml(List<String> data, String html) {
-        for (int i = 0; i < data.size(); i++) {
-            html = html.replace("<param" + i + ">", data.get(i));
+        boolean hasNull = false;
+        for (String str : data) {
+            if(str == null){
+                hasNull = true;
+            }
+        }
+        if (hasNull) {
+            for (int i = 0; i < data.size(); i++) {
+                if (i < data.size()-1) {
+                    html = html.replace("<param" + i + ">", data.get(i+1));
+                }
+            }
+        } else {
+            for (int i = 0; i < data.size(); i++) {
+                html = html.replace("<param" + i + ">", data.get(i));
+            }
         }
         return html;
     }
