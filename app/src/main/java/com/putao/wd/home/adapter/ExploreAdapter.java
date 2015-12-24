@@ -84,11 +84,16 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             } else {
                 viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
                 viewHolder.tv_date.setText(exploreProduct.getTime());
+                viewHolder.tv_introduct.setText(exploreProduct.getSummary());
+                viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
             }
             viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
             viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
 
             List<ExploreProductDetail> details = exploreProduct.getDetails();
+            if (details.size() == 2) {
+                viewHolder.ll_content2.setVisibility(View.GONE);
+            }
             if (null != details && details.size() > 0) {
                 for (int i = 0; i < details.size(); i++) {
                     ExploreProductDetail productDetail = details.get(i);
@@ -145,6 +150,9 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         return html;
     }
 
+    /**
+     * 设置显示内容
+     */
     private void setContent(ExploerViewHolder viewHolder, int index, int builderSize) {
         switch (index) {
             case 0:
@@ -204,13 +212,13 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
                 viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
                 viewHolder.tv_date.setText(exploreProduct.getTime());
                 viewHolder.tv_introduct.setText(exploreProduct.getSummary());
-                viewHolder.iv_user_icon.setImageURL(exploreProduct.getImg_url());
+                viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
             } else if (holder instanceof ExploerMixedViewHolder) {
                 ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
                 viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
                 viewHolder.tv_date.setText(exploreProduct.getTime());
                 viewHolder.tv_introduct.setText(exploreProduct.getSummary());
-                viewHolder.iv_user_icon.setImageURL(exploreProduct.getImg_url());
+                viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
             }
         }
     }
@@ -276,6 +284,10 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         ImageDraweeView iv_skill_icon;
         @Bind(R.id.tv_skill_name)
         TextView tv_skill_name;
+        @Bind(R.id.ll_content1)
+        LinearLayout ll_content1;
+        @Bind(R.id.ll_content2)
+        LinearLayout ll_content2;
         @Bind(R.id.tv_content_head1)
         TextView tv_content_head1;
         @Bind(R.id.tv_content_center1)

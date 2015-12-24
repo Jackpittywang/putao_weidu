@@ -2,6 +2,7 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -88,18 +89,7 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                             public void onSuccess(String url, Explore result) {
                                 Logger.i("探索号请求结果 = " + result.toString());
                                 if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                                    List<ExploreProduct> datas = result.getData();
-                                    for (ExploreProduct data : datas) {
-                                        switch (data.getType()) {
-                                            case 1:
-                                                data.setDetails(parseDetail(data.getData()));
-                                                break;
-                                            default:
-                                                data.setPlot(parsePlot(data.getData()));
-                                                break;
-                                        }
-                                    }
-                                    adapter.addAll(datas);
+                                    adapter.addAll(parseExplore(result));
                                     rv_content.loadMoreComplete();
                                     page++;
                                 } else {
@@ -122,28 +112,35 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                     public void onSuccess(String url, Explore result) {
                         Logger.i("探索号请求结果 = " + result.toString());
                         if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                            List<ExploreProduct> datas = result.getData();
-                            for (ExploreProduct data : datas) {
-                                switch (data.getType()) {
-                                    case 1:
-                                        data.setDetails(parseDetail(data.getData()));
-                                        break;
-                                    default:
-                                        data.setPlot(parsePlot(data.getData()));
-                                        break;
-                                }
-                            }
                             rl_empty.setVisibility(View.GONE);
                             ll_content.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(datas);
+                            adapter.replaceAll(parseExplore(result));
                             rv_content.loadMoreComplete();
                             page++;
                         } else {
-                            rv_content.noMoreLoading();
+                            rl_empty.setVisibility(View.VISIBLE);
                         }
                         loading.dismiss();
                     }
                 });
+    }
+
+    /**
+     * 解析数据
+     */
+    private List<ExploreProduct> parseExplore(Explore result) {
+        List<ExploreProduct> datas = result.getData();
+        for (ExploreProduct data : datas) {
+            switch (data.getType()) {
+                case 1:
+                    data.setDetails(parseDetail(data.getData()));
+                    break;
+                default:
+                    data.setPlot(parsePlot(data.getData()));
+                    break;
+            }
+        }
+        return datas;
     }
 
     /**
