@@ -6,9 +6,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
@@ -26,6 +28,9 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
 
     @Bind(R.id.vp_pics)
     ViewPager vp_pics;
+    @Bind(R.id.ll_main)
+    RelativeLayout ll_main;
+    private SharePopupWindow mSharePopupWindow;//分享弹框
 
     private int mClickIndex;//当前点击的项目
     private ArrayList<String> mPicList;//图片数据源
@@ -39,6 +44,7 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        mSharePopupWindow = new SharePopupWindow(mContext);
         mClickIndex = args.getInt(BUNDLE_CLICK_INDEX);
         mPicList = (ArrayList<String>) args.getSerializable(BUNDLE_PICTRUES);
         size = mPicList.size();
@@ -73,7 +79,22 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
             }
         });
         vp_pics.setCurrentItem(mClickIndex);
+        addListener();
+    }
+
+    private void addListener() {
         vp_pics.addOnPageChangeListener(this);
+        mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {
+            @Override
+            public void onWechat() {
+
+            }
+
+            @Override
+            public void onWechatFriend() {
+
+            }
+        });
     }
 
     @Override
@@ -94,5 +115,10 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onRightAction() {
+        mSharePopupWindow.show(ll_main);
     }
 }

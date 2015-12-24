@@ -3,6 +3,7 @@ package com.putao.wd.start.action;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -14,6 +15,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.map.MapActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
+import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.start.apply.ApplyActivity;
 import com.putao.wd.start.apply.ApplyListActivity;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
@@ -73,7 +75,9 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_join;
     @Bind(R.id.tv_personinfo_address)
     TextView tv_personinfo_address;
-
+    private SharePopupWindow mSharePopupWindow;//分享弹框
+    @Bind(R.id.ll_main)
+    RelativeLayout ll_main;
 
     private ActionDetail actionDetail;
     private UserIconAdapter adapter;
@@ -94,6 +98,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         addNavigation();
 
         sticky_layout.canScrollView();
+        mSharePopupWindow = new SharePopupWindow(mContext);
         adapter = new UserIconAdapter(mContext, null);
         rv_actionsdetail_applyusers.setAdapter(adapter);
         action_id = args.getString(BUNDLE_ACTION_ID);
@@ -154,6 +159,17 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 }
             }
         });
+        mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {
+            @Override
+            public void onWechat() {
+
+            }
+
+            @Override
+            public void onWechatFriend() {
+
+            }
+        });
     }
 
     @Override
@@ -197,6 +213,11 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 break;
         }
         loadHtml(action_id, action_type);
+    }
+
+    @Override
+    public void onRightAction() {
+        mSharePopupWindow.show(ll_main);
     }
 
     /**
