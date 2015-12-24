@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -26,7 +27,6 @@
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             auto:divider_color="@color/divider_color"
             auto:divider_height="1px"
             auto:has_row_divider="true" />
@@ -39,7 +39,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/img_explore_empty_bg"
         android:visibility="visible">
-
 
         <TextView
             android:id="@+id/iv_explore_empty_arrow"
