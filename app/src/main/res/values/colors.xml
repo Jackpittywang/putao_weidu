@@ -34,4 +34,6 @@
     <color name="service_btn_nor">#985CC9</color>
 
     <color name="service_btn_sel">#B57DE4</color>
+
+    <color name="browse_background">#000000</color>
 </resources>

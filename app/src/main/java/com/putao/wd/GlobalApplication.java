@@ -35,7 +35,6 @@ public class GlobalApplication extends BasicApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        mEmojis = new ConcurrentHashMap<>();
         installDataBase();
         //安装通行证
         AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");
@@ -93,6 +92,7 @@ public class GlobalApplication extends BasicApplication {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    mEmojis = new ConcurrentHashMap<>();
                     try {
                         FileUtils.unZipInAsset(getApplicationContext(), "emoji.zip", "", true);//解压表情包
                         Logger.d("表情包解压完成");
@@ -168,4 +168,12 @@ public class GlobalApplication extends BasicApplication {
     public static final String PREFERENCE_KEY_USER_INFO = "user_info";
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
+
+    /**
+     * H5页面定义Scheme
+     */
+    public static final class Scheme {
+        public static final String OPENWEBVIEW = "openWebview";
+        public static final String VIEWPIC = "viewPic";
+    }
 }

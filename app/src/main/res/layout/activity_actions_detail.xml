@@ -13,13 +13,15 @@
         auto:nav_right_icon="@drawable/btn_20_share_p_nor" />
 
     <!--内容区域-->
-    <ScrollView
+    <com.sunnybear.library.view.sticky.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ll_tab_bottom"
-        android:layout_below="@id/navigation_bar">
+        android:layout_below="@id/navigation_bar"
+        auto:scrollable_closeUpAnimatorInterpolator="@android:anim/bounce_interpolator">
 
         <LinearLayout
+            android:id="@id/stickyHeaderLayout_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -133,9 +135,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#ebebeb" />
+                android:background="@color/color_EBEBEB" />
 
             <View style="@style/line_horizontal" />
+
             <!--地址-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -242,66 +245,71 @@
                 android:background="#ebebeb" />
 
             <View style="@style/line_horizontal" />
-
-            <com.sunnybear.library.view.select.TitleBar
-                android:id="@id/stickyHeaderLayout_sticky"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:padding="6dp">
-
-                <!-- 活动说明 -->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ll_action_instruct"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:is_active="true"
-                    auto:title_text="活动说明" />
-
-                <!-- 活动现场 -->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ll_action_location"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:title_text="活动现场" />
-
-                <!-- 精彩回顾 -->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ll_finish"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:title_text="精彩回顾" />
-
-            </com.sunnybear.library.view.select.TitleBar>
-
-            <com.sunnybear.library.view.BasicWebView
-                android:id="@+id/wb_html_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <View style="@style/line_horizontal" />
-
         </LinearLayout>
+        <!--标题栏-->
+        <com.sunnybear.library.view.select.TitleBar
+            android:id="@id/stickyHeaderLayout_sticky"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:padding="6dp">
 
-    </ScrollView>
+            <!-- 活动说明 -->
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_action_instruct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:is_active="true"
+                auto:title_text="活动说明" />
 
+            <!-- 活动现场 -->
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_action_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:title_text="活动现场" />
+
+            <!-- 精彩回顾 -->
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_finish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="gone"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:title_text="精彩回顾" />
+
+        </com.sunnybear.library.view.select.TitleBar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+
+        <com.sunnybear.library.view.BasicWebView
+            android:id="@id/stickyHeaderLayout_scrollable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp" />
+    </com.sunnybear.library.view.sticky.StickyHeaderLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <!--点赞评论-->
     <LinearLayout
         android:id="@+id/ll_tab_bottom"
         android:layout_width="match_parent"

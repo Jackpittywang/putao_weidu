@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
@@ -14,6 +16,7 @@ import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
 import com.putao.wd.start.apply.ApplyActivity;
 import com.putao.wd.start.apply.ApplyListActivity;
+import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -27,7 +30,10 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,6 +47,8 @@ import butterknife.OnClick;
 public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     public static final String BUNDLE_ACTION_ID = "action_id";
 
+    @Bind(R.id.sticky_layout)
+    StickyHeaderLayout sticky_layout;
     @Bind(R.id.iv_actionssdetail_header)
     ImageDraweeView iv_actionssdetail_header;
     @Bind(R.id.tv_actionsdetail_status)
@@ -49,7 +57,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_actionsdetail_title;
     @Bind(R.id.tv_actionsdetail_resume)
     TextView tv_actionsdetail_resume;
-    @Bind(R.id.wb_html_content)
+    @Bind(R.id.stickyHeaderLayout_scrollable)
     BasicWebView wb_html_content;
     @Bind(R.id.tv_count_cool)
     TextView tv_count_cool;
@@ -85,6 +93,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
 
+        sticky_layout.canScrollView();
         adapter = new UserIconAdapter(mContext, null);
         rv_actionsdetail_applyusers.setAdapter(adapter);
         action_id = args.getString(BUNDLE_ACTION_ID);
@@ -111,8 +120,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 loading.dismiss();
             }
         });
-        ll_title.setOnTitleItemSelectedListener(this);
-
+        addListener();
     }
 
     /**
@@ -122,6 +130,30 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     private void loadHtml(String action_id, int action_type) {
         String url = BASE_HTML_URL + action_id + HTML_Mid + action_type;
         wb_html_content.loadUrl(url);
+    }
+
+    private void addListener() {
+        ll_title.setOnTitleItemSelectedListener(this);
+        wb_html_content.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
+            @Override
+            public void onParsePutaoUrl(String scheme, JSONObject result) {
+                switch (scheme) {
+                    case GlobalApplication.Scheme.VIEWPIC:
+                        int clickIndex = result.getInteger("clickIndex");
+                        List<String> picList = new ArrayList<>();
+                        JSONArray array = result.getJSONArray("picList");
+                        for (int i = 0; i < array.size(); i++) {
+                            JSONObject object = (JSONObject) array.get(i);
+                            picList.add(object.getString("src"));
+                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(PictrueBrowseActivity.BUNDLE_CLICK_INDEX, clickIndex);
+                        bundle.putSerializable(PictrueBrowseActivity.BUNDLE_PICTRUES, (Serializable) picList);
+                        startActivity(PictrueBrowseActivity.class, bundle);
+                        break;
+                }
+            }
+        });
     }
 
     @Override

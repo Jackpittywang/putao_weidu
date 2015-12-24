@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/browse_background">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/transparent"
+        auto:nav_left_icon="@drawable/btn_back_browse_select"
+        auto:nav_right_icon="@drawable/btn_share_browse_select" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_pics"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        android:overScrollMode="never" />
+</RelativeLayout>

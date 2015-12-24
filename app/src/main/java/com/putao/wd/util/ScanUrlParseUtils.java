@@ -61,10 +61,6 @@ public class ScanUrlParseUtils {
         return params;
     }
 
-    public static void main(String[] args) throws Exception {
-        System.out.println(getParams("http://10.1.12.64:9084/qr/login?cid=43AD2910-F82A-4DAF-A5AA-12B937F5F64A&appid=YOUR_APP_ID&token=YOUR_TOKEN").toString());
-    }
-
     /**
      * 二维码扫描的scheme
      */
