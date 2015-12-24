@@ -14,7 +14,6 @@
         android:layout_marginLeft="8dp"
         android:gravity="center"
         android:singleLine="true"
-        android:textColor="@color/text_color"
         android:textSize="@dimen/text_size_18sp" />
 
     <TextView
@@ -28,7 +27,6 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/margin_small"
         android:paddingRight="@dimen/margin_small"
-        android:textColor="@color/color_navigation_bar_button"
         android:textSize="@dimen/text_size_16sp" />
 
     <TextView
@@ -41,7 +39,6 @@
         android:drawablePadding="@dimen/drawable_padding_small"
         android:paddingLeft="@dimen/margin_small"
         android:paddingRight="@dimen/margin_small"
-        android:textColor="@color/color_navigation_bar_button"
         android:textSize="@dimen/text_size_16sp" />
 
     <View

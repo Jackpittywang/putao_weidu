@@ -21,7 +21,6 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -37,9 +36,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     RelativeLayout rl_no_address;//没有收货地址时的布局
 
     private AddressAdapter adapter;
-    private List<AddressDB> addresses;
 
-    private AddressDBManager mAddressDBManager;
     private ProvinceDBManager mProvinceDBManager;
     private CityDBManager mCityDBManager;
     private DistrictDBManager mDistrictDBManager;
@@ -51,70 +48,30 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        mAddressDBManager = (AddressDBManager) mApp.getDataBaseManager(AddressDBManager.class);
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
         mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
         mDistrictDBManager = (DistrictDBManager) mApp.getDataBaseManager(DistrictDBManager.class);
 
         addNavigation();
-//        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
-//        if (addresses == null || addresses.size() == 0) {
-//            rl_no_address.setVisibility(View.VISIBLE);
-//            return;
-//        }
-//        adapter = new AddressAdapter(mContext, addresses);
-//        rv_addresses.setAdapter(adapter);
-        addresses = mApp.getDataBaseManager(AddressDBManager.class).loadAll();
-        if(addresses.size()==0)
-            getAddressLists();
-        else{
-            adapter = new AddressAdapter(mContext, addresses);
-            rv_addresses.setAdapter(adapter);
-        }
-        //网络请求Demo
-//        networkRequest("自己组合的request", new SimpleFastJsonCallback<"自己的接收model">() {
-//            @Override
-//            public void onSuccess("自己的接收model" url, String result) {
-//
-//            }
-//        });
+        adapter = new AddressAdapter(mContext, null);
+        rv_addresses.setAdapter(adapter);
+        getAddressLists();
     }
 
     /**
      * 收货地址列表
      */
-    private void getAddressLists(){
+    private void getAddressLists() {
         networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Address> result) {
                 Logger.d(result.toString());
-
                 if (result == null || result.size() == 0) {
                     rl_no_address.setVisibility(View.VISIBLE);
                     return;
                 }
-                List<AddressDB> addressDBs=new ArrayList<AddressDB>();
-                AddressDB addressDB;
-                for (int i = 0; i < result.size(); i++) {
-                    addressDB=new AddressDB();
-                    addressDB.setId(Long.parseLong(result.get(i).getId()+""));
-                    addressDB.setProvince_id(result.get(i).getProvince_id() + "");
-                    addressDB.setProvince(mProvinceDBManager.getProvinceNameByProvinceId(result.get(i).getProvince_id() + ""));
-                    addressDB.setCity_id(result.get(i).getCity_id() + "");
-                    addressDB.setCity(mCityDBManager.getCityNameByCityId(result.get(i).getCity_id() + ""));
-                    addressDB.setDistrict_id(result.get(i).getArea_id() + "");
-                    addressDB.setStreet(result.get(i).getAddress());
-                    addressDB.setMobile(result.get(i).getMobile());
-                    addressDB.setName(result.get(i).getRealname());
-                    addressDB.setIsDefault(result.get(i).getStatus() == 1 ? true : false);
-                    addressDBs.add(addressDB);
-                    mAddressDBManager.insert(addressDB);
-                }
-
-                adapter = new AddressAdapter(mContext, addressDBs);
-                rv_addresses.setAdapter(adapter);
+                adapter.addAll(result);
             }
-
         });
     }
 
@@ -136,12 +93,12 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_ADD)
-    public void eventAddressAdd(AddressDB address) {
+    public void eventAddressAdd(Address address) {
         adapter.add(address);
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
-    public void eventAddressUpdate(AddressDB address) {
+    public void eventAddressUpdate(Address address) {
         adapter.replace(adapter.getEditPosition(), address);
     }
 
