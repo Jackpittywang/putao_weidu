@@ -6,9 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.MessageNotifyItem;
-import com.putao.wd.dto.ProductItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
@@ -22,7 +20,6 @@ import butterknife.Bind;
  *
  */
 public class MsgNotifyAdapter extends LoadMoreAdapter<MessageNotifyItem,MsgNotifyAdapter.MsgNotifyViewHolder>{
-        //extends BasicAdapter<MessageNotifyItem,MsgNotifyAdapter.MsgNotifyViewHolder> {
 
     public MsgNotifyAdapter(Context context, List<MessageNotifyItem> messagenotifyitems) {
         super(context, messagenotifyitems);

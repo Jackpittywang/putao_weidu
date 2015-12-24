@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/brv_acitions"
+            android:id="@+id/rv_acitions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             auto:divider_color="@color/divider_color"
@@ -33,7 +33,7 @@
             android:background="@color/layout_background">
 
             <ImageView
-                android:id="@+id/iv_address_empty"
+                android:id="@+id/iv_action_empty"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_address_empty"
+                android:layout_below="@id/iv_action_empty"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
                 android:text="还没有参加的活动"

@@ -119,8 +119,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(CompleteActivity.class);
                 break;
             case R.id.si_message://消息中心
-                startActivity(MessageCenterActivity.class);
                 si_message.hide();
+                startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
                 btn_pay.hide();

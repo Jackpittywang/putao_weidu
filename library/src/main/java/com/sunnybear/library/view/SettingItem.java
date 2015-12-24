@@ -110,7 +110,7 @@ public class SettingItem extends LinearLayout {
      * 隐藏指示
      */
     public void hide() {
-        if (mIndicator.isShown())
+        if (mIndicator != null && mIndicator.isShown())
             mIndicator.hide();
     }
 }

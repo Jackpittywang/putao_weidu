@@ -7,11 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.MessageNotifyItem;
-import com.putao.wd.dto.MessagePraiseItem;
 import com.putao.wd.dto.MessageReplyItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
@@ -24,7 +21,6 @@ import butterknife.Bind;
  * Created by wango on 2015/12/2.
  */
 public class MsgReplyAdapter  extends LoadMoreAdapter<MessageReplyItem,MsgReplyAdapter.MsgReplyViewHolder> {
-        //BasicAdapter<MessageReplyItem,MsgReplyAdapter.MsgReplyViewHolder> {
 
     public MsgReplyAdapter(Context context, List<MessageReplyItem> messageReplyItems) {
         super(context, messageReplyItems);
@@ -47,7 +43,6 @@ public class MsgReplyAdapter  extends LoadMoreAdapter<MessageReplyItem,MsgReplyA
         holder.tv_reply_date.setText(messageReplyItem.getDate());
         Spanned sstr=Html.fromHtml("<font color=#959595>回复 您：</font>"+"<font color=#313131>"+messageReplyItem.getComment()+"</font>");
         holder.tv_reply_content.setText(sstr);
-        //holder.tv_replied_username.setText(messageReplyItem.getRepliedUserName());
         holder.tv_replied_content.setText(messageReplyItem.getRepliedUserName() + "：" + messageReplyItem.getRepliedcontent());
     }
 
@@ -63,8 +58,6 @@ public class MsgReplyAdapter  extends LoadMoreAdapter<MessageReplyItem,MsgReplyA
         TextView tv_reply_date;//评论时间
         @Bind(R.id.tv_reply_content)
         TextView tv_reply_content;//评论内容
-//        @Bind(R.id.tv_replied_username)
-//        TextView tv_replied_username;
         @Bind(R.id.tv_replied_content)
         TextView tv_replied_content;//被评论的内容
 

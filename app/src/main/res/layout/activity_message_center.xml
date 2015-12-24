@@ -1,41 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="#fff"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
-        android:visibility="gone"
-        style="@style/style_navigation_bar"/>
-    <!--标题栏-->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:background="#fff"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_vertical"
-        android:layout_height="50dp">
-        <!--返回键盘-->
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/back_selector"
-            android:layout_gravity="center_vertical"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-        <!--标题栏-->
+        style="@style/style_navigation_bar"
+        auto:nav_left_icon="@drawable/back_selector">
+
         <com.sunnybear.library.view.select.TitleBar
-            android:id="@id/stickyHeaderLayout_sticky"
+            android:id="@+id/ll_title_bar"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:padding="6dp">
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
 
             <com.sunnybear.library.view.select.TitleItem
-                android:id="@+id/ll_all"
+                android:id="@+id/ll_notice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,7 +32,7 @@
                 auto:title_text="通知" />
 
             <com.sunnybear.library.view.select.TitleItem
-                android:id="@+id/ll_ing"
+                android:id="@+id/ll_reply"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,7 +43,7 @@
                 auto:title_text="回复" />
 
             <com.sunnybear.library.view.select.TitleItem
-                android:id="@+id/ll_finish"
+                android:id="@+id/ll_cool"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -67,55 +52,46 @@
                 auto:inactive_color="@color/text_color_gray"
                 auto:indicator_color="@color/text_main_color_nor"
                 auto:title_text="赞" />
-
         </com.sunnybear.library.view.select.TitleBar>
+    </com.sunnybear.library.view.NavigationBar>
 
-        <LinearLayout
-            android:layout_width="30dp"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-    <!--间隔线-->
-    <View
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/divider_color" />
+    <!--内容区-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/ll_msgnotify"
-            android:orientation="vertical"
-            android:visibility="gone"
+
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/rv_messages"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                android:id="@+id/brv_messagelist"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <!--<com.sunnybear.library.view.recycler.LoadMoreRecyclerView-->
-                <!--android:id="@+id/brv_messagelist"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--auto:divider_color="#626262"-->
-                <!--auto:divider_height="1px"-->
-                <!--auto:has_row_divider="true"/>-->
-            <!--<TextView-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_margin="30dp"-->
-                <!--android:gravity="top"-->
-                <!--android:text="没有更多信息了"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-        </LinearLayout>
-        <TextView
-            android:id="@+id/tv_nomore"
-            android:gravity="center_horizontal"
-            android:visibility="gone"
-            android:text="还没有消息"
-            android:background="#ebebeb"
-            android:paddingTop="10dp"
+            android:layout_height="match_parent"
+            auto:divider_color="@color/divider_color"
+            auto:divider_height="1px"
+            auto:has_row_divider="true"/>
+
+        <!--没有消息通知-->
+        <RelativeLayout
+            android:id="@+id/rl_no_message"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/layout_background">
+
+            <ImageView
+                android:id="@+id/iv_message_empty"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/img_page_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_message_empty"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:text="还没有通知消息"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_18sp" />
+        </RelativeLayout>
     </FrameLayout>
 </LinearLayout>
