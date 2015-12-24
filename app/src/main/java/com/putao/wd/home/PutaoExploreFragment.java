@@ -82,7 +82,32 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getDiaryIndex();
+                networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
+                        new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
+                            @Override
+                            public void onSuccess(String url, Explore result) {
+                                Logger.i("探索号请求结果 = " + result.toString());
+                                if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
+                                    List<ExploreProduct> datas = result.getData();
+                                    for (ExploreProduct data : datas) {
+                                        switch (data.getType()) {
+                                            case 1:
+                                                data.setDetails(parseDetail(data.getData()));
+                                                break;
+                                            default:
+                                                data.setPlot(parsePlot(data.getData()));
+                                                break;
+                                        }
+                                    }
+                                    adapter.addAll(datas);
+                                    rv_content.loadMoreComplete();
+                                    page++;
+                                } else {
+                                    rv_content.noMoreLoading();
+                                }
+                                loading.dismiss();
+                            }
+                        });
             }
         });
     }
