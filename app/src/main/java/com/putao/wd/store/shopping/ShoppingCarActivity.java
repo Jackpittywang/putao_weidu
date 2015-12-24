@@ -49,6 +49,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
     private ShoppingCarAdapter adapter;
     private boolean isSelectAll = false;
+    private boolean Saveable = false;//保存按钮标志
     private boolean isEditable = true;
     private EditShoppingCarPopupWindow mEditShoppingCarPopupWindow;//购物车弹窗
     private int update_position = -1;
@@ -171,9 +172,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     @Override
     public void onRightAction() {
-        setRightTitle("完成");
-//        setRightTitle("编辑");
-        adapter.startEdit();
+        if (!Saveable) {
+            setRightTitle("保存");
+            adapter.startEdit();
+            Saveable = true;
+        }else {
+            Saveable = false;
+            setRightTitle("编辑");
+        }
 //        if (adapter.getItemState()) {
 //            if (isEditable && adapter.map.size() != 0) {//编辑
 //                ToastUtils.showToastShort(this, "点击编辑");
