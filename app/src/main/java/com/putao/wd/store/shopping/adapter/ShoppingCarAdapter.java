@@ -2,7 +2,6 @@ package com.putao.wd.store.shopping.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.ArrayMap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +21,7 @@ import com.sunnybear.library.view.recycler.BasicViewHolder;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
 
@@ -43,7 +43,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
-        selected = new ArrayMap<>();
+        selected = new ConcurrentHashMap<>();
 //        this.ShoppingCarts = shoppingCars;
     }
 
