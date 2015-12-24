@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -31,6 +32,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoExploreFragment extends PTWDFragment implements View.OnClickListener {
+    @Bind(R.id.ll_content)
+    LinearLayout ll_content;
     @Bind(R.id.rl_empty)
     RelativeLayout rl_empty;
     @Bind(R.id.rv_content)
@@ -53,8 +56,8 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         setRightTitleColor(Color.WHITE);
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-//        getDiaryIndex();
-//        addListener();
+        getDiaryIndex();
+        addListener();
     }
 
     @Override
@@ -105,13 +108,11 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                                         break;
                                 }
                             }
-                            if (false) {
-                                rl_empty.setVisibility(View.GONE);
-                                rv_content.setVisibility(View.VISIBLE);
-                                adapter.replaceAll(datas);
-                                rv_content.loadMoreComplete();
-                                page++;
-                            }
+                            rl_empty.setVisibility(View.GONE);
+                            ll_content.setVisibility(View.VISIBLE);
+                            adapter.replaceAll(datas);
+                            rv_content.loadMoreComplete();
+                            page++;
                         } else {
                             rv_content.noMoreLoading();
                         }
