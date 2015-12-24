@@ -13,13 +13,11 @@ import android.webkit.WebViewClient;
 public class BasicWebView extends WebView {
 
     public BasicWebView(Context context) {
-        super(context);
-        initView();
+        this(context, null, 0);
     }
 
     public BasicWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView();
+        this(context, attrs, 0);
     }
 
     public BasicWebView(Context context, AttributeSet attrs, int defStyleAttr) {

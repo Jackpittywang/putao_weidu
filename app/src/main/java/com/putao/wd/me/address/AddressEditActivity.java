@@ -11,7 +11,6 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
@@ -63,7 +62,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
 
     private AddressDB address;//地址model,本地数据库
     private Address addr;//服务端返回model
-    private AddressDBManager mAddressDBManager;
+    //    private AddressDBManager mAddressDBManager;
     private ProvinceDBManager mProvinceDBManager;
     private CityDBManager mCityDBManager;
     private DistrictDBManager mDistrictDBManager;
@@ -76,7 +75,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        mAddressDBManager = (AddressDBManager) mApp.getDataBaseManager(AddressDBManager.class);
+//        mAddressDBManager = (AddressDBManager) mApp.getDataBaseManager(AddressDBManager.class);
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
         mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
         mDistrictDBManager = (DistrictDBManager) mApp.getDataBaseManager(DistrictDBManager.class);
@@ -100,7 +99,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
         networkRequest(OrderApi.addressAdd(realname, city_id, province_id, area_id, address, mobile, tel, postcode, status), new SimpleFastJsonCallback<Address>(Address.class, loading) {
-//      测试  networkRequest(OrderApi.addressAdd("realname", "1", "1", "1", "address", "13711111111", "02525458565", "111111", "1"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+            //      测试  networkRequest(OrderApi.addressAdd("realname", "1", "1", "1", "address", "13711111111", "02525458565", "111111", "1"), new SimpleFastJsonCallback<Address>(Address.class, loading) {
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
@@ -112,7 +111,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 更新收货地址
      */
-    private void addressUpdate(String address_id,String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
+    private void addressUpdate(String address_id, String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
         networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
@@ -121,10 +120,11 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
 
         });
     }
+
     /**
      * 删除收货地址
      */
-    private void addressDelete(String address_id){
+    private void addressDelete(String address_id) {
         networkRequest(OrderApi.addressDelete(address_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
@@ -164,8 +164,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
-                addressDelete(address.getId()+"");
-                mAddressDBManager.delete(address);
+                addressDelete(address.getId() + "");
+//                mAddressDBManager.delete(address);
                 EventBusHelper.post(address, EVENT_ADDRESS_DELETE);
                 ActivityManager.getInstance().finishCurrentActivity();
                 break;
@@ -206,24 +206,22 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             address.setMobile(et_phone.getText().toString());
             address.setStreet(et_street.getText().toString());
             String status;
-            if(address.getIsDefault()!=null) {
-                if(address.getIsDefault()) {
+            if (address.getIsDefault() != null) {
+                if (address.getIsDefault()) {
                     status = "1";
                     EventBusHelper.post(address, EVENT_ADDRESS_IS_DEFAULT);
-                }
-                else
-                    status="0";
-            }else{
-                status="0";
+                } else
+                    status = "0";
+            } else {
+                status = "0";
             }
             if (isAdd) {
-
                 addressAdd(et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
-                mAddressDBManager.insert(address);//插入本地数据库
+//                mAddressDBManager.insert(address);//插入本地数据库
                 EventBusHelper.post(address, EVENT_ADDRESS_ADD);
             } else {
-                addressUpdate(address.getId()+"",et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
-                mAddressDBManager.update(address);//更新本地数据库
+                addressUpdate(address.getId() + "", et_name.getText().toString(), address.getCity_id(), address.getProvince_id(), address.getDistrict_id(), address.getStreet(), address.getMobile(), null, null, status);
+//                mAddressDBManager.update(address);//更新本地数据库
                 EventBusHelper.post(address, EVENT_ADDRESS_UPDATE);
             }
             ActivityManager.getInstance().finishCurrentActivity();
@@ -243,11 +241,11 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             str.append(" 姓名 ");
             noFill = true;
         }
-        if (null == street || "".equals(street)){
+        if (null == street || "".equals(street)) {
             str.append(" 地址 ");
             noFill = true;
         }
-        if (null == phone || "".equals(phone)){
+        if (null == phone || "".equals(phone)) {
             str.append(" 电话 ");
             noFill = true;
         }

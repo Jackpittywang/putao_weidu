@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
+import com.putao.wd.util.RegionUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -22,8 +23,6 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/12/23.
  */
 public class GuidanceActivity extends BasicFragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
-
     private static final int[] icons = new int[]{
             R.drawable.img_wt_01,
             R.drawable.img_wt_02,
@@ -64,6 +63,8 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
         vp_guidance.setAdapter(adapter);
         ci_indicator.setViewPager(vp_guidance);
         vp_guidance.addOnPageChangeListener(this);
+
+        parseRegions();//解析城市列表
     }
 
     /**
@@ -85,7 +86,7 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start:
-                PreferenceUtils.save(PREFERENCE_KEY_IS_FIRST, true);
+                PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_IS_FIRST, true);
                 startActivity(MainActivity.class);
                 finish();
                 break;
@@ -108,6 +109,18 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    /**
+     * 解析城市列表
+     */
+    private void parseRegions() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RegionUtils.insertRegion();
+            }
+        }).start();
     }
 
     @Override

@@ -24,7 +24,7 @@ public class SplashActivity extends BasicFragmentActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!PreferenceUtils.getValue(GuidanceActivity.PREFERENCE_KEY_IS_FIRST, false))
+                if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                     startActivity(GuidanceActivity.class);
                 else
                     startActivity(MainActivity.class);
