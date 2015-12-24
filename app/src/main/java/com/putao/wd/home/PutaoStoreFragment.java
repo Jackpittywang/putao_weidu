@@ -65,7 +65,6 @@ public class PutaoStoreFragment extends PTWDFragment {
         addListener();
         //广告位
         getStoreHome();
-
         refresh();
     }
 
@@ -112,6 +111,12 @@ public class PutaoStoreFragment extends PTWDFragment {
                 getStoreHome();
                 loading.dismiss();
                 ptl_refresh.refreshComplete();
+            }
+        });
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                rv_content.loadMoreComplete();
             }
         });
     }
