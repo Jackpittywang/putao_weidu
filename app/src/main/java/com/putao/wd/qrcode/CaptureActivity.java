@@ -22,7 +22,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
-import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 
@@ -112,8 +111,8 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     }
 
     private void initAnimation() {
-        animation = new TranslateAnimation(0, 0, -DensityUtil.dp2px(mContext, 225), DensityUtil.dp2px(mContext, 225));
-        animation.setDuration(3000);
+        animation = new TranslateAnimation(0, 0,-scanCropView.getHeight(), scanCropView.getHeight());
+        animation.setDuration(500);
         animation.setRepeatCount(Integer.MAX_VALUE);
         animation.setInterpolator(new LinearInterpolator());
     }
