@@ -1,8 +1,10 @@
 package com.putao.wd.start.action;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -10,11 +12,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.map.MapActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
+import com.putao.wd.model.UserInfo;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.start.apply.ApplyActivity;
 import com.putao.wd.start.apply.ApplyListActivity;
@@ -25,7 +29,9 @@ import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -78,6 +84,10 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     private SharePopupWindow mSharePopupWindow;//分享弹框
     @Bind(R.id.ll_main)
     RelativeLayout ll_main;
+    @Bind(R.id.sb_cool_icon)
+    SwitchButton sb_cool_icon;
+    @Bind(R.id.ll_cool)
+    LinearLayout ll_cool;
 
     private ActionDetail actionDetail;
     private UserIconAdapter adapter;
@@ -103,6 +113,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         rv_actionsdetail_applyusers.setAdapter(adapter);
         action_id = args.getString(BUNDLE_ACTION_ID);
 
+        sb_cool_icon.setState(PreferenceUtils.getValue(action_id, false) ? true : false);
+        sb_cool_icon.setClickable(false);
         networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
@@ -185,7 +197,22 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 startActivity(ApplyListActivity.class, args);
                 break;
             case R.id.ll_cool:
-                startActivity(PraiseListActivity.class, args);
+                if (PreferenceUtils.getValue(action_id, false)) {
+                    startActivity(PraiseListActivity.class, args);
+                } else {
+                    UserInfo userInfo = AccountHelper.getCurrentUserInfo();
+                    networkRequest(StartApi.coolAdd(action_id, userInfo.getNick_name(), "EVENT",
+                                    AccountHelper.getCurrentUid(), userInfo.getHead_img()),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                    PreferenceUtils.save(action_id, true);
+                                    sb_cool_icon.setState(true);
+                                    tv_count_cool.setText((Integer.parseInt(tv_count_cool.getText().toString())+1)+"");
+                                    loading.dismiss();
+                                }
+                            });
+                }
                 break;
             case R.id.ll_comment:
                 startActivity(CommentActivity.class, args);
