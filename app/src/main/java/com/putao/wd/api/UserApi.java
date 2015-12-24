@@ -22,7 +22,8 @@ public class UserApi {
 
     private static final String REQUEST_NICKNAME = "nickName";
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/user/" : "http://api-weidu.putao.com/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
+    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/user" : "http://api-event-dev.putao.com/user";//活动,消息,提问使用的地址
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -97,7 +98,7 @@ public class UserApi {
     /**
      * 我参与的活动
      */
-    public static final String URL_GET_ME_ACTIONS = BASE_URL + "event/list";
+    public static final String URL_GET_ME_ACTIONS = BASE_ACTION_URL + "event/list";
 
     /**
      * 我参与的活动
