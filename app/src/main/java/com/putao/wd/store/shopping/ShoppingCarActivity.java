@@ -173,13 +173,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onRightAction() {
         if (!saveable) {
-            setRightTitle("保存");
+            setButtonStyle("保存", "删除", true);
             adapter.startEdit();
-            saveable = true;
         }else {
-            setRightTitle("编辑");
+            setButtonStyle("编辑", "去结算", false);
             adapter.finishEdit();
-            saveable = false;
         }
 //        if (adapter.getItemState()) {
 //            if (isEditable && adapter.map.size() != 0) {//编辑
@@ -213,6 +211,16 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 //                tv_closing.setText("结算");
 //            }
 //        }
+    }
+
+    /**
+     *设置不同状态时的Button显示
+     */
+    private void setButtonStyle(String topText, String bottomText, boolean canSave) {
+        setRightTitle(topText);
+        tv_closing.setText(bottomText);
+        saveable = canSave;
+        ll_money.setVisibility(canSave == true ? View.GONE : View.VISIBLE);
     }
 
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
