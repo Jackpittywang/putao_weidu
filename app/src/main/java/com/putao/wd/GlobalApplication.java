@@ -166,6 +166,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String PREFERENCE_KEY_EXPIRE_TIME = "expire_tim";
     public static final String PREFERENCE_KEY_REFRESH_TOKEN = "refresh_token";
     public static final String PREFERENCE_KEY_USER_INFO = "user_info";
+    public static final String PREFERENCE_KEY_BABY_ID = "baby_id";
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
 

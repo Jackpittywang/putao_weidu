@@ -86,8 +86,6 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                 break;
             case R.id.tv_send://点击发送
                 String msg = et_msg.getText().toString();
-                Logger.d("_____" + AccountHelper.getCurrentUserInfo().getNick_name());
-                Logger.d("_____" + AccountHelper.getCurrentUserInfo().getHead_img());
                 networkRequest(UserApi.questionAdd(et_msg.getText().toString(), userInfo.getNick_name(), userInfo.getHead_img()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
