@@ -15,6 +15,7 @@ import com.putao.wd.model.ChildInfo;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ResourcesUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.picker.DatePicker;
@@ -88,12 +89,15 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                 && TextUtils.isEmpty(mTvSex) && TextUtils.isEmpty(mTvBirthday));
     }
 
-    //获取孩子信息
+    /**
+     * 获取孩子信息
+     */
     private void getChildInfo() {
         networkRequest(UserApi.getChildInfo(),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
+                        if (StringUtils.isEmpty(result)) return;
                         ChildInfo list = JSON.parseObject(result, ChildInfo.class);
                         if (result != null) {
                             et_nickname.setText(list.getBaby_name());
@@ -192,6 +196,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                     public void onSuccess(String url, String result) {
                         Logger.i(result + "-----------------");
                         ToastUtils.showToastShort(ChildInfoActivity.this, "保存成功！");
+                        finish();
                     }
                 });
     }
