@@ -182,9 +182,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         }else {
             setButtonStyle("编辑", "去结算", false);
-            mCart.setQt(mCart.getGoodCount());
-            mCart.setEditable(false);
-            setGoodsPrice(mCart);
+            saveGoodsInfo();
             adapter.finishEdit();
         }
 //        if (adapter.getItemState()) {
@@ -232,12 +230,21 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
+     * 保存商品编辑信息
+     */
+    private void saveGoodsInfo() {
+        mCart.setQt(mCart.getGoodCount());
+        mCart.setEditable(false);
+        setGoodsPrice(mCart);
+    }
+
+    /**
      * 设置商品价格
      */
     private void setGoodsPrice(Cart cart) {
-        String goodCount = cart.isEditable()? cart.getQt() : cart.getGoodCount();
+        String goodsCount = cart.isEditable()? cart.getQt() : cart.getGoodCount();
         float price = Float.parseFloat(cart.getPrice());
-        float qt = Float.parseFloat(goodCount);
+        float qt = Float.parseFloat(goodsCount);
         tv_money.setText(price * qt + "");
     }
 
