@@ -10,8 +10,8 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.Question;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import butterknife.Bind;
  * 点赞列表适配器
  * Created by wango on 2015/12/4.
  */
-public class QuestionAdapter extends LoadMoreAdapter<Question, BasicViewHolder> {
+public class QuestionAdapter extends BasicAdapter<Question, BasicViewHolder> {
 //    private static final int TYPE_ASK = 1;
 //    private static final int TYPE_ANSWER = 2;
 

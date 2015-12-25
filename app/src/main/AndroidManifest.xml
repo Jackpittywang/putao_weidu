@@ -209,7 +209,7 @@
         <activity
             android:name=".start.user.UserDetailActivity"
             android:screenOrientation="portrait" />
-        <!--我要提问-->
+        <!--我的提问-->
         <activity
             android:name=".start.question.QuestionActivity"
             android:screenOrientation="portrait" />

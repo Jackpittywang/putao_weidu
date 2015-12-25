@@ -15,7 +15,7 @@ import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
-import com.putao.wd.store.order.WriteOrderActivity;
+import com.putao.wd.start.question.QuestionActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -114,7 +114,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(MyActionsActivity.class);
                 break;
             case R.id.si_question://我的提问
-                startActivity(WriteOrderActivity.class);
+                startActivity(QuestionActivity.class);
                 break;
             case R.id.iv_user_icon://完善用户信息
                 startActivity(CompleteActivity.class);

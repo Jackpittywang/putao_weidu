@@ -11,6 +11,7 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
@@ -142,7 +143,7 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected String getNetworkCacheDirectoryPath() {
-        return SDCardUtils.getSDCardPath();
+        return sdCardPath + File.separator + "http_cache";
     }
 
     @Override
@@ -153,6 +154,18 @@ public class GlobalApplication extends BasicApplication {
     @Override
     protected int getNetworkCacheMaxAgeTime() {
         return 0;
+    }
+
+    /**
+     * 捕捉到异常就退出App
+     *
+     * @param ex 异常信息
+     */
+    @Override
+    protected void onCrash(Throwable ex) {
+        Logger.e("APP崩溃了,错误信息是" + ex.getMessage());
+        ex.printStackTrace();
+        ActivityManager.getInstance().killProcess(getApplicationContext());
     }
 
     /**
