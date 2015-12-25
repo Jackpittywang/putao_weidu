@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * 评论页
  * Created by yanghx on 2015/12/7.
  */
-public class CommentActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class CommentActivity extends PTWDActivity implements View.OnClickListener {
     public static final String EVENT_COUNT_COMMENT = "event_count_comment";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
