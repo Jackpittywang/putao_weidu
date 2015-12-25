@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="family">
+        <item>我是爸爸</item>
+        <item>我是妈妈</item>
+        <item>我是爷爷</item>
+        <item>我是奶奶</item>
+        <item>我是外公</item>
+        <item>我是外婆</item>
+        <item>其他亲友</item>
+    </string-array>
+</resources>
