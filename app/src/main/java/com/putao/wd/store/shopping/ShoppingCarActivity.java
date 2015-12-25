@@ -77,7 +77,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         adapter = new ShoppingCarAdapter(mContext, null);
         rv_cars.setAdapter(adapter);
         addListener();
-        getCart();
+        networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+            @Override
+            public void onSuccess(String url, ShopCarItem result) {
+                adapter.addAll(result.getUse());
+                tv_money.setText(caculateSumMoney(result.getUse()));
+                loading.dismiss();
+            }
+        });
     }
 
     @Override
@@ -118,7 +125,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
-                adapter.addAll(result.getUse());
+                adapter.replaceAll(result.getUse());
                 tv_money.setText(caculateSumMoney(result.getUse()));
                 loading.dismiss();
             }
@@ -134,14 +141,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "购物车删除成功");
                 Logger.w("购物车删除成功 = " + result.toString());
-                networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ShopCarItem result) {
-                        adapter.replaceAll(result.getUse());
-                        tv_money.setText(caculateSumMoney(result.getUse()));
-                        loading.dismiss();
-                    }
-                });
+                getCart();
             }
         });
     }
