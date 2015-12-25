@@ -119,49 +119,57 @@
                 android:layout_height="1px"
                 android:background="@color/divider_color" />
 
-
-            <FrameLayout
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
                 android:id="@id/stickyHeaderLayout_scrollable"
-                android:layout_marginTop="48dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp"
+                auto:divider_color="@color/color_EBEBEB"
+                auto:divider_height="8dp"
+                auto:has_row_divider="true" />
 
-                <!--列表-->
-                <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                    android:id="@+id/rv_acition"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    auto:divider_color="@color/color_EBEBEB"
-                    auto:divider_height="8dp"
-                    auto:has_row_divider="true" />
+            <!--<FrameLayout-->
+            <!--android:id="@id/stickyHeaderLayout_scrollable"-->
+            <!--android:layout_marginTop="48dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-                <!--空页面-->
-                <RelativeLayout
-                    android:id="@+id/rl_no_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/layout_background">
+            <!--&lt;!&ndash;列表&ndash;&gt;-->
+            <!--<com.sunnybear.library.view.recycler.LoadMoreRecyclerView-->
+            <!--android:id="@+id/rv_acition"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--auto:divider_color="@color/color_EBEBEB"-->
+            <!--auto:divider_height="8dp"-->
+            <!--auto:has_row_divider="true" />-->
 
-                    <ImageView
-                        android:id="@+id/iv_address_empty"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="50dp"
-                        android:src="@drawable/img_activity_empty" />
+            <!--&lt;!&ndash;空页面&ndash;&gt;-->
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/rl_no_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/layout_background">-->
 
-                    <TextView
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/iv_address_empty"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:text="小Q正在努力策划中,即将为您献上,么么哒~"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_18sp" />
-                </RelativeLayout>
-            </FrameLayout>
+            <!--<ImageView-->
+            <!--android:id="@+id/iv_address_empty"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="120dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="50dp"-->
+            <!--android:src="@drawable/img_activity_empty" />-->
+
+            <!--<TextView-->
+            <!--android:layout_width="280dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/iv_address_empty"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="小Q正在努力策划中,即将为您献上,么么哒~"-->
+            <!--android:textColor="@color/text_color_gray"-->
+            <!--android:textSize="@dimen/text_size_18sp" />-->
+            <!--</RelativeLayout>-->
+            <!--</FrameLayout>-->
 
         </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
