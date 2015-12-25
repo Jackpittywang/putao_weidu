@@ -120,15 +120,12 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
                 return true;
         } else if (content instanceof StickyHeaderLayout) {
             StickyHeaderLayout layout = (StickyHeaderLayout) content;
-            RecyclerView recyclerView = (RecyclerView) layout.getChildAt(2);
-            if (recyclerView == null)
-                throw new RuntimeException("第一个view不是RecyclerView");
+            RecyclerView recyclerView = (RecyclerView) ((FrameLayout) layout.getChildAt(3)).getChildAt(0);
             LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisiblePosition = manager.findFirstCompletelyVisibleItemPosition();
             if (firstVisiblePosition == 0 && layout.isScrollTop())
                 return true;
-        }
-        else if (content instanceof FrameLayout) {
+        } else if (content instanceof FrameLayout) {
             FrameLayout layout = (FrameLayout) content;
             RecyclerView recyclerView = (RecyclerView) layout.getChildAt(0);
             if (recyclerView == null)

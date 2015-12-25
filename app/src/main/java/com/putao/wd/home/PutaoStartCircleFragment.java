@@ -2,6 +2,8 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
@@ -28,6 +30,7 @@ import com.sunnybear.library.view.viewpager.BannerLayout;
 import com.sunnybear.library.view.viewpager.BannerViewPager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -46,12 +49,14 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
-    @Bind(R.id.stickyHeaderLayout_scrollable)
-    LoadMoreRecyclerView rv_content;
+    @Bind(R.id.rv_acition)
+    LoadMoreRecyclerView rv_action;
     @Bind(R.id.bl_banner)
     BannerLayout bl_banner;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
+    @Bind(R.id.rl_no_content)
+    RelativeLayout rl_no_content;//没有内容时的空页面
 
     private ActionNewsAdapter adapter;
     private boolean isStop;//广告栏是否被停止
@@ -75,23 +80,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
         setMainTitleColor(Color.WHITE);
         sticky_layout.canScrollView();
         adapter = new ActionNewsAdapter(mActivity, null);
-        rv_content.setAdapter(adapter);
+        rv_action.setAdapter(adapter);
         addListener();
 
         getBannerList();//获取广告列表
-        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
-                    @Override
-                    public void onSuccess(String url, AcitonNewsList result) {
-//                        cacheEnterDisk(url, result);
-                        adapter.addAll(result.getGetEventList());
-                        if (result.getCurrent_page() != result.getTotal_page())
-                            currentPage++;
-                        else
-                            rv_content.noMoreLoading();
-                        loading.dismiss();
-                    }
-                });
+        getActionList();//获取活动列表
     }
 
     /**
@@ -116,47 +109,67 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     }
 
     /**
+     * 获取活动列表
+     */
+    private void getActionList() {
+        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
+                    @Override
+                    public void onSuccess(String url, AcitonNewsList result) {
+                        List<ActionNews> actionNewses = result.getGetEventList();
+                        if (actionNewses != null && actionNewses.size() > 0) {
+                            rl_no_content.setVisibility(View.GONE);
+                            adapter.replaceAll(result.getGetEventList());
+                        } else
+                            rl_no_content.setVisibility(View.VISIBLE);
+                        if (result.getCurrent_page() != result.getTotal_page() || result.getTotal_page() != 0) {
+                            rv_action.loadMoreComplete();
+                            currentPage++;
+                        } else rv_action.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 刷新活动列表
+     */
+    private void refreshActionList() {
+        currentPage = 1;
+        rv_action.reset();
+        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
+                    @Override
+                    public void onSuccess(String url, AcitonNewsList result) {
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                            rl_no_content.setVisibility(View.GONE);
+                            adapter.replaceAll(result.getGetEventList());
+                            rv_action.loadMoreComplete();
+                            currentPage++;
+                        } else rv_action.noMoreLoading();
+                        ptl_refresh.refreshComplete();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
      * 添加监听器
      */
     private void addListener() {
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currentPage = 1;
-                rv_content.reset();
-                networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                        , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
-                            @Override
-                            public void onSuccess(String url, AcitonNewsList result) {
-                                adapter.addAll(result.getGetEventList());
-                                if (result.getCurrent_page() != result.getTotal_page())
-                                    currentPage++;
-                                else
-                                    rv_content.noMoreLoading();
-                                loading.dismiss();
-                                ptl_refresh.refreshComplete();
-                            }
-                        });
+                refreshActionList();
             }
         });
-        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        rv_action.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                        , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
-                            @Override
-                            public void onSuccess(String url, AcitonNewsList result) {
-                                adapter.addAll(result.getGetEventList());
-                                if (result.getCurrent_page() != result.getTotal_page()) {
-                                    rv_content.loadMoreComplete();
-                                    currentPage++;
-                                } else rv_content.noMoreLoading();
-                                loading.dismiss();
-                            }
-                        });
+                getActionList();
             }
         });
-        rv_content.setOnItemClickListener(new OnItemClickListener<ActionNews>() {
+        rv_action.setOnItemClickListener(new OnItemClickListener<ActionNews>() {
             @Override
             public void onItemClick(ActionNews actionNewsList, int position) {
                 Bundle bundle = new Bundle();
@@ -189,7 +202,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
         currentPage = 1;
-        rv_content.reset();
+        rv_action.reset();
         switch (item.getId()) {
             case R.id.ll_all://全部
                 currentStatus = "";
@@ -208,18 +221,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
                 currentType = TYPE_NEWS;
                 break;
         }
-        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
-                    @Override
-                    public void onSuccess(String url, AcitonNewsList result) {
-                        adapter.replaceAll(result.getGetEventList());
-                        if (result.getCurrent_page() != result.getTotal_page())
-                            currentPage++;
-                        else
-                            rv_content.noMoreLoading();
-                        loading.dismiss();
-                    }
-                });
+        getActionList();
     }
 
     @Override
