@@ -92,7 +92,6 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
             super(itemView);
         }
     }
-
 }
 
 

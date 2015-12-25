@@ -209,6 +209,10 @@
         <activity
             android:name=".start.user.UserDetailActivity"
             android:screenOrientation="portrait" />
+        <!--我要提问-->
+        <activity
+            android:name=".start.question.QuestionActivity"
+            android:screenOrientation="portrait" />
         <!--孩子信息-->
         <activity
             android:name=".me.child.ChildInfoActivity"

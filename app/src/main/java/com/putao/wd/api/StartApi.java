@@ -329,23 +329,4 @@ public class StartApi {
                 .build(RequestMethod.POST, URL_MAP);
     }
 
-    /**
-     * 提交葡萄籽问题
-     */
-    public static final String URL_QUESTION = BASE_URL + "question";
-
-    /**
-     * 提交葡萄籽问题
-     *
-     * @param msg 问题
-     */
-    public static Request question(String msg) {
-        FormEncodingRequestBuilder builder = PTWDRequestHelper.start()
-                .addParam(REQUEST_MSG, msg);
-        String uid = AccountHelper.getCurrentUid();
-        if (!StringUtils.isEmpty(uid))
-            throw new RuntimeException("当前用户没有登录");
-        builder.addParam(REQUEST_UID, uid);
-        return builder.build(RequestMethod.POST, URL_QUESTION);
-    }
 }

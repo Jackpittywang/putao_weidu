@@ -27,13 +27,10 @@ public final class JsonUtils {
         final char firstChar = strChar[0];
         switch (firstChar) {
             case '{':
-                Logger.d(TAG, "类型是JsonObject");
                 return JsonType.JSON_TYPE_OBJECT;
             case '[':
-                Logger.d(TAG, "类型是JsonArray");
                 return JsonType.JSON_TYPE_ARRAY;
             default:
-                Logger.d(TAG, "类型错误");
                 return JsonType.JSON_TYPE_ERROR;
         }
     }

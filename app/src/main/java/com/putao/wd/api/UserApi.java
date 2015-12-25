@@ -2,9 +2,12 @@ package com.putao.wd.api;
 
 import com.facebook.common.internal.DoNotStrip;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
+import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.util.StringUtils;
 
 /**
  * 用户接口
@@ -19,11 +22,12 @@ public class UserApi {
     private static final String REQUEST_HEAD_ICON = "userProfilePhoto";//头像
     private static final String REQUEST_PAGE = "page";//页码
     private static final String REQUEST_TYPE = "type";//类型
+    private static final String REQUEST_MSG = "message";//提问问题
 
     private static final String REQUEST_NICKNAME = "nickName";
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
-    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/user/" : "http://api-event-dev.putao.com/user/";//活动,消息,提问使用的地址
+    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/" : "http://api-event-dev.putao.com/";//活动,消息,提问使用的地址
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -38,7 +42,7 @@ public class UserApi {
     /**
      * 登录接口（查询）
      */
-    @DoNotStrip
+    @Deprecated
     public static Request login() {
         return PTWDRequestHelper.explore()
                 .build(RequestMethod.POST, URL_LOGIN);
@@ -98,7 +102,7 @@ public class UserApi {
     /**
      * 我参与的活动
      */
-    public static final String URL_GET_ME_ACTIONS = BASE_ACTION_URL + "event/list";
+    public static final String URL_GET_ME_ACTIONS = BASE_ACTION_URL + "user/event/list";
 
     /**
      * 我参与的活动
@@ -113,5 +117,46 @@ public class UserApi {
                 .addParam(REQUEST_HEAD_ICON, head_icon)
                 .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.GET, URL_GET_ME_ACTIONS);
+    }
+
+    /**
+     * 提交葡萄籽问题
+     */
+    public static final String URL_QUESTION_ADD = BASE_ACTION_URL + "question/add";
+
+    /**
+     * 提交葡萄籽问题
+     *
+     * @param nickName         昵称
+     * @param userProfilePhoto 头像
+     * @param msg              问题
+     */
+    public static Request questionAdd(String msg, String nickName, String userProfilePhoto) {
+        FormEncodingRequestBuilder builder = PTWDRequestHelper.user()
+                .addParam(REQUEST_MSG, msg);
+        String uid = AccountHelper.getCurrentUid();
+        if (StringUtils.isEmpty(uid))
+            throw new RuntimeException("当前用户没有登录");
+        builder.addParam(REQUEST_NICKNAME, nickName)
+                .addParam(REQUEST_HEAD_ICON, userProfilePhoto);
+        return builder.build(RequestMethod.POST, URL_QUESTION_ADD);
+    }
+
+    /**
+     * 获取提问
+     */
+    public static final String URL_QUESTION_LIST = BASE_ACTION_URL + "user/question/list";
+
+    /**
+     * 提交葡萄籽问题
+     *
+     * @param nickName         昵称
+     * @param userProfilePhoto 头像
+     */
+    public static Request getQuestionList(String nickName, String userProfilePhoto) {
+        return PTWDRequestHelper.user()
+                .addParam(REQUEST_NICKNAME, nickName)
+                .addParam(REQUEST_HEAD_ICON, userProfilePhoto)
+                .build(RequestMethod.POST, URL_QUESTION_LIST);
     }
 }
