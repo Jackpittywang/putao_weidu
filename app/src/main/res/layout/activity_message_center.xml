@@ -56,49 +56,8 @@
     </com.sunnybear.library.view.NavigationBar>
 
     <!--内容区-->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/rv_messages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            auto:divider_color="@color/divider_color"
-            auto:divider_height="1px"
-            auto:has_row_divider="true"/>
-
-        <!--没有消息通知-->
-        <RelativeLayout
-            android:id="@+id/rl_no_message"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/layout_background">
-
-            <ImageView
-                android:id="@+id/iv_message_empty"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/img_page_empty" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_message_empty"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:text="还没有通知消息"
-                android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_18sp" />
-        </RelativeLayout>
-    </FrameLayout>
-
     <com.sunnybear.library.view.viewpager.UnScrollableViewPager
         android:id="@+id/vp_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent" />
 </LinearLayout>

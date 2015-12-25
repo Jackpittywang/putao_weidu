@@ -5,33 +5,30 @@
     android:layout_height="wrap_content"
     android:background="@color/transparent"
     android:orientation="horizontal"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    android:padding="10dp">
 
-    <!--消息通知图标-->
+    <!--头像-->
     <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_notify_icon"
+        android:id="@+id/iv_head_icon"
         style="@style/image_circle"
         android:layout_width="40dp"
         android:layout_height="40dp"
         auto:placeholderImage="@drawable/img_head_signup" />
 
-    <!--消息通知介绍-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:orientation="vertical">
 
-        <!--消息通知标题-->
+        <!--用户昵称-->
         <TextView
-            android:id="@+id/tv_notify_title"
+            android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="葡萄籽"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <!--消息通知日期-->
         <TextView
@@ -44,21 +41,34 @@
             android:textSize="@dimen/text_size_14sp" />
 
         <!--通知消息内容-->
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_notify_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:lineSpacingExtra="5dp"
+            android:text="这里显示用系统发来的通知,字数没有限制,没有详情页.未读信息为黑色字体"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_18sp" />
 
-            <TextView
-                android:id="@+id/tv_notify_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="5dp"
-                android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/text_size_16sp" />
-        </LinearLayout>
+        <!--活动封面-->
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_action_icon"
+            style="@style/image_circle"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="10dp"
+            auto:placeholderImage="@drawable/img_head_signup" />
+
+        <!--查看详情-->
+        <TextView
+            android:id="@+id/tv_check_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:padding="10dp"
+            android:text="查看详情"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_16sp" />
     </LinearLayout>
 </LinearLayout>

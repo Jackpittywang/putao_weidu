@@ -7,6 +7,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.okhttp.OkHttpClient;
 import com.sunnybear.library.model.http.OkHttpManager;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.CrashHandler;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.hawk.Hawk;
@@ -73,6 +74,13 @@ public abstract class BasicApplication extends Application {
         //app_id配置
         app_id = AppUtils.getMetaData(getApplicationContext(), KEY_APP_ID);
         isDebug = isDebug();
+        //捕捉系统崩溃异常
+        CrashHandler.getInstance().init(getApplicationContext(), new CrashHandler.OncrashHandler() {
+            @Override
+            public void onCrashHandler(Throwable ex) {
+                onCrash(ex);
+            }
+        });
     }
 
     public static Context getInstance() {
@@ -146,4 +154,11 @@ public abstract class BasicApplication extends Application {
      * @return 缓存最大时间
      */
     protected abstract int getNetworkCacheMaxAgeTime();
+
+    /**
+     * 异常信息处理
+     *
+     * @param ex 异常信息
+     */
+    protected abstract void onCrash(Throwable ex);
 }

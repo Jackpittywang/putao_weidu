@@ -4,15 +4,11 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.putao.wd.model.AuditType;
-import com.putao.wd.model.CommentType;
-import com.putao.wd.model.CoolType;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
-import com.sunnybear.library.util.StringUtils;
 
 /**
  * 葡星圈接口
@@ -42,6 +38,7 @@ public class StartApi {
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.event.start.wang/" : "http://api-event.putao.com/";//基础url
+    private static final String BASE_WEIDU_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-event.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -329,4 +326,51 @@ public class StartApi {
                 .build(RequestMethod.POST, URL_MAP);
     }
 
+    /**
+     * 消息列表
+     */
+    public static final String URL_NOTIFY_LIST = BASE_WEIDU_URL + "message/center";
+
+    /**
+     * 消息列表
+     *
+     * @param page 分页
+     */
+    public static Request getNotifyList(String page) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, page)
+                .build(RequestMethod.GET, URL_NOTIFY_LIST);
+    }
+
+    /**
+     * 回复列表
+     */
+    public static final String URL_REPLY_LIST = BASE_URL + "user/comment/reply";
+
+    /**
+     * 回复列表
+     *
+     * @param page 分页
+     */
+    public static Request getReplyList(String page) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, page)
+                .build(RequestMethod.GET, URL_REPLY_LIST);
+    }
+
+    /**
+     * 赞列表
+     */
+    public static final String URL_PRAISE_LIST = BASE_URL + "user/liked";
+
+    /**
+     * 赞列表
+     *
+     * @param page 分页
+     */
+    public static Request getPraiseList(String page) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, page)
+                .build(RequestMethod.GET, URL_PRAISE_LIST);
+    }
 }

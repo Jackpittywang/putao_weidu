@@ -13,10 +13,12 @@ public class UnScrollableViewPager extends ViewPager {
 
     public UnScrollableViewPager(Context context) {
         super(context);
+        setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
     public UnScrollableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
     @Override

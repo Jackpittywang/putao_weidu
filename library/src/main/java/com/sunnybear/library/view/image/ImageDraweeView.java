@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -17,6 +18,7 @@ import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.sunnybear.library.R;
+import com.sunnybear.library.util.ResourcesUtils;
 
 /**
  * 图片加载控件
@@ -80,6 +82,18 @@ public class ImageDraweeView extends SimpleDraweeView {
     public void setDefaultImage(Bitmap bitmap) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
         hierarchy.setPlaceholderImage(new BitmapDrawable(bitmap), ScalingUtils.ScaleType.FOCUS_CROP);
+        setHierarchy(hierarchy);
+    }
+
+    /**
+     * 设置默认图片
+     *
+     * @param resId 默认图片资源id
+     */
+    public void setDefaultImage(int resId) {
+        Drawable drawable = ResourcesUtils.getDrawable(getContext(), resId);
+        GenericDraweeHierarchy hierarchy = getHierarchy();
+        hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FOCUS_CROP);
         setHierarchy(hierarchy);
     }
 

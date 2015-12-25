@@ -6,8 +6,9 @@ import java.io.Serializable;
  * 消息通知列表item
  * Created by wango on 2015/12/1.
  */
+@Deprecated
 public class MessageNotifyItem implements Serializable {
-    private String id;      //消息ID
+    private String id;//消息ID
     private String iconUrl;//头像url
     private String title;//标题
     private String date;//时间

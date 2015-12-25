@@ -18,7 +18,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * 设置
+ * 我的提问
  * create by wangou
  */
 public class QuestionActivity extends PTWDActivity implements View.OnClickListener {
@@ -40,7 +40,7 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
     @Bind(R.id.rl_no_question)
     RelativeLayout rl_no_question;
     @Bind(R.id.rv_messages)
-    LoadMoreRecyclerView rv_messages;
+    BasicRecyclerView rv_messages;
 
     private QuestionAdapter adapter;
 
@@ -86,8 +86,6 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                 break;
             case R.id.tv_send://点击发送
                 String msg = et_msg.getText().toString();
-                Logger.d("_____" + AccountHelper.getCurrentUserInfo().getNick_name());
-                Logger.d("_____" + AccountHelper.getCurrentUserInfo().getHead_img());
                 networkRequest(UserApi.questionAdd(et_msg.getText().toString(), userInfo.getNick_name(), userInfo.getHead_img()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
@@ -112,10 +110,11 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                     public void onSuccess(String url, ArrayList<Question> result) {
                         Logger.d(result.toString());
                         if (result.size() > 0) {
-                            Logger.d(result.size()+"");
+                            Logger.d(result.size() + "");
                             rl_no_question.setVisibility(View.GONE);
                             rv_messages.setVisibility(View.VISIBLE);
                             adapter.addAll(result);
+                            loading.dismiss();
                         }
                     }
                 });

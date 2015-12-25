@@ -11,6 +11,7 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
@@ -142,7 +143,7 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected String getNetworkCacheDirectoryPath() {
-        return SDCardUtils.getSDCardPath();
+        return sdCardPath + File.separator + "http_cache";
     }
 
     @Override
@@ -156,6 +157,18 @@ public class GlobalApplication extends BasicApplication {
     }
 
     /**
+     * 捕捉到异常就退出App
+     *
+     * @param ex 异常信息
+     */
+    @Override
+    protected void onCrash(Throwable ex) {
+        Logger.e("APP崩溃了,错误信息是" + ex.getMessage());
+        ex.printStackTrace();
+        ActivityManager.getInstance().killProcess(getApplicationContext());
+    }
+
+    /**
      * 有此至下为常量定义
      */
     private static final String MAP_EMOJI = "map_emoji";
@@ -166,6 +179,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String PREFERENCE_KEY_EXPIRE_TIME = "expire_tim";
     public static final String PREFERENCE_KEY_REFRESH_TOKEN = "refresh_token";
     public static final String PREFERENCE_KEY_USER_INFO = "user_info";
+    public static final String PREFERENCE_KEY_BABY_ID = "baby_id";
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
 

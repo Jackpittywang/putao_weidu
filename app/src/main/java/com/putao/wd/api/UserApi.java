@@ -24,6 +24,14 @@ public class UserApi {
     private static final String REQUEST_TYPE = "type";//类型
     private static final String REQUEST_MSG = "message";//提问问题
 
+
+    private static final String BABY_ID = "baby_id";//孩子ID
+    private static final String BABY_NAME = "baby_name";//孩子昵称
+    private static final String RELATION = "relation";//与孩子关系
+    private static final String SEX = "sex";//孩子性别
+    private static final String BIRTHDAY = "birthday";//孩子生日
+
+
     private static final String REQUEST_NICKNAME = "nickName";
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
@@ -148,7 +156,7 @@ public class UserApi {
     public static final String URL_QUESTION_LIST = BASE_ACTION_URL + "user/question/list";
 
     /**
-     * 提交葡萄籽问题
+     * 获取问题列表
      *
      * @param nickName         昵称
      * @param userProfilePhoto 头像
@@ -158,5 +166,36 @@ public class UserApi {
                 .addParam(REQUEST_NICKNAME, nickName)
                 .addParam(REQUEST_HEAD_ICON, userProfilePhoto)
                 .build(RequestMethod.POST, URL_QUESTION_LIST);
+    }
+
+    /**
+     * 查询孩子信息
+     */
+    public static final String URL_CHILD_GET = BASE_URL + "kids/getinfo";
+
+    /**
+     * 查询孩子信息
+     */
+    public static Request getChildInfo() {
+        return PTWDRequestHelper.user()
+                .build(RequestMethod.POST, URL_CHILD_GET);
+    }
+
+    /**
+     * 保存孩子信息
+     */
+    public static final String URL_CHILD_SET = BASE_URL + "kids/setinfo";
+
+    /**
+     * 保存孩子信息
+     */
+    public static Request setChildInfo(String baby_id, String baby_name, String relation, String sex, String birthday) {
+        return PTWDRequestHelper.user()
+                .addParam(BABY_ID, baby_id)
+                .addParam(BABY_NAME, baby_name)
+                .addParam(RELATION, relation)
+                .addParam(SEX, sex)
+                .addParam(BIRTHDAY, birthday)
+                .build(RequestMethod.POST, URL_CHILD_SET);
     }
 }
