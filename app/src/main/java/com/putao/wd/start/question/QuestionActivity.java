@@ -3,6 +3,7 @@ package com.putao.wd.start.question;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -17,6 +18,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
+import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,12 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
     ViewPager vp_emojis;
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
+
+    @Bind(R.id.rl_no_question)
+    RelativeLayout rl_no_question;
+    @Bind(R.id.rv_messages)
+    LoadMoreRecyclerView rv_messages;
+
     private QuestionAdapter adapter;
 
     private Map<String, String> emojiMap;
@@ -51,6 +59,7 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        adapter = new QuestionAdapter(this, null);
         userInfo = AccountHelper.getCurrentUserInfo();
         emojiMap = GlobalApplication.getEmojis();
         emojis = new ArrayList<>();
@@ -58,7 +67,7 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
         vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
-
+        rv_messages.setAdapter(adapter);
         getQuestionList();
     }
 
@@ -85,7 +94,8 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                             public void onSuccess(String url, String result) {
                                 Logger.i("我的提问提交成功");
                                 et_msg.setText("");
-//                                refreshQuestionList();
+                                adapter.clear();
+                                getQuestionList();
                             }
                         });
                 break;
@@ -93,7 +103,7 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
     }
 
     /**
-     * 获得评论列表
+     * 获得提问列表
      */
     private void getQuestionList() {
         networkRequest(UserApi.getQuestionList(userInfo.getNick_name(), userInfo.getHead_img()),
@@ -101,6 +111,12 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(String url, ArrayList<Question> result) {
                         Logger.d(result.toString());
+                        if (result.size() > 0) {
+                            Logger.d(result.size()+"");
+                            rl_no_question.setVisibility(View.GONE);
+                            rv_messages.setVisibility(View.VISIBLE);
+                            adapter.addAll(result);
+                        }
                     }
                 });
     }
