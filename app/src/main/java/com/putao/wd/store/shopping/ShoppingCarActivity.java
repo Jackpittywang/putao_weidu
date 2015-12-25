@@ -98,21 +98,22 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 编辑购物车
-     */
-    private void multiManage(List products) {
-
-    }
-
-    /**
      * 删除购物车
      */
     private void cartDelete(String pid) {
         networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                Logger.d(result.toString());
-                getCart();
+                ToastUtils.showToastShort(mContext, "购物车删除成功");
+                Logger.w("购物车删除成功 = " + result.toString());
+                networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ShopCarItem result) {
+                        adapter.replaceAll(result.getUse());
+                        tv_money.setText(caculateSumMoney(result.getUse()));
+                        loading.dismiss();
+                    }
+                });
             }
         });
     }
@@ -156,6 +157,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                     case DELETE:
 
                         //删除操作
+                        cartDelete(mCart.getPid());
+
 
                         break;
                 }
