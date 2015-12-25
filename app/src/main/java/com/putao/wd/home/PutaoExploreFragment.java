@@ -2,10 +2,7 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -16,8 +13,8 @@ import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.model.ExploreProductDetail;
+import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -33,14 +30,10 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoExploreFragment extends PTWDFragment implements View.OnClickListener {
-    @Bind(R.id.ll_content)
-    LinearLayout ll_content;
-    @Bind(R.id.rl_empty)
-    RelativeLayout rl_empty;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.btn_explore_empty)
-    Button btn_explore_empty;
+    @Bind(R.id.rl_explor_empty)
+    RelativeLayout rl_explor_empty;
 
     private ExploreAdapter adapter;
     private int page = 1;
@@ -110,16 +103,12 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                 new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
                     public void onSuccess(String url, Explore result) {
-                        Logger.i("探索号请求结果 = " + result.toString());
-                        if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                            rl_empty.setVisibility(View.GONE);
-                            ll_content.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(parseExplore(result));
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                            adapter.addAll(parseExplore(result));
+                            rl_explor_empty.setVisibility(View.GONE);
                             rv_content.loadMoreComplete();
                             page++;
-                        } else {
-                            rl_empty.setVisibility(View.VISIBLE);
-                        }
+                        } else rv_content.noMoreLoading();
                         loading.dismiss();
                     }
                 });
@@ -167,23 +156,6 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                 break;
         }
     }
-
-//    /**
-//     * 获取剧情理念详情
-//     * by yanghx
-//     *
-//     * @param plot_id 剧情理念详情id
-//     */
-//    private void getPlotDetails(String plot_id) {
-//        networkRequest(ExploreApi.getPlotDetails(plot_id), new SimpleFastJsonCallback<ArrayList<PlotDetail>>(PlotDetail.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<PlotDetail> result) {
-//                Log.i("pt", "剧情理念详情请求成功");
-//            }
-//        });
-//    }
-
-
 }
 
 
