@@ -20,6 +20,7 @@ public class Cart implements Serializable {
     private boolean isSelect;
     private boolean editable;
     private String color;
+    private String goodCount;//保存编辑时的商品数量，供保存时使用
 
     public boolean isNull() {
         return isNull;
@@ -109,6 +110,14 @@ public class Cart implements Serializable {
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+    }
+
+    public String getGoodCount() {
+        return goodCount;
+    }
+
+    public void setGoodCount(String goodCount) {
+        this.goodCount = goodCount;
     }
 
     @Override
