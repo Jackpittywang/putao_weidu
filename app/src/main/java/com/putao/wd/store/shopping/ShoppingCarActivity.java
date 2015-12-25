@@ -119,6 +119,20 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
+     * 标题右边按钮点击事件
+     */
+    @Override
+    public void onRightAction() {
+        if (!saveable) {//这里编辑操作的入口
+            setButtonStyle(SAVE, DELETE, true);
+            adapter.startEdit();
+        }else {//这里做保存操作
+            setButtonStyle(EDIT, PAY, false);
+            saveGoodsInfo();
+        }
+    }
+
+    /**
      * 查看购物车
      */
     private void getCart() {
@@ -166,21 +180,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 标题右边按钮点击事件
-     */
-    @Override
-    public void onRightAction() {
-        if (!saveable) {//这里编辑操作的入口
-            setButtonStyle(SAVE, DELETE, true);
-            adapter.startEdit();
-        }else {//这里做保存操作
-            setButtonStyle(EDIT, PAY, false);
-            saveGoodsInfo();
-            adapter.finishEdit();
-        }
-    }
-
-    /**
      *设置不同状态时的Button显示
      */
     private void setButtonStyle(String topText, String bottomText, boolean canSave) {
@@ -207,6 +206,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 mCart.setQt(mCart.getGoodsCount());
                 mCart.setEditable(false);
                 setGoodsPrice(mCart);
+                adapter.finishEdit();
                 loading.dismiss();
             }
         });
