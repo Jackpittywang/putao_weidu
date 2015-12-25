@@ -82,7 +82,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 } else {
                     selected.remove(position);
                     if (selected.size() == 0)
-                        EventBusHelper.post(EVENT_UNEDITABLE, EVENT_UNEDITABLE);
+                        EventBusHelper.post(cart, EVENT_UNEDITABLE);
                 }
                 replace(position, cart);
             }
@@ -94,10 +94,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 //                cart.setQt(holder.asl_num_sel.getCurrentCount() + "");
 //                ShoppingCarts.set(position, cart);
                 Cart curCart = selected.get(position);
-                if (isPlus)
-                    curCart.setQt(MathUtils.add(curCart.getQt(), count + ""));
-                else
-                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
+//                if (isPlus)
+//                    curCart.setQt(MathUtils.add(curCart.getQt(), count + ""));
+//                else
+//                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
+                curCart.setQt(count + "");
+                holder.tv_count.setText(curCart.getQt());
                 selected.put(position, curCart);
             }
         });

@@ -1,6 +1,7 @@
 package com.sunnybear.library.util;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
@@ -101,4 +102,27 @@ public final class DensityUtil {
                 .getSystemService(Context.WINDOW_SERVICE);
         return manager.getDefaultDisplay().getHeight();
     }
+
+    public static class Screen {
+        public int widthPixels;
+        public int heightPixels;
+        public int densityDpi;
+        public float density;
+    }
+
+    public static Screen getScreenPixels(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        Screen screen = new Screen();
+        screen.widthPixels = dm.widthPixels;// e.g. 1080
+        screen.heightPixels = dm.heightPixels;// e.g. 1920
+        screen.densityDpi = dm.densityDpi;// e.g. 480
+        screen.density = dm.density;// e.g. 2.0
+        Logger.d("width=" + screen.widthPixels + ", height=" + screen.heightPixels
+                + ", densityDpi=" + screen.densityDpi + ", density=" + screen.density);
+        return screen;
+    }
+
 }
