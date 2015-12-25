@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -37,12 +38,12 @@
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/question_item_ask_icon"
-                app:placeholderImage="@drawable/tab_bar_me_sel"
-                app:roundAsCircle="true"
+                style="@style/image_circle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                android:padding="10dp" />
+                android:padding="10dp"
+                auto:placeholderImage="@drawable/img_head_signup" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
