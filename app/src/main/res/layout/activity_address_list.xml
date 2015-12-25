@@ -33,8 +33,7 @@
             android:id="@+id/rl_no_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background"
-            android:visibility="gone">
+            android:background="@color/layout_background">
 
             <ImageView
                 android:id="@+id/iv_address_empty"
