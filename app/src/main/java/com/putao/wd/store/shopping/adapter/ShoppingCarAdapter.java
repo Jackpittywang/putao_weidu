@@ -72,13 +72,16 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_count.setText(cart.getQt());
         holder.btn_sel.setState(cart.isSelect());
         showEdit(holder, cart);
+        if (!cart.isSelect()) {
+            holder.btn_sel.setState(false);
+        }
         holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
                 cart.setIsSelect(isSelect);
                 if (isSelect) {
                     selected.put(position, cart);
-                    EventBusHelper.post(EVENT_EDITABLE, EVENT_EDITABLE);
+                    EventBusHelper.post(cart, EVENT_EDITABLE);
                 } else {
                     selected.remove(position);
                     if (selected.size() == 0)
@@ -98,8 +101,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 //                    curCart.setQt(MathUtils.add(curCart.getQt(), count + ""));
 //                else
 //                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
-                curCart.setQt(count + "");
-                holder.tv_count.setText(curCart.getQt());
+                curCart.setGoodCount(count + "");
                 selected.put(position, curCart);
             }
         });
@@ -178,6 +180,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         for (Integer key : keys) {
             Cart cart = selected.get(key);
             cart.setEditable(false);
+            cart.setIsSelect(false);
             replace(key, cart);
         }
     }
