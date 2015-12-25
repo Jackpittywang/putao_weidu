@@ -209,6 +209,10 @@
         <activity
             android:name=".start.user.UserDetailActivity"
             android:screenOrientation="portrait" />
+        <!--孩子信息-->
+        <activity
+            android:name=".me.child.ChildInfoActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

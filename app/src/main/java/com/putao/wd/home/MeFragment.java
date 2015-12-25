@@ -9,6 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.child.ChildInfoActivity;
 import com.putao.wd.me.message.MessageCenterActivity;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.service.ServiceListActivity;
@@ -104,7 +105,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(OrderListActivity.class);
                 break;
             case R.id.si_child_info://孩子信息
-
+                startActivity(ChildInfoActivity.class);
                 break;
             case R.id.si_address://收货地址
                 startActivity(AddressListActivity.class);
