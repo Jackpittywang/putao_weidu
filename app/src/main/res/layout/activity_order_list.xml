@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            auto:divider_color="#ebebeb"
+            auto:divider_color="@color/divider_color"
             auto:divider_height="5dp"
             auto:has_row_divider="true" />
 
@@ -96,8 +96,7 @@
             android:id="@+id/rl_no_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_EBEBEB"
-            android:visibility="gone">
+            android:background="@color/color_EBEBEB">
 
             <ImageView
                 android:id="@+id/img_no_data"
@@ -111,10 +110,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_no_data"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
+                android:text="还没有相关订单"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_20sp" />
-
         </RelativeLayout>
     </FrameLayout>
 

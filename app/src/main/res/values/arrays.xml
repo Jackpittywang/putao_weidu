@@ -9,4 +9,21 @@
         <item>我是外婆</item>
         <item>其他亲友</item>
     </string-array>
+    <string-array name="ages">
+        <item>1岁</item>
+        <item>2岁</item>
+        <item>3岁</item>
+        <item>4岁</item>
+        <item>5岁</item>
+        <item>6岁</item>
+        <item>7岁</item>
+        <item>8岁</item>
+        <item>9岁</item>
+        <item>10岁</item>
+        <item>11岁</item>
+        <item>12岁</item>
+        <item>13岁</item>
+        <item>14岁</item>
+        <item>15岁</item>
+    </string-array>
 </resources>

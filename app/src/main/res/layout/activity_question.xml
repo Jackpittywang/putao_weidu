@@ -5,50 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/text_color_F5F5F5">
 
-    <!--标题栏-->
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        auto:nav_has_divider="true"
-        auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="@string/myquestion" />
-
-    <!--内容区-->
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="48dp"
-        android:layout_below="@id/navigation_bar">
-
-        <!--列表-->
-        <com.sunnybear.library.view.recycler.BasicRecyclerView
-            android:id="@+id/rv_messages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
-        <!--没有提问时的页面-->
-        <RelativeLayout
-            android:id="@+id/rl_no_question"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/img_question_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/img_page_empty" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/img_question_empty"
-                android:text="@string/question_empty" />
-        </RelativeLayout>
-    </FrameLayout>
-
     <!--发送表情栏-->
     <LinearLayout
         android:id="@+id/ll_qusetion_edit"
@@ -95,6 +51,7 @@
                 android:text="发送"
                 android:textSize="@dimen/text_size_18sp" />
         </LinearLayout>
+
         <!--表情栏-->
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_emojis"
@@ -102,5 +59,55 @@
             android:layout_height="200dp"
             android:overScrollMode="never"
             android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_qusetion_edit"
+        android:orientation="vertical">
+
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_main_title="@string/myquestion" />
+
+        <!--内容区-->
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/navigation_bar">
+
+            <!--列表-->
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_messages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <!--没有提问时的页面-->
+            <RelativeLayout
+                android:id="@+id/rl_no_question"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_question_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/img_page_empty" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_question_empty"
+                    android:text="@string/question_empty" />
+            </RelativeLayout>
+        </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

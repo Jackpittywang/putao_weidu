@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:auto="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -14,7 +14,7 @@
         auto:nav_main_title="我要参加"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title="提交"
-        auto:nav_right_title_color="@drawable/text_select"/>
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <TextView
         android:layout_width="match_parent"
@@ -23,22 +23,22 @@
         android:gravity="center"
         android:text="提交成功后，会有客服联系确认报名结果。"
         android:textColor="#ed5564"
-        android:textSize="@dimen/text_size_14sp"/>
+        android:textSize="@dimen/text_size_14sp" />
     <!--间隔线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color" />
     <!--间隔区-->
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#ebebeb"/>
+        android:background="#ebebeb" />
     <!--间隔线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="家长身份"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:text="*"
-                    android:textColor="@color/text_color_red"/>
+                    android:textColor="@color/text_color_red" />
 
                 <TextView
                     android:id="@+id/tv_parent_relation"
@@ -83,14 +83,14 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <ImageView
                     android:id="@+id/iv_parentrelation_selecticon"
                     android:layout_width="10dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/btn_arrow_down"/>
+                    android:src="@drawable/btn_arrow_down" />
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -98,7 +98,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
         </LinearLayout>
 
         <!--手机号码-->
@@ -121,7 +121,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:hint="手机号码"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:text="*"
-                    android:textColor="@color/text_color_red"/>
+                    android:textColor="@color/text_color_red" />
 
                 <com.sunnybear.library.view.CleanableEditText
                     android:id="@+id/et_phone"
@@ -139,9 +139,10 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:drawableRight="@drawable/close_selector"
+                    android:inputType="number"
                     android:maxLength="11"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -149,7 +150,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
         </LinearLayout>
 
         <!--孩子昵称-->
@@ -172,7 +173,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:hint="孩子昵称"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -180,7 +181,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:text="*"
-                    android:textColor="@color/text_color_red"/>
+                    android:textColor="@color/text_color_red" />
 
                 <EditText
                     android:id="@+id/et_nickname"
@@ -191,7 +192,7 @@
                     android:background="@color/white"
                     android:maxLines="1"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -199,7 +200,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
         </LinearLayout>
 
         <!--孩子年龄-->
@@ -223,7 +224,7 @@
                     android:layout_height="48dp"
                     android:background="@color/white"
                     android:hint="孩子年龄"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -231,7 +232,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:text="*"
-                    android:textColor="@color/text_color_red"/>
+                    android:textColor="@color/text_color_red" />
 
                 <TextView
                     android:id="@+id/tv_childage"
@@ -241,7 +242,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <ImageView
                     android:id="@+id/iv_child_age"
@@ -249,7 +250,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:background="@color/white"
-                    android:src="@drawable/btn_arrow_down"/>
+                    android:src="@drawable/btn_arrow_down" />
             </LinearLayout>
 
         </LinearLayout>
@@ -259,29 +260,29 @@
             android:layout_height="1px"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
         <!--间隔线-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
         <!--间隔区-->
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="#ebebeb"/>
+            android:background="#ebebeb" />
         <!--间隔线-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
         <!--活动场次-->
         <LinearLayout
             android:id="@+id/ll_activitytimes"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -296,7 +297,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:hint="活动场次"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <EditText
                     android:id="@+id/et_activitytimes"
@@ -308,7 +309,7 @@
                     android:background="@color/white"
                     android:maxLines="1"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
             </LinearLayout>
 
             <!--间隔线-->
@@ -317,7 +318,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
 
         </LinearLayout>
 
@@ -340,7 +341,7 @@
                     android:layout_height="48dp"
                     android:background="@color/white"
                     android:hint="QQ/微信"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <EditText
                     android:id="@+id/et_QQorWX"
@@ -352,7 +353,7 @@
                     android:background="@color/white"
                     android:maxLines="1"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -360,7 +361,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
         </LinearLayout>
         <!--家长姓名-->
         <LinearLayout
@@ -381,7 +382,7 @@
                     android:layout_height="48dp"
                     android:background="@color/white"
                     android:hint="家长姓名"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
 
                 <EditText
                     android:id="@+id/et_parentname"
@@ -393,7 +394,7 @@
                     android:background="@color/white"
                     android:maxLines="1"
                     android:paddingLeft="5dp"
-                    android:textColorHint="#646464"/>
+                    android:textColorHint="#646464" />
             </LinearLayout>
             <!--间隔线-->
             <View
@@ -401,7 +402,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
         </LinearLayout>
 
         <EditText
@@ -416,17 +417,17 @@
             android:paddingTop="10dp"
             android:textColor="#313131"
             android:textColorHint="#c2c2c2"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
         <!--间隔线-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_weight="1"
-            android:background="#ebebeb"/>
+            android:background="#ebebeb" />
     </LinearLayout>
 </LinearLayout>

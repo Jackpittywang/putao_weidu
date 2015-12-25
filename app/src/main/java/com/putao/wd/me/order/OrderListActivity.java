@@ -110,17 +110,10 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
-                        // Logger.d(result.toString());
-                        // 测试数据结束
-                        if (result == null || result.size() == 0) {
-                            rl_no_order.setVisibility(View.VISIBLE);
-                            rv_order.setVisibility(View.GONE);
-                            return;
-                        } else {
+                        if (result != null && result.size() > 0) {
                             rl_no_order.setVisibility(View.GONE);
-                            rv_order.setVisibility(View.VISIBLE);
+                            adapter.addAll(result);
                         }
-                        adapter.addAll(result);
                         loading.dismiss();
                     }
                 });

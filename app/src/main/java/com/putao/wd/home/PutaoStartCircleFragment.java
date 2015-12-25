@@ -61,8 +61,6 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     private String currentStatus = "";//当前的状态
     private String currentType = "";//当前的类型
 
-    private int pageCount = 10;//分页的每页条目数
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_start_circle;
@@ -128,7 +126,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
                         , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
                             @Override
                             public void onSuccess(String url, AcitonNewsList result) {
-                                adapter.addAll(result.getGetEventList());
+                                adapter.replaceAll(result.getGetEventList());
                                 if (result.getCurrent_page() != result.getTotal_page())
                                     currentPage++;
                                 else
@@ -161,7 +159,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
             public void onItemClick(ActionNews actionNewsList, int position) {
                 Bundle bundle = new Bundle();
                 ActionNews actionNews = adapter.getItem(position);
-                bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, actionNews.getId());
+                bundle.putString("action_id", actionNews.getId());
                 startActivity(ActionsDetailActivity.class, bundle);
             }
         });
