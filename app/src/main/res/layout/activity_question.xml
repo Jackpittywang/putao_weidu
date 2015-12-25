@@ -5,27 +5,30 @@
     android:layout_height="match_parent"
     android:background="@color/text_color_F5F5F5">
 
-    <!--标题栏-->
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        auto:nav_has_divider="true"
-        auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="@string/myquestion" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fl_navigationbar">
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_main_title="@string/myquestion" />
+    </FrameLayout>
 
     <!--内容区-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_navigationbar">
 
         <!--列表-->
         <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
             android:id="@+id/rv_messages"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:visibility="gone"
-            auto:divider_color="@color/color_EBEBEB"
-            auto:divider_height="8dp"
-            auto:has_row_divider="true" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <!--没有提问时的页面-->
         <RelativeLayout
