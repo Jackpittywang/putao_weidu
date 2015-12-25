@@ -2,6 +2,7 @@ package com.putao.wd.account;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.model.ChildInfo;
 import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
@@ -104,5 +105,21 @@ public final class AccountHelper {
      */
     public static UserInfo getCurrentUserInfo() {
         return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_USER_INFO, null);
+    }
+
+    /**
+     * 获取当前userInfo
+     *
+     * @return
+     */
+    public static ChildInfo getChildInfo() {
+        return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_BABY_ID, new ChildInfo());
+    }
+    /**
+     *设置孩子信息
+     * @return
+     */
+    public static void setChildInfo(ChildInfo childInfo) {
+        PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_BABY_ID, childInfo);
     }
 }

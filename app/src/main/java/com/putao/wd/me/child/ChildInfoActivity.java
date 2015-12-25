@@ -1,16 +1,30 @@
 package com.putao.wd.me.child;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.ChildInfo;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ResourcesUtils;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.picker.DatePicker;
 import com.sunnybear.library.view.picker.OptionPicker;
 import com.sunnybear.library.view.picker.SexPicker;
+
+import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -29,9 +43,23 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
     @Bind(R.id.tv_identity)
     TextView tv_identity;
 
+    @Bind(R.id.iv_sex)
+    ImageView iv_sex;
+    @Bind(R.id.iv_birthday)
+    ImageView iv_birthday;
+    @Bind(R.id.iv_identity)
+    ImageView iv_identity;
+
     private DatePicker mDatePicker;//日期选择器
     private SexPicker mSexPicker;//性别选择器
     private OptionPicker mFamilyPicker;//亲友选择器
+
+    private String mEtNickname;//昵称
+    private String mTvIdentity;//关系
+    private String mTvSex;//性别
+    private String mTvBirthday;//生日
+
+    private boolean isEditable = true;//是否可以修改
 
     @Override
     protected int getLayoutId() {
@@ -41,9 +69,58 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        getChildInfo();
         initSexPicker();
         initDatePicker();
         initFamilyPicker();
+    }
+
+    /**
+     * 检查孩子信息是否完整
+     *
+     * @return
+     */
+    private boolean checkInfo() {
+        mEtNickname = et_nickname.getText().toString();
+        mTvIdentity = tv_identity.getText().toString();
+        mTvSex = tv_sex.getText().toString();
+        mTvBirthday = tv_birthday.getText().toString();
+        return !(TextUtils.isEmpty(mEtNickname) && TextUtils.isEmpty(mTvIdentity)
+                && TextUtils.isEmpty(mTvSex) && TextUtils.isEmpty(mTvBirthday));
+    }
+
+    /**
+     * 获取孩子信息
+     */
+    private void getChildInfo() {
+        networkRequest(UserApi.getChildInfo(),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        if (StringUtils.isEmpty(result)) return;
+                        ChildInfo list = JSON.parseObject(result, ChildInfo.class);
+                        if (result != null) {
+                            et_nickname.setText(list.getBaby_name());
+                            tv_identity.setText(list.getRelation());
+                            tv_sex.setText(list.getSex());
+                            tv_birthday.setText(list.getBirthday());
+                            AccountHelper.setChildInfo(list);
+                            isEditable = false;
+                            cancelChoose();
+                        }
+                    }
+                });
+
+
+    }
+
+    /**
+     * 取消选择按钮
+     */
+    private void cancelChoose() {
+        iv_sex.setVisibility(View.GONE);
+        iv_birthday.setVisibility(View.GONE);
+        iv_identity.setVisibility(View.GONE);
     }
 
     /**
@@ -93,16 +170,34 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
     @OnClick({R.id.tv_sex, R.id.tv_birthday, R.id.tv_identity})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_sex://性別
-                mSexPicker.show();
-                break;
-            case R.id.tv_birthday://生日
-                mDatePicker.show();
-                break;
-            case R.id.tv_identity://身份
-                mFamilyPicker.show();
-                break;
+        if (isEditable)
+            switch (v.getId()) {
+                case R.id.tv_sex://性別
+                    mSexPicker.show();
+                    break;
+                case R.id.tv_birthday://生日
+                    mDatePicker.show();
+                    break;
+                case R.id.tv_identity://身份
+                    mFamilyPicker.show();
+                    break;
+            }
+    }
+
+    @Override
+    public void onRightAction() {
+        if (!checkInfo()) {
+            ToastUtils.showToastShort(this, "孩子信息没有填写完整");
+            return;
         }
+        networkRequest(UserApi.setChildInfo(AccountHelper.getChildInfo().getBaby_id() + "", mEtNickname, mTvIdentity, mTvSex, mTvBirthday),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.i(result + "-----------------");
+                        ToastUtils.showToastShort(ChildInfoActivity.this, "保存成功！");
+                        finish();
+                    }
+                });
     }
 }
