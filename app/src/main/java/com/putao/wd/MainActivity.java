@@ -52,6 +52,19 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+//        addHome();
+//        mFragments = new SparseArray<>();
+//        addFragment();
+////        ti_start_circle.show(4);//显示指示数字
+////        ti_explore.show(4);//显示指示数字
+////        ti_store.show(4);//显示指示数字
+////        ti_me.show(4);//显示指示数字
+//        addListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         addHome();
         mFragments = new SparseArray<>();
         addFragment();
@@ -63,8 +76,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onRestart() {
+        super.onRestart();
+        FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(mFragmentTransaction);
+        mFragmentTransaction.commit();
     }
 
     /**

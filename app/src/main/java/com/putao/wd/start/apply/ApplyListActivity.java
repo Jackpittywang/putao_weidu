@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
@@ -22,7 +21,7 @@ import butterknife.Bind;
  * 报名列表
  * Created by wango on 2015/12/4.
  */
-public class ApplyListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class ApplyListActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;//报名列表
     @Bind(R.id.tv_nomore)
@@ -63,7 +62,8 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
      * 获取报名列表
      */
     private void getEnrollment() {
-        networkRequest(StartApi.getEnrollment(String.valueOf(page), action_id), new SimpleFastJsonCallback<ActionEnrollmentList>(ActionEnrollmentList.class, loading) {
+        networkRequest(StartApi.getEnrollment(String.valueOf(page), action_id),
+                new SimpleFastJsonCallback<ActionEnrollmentList>(ActionEnrollmentList.class, loading) {
             @Override
             public void onSuccess(String url, ActionEnrollmentList result) {
                 Logger.i("报名列表请求成功");
@@ -88,18 +88,4 @@ public class ApplyListActivity extends PTWDActivity<GlobalApplication> implement
     public void onClick(View v) {
 
     }
-
-//    //初始化报名列表数据
-//    private void initApplyList(){
-//        if(this.initApplyListData().size() != 0) {
-//            this.ll_applylist.setVisibility(View.VISIBLE);
-//            this.tv_nomore.setVisibility(View.GONE);
-//            ApplyListAdapter applyListAdapter = new ApplyListAdapter(mContext, this.initApplyListData());
-//            this.brv_applylist.setAdapter(applyListAdapter);
-//        } else {
-//            this.ll_applylist.setVisibility(View.GONE);
-//            this.tv_nomore.setVisibility(View.VISIBLE);
-//        }
-//    }
-
 }

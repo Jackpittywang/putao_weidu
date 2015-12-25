@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="孩子信息"
+        auto:nav_right_title="保存"
+        auto:nav_right_title_color="@drawable/text_select" />
+
+    <!--间隔区-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/divider_color" />
+
+    <!--昵称-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WeiduText.EditText"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:text="昵称"
+            android:textColor="@color/text_color_646464"
+            android:textSize="@dimen/text_size_18sp" />
+
+
+        <com.sunnybear.library.view.CleanableEditText
+            android:id="@+id/et_nickname"
+            style="@style/WeiduText.EditText"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableRight="@drawable/close_selector"
+            android:hint="孩子的昵称"
+            android:maxLength="8"
+            android:paddingLeft="5dp"
+            android:textColor="@color/text_color" />
+    </LinearLayout>
+
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="8dp"
+        android:background="@color/divider_color" />
+
+    <!--性别-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WeiduText.EditText"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="性别"
+            android:textColor="@color/text_color_646464"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_sex"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:textColorHint="#646464" />
+
+        <ImageView
+            android:id="@+id/iv_sex"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/btn_arrow_down" />
+    </LinearLayout>
+
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="8dp"
+        android:background="@color/divider_color" />
+
+    <!--生日-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WeiduText.EditText"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="生日"
+            android:textColor="@color/text_color_646464"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_birthday"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:textColorHint="#646464" />
+
+        <ImageView
+            android:id="@+id/iv_birthday"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/btn_arrow_down" />
+    </LinearLayout>
+
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="8dp"
+        android:background="@color/divider_color" />
+
+    <!--身份-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WeiduText.EditText"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="身份"
+            android:textColor="@color/text_color_646464"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_identity"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:textColorHint="#646464" />
+
+        <ImageView
+            android:id="@+id/iv_identity"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/btn_arrow_down" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="8dp"
+        android:background="@color/divider_color" />
+</LinearLayout>
