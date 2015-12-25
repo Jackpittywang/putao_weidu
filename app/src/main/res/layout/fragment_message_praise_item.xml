@@ -11,27 +11,26 @@
 
     <!--赞用户图标-->
     <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_praise_headericon"
+        android:id="@+id/iv_head_icon"
         style="@style/image_circle"
         android:layout_width="40dp"
         android:layout_height="40dp"
         auto:placeholderImage="@drawable/img_head_signup" />
 
-    <!--赞介绍-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:orientation="vertical">
 
-        <!--赞标题-->
+        <!--用户昵称-->
         <TextView
-            android:id="@+id/tv_praise_usernickname"
+            android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="这里显示用户昵称"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <!--赞日期-->
         <TextView
@@ -43,42 +42,26 @@
             android:text="刚刚而已"
             android:textSize="@dimen/text_size_14sp" />
 
-        <!--被赞内容-->
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:text="赞了您"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_16sp" />
 
-            <TextView
-                android:id="@+id/tv_reply_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:maxLength="200"
-                android:text="赞了您"
-                android:textColor="#313131"
-                android:textSize="@dimen/text_size_16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!--被赞内容-->
+        <TextView
+            android:id="@+id/tv_praised_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="@color/text_color_F5F5F5"
-            android:padding="10dp">
-
-            <!--被赞内容-->
-            <TextView
-                android:id="@+id/tv_praised_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="5dp"
-                android:maxLength="200"
-                android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
-                android:textColor="#959595"
-                android:textSize="@dimen/text_size_16sp" />
-        </LinearLayout>
+            android:lineSpacingExtra="5dp"
+            android:maxLength="200"
+            android:padding="10dp"
+            android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_16sp" />
     </LinearLayout>
-
 </LinearLayout>

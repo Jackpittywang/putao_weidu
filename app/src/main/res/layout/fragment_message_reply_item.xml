@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <!--用户头像-->
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_head_icon"
+        style="@style/image_circle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        auto:placeholderImage="@drawable/img_head_signup" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <!--用户昵称-->
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这里显示用户昵称"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <!--回复日期-->
+        <TextView
+            android:id="@+id/tv_reply_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:singleLine="false"
+            android:text="刚刚而已"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <!--回复人内容-->
+        <com.sunnybear.library.view.emoji.EmojiTextView
+            android:id="@+id/tv_reply_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="5dp"
+            android:maxLength="200"
+            android:text="这里显示用户发表的评论，字数限制为两百个汉字支持app内置表情发送支持回复"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <!--被回复内容-->
+        <TextView
+            android:id="@+id/tv_replied_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/text_color_F5F5F5"
+            android:lineSpacingExtra="5dp"
+            android:maxLength="200"
+            android:padding="10dp"
+            android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_16sp" />
+    </LinearLayout>
+</LinearLayout>
