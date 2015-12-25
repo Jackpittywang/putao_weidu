@@ -72,6 +72,9 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_count.setText(cart.getQt());
         holder.btn_sel.setState(cart.isSelect());
         showEdit(holder, cart);
+        if (!cart.isSelect()) {
+            holder.btn_sel.setState(false);
+        }
         holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
             @Override
             public void onSwitchClick(View v, boolean isSelect) {
@@ -177,6 +180,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         for (Integer key : keys) {
             Cart cart = selected.get(key);
             cart.setEditable(false);
+            cart.setIsSelect(false);
             replace(key, cart);
         }
     }
