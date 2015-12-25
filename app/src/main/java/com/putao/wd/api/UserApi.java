@@ -153,13 +153,10 @@ public class UserApi {
      * @param nickName         昵称
      * @param userProfilePhoto 头像
      */
-    public static Request questionList(String nickName, String userProfilePhoto) {
-        FormEncodingRequestBuilder builder = PTWDRequestHelper.user();
-        String uid = AccountHelper.getCurrentUid();
-        if (!StringUtils.isEmpty(uid))
-            throw new RuntimeException("当前用户没有登录");
-        builder.addParam(REQUEST_NICKNAME, nickName)
-                .addParam(REQUEST_HEAD_ICON, userProfilePhoto);
-        return builder.build(RequestMethod.POST, URL_QUESTION_LIST);
+    public static Request getQuestionList(String nickName, String userProfilePhoto) {
+        return PTWDRequestHelper.user()
+                .addParam(REQUEST_NICKNAME, nickName)
+                .addParam(REQUEST_HEAD_ICON, userProfilePhoto)
+                .build(RequestMethod.POST, URL_QUESTION_LIST);
     }
 }

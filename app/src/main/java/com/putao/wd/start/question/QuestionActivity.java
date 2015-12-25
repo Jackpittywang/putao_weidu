@@ -9,6 +9,8 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Question;
+import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.start.question.adapter.QuestionAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -39,6 +41,8 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
 
     private boolean isShowEmoji = false;
 
+    private UserInfo userInfo;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_question;
@@ -47,12 +51,15 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        userInfo = AccountHelper.getCurrentUserInfo();
         emojiMap = GlobalApplication.getEmojis();
         emojis = new ArrayList<>();
         for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
         vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
+
+        getQuestionList();
     }
 
     @Override
@@ -72,13 +79,13 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                 String msg = et_msg.getText().toString();
                 Logger.d("_____" + AccountHelper.getCurrentUserInfo().getNick_name());
                 Logger.d("_____" + AccountHelper.getCurrentUserInfo().getHead_img());
-                networkRequest(UserApi.questionAdd(et_msg.getText().toString(), AccountHelper.getCurrentUserInfo().getNick_name(), AccountHelper.getCurrentUserInfo().getHead_img()),
+                networkRequest(UserApi.questionAdd(et_msg.getText().toString(), userInfo.getNick_name(), userInfo.getHead_img()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
                                 Logger.i("我的提问提交成功");
                                 et_msg.setText("");
-                                refreshQuestionList();
+//                                refreshQuestionList();
                             }
                         });
                 break;
@@ -86,8 +93,15 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
     }
 
     /**
-     * 刷新评论列表
+     * 获得评论列表
      */
-    private void refreshQuestionList() {
+    private void getQuestionList() {
+        networkRequest(UserApi.getQuestionList(userInfo.getNick_name(), userInfo.getHead_img()),
+                new SimpleFastJsonCallback<ArrayList<Question>>(Question.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<Question> result) {
+                        Logger.d(result.toString());
+                    }
+                });
     }
 }
