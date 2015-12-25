@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.Cart;
 import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.SwitchButton;
@@ -66,8 +65,10 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_title.setText(cart.getTitle());
         holder.tv_sku.setText(cart.getSku());
         holder.tv_money.setText(cart.getPrice());
-        if (!StringUtils.isEmpty(cart.getQt()))
+        if (!StringUtils.isEmpty(cart.getQt())){
             holder.asl_num_sel.setCount(Integer.parseInt(cart.getQt()));
+            cart.setGoodsCount(cart.getQt());
+        }
 
         holder.tv_count.setText(cart.getQt());
         holder.btn_sel.setState(cart.isSelect());
@@ -101,7 +102,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 //                    curCart.setQt(MathUtils.add(curCart.getQt(), count + ""));
 //                else
 //                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
-                curCart.setGoodCount(count + "");
+                curCart.setGoodsCount(count + "");
                 selected.put(position, curCart);
             }
         });

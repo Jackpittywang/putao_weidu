@@ -1,7 +1,6 @@
 package com.putao.wd.store.shopping;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,16 +10,20 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Cart;
+import com.putao.wd.model.CartEdit;
 import com.putao.wd.model.ShopCarItem;
+import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.product.EditShoppingCarPopupWindow;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,6 +34,10 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/4.
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
+    private final String PAY = "去结算";
+    private final String DELETE = "删除";
+    private final String SAVE = "保存";
+    private final String EDIT = "编辑";
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -94,12 +101,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 编辑购物车
      */
     private void multiManage(List products) {
-        networkRequest(StoreApi.multiManage(products), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
-            @Override
-            public void onSuccess(String url, ShopCarItem result) {
-                Logger.d(result.toString());
-            }
-        });
+
     }
 
     /**
@@ -147,6 +149,17 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 adapter.selAll(isSelectAll);
                 break;
             case R.id.ll_closing://去结算/删除
+                switch (tv_closing.getText().toString()) {
+                    case PAY:
+                        startActivity(WriteOrderActivity.class);
+                        break;
+                    case DELETE:
+
+                        //删除操作
+
+                        break;
+                }
+                break;
 //                if (isEditable) {
 //                    startActivity(WriteOrderActivity.class);
 //                } else {
@@ -160,7 +173,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 //                    setRightTitle("编辑");
 //                    isEditable = true;
 //                }
-                break;
         }
     }
 
@@ -177,11 +189,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     @Override
     public void onRightAction() {
-        if (!saveable) {
-            setButtonStyle("保存", "删除", true);
+        if (!saveable) {//这里编辑操作的入口
+            setButtonStyle(SAVE, DELETE, true);
             adapter.startEdit();
-        }else {
-            setButtonStyle("编辑", "去结算", false);
+        }else {//这里做保存操作
+            setButtonStyle(EDIT, PAY, false);
             saveGoodsInfo();
             adapter.finishEdit();
         }
@@ -233,16 +245,29 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 保存商品编辑信息
      */
     private void saveGoodsInfo() {
-        mCart.setQt(mCart.getGoodCount());
-        mCart.setEditable(false);
-        setGoodsPrice(mCart);
+        List<CartEdit> cartEdits = new ArrayList<>();
+        CartEdit cartEdit = new CartEdit();
+        cartEdit.setPid(mCart.getPid());
+        cartEdit.setQt(mCart.getQt());
+        cartEdits.add(cartEdit);
+        networkRequest(StoreApi.multiManage(cartEdits), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+            @Override
+            public void onSuccess(String url, ShopCarItem result) {
+                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
+                Logger.w("保存成功 = " + result.toString());
+                mCart.setQt(mCart.getGoodsCount());
+                mCart.setEditable(false);
+                setGoodsPrice(mCart);
+                loading.dismiss();
+            }
+        });
     }
 
     /**
      * 设置商品价格
      */
     private void setGoodsPrice(Cart cart) {
-        String goodsCount = cart.isEditable()? cart.getQt() : cart.getGoodCount();
+        String goodsCount = cart.isEditable()? cart.getQt() : cart.getGoodsCount();
         float price = Float.parseFloat(cart.getPrice());
         float qt = Float.parseFloat(goodsCount);
         tv_money.setText(price * qt + "");
@@ -251,7 +276,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
     public void eventUpdateNorms(Cart cart) {
         adapter.editNorms(currentPosition, cart);
-
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
@@ -266,7 +290,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void eventUneditable(Cart cart) {
         navigation_bar.setRightAction(false);
         setRightTitleColor(R.color.text_color_gray);
-        setButtonStyle("编辑", "去结算", false);
+        setButtonStyle(EDIT, PAY, false);
         cart.setEditable(false);
     }
 

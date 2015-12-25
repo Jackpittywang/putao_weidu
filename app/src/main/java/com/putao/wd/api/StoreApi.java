@@ -3,7 +3,7 @@ package com.putao.wd.api;
 import com.alibaba.fastjson.JSON;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
-import com.putao.wd.model.EditShopCart;
+import com.putao.wd.model.CartEdit;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.RequestMethod;
 
@@ -118,9 +118,9 @@ public class StoreApi {
     /**
      * 编辑购物车
      *
-     * @param products 产品id
+     * @param products 产品list
      */
-    public static Request multiManage(List<EditShopCart> products) {
+    public static Request multiManage(List<CartEdit> products) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_PRODUCTS, JSON.toJSONString(products))
                 .build(RequestMethod.POST, URL_CART_EDIT);
