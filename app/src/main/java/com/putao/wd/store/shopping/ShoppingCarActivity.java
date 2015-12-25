@@ -235,8 +235,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
-    public void eventUneditable(String tag) {
+    public void eventUneditable(Cart cart) {
         navigation_bar.setRightAction(false);
+        setButtonStyle("编辑", "去结算", false);
+        cart.setEditable(false);
         setRightTitleColor(R.color.text_color_gray);
     }
 
