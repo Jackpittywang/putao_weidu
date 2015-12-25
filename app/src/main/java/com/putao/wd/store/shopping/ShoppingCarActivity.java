@@ -1,6 +1,7 @@
 package com.putao.wd.store.shopping;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -55,6 +56,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private int update_position = -1;
 
     private int currentPosition;//当前修改的位置
+    private Cart mCart;//当前修改的位置
 
     @Override
     protected int getLayoutId() {
@@ -113,6 +115,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         });
     }
 
+    /**
+     * 计算购物车商品总金额
+     */
     private String caculateSumMoney(List<Cart> carts) {
         String sum = "0";
         for (Cart cart : carts) {
@@ -177,6 +182,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         }else {
             setButtonStyle("编辑", "去结算", false);
+            mCart.setQt(mCart.getGoodCount());
+            mCart.setEditable(false);
+            setGoodsPrice(mCart);
             adapter.finishEdit();
         }
 //        if (adapter.getItemState()) {
@@ -223,23 +231,36 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         ll_money.setVisibility(canSave == true ? View.GONE : View.VISIBLE);
     }
 
+    /**
+     * 设置商品价格
+     */
+    private void setGoodsPrice(Cart cart) {
+        String goodCount = cart.isEditable()? cart.getQt() : cart.getGoodCount();
+        float price = Float.parseFloat(cart.getPrice());
+        float qt = Float.parseFloat(goodCount);
+        tv_money.setText(price * qt + "");
+    }
+
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
     public void eventUpdateNorms(Cart cart) {
         adapter.editNorms(currentPosition, cart);
+
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
-    public void eventEditable(String tag) {
+    public void eventEditable(Cart cart) {
         navigation_bar.setRightAction(true);
         setRightTitleColor(R.color.text_main_color_nor);
+        mCart = cart;
+        setGoodsPrice(cart);
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
     public void eventUneditable(Cart cart) {
         navigation_bar.setRightAction(false);
+        setRightTitleColor(R.color.text_color_gray);
         setButtonStyle("编辑", "去结算", false);
         cart.setEditable(false);
-        setRightTitleColor(R.color.text_color_gray);
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDIT_NORMS)
