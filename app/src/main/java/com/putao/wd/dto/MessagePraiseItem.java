@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by wango on 2015/12/3.
  */
+@Deprecated
 public class MessagePraiseItem implements Serializable {
     private String id;//回复ID
     private String headIconUrl;//用户头像地址

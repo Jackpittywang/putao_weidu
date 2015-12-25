@@ -1,11 +1,15 @@
 package com.putao.wd.me.message.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.MessagePraiseItem;
+import com.putao.wd.model.PraiseDetail;
+import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -18,10 +22,10 @@ import butterknife.Bind;
  * 消息中心：”赞”适配器
  * Created by wango on 2015/12/3.
  */
-public class PraiseAdapter extends LoadMoreAdapter<MessagePraiseItem, PraiseAdapter.PraiseViewHolder> {
+public class PraiseAdapter extends LoadMoreAdapter<PraiseDetail, PraiseAdapter.PraiseViewHolder> {
 
-    public PraiseAdapter(Context context, List<MessagePraiseItem> messagePraiseItems) {
-        super(context, messagePraiseItems);
+    public PraiseAdapter(Context context, List<PraiseDetail> praiseDetail) {
+        super(context, praiseDetail);
     }
 
     @Override
@@ -35,11 +39,12 @@ public class PraiseAdapter extends LoadMoreAdapter<MessagePraiseItem, PraiseAdap
     }
 
     @Override
-    public void onBindItem(PraiseViewHolder holder, MessagePraiseItem messagePraiseItem, int position) {
+    public void onBindItem(PraiseViewHolder holder, PraiseDetail praiseDetail, int position) {
 //        holder.iv_praise_headericon.setImageURL(messagePraiseItem.getHeadIconUrl());
 //        holder.tv_praise_usernickname.setText(messagePraiseItem.getPraiseUserNickname());
 //        holder.tv_praise_date.setText(messagePraiseItem.getDate());
-//        holder.tv_praised_content.setText(messagePraiseItem.getPraisedUserName() + "：" + messagePraiseItem.getPraisedcontent());
+        Spanned sstr= Html.fromHtml("<font color=#313131>" + praiseDetail.getContent() + "</font>");
+        holder.tv_praised_content.setText(sstr);
     }
 
     /**
@@ -53,7 +58,7 @@ public class PraiseAdapter extends LoadMoreAdapter<MessagePraiseItem, PraiseAdap
         @Bind(R.id.tv_praise_date)
         TextView tv_praise_date;//赞时间
         @Bind(R.id.tv_praised_content)
-        TextView tv_praised_content;//被赞内容
+        EmojiTextView tv_praised_content;//被赞内容
 
         public PraiseViewHolder(View itemView) {
             super(itemView);

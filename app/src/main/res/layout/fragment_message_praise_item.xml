@@ -51,7 +51,7 @@
             android:textSize="@dimen/text_size_16sp" />
 
         <!--被赞内容-->
-        <TextView
+        <com.sunnybear.library.view.emoji.EmojiTextView
             android:id="@+id/tv_praised_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

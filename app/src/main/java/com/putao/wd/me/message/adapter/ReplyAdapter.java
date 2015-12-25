@@ -1,11 +1,16 @@
 package com.putao.wd.me.message.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.dto.MessageReplyItem;
+import com.putao.wd.model.ReplyDetail;
+import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -18,9 +23,9 @@ import butterknife.Bind;
  * 消息中心：“回复”适配器
  * Created by wango on 2015/12/2.
  */
-public class ReplyAdapter extends LoadMoreAdapter<MessageReplyItem,ReplyAdapter.ReplyViewHolder> {
+public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail,ReplyAdapter.ReplyViewHolder> {
 
-    public ReplyAdapter(Context context, List<MessageReplyItem> messageReplyItems) {
+    public ReplyAdapter(Context context, List<ReplyDetail> messageReplyItems) {
         super(context, messageReplyItems);
     }
 
@@ -35,12 +40,13 @@ public class ReplyAdapter extends LoadMoreAdapter<MessageReplyItem,ReplyAdapter.
     }
 
     @Override
-    public void onBindItem(ReplyViewHolder holder, MessageReplyItem messageReplyItem, int position) {
-//        holder.iv_reply_headericon.setImageURL(messageReplyItem.getHeadIconUrl());
-//        holder.tv_reply_usernickname.setText(messageReplyItem.getReplyUserNickname());
-//        holder.tv_reply_date.setText(messageReplyItem.getDate());
-//        Spanned sstr=Html.fromHtml("<font color=#959595>回复 您：</font>"+"<font color=#313131>"+messageReplyItem.getComment()+"</font>");
-//        holder.tv_reply_content.setText(sstr);
+    public void onBindItem(ReplyViewHolder holder, ReplyDetail replyDetail, int position) {
+
+
+        holder.iv_head_icon.setImageURL(replyDetail.getUser_profile_photo());
+        holder.tv_nickname.setText(replyDetail.getUser_name());
+        holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getModified_time())));
+        holder.tv_reply_content.setText(replyDetail.getContent());
 //        holder.tv_replied_content.setText(messageReplyItem.getRepliedUserName() + "：" + messageReplyItem.getRepliedcontent());
     }
 
@@ -55,7 +61,7 @@ public class ReplyAdapter extends LoadMoreAdapter<MessageReplyItem,ReplyAdapter.
         @Bind(R.id.tv_reply_date)
         TextView tv_reply_date;//回复时间
         @Bind(R.id.tv_reply_content)
-        TextView tv_reply_content;//回复内容
+        EmojiTextView tv_reply_content;//回复内容
         @Bind(R.id.tv_replied_content)
         TextView tv_replied_content;//被回复的内容
 
