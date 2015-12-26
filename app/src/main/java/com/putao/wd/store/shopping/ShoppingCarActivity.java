@@ -74,6 +74,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         addNavigation();
         navigation_bar.setRightAction(false);
         setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+        btn_sel_all.setClickable(false);
 
         adapter = new ShoppingCarAdapter(mContext, null);
         rv_cars.setAdapter(adapter);
@@ -93,8 +94,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return new String[0];
     }
 
+    /**
+     * 添加监听器
+     */
     private void addListener() {
-        btn_sel_all.setOnSwitchClickListener(this);
+//        btn_sel_all.setOnSwitchClickListener(this);
     }
 
     @OnClick({R.id.ll_closing, R.id.ll_all})
@@ -103,6 +107,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.ll_all://全选
                 isSelectAll = isSelectAll ? false : true;
+                if (isSelectAll) {
+                    navigation_bar.setRightAction(true);
+                    setRightTitleColor(R.color.text_main_color_nor);
+                } else {
+                    navigation_bar.setRightAction(false);
+                    setRightTitleColor(R.color.text_color_gray);
+                    setButtonStyle(EDIT, PAY, false);
+                }
                 btn_sel_all.setState(isSelectAll);
                 adapter.selAll(isSelectAll);
                 break;
@@ -129,8 +141,21 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         } else {//这里做保存操作
             setButtonStyle(EDIT, PAY, false);
+            btn_sel_all.setState(!isSelectAll);
+            navigation_bar.setRightAction(false);
+            setRightTitleColor(R.color.text_color_gray);
+            adapter.finishEdit();
             saveGoodsInfo();
         }
+    }
+
+    /**
+     * 全选监听器
+     */
+    @Override
+    public void onSwitchClick(View v, boolean isSelect) {
+        adapter.selAll(isSelect);
+        navigation_bar.setRightAction(true);
     }
 
     /**
@@ -173,28 +198,20 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 全选监听器
-     */
-    @Override
-    public void onSwitchClick(View v, boolean isSelect) {
-        adapter.selAll(isSelect);
-        navigation_bar.setRightAction(true);
-    }
-
-    /**
-     * 设置不同状态时的Button显示
+     *设置不同状态时的Button显示
      */
     private void setButtonStyle(String topText, String bottomText, boolean canSave) {
         setRightTitle(topText);
         tv_closing.setText(bottomText);
         saveable = canSave;
-        ll_money.setVisibility(canSave == true ? View.GONE : View.VISIBLE);
+        ll_money.setVisibility(canSave ? View.GONE : View.VISIBLE);
     }
 
     /**
      * 保存商品编辑信息
      */
     private void saveGoodsInfo() {
+        mCart.setQt(mCart.getGoodsCount());
         List<CartEdit> cartEdits = new ArrayList<>();
         CartEdit cartEdit = new CartEdit();
         cartEdit.setPid(mCart.getPid());
@@ -205,7 +222,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
                 ToastUtils.showToastShort(mContext, "编辑商品保存成功");
                 Logger.w("保存成功 = " + result.toString());
-                mCart.setQt(mCart.getGoodsCount());
                 mCart.setEditable(false);
                 setGoodsPrice(mCart);
                 adapter.finishEdit();

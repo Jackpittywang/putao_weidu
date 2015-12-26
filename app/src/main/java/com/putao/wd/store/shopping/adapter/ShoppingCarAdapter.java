@@ -157,6 +157,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         for (Cart car : cars) {
             int index = cars.indexOf(car);
             car.setIsSelect(isSelect);
+            selected.put(index, car);
             replace(index, car);
         }
     }
