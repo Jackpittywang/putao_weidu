@@ -277,7 +277,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void eventEditable(Map<Integer, Cart> selected) {
         navigation_bar.setRightAction(true);
         setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
-        btn_sel_all.setState(false);
+        if (selected.size() == adapter.getItems().size()) {
+            btn_sel_all.setState(true);
+        } else {
+            btn_sel_all.setState(false);
+        }
         mSelected = selected;
     }
 
