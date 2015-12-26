@@ -77,19 +77,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
         addListener();
 
         getBannerList();//获取广告列表
-        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
-                    @Override
-                    public void onSuccess(String url, AcitonNewsList result) {
-//                        cacheEnterDisk(url, result);
-                        adapter.addAll(result.getGetEventList());
-                        if (result.getCurrent_page() != result.getTotal_page())
-                            currentPage++;
-                        else
-                            rv_content.noMoreLoading();
-                        loading.dismiss();
-                    }
-                });
+        getActionList();//获取活动列表
     }
 
     /**
@@ -109,6 +97,25 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
                         }));
                         bl_banner.setOffscreenPageLimit(result.size());//缓存页面数
 //                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 获取活动列表
+     */
+    private void getActionList() {
+        networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
+                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
+                    @Override
+                    public void onSuccess(String url, AcitonNewsList result) {
+//                        cacheEnterDisk(url, result);
+                        adapter.addAll(result.getGetEventList());
+                        if (result.getCurrent_page() != result.getTotal_page())
+                            currentPage++;
+                        else
+                            rv_content.noMoreLoading();
+                        loading.dismiss();
                     }
                 });
     }
@@ -140,18 +147,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                        , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
-                            @Override
-                            public void onSuccess(String url, AcitonNewsList result) {
-                                adapter.addAll(result.getGetEventList());
-                                if (result.getCurrent_page() != result.getTotal_page()) {
-                                    rv_content.loadMoreComplete();
-                                    currentPage++;
-                                } else rv_content.noMoreLoading();
-                                loading.dismiss();
-                            }
-                        });
+                getActionList();
             }
         });
         rv_content.setOnItemClickListener(new OnItemClickListener<ActionNews>() {

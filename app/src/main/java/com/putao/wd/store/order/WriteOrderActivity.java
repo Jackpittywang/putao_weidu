@@ -7,13 +7,9 @@ import android.widget.ImageView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
-import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.OrderListItem;
 import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.me.address.AddressListActivity;
-import com.putao.wd.model.Cart;
-import com.putao.wd.model.Order;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -38,7 +34,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Bind(R.id.iv_reapte_picbar)
     ImageView iv_reapte_picbar;//分割图片
     @Bind(R.id.stickyHeaderLayout_scrollable)
-    BasicRecyclerView stickyHeaderLayout_scrollable;//订单列表
+    BasicRecyclerView rv_orders;//订单列表
 
     private OrdersAdapter adapter;
 
@@ -54,62 +50,51 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         sticky_layout.canScrollView();
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
-        //初始化列表数据
-//        List<OrderListItem> cars = getTestData();
-//        adapter = new OrdersAdapter(mContext, cars);
-//        stickyHeaderLayout_scrollable.setAdapter(adapter);
-
+        adapter = new OrdersAdapter(mContext, getTestData());
+        rv_orders.setAdapter(adapter);
     }
 
     /**
      * 订单列表
      */
-    private void getOrderLists(){
+    private void getOrderLists() {
         networkRequest(OrderApi.getOrderLists("0", "1"), new SimpleFastJsonCallback<ArrayList<ShoppingCar>>(ShoppingCar.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<ShoppingCar> result) {
                 Logger.d(result.toString());
-                adapter = new OrdersAdapter(mContext, result);
-                stickyHeaderLayout_scrollable.setAdapter(adapter);
             }
-
         });
     }
 
     /**
      * 取消订单
      */
-    private void orderCancel(){
+    private void orderCancel() {
         networkRequest(OrderApi.orderCancel(""), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
             }
-
         });
     }
 
-    private List<OrderListItem> getTestData() {
-        List<OrderListItem> list = new ArrayList<>();
+    private List<ShoppingCar> getTestData() {
+        List<ShoppingCar> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            OrderListItem order = new OrderListItem();
-            order.setTitle(i+"葡萄探索号.虚拟+现实儿童科技益智玩具");
+            ShoppingCar order = new ShoppingCar();
+            order.setTitle(i + "葡萄探索号.虚拟+现实儿童科技益智玩具");
             order.setColor("塔塔紫");
             order.setSize("均码");
             order.setMoney("399.00");
             order.setCount("2");
             list.add(order);
         }
-        OrderListItem orderfooter=new OrderListItem();
+        ShoppingCar orderfooter = new ShoppingCar();
         orderfooter.setSum_count("3");
         orderfooter.setCarriage("399.00");
         orderfooter.setSum("3666.00");
         orderfooter.setSum_price("8888");
         list.add(orderfooter);
-//        for (){
-//
-//        }
-
         return list;
     }
 
@@ -118,10 +103,10 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         return new String[0];
     }
 
-    @OnClick({R.id.ll_receiving_address,R.id.ll_need_invoice,})
+    @OnClick({R.id.ll_receiving_address, R.id.ll_need_invoice,})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_receiving_address:
                 startActivity(AddressListActivity.class);
                 break;

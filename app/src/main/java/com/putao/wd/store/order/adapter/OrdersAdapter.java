@@ -1,6 +1,7 @@
 package com.putao.wd.store.order.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,10 +39,10 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
 
     @Override
     public int getLayoutId(int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_ORDER:
                 return R.layout.layout_writeorder_item;
-            case TYPE_SUM :
+            case TYPE_SUM:
                 return R.layout.layout_write_order_sum;
         }
         return 0;
@@ -49,10 +50,10 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
 
     @Override
     public BasicViewHolder getViewHolder(View itemView, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_ORDER:
                 return new OrderListViewHolder(itemView);
-            case TYPE_SUM :
+            case TYPE_SUM:
                 return new SumOrderListViewHolder(itemView);
         }
         return null;
@@ -61,16 +62,16 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
 
     @Override
     public void onBindItem(BasicViewHolder holder, final ShoppingCar orderListItem, final int position) {
-        if(holder instanceof OrderListViewHolder) {
-            OrderListViewHolder viewHolder= (OrderListViewHolder) holder;
+        if (holder instanceof OrderListViewHolder) {
+            OrderListViewHolder viewHolder = (OrderListViewHolder) holder;
             viewHolder.iv_car_icon.setImageURL(orderListItem.getImgUrl());
             viewHolder.tv_title.setText(orderListItem.getTitle());
             viewHolder.tv_color.setText(orderListItem.getColor());
             viewHolder.tv_size.setText(orderListItem.getSize());
             viewHolder.tv_money.setText(orderListItem.getMoney());
-            viewHolder.tv_count.setText(orderListItem.getColor());
-        }else if(holder instanceof SumOrderListViewHolder){//列表底部汇总
-            SumOrderListViewHolder sumviewHolder= (SumOrderListViewHolder) holder;
+            viewHolder.tv_count.setText(orderListItem.getCount());
+        } else if (holder instanceof SumOrderListViewHolder) {//列表底部汇总
+            SumOrderListViewHolder sumviewHolder = (SumOrderListViewHolder) holder;
             sumviewHolder.tv_order_sumcount.setText(orderListItem.getCount());
             sumviewHolder.tv_product_summoney.setText(orderListItem.getMoney());
             sumviewHolder.tv_carriage.setText(orderListItem.getImgUrl());//在返回的list中，再添加一个item保存汇总值，其中ImgUrl保存总价
@@ -83,7 +84,6 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
      * 订单视图
      */
     static class OrderListViewHolder extends BasicViewHolder {
-
         @Bind(R.id.iv_car_icon)
         ImageDraweeView iv_car_icon;
         @Bind(R.id.tv_title)
@@ -96,7 +96,6 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
         TextView tv_money;
         @Bind(R.id.tv_count)
         TextView tv_count;
-
 
         public OrderListViewHolder(View itemView) {
             super(itemView);
@@ -118,6 +117,7 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
 
         public SumOrderListViewHolder(View itemView) {
             super(itemView);
+            itemView.setBackgroundColor(Color.WHITE);
         }
     }
 }

@@ -2,143 +2,143 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="5dp">
 
-        <!--商品图片-->
-        <com.sunnybear.library.view.image.ImageDraweeView
-            android:id="@+id/iv_car_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@id/btn_sel"
-            android:background="@color/text_color_gray" />
+    <!--商品图片-->
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_car_icon"
+        style="@style/image_round_4dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/btn_sel" />
 
-        <!--商品信息-->
-        <RelativeLayout
+    <!--商品信息-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/iv_car_icon">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@id/iv_car_icon">
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="65dp"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_marginRight="65dp"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <!--商品标题-->
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="2dp"
-                    android:lines="2"
-                    android:maxLines="2"
-                    android:singleLine="false"
-                    android:text="葡萄探索号.虚拟+现实儿童科技益智玩具"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_16sp" />
-
-                <!--规格参数-->
-                <LinearLayout
-                    android:id="@+id/ll_norms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_title"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="颜色:"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_color"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="塔塔紫"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="尺码:"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="均码"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_12sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!--价格信息-->
-            <LinearLayout
-                android:layout_alignParentRight="true"
+            <!--商品标题-->
+            <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:orientation="vertical">
+                android:lineSpacingExtra="2dp"
+                android:lines="2"
+                android:maxLines="2"
+                android:singleLine="false"
+                android:text="葡萄探索号.虚拟+现实儿童科技益智玩具"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_16sp" />
 
-                <!--价格-->
-                <LinearLayout
+            <!--规格参数-->
+            <LinearLayout
+                android:id="@+id/ll_norms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:orientation="horizontal">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal">
+                    android:text="颜色:"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="￥"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/text_size_12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:singleLine="true"
-                        android:text="399.00"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/text_size_16sp" />
-                </LinearLayout>
-
-                <!--数量-->
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="4dp">
+                    android:text="塔塔紫"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="X"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/text_size_14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="尺码:"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp" />
 
-                    <TextView
-                        android:id="@+id/tv_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:singleLine="true"
-                        android:text="2"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/text_size_16sp" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="均码"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
+
+        <!--价格信息-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
+            android:orientation="vertical">
+
+            <!--价格-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:singleLine="true"
+                    android:text="399.00"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_16sp" />
+            </LinearLayout>
+
+            <!--数量-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="X"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:singleLine="true"
+                    android:text="2"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
