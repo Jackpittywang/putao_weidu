@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.UserApi;
+import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.child.ChildInfoActivity;
 import com.putao.wd.me.message.MessageCenterActivity;
@@ -15,7 +16,6 @@ import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.question.QuestionActivity;
-import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -111,8 +111,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(AddressListActivity.class);
                 break;
             case R.id.si_action://我参与的活动
-//                startActivity(MyActionsActivity.class);
-                startActivity(WriteOrderActivity.class);
+                startActivity(MyActionsActivity.class);
+//                startActivity(WriteOrderActivity.class);
                 break;
             case R.id.si_question://我的提问
                 startActivity(QuestionActivity.class);
