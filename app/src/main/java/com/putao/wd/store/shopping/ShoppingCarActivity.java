@@ -259,8 +259,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         navigation_bar.setRightAction(true);
         setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         btn_sel_all.setState(false);
-        mSelected = selected;
-        setGoodsPrice();
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
