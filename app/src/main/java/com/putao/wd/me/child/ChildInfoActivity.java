@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
@@ -21,10 +22,6 @@ import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.picker.DatePicker;
 import com.sunnybear.library.view.picker.OptionPicker;
 import com.sunnybear.library.view.picker.SexPicker;
-
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -128,6 +125,8 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
      */
     private void initSexPicker() {
         mSexPicker = new SexPicker(this);
+        mSexPicker.setTextColor(ColorConstant.MAIN_COLOR_SEL, ColorConstant.MAIN_COLOR_NOR);
+        mSexPicker.setLineColor(ColorConstant.MAIN_COLOR_NOR);
         mSexPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(String option) {
@@ -141,6 +140,8 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
      */
     private void initDatePicker() {
         mDatePicker = new DatePicker(this);
+        mDatePicker.setTextColor(ColorConstant.MAIN_COLOR_SEL, ColorConstant.MAIN_COLOR_NOR);
+        mDatePicker.setLineColor(ColorConstant.MAIN_COLOR_NOR);
         mDatePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
@@ -154,6 +155,8 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
      */
     private void initFamilyPicker() {
         mFamilyPicker = new OptionPicker(this, ResourcesUtils.getStringArray(mContext, R.array.family));
+        mFamilyPicker.setTextColor(ColorConstant.MAIN_COLOR_SEL, ColorConstant.MAIN_COLOR_NOR);
+        mFamilyPicker.setLineColor(ColorConstant.MAIN_COLOR_NOR);
         mFamilyPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(String option) {

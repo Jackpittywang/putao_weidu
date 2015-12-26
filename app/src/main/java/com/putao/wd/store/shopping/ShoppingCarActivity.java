@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
@@ -34,10 +35,10 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/4.
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
-    private final String PAY = "去结算";
-    private final String DELETE = "删除";
-    private final String SAVE = "保存";
-    private final String EDIT = "编辑";
+    private static final String PAY = "去结算";
+    private static final String DELETE = "删除";
+    private static final String SAVE = "保存";
+    private static final String EDIT = "编辑";
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -72,7 +73,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         navigation_bar.setRightAction(false);
-        setRightTitleColor(R.color.text_color_gray);
+        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
 
         adapter = new ShoppingCarAdapter(mContext, null);
         rv_cars.setAdapter(adapter);

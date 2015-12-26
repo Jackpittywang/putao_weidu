@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
@@ -62,6 +63,8 @@ public class ApplyActivity extends PTWDActivity implements View.OnClickListener 
      */
     private void initFamilyPicker() {
         mFamilyPicker = new OptionPicker(this, ResourcesUtils.getStringArray(mContext, R.array.family));
+        mFamilyPicker.setTextColor(ColorConstant.MAIN_COLOR_SEL, ColorConstant.MAIN_COLOR_NOR);
+        mFamilyPicker.setLineColor(ColorConstant.MAIN_COLOR_NOR);
         mFamilyPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(String option) {
@@ -75,6 +78,8 @@ public class ApplyActivity extends PTWDActivity implements View.OnClickListener 
      */
     private void initAgesPicker() {
         mAgesPicker = new OptionPicker(this, ResourcesUtils.getStringArray(mContext, R.array.ages));
+        mAgesPicker.setTextColor(ColorConstant.MAIN_COLOR_SEL, ColorConstant.MAIN_COLOR_NOR);
+        mAgesPicker.setLineColor(ColorConstant.MAIN_COLOR_NOR);
         mAgesPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(String option) {

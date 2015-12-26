@@ -10,7 +10,7 @@
         style="@style/style_navigation_bar"
         auto:nav_main_title="关注成功"
         auto:nav_right_title="完成"
-        auto:nav_right_title_color="@drawable/text_select" />
+        auto:nav_right_title_color="@color/text_select" />
 
     <RelativeLayout
         android:layout_width="match_parent"
