@@ -32,6 +32,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public static final String EVENT_EDITABLE = "editable";//可编辑
     public static final String EVENT_UNEDITABLE = "uneditable";//不可编辑
     public static final String EVENT_EDIT_NORMS = "edit_norms";//编辑规格
+    public static final String EVENT_EDIT_COUNT = "edit_count";//编辑数量
 
     public static final String BUNDLE_POSITION = "position";
     public static final String BUNDLE_CART = "cart";
@@ -82,11 +83,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 cart.setIsSelect(isSelect);
                 if (isSelect) {
                     selected.put(position, cart);
-                    EventBusHelper.post(cart, EVENT_EDITABLE);
+                    EventBusHelper.post(selected, EVENT_EDITABLE);
                 } else {
                     selected.remove(position);
                     if (selected.size() == 0)
-                        EventBusHelper.post(cart, EVENT_UNEDITABLE);
+                        cart.setEditable(false);
+                        EventBusHelper.post(EVENT_UNEDITABLE, EVENT_UNEDITABLE);
                 }
                 replace(position, cart);
             }
@@ -104,6 +106,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 //                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
                 curCart.setGoodsCount(count + "");
                 selected.put(position, curCart);
+                EventBusHelper.post(selected, EVENT_EDIT_COUNT);
             }
         });
 
@@ -154,11 +157,17 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      */
     public void selAll(boolean isSelect) {
         List<Cart> cars = getItems();
-        for (Cart car : cars) {
-            int index = cars.indexOf(car);
-            car.setIsSelect(isSelect);
-            selected.put(index, car);
-            replace(index, car);
+        for (Cart cart : cars) {
+            int index = cars.indexOf(cart);
+            cart.setIsSelect(isSelect);
+            if (isSelect) {
+                selected.put(index, cart);
+            } else {
+                selected.remove(index);
+                cart.setEditable(false);
+                cart.setIsSelect(false);
+            }
+            replace(index, cart);
         }
     }
 
