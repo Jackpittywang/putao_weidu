@@ -112,6 +112,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
             case R.id.si_action://我参与的活动
                 startActivity(MyActionsActivity.class);
+//                startActivity(WriteOrderActivity.class);
                 break;
             case R.id.si_question://我的提问
                 startActivity(QuestionActivity.class);

@@ -14,9 +14,15 @@ public class ShoppingCar implements Serializable {
     private String money;
     private String count;
     private String imgUrl;
+
     private boolean isNull;
     private boolean isSelect;
     private boolean editable;
+
+    private String sum_count;
+    private String sum_price;
+    private String carriage;
+    private String sum;
 
     public String getId() {
         return id;
@@ -66,14 +72,6 @@ public class ShoppingCar implements Serializable {
         this.count = count;
     }
 
-    public boolean isNull() {
-        return isNull;
-    }
-
-    public void setIsNull(boolean isNull) {
-        this.isNull = isNull;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }
@@ -82,12 +80,20 @@ public class ShoppingCar implements Serializable {
         this.imgUrl = imgUrl;
     }
 
+    public boolean isNull() {
+        return isNull;
+    }
+
+    public void setNull(boolean aNull) {
+        isNull = aNull;
+    }
+
     public boolean isSelect() {
         return isSelect;
     }
 
-    public void setIsSelect(boolean isSelect) {
-        this.isSelect = isSelect;
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 
     public boolean isEditable() {
@@ -96,6 +102,38 @@ public class ShoppingCar implements Serializable {
 
     public void setEditable(boolean editable) {
         this.editable = editable;
+    }
+
+    public String getSum_count() {
+        return sum_count;
+    }
+
+    public void setSum_count(String sum_count) {
+        this.sum_count = sum_count;
+    }
+
+    public String getSum_price() {
+        return sum_price;
+    }
+
+    public void setSum_price(String sum_price) {
+        this.sum_price = sum_price;
+    }
+
+    public String getCarriage() {
+        return carriage;
+    }
+
+    public void setCarriage(String carriage) {
+        this.carriage = carriage;
+    }
+
+    public String getSum() {
+        return sum;
+    }
+
+    public void setSum(String sum) {
+        this.sum = sum;
     }
 
     @Override
@@ -111,6 +149,10 @@ public class ShoppingCar implements Serializable {
                 ", isNull=" + isNull +
                 ", isSelect=" + isSelect +
                 ", editable=" + editable +
+                ", sum_count='" + sum_count + '\'' +
+                ", sum_price='" + sum_price + '\'' +
+                ", carriage='" + carriage + '\'' +
+                ", sum='" + sum + '\'' +
                 '}';
     }
 }

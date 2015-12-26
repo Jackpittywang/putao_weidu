@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#e1ffffff"
+    android:background="@color/white"
     android:orientation="vertical">
 
+    <!--订单信息栏-->
     <RelativeLayout
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
@@ -12,24 +14,24 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="#e1ffffff">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_order_no_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="订单号"
-            android:textSize="@dimen/text_size_14sp"
-            android:textColor="#313131"
-            />
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_14sp" />
 
         <TextView
             android:id="@+id/tv_order_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_order_no_text"
-            android:text="----------"
-            android:textColor="#313131"
+            android:layout_marginTop="5dp"
+            android:text="2015112614082887661001"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/text_size_16sp" />
 
         <TextView
@@ -37,8 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_order_no"
+            android:layout_marginTop="5dp"
+            android:text="2015-08-02 13:48:37"
             android:textColor="@color/text_color_gray"
-            android:text="---------- --:--"
             android:textSize="@dimen/text_size_14sp" />
 
         <TextView
@@ -47,46 +50,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="----"
-            android:textSize="@dimen/text_size_16sp" />
+            android:text="待支付"
+            android:textColor="@color/text_color_red"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_goods"
+    <!--订单列表-->
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@id/stickyHeaderLayout_scrollable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#e1ffffff"
-        android:orientation="vertical">
+        auto:divider_color="@color/white"
+        auto:divider_height="1px"
+        auto:has_row_divider="true"
+        auto:is_inner="true" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f5f5f5"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/tv_total_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:textColor="#313131"
-            android:text="--件商品 合计：---" />
-
-        <TextView
-            android:id="@+id/tv_shipment_fee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="#959595"
-            android:text="含运费：---" />
-    </LinearLayout>
-
+    <!--订单确认栏-->
     <RelativeLayout
-        android:id="@+id/rl_foot"
+        android:id="@+id/rl_comfirm"
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
@@ -106,5 +88,4 @@
             android:layout_alignParentRight="true"
             android:text="订单操作" />
     </RelativeLayout>
-
 </LinearLayout>

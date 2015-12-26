@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 订单列表
  * Created by wango on 2015/12/7.
  */
+@Deprecated
 public class OrderListItem implements Serializable {
     private String id;
     private String title;
