@@ -222,16 +222,17 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 btn_sel_all.setState(false);
                 navigation_bar.setRightAction(false);
                 setRightTitleColor(R.color.text_color_gray);
+
+                Set<Integer> keys = mSelected.keySet();
+                String sum = "0";
+                for (Integer key : keys) {
+                    Cart cart = mSelected.get(key);
+                    cart.setQt(cart.getGoodsCount());
+                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+                }
+                tv_money.setText(sum);
                 adapter.finishEdit();
-                adapter.selected.clear();
                 loading.dismiss();
-//                Set<Integer> keys = mSelected.keySet();
-//                for (Integer key : keys) {
-//                    Cart cart = mSelected.get(key);
-//                    cart.setQt(cart.getGoodsCount());
-//                    cart.setEditable(false);
-//                }
-//                setGoodsPrice();
             }
         });
     }
@@ -258,13 +259,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     private void setGoodsPrice() {
         Set<Integer> keys = mSelected.keySet();
+        String sum = "0";
         for (Integer key : keys) {
             Cart cart = mSelected.get(key);
             String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
-            float price = Float.parseFloat(cart.getPrice());
-            float qt = Float.parseFloat(goodsCount);
-            tv_money.setText(price * qt + "");
+            sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), goodsCount));
         }
+        tv_money.setText(sum);
     }
 
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
@@ -277,14 +278,18 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         navigation_bar.setRightAction(true);
         setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         btn_sel_all.setState(false);
+        mSelected = selected;
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
-    public void eventUneditable(String tag) {
-        navigation_bar.setRightAction(false);
-        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+    public void eventUneditable(Map<Integer, Cart> selected) {
+        if(selected.size() == 0) {
+            navigation_bar.setRightAction(false);
+            setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+        }
         setButtonStyle(EDIT, PAY, false);
         btn_sel_all.setState(false);
+        mSelected = selected;
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDIT_COUNT)

@@ -88,7 +88,8 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                     selected.remove(position);
                     if (selected.size() == 0)
                         cart.setEditable(false);
-                        EventBusHelper.post(EVENT_UNEDITABLE, EVENT_UNEDITABLE);
+//                        EventBusHelper.post(EVENT_UNEDITABLE, EVENT_UNEDITABLE);
+                    EventBusHelper.post(selected, EVENT_UNEDITABLE);
                 }
                 replace(position, cart);
             }
