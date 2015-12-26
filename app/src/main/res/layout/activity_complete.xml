@@ -15,7 +15,7 @@
         auto:nav_main_title="完善用户信息"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title="保存"
-        auto:nav_right_title_color="@drawable/text_select" />
+        auto:nav_right_title_color="@color/text_select" />
 
     <RelativeLayout
         android:layout_width="match_parent"

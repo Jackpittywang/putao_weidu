@@ -11,7 +11,7 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="每次使用时间"
         auto:nav_right_title="保存"
-        auto:nav_right_title_color="@drawable/text_select" />
+        auto:nav_right_title_color="@color/text_select" />
 
     <!--选择区-->
     <com.sunnybear.library.view.select.RadioBar
