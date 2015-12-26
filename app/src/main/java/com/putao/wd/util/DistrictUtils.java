@@ -20,7 +20,7 @@ import java.util.List;
  * 地区解析工具
  * Created by guchenkai on 2015/12/15.
  */
-public class RegionUtils {
+public class DistrictUtils {
     private static JSONObject list;//城市列表
     private static List<ProvinceDB> mProvinceDBs = new ArrayList<>();//省份列表
     private static List<CityDB> mCityDBs = new ArrayList<>();//城区列表

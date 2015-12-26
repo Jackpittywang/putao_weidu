@@ -157,7 +157,3 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         }
     }
 }
-
-
-
-

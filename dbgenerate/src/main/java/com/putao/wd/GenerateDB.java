@@ -15,7 +15,7 @@ public class GenerateDB {
         initProvince(schema);
         initCity(schema);
         initDistrict(schema);
-        initAddress(schema);
+//        initAddress(schema);
         new DaoGenerator().generateAll(schema, args[0]);
     }
 
@@ -58,19 +58,19 @@ public class GenerateDB {
     /**
      * 地址
      */
-    private static void initAddress(Schema schema) {
-        Entity address = schema.addEntity("AddressDB");
-        address.setTableName("putao_wd_address");
-        address.addIdProperty().autoincrement().index();//id
-        address.addStringProperty("name");//收货人姓名
-        address.addStringProperty("province");//省份
-        address.addStringProperty("province_id");//省份id
-        address.addStringProperty("city");//城市
-        address.addStringProperty("city_id");//城市id
-        address.addStringProperty("district");//城区
-        address.addStringProperty("district_id");//城区id
-        address.addStringProperty("street");//街道
-        address.addStringProperty("mobile");//收货人电话
-        address.addBooleanProperty("isDefault");//是否是默认地址
-    }
+//    private static void initAddress(Schema schema) {
+//        Entity address = schema.addEntity("AddressDB");
+//        address.setTableName("putao_wd_address");
+//        address.addIdProperty().autoincrement().index();//id
+//        address.addStringProperty("name");//收货人姓名
+//        address.addStringProperty("province");//省份
+//        address.addStringProperty("province_id");//省份id
+//        address.addStringProperty("city");//城市
+//        address.addStringProperty("city_id");//城市id
+//        address.addStringProperty("district");//城区
+//        address.addStringProperty("district_id");//城区id
+//        address.addStringProperty("street");//街道
+//        address.addStringProperty("mobile");//收货人电话
+//        address.addBooleanProperty("isDefault");//是否是默认地址
+//    }
 }

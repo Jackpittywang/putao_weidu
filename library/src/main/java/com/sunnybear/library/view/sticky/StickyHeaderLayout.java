@@ -19,10 +19,6 @@ public class StickyHeaderLayout extends ScrollableLayout {
 
     private int maxScrollY;
 
-//    private int downX;
-//    private int downY;
-//    private int mTouchSlop;
-
     public StickyHeaderLayout(Context context) {
         this(context, null, 0);
     }
@@ -37,7 +33,6 @@ public class StickyHeaderLayout extends ScrollableLayout {
     }
 
     private void init(Context context) {
-//        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     public void setMinusView(View minusView) {
@@ -53,7 +48,6 @@ public class StickyHeaderLayout extends ScrollableLayout {
 
         setDraggableView(mStickyView);
         setFriction(0.1f);
-//        setMaxScrollY(mHeaderView.getHeight());
 
         setOnScrollChangedListener(new OnScrollChangedListener() {
             @Override
