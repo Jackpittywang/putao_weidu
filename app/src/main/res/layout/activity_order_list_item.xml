@@ -3,7 +3,7 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/color_EBEBEB"
     android:orientation="vertical">
 
     <!--订单信息栏-->
@@ -11,10 +11,10 @@
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/tv_order_no_text"
@@ -61,31 +61,54 @@
         android:id="@id/stickyHeaderLayout_scrollable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        auto:divider_color="@color/white"
+        android:background="@color/color_EBEBEB"
         auto:divider_height="1px"
         auto:has_row_divider="true"
         auto:is_inner="true" />
 
     <!--订单确认栏-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_comfirm"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:gravity="right|center_vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_order_hint"
+            android:gravity="center_vertical"
+            android:text="签收后15日内可申请售后"
+            android:layout_toLeftOf="@+id/btn_order_cancel"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="gone" />
+        
         <Button
             android:id="@+id/btn_order_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
             android:layout_toLeftOf="@+id/btn_order_operation"
             android:layout_toStartOf="@+id/btn_order_operation"
-            android:text="取消订单" />
+            android:background="@drawable/btn_order_state_selector"
+            android:gravity="center"
+            android:text="取消订单"
+            android:textColor="@color/service_btn_nor"
+            android:textSize="@dimen/text_size_14sp" />
 
         <Button
             android:id="@+id/btn_order_operation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="订单操作" />
-    </RelativeLayout>
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_order_express_selector"
+            android:gravity="center"
+            android:text="订单操作"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14sp" />
+    </LinearLayout>
 </LinearLayout>

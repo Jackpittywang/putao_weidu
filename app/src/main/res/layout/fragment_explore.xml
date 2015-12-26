@@ -63,7 +63,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/btn_service_state_selector"
+            android:background="@drawable/btn_order_state_selector"
             android:drawableLeft="@drawable/btn_explore_empty_selector"
             android:gravity="center"
             android:paddingLeft="30dp"

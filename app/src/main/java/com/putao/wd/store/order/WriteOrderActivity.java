@@ -78,7 +78,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         });
     }
 
-    private List<ShoppingCar> getTestData() {
+    public static List<ShoppingCar> getTestData() {
         List<ShoppingCar> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             ShoppingCar order = new ShoppingCar();

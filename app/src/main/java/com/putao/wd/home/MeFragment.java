@@ -16,6 +16,7 @@ import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.question.QuestionActivity;
+import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;

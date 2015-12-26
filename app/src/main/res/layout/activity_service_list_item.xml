@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_service_state_selector"
+            android:background="@drawable/btn_order_state_selector"
             android:gravity="center"
             android:layout_margin="10dp"
             android:paddingLeft="10dp"

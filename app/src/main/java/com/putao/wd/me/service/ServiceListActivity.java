@@ -1,6 +1,5 @@
 package com.putao.wd.me.service;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -62,8 +61,8 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         addNavigation();
         mActivity = this;
         mLoading = loading;
-        // 测试数据
-       /* serviceList = new ArrayList<ServiceDto>();
+        /*// 测试数据
+        serviceList = new ArrayList<ServiceDto>();
 
         for (int i = 0; i < 10; i++) {
             ServiceDto service = new ServiceDto();
@@ -73,13 +72,13 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             service.setCustomerName("葡萄科技");
             service.setCustomerAddress("宜山路218号");
             service.setCustomerPhone("13622222222");
-            if (i == 0) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_CHECK);
-            else if (i == 1) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_OVER);
-            else if (i == 2) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_AGREE);
-            else if (i == 3) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_SEND);
-            else if (i == 4) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_RECEIVE);
-            else if (i == 5) service.setServiceStatus(ServiceCommon.SERVICE_REFUND_FINISH);
-            else service.setServiceStatus(ServiceCommon.SERVICE_EXCHANGE_CHECK);
+            if (i == 0) service.setServiceStatus(ServiceCommonState.SERVICE_REFUND_CHECK);
+            else if (i == 1) service.setServiceStatus(ServiceCommonState.SERVICE_REFUND_OVER);
+            else if (i == 2) service.setServiceStatus(ServiceCommonState.SERVICE_REFUND_AGREE);
+            else if (i == 3) service.setServiceStatus(ServiceCommonState.SERVICE_REFUND_SEND);
+            else if (i == 4) service.setServiceStatus(ServiceCommonState.SERVICE_REFUND_RECEIVE);
+            else if (i == 5) service.setServiceStatus(ServiceCommonState.SERVICE_REFUND_FINISH);
+            else service.setServiceStatus(ServiceCommonState.SERVICE_EXCHANGE_CHECK);
 
             int num = (int) (Math.random() * 3);
             List<ServiceGoodsDto> goodsList = new ArrayList<ServiceGoodsDto>();
@@ -110,7 +109,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
             serviceList.add(service);
 
-        }*/
+        }
         // 测试数据结束
         if (serviceList == null || serviceList.size() == 0) {
             rl_no_service.setVisibility(View.VISIBLE);
@@ -135,7 +134,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             }
         });
 
-        refreshViewByType(0);
+        refreshViewByType(0);*/
     }
 
     /**

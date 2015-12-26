@@ -3,7 +3,6 @@ package com.putao.wd.me.service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -189,7 +188,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 
         tv_service_no.setText(serviceDto.getServiceNo());
         tv_service_purchase_time.setText(serviceDto.getPurchaseTime() + "");
-        tv_service_status.setText(ServiceCommon.getServiceStatusShowString(serviceDto.getServiceStatus()));
+        tv_service_status.setText(ServiceCommonState.getServiceStatusShowString(serviceDto.getServiceStatus()));
         tv_service_info.setText("商品信息");
         tv_customer_name.setText(serviceDto.getCustomerName());
         tv_customer_address.setText(serviceDto.getCustomerAddress());
@@ -228,39 +227,39 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
      * @param status
      */
     private void setServiceStatus(int status) {
-        String statusStr = ServiceCommon.getServiceStatusShowString(status);
+        String statusStr = ServiceCommonState.getServiceStatusShowString(status);
         TextView tv_service_status = (TextView) findViewById(R.id.tv_service_status);
         tv_service_status.setText(statusStr);
-        if (status == ServiceCommon.SERVICE_REFUND_CHECK || status == ServiceCommon.SERVICE_REFUND_AGREE ||
-                status == ServiceCommon.SERVICE_REFUND_SEND || status == ServiceCommon.SERVICE_REFUND_RECEIVE ||
-                status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_CHECK ||
-                status == ServiceCommon.SERVICE_EXCHANGE_AGREE || status == ServiceCommon.SERVICE_EXCHANGE_SEND ||
-                status == ServiceCommon.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommon.SERVICE_EXCHANGE_BACK ||
-                status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
+        if (status == ServiceCommonState.SERVICE_REFUND_CHECK || status == ServiceCommonState.SERVICE_REFUND_AGREE ||
+                status == ServiceCommonState.SERVICE_REFUND_SEND || status == ServiceCommonState.SERVICE_REFUND_RECEIVE ||
+                status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_CHECK ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_AGREE || status == ServiceCommonState.SERVICE_EXCHANGE_SEND ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommonState.SERVICE_EXCHANGE_BACK ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
             View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
             v_status_waiting_pay.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);
             img_status_waiting_pay.setImageResource(R.drawable.img_details_as_steps_01_sel);
         }
-        if (status == ServiceCommon.SERVICE_REFUND_AGREE || status == ServiceCommon.SERVICE_REFUND_SEND || status == ServiceCommon.SERVICE_REFUND_RECEIVE ||
-                status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_AGREE || status == ServiceCommon.SERVICE_EXCHANGE_SEND ||
-                status == ServiceCommon.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommon.SERVICE_EXCHANGE_BACK ||
-                status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
+        if (status == ServiceCommonState.SERVICE_REFUND_AGREE || status == ServiceCommonState.SERVICE_REFUND_SEND || status == ServiceCommonState.SERVICE_REFUND_RECEIVE ||
+                status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_AGREE || status == ServiceCommonState.SERVICE_EXCHANGE_SEND ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommonState.SERVICE_EXCHANGE_BACK ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
             View v_status_waiting_shipment = findViewById(R.id.v_status_waiting_shipment);
             v_status_waiting_shipment.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_shipment = (ImageView) findViewById(R.id.img_status_waiting_shipment);
             img_status_waiting_shipment.setImageResource(R.drawable.img_details_as_steps_02_sel);
         }
-        if (status == ServiceCommon.SERVICE_REFUND_SEND || status == ServiceCommon.SERVICE_REFUND_RECEIVE ||
-                status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_SEND ||
-                status == ServiceCommon.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommon.SERVICE_EXCHANGE_BACK ||
-                status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
+        if (status == ServiceCommonState.SERVICE_REFUND_SEND || status == ServiceCommonState.SERVICE_REFUND_RECEIVE ||
+                status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_SEND ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommonState.SERVICE_EXCHANGE_BACK ||
+                status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
             View v_status_waiting_sign = findViewById(R.id.v_status_waiting_sign);
             v_status_waiting_sign.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_sign = (ImageView) findViewById(R.id.img_status_waiting_sign);
             img_status_waiting_sign.setImageResource(R.drawable.img_details_as_steps_03_sel);
         }
-        if (status == ServiceCommon.SERVICE_REFUND_FINISH || status == ServiceCommon.SERVICE_EXCHANGE_FINISH) {
+        if (status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
             View v_status_sale_service = findViewById(R.id.v_status_sale_service);
             v_status_sale_service.setBackgroundColor(0xffffffff);
             ImageView img_status_sale_service = (ImageView) findViewById(R.id.img_status_sale_service);

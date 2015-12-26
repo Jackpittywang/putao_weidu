@@ -14,11 +14,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.OrderDto;
-import com.putao.wd.dto.OrderGoodsDto;
-import com.putao.wd.dto.OrderShipmentListItemDto;
 import com.putao.wd.me.order.view.OrderGoodsItem;
-import com.putao.wd.me.order.view.OrderShipmentListItem;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.model.OrderProduct;
@@ -28,10 +24,7 @@ import com.sunnybear.library.util.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.transform.Result;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -201,7 +194,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
 
         tv_order_no.setText(orderDto.getOrder_sn());
         tv_order_purchase_time.setText(orderDto.getCreate_time() + "");
-        tv_order_status.setText(OrderCommon.getOrderStatusShowString(orderDto.getShipping_status()));
+        tv_order_status.setText(OrderCommonState.getOrderStatusShowString(orderDto.getShipping_status()));
         tv_order_cost.setText("¥" + orderDto.getTotal_amount());
         tv_order_info.setText("商品信息");
         tv_customer_name.setText(orderDto.getConsignee());
@@ -241,28 +234,28 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
      * @param status
      */
     private void setOrderStatus(int status) {
-        String statusStr = OrderCommon.getOrderStatusShowString(status);
+        String statusStr = OrderCommonState.getOrderStatusShowString(status);
         TextView tv_order_status = (TextView) findViewById(R.id.tv_order_status);
         tv_order_status.setText(statusStr);
-        if (status == OrderCommon.ORDER_WAITING_PAY || status == OrderCommon.ORDER_WAITING_SHIPMENT || status == OrderCommon.ORDER_WAITING_SIGN || status == OrderCommon.ORDER_SALE_SERVICE) {
+        if (status == OrderCommonState.ORDER_WAITING_PAY || status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
             View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
             v_status_waiting_pay.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);
             img_status_waiting_pay.setImageResource(R.drawable.img_details_order_steps_01_sel);
         }
-        if (status == OrderCommon.ORDER_WAITING_SHIPMENT || status == OrderCommon.ORDER_WAITING_SIGN || status == OrderCommon.ORDER_SALE_SERVICE) {
+        if (status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
             View v_status_waiting_shipment = findViewById(R.id.v_status_waiting_shipment);
             v_status_waiting_shipment.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_shipment = (ImageView) findViewById(R.id.img_status_waiting_shipment);
             img_status_waiting_shipment.setImageResource(R.drawable.img_details_order_steps_02_sel);
         }
-        if (status == OrderCommon.ORDER_WAITING_SIGN || status == OrderCommon.ORDER_SALE_SERVICE) {
+        if (status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
             View v_status_waiting_sign = findViewById(R.id.v_status_waiting_sign);
             v_status_waiting_sign.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_sign = (ImageView) findViewById(R.id.img_status_waiting_sign);
             img_status_waiting_sign.setImageResource(R.drawable.img_details_order_steps_03_sel);
         }
-        if (status == OrderCommon.ORDER_SALE_SERVICE) {
+        if (status == OrderCommonState.ORDER_SALE_SERVICE) {
             View v_status_sale_service = findViewById(R.id.v_status_sale_service);
             v_status_sale_service.setBackgroundColor(0xffffffff);
             ImageView img_status_sale_service = (ImageView) findViewById(R.id.img_status_sale_service);

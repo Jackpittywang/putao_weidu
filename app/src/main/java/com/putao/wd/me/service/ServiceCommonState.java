@@ -1,9 +1,10 @@
 package com.putao.wd.me.service;
 
 /**
+ * 售后状态
  * Created by wangou on 15/12/2.
  */
-public class ServiceCommon {
+public class ServiceCommonState {
 
     /**
      * 退款请求审核中
@@ -84,7 +85,6 @@ public class ServiceCommon {
      */
     public static final int SERVICE_DRAWBACK_FINISH = 23;
 
-
     /**
      * 根据订单的状态来获取相应的显示文字
      *
@@ -93,58 +93,39 @@ public class ServiceCommon {
      */
     public static String getServiceStatusShowString(int status) {
         switch (status) {
-            case SERVICE_REFUND_CHECK: {
+            case SERVICE_REFUND_CHECK:
                 return "退货请求审核中";
-            }
-            case SERVICE_REFUND_OVER: {
+            case SERVICE_REFUND_OVER:
                 return "退货已结束";
-            }
-            case SERVICE_REFUND_AGREE: {
+            case SERVICE_REFUND_AGREE:
                 return "同意请求";
-            }
-            case SERVICE_REFUND_SEND: {
+            case SERVICE_REFUND_SEND:
                 return "您已发货";
-            }
-            case SERVICE_REFUND_RECEIVE: {
+            case SERVICE_REFUND_RECEIVE:
                 return "退货已收到";
-            }
-            case SERVICE_REFUND_FINISH: {
+            case SERVICE_REFUND_FINISH:
                 return "退货已完成";
-            }
-            case SERVICE_EXCHANGE_CHECK: {
+            case SERVICE_EXCHANGE_CHECK:
                 return "换货请求审核中";
-            }
-            case SERVICE_EXCHANGE_OVER: {
+            case SERVICE_EXCHANGE_OVER:
                 return "换货已结束";
-            }
-            case SERVICE_EXCHANGE_AGREE: {
+            case SERVICE_EXCHANGE_AGREE:
                 return "同意换货请求";
-            }
-            case SERVICE_EXCHANGE_SEND: {
+            case SERVICE_EXCHANGE_SEND:
                 return "您已发货";
-            }
-            case SERVICE_EXCHANGE_RECEIVE: {
+            case SERVICE_EXCHANGE_RECEIVE:
                 return "换货商品已收到";
-            }
-            case SERVICE_EXCHANGE_BACK: {
+            case SERVICE_EXCHANGE_BACK:
                 return "换货寄回中";
-            }
-            case SERVICE_EXCHANGE_FINISH: {
+            case SERVICE_EXCHANGE_FINISH:
                 return "换货已完成";
-            }
-            case SERVICE_DRAWBACK_CHECK: {
+            case SERVICE_DRAWBACK_CHECK:
                 return "退款请求审核中";
-            }
-            case SERVICE_DRAWBACK_OVER: {
+            case SERVICE_DRAWBACK_OVER:
                 return "退款已结束";
-            }
-            case SERVICE_DRAWBACK_FINISH: {
+            case SERVICE_DRAWBACK_FINISH:
                 return "退款已成功";
-            }
-            default: {
-                return "";
-            }
         }
-
+        return "";
     }
 }

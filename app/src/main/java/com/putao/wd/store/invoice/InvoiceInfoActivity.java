@@ -84,7 +84,6 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onRightAction() {
 
-
     }
 
     /**
@@ -95,9 +94,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ArrayList<Cart> result) {
                 Logger.d(result.toString());
-
             }
-
         });
     }
     @Override

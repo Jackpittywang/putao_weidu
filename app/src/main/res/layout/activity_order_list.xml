@@ -67,7 +67,6 @@
             auto:inactive_color="@color/text_color_gray"
             auto:indicator_color="@color/text_main_color_nor"
             auto:title_text="待收货" />
-
     </com.sunnybear.library.view.select.TitleBar>
 
     <View
@@ -82,7 +81,7 @@
         android:background="@color/white">
 
         <!--有订单时-->
-        <com.sunnybear.library.view.recycler.BasicRecyclerView
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
             android:id="@+id/rv_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -117,5 +116,4 @@
                 android:textSize="@dimen/text_size_20sp" />
         </RelativeLayout>
     </FrameLayout>
-
 </LinearLayout>

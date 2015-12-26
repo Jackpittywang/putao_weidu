@@ -75,7 +75,7 @@ public class QuestionAdapter extends BasicAdapter<Question, BasicViewHolder> {
 
         }*/
 
-        viewHolder.question_item_ask_time.setText(DateUtils.secondToDate(Integer.parseInt(question.getQuestion().getCreate_time()), "----yyyy.MM.dd----"));
+        viewHolder.question_item_ask_time.setText(DateUtils.secondToDate(Integer.parseInt(question.getQuestion().getCreate_time()), "───yyyy.MM.dd───"));
         viewHolder.question_item_ask_context.setText(question.getQuestion().getMessage());
         List<String> replyList = question.getReply();
         if (replyList != null && replyList.size() > 0) {
