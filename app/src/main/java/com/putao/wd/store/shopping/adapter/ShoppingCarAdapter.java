@@ -33,18 +33,16 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public static final String EVENT_UNEDITABLE = "uneditable";//不可编辑
     public static final String EVENT_EDIT_NORMS = "edit_norms";//编辑规格
     public static final String EVENT_EDIT_COUNT = "edit_count";//编辑数量
+    public static final String EVENT_CURR_CLICK = "curr_click";//当前点击位置
 
     public static final String BUNDLE_POSITION = "position";
     public static final String BUNDLE_CART = "cart";
 
-    //    private boolean itemState;//记录当前状态值
     public Map<Integer, Cart> selected;//记录进入编辑状态后选中的商品
-//    public List<Cart> ShoppingCarts;//商品
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
         selected = new ConcurrentHashMap<>();
-//        this.ShoppingCarts = shoppingCars;
     }
 
     @Override
@@ -61,6 +59,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public void onBindItem(final ShoppingCarViewHolder holder, final Cart cart, final int position) {
         holder.tv_big_title.setText(!cart.isNull() ? "商品信息" : "无效商品");
         setTitle(holder, cart, position);//设置标题
+        EventBusHelper.post(position, EVENT_CURR_CLICK);
 
         holder.iv_car_icon.setImageURL(cart.getIcon());
         holder.tv_title.setText(cart.getTitle());
@@ -88,7 +87,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                     selected.remove(position);
                     if (selected.size() == 0)
                         cart.setEditable(false);
-                        EventBusHelper.post(EVENT_UNEDITABLE, EVENT_UNEDITABLE);
+                    EventBusHelper.post(selected, EVENT_UNEDITABLE);
                 }
                 replace(position, cart);
             }
@@ -97,19 +96,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override
             public void onAmountSelected(int count, boolean isPlus) {
-//                cart.setQt(holder.asl_num_sel.getCurrentCount() + "");
-//                ShoppingCarts.set(position, cart);
                 Cart curCart = selected.get(position);
-//                if (isPlus)
-//                    curCart.setQt(MathUtils.add(curCart.getQt(), count + ""));
-//                else
-//                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
                 curCart.setGoodsCount(count + "");
                 selected.put(position, curCart);
                 EventBusHelper.post(selected, EVENT_EDIT_COUNT);
             }
         });
-
         //修改规格参数
         holder.iv_update_norms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +159,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 cart.setEditable(false);
                 cart.setIsSelect(false);
             }
+            EventBusHelper.post(selected, EVENT_EDITABLE);
             replace(index, cart);
         }
     }
@@ -213,12 +206,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         }
     }
 
-//    /**
-//     * 获取当前item状态,判断是否是可编辑
-//     */
-//    public boolean getItemState() {
-//        return itemState;
-//    }
 
 //    /**
 //     * 更新Item显示编辑
