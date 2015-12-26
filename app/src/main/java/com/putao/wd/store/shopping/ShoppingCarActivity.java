@@ -143,12 +143,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         } else {//这里做保存操作
             setButtonStyle(EDIT, PAY, false);
-            btn_sel_all.setState(false);
-            navigation_bar.setRightAction(false);
-            setRightTitleColor(R.color.text_color_gray);
-            setGoodsPrice();
-            adapter.finishEdit();
-//            saveGoodsInfo();
+//            btn_sel_all.setState(false);
+//            navigation_bar.setRightAction(false);
+//            setRightTitleColor(R.color.text_color_gray);
+//            setGoodsPrice();
+//            adapter.finishEdit();
+            saveGoodsInfo();
         }
     }
 
@@ -201,7 +201,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     *设置不同状态时的Button显示
+     * 设置不同状态时的Button显示
      */
     private void setButtonStyle(String topText, String bottomText, boolean canSave) {
         setRightTitle(topText);
@@ -213,25 +213,45 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 保存商品编辑信息
      */
-//    private void saveGoodsInfo() {
-//        mCart.setQt(mCart.getGoodsCount());
-//        List<CartEdit> cartEdits = new ArrayList<>();
-//        CartEdit cartEdit = new CartEdit();
-//        cartEdit.setPid(mCart.getPid());
-//        cartEdit.setQt(mCart.getQt());
-//        cartEdits.add(cartEdit);
-//        networkRequest(StoreApi.multiManage(cartEdits), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ShopCarItem result) {
-//                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
-//                Logger.w("保存成功 = " + result.toString());
-//                mCart.setEditable(false);
-//                setGoodsPrice(mCart);
-//                adapter.finishEdit();
-//                loading.dismiss();
-//            }
-//        });
-//    }
+    private void saveGoodsInfo() {
+        networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+            @Override
+            public void onSuccess(String url, ShopCarItem result) {
+                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
+                Logger.w("保存成功 = " + result.toString());
+                btn_sel_all.setState(false);
+                navigation_bar.setRightAction(false);
+                setRightTitleColor(R.color.text_color_gray);
+                adapter.finishEdit();
+                adapter.selected.clear();
+                loading.dismiss();
+//                Set<Integer> keys = mSelected.keySet();
+//                for (Integer key : keys) {
+//                    Cart cart = mSelected.get(key);
+//                    cart.setQt(cart.getGoodsCount());
+//                    cart.setEditable(false);
+//                }
+//                setGoodsPrice();
+            }
+        });
+    }
+
+    /**
+     * 获取请求List
+     */
+    private List<CartEdit> getReqParam() {
+        List<CartEdit> cartEdits = new ArrayList<>();
+        Set<Integer> keys = mSelected.keySet();
+        for (Integer key : keys) {
+            CartEdit cartEdit = new CartEdit();
+            Cart cart = mSelected.get(key);
+            cartEdit.setPid(cart.getPid());
+            cartEdit.setQt(cart.getGoodsCount());
+            cart.setEditable(false);
+            cartEdits.add(cartEdit);
+        }
+        return cartEdits;
+    }
 
     /**
      * 设置商品价格
@@ -239,9 +259,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private void setGoodsPrice() {
         Set<Integer> keys = mSelected.keySet();
         for (Integer key : keys) {
-           Cart cart = mSelected.get(key);
-            cart.setQt(cart.getGoodsCount());
-            cart.setEditable(false);
+            Cart cart = mSelected.get(key);
             String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
             float price = Float.parseFloat(cart.getPrice());
             float qt = Float.parseFloat(goodsCount);
