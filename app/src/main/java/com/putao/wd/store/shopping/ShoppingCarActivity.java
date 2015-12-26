@@ -86,7 +86,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 adapter.addAll(result.getUse());
-                tv_money.setText(caculateSumMoney(result.getUse()));
+//                btn_sel_all.setState(true);
+//                adapter.selAll(true);
+//                tv_money.setText(caculateSumMoney(result.getUse()));
                 loading.dismiss();
             }
         });
@@ -276,6 +278,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
+        mSelected = selected;
+        setGoodsPrice();
         navigation_bar.setRightAction(true);
         setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         if (selected.size() == adapter.getItems().size()) {
@@ -283,18 +287,18 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         } else {
             btn_sel_all.setState(false);
         }
-        mSelected = selected;
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
     public void eventUneditable(Map<Integer, Cart> selected) {
+        mSelected = selected;
+        setGoodsPrice();
         if(selected.size() == 0) {
             navigation_bar.setRightAction(false);
             setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         }
         setButtonStyle(EDIT, PAY, false);
         btn_sel_all.setState(false);
-        mSelected = selected;
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDIT_COUNT)

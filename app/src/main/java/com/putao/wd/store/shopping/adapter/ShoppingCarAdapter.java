@@ -38,14 +38,11 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public static final String BUNDLE_POSITION = "position";
     public static final String BUNDLE_CART = "cart";
 
-    //    private boolean itemState;//记录当前状态值
     public Map<Integer, Cart> selected;//记录进入编辑状态后选中的商品
-//    public List<Cart> ShoppingCarts;//商品
 
     public ShoppingCarAdapter(Context context, List<Cart> shoppingCars) {
         super(context, shoppingCars);
         selected = new ConcurrentHashMap<>();
-//        this.ShoppingCarts = shoppingCars;
     }
 
     @Override
@@ -90,7 +87,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                     selected.remove(position);
                     if (selected.size() == 0)
                         cart.setEditable(false);
-//                        EventBusHelper.post(EVENT_UNEDITABLE, EVENT_UNEDITABLE);
                     EventBusHelper.post(selected, EVENT_UNEDITABLE);
                 }
                 replace(position, cart);
@@ -100,13 +96,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override
             public void onAmountSelected(int count, boolean isPlus) {
-//                cart.setQt(holder.asl_num_sel.getCurrentCount() + "");
-//                ShoppingCarts.set(position, cart);
                 Cart curCart = selected.get(position);
-//                if (isPlus)
-//                    curCart.setQt(MathUtils.add(curCart.getQt(), count + ""));
-//                else
-//                    curCart.setQt(MathUtils.subtract(curCart.getQt(), count + ""));
                 curCart.setGoodsCount(count + "");
                 selected.put(position, curCart);
                 EventBusHelper.post(selected, EVENT_EDIT_COUNT);
@@ -169,6 +159,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 cart.setEditable(false);
                 cart.setIsSelect(false);
             }
+            EventBusHelper.post(selected, EVENT_EDITABLE);
             replace(index, cart);
         }
     }
@@ -215,12 +206,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         }
     }
 
-//    /**
-//     * 获取当前item状态,判断是否是可编辑
-//     */
-//    public boolean getItemState() {
-//        return itemState;
-//    }
 
 //    /**
 //     * 更新Item显示编辑
