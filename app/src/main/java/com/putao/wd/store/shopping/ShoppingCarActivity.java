@@ -177,6 +177,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
         adapter.selAll(isSelect);
+        navigation_bar.setRightAction(true);
     }
 
     /**
