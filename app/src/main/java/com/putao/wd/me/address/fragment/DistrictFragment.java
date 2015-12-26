@@ -7,13 +7,13 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.DistrictDBManager;
-import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.CitySelectAdapter;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -66,11 +66,11 @@ public class DistrictFragment extends PTWDFragment<GlobalApplication> {
         rv_district.setOnItemClickListener(new OnItemClickListener<String>() {
             @Override
             public void onItemClick(String s, int position) {
-                AddressDB addressDB = new AddressDB();
-                addressDB.setProvince(province_name);
-                addressDB.setCity(city_name);
-                addressDB.setDistrict(s);
-                EventBusHelper.post(addressDB, EVENT_DISTRICT_SELECT);
+                List<String> list = new ArrayList<>();
+                list.add(province_name);
+                list.add(city_name);
+                list.add(s);
+                EventBusHelper.post(list, EVENT_DISTRICT_SELECT);
                 ActivityManager.getInstance().finishCurrentActivity();
             }
         });

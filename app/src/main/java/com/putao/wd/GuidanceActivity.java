@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
-import com.putao.wd.util.RegionUtils;
+import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -118,7 +118,7 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RegionUtils.insertRegion();
+                DistrictUtils.insertRegion();
             }
         }).start();
     }

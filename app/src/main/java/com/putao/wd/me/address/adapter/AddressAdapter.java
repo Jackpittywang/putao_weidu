@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AddressEditActivity;
 import com.putao.wd.model.Address;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
@@ -40,23 +43,33 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
     @Override
     public void onBindItem(AddressViewHolder holder, final Address address, final int position) {
         holder.tv_name.setText(address.getRealname());
-        boolean isDefault = address.getStatus() == 1;
-        if (isDefault)
-            holder.tv_default.setVisibility(View.VISIBLE);
-        else
-            holder.tv_default.setVisibility(View.GONE);
-        holder.tv_address.setText(address.getAddress());
+        holder.tv_default.setVisibility(StringUtils.equals(address.getStatus(), "1") ? View.VISIBLE : View.GONE);
+        setAddressName(holder, address);
         holder.tv_mobile.setText(address.getMobile());
         holder.tv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 index = position;
                 Bundle bundle = new Bundle();
-                bundle.putBoolean(AddressEditActivity.KEY_IS_ADD, false);
-                bundle.putSerializable(AddressEditActivity.KEY_ADDRESS, address);
+                bundle.putSerializable(AddressEditActivity.BUNDLE_KEY_ADDRESS, address);
                 ((PTWDActivity) context).startActivity(AddressEditActivity.class, bundle);
             }
         });
+    }
+
+    /**
+     * 设置地址
+     *
+     * @param holder
+     * @param address
+     */
+    private void setAddressName(AddressViewHolder holder, Address address) {
+        JSONObject object = JSON.parseObject(address.getAddressName());
+        String addr = object.getString(address.getProvince_id()) +
+                object.getString(address.getCity_id()) +
+                object.getString(address.getArea_id()) +
+                address.getAddress();
+        holder.tv_address.setText(addr);
     }
 
     /**
@@ -67,20 +80,6 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
     public int getEditPosition() {
         return index;
     }
-
-    /**
-     * 获得收货地址
-     *
-     * @param address address
-     * @return 收货地址
-     */
-//    private String getAddress(Address address) {
-//        String province = address.getProvince();//省
-//        String city = address.getCity();//市
-//        String district = address.getDistrict();//区;
-//        String street = address.getAddress();//街道
-//        return province + province + city + district + street;
-//    }
 
     /**
      * 收货人地址布局
