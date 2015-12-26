@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -11,7 +12,6 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
@@ -165,7 +165,9 @@ public class GlobalApplication extends BasicApplication {
     protected void onCrash(Throwable ex) {
         Logger.e("APP崩溃了,错误信息是" + ex.getMessage());
         ex.printStackTrace();
-        ActivityManager.getInstance().killProcess(getApplicationContext());
+        Intent intent=new Intent(this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     /**

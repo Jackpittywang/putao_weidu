@@ -53,7 +53,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
     private NormsSelectAdapter adapter;
 
-    private String count = "1";//总数量
+    private String mCount = "1";//总数量
     private float Price = 0;
     private String product_id;
 
@@ -111,8 +111,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
                 ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
-                if (!MathUtils.compare(count, sku.getQuantity()))
-                    carAdd(sku.getPid(), count);
+                if (!MathUtils.compare(mCount, sku.getQuantity()))
+                    carAdd(sku.getPid(), mCount);
                 else
                     ToastUtils.showToastShort(mContext, "库存不足！");
                 //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
@@ -156,8 +156,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
     @Subcriber(tag = NormsSelectAdapter.EVENT_COUNT)
     public void eventCount(int count) {
-        String string = MathUtils.multiplication(sku.getPrice(), count);
-        this.count = string;
-        tv_product_price.setText(string);
+        String sum = MathUtils.multiplication(sku.getPrice(), count);
+        mCount = String.valueOf(count);
+        tv_product_price.setText(sum);
     }
 }

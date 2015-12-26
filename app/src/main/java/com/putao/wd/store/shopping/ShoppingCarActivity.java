@@ -35,10 +35,10 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/4.
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
-    private static final String PAY = "去结算";
-    private static final String DELETE = "删除";
-    private static final String SAVE = "保存";
-    private static final String EDIT = "编辑";
+    private final String PAY = "去结算";
+    private final String DELETE = "删除";
+    private final String SAVE = "保存";
+    private final String EDIT = "编辑";
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -127,7 +127,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         if (!saveable) {//这里编辑操作的入口
             setButtonStyle(SAVE, DELETE, true);
             adapter.startEdit();
-        }else {//这里做保存操作
+        } else {//这里做保存操作
             setButtonStyle(EDIT, PAY, false);
             saveGoodsInfo();
         }
@@ -182,7 +182,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     *设置不同状态时的Button显示
+     * 设置不同状态时的Button显示
      */
     private void setButtonStyle(String topText, String bottomText, boolean canSave) {
         setRightTitle(topText);
@@ -218,7 +218,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 设置商品价格
      */
     private void setGoodsPrice(Cart cart) {
-        String goodsCount = cart.isEditable()? cart.getQt() : cart.getGoodsCount();
+        String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
         float price = Float.parseFloat(cart.getPrice());
         float qt = Float.parseFloat(goodsCount);
         tv_money.setText(price * qt + "");
@@ -232,7 +232,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Cart cart) {
         navigation_bar.setRightAction(true);
-        setRightTitleColor(R.color.text_main_color_nor);
+        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         mCart = cart;
         setGoodsPrice(cart);
     }
@@ -240,7 +240,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
     public void eventUneditable(Cart cart) {
         navigation_bar.setRightAction(false);
-        setRightTitleColor(R.color.text_color_gray);
+        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         setButtonStyle(EDIT, PAY, false);
         cart.setEditable(false);
     }

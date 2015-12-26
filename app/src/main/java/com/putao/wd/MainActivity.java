@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -186,6 +187,13 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     public void eventLogout(String tag) {
         setCurrentItem(R.id.ti_start_circle);
         tb_tab.setTabItemSelected(R.id.ti_start_circle);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if ((Intent.FLAG_ACTIVITY_CLEAR_TASK & intent.getFlags()) != 0)
+            finish();
     }
 
     /**
