@@ -26,6 +26,8 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -35,10 +37,10 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/4.
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
-    private static final String PAY = "去结算";
-    private static final String DELETE = "删除";
-    private static final String SAVE = "保存";
-    private static final String EDIT = "编辑";
+    private final String PAY = "去结算";
+    private final String DELETE = "删除";
+    private final String SAVE = "保存";
+    private final String EDIT = "编辑";
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -58,7 +60,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
     private ShoppingCarAdapter adapter;
     private EditShoppingCarPopupWindow mEditShoppingCarPopupWindow;//购物车弹窗
-    private Cart mCart;
+    private Map<Integer, Cart> mSelected;//记录进入编辑状态后选中的商品
     private int currentPosition;//当前修改的位置
     private boolean isSelectAll = false;
     private boolean saveable = false;//保存按钮标志
@@ -74,6 +76,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         addNavigation();
         navigation_bar.setRightAction(false);
         setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+        btn_sel_all.setClickable(false);
 
         adapter = new ShoppingCarAdapter(mContext, null);
         rv_cars.setAdapter(adapter);
@@ -93,8 +96,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return new String[0];
     }
 
+    /**
+     * 添加监听器
+     */
     private void addListener() {
-        btn_sel_all.setOnSwitchClickListener(this);
+//        btn_sel_all.setOnSwitchClickListener(this);
     }
 
     @OnClick({R.id.ll_closing, R.id.ll_all})
@@ -105,6 +111,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 isSelectAll = isSelectAll ? false : true;
                 btn_sel_all.setState(isSelectAll);
                 adapter.selAll(isSelectAll);
+                if (isSelectAll) {
+                    navigation_bar.setRightAction(true);
+                    setRightTitleColor(R.color.text_main_color_nor);
+                } else {
+                    navigation_bar.setRightAction(false);
+                    setRightTitleColor(R.color.text_color_gray);
+                    setButtonStyle(EDIT, PAY, false);
+                }
                 break;
             case R.id.ll_closing://去结算/删除
                 switch (tv_closing.getText().toString()) {
@@ -112,7 +126,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         startActivity(WriteOrderActivity.class);
                         break;
                     case DELETE:
-                        cartDelete(mCart.getPid());
+//                        cartDelete(mCart.getPid());
                         break;
                 }
                 break;
@@ -127,10 +141,24 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         if (!saveable) {//这里编辑操作的入口
             setButtonStyle(SAVE, DELETE, true);
             adapter.startEdit();
-        }else {//这里做保存操作
+        } else {//这里做保存操作
             setButtonStyle(EDIT, PAY, false);
+//            btn_sel_all.setState(false);
+//            navigation_bar.setRightAction(false);
+//            setRightTitleColor(R.color.text_color_gray);
+//            setGoodsPrice();
+//            adapter.finishEdit();
             saveGoodsInfo();
         }
+    }
+
+    /**
+     * 全选监听器
+     */
+    @Override
+    public void onSwitchClick(View v, boolean isSelect) {
+        adapter.selAll(isSelect);
+        navigation_bar.setRightAction(true);
     }
 
     /**
@@ -173,55 +201,70 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 全选监听器
-     */
-    @Override
-    public void onSwitchClick(View v, boolean isSelect) {
-        adapter.selAll(isSelect);
-        navigation_bar.setRightAction(true);
-    }
-
-    /**
-     *设置不同状态时的Button显示
+     * 设置不同状态时的Button显示
      */
     private void setButtonStyle(String topText, String bottomText, boolean canSave) {
         setRightTitle(topText);
         tv_closing.setText(bottomText);
         saveable = canSave;
-        ll_money.setVisibility(canSave == true ? View.GONE : View.VISIBLE);
+        ll_money.setVisibility(canSave ? View.GONE : View.VISIBLE);
     }
 
     /**
      * 保存商品编辑信息
      */
     private void saveGoodsInfo() {
-        List<CartEdit> cartEdits = new ArrayList<>();
-        CartEdit cartEdit = new CartEdit();
-        cartEdit.setPid(mCart.getPid());
-        cartEdit.setQt(mCart.getQt());
-        cartEdits.add(cartEdit);
-        networkRequest(StoreApi.multiManage(cartEdits), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+        networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 ToastUtils.showToastShort(mContext, "编辑商品保存成功");
                 Logger.w("保存成功 = " + result.toString());
-                mCart.setQt(mCart.getGoodsCount());
-                mCart.setEditable(false);
-                setGoodsPrice(mCart);
+                btn_sel_all.setState(false);
+                navigation_bar.setRightAction(false);
+                setRightTitleColor(R.color.text_color_gray);
                 adapter.finishEdit();
+                adapter.selected.clear();
                 loading.dismiss();
+//                Set<Integer> keys = mSelected.keySet();
+//                for (Integer key : keys) {
+//                    Cart cart = mSelected.get(key);
+//                    cart.setQt(cart.getGoodsCount());
+//                    cart.setEditable(false);
+//                }
+//                setGoodsPrice();
             }
         });
     }
 
     /**
+     * 获取请求List
+     */
+    private List<CartEdit> getReqParam() {
+        List<CartEdit> cartEdits = new ArrayList<>();
+        Set<Integer> keys = mSelected.keySet();
+        for (Integer key : keys) {
+            CartEdit cartEdit = new CartEdit();
+            Cart cart = mSelected.get(key);
+            cartEdit.setPid(cart.getPid());
+            cartEdit.setQt(cart.getGoodsCount());
+            cart.setEditable(false);
+            cartEdits.add(cartEdit);
+        }
+        return cartEdits;
+    }
+
+    /**
      * 设置商品价格
      */
-    private void setGoodsPrice(Cart cart) {
-        String goodsCount = cart.isEditable()? cart.getQt() : cart.getGoodsCount();
-        float price = Float.parseFloat(cart.getPrice());
-        float qt = Float.parseFloat(goodsCount);
-        tv_money.setText(price * qt + "");
+    private void setGoodsPrice() {
+        Set<Integer> keys = mSelected.keySet();
+        for (Integer key : keys) {
+            Cart cart = mSelected.get(key);
+            String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
+            float price = Float.parseFloat(cart.getPrice());
+            float qt = Float.parseFloat(goodsCount);
+            tv_money.setText(price * qt + "");
+        }
     }
 
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
@@ -230,19 +273,24 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
-    public void eventEditable(Cart cart) {
+    public void eventEditable(Map<Integer, Cart> selected) {
         navigation_bar.setRightAction(true);
-        setRightTitleColor(R.color.text_main_color_nor);
-        mCart = cart;
-        setGoodsPrice(cart);
+        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+        btn_sel_all.setState(false);
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
-    public void eventUneditable(Cart cart) {
+    public void eventUneditable(String tag) {
         navigation_bar.setRightAction(false);
-        setRightTitleColor(R.color.text_color_gray);
+        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         setButtonStyle(EDIT, PAY, false);
-        cart.setEditable(false);
+        btn_sel_all.setState(false);
+    }
+
+    @Subcriber(tag = ShoppingCarAdapter.EVENT_EDIT_COUNT)
+    public void eventEditCount(Map<Integer, Cart> selected) {
+        mSelected = selected;
+        setGoodsPrice();
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDIT_NORMS)

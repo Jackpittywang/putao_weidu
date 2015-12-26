@@ -8,6 +8,7 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
+        auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="@string/address" />
 

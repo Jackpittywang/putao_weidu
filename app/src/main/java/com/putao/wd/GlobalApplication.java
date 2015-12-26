@@ -4,7 +4,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.putao.wd.account.AccountApi;
-import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
@@ -72,8 +71,6 @@ public class GlobalApplication extends BasicApplication {
      */
     public DataBaseManager getDataBaseManager(Class<? extends DataBaseManager> clazz) {
         switch (clazz.getSimpleName()) {
-            case "AddressDBManager":
-                return AddressDBManager.getInstance(mHelper);
             case "CityDBManager":
                 return CityDBManager.getInstance(mHelper);
             case "DistrictDBManager":
@@ -165,6 +162,9 @@ public class GlobalApplication extends BasicApplication {
     protected void onCrash(Throwable ex) {
         Logger.e("APP崩溃了,错误信息是" + ex.getMessage());
         ex.printStackTrace();
+//        Intent intent=new Intent(this,MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
         ActivityManager.getInstance().killProcess(getApplicationContext());
     }
 

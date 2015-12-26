@@ -8,11 +8,9 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.db.AddressDBManager;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
-import com.putao.wd.db.entity.AddressDB;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.Address;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -65,12 +63,11 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Address> result) {
-                Logger.d(result.toString());
-                if (result == null || result.size() == 0) {
-                    rl_no_address.setVisibility(View.VISIBLE);
-                    return;
+                if (result != null && result.size() > 0) {
+                    adapter.addAll(result);
+                    rl_no_address.setVisibility(View.GONE);
                 }
-                adapter.addAll(result);
+                loading.dismiss();
             }
         });
     }
@@ -85,9 +82,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_add_address://新增地址
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(AddressEditActivity.KEY_IS_ADD, true);
-                startActivity(AddressEditActivity.class, bundle);
+                startActivity(AddressEditActivity.class);
                 break;
         }
     }
@@ -103,12 +98,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
-    public void eventAddressDelete(AddressDB address) {
+    public void eventAddressDelete(Address address) {
         adapter.delete(adapter.getEditPosition());
-    }
-
-    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_IS_DEFAULT)
-    public void eventAddressIsDefault(String tag) {
-        adapter.replaceAll(mApp.getDataBaseManager(AddressDBManager.class).loadAll());
     }
 }
