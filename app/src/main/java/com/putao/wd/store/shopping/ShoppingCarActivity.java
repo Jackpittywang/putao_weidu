@@ -62,6 +62,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private EditShoppingCarPopupWindow mEditShoppingCarPopupWindow;//购物车弹窗
     private Map<Integer, Cart> mSelected;//记录进入编辑状态后选中的商品
     private int currentPosition;//当前修改的位置
+    private int currClickPosition;//当前点击的位置
     private boolean isSelectAll = false;
     private boolean saveable = false;//保存按钮标志
     private boolean isEditable = true;
@@ -126,7 +127,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         startActivity(WriteOrderActivity.class);
                         break;
                     case DELETE:
-//                        cartDelete(mCart.getPid());
+                        cartDelete(mSelected.get(currClickPosition).getPid());
                         break;
                 }
                 break;
@@ -143,11 +144,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         } else {//这里做保存操作
             setButtonStyle(EDIT, PAY, false);
-//            btn_sel_all.setState(false);
-//            navigation_bar.setRightAction(false);
-//            setRightTitleColor(R.color.text_color_gray);
-//            setGoodsPrice();
-//            adapter.finishEdit();
             saveGoodsInfo();
         }
     }
@@ -271,6 +267,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
     public void eventUpdateNorms(Cart cart) {
         adapter.editNorms(currentPosition, cart);
+    }
+
+    @Subcriber(tag = ShoppingCarAdapter.EVENT_CURR_CLICK)
+    public void eventcurrClick(int position) {
+       currClickPosition = position;
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
