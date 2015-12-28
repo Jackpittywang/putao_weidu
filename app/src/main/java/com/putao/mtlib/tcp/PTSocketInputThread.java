@@ -51,6 +51,8 @@ public class PTSocketInputThread extends Thread {
 
     public void setStart(boolean isStart) {
         this.isStart = isStart;
+        if (!isStart)
+            mHandler.removeCallbacks(runnable);
     }
 
     /**
