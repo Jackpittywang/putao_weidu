@@ -75,8 +75,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        navigation_bar.setRightAction(false);
-        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+//        navigation_bar.setRightAction(false);
+//        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+        setRightClickable(false);
         btn_sel_all.setClickable(false);
 
         adapter = new ShoppingCarAdapter(mContext, null);
@@ -115,11 +116,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 btn_sel_all.setState(isSelectAll);
                 adapter.selAll(isSelectAll);
                 if (isSelectAll) {
-                    navigation_bar.setRightAction(true);
-                    setRightTitleColor(R.color.text_main_color_nor);
+//                    navigation_bar.setRightAction(true);
+//                    setRightTitleColor(R.color.text_main_color_nor);
+                    setRightClickable(true);
                 } else {
-                    navigation_bar.setRightAction(false);
-                    setRightTitleColor(R.color.text_color_gray);
+//                    navigation_bar.setRightAction(false);
+//                    setRightTitleColor(R.color.text_color_gray);
+                    setRightClickable(false);
                     setButtonStyle(EDIT, PAY, false);
                 }
                 break;
@@ -156,7 +159,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
         adapter.selAll(isSelect);
-        navigation_bar.setRightAction(true);
+//        navigation_bar.setRightAction(true);
+        setRightClickable(true);
     }
 
     /**
@@ -218,8 +222,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 ToastUtils.showToastShort(mContext, "编辑商品保存成功");
                 Logger.w("保存成功 = " + result.toString());
                 btn_sel_all.setState(false);
-                navigation_bar.setRightAction(false);
-                setRightTitleColor(R.color.text_color_gray);
+//                navigation_bar.setRightAction(false);
+//                setRightTitleColor(R.color.text_color_gray);
+                setRightClickable(false);
 
                 Set<Integer> keys = mSelected.keySet();
                 String sum = "0";
@@ -273,27 +278,27 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_CURR_CLICK)
     public void eventcurrClick(int position) {
-       currClickPosition = position;
+        currClickPosition = position;
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
         setGoodsPrice();
-        navigation_bar.setRightAction(true);
-        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
-        if (selected.size() == adapter.getItems().size()) {
+//        navigation_bar.setRightAction(true);
+//        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+        setRightClickable(true);
+        if (selected.size() == adapter.getItems().size())
             btn_sel_all.setState(true);
-        } else {
+         else
             btn_sel_all.setState(false);
-        }
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_UNEDITABLE)
     public void eventUneditable(Map<Integer, Cart> selected) {
         mSelected = selected;
         setGoodsPrice();
-        if(selected.size() == 0) {
+        if (selected.size() == 0) {
             navigation_bar.setRightAction(false);
             setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         }

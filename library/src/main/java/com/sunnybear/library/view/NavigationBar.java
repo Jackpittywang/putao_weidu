@@ -128,6 +128,10 @@ public class NavigationBar extends RelativeLayout {
         ((TextView) mLeftView).setTextColor(colorId);
     }
 
+    public void setLeftClickable(boolean isClick) {
+        mLeftView.setClickable(isClick);
+    }
+
     public void setRightTitle(String title) {
         mRightTitle = title;
         if (mRightView instanceof TextView) {
@@ -141,6 +145,10 @@ public class NavigationBar extends RelativeLayout {
 
     public void setRightTitleColor(int colorId) {
         ((TextView) mRightView).setTextColor(colorId);
+    }
+
+    public void setRightClickable(boolean isClick) {
+        mRightView.setClickable(isClick);
     }
 
     public void setRightView(View view) {

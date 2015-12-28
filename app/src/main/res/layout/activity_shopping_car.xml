@@ -12,7 +12,8 @@
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="购物车"
-        auto:nav_right_title="编辑" />
+        auto:nav_right_title="编辑"
+        auto:nav_right_title_color="@color/text_select" />
 
     <!--内容区-->
     <FrameLayout
