@@ -2,20 +2,28 @@ package com.putao.wd.me.order.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.OrderCommonState;
 import com.putao.wd.model.Order;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.squareup.okhttp.OkHttpClient;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.LoadingHUD;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -27,10 +35,15 @@ import butterknife.Bind;
 public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.OrderListViewHolder> {
     private OrdersAdapter adapter;
     private int mOrderStatus;
+    private PTWDActivity mContext;
+    private OkHttpClient mOkHttpClient;
+    LoadingHUD mLoading;
 
 
     public OrderListAdapter(Context context, List<Order> orders) {
         super(context, orders);
+        mContext = (PTWDActivity) context;
+        mLoading = LoadingHUD.getInstance(mContext);
     }
 
     @Override
@@ -44,9 +57,21 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
     }
 
     @Override
-    public void onBindItem(OrderListViewHolder holder, Order order, int position) {
-        mOrderStatus = order.getShipping_status();
-        changeStyle(holder,mOrderStatus);
+    public void onBindItem(OrderListViewHolder holder, Order order, final int position) {
+        mOrderStatus = order.getOrderStatusID();
+        checkOrder(holder, mOrderStatus);
+        holder.btn_order_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leftClick(getItems().get(position));
+            }
+        });
+        holder.btn_order_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rightClick(getItems().get(position).getOrderStatusID());
+            }
+        });
         holder.tv_order_no.setText(order.getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         holder.tv_order_sum_count.setText(order.getTotalQuantity() + "");
@@ -55,56 +80,118 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         holder.rv_orders.setAdapter(adapter);
     }
 
-    private void changeStyle(OrderListViewHolder holder,int orderStatus) {
-        /*switch (orderStatus) {
-            case OrderCommonState.ORDER_WAITING_PAY:
+    private void rightClick(int orderStatus) {
+        switch (orderStatus){
+            case OrderCommonState.ORDER_PAY_WAIT:
+                ToastUtils.showToastShort(mContext,"马上支付");
+
+                break;
+        }
+    }
+
+    /**
+     * 左边按钮点击事件
+     * @param order 订单
+     */
+    private void leftClick(Order order) {
+        int orderStatus = order.getOrderStatusID();
+        String id = order.getId();
+        switch (orderStatus){//取消订单按钮
+            case OrderCommonState.ORDER_PAY_WAIT:
+                ToastUtils.showToastShort(mContext, "取消订单");
+                mContext.networkRequest(OrderApi.orderCancel(id),new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, mLoading) {
+                            @Override
+                            public void onSuccess(String url, ArrayList<Order> result) {
+
+                                mLoading.dismiss();
+                            }
+                        });
+                break;
+            case OrderCommonState.ORDER_WAITING_SHIPMENT:
+                ToastUtils.showToastShort(mContext,"申请退款");
+                break;
+            case OrderCommonState.ORDER_WAITING_SIGN:
+                ToastUtils.showToastShort(mContext,"查看物流");
+                break;
+            case OrderCommonState.ORDER_SALE_SERVICE:
+                ToastUtils.showToastShort(mContext,"申请售后");
+                break;
+        }
+    }
+
+
+    private void checkOrder(OrderListViewHolder holder, int orderStatus) {
+        switch (orderStatus) {
+            case OrderCommonState.ORDER_PAY_WAIT://待支付
                 holder.tv_order_status.setText("待支付");
                 holder.tv_order_status.setTextColor(Color.RED);
-                holder.rl_comfirm.setVisibility(View.VISIBLE);
-                holder.tv_order_hint.setVisibility(View.GONE);
-                holder.btn_order_right.setVisibility(View.VISIBLE);
-                holder.btn_order_right.setText("马上支付");
+                setBtn(holder, "", "取消订单", "马上支付");
                 break;
-            case OrderCommonState.ORDER_CANCLED:
+
+            case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
+                holder.tv_order_status.setText("待发货");
+                holder.tv_order_status.setTextColor(0xFF313131);
+                setBtn(holder, "您可以在签收后15天内申请售后", "申请退款", "");
+                break;
+            case OrderCommonState.ORDER_GOOD_PREPARE://正在准备商品中
+                holder.tv_order_status.setText("正在准备商品中");
+                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.rl_comfirm.setVisibility(View.GONE);
+                break;
+            case OrderCommonState.ORDER_WAITING_SIGN://待签收
+                holder.tv_order_status.setText("已发货");
+                holder.tv_order_status.setTextColor(0xFF313131);
+                setBtn(holder, "您可以在签收后15天内申请售后", "查看物流", "");
+                break;
+            case OrderCommonState.ORDER_SALE_SERVICE://已收货
+                holder.tv_order_status.setText("已签收");
+                holder.tv_order_status.setTextColor(0xFF313131);
+                setBtn(holder, "您可以在签收后15天内申请售后", "申请售后", "");
+                break;
+
+            case OrderCommonState.ORDER_FINISH://已完成
+                holder.tv_order_status.setText("已完成");
+                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.rl_comfirm.setVisibility(View.GONE);
+                break;
+
+            case OrderCommonState.ORDER_CANCLED://订单取消
                 holder.tv_order_status.setText("已取消");
                 holder.tv_order_status.setTextColor(0xFF313131);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-            case OrderCommonState.ORDER_WAITING_SHIPMENT:
-                holder.tv_order_status.setText("待发货");
+
+            case OrderCommonState.ORDER_AFTER_SALE:
+                holder.tv_order_status.setText("此订单正在申请售后");
                 holder.tv_order_status.setTextColor(0xFF313131);
-                holder.rl_comfirm.setVisibility(View.VISIBLE);
-                holder.btn_order_left.setText("申请退款");
-                holder.tv_order_hint.setVisibility(View.GONE);
-                holder.btn_order_right.setVisibility(View.GONE);
+                holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-            case OrderCommonState.ORDER_WAITING_SIGN:
-                holder.tv_order_status.setText("已发货");
+            case OrderCommonState.ORDER_REFUND_FINISH:
+                holder.tv_order_status.setText("退款成功");
                 holder.tv_order_status.setTextColor(0xFF313131);
-                holder.rl_comfirm.setVisibility(View.VISIBLE);
-                holder.btn_order_left.setText("查看物流");
-                holder.tv_order_hint.setVisibility(View.GONE);
-                holder.btn_order_right.setVisibility(View.GONE);
+                holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-            case OrderCommonState.ORDER_SALE_SERVICE:
-                holder.tv_order_status.setText("已完成");
+            case OrderCommonState.ORDER_EXCEPTION:
+                holder.tv_order_status.setText("异常订单");
                 holder.tv_order_status.setTextColor(0xFF313131);
-                holder.rl_comfirm.setVisibility(View.VISIBLE);
-                holder.btn_order_left.setText("申请售后");
-                holder.tv_order_hint.setVisibility(View.VISIBLE);
-                holder.tv_order_hint.setText("签收15日内可申请售后");
-                holder.btn_order_right.setVisibility(View.GONE);
+                holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-            case OrderCommonState.ORDER_NO_SIGN:
-                holder.tv_order_status.setText("退签");
+            default:
+                holder.rl_comfirm.setVisibility(View.GONE);
                 holder.tv_order_status.setTextColor(0xFF313131);
-                holder.rl_comfirm.setVisibility(View.VISIBLE);
-                holder.btn_order_left.setText("申请售后");
-                holder.tv_order_hint.setVisibility(View.VISIBLE);
-                holder.tv_order_hint.setText("退签7日内可申请售后");
-                holder.btn_order_right.setVisibility(View.GONE);
+                holder.tv_order_status.setText("异常订单");
                 break;
-        }*/
+        }
+    }
+
+    private void setBtn(OrderListViewHolder holder,String hint,String left, String right) {
+        holder.rl_comfirm.setVisibility(View.VISIBLE);
+        holder.tv_order_hint.setVisibility(TextUtils.isEmpty(hint)?View.GONE:View.VISIBLE);
+        holder.tv_order_hint.setText(hint);
+        holder.btn_order_left.setVisibility(TextUtils.isEmpty(left) ? View.GONE : View.VISIBLE);
+        holder.btn_order_left.setText(left);
+        holder.btn_order_right.setVisibility(TextUtils.isEmpty(right) ? View.GONE : View.VISIBLE);
+        holder.btn_order_right.setText(right);
     }
 
     /**

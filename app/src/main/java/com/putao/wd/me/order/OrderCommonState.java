@@ -10,68 +10,56 @@ public final class OrderCommonState {
     //----------商品配送情况---------//
 
     /**
+     * 待支付
+     */
+    public static final int ORDER_PAY_WAIT = 1;
+
+    /**
      * 待发货
      */
-    public static final int ORDER_WAITING_SHIPMENT = 1;
+    public static final int ORDER_WAITING_SHIPMENT = 2;
+
+    /**
+     * 正在准备商品中
+     */
+    public static final int ORDER_GOOD_PREPARE = 3;
 
     /**
      * 已发货
      */
-    public static final int ORDER_WAITING_SIGN = 2;
+    public static final int ORDER_WAITING_SIGN = 4;
 
     /**
      * 已收货
      */
-    public static final int ORDER_SALE_SERVICE = 3;
+    public static final int ORDER_SALE_SERVICE = 5  ;
 
     /**
-     * 退签
+     * 已完成
      */
-    public static final int ORDER_NO_SIGN = 4;
+    public static final int ORDER_FINISH= 6;
 
     /**
-     *已生成发货单
+     * 订单被取消
      */
-    public static final int ORDER_FORM_FINISH= 5;
+    public static final int ORDER_CANCLED = 7;
 
     /**
-     *疑难
+     * 订单正在申请售后
      */
-    public static final int ORDER_PROBLEM= 5;
+    public static final int ORDER_AFTER_SALE = 8;
 
     /**
-     *退回
+     * 退款成功
      */
-    public static final int ORDER_BACK= 6;
+    public static final int ORDER_REFUND_FINISH = 9;
 
     /**
-     * 关闭
+     * 订单异常
      */
-   /* public static final int ORDER_CLOSED = 5;
-
-    *//**
-     * 取消
-     *//*
-    public static final int ORDER_CANCLED = 6;*/
+    public static final int ORDER_EXCEPTION= 10;
 
 
-    //----------支付状态---------//
-    /**
-     * 待支付
-     */
-    public static final int PAY_WAIT = 0;
-    /**
-     * 已付款
-     */
-    public static final int PAY_FINISH= 1;
-    /**
-     * 待支付
-     */
-    public static final int PAY_REFUND= 2;
-    /**
-     * 部分款
-     */
-    public static final int PAY_PART = 3;
 
     /**
      * 根据订单的状态来获取相应的显示文字
@@ -79,23 +67,29 @@ public final class OrderCommonState {
      * @param status
      * @return
      */
-  /*  public static String getOrderStatusShowString(int status) {
+    public static String getOrderStatusShowString(int status) {
         switch (status) {
-            case ORDER_WAITING_PAY:
-                return "等付款";
+            case ORDER_PAY_WAIT:
+                return "待支付";
             case ORDER_WAITING_SHIPMENT:
                 return "待发货";
+            case ORDER_GOOD_PREPARE:
+                return "正在准备商品中";
             case ORDER_WAITING_SIGN:
-                return "待收货";
+                return "已发货";
             case ORDER_SALE_SERVICE:
-                return "售后";
-            case ORDER_CLOSED:
-                return "已关闭";
+                return "已签收";
+            case ORDER_FINISH:
+                return "已完成";
             case ORDER_CANCLED:
-                return "取消";
-            case ORDER_NO_SIGN:
-                return "退签";
+                return "已取消";
+            case ORDER_AFTER_SALE:
+                return "此订单正在申请售后";
+            case ORDER_REFUND_FINISH:
+                return "退款成功";
+            case ORDER_EXCEPTION:
+                return "订单异常，请联系客服";
         }
         return "";
-    }*/
+    }
 }

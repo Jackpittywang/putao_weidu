@@ -237,7 +237,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         String statusStr = OrderCommonState.getOrderStatusShowString(status);
         TextView tv_order_status = (TextView) findViewById(R.id.tv_order_status);
         tv_order_status.setText(statusStr);
-        if (status == OrderCommonState.ORDER_WAITING_PAY || status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
+        if (status == OrderCommonState.ORDER_PAY_WAIT || status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
             View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
             v_status_waiting_pay.setBackgroundColor(0xffffffff);
             ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);

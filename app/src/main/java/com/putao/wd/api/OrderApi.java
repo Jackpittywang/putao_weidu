@@ -49,7 +49,7 @@ public class OrderApi {
      * @param type 订单分类
      * @param page 数据分页
      */
-    public static Request getOrderLists(String type, String page) {
+    public static Request   getOrderLists(String type, String page) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PAGE, page)

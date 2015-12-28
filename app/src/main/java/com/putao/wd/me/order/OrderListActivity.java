@@ -56,7 +56,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         addNavigation();
         currentType = args.getString(TYPE_INDEX, TYPE_ALL);
 
-        adapter = new OrderListAdapter(mContext, null);
+        adapter = new OrderListAdapter(this, null);
         rv_order.setAdapter(adapter);
 
         addListener();
