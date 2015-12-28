@@ -254,9 +254,9 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
-        <!--推送-->
+        <!--通知推送-->
         <service
-            android:name="com.putao.push.PushService"
+            android:name="com.putao.mtlib.NotifyService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
