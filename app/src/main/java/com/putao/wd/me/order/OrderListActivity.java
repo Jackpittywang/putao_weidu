@@ -72,8 +72,8 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
         getOrderLists(currentType, String.valueOf(currentPage));
 
 
-        /*// 测试数据
-        orderList = new ArrayList<OrderDto>();
+        // 测试数据
+        /*orderList = new ArrayList<OrderDto>();
 
         for (int i = 0; i < 10; i++) {
             OrderDto order = new OrderDto();
