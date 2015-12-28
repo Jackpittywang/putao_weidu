@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -198,6 +199,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            stopService(new Intent(GlobalApplication.ACTION_PUSH_SERVICE));
 //            stopService(new Intent(GlobalApplication.ACTION_PUSH_SERVICE));
             return exit();
         }

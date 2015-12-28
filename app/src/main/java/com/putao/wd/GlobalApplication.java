@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -44,7 +45,7 @@ public class GlobalApplication extends BasicApplication {
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
         //启动推送
-//        startService(new Intent(ACTION_PUSH_SERVICE));
+        startService(new Intent(ACTION_PUSH_SERVICE));
     }
 
     /**
@@ -165,6 +166,7 @@ public class GlobalApplication extends BasicApplication {
 //        Intent intent=new Intent(this,MainActivity.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
+        stopService(new Intent(ACTION_PUSH_SERVICE));
         ActivityManager.getInstance().killProcess(getApplicationContext());
     }
 
