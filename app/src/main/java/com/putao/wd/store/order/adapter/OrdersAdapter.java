@@ -41,9 +41,9 @@ public class OrdersAdapter extends BasicAdapter<ShoppingCar, BasicViewHolder> {
     public int getLayoutId(int viewType) {
         switch (viewType) {
             case TYPE_ORDER:
-                return R.layout.layout_writeorder_item;
+                return R.layout.activity_write_order_item;
             case TYPE_SUM:
-                return R.layout.layout_write_order_sum;
+                return R.layout.activity_write_order_sum_item;
         }
         return 0;
     }

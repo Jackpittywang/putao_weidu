@@ -22,7 +22,7 @@ public class MyActionsAdapter extends LoadMoreAdapter<MyActionsItem, MyActionsAd
     }
 
     public int getLayoutId(int viewType) {
-        return R.layout.layout_myactivities_item;
+        return R.layout.activity_my_actions_item;
     }
 
     public MyActionsAdapter.MyActivitiesViewHolder getViewHolder(View itemView, int viewType) {

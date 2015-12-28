@@ -82,14 +82,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
 
         adapter = new ShoppingCarAdapter(mContext, null);
         rv_cars.setAdapter(adapter);
-        addListener();
+//        addListener();
         networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 adapter.addAll(result.getUse());
 //                btn_sel_all.setState(true);
 //                adapter.selAll(true);
-//                tv_money.setText(caculateSumMoney(result.getUse()));
+                tv_money.setText(caculateSumMoney(result.getUse()));
                 loading.dismiss();
             }
         });
@@ -100,12 +100,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return new String[0];
     }
 
-    /**
-     * 添加监听器
-     */
-    private void addListener() {
+//    /**
+//     * 添加监听器
+//     */
+//    private void addListener() {
 //        btn_sel_all.setOnSwitchClickListener(this);
-    }
+//    }
 
     @OnClick({R.id.ll_closing, R.id.ll_all})
     @Override
@@ -154,12 +154,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 全选监听器
+     * 全选监听器      暂未使用
+     *
      */
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
         adapter.selAll(isSelect);
-//        navigation_bar.setRightAction(true);
+        navigation_bar.setRightAction(true);
         setRightClickable(true);
     }
 
@@ -227,7 +228,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 setRightClickable(false);
 
                 Set<Integer> keys = mSelected.keySet();
-                String sum = "0";
+                String sum = "0.00";
                 for (Integer key : keys) {
                     Cart cart = mSelected.get(key);
                     cart.setQt(cart.getGoodsCount());
