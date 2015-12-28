@@ -9,12 +9,14 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Cart;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -24,9 +26,18 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/08.
  */
 public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickListener {
+    public static final String EVENT_INVOICE = "Event_Invoice";
+
+    public static final String INVOICE_NEEDNOT = "不需要发票";
+    public static final String INVOICE_NEED = "需要发票";
+    public static final String INVOICE_PERSONAL = "个人";
+    public static final String INVOICE_COMPANY = "单位";
+    public static final String INVOICE_DETAIL = "需要明细";
+    public static final String INVOICE_ELECTRONIC = "电子产品";
+    public static final String INVOICE_PLAY = "玩具";
+
     @Bind(R.id.ll_need_invoice_detail)
     LinearLayout ll_need_invoice_detail;//需要发票信息区域（默认不可见）
-
     @Bind(R.id.ll_need_invoice)
     LinearLayout ll_need_invoice;//不需要发票条目
     @Bind(R.id.ll_noneed_invoice)
@@ -62,14 +73,9 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @Bind(R.id.btn_toy)
     SwitchButton btn_toy;//玩具
 
-    public static final String NEED_INVOICE = "need_invoice";//发票抬头信息
-    public static final String INVOICE_TYPE = "invoice_type";//发票抬头类型
-    public static final String INVOICE_TITLE = "invoice_title";//发票抬头
-    public static final String INVOICE_CONTENT = "invoice_content";//发票类型
-    private String need_invoice = "";
-    private String invoice_type = "";
-    private String invoice_title = "";
-    private String invoice_content = "";
+    private String need_invoice = INVOICE_NEEDNOT;//发票抬头信息
+    private String invoice_type = INVOICE_PERSONAL;//发票抬头
+    private String invoice_content = INVOICE_DETAIL;//发票内容
 
     @Override
     protected int getLayoutId() {
@@ -82,9 +88,9 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
         cancelBtn();
     }
 
-    private void initInfo() {
-        need_invoice = 0 + "";
-    }
+//    private void initInfo() {
+//        need_invoice = 0 + "";
+//    }
 
     private void cancelBtn() {
         btn_noneed_invoice.setClickable(false);
@@ -109,44 +115,43 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
                 ll_need_invoice_detail.setVisibility(View.GONE);
                 btn_noneed_invoice.setState(true);
                 btn_need_invoice.setState(false);
-                need_invoice = 0 + "";
+                need_invoice = INVOICE_NEEDNOT;
                 break;
             case R.id.ll_need_invoice:
                 ll_need_invoice_detail.setVisibility(View.VISIBLE);
                 btn_need_invoice.setState(true);
                 btn_noneed_invoice.setState(false);
-                need_invoice = 1 + "";
+                need_invoice = INVOICE_NEED;
                 break;
             case R.id.ll_person:
                 btn_person.setState(true);
                 btn_company.setState(false);
                 et_company.setVisibility(View.INVISIBLE);
-                invoice_type = 1 + "";
+                invoice_type = INVOICE_PERSONAL;
                 break;
             case R.id.ll_company:
                 btn_person.setState(false);
                 btn_company.setState(true);
                 et_company.setVisibility(View.VISIBLE);
-                invoice_type = 2 + "";
-                invoice_title = et_company.getText().toString();
+                invoice_type = et_company.getText().toString();
                 break;
             case R.id.ll_info:
                 btn_invoice_info.setState(true);
                 btn_electronic_product.setState(false);
                 btn_toy.setState(false);
-                invoice_content = 1 + "";
+                invoice_content = INVOICE_DETAIL;
                 break;
             case R.id.ll_electronic_product:
                 btn_electronic_product.setState(true);
                 btn_invoice_info.setState(false);
                 btn_toy.setState(false);
-                invoice_content = 2 + "";
+                invoice_content = INVOICE_ELECTRONIC;
                 break;
             case R.id.ll_toy:
                 btn_toy.setState(true);
                 btn_invoice_info.setState(false);
                 btn_electronic_product.setState(false);
-                invoice_content = 3 + "";
+                invoice_content = INVOICE_PLAY;
                 break;
         }
     }
@@ -156,15 +161,12 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
      */
     @Override
     public void onRightAction() {
-        Intent intent = getIntent();
-        Bundle bundle = new Bundle();
-        bundle.putString(NEED_INVOICE, need_invoice);
-        bundle.putString(INVOICE_TYPE, invoice_type);
-        bundle.putString(INVOICE_TITLE, invoice_title);
-        bundle.putString(INVOICE_CONTENT, invoice_content);
-        setResult(0, intent);
+        List<String> invoiceInfo = new ArrayList<>();
+        invoiceInfo.add(need_invoice);
+        invoiceInfo.add(invoice_type);
+        invoiceInfo.add(invoice_content);
+        EventBusHelper.post(invoiceInfo, EVENT_INVOICE);
         finish();
-
     }
 
     /**

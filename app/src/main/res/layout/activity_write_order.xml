@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/transparent">
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent">
 
     <LinearLayout
         android:id="@+id/ll_content"
@@ -16,7 +16,7 @@
             android:visibility="visible"
             auto:nav_has_divider="true"
             auto:nav_left_icon="@drawable/btn_20_back_p_sel"
-            auto:nav_main_title="填写订单" />
+            auto:nav_main_title="填写订单"/>
 
         <!--内容区-->
         <com.sunnybear.library.view.sticky.StickyHeaderLayout
@@ -45,7 +45,7 @@
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/icon_20_17" />
+                        android:src="@drawable/icon_20_17"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -54,26 +54,26 @@
                         android:gravity="center_vertical"
                         android:text="尚未选择收货人地址"
                         android:textColor="#313131"
-                        android:textSize="@dimen/text_size_16sp" />
+                        android:textSize="@dimen/text_size_16sp"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/btn_arrow" />
+                        android:src="@drawable/btn_arrow"/>
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/iv_reapte_picbar"
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
-                    android:src="@drawable/img_cart_lace_stuff" />
+                    android:src="@drawable/img_cart_lace_stuff"/>
 
                 <!--间隔线-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/color_EBEBEB" />
+                    android:background="@color/color_EBEBEB"/>
 
                 <!--是否需要发票-->
                 <LinearLayout
@@ -87,7 +87,7 @@
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/icon_20_18" />
+                        android:src="@drawable/icon_20_18"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -95,28 +95,45 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="尚未选择收货人地址"
-                        android:textSize="@dimen/text_size_14sp" />
+                        android:textSize="@dimen/text_size_14sp"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="不需要发票"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/text_size_16sp" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_Invoice_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="不需要发票"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_16sp"/>
+
+                        <TextView
+                            android:id="@+id/tv_Invoice_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="发票内容"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_16sp"
+                            android:visibility="gone"/>
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/btn_arrow" />
+                        android:src="@drawable/btn_arrow"/>
                 </LinearLayout>
 
                 <!--间隔线-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/color_EBEBEB" />
+                    android:background="@color/color_EBEBEB"/>
 
                 <!--订单信息-->
                 <LinearLayout
@@ -129,7 +146,7 @@
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/icon_20_18" />
+                        android:src="@drawable/icon_20_18"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -137,14 +154,14 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="订单信息  "
-                        android:textSize="@dimen/text_size_14sp" />
+                        android:textSize="@dimen/text_size_14sp"/>
                 </LinearLayout>
             </LinearLayout>
 
             <View
                 android:id="@id/stickyHeaderLayout_sticky"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"/>
 
             <!--订单列表-->
             <com.sunnybear.library.view.recycler.BasicRecyclerView
@@ -155,14 +172,14 @@
                 android:background="@color/color_EBEBEB"
                 auto:divider_color="@color/white"
                 auto:divider_height="1px"
-                auto:has_row_divider="true" />
+                auto:has_row_divider="true"/>
         </com.sunnybear.library.view.sticky.StickyHeaderLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color"/>
     <!--结算区-->
     <LinearLayout
         android:id="@+id/ll_settle"
@@ -176,7 +193,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -190,7 +207,7 @@
                 android:layout_marginTop="5dp"
                 android:text="应付金额"
                 android:textColor="@color/text_color"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -203,7 +220,7 @@
                     android:layout_height="match_parent"
                     android:text="¥"
                     android:textColor="@color/text_color_red"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_sum"
@@ -211,7 +228,7 @@
                     android:layout_height="match_parent"
                     android:text="0.00"
                     android:textColor="@color/text_color_red"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -224,6 +241,6 @@
             android:background="@color/text_main_color_nor"
             android:gravity="center"
             android:text="提交订单"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </LinearLayout>
 </RelativeLayout>
