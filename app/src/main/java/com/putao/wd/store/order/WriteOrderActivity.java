@@ -1,5 +1,6 @@
 package com.putao.wd.store.order;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.putao.wd.store.cashier.CashierActivity;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
@@ -38,10 +40,15 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.iv_reapte_picbar)
     ImageView iv_reapte_picbar;//分割图片
+    @Bind(R.id.tv_Invoice_type)
+    TextView tv_Invoice_type;
+    @Bind(R.id.tv_Invoice_content)
+    TextView tv_Invoice_content;
     @Bind(R.id.stickyHeaderLayout_scrollable)
     BasicRecyclerView rv_orders;//订单列表
     @Bind(R.id.tv_sum)
     TextView tv_sum;//总金额
+
 
     private WriteOrderAdapter adapter;
 
@@ -110,4 +117,15 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         }
     }
 
+    @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
+    public void eventInvoice(List<String> invoiceInfo) {
+        if (!invoiceInfo.get(0).equals(InvoiceInfoActivity.INVOICE_NEEDNOT)) {
+            tv_Invoice_type.setText(invoiceInfo.get(1));
+            tv_Invoice_content.setText(invoiceInfo.get(2));
+            tv_Invoice_content.setVisibility(View.VISIBLE);
+        }else {
+            tv_Invoice_type.setText(InvoiceInfoActivity.INVOICE_NEEDNOT);
+            tv_Invoice_content.setVisibility(View.GONE);
+        }
+    }
 }
