@@ -10,4 +10,5 @@ public class ColorConstant {
     public static final int MAIN_COLOR_SEL = Color.parseColor("#B57DE4");
     public static final int MAIN_COLOR_NOR = Color.parseColor("#985EC9");
     public static final int MAIN_COLOR_DIS = Color.parseColor("#C2C2C2");
+    public static final int TEXT_COLOR = Color.parseColor("#313131");
 }
