@@ -89,7 +89,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 adapter.addAll(result.getUse());
 //                btn_sel_all.setState(true);
 //                adapter.selAll(true);
-                tv_money.setText(caculateSumMoney(result.getUse()));
+//                tv_money.setText(caculateSumMoney(result.getUse()));
                 loading.dismiss();
             }
         });
