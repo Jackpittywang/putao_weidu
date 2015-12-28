@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -24,7 +23,7 @@ import butterknife.Bind;
  * 订单列表
  * Created by yanguoqiang on 15/11/27.
  */
-public class OrderListActivity extends PTWDActivity<GlobalApplication> implements TitleBar.OnTitleItemSelectedListener {
+public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleItemSelectedListener {
     public static final String TYPE_INDEX = "current_index";
 
     public static final String TYPE_ALL = "0";//全部
