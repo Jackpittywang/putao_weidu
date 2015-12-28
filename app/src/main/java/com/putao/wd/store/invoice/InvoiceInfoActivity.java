@@ -83,7 +83,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     }
 
     private void initInfo() {
-        need_invoice = 0+"";
+        need_invoice = 0 + "";
     }
 
     private void cancelBtn() {
@@ -109,44 +109,44 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
                 ll_need_invoice_detail.setVisibility(View.GONE);
                 btn_noneed_invoice.setState(true);
                 btn_need_invoice.setState(false);
-                need_invoice = 0+"";
+                need_invoice = 0 + "";
                 break;
             case R.id.ll_need_invoice:
                 ll_need_invoice_detail.setVisibility(View.VISIBLE);
                 btn_need_invoice.setState(true);
                 btn_noneed_invoice.setState(false);
-                need_invoice = 1+"";
+                need_invoice = 1 + "";
                 break;
             case R.id.ll_person:
                 btn_person.setState(true);
                 btn_company.setState(false);
                 et_company.setVisibility(View.INVISIBLE);
-                invoice_type = 1+"";
+                invoice_type = 1 + "";
                 break;
             case R.id.ll_company:
                 btn_person.setState(false);
                 btn_company.setState(true);
                 et_company.setVisibility(View.VISIBLE);
-                invoice_type = 2+"";
+                invoice_type = 2 + "";
                 invoice_title = et_company.getText().toString();
                 break;
             case R.id.ll_info:
                 btn_invoice_info.setState(true);
                 btn_electronic_product.setState(false);
                 btn_toy.setState(false);
-                invoice_content = 1+"";
+                invoice_content = 1 + "";
                 break;
             case R.id.ll_electronic_product:
                 btn_electronic_product.setState(true);
                 btn_invoice_info.setState(false);
                 btn_toy.setState(false);
-                invoice_content = 2+"";
+                invoice_content = 2 + "";
                 break;
             case R.id.ll_toy:
                 btn_toy.setState(true);
                 btn_invoice_info.setState(false);
                 btn_electronic_product.setState(false);
-                invoice_content = 3+"";
+                invoice_content = 3 + "";
                 break;
         }
     }
