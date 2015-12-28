@@ -1,10 +1,13 @@
 package com.putao.wd.store.product;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
@@ -13,9 +16,11 @@ import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.putao.wd.util.IndicatorUtils;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.BadgeView;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
@@ -79,6 +84,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         addListener();
 
         getProductDetail(product_id);
+        getCartCount();
 
         stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
     }
@@ -97,7 +103,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 tv_product_price.setText(result.getPrice());
                 //广告列表
 
-                if(result.getPictures()!=null) {
+                if (result.getPictures() != null) {
                     bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), new BannerViewPager.OnPagerClickListenr() {
                         @Override
                         public void onPagerClick(int position) {
@@ -106,8 +112,24 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     }));
                     bl_banner.setOffscreenPageLimit(result.getPictures().size());//缓存页面数
                 }
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext,result.getId());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());
                 loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 获得购物车数量
+     */
+    private void getCartCount() {
+        networkRequest(StoreApi.getCartCount(), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.d(result);
+                JSONObject object = JSON.parseObject(result);
+                IndicatorUtils.getInstance(mContext, navigation_bar.getRightView())
+                        .indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
+                                com.sunnybear.library.R.drawable.indicator_background, Color.WHITE);
             }
         });
     }
