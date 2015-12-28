@@ -106,7 +106,7 @@
                 android:textSize="@dimen/text_size_12sp" />
 
             <TextView
-                android:id="@+id/tv_sum_noney"
+                android:id="@+id/tv_sum_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.00"

@@ -75,7 +75,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     }
 
     /**
-     * 向适配器添加最后一个item，包含商品总价
+     * 向适配器添加最后一个item，包含商品总价等信息
      */
     @NonNull
     private List<OrderConfirmProduct> getLastItem(OrderConfirm result) {
@@ -89,6 +89,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         }
         product.setTotalPrice(totalPrice);
         product.setTotalQt(totalQt);
+        product.setTotalFee(result.getShipping_fee());
         products.add(product);
         return products;
     }

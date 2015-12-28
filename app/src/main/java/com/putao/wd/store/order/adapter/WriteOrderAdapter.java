@@ -72,10 +72,10 @@ public class WriteOrderAdapter extends BasicAdapter<OrderConfirmProduct, BasicVi
             viewHolder.tv_count.setText(orderConfirmProduct.getQt());
         } else if (holder instanceof SumOrderListViewHolder) {//列表底部汇总
             SumOrderListViewHolder sumviewHolder = (SumOrderListViewHolder) holder;
-            sumviewHolder.tv_order_sumcount.setText(orderConfirmProduct.getTotalQt());
+            sumviewHolder.tv_order_sumcount.setText(orderConfirmProduct.getTotalQt()+"");
             sumviewHolder.tv_product_summoney.setText(orderConfirmProduct.getTotalPrice());
-//            sumviewHolder.tv_carriage.setText(orderListItem.getImgUrl());//在返回的list中，再添加一个item保存汇总值，其中ImgUrl保存总价
-            sumviewHolder.tv_sum_noney.setText(orderConfirmProduct.getTotalPrice());//在返回的list中，再添加一个item保存汇总值，其中Title保存总价
+            sumviewHolder.tv_carriage.setText(orderConfirmProduct.getTotalFee());
+            sumviewHolder.tv_sum_money.setText(orderConfirmProduct.getTotalPrice());
         }
 
     }
@@ -112,8 +112,8 @@ public class WriteOrderAdapter extends BasicAdapter<OrderConfirmProduct, BasicVi
         TextView tv_product_summoney;//产品总额
         @Bind(R.id.tv_carriage)
         TextView tv_carriage;//运费
-        @Bind(R.id.tv_sum_noney)
-        TextView tv_sum_noney;//总计费用
+        @Bind(R.id.tv_sum_money)
+        TextView tv_sum_money;//总计费用
 
         public SumOrderListViewHolder(View itemView) {
             super(itemView);

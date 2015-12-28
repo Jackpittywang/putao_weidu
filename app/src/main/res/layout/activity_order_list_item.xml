@@ -121,7 +121,7 @@
                     android:textColor="@color/text_color" />
 
                 <TextView
-                    android:id="@+id/tv_sum_noney"
+                    android:id="@+id/tv_sum_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1197.00"

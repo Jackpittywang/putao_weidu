@@ -19,6 +19,7 @@ public class OrderConfirmProduct implements Serializable {
     private String icon;
     private String totalPrice;
     private int totalQt;
+    private String totalFee;
 
     public String getPid() {
         return pid;
@@ -106,6 +107,14 @@ public class OrderConfirmProduct implements Serializable {
 
     public void setTotalQt(int totalQt) {
         this.totalQt = totalQt;
+    }
+
+    public String getTotalFee() {
+        return totalFee;
+    }
+
+    public void setTotalFee(String totalFee) {
+        this.totalFee = totalFee;
     }
 
     @Override
