@@ -15,7 +15,7 @@
 
     <!--标题栏-->
     <com.sunnybear.library.view.select.TitleBar
-        android:id="@id/stickyHeaderLayout_sticky"
+        android:id="@+id/ll_title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

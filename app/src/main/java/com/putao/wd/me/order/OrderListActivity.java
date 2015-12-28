@@ -37,7 +37,7 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
     @Bind(R.id.rl_no_order)
     RelativeLayout rl_no_order;//没有order时的布局
 
-    @Bind(R.id.stickyHeaderLayout_sticky)
+    @Bind(R.id.ll_title_bar)
     TitleBar ll_title;
 
     private String TAG = OrderListActivity.class.getName();
@@ -144,6 +144,17 @@ public class OrderListActivity extends PTWDActivity<GlobalApplication> implement
                 currentType = TYPE_WAITING_SIGN;
                 break;
         }
-        getOrderLists(currentType, String.valueOf(currentPage));
+        networkRequest(OrderApi.getOrderLists(currentType, String.valueOf(currentPage)),
+                new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<Order> result) {
+                        adapter.replaceAll(result);
+                        if (result != null && result.size() > 0)
+                            rl_no_order.setVisibility(View.GONE);
+                        else
+                            rl_no_order.setVisibility(View.VISIBLE);
+                        loading.dismiss();
+                    }
+                });
     }
 }

@@ -67,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_EBEBEB"
+        auto:divider_color="@color/white"
         auto:divider_height="1px"
         auto:has_row_divider="true"
         auto:is_inner="true" />
