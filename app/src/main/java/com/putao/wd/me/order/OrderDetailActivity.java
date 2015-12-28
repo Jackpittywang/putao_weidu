@@ -19,6 +19,7 @@ import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.model.OrderProduct;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 
 import java.util.ArrayList;
@@ -137,7 +138,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         if (intent != null) {
             orderDto = (Order) intent.getSerializableExtra(KEY_ORDER);
         }
-
         //初始化布局对象
         initComponent();
         getOrderDetail();
@@ -193,7 +193,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         if (orderDto == null) return;
 
         tv_order_no.setText(orderDto.getOrder_sn());
-        tv_order_purchase_time.setText(orderDto.getCreate_time() + "");
+        tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(orderDto.getCreate_time()), "yyyy-MM-dd HH:mm:ss" + ""));
         tv_order_status.setText(OrderCommonState.getOrderStatusShowString(orderDto.getShipping_status()));
         tv_order_cost.setText("¥" + orderDto.getTotal_amount());
         tv_order_info.setText("商品信息");
@@ -202,16 +202,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_customer_phone.setText(orderDto.getMobile());
 //        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());
         tv_total_cost.setText("¥" + orderDto.getTotal_amount());
-
-//        List<OrderShipmentListItemDto> shipmentList = orderDto.getShipmentList();
-//        Logger.i("OrderDetailActivity", "package size is:" + shipmentList.size());
-//        if (shipmentList.size() > 0) {
-//            ll_shipment.removeAllViews();
-//            for (int i = 0; i < shipmentList.size(); i++) {
-//                OrderShipmentListItem orderShipmentListItem = new OrderShipmentListItem(this, shipmentList.get(i));
-//                ll_shipment.addView(orderShipmentListItem);
-//            }
-//        }
 
         List<OrderProduct> goodsList = orderDto.getProduct();
         ll_goods.removeAllViews();
@@ -236,7 +226,10 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     private void setOrderStatus(int status) {
         String statusStr = OrderCommonState.getOrderStatusShowString(status);
         TextView tv_order_status = (TextView) findViewById(R.id.tv_order_status);
-        tv_order_status.setText(statusStr);
+        switch(status){
+
+
+        }
         if (status == OrderCommonState.ORDER_PAY_WAIT || status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
             View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
             v_status_waiting_pay.setBackgroundColor(0xffffffff);

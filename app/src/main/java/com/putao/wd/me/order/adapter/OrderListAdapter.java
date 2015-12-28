@@ -9,21 +9,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.api.OrderApi;
-import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.OrderCommonState;
 import com.putao.wd.model.Order;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
-import com.squareup.okhttp.OkHttpClient;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.LoadingHUD;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,17 +27,17 @@ import butterknife.Bind;
  * Created by yanguoqiang on 15/11/29.
  */
 public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.OrderListViewHolder> {
+    public static final String EVENT_CANCEL_ORDER = "cancel_order";
+    public static final String EVENT_AOPPLY_REFUND = "aopply_refund";
+    public static final String EVENT_LOOK_LOGISTICS = "look_logistics";
+    public static final String EVENT_SALE_SERVICE = "sale_service";
+    public static final String EVENT_PAY = "pay";
+
     private OrdersAdapter adapter;
     private int mOrderStatus;
-    private PTWDActivity mContext;
-    private OkHttpClient mOkHttpClient;
-    LoadingHUD mLoading;
-
 
     public OrderListAdapter(Context context, List<Order> orders) {
         super(context, orders);
-        mContext = (PTWDActivity) context;
-        mLoading = LoadingHUD.getInstance(mContext);
     }
 
     @Override
@@ -69,7 +63,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         holder.btn_order_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rightClick(getItems().get(position).getOrderStatusID());
+                rightClick(getItems().get(position));
             }
         });
         holder.tv_order_no.setText(order.getOrder_sn());
@@ -80,41 +74,38 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         holder.rv_orders.setAdapter(adapter);
     }
 
-    private void rightClick(int orderStatus) {
-        switch (orderStatus){
+    private void rightClick(Order order) {
+        int orderStatus = order.getOrderStatusID();
+        switch (orderStatus) {
             case OrderCommonState.ORDER_PAY_WAIT:
-                ToastUtils.showToastShort(mContext,"马上支付");
-
+//                ToastUtils.showToastShort(mContext, "马上支付");
+                EventBusHelper.post(order.getId(), EVENT_PAY);
                 break;
         }
     }
 
     /**
      * 左边按钮点击事件
+     *
      * @param order 订单
      */
     private void leftClick(Order order) {
         int orderStatus = order.getOrderStatusID();
-        String id = order.getId();
-        switch (orderStatus){//取消订单按钮
+        switch (orderStatus) {//取消订单按钮
             case OrderCommonState.ORDER_PAY_WAIT:
-                ToastUtils.showToastShort(mContext, "取消订单");
-                mContext.networkRequest(OrderApi.orderCancel(id),new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, mLoading) {
-                            @Override
-                            public void onSuccess(String url, ArrayList<Order> result) {
-
-                                mLoading.dismiss();
-                            }
-                        });
+                EventBusHelper.post(order.getId(), EVENT_CANCEL_ORDER);
                 break;
             case OrderCommonState.ORDER_WAITING_SHIPMENT:
-                ToastUtils.showToastShort(mContext,"申请退款");
+                EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
+//                ToastUtils.showToastShort(mContext, "申请退款");
                 break;
             case OrderCommonState.ORDER_WAITING_SIGN:
-                ToastUtils.showToastShort(mContext,"查看物流");
+                EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
+//                ToastUtils.showToastShort(mContext, "查看物流");
                 break;
             case OrderCommonState.ORDER_SALE_SERVICE:
-                ToastUtils.showToastShort(mContext,"申请售后");
+                EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
+//                ToastUtils.showToastShort(mContext, "申请售后");
                 break;
         }
     }
@@ -171,11 +162,6 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
                 holder.tv_order_status.setTextColor(0xFF313131);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-            case OrderCommonState.ORDER_EXCEPTION:
-                holder.tv_order_status.setText("异常订单");
-                holder.tv_order_status.setTextColor(0xFF313131);
-                holder.rl_comfirm.setVisibility(View.GONE);
-                break;
             default:
                 holder.rl_comfirm.setVisibility(View.GONE);
                 holder.tv_order_status.setTextColor(0xFF313131);
@@ -184,9 +170,9 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         }
     }
 
-    private void setBtn(OrderListViewHolder holder,String hint,String left, String right) {
+    private void setBtn(OrderListViewHolder holder, String hint, String left, String right) {
         holder.rl_comfirm.setVisibility(View.VISIBLE);
-        holder.tv_order_hint.setVisibility(TextUtils.isEmpty(hint)?View.GONE:View.VISIBLE);
+        holder.tv_order_hint.setVisibility(TextUtils.isEmpty(hint) ? View.GONE : View.VISIBLE);
         holder.tv_order_hint.setText(hint);
         holder.btn_order_left.setVisibility(TextUtils.isEmpty(left) ? View.GONE : View.VISIBLE);
         holder.btn_order_left.setText(left);
