@@ -50,8 +50,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         sticky_layout.canScrollView();
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
-        adapter = new OrdersAdapter(mContext, getTestData());
-        rv_orders.setAdapter(adapter);
+//        adapter = new OrdersAdapter(mContext, getTestData());
+//        rv_orders.setAdapter(adapter);
     }
 
     /**

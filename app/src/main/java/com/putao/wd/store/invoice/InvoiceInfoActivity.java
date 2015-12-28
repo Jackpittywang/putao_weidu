@@ -10,6 +10,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Cart;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 
@@ -33,6 +34,8 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     //发票抬头
     @Bind(R.id.btn_person)
     SwitchButton btn_person;//个人
+    @Bind(R.id.et_person)
+    CleanableEditText et_person;
     @Bind(R.id.btn_company)
     SwitchButton btn_company;//单位
     @Bind(R.id.et_company)
@@ -44,6 +47,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     SwitchButton btn_electronic_product;//电子产品
     @Bind(R.id.btn_toy)
     SwitchButton btn_toy;//玩具
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_invoice_info;
@@ -52,6 +56,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        setRightClickable(false);
         addListener();
     }
 
@@ -76,64 +81,55 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @OnClick({R.id.ll_need_invoice_detail})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_need_invoice_detail:
         }
     }
 
     @Override
     public void onRightAction() {
-
+        ToastUtils.showToastLong(mContext, "点击保存");
     }
 
     /**
      * 编辑发票
      */
-    private void editInvoice(String invoice_id,String invoice_type,String invoice_content,String invoice_title){
-        networkRequest(StoreApi.editInvoice(invoice_id,invoice_type,invoice_content,invoice_title), new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Cart> result) {
-                Logger.d(result.toString());
-            }
-        });
+    private void editInvoice(String invoice_id, String invoice_type, String invoice_content, String invoice_title) {
+        networkRequest(StoreApi.editInvoice(invoice_id, invoice_type, invoice_content, invoice_title),
+                new SimpleFastJsonCallback<ArrayList<Cart>>(Cart.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<Cart> result) {
+                        Logger.d(result.toString());
+                    }
+                });
     }
+
     @Override
     public void onSwitchClick(View v, boolean isSelect) {
-        switch (v.getId()){
-            case R.id.btn_need_invoice://需要发票
-                ll_need_invoice_detail.setVisibility(View.VISIBLE);
-                btn_need_invoice.setState(true);
-                btn_noneed_invoice.setState(false);
-                break;
+        switch (v.getId()) {
             case R.id.btn_noneed_invoice://不需要发票
-                ll_need_invoice_detail.setVisibility(View.GONE);
-                btn_noneed_invoice.setState(true);
-                btn_need_invoice.setState(false);
+                setRightClickable(false);
+                ll_need_invoice_detail.setVisibility(isSelect ? View.GONE : View.VISIBLE);
+                btn_need_invoice.setState(!isSelect);
+                break;
+            case R.id.btn_need_invoice://需要发票
+                setRightClickable(true);
+                ll_need_invoice_detail.setVisibility(isSelect ? View.VISIBLE : View.GONE);
+                btn_noneed_invoice.setState(!isSelect);
                 break;
             case R.id.btn_person://个人
-                btn_person.setState(true);
-                btn_company.setState(false);
-                et_company.setVisibility(View.INVISIBLE);
+                btn_company.setState(!isSelect);
+                et_person.setFocusable(isSelect);
                 break;
             case R.id.btn_company://单位
-                btn_person.setState(true);
-                btn_person.setState(false);
-                et_company.setVisibility(View.VISIBLE);
+                btn_person.setState(!isSelect);
+                et_company.setFocusable(isSelect);
                 break;
             case R.id.btn_invoice_info://发票明细
-                btn_invoice_info.setState(true);
-                btn_electronic_product.setState(false);
-                btn_toy.setState(false);
                 break;
             case R.id.btn_electronic_product://电子产品
-                btn_electronic_product.setState(true);
-                btn_invoice_info.setState(false);
-                btn_toy.setState(false);
                 break;
             case R.id.btn_toy://玩具
-                btn_toy.setState(true);
-                btn_invoice_info.setState(false);
-                btn_electronic_product.setState(false);
                 break;
         }
     }

@@ -200,7 +200,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_customer_name.setText(orderDto.getConsignee());
         tv_customer_address.setText(orderDto.getAddress());
         tv_customer_phone.setText(orderDto.getMobile());
-        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());
+//        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());
         tv_total_cost.setText("¥" + orderDto.getTotal_amount());
 
 //        List<OrderShipmentListItemDto> shipmentList = orderDto.getShipmentList();
@@ -220,7 +220,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         for (int i = 0; i < goodsNumber; i++) {
             OrderGoodsItem goodsItem = new OrderGoodsItem(this, goodsList.get(i));
             ll_goods.addView(goodsItem);
-            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
+//            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
         }
         tv_goods_total_number.setText(goodsTotalNumber + "");
         setOrderStatus(orderDto.getOrderStatusID());
@@ -262,7 +262,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             img_status_sale_service.setImageResource(R.drawable.img_details_order_steps_04_sel);
         }
     }
-
 }
 
 

@@ -79,6 +79,15 @@ public abstract class PTWDActivity<App extends BasicApplication> extends BasicFr
     }
 
     /**
+     * 设置左标题文字是否可以点击
+     *
+     * @param isClick 是否可以点击
+     */
+    protected void setLeftClickable(boolean isClick) {
+        navigation_bar.setLeftClickable(isClick);
+    }
+
+    /**
      * 设置右标题文字
      *
      * @param text 标题文字
@@ -94,6 +103,15 @@ public abstract class PTWDActivity<App extends BasicApplication> extends BasicFr
      */
     protected void setRightTitleColor(int color) {
         navigation_bar.setRightTitleColor(color);
+    }
+
+    /**
+     * 设置右标题文字是否可以点击
+     *
+     * @param isClick 是否可以点击
+     */
+    protected void setRightClickable(boolean isClick) {
+        navigation_bar.setRightClickable(isClick);
     }
 
     @Override
