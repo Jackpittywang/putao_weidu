@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Created by yanguoqiang on 15/11/29.
  */
+@Deprecated
 public class OrderDto implements Serializable {
     // order号
     private String orderNo;

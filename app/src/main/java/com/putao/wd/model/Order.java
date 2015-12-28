@@ -8,53 +8,46 @@ import java.util.List;
  * Created by guchenkai on 2015/12/9.
  */
 public class Order implements Serializable {
-    private int id;//订单id
-    private String order_sn;//订单SN
-    private int sell_type;//销售类型
-    private int uid;//用户id
-    private int shipping_status;//商品配送情况
-    private int pay_status;//支付状态
-    private String pay_trade_no;//支付订单号
-    private int express_status;//erp和快递100和官网同步字段
-    private int pay_time;//支付时间
-    private String outer_order_sn;//外部订单号
-    private int need_invoice;//是否需要开发票
-    private int invoice_content;//发票类型
-    private String invoice_title;//发票抬头
-    private int invoice_type;//发票抬头类型
-    private String consignee;//收货人
-    private int area_id;//区ID
-    private String area;//区
-    private int province_id;//省ID
-    private String province;//省
-    private int city_id;//市ID
-    private String city;//市
-    private String address;//地址
-    private String tel;//电话
-    private String mobile;//手机
-    private String total_amount;//订单总金额
-    private String total_quantity;//订单商品总数量
-    private String note;//订单备注
-    private String mall_ordercol;//暂时无用
-    private int create_time;//订单创建时间
-    private int update_time;//订单更新时间
-    private int receive_shipping_time;//收货时间,下一版本会移除
-    private String order_status_msg;//暂时无用
-    private String ip;//购买ip
-    private String product_money;//货物金额
-    private String express_money;//快递费用
-    private String source;//来源
-    private List<OrderProduct> product;//订单里的商品数据
-    private int orderStatusID;//订单状态id
-    private int orderActionID;//订单操作id
-    private String pay_type;//支付方式
-    private String deliver_type;//配送方式
+    private String id;
+    private String order_sn;
+    private String sell_type;
+    private String uid;
+    private int order_status;
+    private int shipping_status;
+    private int pay_status;
+    private String outer_order_sn;
+    private String need_invoice;
+    private String invoice_content;
+    private String invoice_title;
+    private String invoice_type;
+    private String consignee;
+    private String area_id;
+    private String area;
+    private String province_id;
+    private String province;
+    private String city_id;
+    private String city;
+    private String address;
+    private String tel;
+    private String mobile;
+    private String total_amount;
+    private String total_quantity;
+    private String create_time;
+    private String update_time;
+    private List<OrderProduct> product;
+    private String pay_type;
+    private String deliver_type;
+    private int serviceValid;
+    private int totalPrice;
+    private int totalQuantity;
+    private int banner_control;
+    private int orderStatusID;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,20 +59,28 @@ public class Order implements Serializable {
         this.order_sn = order_sn;
     }
 
-    public int getSell_type() {
+    public String getSell_type() {
         return sell_type;
     }
 
-    public void setSell_type(int sell_type) {
+    public void setSell_type(String sell_type) {
         this.sell_type = sell_type;
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public int getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(int order_status) {
+        this.order_status = order_status;
     }
 
     public int getShipping_status() {
@@ -98,30 +99,6 @@ public class Order implements Serializable {
         this.pay_status = pay_status;
     }
 
-    public String getPay_trade_no() {
-        return pay_trade_no;
-    }
-
-    public void setPay_trade_no(String pay_trade_no) {
-        this.pay_trade_no = pay_trade_no;
-    }
-
-    public int getExpress_status() {
-        return express_status;
-    }
-
-    public void setExpress_status(int express_status) {
-        this.express_status = express_status;
-    }
-
-    public int getPay_time() {
-        return pay_time;
-    }
-
-    public void setPay_time(int pay_time) {
-        this.pay_time = pay_time;
-    }
-
     public String getOuter_order_sn() {
         return outer_order_sn;
     }
@@ -130,19 +107,19 @@ public class Order implements Serializable {
         this.outer_order_sn = outer_order_sn;
     }
 
-    public int getNeed_invoice() {
+    public String getNeed_invoice() {
         return need_invoice;
     }
 
-    public void setNeed_invoice(int need_invoice) {
+    public void setNeed_invoice(String need_invoice) {
         this.need_invoice = need_invoice;
     }
 
-    public int getInvoice_content() {
+    public String getInvoice_content() {
         return invoice_content;
     }
 
-    public void setInvoice_content(int invoice_content) {
+    public void setInvoice_content(String invoice_content) {
         this.invoice_content = invoice_content;
     }
 
@@ -154,11 +131,11 @@ public class Order implements Serializable {
         this.invoice_title = invoice_title;
     }
 
-    public int getInvoice_type() {
+    public String getInvoice_type() {
         return invoice_type;
     }
 
-    public void setInvoice_type(int invoice_type) {
+    public void setInvoice_type(String invoice_type) {
         this.invoice_type = invoice_type;
     }
 
@@ -170,11 +147,11 @@ public class Order implements Serializable {
         this.consignee = consignee;
     }
 
-    public int getArea_id() {
+    public String getArea_id() {
         return area_id;
     }
 
-    public void setArea_id(int area_id) {
+    public void setArea_id(String area_id) {
         this.area_id = area_id;
     }
 
@@ -186,11 +163,11 @@ public class Order implements Serializable {
         this.area = area;
     }
 
-    public int getProvince_id() {
+    public String getProvince_id() {
         return province_id;
     }
 
-    public void setProvince_id(int province_id) {
+    public void setProvince_id(String province_id) {
         this.province_id = province_id;
     }
 
@@ -202,11 +179,11 @@ public class Order implements Serializable {
         this.province = province;
     }
 
-    public int getCity_id() {
+    public String getCity_id() {
         return city_id;
     }
 
-    public void setCity_id(int city_id) {
+    public void setCity_id(String city_id) {
         this.city_id = city_id;
     }
 
@@ -258,84 +235,20 @@ public class Order implements Serializable {
         this.total_quantity = total_quantity;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getMall_ordercol() {
-        return mall_ordercol;
-    }
-
-    public void setMall_ordercol(String mall_ordercol) {
-        this.mall_ordercol = mall_ordercol;
-    }
-
-    public int getCreate_time() {
+    public String getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(int create_time) {
+    public void setCreate_time(String create_time) {
         this.create_time = create_time;
     }
 
-    public int getUpdate_time() {
+    public String getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(int update_time) {
+    public void setUpdate_time(String update_time) {
         this.update_time = update_time;
-    }
-
-    public int getReceive_shipping_time() {
-        return receive_shipping_time;
-    }
-
-    public void setReceive_shipping_time(int receive_shipping_time) {
-        this.receive_shipping_time = receive_shipping_time;
-    }
-
-    public String getOrder_status_msg() {
-        return order_status_msg;
-    }
-
-    public void setOrder_status_msg(String order_status_msg) {
-        this.order_status_msg = order_status_msg;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getProduct_money() {
-        return product_money;
-    }
-
-    public void setProduct_money(String product_money) {
-        this.product_money = product_money;
-    }
-
-    public String getExpress_money() {
-        return express_money;
-    }
-
-    public void setExpress_money(String express_money) {
-        this.express_money = express_money;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
     }
 
     public List<OrderProduct> getProduct() {
@@ -344,22 +257,6 @@ public class Order implements Serializable {
 
     public void setProduct(List<OrderProduct> product) {
         this.product = product;
-    }
-
-    public int getOrderStatusID() {
-        return orderStatusID;
-    }
-
-    public void setOrderStatusID(int orderStatusID) {
-        this.orderStatusID = orderStatusID;
-    }
-
-    public int getOrderActionID() {
-        return orderActionID;
-    }
-
-    public void setOrderActionID(int orderActionID) {
-        this.orderActionID = orderActionID;
     }
 
     public String getPay_type() {
@@ -378,50 +275,83 @@ public class Order implements Serializable {
         this.deliver_type = deliver_type;
     }
 
+    public int getServiceValid() {
+        return serviceValid;
+    }
+
+    public void setServiceValid(int serviceValid) {
+        this.serviceValid = serviceValid;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
+
+    public int getBanner_control() {
+        return banner_control;
+    }
+
+    public void setBanner_control(int banner_control) {
+        this.banner_control = banner_control;
+    }
+
+    public int getOrderStatusID() {
+        return orderStatusID;
+    }
+
+    public void setOrderStatusID(int orderStatusID) {
+        this.orderStatusID = orderStatusID;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", order_sn='" + order_sn + '\'' +
-                ", sell_type=" + sell_type +
-                ", uid=" + uid +
+                ", sell_type='" + sell_type + '\'' +
+                ", uid='" + uid + '\'' +
+                ", order_status=" + order_status +
                 ", shipping_status=" + shipping_status +
                 ", pay_status=" + pay_status +
-                ", pay_trade_no='" + pay_trade_no + '\'' +
-                ", express_status=" + express_status +
-                ", pay_time=" + pay_time +
                 ", outer_order_sn='" + outer_order_sn + '\'' +
-                ", need_invoice=" + need_invoice +
-                ", invoice_content=" + invoice_content +
+                ", need_invoice='" + need_invoice + '\'' +
+                ", invoice_content='" + invoice_content + '\'' +
                 ", invoice_title='" + invoice_title + '\'' +
-                ", invoice_type=" + invoice_type +
+                ", invoice_type='" + invoice_type + '\'' +
                 ", consignee='" + consignee + '\'' +
-                ", area_id=" + area_id +
+                ", area_id='" + area_id + '\'' +
                 ", area='" + area + '\'' +
-                ", province_id=" + province_id +
+                ", province_id='" + province_id + '\'' +
                 ", province='" + province + '\'' +
-                ", city_id=" + city_id +
+                ", city_id='" + city_id + '\'' +
                 ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
                 ", tel='" + tel + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", total_amount='" + total_amount + '\'' +
                 ", total_quantity='" + total_quantity + '\'' +
-                ", note='" + note + '\'' +
-                ", mall_ordercol='" + mall_ordercol + '\'' +
-                ", create_time=" + create_time +
-                ", update_time=" + update_time +
-                ", receive_shipping_time=" + receive_shipping_time +
-                ", order_status_msg='" + order_status_msg + '\'' +
-                ", ip='" + ip + '\'' +
-                ", product_money='" + product_money + '\'' +
-                ", express_money='" + express_money + '\'' +
-                ", source='" + source + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", update_time='" + update_time + '\'' +
                 ", product=" + product +
-                ", orderStatusID=" + orderStatusID +
-                ", orderActionID=" + orderActionID +
                 ", pay_type='" + pay_type + '\'' +
                 ", deliver_type='" + deliver_type + '\'' +
+                ", serviceValid=" + serviceValid +
+                ", totalPrice=" + totalPrice +
+                ", totalQuantity=" + totalQuantity +
+                ", banner_control=" + banner_control +
+                ", orderStatusID=" + orderStatusID +
                 '}';
     }
 }

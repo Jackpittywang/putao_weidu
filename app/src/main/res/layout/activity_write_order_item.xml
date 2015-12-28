@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <!--商品图片-->
     <com.sunnybear.library.view.image.ImageDraweeView
@@ -42,46 +42,13 @@
                 android:textSize="@dimen/text_size_16sp" />
 
             <!--规格参数-->
-            <LinearLayout
-                android:id="@+id/ll_norms"
+            <TextView
+                android:id="@+id/tv_sku"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_title"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="颜色:"
-                    android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_12sp" />
-
-                <TextView
-                    android:id="@+id/tv_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="塔塔紫"
-                    android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="尺码:"
-                    android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_12sp" />
-
-                <TextView
-                    android:id="@+id/tv_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="均码"
-                    android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_12sp" />
-            </LinearLayout>
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_12sp" />
         </LinearLayout>
-
         <!--价格信息-->
         <LinearLayout
             android:layout_width="wrap_content"
