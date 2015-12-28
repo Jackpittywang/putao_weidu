@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
+import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -27,7 +28,7 @@ public class SplashActivity extends BasicFragmentActivity {
                 if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                     startActivity(GuidanceActivity.class);
                 else
-                    startActivity(MainActivity.class);
+                    startActivity(InvoiceInfoActivity.class);
                 ActivityManager.getInstance().finishCurrentActivity();
             }
         }, 3 * 1000);
