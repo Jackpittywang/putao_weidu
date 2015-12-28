@@ -37,7 +37,7 @@ public class StartApi {
     private static final String REQUEST_UID = "uid";//用户的唯一标识ID
 
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.event.start.wang/" : "http://api-event.putao.com/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/" : "http://api-event-dev.putao.com/";//基础url
     private static final String BASE_WEIDU_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-event.putao.com/";//基础url
 
     public static void install(String base_url) {

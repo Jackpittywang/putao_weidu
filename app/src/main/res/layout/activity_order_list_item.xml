@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tv_order_no_text"
@@ -56,15 +55,118 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
+    <!--间隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+
     <!--订单列表-->
     <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@id/stickyHeaderLayout_scrollable"
+        android:id="@+id/rv_orders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_EBEBEB"
+        auto:divider_color="@color/white"
         auto:divider_height="1px"
         auto:has_row_divider="true"
         auto:is_inner="true" />
+
+    <!--合计-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_color_F5F5F5"
+        android:gravity="right"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!--合计金额-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_order_sum_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="3"
+                    android:textColor="@color/text_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="件商品 合计："
+                    android:textColor="@color/text_color" />
+            </LinearLayout>
+
+            <!--金额-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/text_color" />
+
+                <TextView
+                    android:id="@+id/tv_sum_noney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1197.00"
+                    android:textColor="@color/text_color" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--运费-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="含运费："
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <!--金额-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <TextView
+                    android:id="@+id/tv_sum_carriage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <!--订单确认栏-->
     <LinearLayout
@@ -75,22 +177,20 @@
         android:gravity="right|center_vertical">
 
         <TextView
+            android:id="@+id/tv_order_hint"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/tv_order_hint"
+            android:layout_toLeftOf="@+id/tv_order_hint"
             android:gravity="center_vertical"
             android:text="签收后15日内可申请售后"
-            android:layout_toLeftOf="@+id/btn_order_cancel"
             android:textSize="@dimen/text_size_12sp"
             android:visibility="gone" />
-        
+
         <Button
-            android:id="@+id/btn_order_cancel"
+            android:id="@+id/btn_order_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_toLeftOf="@+id/btn_order_operation"
-            android:layout_toStartOf="@+id/btn_order_operation"
             android:background="@drawable/btn_order_state_selector"
             android:gravity="center"
             android:text="取消订单"
@@ -98,13 +198,13 @@
             android:textSize="@dimen/text_size_14sp" />
 
         <Button
-            android:id="@+id/btn_order_operation"
+            android:id="@+id/btn_order_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/btn_order_express_selector"
             android:gravity="center"
             android:text="订单操作"

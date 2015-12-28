@@ -21,12 +21,12 @@ public class StoreApi {
     private static final String REQUEST_NEW_PID = "new_pid";//新商品id
     private static final String REQUEST_PRODUCTS = "products";//产品(批量编辑购物车用）
     //发票相关
-    private static final String REQUEST_iNVOICE_ID="id";//发票ID
-    private static final String REQUEST_INVOICE_TYPE="type";//旧商品id
-    private static final String REQUEST_INVOICE_CONTENT="Content";//发票内容
-    private static final String REQUEST_INVOICE_TITLE="title";//发票抬头
+    private static final String REQUEST_iNVOICE_ID = "id";//发票ID
+    private static final String REQUEST_INVOICE_TYPE = "type";//旧商品id
+    private static final String REQUEST_INVOICE_CONTENT = "Content";//发票内容
+    private static final String REQUEST_INVOICE_TITLE = "title";//发票抬头
 
-//    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
+    //    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
     //商城请求所使用的预发布域名
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.test.putao.com/" : "http://api.sotre.putao.com/";//基础url
 
@@ -160,47 +160,65 @@ public class StoreApi {
                 .build(RequestMethod.POST, URL_CART_CHANGE);
     }
 
-    public static final String URL_INVOICE_LIST=BASE_URL+" invoices/list";
+    /**
+     * 购物车数量
+     */
+    public static final String URL_CART_COUNT = BASE_URL + "cart/qt";
 
     /**
-     * 编辑发票
-     *
-     * @param invoice_id 发票的id
-     * @param invoice_type 旧商品id
-     * @param invoice_content 发票内容
-     * @param invoice_title 发票抬头
+     * 购物车数量
      */
-    public static Request InvoiceList(String invoice_id,String invoice_type,String invoice_content,String invoice_title){
-        return PTWDRequestHelper.shopCar()
-                .build(RequestMethod.POST, URL_INVOICE_LIST);
+    public static Request getCartCount() {
+        return PTWDRequestHelper.store()
+                .build(RequestMethod.GET, URL_CART_COUNT);
     }
 
-    public static final String URL_EDIT_INVOICE=BASE_URL+" invoices/edit";
+    /**
+     * 发票列表
+     */
+    public static final String URL_INVOICE_LIST = BASE_URL + " invoices/list";
+
+    /**
+     * 发票列表
+     */
+    public static Request InvoiceList() {
+        return PTWDRequestHelper.shopCar()
+                .build(RequestMethod.GET, URL_INVOICE_LIST);
+    }
+
+    /**
+     * 编辑发票
+     */
+    public static final String URL_EDIT_INVOICE = BASE_URL + " invoices/edit";
 
     /**
      * 编辑发票
      *
-     * @param invoice_id 发票的id
-     * @param invoice_type 旧商品id
+     * @param invoice_id      发票的id
+     * @param invoice_type    旧商品id
      * @param invoice_content 发票内容
-     * @param invoice_title 发票抬头
+     * @param invoice_title   发票抬头
      */
-    public static Request editInvoice(String invoice_id,String invoice_type,String invoice_content,String invoice_title){
+    public static Request editInvoice(String invoice_id, String invoice_type, String invoice_content, String invoice_title) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_iNVOICE_ID, invoice_id)
-                .addParam(REQUEST_INVOICE_TYPE,invoice_type)
-                .addParam(REQUEST_INVOICE_CONTENT,invoice_content)
-                .addParam(REQUEST_INVOICE_TITLE,invoice_title)
+                .addParam(REQUEST_INVOICE_TYPE, invoice_type)
+                .addParam(REQUEST_INVOICE_CONTENT, invoice_content)
+                .addParam(REQUEST_INVOICE_TITLE, invoice_title)
                 .build(RequestMethod.POST, URL_EDIT_INVOICE);
     }
 
-    public static final String URL_DELETE_INVOICE=BASE_URL+" invoices/delete";
     /**
-     * 编辑发票
+     * 删除发票
+     */
+    public static final String URL_DELETE_INVOICE = BASE_URL + " invoices/delete";
+
+    /**
+     * 删除发票
      *
      * @param invoice_id 发票的id
      */
-    public static Request deleteInvoice(String invoice_id){
+    public static Request deleteInvoice(String invoice_id) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_iNVOICE_ID, invoice_id)
                 .build(RequestMethod.POST, URL_DELETE_INVOICE);

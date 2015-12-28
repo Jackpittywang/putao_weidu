@@ -32,7 +32,7 @@ public class OrderApi {
     private static final String REQUEST_STATUS = "status";//是否为默认地址
     private static final String REQUEST_ADDRESS_ID = "id";//收货地址id
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.store.start.wang/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.test.putao.com/" : "http://api.store.test.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -53,7 +53,7 @@ public class OrderApi {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.POST, URL_ORDER_LIST);
+                .build(RequestMethod.GET, URL_ORDER_LIST);
     }
 
     /**
@@ -250,5 +250,18 @@ public class OrderApi {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_ORDER_ID, order_id)
                 .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
+    }
+
+    /**
+     * 获得订单数量
+     */
+    public static final String URL_ORDER_COUNT = BASE_URL + "order/order/getOrderCount";
+
+    /**
+     * 获得订单数量
+     */
+    public static Request getOrderCount() {
+        return PTWDRequestHelper.user()
+                .build(RequestMethod.GET, URL_ORDER_COUNT);
     }
 }

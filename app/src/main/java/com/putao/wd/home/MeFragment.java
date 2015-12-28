@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
@@ -14,13 +15,14 @@ import com.putao.wd.me.message.MessageCenterActivity;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.me.setting.SettingActivity;
+import com.putao.wd.model.OrderCount;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.question.QuestionActivity;
-import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.IndicatorButton;
@@ -38,13 +40,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Bind(R.id.si_message)
     SettingItem si_message;
     @Bind(R.id.btn_pay)
-    IndicatorButton btn_pay;
+    IndicatorButton btn_pay;//待付款
     @Bind(R.id.btn_deliver)
-    IndicatorButton btn_deliver;
+    IndicatorButton btn_deliver;//待发货
     @Bind(R.id.btn_take_deliver)
-    IndicatorButton btn_take_deliver;
+    IndicatorButton btn_take_deliver;//待收货
     @Bind(R.id.btn_after_sale)
-    IndicatorButton btn_after_sale;
+    IndicatorButton btn_after_sale;//售后
     @Bind(R.id.iv_user_icon)
     ImageDraweeView iv_user_icon;
     @Bind(R.id.tv_user_nickname)
@@ -59,13 +61,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        //Logger.d(MainActivity.TAG, "MeFragment启动");
-//        si_message.show(18);
-//        btn_pay.show(9);
-//        btn_deliver.show(10);
-//        btn_take_deliver.show(11);
-//        btn_after_sale.show(12);
         getUserInfo();
+        getOrderCount();
     }
 
     /**
@@ -77,6 +74,23 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             public void onSuccess(String url, UserInfo result) {
                 iv_user_icon.setImageURL(result.getHead_img());
                 tv_user_nickname.setText(result.getNick_name());
+                loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 获得订单数量
+     */
+    private void getOrderCount() {
+        networkRequest(OrderApi.getOrderCount(), new SimpleFastJsonCallback<OrderCount>(OrderCount.class, loading) {
+            @Override
+            public void onSuccess(String url, OrderCount result) {
+                Logger.d(result.toString());
+                btn_pay.show(result.getUnpaid().getNum());
+                btn_deliver.show(result.getUndelivery().getNum());
+                btn_take_deliver.show(result.getUnCheck().getNum());
+                btn_after_sale.show(result.getService().getNum());
                 loading.dismiss();
             }
         });
@@ -102,7 +116,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
-                bundle.putInt("current_Index", 0);
+                bundle.putInt(OrderListActivity.TYPE_INDEX, 0);
                 startActivity(OrderListActivity.class);
                 break;
             case R.id.si_child_info://孩子信息
@@ -126,22 +140,22 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
-                btn_pay.hide();
-                bundle.putInt("current_Index", 1);
+//                btn_pay.hide();
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_deliver://待发货
-                btn_deliver.hide();
-                bundle.putInt("current_Index", 2);
+//                btn_deliver.hide();
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_take_deliver://待收货
-                btn_take_deliver.hide();
-                bundle.putInt("current_Index", 3);
+//                btn_take_deliver.hide();
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_after_sale://售后
-                btn_after_sale.hide();
+//                btn_after_sale.hide();
                 startActivity(ServiceListActivity.class, bundle);
                 break;
         }

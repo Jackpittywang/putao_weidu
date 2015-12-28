@@ -27,10 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@color/color_EBEBEB" />
-        <!--需要发票-->
+        <!--不需要发票-->
         <LinearLayout
-            android:id="@+id/ll_need_invoice"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_noneed_invoice"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
@@ -38,9 +38,9 @@
 
             <com.sunnybear.library.view.SwitchButton
                 android:id="@+id/btn_noneed_invoice"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center_vertical"
                 auto:isSelect="true"
                 auto:norDrawable="@drawable/check_box_nor"
@@ -59,13 +59,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
             android:background="@color/divider_color" />
-        <!--不需要-->
+        <!--需要发票-->
         <LinearLayout
-            android:id="@+id/ll_noneed_invoice"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_need_invoice"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
@@ -74,9 +73,9 @@
 
             <com.sunnybear.library.view.SwitchButton
                 android:id="@+id/btn_need_invoice"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
                 auto:norDrawable="@drawable/check_box_nor"
                 auto:selDrawable="@drawable/check_box_sel" />
 
@@ -100,13 +99,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/color_EBEBEB"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 android:text="发票抬头"
                 android:textSize="14sp" />
             <!--个人-->
             <LinearLayout
                 android:id="@+id/ll_person"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
@@ -115,9 +114,9 @@
 
                 <com.sunnybear.library.view.SwitchButton
                     android:id="@+id/btn_person"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
                     auto:isSelect="true"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
@@ -134,13 +133,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
                 android:background="@color/divider_color" />
             <!--单位-->
             <LinearLayout
                 android:id="@+id/ll_company"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
@@ -149,9 +147,9 @@
 
                 <com.sunnybear.library.view.SwitchButton
                     android:id="@+id/btn_company"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
 
@@ -179,12 +177,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/color_EBEBEB"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 android:text="发票内容"
                 android:textSize="14sp" />
             <!--需要明细-->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/ll_info"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
@@ -193,9 +192,9 @@
 
                 <com.sunnybear.library.view.SwitchButton
                     android:id="@+id/btn_invoice_info"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
                     auto:isSelect="true"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
@@ -212,13 +211,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
                 android:background="@color/divider_color" />
             <!--电子产品-->
             <LinearLayout
                 android:id="@+id/ll_electronic_product"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
@@ -227,9 +225,9 @@
 
                 <com.sunnybear.library.view.SwitchButton
                     android:id="@+id/btn_electronic_product"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
 
@@ -245,13 +243,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
                 android:background="@color/divider_color" />
-            <!--电子产品-->
+            <!--玩具-->
             <LinearLayout
                 android:id="@+id/ll_toy"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
@@ -260,9 +257,9 @@
 
                 <com.sunnybear.library.view.SwitchButton
                     android:id="@+id/btn_toy"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
                     auto:norDrawable="@drawable/check_box_nor"
                     auto:selDrawable="@drawable/check_box_sel" />
 
@@ -279,7 +276,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginTop="5dp"
             android:background="@color/divider_color" />
 
         <TextView

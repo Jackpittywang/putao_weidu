@@ -129,7 +129,7 @@ public class NavigationBar extends RelativeLayout {
     }
 
     public void setLeftClickable(boolean isClick) {
-        mLeftView.setClickable(isClick);
+        mLeftView.setEnabled(isClick);
     }
 
     public void setRightTitle(String title) {
@@ -148,7 +148,7 @@ public class NavigationBar extends RelativeLayout {
     }
 
     public void setRightClickable(boolean isClick) {
-        mRightView.setClickable(isClick);
+        mRightView.setEnabled(isClick);
     }
 
     public void setRightView(View view) {

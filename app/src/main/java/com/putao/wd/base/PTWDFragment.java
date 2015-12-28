@@ -18,7 +18,7 @@ import butterknife.Bind;
  */
 public abstract class PTWDFragment<App extends BasicApplication> extends BasicFragment<App> implements NavigationBar.ActionsListener {
     @Bind(R.id.navigation_bar)
-    NavigationBar navigation_bar;
+    public NavigationBar navigation_bar;
 
     /**
      * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
