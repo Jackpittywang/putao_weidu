@@ -7,18 +7,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.ShoppingCar;
 import com.putao.wd.me.address.AddressListActivity;
-import com.putao.wd.model.Cart;
-import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
 import com.putao.wd.store.cashier.CashierActivity;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
-import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.putao.wd.store.order.adapter.WriteOrderAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
@@ -26,7 +22,6 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,7 +41,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Bind(R.id.tv_sum)
     TextView tv_sum;//总金额
 
-    private OrdersAdapter adapter;
+    private WriteOrderAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -67,7 +62,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                 Logger.w("填写订单 = " + result.toString());
                 List<OrderConfirmProduct> products = result.getProduct();
                 products.add(new OrderConfirmProduct());
-                adapter = new OrdersAdapter(mContext, products);
+                adapter = new WriteOrderAdapter(mContext, products);
                 rv_orders.setAdapter(adapter);
                 loading.dismiss();
             }
@@ -139,7 +134,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 //
 //    }
 
-//    @Subcriber(tag = OrdersAdapter.EVENT_TOTAL)
 //    public void eventTotalMoney(String tag) {
 //        tv_sum.setText("");
 //    }

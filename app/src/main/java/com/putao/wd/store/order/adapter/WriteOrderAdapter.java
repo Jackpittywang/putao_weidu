@@ -6,11 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.ShoppingCar;
-import com.putao.wd.model.Cart;
-import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderConfirmProduct;
-import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -24,13 +20,13 @@ import butterknife.Bind;
  * 填写订单的订单列表适配器
  * Created by wango on 2015/12/7.
  */
-public class OrdersAdapter extends BasicAdapter<OrderConfirmProduct, BasicViewHolder> {
+public class WriteOrderAdapter extends BasicAdapter<OrderConfirmProduct, BasicViewHolder> {
 //    public static final String EVENT_TOTAL = "event_total";
     private int size;
     private static final int TYPE_ORDER = 1;
     private static final int TYPE_SUM = 2;
 
-    public OrdersAdapter(Context context, List<OrderConfirmProduct> orderConfirmProducts) {
+    public WriteOrderAdapter(Context context, List<OrderConfirmProduct> orderConfirmProducts) {
         super(context, orderConfirmProducts);
         size = orderConfirmProducts.size();
     }
@@ -83,7 +79,6 @@ public class OrdersAdapter extends BasicAdapter<OrderConfirmProduct, BasicViewHo
 //            sumviewHolder.tv_sum_noney.setText(orderListItem.getTitle());//在返回的list中，再添加一个item保存汇总值，其中Title保存总价
         }
 
-//        EventBusHelper.post(OrdersAdapter.EVENT_TOTAL, OrdersAdapter.EVENT_TOTAL);
 
 
     }

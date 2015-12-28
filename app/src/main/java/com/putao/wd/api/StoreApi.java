@@ -208,7 +208,6 @@ public class StoreApi {
                 .build(RequestMethod.POST, URL_EDIT_INVOICE);
     }
 
-    public static final String URL_DELETE_INVOICE=BASE_URL+" invoices/delete";
     /**
      * 删除发票
      */
