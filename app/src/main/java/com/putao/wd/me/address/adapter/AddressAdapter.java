@@ -11,6 +11,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AddressEditActivity;
 import com.putao.wd.model.Address;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -24,6 +25,7 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/26.
  */
 public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.AddressViewHolder> {
+    public static final String EVENT_ADDRESS = "send_address";//可编辑
     private int index;
 
     public AddressAdapter(Context context, List<Address> shippingAddressDBs) {
@@ -44,7 +46,7 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
     public void onBindItem(AddressViewHolder holder, final Address address, final int position) {
         holder.tv_name.setText(address.getRealname());
         holder.tv_default.setVisibility(StringUtils.equals(address.getStatus(), "1") ? View.VISIBLE : View.GONE);
-        setAddressName(holder, address);
+        String addr = setAddressName(holder, address);
         holder.tv_mobile.setText(address.getMobile());
         holder.tv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,9 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
                 ((PTWDActivity) context).startActivity(AddressEditActivity.class, bundle);
             }
         });
+
+        String addressInfo = address.getRealname()+ "/" + addr + "/" + address.getMobile();
+        EventBusHelper.post(addressInfo, EVENT_ADDRESS);
     }
 
     /**
@@ -63,13 +68,14 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
      * @param holder
      * @param address
      */
-    private void setAddressName(AddressViewHolder holder, Address address) {
+    private String setAddressName(AddressViewHolder holder, Address address) {
         JSONObject object = JSON.parseObject(address.getAddressName());
         String addr = object.getString(address.getProvince_id()) +
                 object.getString(address.getCity_id()) +
                 object.getString(address.getArea_id()) +
                 address.getAddress();
         holder.tv_address.setText(addr);
+        return addr;
     }
 
     /**

@@ -17,7 +17,9 @@ import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -60,6 +62,12 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
      * 收货地址列表
      */
     private void getAddressLists() {
+        rv_addresses.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Serializable serializable, int position) {
+                finish();
+            }
+        });
         networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<Address> result) {
