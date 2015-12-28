@@ -2,12 +2,9 @@ package com.putao.wd.start.praise.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.PraiseListItem;
-import com.putao.wd.model.Cool;
 import com.putao.wd.model.CoolList;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -27,7 +24,7 @@ public class PraiseListAdapter  extends LoadMoreAdapter<CoolList, PraiseListAdap
     }
 
     public int getLayoutId(int viewType) {
-        return R.layout.layout_apply_list_item;
+        return R.layout.activity_apply_list_item;
     }
 
     public PraiseListAdapter.PraiseListViewHolder getViewHolder(View itemView, int viewType) {
