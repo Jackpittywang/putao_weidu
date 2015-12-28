@@ -164,6 +164,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
         bundle.putString(INVOICE_CONTENT, invoice_content);
         setResult(0, intent);
         finish();
+
     }
 
     /**
