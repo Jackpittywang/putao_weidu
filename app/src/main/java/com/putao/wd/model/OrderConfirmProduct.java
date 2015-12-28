@@ -17,6 +17,8 @@ public class OrderConfirmProduct implements Serializable {
     private String product_number;
     private String sku;
     private String icon;
+    private String totalPrice;
+    private int totalQt;
 
     public String getPid() {
         return pid;
@@ -88,6 +90,22 @@ public class OrderConfirmProduct implements Serializable {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getTotalQt() {
+        return totalQt;
+    }
+
+    public void setTotalQt(int totalQt) {
+        this.totalQt = totalQt;
     }
 
     @Override

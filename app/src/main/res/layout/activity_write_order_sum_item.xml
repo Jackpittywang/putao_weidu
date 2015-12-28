@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="3"
+                android:text="0"
                 android:textColor="@color/text_color_red" />
 
             <TextView
@@ -68,7 +68,7 @@
                 android:id="@+id/tv_product_summoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="864.00"
+                android:text="0.00"
                 android:textColor="#313131" />
         </LinearLayout>
 
@@ -109,7 +109,7 @@
                 android:id="@+id/tv_sum_noney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1197.00"
+                android:text="0.00"
                 android:textColor="@color/text_color_red" />
         </LinearLayout>
     </LinearLayout>

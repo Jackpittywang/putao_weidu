@@ -21,10 +21,9 @@ import butterknife.Bind;
  * Created by wango on 2015/12/7.
  */
 public class WriteOrderAdapter extends BasicAdapter<OrderConfirmProduct, BasicViewHolder> {
-//    public static final String EVENT_TOTAL = "event_total";
-    private int size;
     private static final int TYPE_ORDER = 1;
     private static final int TYPE_SUM = 2;
+    private int size;
 
     public WriteOrderAdapter(Context context, List<OrderConfirmProduct> orderConfirmProducts) {
         super(context, orderConfirmProducts);
@@ -72,14 +71,12 @@ public class WriteOrderAdapter extends BasicAdapter<OrderConfirmProduct, BasicVi
             viewHolder.tv_money.setText(orderConfirmProduct.getPrice());
             viewHolder.tv_count.setText(orderConfirmProduct.getQt());
         } else if (holder instanceof SumOrderListViewHolder) {//列表底部汇总
-//            SumOrderListViewHolder sumviewHolder = (SumOrderListViewHolder) holder;
-//            sumviewHolder.tv_order_sumcount.setText(orderListItem.getCount());
-//            sumviewHolder.tv_product_summoney.setText(orderListItem.getMoney());
+            SumOrderListViewHolder sumviewHolder = (SumOrderListViewHolder) holder;
+            sumviewHolder.tv_order_sumcount.setText(orderConfirmProduct.getTotalQt());
+            sumviewHolder.tv_product_summoney.setText(orderConfirmProduct.getTotalPrice());
 //            sumviewHolder.tv_carriage.setText(orderListItem.getImgUrl());//在返回的list中，再添加一个item保存汇总值，其中ImgUrl保存总价
-//            sumviewHolder.tv_sum_noney.setText(orderListItem.getTitle());//在返回的list中，再添加一个item保存汇总值，其中Title保存总价
+            sumviewHolder.tv_sum_noney.setText(orderConfirmProduct.getTotalPrice());//在返回的list中，再添加一个item保存汇总值，其中Title保存总价
         }
-
-
 
     }
 
