@@ -7,7 +7,7 @@ package com.putao.wd.me.order;
 public final class OrderCommonState {
 
     /**
-     * 待付款
+     * 待支付
      */
     public static final int ORDER_WAITING_PAY = 1;
     /**

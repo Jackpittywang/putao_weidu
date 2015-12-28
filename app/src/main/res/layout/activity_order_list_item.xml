@@ -187,7 +187,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btn_order_cancel"
+            android:id="@+id/btn_order_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -200,7 +200,7 @@
             android:textSize="@dimen/text_size_14sp" />
 
         <Button
-            android:id="@+id/btn_order_operation"
+            android:id="@+id/btn_order_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
