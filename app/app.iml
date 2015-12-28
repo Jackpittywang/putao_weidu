@@ -120,22 +120,22 @@
     <orderEntry type="library" exported="" name="ShareSDK-TencentWeibo-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.4.1.1" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
-    <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.6.4" level="project" />
+    <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QZone-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.4" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.6.4" level="project" />
-    <orderEntry type="library" exported="" name="alipaySdk-20151112" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.6.4" level="project" />
+    <orderEntry type="library" exported="" name="alipaySdk-20151112" level="project" />
     <orderEntry type="library" exported="" name="greendao-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.6.4" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Favorite-2.6.4" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="zbardecoder" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="MobCommons" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.4" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
   </component>
 </module>

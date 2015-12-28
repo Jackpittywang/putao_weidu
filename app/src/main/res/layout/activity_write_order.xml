@@ -217,6 +217,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_submit"
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"

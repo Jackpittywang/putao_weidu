@@ -202,12 +202,13 @@ public class StoreApi {
     public static Request editInvoice(String invoice_id, String invoice_type, String invoice_content, String invoice_title) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_iNVOICE_ID, invoice_id)
-                .addParam(REQUEST_INVOICE_TYPE, invoice_type)
-                .addParam(REQUEST_INVOICE_CONTENT, invoice_content)
-                .addParam(REQUEST_INVOICE_TITLE, invoice_title)
+                .addParam(REQUEST_INVOICE_TYPE,invoice_type)
+                .addParam(REQUEST_INVOICE_CONTENT,invoice_content)
+                .addParam(REQUEST_INVOICE_TITLE,invoice_title)
                 .build(RequestMethod.POST, URL_EDIT_INVOICE);
     }
 
+    public static final String URL_DELETE_INVOICE=BASE_URL+" invoices/delete";
     /**
      * 删除发票
      */
@@ -223,4 +224,26 @@ public class StoreApi {
                 .addParam(REQUEST_iNVOICE_ID, invoice_id)
                 .build(RequestMethod.POST, URL_DELETE_INVOICE);
     }
+
+    /**
+     * 订单确认
+     */
+    public static final String URL_ORDER_CONFIRM = BASE_URL + "order/confirm";
+
+    /**
+     * 订单确认
+     *
+     * @param type   购买方式--"1"立即购买，"2"购物车购买
+     * @param pid    商品id
+     * @return
+     */
+    public static Request orderConfirm(String type, String pid){
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_INVOICE_TYPE, type)
+                .addParam(REQUEST_PRODUCT_PID, pid)
+                .build(RequestMethod.POST, URL_ORDER_CONFIRM);
+    }
+
+
+
 }

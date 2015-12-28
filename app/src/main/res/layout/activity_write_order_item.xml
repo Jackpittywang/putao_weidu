@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <!--商品图片-->
     <com.sunnybear.library.view.image.ImageDraweeView
@@ -12,7 +12,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/btn_sel" />
+        android:layout_toRightOf="@id/btn_sel"/>
 
     <!--商品信息-->
     <RelativeLayout
@@ -39,16 +39,35 @@
                 android:singleLine="false"
                 android:text="葡萄探索号.虚拟+现实儿童科技益智玩具"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"/>
 
             <!--规格参数-->
-            <TextView
-                android:id="@+id/tv_sku"
+            <LinearLayout
+                android:id="@+id/ll_norms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_12sp" />
+                android:layout_below="@id/tv_title"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="塔塔紫"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="均码"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:visibility="gone"/>
+            </LinearLayout>
         </LinearLayout>
+
         <!--价格信息-->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:text="￥"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_12sp" />
+                    android:textSize="@dimen/text_size_12sp"/>
 
                 <TextView
                     android:id="@+id/tv_money"
@@ -79,7 +98,7 @@
                     android:singleLine="true"
                     android:text="399.00"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_16sp" />
+                    android:textSize="@dimen/text_size_16sp"/>
             </LinearLayout>
 
             <!--数量-->
@@ -94,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="X"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/text_size_14sp"/>
 
                 <TextView
                     android:id="@+id/tv_count"
@@ -104,7 +123,7 @@
                     android:singleLine="true"
                     android:text="2"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_16sp" />
+                    android:textSize="@dimen/text_size_16sp"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
