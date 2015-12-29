@@ -1,4 +1,4 @@
-package com.putao.wd.store.cashier;
+package com.putao.wd.store.pay;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.OrderSubmitReturn;
-import com.putao.wd.pay.PayResult;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -27,7 +26,7 @@ import butterknife.OnClick;
  * 收银台
  * Created by wangou on 2015/12/08.
  */
-public class CashPayActivity extends PTWDActivity implements View.OnClickListener {
+public class PayActivity extends PTWDActivity implements View.OnClickListener {
     public static final String BUNDLE_ORDER_PAY = "order_pay";
     private final int SDK_PAY_FLAG = 1;
     private final int SDK_CHECK_FLAG = 2;
@@ -46,7 +45,7 @@ public class CashPayActivity extends PTWDActivity implements View.OnClickListene
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_cash_pay;
+        return R.layout.activity_pay;
     }
 
     @Override
@@ -116,7 +115,7 @@ public class CashPayActivity extends PTWDActivity implements View.OnClickListene
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{StoreApi.URL_PAY};
     }
 
     @OnClick(R.id.tv_pay)

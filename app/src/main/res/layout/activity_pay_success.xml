@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_has_divider="true"
+        auto:nav_main_title="支付成功"
+        auto:nav_main_title_color="@color/text_color" />
+
+    <!--图片-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="133dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_paysuccess_cover" />
+
+    <!--按钮-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_back_store"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_get_focus"
+            android:text="返回葡商城"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp" />
+
+
+        <TextView
+            android:id="@+id/tv_look_order"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:gravity="center"
+            android:text="查看订单"
+            android:textColor="@drawable/text_select"
+            android:textSize="@dimen/text_size_18sp" />
+    </LinearLayout>
+</LinearLayout>
