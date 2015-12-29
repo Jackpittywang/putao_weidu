@@ -2,7 +2,6 @@ package com.putao.wd.store.order;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,17 +75,17 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         sticky_layout.canScrollView();
+        adapter = new WriteOrderAdapter(mContext, null);
+        rv_orders.setAdapter(adapter);
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
-        Bundle bundle = getIntent().getExtras();
-        networkRequest(StoreApi.orderConfirm(bundle.getString(ShoppingCarActivity.BUY_TYPE), "11|13", ""),
+        networkRequest(StoreApi.orderConfirm(args.getString(ShoppingCarActivity.BUY_TYPE), "11|13", ""),
                 new SimpleFastJsonCallback<OrderConfirm>(OrderConfirm.class, loading) {
                     @Override
                     public void onSuccess(String url, OrderConfirm result) {
                         Logger.w("填写订单 = " + result.toString());
                         if (null != result) {
-                            adapter = new WriteOrderAdapter(mContext, getLastItem(result));
-                            rv_orders.setAdapter(adapter);
+                            adapter.addAll(getLastItem(result));
                             addressId = result.getAddress().getId();
                         }
                         loading.dismiss();
@@ -134,11 +133,11 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 //                String invoice_title,String invoice_content, String consignee, String mobile, String tel
                 networkRequest(StoreApi.orderSubmit("2", "11|13", "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        startActivity(CashierActivity.class);
-                    }
-                });
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                startActivity(CashierActivity.class);
+                            }
+                        });
                 break;
         }
     }
@@ -160,15 +159,15 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             tv_Invoice_content.setText(invoiceInfo.get(2));
             tv_Invoice_content.setVisibility(View.VISIBLE);
             need_invoice = "1";
-            if(invoiceInfo.get(1).equals(InvoiceInfoActivity.INVOICE_PERSONAL)) {
+            if (invoiceInfo.get(1).equals(InvoiceInfoActivity.INVOICE_PERSONAL)) {
                 invoice_type = "1";
                 invoice_title = InvoiceInfoActivity.INVOICE_PERSONAL;
-            }else {
+            } else {
                 invoice_type = "2";
                 invoice_title = invoiceInfo.get(1);
             }
             invoice_content = invoiceInfo.get(2);
-        }else {
+        } else {
             tv_Invoice_type.setText(InvoiceInfoActivity.INVOICE_NEEDNOT);
             tv_Invoice_content.setVisibility(View.GONE);
             need_invoice = "0";
