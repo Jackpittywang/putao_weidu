@@ -18,6 +18,8 @@ public class Express implements Serializable {
     private String update_time;//快递单当前签收状态
     private String salt;//快递单当前签收状态
     private ArrayList<ExpressContent> real_content;
+    private ArrayList<Product> product;
+
 
     public String getId() {
         return id;
@@ -107,6 +109,14 @@ public class Express implements Serializable {
         this.real_content = real_content;
     }
 
+    public ArrayList<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(ArrayList<Product> product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
         return "Express{" +
@@ -116,11 +126,12 @@ public class Express implements Serializable {
                 ", express_name='" + express_name + '\'' +
                 ", express_code='" + express_code + '\'' +
                 ", isCheck='" + isCheck + '\'' +
-                ", state='" + state + '\'' +
+                ", state=" + state +
                 ", content=" + content +
                 ", update_time='" + update_time + '\'' +
                 ", salt='" + salt + '\'' +
                 ", real_content=" + real_content +
+                ", product=" + product +
                 '}';
     }
 }

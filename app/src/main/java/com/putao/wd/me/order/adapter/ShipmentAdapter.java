@@ -41,7 +41,7 @@ public class ShipmentAdapter extends BasicAdapter<Express, ShipmentAdapter.Shipm
 
     @Override
     public void onBindItem(ShipmentViewHolder holder, Express express, int position) {
-        holder.tv_shipment_title.setText("包裹"+position);
+        holder.tv_shipment_title.setText("包裹"+(position+1));
         holder.tv_shipment_status.setText(ShipmentState.getExpressStatusShowString(express.getState()));
     }
 
