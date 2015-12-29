@@ -100,6 +100,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             totalPrice = MathUtils.add(totalPrice, MathUtils.multiplication(confirmProduct.getPrice(), confirmProduct.getQt()));
             totalQt += Integer.parseInt(confirmProduct.getQt());
         }
+        tv_sum.setText(product.getTotalPrice());
         product.setTotalPrice(totalPrice);
         product.setTotalQt(totalQt);
         product.setTotalFee(result.getShipping_fee());
