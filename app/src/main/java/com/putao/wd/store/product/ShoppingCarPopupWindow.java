@@ -147,6 +147,10 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 ll_join_car.setClickable(true);
                 tv_product_price.setText(sku.getPrice());
                 adapter.resetAmount();
+                if(MathUtils.compare(mCount, sku.getQuantity())) {
+                    ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
+                    ll_join_car.setClickable(false);
+                }
             } else {
                 ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
                 ll_join_car.setClickable(false);
