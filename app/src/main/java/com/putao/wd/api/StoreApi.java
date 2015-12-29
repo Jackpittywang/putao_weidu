@@ -35,6 +35,7 @@ public class StoreApi {
     private static final String REQUEST_ORDER_CONSIGNEE = "consignee";//收货人
     private static final String REQUEST_ORDER_MOBILE = "mobile";//手机
     private static final String REQUEST_ORDER_TEL = "tel";//固话   N
+    private static final String REQUEST_ORDER_ID = "order_id";//订单id
 
     //    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
     //商城请求所使用的预发布域名
@@ -212,7 +213,7 @@ public class StoreApi {
     public static Request editInvoice(String invoice_id, String invoice_type, String invoice_content, String invoice_title) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_iNVOICE_ID, invoice_id)
-                .addParam(REQUEST_INVOICE_TYPE,invoice_type)
+                .addParam(REQUEST_INVOICE_TYPE, invoice_type)
                 .addParam(REQUEST_INVOICE_CONTENT, invoice_content)
                 .addParam(REQUEST_INVOICE_TITLE, invoice_title)
                 .build(RequestMethod.POST, URL_EDIT_INVOICE);
@@ -242,10 +243,10 @@ public class StoreApi {
     /**
      * 订单确认
      *
-     * @param type   购买方式--"1"立即购买，"2"购物车购买
-     * @param pid    商品id
+     * @param type 购买方式--"1"立即购买，"2"购物车购买
+     * @param pid  商品id
      */
-    public static Request orderConfirm(String type, String pid, String qt){
+    public static Request orderConfirm(String type, String pid, String qt) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PRODUCT_PID, pid)
@@ -275,8 +276,8 @@ public class StoreApi {
      * @param tel             固话   N
      * @return
      */
-    public static Request orderSubmit(String type, String pid, String qt, String address_id,String need_invoice, String invoice_type,
-                                      String invoice_title,String invoice_content, String consignee, String mobile, String tel){
+    public static Request orderSubmit(String type, String pid, String qt, String address_id, String need_invoice, String invoice_type,
+                                      String invoice_title, String invoice_content, String consignee, String mobile, String tel) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_INVOICE_TYPE, type)
                 .addParam(REQUEST_PRODUCT_PID, pid)
@@ -292,4 +293,19 @@ public class StoreApi {
                 .build(RequestMethod.POST, URL_ORDER_SUBMIT);
     }
 
+    /**
+     * 手机支付
+     */
+    public static final String URL_PAY = BASE_URL + "pay/order/mobile";
+
+    /**
+     * 手机支付
+     *
+     * @param order_id 订单id
+     */
+    public static Request pay(String order_id) {
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.GET, URL_PAY);
+    }
 }

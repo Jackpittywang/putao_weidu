@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * 编辑购物车规格
  * Created by wangou on 2015/12/4.
  */
-public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
+public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener {
     public static final String PRODUCT_ID = "productId";
     private final String PAY = "去结算";
     private final String DELETE = "删除";
