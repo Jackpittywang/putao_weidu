@@ -1,7 +1,8 @@
 package com.putao.wd.store.invoice;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -100,6 +101,20 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
         btn_invoice_info.setClickable(false);
         btn_electronic_product.setClickable(false);
         btn_toy.setClickable(false);
+        et_company.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                invoice_type = et_company.getText().toString();
+            }
+        });
     }
 
     @Override
@@ -133,7 +148,6 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
                 btn_person.setState(false);
                 btn_company.setState(true);
                 et_company.setVisibility(View.VISIBLE);
-                invoice_type = et_company.getText().toString();
                 break;
             case R.id.ll_info:
                 btn_invoice_info.setState(true);

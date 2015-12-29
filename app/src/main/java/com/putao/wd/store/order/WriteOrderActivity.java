@@ -123,6 +123,14 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         }
     }
 
+    @Subcriber(tag = AddressAdapter.EVENT_ADDRESS)
+    public void eventAddress(String addressInfo) {
+        String[] split = addressInfo.split("/");
+        tv_name.setText(split[0]);
+        tv_address.setText(split[1]);
+        tv_phone.setText(split[2]);
+    }
+
     @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
     public void eventInvoice(List<String> invoiceInfo) {
         if (!invoiceInfo.get(0).equals(InvoiceInfoActivity.INVOICE_NEEDNOT)) {
@@ -133,14 +141,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             tv_Invoice_type.setText(InvoiceInfoActivity.INVOICE_NEEDNOT);
             tv_Invoice_content.setVisibility(View.GONE);
         }
-    }
-
-    @Subcriber(tag = AddressAdapter.EVENT_ADDRESS)
-    public void eventAddress(String addressInfo) {
-        String[] split = addressInfo.split("/");
-        tv_name.setText(split[0]);
-        tv_address.setText(split[1]);
-        tv_phone.setText(split[2]);
     }
 
 }
