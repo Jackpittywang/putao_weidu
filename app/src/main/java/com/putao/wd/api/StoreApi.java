@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class StoreApi {
     private static final String REQUEST_PRODUCT_ID = "id";//产品id
+    private static final String REQUEST_TYPE = "type";//购买方式--1立即/2购物车
     private static final String REQUEST_PRODUCT_PID = "pid";//产品id(添加购物车时用）
     private static final String REQUEST_QT = "qt";//数量
     private static final String REQUEST_OLD_PID = "old_pid";//旧商品id
@@ -25,6 +26,15 @@ public class StoreApi {
     private static final String REQUEST_INVOICE_TYPE = "type";//旧商品id
     private static final String REQUEST_INVOICE_CONTENT = "Content";//发票内容
     private static final String REQUEST_INVOICE_TITLE = "title";//发票抬头
+    //订单提交 "N"非毕传
+    private static final String REQUEST_ORDER_ADDRESS_ID = "address_id";//地址id
+    private static final String REQUEST_ORDER_NEED_INVOICE = "need_invoice";//是否需要发票--1需要/0不需要
+    private static final String REQUEST_ORDER_INVOICE_TYPE = "invoice_type";//发票抬头类型--1个人/2公司    N
+    private static final String REQUEST_ORDER_INVOICE_TITLE = "invoice_title";//发票抬头--个人/公司名      N
+    private static final String REQUEST_ORDER_INVOICE_CONTENT = "invoice_content";//发票类型--1商品明细/2电子产品/3玩具   N
+    private static final String REQUEST_ORDER_CONSIGNEE = "consignee";//收货人
+    private static final String REQUEST_ORDER_MOBILE = "mobile";//手机
+    private static final String REQUEST_ORDER_TEL = "tel";//固话   N
 
     //    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
     //商城请求所使用的预发布域名
@@ -203,8 +213,8 @@ public class StoreApi {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_iNVOICE_ID, invoice_id)
                 .addParam(REQUEST_INVOICE_TYPE,invoice_type)
-                .addParam(REQUEST_INVOICE_CONTENT,invoice_content)
-                .addParam(REQUEST_INVOICE_TITLE,invoice_title)
+                .addParam(REQUEST_INVOICE_CONTENT, invoice_content)
+                .addParam(REQUEST_INVOICE_TITLE, invoice_title)
                 .build(RequestMethod.POST, URL_EDIT_INVOICE);
     }
 
@@ -234,15 +244,49 @@ public class StoreApi {
      *
      * @param type   购买方式--"1"立即购买，"2"购物车购买
      * @param pid    商品id
-     * @return
      */
     public static Request orderConfirm(String type, String pid){
         return PTWDRequestHelper.shopCar()
-                .addParam(REQUEST_INVOICE_TYPE, type)
+                .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PRODUCT_PID, pid)
                 .build(RequestMethod.POST, URL_ORDER_CONFIRM);
     }
 
+    /**
+     * 订单提交
+     */
+    public static final String URL_ORDER_SUBMIT = BASE_URL + "order/save";
 
+    /**
+     * 订单提交
+     *
+     * @param type            购买方式--"1"立即购买，"2"购物车购买
+     * @param pid             商品id
+     * @param address_id      地址id
+     * @param need_invoice    是否需要发票--1需要/0不需要
+     * @param invoice_type    发票抬头类型--1个人/2公司    N
+     * @param invoice_title   发票抬头--个人/公司名        N
+     * @param invoice_content 发票类型--1商品明细/2电子产品/3玩具   N
+     * @param consignee       收货人
+     * @param mobile          手机
+     * @param tel             固话   N
+     * @return
+     */
+    public static Request orderSubmit(String type, String pid, String address_id,String need_invoice, String invoice_type,
+                                      String invoice_title,String invoice_content, String consignee, String mobile, String tel){
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_INVOICE_TYPE, type)
+                .addParam(REQUEST_PRODUCT_PID, pid)
+//                .addParam(REQUEST_QT, qt)
+                .addParam(REQUEST_ORDER_ADDRESS_ID, address_id)
+                .addParam(REQUEST_ORDER_NEED_INVOICE, need_invoice)
+                .addParam(REQUEST_ORDER_INVOICE_TYPE, invoice_type)
+                .addParam(REQUEST_ORDER_INVOICE_TITLE, invoice_title)
+                .addParam(REQUEST_ORDER_INVOICE_CONTENT, invoice_content)
+                .addParam(REQUEST_ORDER_CONSIGNEE, consignee)
+                .addParam(REQUEST_ORDER_MOBILE, mobile)
+                .addParam(REQUEST_ORDER_TEL, tel)
+                .build(RequestMethod.POST, URL_ORDER_SUBMIT);
+    }
 
 }
