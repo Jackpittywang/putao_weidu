@@ -41,7 +41,7 @@ public class OrdersAdapter extends BasicAdapter<OrderProduct, OrdersAdapter.Orde
         holder.tv_title.setText(orderProduct.getProduct_name());
         holder.tv_money.setText(orderProduct.getPrice());
         holder.tv_count.setText(orderProduct.getQuantity());
-        holder.tv_sku.setText(orderProduct.getSku());
+        holder.tv_color.setText(orderProduct.getSku());
     }
 
     /**
@@ -56,8 +56,8 @@ public class OrdersAdapter extends BasicAdapter<OrderProduct, OrdersAdapter.Orde
         TextView tv_money;
         @Bind(R.id.tv_count)
         TextView tv_count;
-        @Bind(R.id.tv_sku)
-        TextView tv_sku;
+        @Bind(R.id.tv_color)
+        TextView tv_color;
 
         public OrderListViewHolder(View itemView) {
             super(itemView);

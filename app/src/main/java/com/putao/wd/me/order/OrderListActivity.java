@@ -17,7 +17,6 @@ import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -61,7 +60,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         addNavigation();
         currentType = args.getString(TYPE_INDEX, TYPE_ALL);
 
-        adapter = new OrderListAdapter(this, null);
+        adapter = new OrderListAdapter(mContext, null);
         rv_order.setAdapter(adapter);
 
         addListener();
@@ -69,7 +68,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         setCurrentItem();
         getOrderLists(currentType, String.valueOf(currentPage));
     }
-
 
     /**
      * 设置当前选中项

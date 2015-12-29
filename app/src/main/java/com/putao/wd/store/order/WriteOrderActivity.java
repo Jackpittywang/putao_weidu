@@ -57,6 +57,15 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 
 
     private WriteOrderAdapter adapter;
+    private String addressId;
+    private String consignee = "";
+    private String mobile = "";
+    private String tel = "";
+    private String need_invoice = "";
+    private String invoice_type = "";
+    private String invoice_title = "";
+    private String invoice_content = "";
+
 
     @Override
     protected int getLayoutId() {
@@ -70,13 +79,16 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
         Bundle bundle = getIntent().getExtras();
-        networkRequest(StoreApi.orderConfirm(bundle.getString(ShoppingCarActivity.BUY_TYPE), "11|13"),
+        networkRequest(StoreApi.orderConfirm(bundle.getString(ShoppingCarActivity.BUY_TYPE), "11|13", ""),
                 new SimpleFastJsonCallback<OrderConfirm>(OrderConfirm.class, loading) {
                     @Override
                     public void onSuccess(String url, OrderConfirm result) {
                         Logger.w("填写订单 = " + result.toString());
-                        adapter = new WriteOrderAdapter(mContext, getLastItem(result));
-                        rv_orders.setAdapter(adapter);
+                        if (null != result) {
+                            adapter = new WriteOrderAdapter(mContext, getLastItem(result));
+                            rv_orders.setAdapter(adapter);
+                            addressId = result.getAddress().getId();
+                        }
                         loading.dismiss();
                     }
                 });
@@ -90,7 +102,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     /**
      * 向适配器添加最后一个item，包含商品总价等信息
      */
-    @NonNull
     private List<OrderConfirmProduct> getLastItem(OrderConfirm result) {
         List<OrderConfirmProduct> products = result.getProduct();
         OrderConfirmProduct product = new OrderConfirmProduct();
@@ -119,7 +130,15 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                 startActivity(InvoiceInfoActivity.class);
                 break;
             case R.id.tv_submit:
-                startActivity(CashierActivity.class);
+//                String type, String pid, String address_id,String need_invoice, String invoice_type,
+//                String invoice_title,String invoice_content, String consignee, String mobile, String tel
+                networkRequest(StoreApi.orderSubmit("2", "11|13", "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        startActivity(CashierActivity.class);
+                    }
+                });
                 break;
         }
     }
@@ -130,6 +149,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         tv_name.setText(split[0]);
         tv_address.setText(split[1]);
         tv_phone.setText(split[2]);
+        consignee = split[0];
+        mobile = split[2];
     }
 
     @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
@@ -138,10 +159,22 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             tv_Invoice_type.setText(invoiceInfo.get(1));
             tv_Invoice_content.setText(invoiceInfo.get(2));
             tv_Invoice_content.setVisibility(View.VISIBLE);
+            need_invoice = "1";
+            if(invoiceInfo.get(1).equals(InvoiceInfoActivity.INVOICE_PERSONAL)) {
+                invoice_type = "1";
+                invoice_title = InvoiceInfoActivity.INVOICE_PERSONAL;
+            }else {
+                invoice_type = "2";
+                invoice_title = invoiceInfo.get(1);
+            }
+            invoice_content = invoiceInfo.get(2);
         }else {
             tv_Invoice_type.setText(InvoiceInfoActivity.INVOICE_NEEDNOT);
             tv_Invoice_content.setVisibility(View.GONE);
+            need_invoice = "0";
+            invoice_type = "";
+            invoice_title = "";
+            invoice_content = "";
         }
     }
-
 }
