@@ -1,6 +1,7 @@
 package com.putao.wd.api;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
@@ -203,9 +204,14 @@ public class OrderApi {
      * @param page 数据分页
      */
     public static Request getServiceLists(String page) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.POST, URL_SERVICE_LIST);
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(REQUEST_PAGE, page);
+        return builder.build(RequestMethod.POST, URL_SERVICE_LIST);
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_PAGE, page)
+//                .build(RequestMethod.POST, URL_SERVICE_LIST);
     }
 
     /**
