@@ -1,6 +1,7 @@
 package com.putao.wd.store.shopping;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -117,14 +118,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             case R.id.ll_closing://去结算/删除
                 switch (tv_closing.getText().toString()) {
                     case PAY:
-                        Bundle bundle = new Bundle();
-                        StringBuilder pid = new StringBuilder();
-                        Set<Integer> keys = mSelected.keySet();
-                        for(Integer key : keys) {
-                            pid.append(mSelected.get(key).getPid() + "|");
-                        }
-                        bundle.putString(PRODUCT_ID, pid.substring(0, pid.length()-1));
-                        startActivity(WriteOrderActivity.class, bundle);
+                        startActivity(WriteOrderActivity.class, getBundle());
                         break;
                     case DELETE:
                         cartDelete(mSelected.get(currClickPosition).getPid());
@@ -132,6 +126,20 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 }
                 break;
         }
+    }
+
+    /**
+     * 产生“去结算”页的跳转Bundle，装载pid
+     */
+    private Bundle getBundle() {
+        Bundle bundle = new Bundle();
+        StringBuilder pid = new StringBuilder();
+        Set<Integer> keys = mSelected.keySet();
+        for(Integer key : keys) {
+            pid.append(mSelected.get(key).getPid() + "|");
+        }
+        bundle.putString(PRODUCT_ID, pid.substring(0, pid.length()-1));
+        return bundle;
     }
 
     /**
