@@ -6,12 +6,17 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.me.service.adapter.ServiceListAdapter;
+import com.putao.wd.model.Service;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 
@@ -44,14 +49,14 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         adapter = new ServiceListAdapter(mContext, null);
         rv_service.setAdapter(adapter);
 
-//        networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<ArrayList<Service>>(Service.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<Service> result) {
-//                Logger.d(result.toString());
-//
-//
-//            }
-//        });
+        networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                Logger.w("售后 = " + result.toString());
+
+
+            }
+        });
 
         addListener();
 //        refreshViewByType(0);
