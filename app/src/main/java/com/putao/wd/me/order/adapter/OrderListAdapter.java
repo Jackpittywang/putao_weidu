@@ -69,7 +69,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         holder.tv_order_no.setText(order.getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         holder.tv_order_sum_count.setText(order.getTotalQuantity() + "");
-        holder.tv_sum_noney.setText(order.getTotal_amount() + "");
+        holder.tv_sum_money.setText(order.getTotal_amount() + "");
         holder.tv_sum_carriage.setText(order.getExpress_money());
         adapter = new OrdersAdapter(context, order.getProduct());
         holder.rv_orders.setAdapter(adapter);
@@ -195,8 +195,8 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         BasicRecyclerView rv_orders;//订单列表
         @Bind(R.id.tv_order_sum_count)
         TextView tv_order_sum_count;//合计件数
-        @Bind(R.id.tv_sum_noney)
-        TextView tv_sum_noney;//合计金额
+        @Bind(R.id.tv_sum_money)
+        TextView tv_sum_money;//合计金额
         @Bind(R.id.tv_sum_carriage)
         TextView tv_sum_carriage;//合计运费
         @Bind(R.id.rl_comfirm)
