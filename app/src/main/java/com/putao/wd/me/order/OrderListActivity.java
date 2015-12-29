@@ -13,6 +13,7 @@ import com.putao.wd.model.Order;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
@@ -35,7 +36,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     public static final String TYPE_WAITING_SIGN = "3";//等待签收
 
     @Bind(R.id.rv_order)
-    BasicRecyclerView rv_order;
+    LoadMoreRecyclerView rv_order;
     @Bind(R.id.rl_no_order)
     RelativeLayout rl_no_order;//没有order时的布局
 
@@ -94,8 +95,14 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
             @Override
             public void onItemClick(Order order, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(OrderDetailActivity.KEY_ORDER, order);
+                bundle.putString(OrderDetailActivity.KEY_ORDER, order.getId());
                 startActivity(OrderDetailActivity.class, bundle);
+            }
+        });
+        rv_order.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                getOrderLists(currentType,String.valueOf(currentPage));
             }
         });
         ll_title.setOnTitleItemSelectedListener(this);
@@ -112,6 +119,9 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                         if (result != null && result.size() > 0) {
                             rl_no_order.setVisibility(View.GONE);
                             adapter.addAll(result);
+                            currentPage++;
+                        }else{
+                            rv_order.noMoreLoading();
                         }
                         loading.dismiss();
                     }
@@ -171,7 +181,14 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
             }
         });
     }
-/*
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.clear();
+    }
+
+    /*
     @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
     public void eventAopplyRefund(String mId) {
         networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
