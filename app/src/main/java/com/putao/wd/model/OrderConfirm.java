@@ -9,7 +9,6 @@ import java.util.List;
  * Created by yanghx on 2015/12/28.
  */
 public class OrderConfirm implements Serializable {
-
     private List<OrderConfirmInvoices> invoices;
     private List<OrderConfirmProduct> product;
     private String shipping_fee;

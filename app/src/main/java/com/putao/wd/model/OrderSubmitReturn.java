@@ -8,7 +8,6 @@ import java.io.Serializable;
  * Created by yanghx on 2015/12/29.
  */
 public class OrderSubmitReturn implements Serializable {
-
     private String order_id;
     private String order_sn;
     private String price;

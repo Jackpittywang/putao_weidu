@@ -175,7 +175,7 @@
             android:screenOrientation="portrait" />
         <!--发票信息-->
         <activity
-            android:name=".store.cashier.CashierActivity"
+            android:name=".store.cashier.CashPayActivity"
             android:screenOrientation="portrait" />
         <!--管理-->
         <activity

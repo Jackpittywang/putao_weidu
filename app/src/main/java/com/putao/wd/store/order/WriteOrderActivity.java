@@ -14,7 +14,7 @@ import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
 import com.putao.wd.model.OrderSubmitReturn;
-import com.putao.wd.store.cashier.CashierActivity;
+import com.putao.wd.store.cashier.CashPayActivity;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
@@ -144,7 +144,11 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                         new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
                             @Override
                             public void onSuccess(String url, OrderSubmitReturn result) {
-                                startActivity(CashierActivity.class);
+                                if (result != null) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable(CashPayActivity.BUNDLE_ORDER_PAY, result);
+                                    startActivity(CashPayActivity.class, bundle);
+                                }
                             }
                         });
                 break;
