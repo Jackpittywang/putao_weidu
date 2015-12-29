@@ -14,6 +14,7 @@ import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
+import com.putao.wd.model.OrderSubmitReturn;
 import com.putao.wd.store.cashier.CashierActivity;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
@@ -57,6 +58,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 
 
     private WriteOrderAdapter adapter;
+    private String pid;
     private String addressId;
     private String consignee = "";
     private String mobile = "";
@@ -79,7 +81,9 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
         Bundle bundle = getIntent().getExtras();
-        networkRequest(StoreApi.orderConfirm(bundle.getString(ShoppingCarActivity.BUY_TYPE), "11|13", ""),
+        pid = bundle.getString(ShoppingCarActivity.PRODUCT_ID);
+        Logger.w("pid = " + pid);
+        networkRequest(StoreApi.orderConfirm("2", pid, ""),
                 new SimpleFastJsonCallback<OrderConfirm>(OrderConfirm.class, loading) {
                     @Override
                     public void onSuccess(String url, OrderConfirm result) {
@@ -132,10 +136,10 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             case R.id.tv_submit:
 //                String type, String pid, String address_id,String need_invoice, String invoice_type,
 //                String invoice_title,String invoice_content, String consignee, String mobile, String tel
-                networkRequest(StoreApi.orderSubmit("2", "11|13", "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
-                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                networkRequest(StoreApi.orderSubmit("2", pid, "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
+                        new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
                     @Override
-                    public void onSuccess(String url, String result) {
+                    public void onSuccess(String url, OrderSubmitReturn result) {
                         startActivity(CashierActivity.class);
                     }
                 });

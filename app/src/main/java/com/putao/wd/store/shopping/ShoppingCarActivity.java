@@ -37,8 +37,7 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/4.
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
-    public static final String GOODS_ID = "goodsId";
-    public static final String BUY_TYPE = "type";
+    public static final String PRODUCT_ID = "productId";
     private final String PAY = "去结算";
     private final String DELETE = "删除";
     private final String SAVE = "保存";
@@ -132,8 +131,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 switch (tv_closing.getText().toString()) {
                     case PAY:
                         Bundle bundle = new Bundle();
-//                        bundle.putString(GOODS_ID, mSelected.get(currClickPosition).getPid());
-                        bundle.putString(BUY_TYPE, "2");
+                        StringBuilder pid = new StringBuilder();
+                        Set<Integer> keys = mSelected.keySet();
+                        for(Integer key : keys) {
+                            pid.append(mSelected.get(key).getPid() + "|");
+                        }
+                        bundle.putString(PRODUCT_ID, pid.substring(0, pid.length()-1));
                         startActivity(WriteOrderActivity.class, bundle);
                         break;
                     case DELETE:
