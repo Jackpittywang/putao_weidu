@@ -110,15 +110,20 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         OrderConfirmProduct product = new OrderConfirmProduct();
         String totalPrice = "0";
         int totalQt = 0;
-        for (OrderConfirmProduct confirmProduct : products) {
-            totalPrice = MathUtils.add(totalPrice, MathUtils.multiplication(confirmProduct.getPrice(), confirmProduct.getQt()));
-            totalQt += Integer.parseInt(confirmProduct.getQt());
+        if (products.size() == 1) {
+            totalPrice = MathUtils.multiplication(products.get(0).getPrice(), products.get(0).getQt());
+            totalQt = Integer.parseInt(products.get(0).getQt());
+        } else {
+            for (OrderConfirmProduct confirmProduct : products) {
+                totalPrice = MathUtils.add(totalPrice, MathUtils.multiplication(confirmProduct.getPrice(), confirmProduct.getQt()));
+                totalQt += Integer.parseInt(confirmProduct.getQt());
+            }
         }
-        tv_sum.setText(product.getTotalPrice());
         product.setTotalPrice(totalPrice);
         product.setTotalQt(totalQt);
         product.setTotalFee(result.getShipping_fee());
         products.add(product);
+        tv_sum.setText(product.getTotalPrice());
         return products;
     }
 
@@ -137,11 +142,11 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 //                String invoice_title,String invoice_content, String consignee, String mobile, String tel
                 networkRequest(StoreApi.orderSubmit("2", pid, "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
                         new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
-                    @Override
-                    public void onSuccess(String url, OrderSubmitReturn result) {
-                        startActivity(CashierActivity.class);
-                    }
-                });
+                            @Override
+                            public void onSuccess(String url, OrderSubmitReturn result) {
+                                startActivity(CashierActivity.class);
+                            }
+                        });
                 break;
         }
     }
