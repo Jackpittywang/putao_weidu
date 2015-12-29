@@ -27,7 +27,11 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/08.
  */
 public class PayActivity extends PTWDActivity implements View.OnClickListener {
-    public static final String BUNDLE_ORDER_PAY = "order_pay";
+    public static final String BUNDLE_ORDER_ID = "order_id";
+    public static final String BUNDLE_ORDER_SN = "order_sn";
+    public static final String BUNDLE_ORDER_DATE = "order_date";
+    public static final String BUNDLE_ORDER_PRICE = "order_price";
+
     private final int SDK_PAY_FLAG = 1;
     private final int SDK_CHECK_FLAG = 2;
 
@@ -38,7 +42,10 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.tv_cash_pay_summoney)
     TextView tv_cash_pay_summoney;//订单金额
 
-    private OrderSubmitReturn mOrderSubmitReturn;
+    private String order_id;
+    private String order_sn;
+    private String order_date;
+    private String order_price;
 
     private String orderInfo;
     private Handler mHandler;
@@ -51,7 +58,11 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        mOrderSubmitReturn = (OrderSubmitReturn) args.getSerializable(BUNDLE_ORDER_PAY);
+        order_id = args.getString(BUNDLE_ORDER_ID);
+        order_sn = args.getString(BUNDLE_ORDER_SN);
+        order_date = args.getString(BUNDLE_ORDER_DATE);
+        order_price = args.getString(BUNDLE_ORDER_PRICE);
+
         initView();
         mHandler = new Handler() {
             @Override
@@ -81,16 +92,16 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                 }
             }
         };
-        pay(mOrderSubmitReturn.getOrder_id());
+        pay(order_id);
     }
 
     /**
      * 初始化页面
      */
     private void initView() {
-        tv_order_sn.setText(mOrderSubmitReturn.getOrder_sn());
-        tv_order_date.setText(mOrderSubmitReturn.getTime());
-        tv_cash_pay_summoney.setText(mOrderSubmitReturn.getPrice());
+        tv_order_sn.setText(order_sn);
+        tv_order_date.setText(order_date);
+        tv_cash_pay_summoney.setText(order_price);
     }
 
     /**
