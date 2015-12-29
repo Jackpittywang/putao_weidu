@@ -26,7 +26,7 @@ public class StoreApi {
     private static final String REQUEST_INVOICE_TYPE = "type";//旧商品id
     private static final String REQUEST_INVOICE_CONTENT = "Content";//发票内容
     private static final String REQUEST_INVOICE_TITLE = "title";//发票抬头
-    //订单提交 "N"非毕传
+    //订单提交 "N"非必传
     private static final String REQUEST_ORDER_ADDRESS_ID = "address_id";//地址id
     private static final String REQUEST_ORDER_NEED_INVOICE = "need_invoice";//是否需要发票--1需要/0不需要
     private static final String REQUEST_ORDER_INVOICE_TYPE = "invoice_type";//发票抬头类型--1个人/2公司    N
@@ -245,10 +245,11 @@ public class StoreApi {
      * @param type   购买方式--"1"立即购买，"2"购物车购买
      * @param pid    商品id
      */
-    public static Request orderConfirm(String type, String pid){
+    public static Request orderConfirm(String type, String pid, String qt){
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PRODUCT_PID, pid)
+                .addParam(REQUEST_QT, qt)
                 .build(RequestMethod.POST, URL_ORDER_CONFIRM);
     }
 
@@ -259,9 +260,11 @@ public class StoreApi {
 
     /**
      * 订单提交
+     * N非必传
      *
      * @param type            购买方式--"1"立即购买，"2"购物车购买
      * @param pid             商品id
+     * @param qt              商品数量    N
      * @param address_id      地址id
      * @param need_invoice    是否需要发票--1需要/0不需要
      * @param invoice_type    发票抬头类型--1个人/2公司    N
@@ -272,12 +275,12 @@ public class StoreApi {
      * @param tel             固话   N
      * @return
      */
-    public static Request orderSubmit(String type, String pid, String address_id,String need_invoice, String invoice_type,
+    public static Request orderSubmit(String type, String pid, String qt, String address_id,String need_invoice, String invoice_type,
                                       String invoice_title,String invoice_content, String consignee, String mobile, String tel){
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_INVOICE_TYPE, type)
                 .addParam(REQUEST_PRODUCT_PID, pid)
-//                .addParam(REQUEST_QT, qt)
+                .addParam(REQUEST_QT, qt)
                 .addParam(REQUEST_ORDER_ADDRESS_ID, address_id)
                 .addParam(REQUEST_ORDER_NEED_INVOICE, need_invoice)
                 .addParam(REQUEST_ORDER_INVOICE_TYPE, invoice_type)
@@ -285,7 +288,7 @@ public class StoreApi {
                 .addParam(REQUEST_ORDER_INVOICE_CONTENT, invoice_content)
                 .addParam(REQUEST_ORDER_CONSIGNEE, consignee)
                 .addParam(REQUEST_ORDER_MOBILE, mobile)
-                .addParam(REQUEST_ORDER_TEL, tel)
+//                .addParam(REQUEST_ORDER_TEL, tel)
                 .build(RequestMethod.POST, URL_ORDER_SUBMIT);
     }
 
