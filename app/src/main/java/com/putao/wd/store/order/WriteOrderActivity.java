@@ -1,6 +1,5 @@
 package com.putao.wd.store.order;
 
-import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +11,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
 import com.putao.wd.store.cashier.CashierActivity;
@@ -40,6 +40,12 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.iv_reapte_picbar)
     ImageView iv_reapte_picbar;//分割图片
+    @Bind(R.id.tv_name)
+    TextView tv_name;
+    @Bind(R.id.tv_address)
+    TextView tv_address;
+    @Bind(R.id.tv_phone)
+    TextView tv_phone;
     @Bind(R.id.tv_Invoice_type)
     TextView tv_Invoice_type;
     @Bind(R.id.tv_Invoice_content)
@@ -94,6 +100,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             totalPrice = MathUtils.add(totalPrice, MathUtils.multiplication(confirmProduct.getPrice(), confirmProduct.getQt()));
             totalQt += Integer.parseInt(confirmProduct.getQt());
         }
+        tv_sum.setText(product.getTotalPrice());
         product.setTotalPrice(totalPrice);
         product.setTotalQt(totalQt);
         product.setTotalFee(result.getShipping_fee());
@@ -117,6 +124,14 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         }
     }
 
+    @Subcriber(tag = AddressAdapter.EVENT_ADDRESS)
+    public void eventAddress(String addressInfo) {
+        String[] split = addressInfo.split("/");
+        tv_name.setText(split[0]);
+        tv_address.setText(split[1]);
+        tv_phone.setText(split[2]);
+    }
+
     @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
     public void eventInvoice(List<String> invoiceInfo) {
         if (!invoiceInfo.get(0).equals(InvoiceInfoActivity.INVOICE_NEEDNOT)) {
@@ -128,4 +143,5 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             tv_Invoice_content.setVisibility(View.GONE);
         }
     }
+
 }

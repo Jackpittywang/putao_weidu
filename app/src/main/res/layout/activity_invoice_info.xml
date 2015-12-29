@@ -169,7 +169,6 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:drawableRight="@drawable/close_selector"
-                    android:maxLength="1"
                     android:visibility="invisible" />
             </LinearLayout>
 

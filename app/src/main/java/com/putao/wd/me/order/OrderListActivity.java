@@ -1,5 +1,6 @@
 package com.putao.wd.me.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -9,11 +10,14 @@ import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.model.Order;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -51,6 +55,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         return R.layout.activity_order_list;
     }
 
+
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
@@ -87,14 +92,14 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     }
 
     private void addListener() {
-        /*rv_order.setOnItemClickListener(new OnItemClickListener<Order>() {
+        rv_order.setOnItemClickListener(new OnItemClickListener<Order>() {
             @Override
             public void onItemClick(Order order, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(OrderDetailActivity.KEY_ORDER_ID, order.getId());
+                bundle.putSerializable(OrderDetailActivity.KEY_ORDER, order);
                 startActivity(OrderDetailActivity.class, bundle);
             }
-        });*/
+        });
         ll_title.setOnTitleItemSelectedListener(this);
     }
 
@@ -156,4 +161,56 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                     }
                 });
     }
+
+    @Subcriber(tag = OrderListAdapter.EVENT_CANCEL_ORDER)
+    public void eventCancelOrder(String mId) {
+        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                adapter.clear();
+                getOrderLists(currentType, String.valueOf(currentPage));
+                loading.dismiss();
+            }
+        });
+    }
+/*
+    @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
+    public void eventAopplyRefund(String mId) {
+        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                loading.dismiss();
+            }
+        });
+    }
+
+    @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
+    public void eventLookLogistics(String mId) {
+        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                loading.dismiss();
+            }
+        });
+    }
+
+    @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
+    public void eventSaleService(String mId) {
+        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                loading.dismiss();
+            }
+        });
+    }
+
+    @Subcriber(tag = OrderListAdapter.EVENT_PAY)
+    public void eventPay(String mId) {
+        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Order> result) {
+                loading.dismiss();
+            }
+        });
+    }*/
 }
