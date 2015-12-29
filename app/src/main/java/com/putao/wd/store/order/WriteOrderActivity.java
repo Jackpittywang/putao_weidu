@@ -146,7 +146,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                             public void onSuccess(String url, OrderSubmitReturn result) {
                                 if (result != null) {
                                     Bundle bundle = new Bundle();
-                                    bundle.putSerializable(PayActivity.BUNDLE_ORDER_PAY, result);
+                                    //bundle.putSerializable(PayActivity.BUNDLE_ORDER_PAY, result);
                                     startActivity(PayActivity.class, bundle);
                                 }
                             }

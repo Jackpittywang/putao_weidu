@@ -20,7 +20,8 @@ public class OrderApi {
     private static final String REQUEST_TYPE = "type";//订单状态
     private static final String REQUEST_PAGE = "page";//数据分页
 
-    private static final String REQUEST_ORDER_ID = "id";//订单id
+    private static final String REQUEST_ORDER_ID = "order_id";//订单id
+    private static final String REQUEST_ID = "id";//订单id
     private static final String REQUEST_REALNAME = "realname";//收货人姓名
     private static final String REQUEST_CITY_ID = "city_id";//市ID
     private static final String REQUEST_PROVINCE_ID = "province_id";//省ID
@@ -84,7 +85,7 @@ public class OrderApi {
      */
     public static Request getOrderDetail(String order_id) {
         return PTWDRequestHelper.store()
-                .addParam(REQUEST_ORDER_ID, order_id)
+                .addParam(REQUEST_ID, order_id)
                 .build(RequestMethod.POST, URL_ORDER_DETAIL);
     }
 

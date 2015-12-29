@@ -1,6 +1,7 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,51 +46,10 @@ public class OrderDetail implements Serializable {
     private int banner_control;
     private int orderStatusID;
     private OrderDetail orderDetail;
-    private String express_status;//监控状态
-    private String express_name;//快递公司
-    private String express_code;//快递单号
-    private String state;//快递单当前签收状态
-    private String content;//物流信息
 
-    public String getExpress_status() {
-        return express_status;
-    }
+    private ArrayList<Express> express;//物流信息
 
-    public void setExpress_status(String express_status) {
-        this.express_status = express_status;
-    }
 
-    public String getExpress_name() {
-        return express_name;
-    }
-
-    public void setExpress_name(String express_name) {
-        this.express_name = express_name;
-    }
-
-    public String getExpress_code() {
-        return express_code;
-    }
-
-    public void setExpress_code(String express_code) {
-        this.express_code = express_code;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getId() {
         return id;
@@ -387,6 +347,13 @@ public class OrderDetail implements Serializable {
         this.orderDetail = orderDetail;
     }
 
+    public ArrayList<Express> getExpress() {
+        return express;
+    }
+
+    public void setExpress(ArrayList<Express> express) {
+        this.express = express;
+    }
 
     @Override
     public String toString() {
@@ -428,11 +395,7 @@ public class OrderDetail implements Serializable {
                 ", banner_control=" + banner_control +
                 ", orderStatusID=" + orderStatusID +
                 ", orderDetail=" + orderDetail +
-                ", express_status='" + express_status + '\'' +
-                ", express_name='" + express_name + '\'' +
-                ", express_code='" + express_code + '\'' +
-                ", state='" + state + '\'' +
-                ", content='" + content + '\'' +
+                ", express='" + express + '\'' +
                 '}';
     }
 }

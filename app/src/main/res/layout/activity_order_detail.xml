@@ -173,7 +173,6 @@
                     android:text="---- : -- --"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
-
                 <RelativeLayout
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
@@ -213,7 +212,9 @@
                         android:textSize="@dimen/text_size_14sp" />
 
                 </RelativeLayout>
+
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/rl_order_info"
@@ -241,6 +242,8 @@
                     android:textSize="@dimen/text_size_14sp" />
             </RelativeLayout>
 
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -257,7 +260,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#ffffff"
                 android:orientation="vertical">
-
+                <!--没有物流信息时显示-->
                 <TextView
                     android:id="@+id/tv_no_shipment"
                     android:layout_width="match_parent"
@@ -267,6 +270,15 @@
                     android:text="还没有物流信息"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_16sp" />
+                <!--有物流信息时显示-->
+                <com.sunnybear.library.view.recycler.BasicRecyclerView
+                    android:id="@+id/rv_shipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    auto:divider_height="1px"
+                    auto:has_row_divider="true"
+                    auto:is_inner="true" />
             </LinearLayout>
 
             <TextView
@@ -344,9 +356,9 @@
                     android:background="#e1e1e1" />
 
                 <LinearLayout
+                    android:id="@+id/ll_receipt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ll_receipt"
                     android:orientation="vertical">
 
                     <TextView
@@ -490,19 +502,19 @@
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="right"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:layout_alignParentBottom="true">
+        android:visibility="gone"
+        android:gravity="right">
 
         <Button
             android:id="@+id/btn_order_left"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:background="@drawable/btn_order_state_selector"
             android:text="取消订单"
+            android:visibility="gone"
             android:textColor="@color/service_btn_sel" />
 
         <Button
@@ -510,10 +522,13 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_order_express_selector"
             android:text="立即支付"
-            android:textColor="@color/text_color_white" />
+            android:textColor="@color/text_color_white"
+            android:visibility="gone" />
 
     </LinearLayout>
 </RelativeLayout>
