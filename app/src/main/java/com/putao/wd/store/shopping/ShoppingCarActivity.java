@@ -14,7 +14,6 @@ import com.putao.wd.model.Cart;
 import com.putao.wd.model.CartEdit;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.order.WriteOrderActivity;
-import com.putao.wd.store.product.EditShoppingCarPopupWindow;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -36,13 +35,14 @@ import butterknife.OnClick;
  * 编辑购物车规格
  * Created by wangou on 2015/12/4.
  */
-public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener, SwitchButton.OnSwitchClickListener {
+public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener {
     public static final String GOODS_ID = "goodsId";
     public static final String BUY_TYPE = "type";
     private final String PAY = "去结算";
     private final String DELETE = "删除";
     private final String SAVE = "保存";
     private final String EDIT = "编辑";
+
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -77,14 +77,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-//        navigation_bar.setRightAction(false);
-//        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
-        setRightClickable(false);
-        btn_sel_all.setClickable(false);
+        navigation_bar.setRightAction(false);
 
         adapter = new ShoppingCarAdapter(mContext, null);
         rv_cars.setAdapter(adapter);
-//        addListener();
         networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
@@ -102,12 +98,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return new String[0];
     }
 
-//    /**
-//     * 添加监听器
-//     */
-//    private void addListener() {
-//        btn_sel_all.setOnSwitchClickListener(this);
-//    }
 
     @OnClick({R.id.ll_closing, R.id.ll_all})
     @Override
@@ -118,13 +108,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 btn_sel_all.setState(isSelectAll);
                 adapter.selAll(isSelectAll);
                 if (isSelectAll) {
-//                    navigation_bar.setRightAction(true);
-//                    setRightTitleColor(R.color.text_main_color_nor);
-                    setRightClickable(true);
+                    navigation_bar.setRightAction(true);
                 } else {
-//                    navigation_bar.setRightAction(false);
-//                    setRightTitleColor(R.color.text_color_gray);
-                    setRightClickable(false);
+                    navigation_bar.setRightAction(false);
                     setButtonStyle(EDIT, PAY, false);
                 }
                 break;
@@ -149,6 +135,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     @Override
     public void onRightAction() {
+        Logger.d("点击右上角");
         if (!saveable) {//这里编辑操作的入口
             setButtonStyle(SAVE, DELETE, true);
             adapter.startEdit();
@@ -156,16 +143,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             setButtonStyle(EDIT, PAY, false);
             saveGoodsInfo();
         }
-    }
-
-    /**
-     * 全选监听器      暂未使用
-     */
-    @Override
-    public void onSwitchClick(View v, boolean isSelect) {
-        adapter.selAll(isSelect);
-        navigation_bar.setRightAction(true);
-        setRightClickable(true);
     }
 
     /**
@@ -290,9 +267,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
         setGoodsPrice();
-//        navigation_bar.setRightAction(true);
-//        setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
-        setRightClickable(true);
+        navigation_bar.setRightAction(true);
         if (selected.size() == adapter.getItems().size())
             btn_sel_all.setState(true);
         else

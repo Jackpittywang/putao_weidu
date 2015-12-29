@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -119,7 +120,6 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         }
     }
 
-
     private void checkOrder(OrderListViewHolder holder, int orderStatus) {
         switch (orderStatus) {
             case OrderCommonState.ORDER_PAY_WAIT://待支付
@@ -127,58 +127,54 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
                 holder.tv_order_status.setTextColor(Color.RED);
                 setBtn(holder, "", "取消订单", "马上支付");
                 break;
-
             case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 holder.tv_order_status.setText("待发货");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 setBtn(holder, "您可以在签收后15天内申请售后", "申请退款", "");
                 break;
             case OrderCommonState.ORDER_GOOD_PREPARE://正在准备商品中
                 holder.tv_order_status.setText("正在准备商品中");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_WAITING_SIGN://待签收
                 holder.tv_order_status.setText("已发货");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 setBtn(holder, "您可以在签收后15天内申请售后", "查看物流", "");
                 break;
             case OrderCommonState.ORDER_SALE_SERVICE://已收货
                 holder.tv_order_status.setText("已签收");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 setBtn(holder, "您可以在签收后15天内申请售后", "申请售后", "");
                 break;
-
             case OrderCommonState.ORDER_FINISH://已完成
                 holder.tv_order_status.setText("已完成");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-
             case OrderCommonState.ORDER_CANCLED://订单取消
                 holder.tv_order_status.setText("已取消");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
-
             case OrderCommonState.ORDER_AFTER_SALE:
                 holder.tv_order_status.setText("此订单正在申请售后");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_REFUND_FINISH:
                 holder.tv_order_status.setText("退款成功");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_EXCEPTION:
                 holder.tv_order_status.setText("异常订单");
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.rl_comfirm.setVisibility(View.GONE);
                 break;
             default:
                 holder.rl_comfirm.setVisibility(View.GONE);
-                holder.tv_order_status.setTextColor(0xFF313131);
+                holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
                 holder.tv_order_status.setText("异常订单");
                 break;
         }

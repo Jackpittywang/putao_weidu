@@ -155,8 +155,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             public void onSuccess(String url, ArrayList<OrderDetail> result) {
                 Logger.d(result.toString());
             }
-
-
         });
     }
 

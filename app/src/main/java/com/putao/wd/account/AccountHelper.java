@@ -41,7 +41,13 @@ public final class AccountHelper {
      * 登出
      */
     public static void logout() {
-        PreferenceUtils.clear();
+//        PreferenceUtils.clear();
+        PreferenceUtils.remove(GlobalApplication.PREFERENCE_KEY_UID);
+        PreferenceUtils.remove(GlobalApplication.PREFERENCE_KEY_TOKEN);
+        PreferenceUtils.remove(GlobalApplication.PREFERENCE_KEY_NICKNAME);
+        PreferenceUtils.remove(GlobalApplication.PREFERENCE_KEY_EXPIRE_TIME);
+        PreferenceUtils.remove(GlobalApplication.PREFERENCE_KEY_REFRESH_TOKEN);
+        PreferenceUtils.remove(GlobalApplication.PREFERENCE_KEY_USER_INFO);
     }
 
     /**
@@ -95,7 +101,8 @@ public final class AccountHelper {
      * @param userInfo
      */
     public static void setUserInfo(UserInfo userInfo) {
-        PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_USER_INFO, userInfo);
+        if (userInfo != null)
+            PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_USER_INFO, userInfo);
     }
 
     /**
@@ -115,8 +122,10 @@ public final class AccountHelper {
     public static ChildInfo getChildInfo() {
         return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_BABY_ID, new ChildInfo());
     }
+
     /**
-     *设置孩子信息
+     * 设置孩子信息
+     *
      * @return
      */
     public static void setChildInfo(ChildInfo childInfo) {

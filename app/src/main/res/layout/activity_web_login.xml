@@ -11,7 +11,7 @@
         style="@style/style_navigation_bar"
         android:background="@color/transparent"
         auto:nav_left_title="关闭"
-        auto:nav_left_title_color="@color/text_select" />
+        auto:nav_left_title_color="@drawable/text_select" />
 
     <!--图片区-->
     <LinearLayout
@@ -91,7 +91,7 @@
                 android:background="@null"
                 android:gravity="center"
                 android:text="取消登录"
-                android:textColor="@color/text_select"
+                android:textColor="@drawable/text_select"
                 android:textSize="@dimen/text_size_18sp" />
         </LinearLayout>
 

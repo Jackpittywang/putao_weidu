@@ -1,4 +1,4 @@
-package com.putao.wd.store.product;
+package com.putao.wd.store.shopping;
 
 import android.content.Context;
 import android.view.View;
@@ -11,8 +11,8 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Norms;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ProductNormsSku;
-import com.putao.wd.store.product.adapter.NormsSelectAdapter;
-import com.putao.wd.store.product.util.SpecUtils;
+import com.putao.wd.store.shopping.adapter.NormsSelectAdapter;
+import com.putao.wd.store.shopping.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;

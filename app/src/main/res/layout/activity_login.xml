@@ -11,7 +11,7 @@
         style="@style/style_navigation_bar"
         android:background="@color/transparent"
         auto:nav_left_title="@string/cancel"
-        auto:nav_left_title_color="@color/text_select"
+        auto:nav_left_title_color="@drawable/text_select"
         auto:nav_main_title="@string/login_title"
         auto:nav_main_title_color="@color/text_color" />
 

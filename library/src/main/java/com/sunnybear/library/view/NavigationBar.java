@@ -25,6 +25,10 @@ public class NavigationBar extends RelativeLayout {
     private int mLeftTitleColor;
     private int mRightTitleColor;
 
+    private int mDisMainTitleColor;
+    private int mDisLeftTitleColor;
+    private int mDisRightTitleColor;
+
     private int mMainTitleSize;
     private int mLeftTitleSize;
     private int mRightTitleSize;
@@ -63,6 +67,9 @@ public class NavigationBar extends RelativeLayout {
         mMainTitleColor = array.getColor(R.styleable.NavigationBar_nav_main_title_color, -1);
         mLeftTitleColor = array.getColor(R.styleable.NavigationBar_nav_left_title_color, -1);
         mRightTitleColor = array.getColor(R.styleable.NavigationBar_nav_right_title_color, -1);
+        mDisMainTitleColor = array.getColor(R.styleable.NavigationBar_nav_dis_main_title_color, -1);
+        mDisLeftTitleColor = array.getColor(R.styleable.NavigationBar_nav_dis_left_title_color, -1);
+        mDisRightTitleColor = array.getColor(R.styleable.NavigationBar_nav_dis_right_title_color, -1);
         mMainTitleSize = array.getDimensionPixelSize(R.styleable.NavigationBar_nav_main_title_size, -1);
         mLeftTitleSize = array.getDimensionPixelSize(R.styleable.NavigationBar_nav_left_title_size, -1);
         mRightTitleSize = array.getDimensionPixelSize(R.styleable.NavigationBar_nav_right_title_size, -1);
@@ -161,14 +168,17 @@ public class NavigationBar extends RelativeLayout {
 
     public void setMainAction(boolean mainAction) {
         isMainAction = mainAction;
+        setMainTitleColor(isMainAction ? mMainTitleColor : mDisMainTitleColor);
     }
 
     public void setLeftAction(boolean leftAction) {
         isLeftAction = leftAction;
+        setLeftTitleColor(isLeftAction ? mLeftTitleColor : mDisLeftTitleColor);
     }
 
     public void setRightAction(boolean rightAction) {
         isRightAction = rightAction;
+        setRightTitleColor(isRightAction ? mRightTitleColor : mDisRightTitleColor);
     }
 
     /**

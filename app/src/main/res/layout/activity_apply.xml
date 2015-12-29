@@ -10,11 +10,11 @@
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_title="@string/cancel"
-        auto:nav_left_title_color="@color/text_select"
+        auto:nav_left_title_color="@drawable/text_select"
         auto:nav_main_title="我要参加"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title="提交"
-        auto:nav_right_title_color="@color/text_select" />
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <TextView
         android:layout_width="match_parent"
