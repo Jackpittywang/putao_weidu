@@ -115,7 +115,7 @@ public abstract class JSONObjectCallback implements Callback {
         if (e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
             Bundle bundle = new Bundle();
             bundle.putString(KEY_URL, url);
-            bundle.putString(KEY_STATUS_CODE, "500");
+            bundle.putInt(KEY_STATUS_CODE, 500);
             bundle.putString(KEY_FAILURE_MSG, "请检查网络后重新尝试");
 
             mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));

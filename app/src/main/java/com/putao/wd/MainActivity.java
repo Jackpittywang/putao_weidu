@@ -189,6 +189,12 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         tb_tab.setTabItemSelected(R.id.ti_start_circle);
     }
 
+    @Subcriber(tag = LoginActivity.EVENT_CANCEL_LOGIN)
+    public void enentCancelLogin(String tag) {
+        setCurrentItem(R.id.ti_start_circle);
+        tb_tab.setTabItemSelected(R.id.ti_start_circle);
+    }
+
     /**
      * 返回键
      *

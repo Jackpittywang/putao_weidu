@@ -343,29 +343,36 @@
                     android:layout_marginTop="10dp"
                     android:background="#e1e1e1" />
 
-                <TextView
-                    android:id="@+id/tv_receipt_type"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="发票类型："
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp" />
+                    android:id="@+id/ll_receipt"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_receipt_head"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="发票抬头："
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp" />
+                    <TextView
+                        android:id="@+id/tv_receipt_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="发票类型："
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_16sp" />
 
-                <TextView
-                    android:id="@+id/tv_receipt_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="发票内容："
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp" />
+                    <TextView
+                        android:id="@+id/tv_receipt_head"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="发票抬头："
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_receipt_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="发票内容："
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_16sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -386,20 +393,16 @@
                     android:textColor="#646464"
                     android:textSize="@dimen/text_size_16sp" />
 
-                <LinearLayout
-                    android:id="@+id/ll_goods"
+                <!--订单列表-->
+                <com.sunnybear.library.view.recycler.BasicRecyclerView
+                    android:id="@+id/rv_goods"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:gravity="center_vertical"
-                        android:text="没有商品"
-                        android:textColor="#959595" />
-
-                </LinearLayout>
+                    android:background="@color/color_EBEBEB"
+                    auto:divider_color="@color/white"
+                    auto:divider_height="1px"
+                    auto:has_row_divider="true"
+                    auto:is_inner="true" />
 
                 <RelativeLayout
                     android:id="@+id/rl_fee_info"
@@ -486,24 +489,30 @@
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btn_order_cancel"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/btn_order_operation"
-            android:text="取消订单" />
+            android:background="@drawable/btn_order_state_selector"
+            android:text="取消订单"
+            android:textColor="@color/service_btn_sel" />
 
         <Button
             android:id="@+id/btn_order_operation"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:text="立即支付" />
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_order_express_selector"
+            android:text="立即支付"
+            android:textColor="@color/text_color_white" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -12,7 +12,7 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="孩子信息"
         auto:nav_right_title="保存"
-        auto:nav_right_title_color="@color/text_select" />
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <!--间隔区-->
     <View

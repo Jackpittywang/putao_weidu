@@ -16,6 +16,7 @@ import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.util.IndicatorUtils;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -79,7 +80,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         product_id = args.getString(PRODUCT_ID);
 
         sticky_layout.canScrollView();
-        wv_content.loadUrl("http://www.putao.com");
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
 
@@ -90,13 +90,24 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     /**
+     * 加载WebView
+     *
+     * @param product_id 产品id
+     * @param type       种类
+     */
+    private void loadHtml(String product_id, String type) {
+        String webUrl = "http://static.uzu.wang/weidu_event/uncdn/index.html?id=" + product_id + "&nav=" + type;
+        wv_content.loadUrl(webUrl);
+    }
+
+    /**
      * 商品详情
      */
     private void getProductDetail(String product_id) {
         networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
-                Logger.d(result.toString());
+                loadHtml(result.getId(), "0");
                 shareUrl = result.getShare();
                 tv_product_title.setText(result.getTitle());
                 tv_product_intro.setText(result.getSubtitle());
@@ -194,16 +205,16 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
             case R.id.ti_summary://概述
-                wv_content.loadUrl("http://www.putao.com");
+                loadHtml(product_id, "0");
                 break;
             case R.id.ti_parameter://规格参数
-                wv_content.loadUrl("http://www.putao.com");
+//                wv_content.loadUrl("http://www.putao.com");
                 break;
             case R.id.ti_pack://包装清单
-                wv_content.loadUrl("http://www.putao.com");
+//                wv_content.loadUrl("http://www.putao.com");
                 break;
             case R.id.ti_service://售后
-                wv_content.loadUrl("http://www.putao.com");
+//                wv_content.loadUrl("http://www.putao.com");
                 break;
         }
     }

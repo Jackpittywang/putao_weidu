@@ -14,13 +14,16 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.order.view.OrderGoodsItem;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.model.OrderProduct;
+import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
 
     public static final String KEY_ORDER = "order";
     public static final String KEY_ORDER_ID = "order_id";
+    private static final String HINT1 = "请在24小时之内支付订单，逾期未付款，订单将自动关闭";
+    private static final String HINT2 = "您可以在签收后15天内申请售后";
     @Bind(R.id.v_status_waiting_pay)
     View v_status_waiting_pay;
     @Bind(R.id.img_status_waiting_pay)
@@ -94,8 +99,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     LinearLayout ll_order_info;
     @Bind(R.id.tv_goods_title)
     TextView tv_goods_title;
-    @Bind(R.id.ll_goods)
-    LinearLayout ll_goods;
+    @Bind(R.id.rv_goods)
+    BasicRecyclerView rv_goods;
     @Bind(R.id.tv_goods_total_number)
     TextView tv_goods_total_number;
     @Bind(R.id.tv_cost_text)
@@ -122,8 +127,11 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     Button btn_order_operation;
     @Bind(R.id.rl_bottom)
     RelativeLayout rl_bottom;
+    @Bind(R.id.ll_receipt)
+    LinearLayout ll_receipt;
 
     private Order orderDto;
+    private OrdersAdapter adapter;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_detail;
@@ -132,7 +140,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-
+        adapter = new OrdersAdapter(mContext, null);
         //获取order数据
         Intent intent = getIntent();
         if (intent != null) {
@@ -155,8 +163,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             public void onSuccess(String url, ArrayList<OrderDetail> result) {
                 Logger.d(result.toString());
             }
-
-
         });
     }
 
@@ -191,19 +197,33 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
 
     private void refreshView() {
         if (orderDto == null) return;
+        //---------详情头----------//
+        tv_order_no.setText(orderDto.getOrder_sn());//设置订单号
+        tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(orderDto.getCreate_time()), "yyyy-MM-dd HH:mm:ss" + ""));//设置时间
+        tv_order_status.setText(OrderCommonState.getOrderStatusShowString(orderDto.getOrder_status()));//设置订单状态
+        tv_order_cost.setText("¥" + orderDto.getTotal_amount());//设置订单金额
+        //---------收货信息----------//
+        tv_customer_name.setText(orderDto.getConsignee());  //设置收货人
+        tv_customer_address.setText(orderDto.getAddress());//设置收货地址
+        tv_customer_phone.setText(orderDto.getMobile());//设置电话号码
+        //---------支付与配送方式----------//
+        tv_pay_method.setText("支付方式：" + orderDto.getPay_type());//设置支付方式
+        tv_shipment_method.setText("配送方式：" + orderDto.getDeliver_type());//设置配送方式
+        //---------发票区域----------//
+        ll_receipt.setVisibility(orderDto.getNeed_invoice() == 1 ? View.VISIBLE : View.GONE);
+        tv_receipt_type.setText("发票类型："+orderDto.getInvoice_type());//设置发票类型
+        tv_receipt_head.setText("发票抬头：" +orderDto.getInvoice_title());//设置发票抬头
+        tv_receipt_content.setText("发票内容："+ orderDto.getInvoice_content());//设置发票内容
+        //---------商品数量与费用----------//
+        tv_goods_total_number.setText(orderDto.getTotal_quantity());//设置商品数量
+        tv_cost.setText("¥" + orderDto.getProduct_money()); //设置货物费用
+        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());//设置运费
+        tv_total_cost.setText("¥" + orderDto.getTotal_amount());//设置总金额
+        rv_goods.setAdapter(adapter);
+        adapter.addAll(orderDto.getProduct());
 
-        tv_order_no.setText(orderDto.getOrder_sn());
-        tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(orderDto.getCreate_time()), "yyyy-MM-dd HH:mm:ss" + ""));
-        tv_order_status.setText(OrderCommonState.getOrderStatusShowString(orderDto.getShipping_status()));
-        tv_order_cost.setText("¥" + orderDto.getTotal_amount());
-        tv_order_info.setText("商品信息");
-        tv_customer_name.setText(orderDto.getConsignee());
-        tv_customer_address.setText(orderDto.getAddress());
-        tv_customer_phone.setText(orderDto.getMobile());
-//        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());
-        tv_total_cost.setText("¥" + orderDto.getTotal_amount());
 
-        List<OrderProduct> goodsList = orderDto.getProduct();
+/*        List<OrderProduct> goodsList = orderDto.getProduct();
         ll_goods.removeAllViews();
         int goodsTotalNumber = 0;
         int goodsNumber = goodsList.size();
@@ -211,11 +231,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             OrderGoodsItem goodsItem = new OrderGoodsItem(this, goodsList.get(i));
             ll_goods.addView(goodsItem);
 //            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
-        }
-        tv_goods_total_number.setText(goodsTotalNumber + "");
+        }*/
         setOrderStatus(orderDto.getOrderStatusID());
-
-
     }
 
     /**
@@ -226,34 +243,83 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     private void setOrderStatus(int status) {
         String statusStr = OrderCommonState.getOrderStatusShowString(status);
         TextView tv_order_status = (TextView) findViewById(R.id.tv_order_status);
-        switch(status){
+        tv_order_status.setText(statusStr);
+        switch (status) {
+            case OrderCommonState.ORDER_PAY_WAIT:
+                setProgress1();
+                tv_order_info.setText(HINT1);//设置商品信息
+                break;
+            case OrderCommonState.ORDER_WAITING_SHIPMENT:
+                setProgress2();
+                tv_order_info.setText(HINT2);//设置商品信息
+                break;
+            case OrderCommonState.ORDER_GOOD_PREPARE:
+                setProgress2();
+                tv_order_info.setText(HINT2);//设置商品信息
+                break;
+            case OrderCommonState.ORDER_WAITING_SIGN:
+                setProgress3();
+                tv_order_info.setText(HINT2);//设置商品信息
+                break;
+            case OrderCommonState.ORDER_SALE_SERVICE:
+                setProgress4();
+                tv_order_info.setText(HINT2);//设置商品信息
+                break;
+            case OrderCommonState.ORDER_FINISH:
+                setProgress4();
+                tv_order_info.setText(HINT2);//设置商品信息
+                break;
+            case OrderCommonState.ORDER_CANCLED:
+                setProgress1();
+                rl_order_info.setVisibility(View.GONE);
+                rl_bottom.setVisibility(View.GONE);
+                break;
+            case OrderCommonState.ORDER_AFTER_SALE:
+                rl_order_info.setVisibility(View.GONE);
+                rl_bottom.setVisibility(View.GONE);
+                break;
+            case OrderCommonState.ORDER_REFUND_FINISH:
+                tv_order_info.setVisibility(View.GONE);
+                rl_order_info.setVisibility(View.GONE);
+                rl_bottom.setVisibility(View.GONE);
+                break;
+            case OrderCommonState.ORDER_EXCEPTION:
+                rl_order_info.setVisibility(View.GONE);
+                rl_bottom.setVisibility(View.GONE);
+                break;
 
+        }
+    }
 
-        }
-        if (status == OrderCommonState.ORDER_PAY_WAIT || status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
-            View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
-            v_status_waiting_pay.setBackgroundColor(0xffffffff);
-            ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);
-            img_status_waiting_pay.setImageResource(R.drawable.img_details_order_steps_01_sel);
-        }
-        if (status == OrderCommonState.ORDER_WAITING_SHIPMENT || status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
-            View v_status_waiting_shipment = findViewById(R.id.v_status_waiting_shipment);
-            v_status_waiting_shipment.setBackgroundColor(0xffffffff);
-            ImageView img_status_waiting_shipment = (ImageView) findViewById(R.id.img_status_waiting_shipment);
-            img_status_waiting_shipment.setImageResource(R.drawable.img_details_order_steps_02_sel);
-        }
-        if (status == OrderCommonState.ORDER_WAITING_SIGN || status == OrderCommonState.ORDER_SALE_SERVICE) {
-            View v_status_waiting_sign = findViewById(R.id.v_status_waiting_sign);
-            v_status_waiting_sign.setBackgroundColor(0xffffffff);
-            ImageView img_status_waiting_sign = (ImageView) findViewById(R.id.img_status_waiting_sign);
-            img_status_waiting_sign.setImageResource(R.drawable.img_details_order_steps_03_sel);
-        }
-        if (status == OrderCommonState.ORDER_SALE_SERVICE) {
-            View v_status_sale_service = findViewById(R.id.v_status_sale_service);
-            v_status_sale_service.setBackgroundColor(0xffffffff);
-            ImageView img_status_sale_service = (ImageView) findViewById(R.id.img_status_sale_service);
-            img_status_sale_service.setImageResource(R.drawable.img_details_order_steps_04_sel);
-        }
+    private void setProgress4() {
+        setProgress3();
+        View v_status_sale_service = findViewById(R.id.v_status_sale_service);
+        v_status_sale_service.setBackgroundColor(0xffffffff);
+        ImageView img_status_sale_service = (ImageView) findViewById(R.id.img_status_sale_service);
+        img_status_sale_service.setImageResource(R.drawable.img_details_order_steps_04_sel);
+    }
+
+    private void setProgress3() {
+        setProgress2();
+        View v_status_waiting_sign = findViewById(R.id.v_status_waiting_sign);
+        v_status_waiting_sign.setBackgroundColor(0xffffffff);
+        ImageView img_status_waiting_sign = (ImageView) findViewById(R.id.img_status_waiting_sign);
+        img_status_waiting_sign.setImageResource(R.drawable.img_details_order_steps_03_sel);
+    }
+
+    private void setProgress2() {
+        setProgress1();
+        View v_status_waiting_shipment = findViewById(R.id.v_status_waiting_shipment);
+        v_status_waiting_shipment.setBackgroundColor(0xffffffff);
+        ImageView img_status_waiting_shipment = (ImageView) findViewById(R.id.img_status_waiting_shipment);
+        img_status_waiting_shipment.setImageResource(R.drawable.img_details_order_steps_02_sel);
+    }
+
+    private void setProgress1() {
+        View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
+        v_status_waiting_pay.setBackgroundColor(0xffffffff);
+        ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);
+        img_status_waiting_pay.setImageResource(R.drawable.img_details_order_steps_01_sel);
     }
 }
 

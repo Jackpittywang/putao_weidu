@@ -3,6 +3,7 @@ package com.putao.wd.user;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -29,6 +30,7 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
     public static final String EVENT_LOGIN = "login";
+    public static final String EVENT_CANCEL_LOGIN = "cancel_login";
 
     @Bind(R.id.et_mobile)
     CleanableEditText et_mobile;
@@ -98,6 +100,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
             @Override
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
+                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
                 loading.dismiss();
                 finish();
             }
@@ -126,8 +129,15 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+    public void onLeftAction() {
+        EventBusHelper.post(EVENT_CANCEL_LOGIN, EVENT_CANCEL_LOGIN);
+        super.onLeftAction();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+            EventBusHelper.post(EVENT_CANCEL_LOGIN, EVENT_CANCEL_LOGIN);
+        return super.dispatchKeyEvent(event);
     }
 }

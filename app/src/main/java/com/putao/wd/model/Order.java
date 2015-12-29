@@ -16,7 +16,7 @@ public class Order implements Serializable {
     private int shipping_status;
     private int pay_status;
     private String outer_order_sn;
-    private String need_invoice;
+    private int need_invoice;
     private String invoice_content;
     private String invoice_title;
     private String invoice_type;
@@ -30,8 +30,10 @@ public class Order implements Serializable {
     private String address;
     private String tel;
     private String mobile;
-    private String total_amount;
-    private String total_quantity;
+    private String total_amount;  //总金额
+    private String express_money; //快递金额
+    private String product_money; //货物金额
+    private String total_quantity;//商品总数量
     private String create_time;
     private String update_time;
     private List<OrderProduct> product;
@@ -107,11 +109,19 @@ public class Order implements Serializable {
         this.outer_order_sn = outer_order_sn;
     }
 
-    public String getNeed_invoice() {
+    public String getProduct_money() {
+        return product_money;
+    }
+
+    public void setProduct_money(String product_money) {
+        this.product_money = product_money;
+    }
+
+    public int getNeed_invoice() {
         return need_invoice;
     }
 
-    public void setNeed_invoice(String need_invoice) {
+    public void setNeed_invoice(int need_invoice) {
         this.need_invoice = need_invoice;
     }
 
@@ -227,6 +237,14 @@ public class Order implements Serializable {
         this.total_amount = total_amount;
     }
 
+    public String getExpress_money() {
+        return express_money;
+    }
+
+    public void setExpress_money(String express_money) {
+        this.express_money = express_money;
+    }
+
     public String getTotal_quantity() {
         return total_quantity;
     }
@@ -315,43 +333,4 @@ public class Order implements Serializable {
         this.orderStatusID = orderStatusID;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id='" + id + '\'' +
-                ", order_sn='" + order_sn + '\'' +
-                ", sell_type='" + sell_type + '\'' +
-                ", uid='" + uid + '\'' +
-                ", order_status=" + order_status +
-                ", shipping_status=" + shipping_status +
-                ", pay_status=" + pay_status +
-                ", outer_order_sn='" + outer_order_sn + '\'' +
-                ", need_invoice='" + need_invoice + '\'' +
-                ", invoice_content='" + invoice_content + '\'' +
-                ", invoice_title='" + invoice_title + '\'' +
-                ", invoice_type='" + invoice_type + '\'' +
-                ", consignee='" + consignee + '\'' +
-                ", area_id='" + area_id + '\'' +
-                ", area='" + area + '\'' +
-                ", province_id='" + province_id + '\'' +
-                ", province='" + province + '\'' +
-                ", city_id='" + city_id + '\'' +
-                ", city='" + city + '\'' +
-                ", address='" + address + '\'' +
-                ", tel='" + tel + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", total_amount='" + total_amount + '\'' +
-                ", total_quantity='" + total_quantity + '\'' +
-                ", create_time='" + create_time + '\'' +
-                ", update_time='" + update_time + '\'' +
-                ", product=" + product +
-                ", pay_type='" + pay_type + '\'' +
-                ", deliver_type='" + deliver_type + '\'' +
-                ", serviceValid=" + serviceValid +
-                ", totalPrice=" + totalPrice +
-                ", totalQuantity=" + totalQuantity +
-                ", banner_control=" + banner_control +
-                ", orderStatusID=" + orderStatusID +
-                '}';
-    }
 }

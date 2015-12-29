@@ -2,7 +2,6 @@ package com.putao.wd.store.order;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -164,15 +163,15 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             tv_Invoice_content.setText(invoiceInfo.get(2));
             tv_Invoice_content.setVisibility(View.VISIBLE);
             need_invoice = "1";
-            if(invoiceInfo.get(1).equals(InvoiceInfoActivity.INVOICE_PERSONAL)) {
+            if (invoiceInfo.get(1).equals(InvoiceInfoActivity.INVOICE_PERSONAL)) {
                 invoice_type = "1";
                 invoice_title = InvoiceInfoActivity.INVOICE_PERSONAL;
-            }else {
+            } else {
                 invoice_type = "2";
                 invoice_title = invoiceInfo.get(1);
             }
             invoice_content = invoiceInfo.get(2);
-        }else {
+        } else {
             tv_Invoice_type.setText(InvoiceInfoActivity.INVOICE_NEEDNOT);
             tv_Invoice_content.setVisibility(View.GONE);
             need_invoice = "0";

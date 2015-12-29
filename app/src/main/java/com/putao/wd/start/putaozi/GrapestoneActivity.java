@@ -5,8 +5,10 @@ import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.start.question.QuestionActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.view.BasicWebView;
 
 import butterknife.Bind;
@@ -40,9 +42,12 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     public void onClick(View v) {
 
     }
+
     @Override
     public void onRightAction() {
-        startActivity(QuestionActivity.class);
+        if (!AccountHelper.isLogin())
+            startActivity(LoginActivity.class);
+        else
+            startActivity(QuestionActivity.class);
     }
-
 }

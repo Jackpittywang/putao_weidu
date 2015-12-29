@@ -1,4 +1,4 @@
-package com.putao.wd.store.product.util;
+package com.putao.wd.store.shopping.util;
 
 import android.support.v4.util.ArrayMap;
 

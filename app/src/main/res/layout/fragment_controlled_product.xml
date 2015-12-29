@@ -11,7 +11,7 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="受控产品"
         auto:nav_right_title="保存"
-        auto:nav_right_title_color="@color/text_select"/>
+        auto:nav_right_title_color="@drawable/text_select"/>
 
     <com.sunnybear.library.view.recycler.BasicRecyclerView
         android:id="@+id/brv_product"

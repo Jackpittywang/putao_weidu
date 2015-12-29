@@ -87,6 +87,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
      */
     public void setTabItemSelected(int resId) {
         TabItem tabItem = mTabItemArray.get(resId);
+        tabItem.setActive(true);
         selectTabItem(tabItem);
     }
 

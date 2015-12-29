@@ -1,4 +1,4 @@
-package com.putao.wd.store.product.adapter;
+package com.putao.wd.store.shopping.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.Cart;
 import com.putao.wd.model.Norms;
-import com.putao.wd.store.product.util.SpecUtils;
+import com.putao.wd.store.shopping.util.SpecUtils;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.BasicAdapter;
