@@ -1,5 +1,7 @@
 package com.putao.wd.model;
 
+import com.putao.wd.me.order.OrderDetailActivity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class Order implements Serializable {
     private int totalQuantity;
     private int banner_control;
     private int orderStatusID;
+    private OrderDetail orderDetail;
 
     public String getId() {
         return id;
@@ -131,6 +134,14 @@ public class Order implements Serializable {
 
     public void setInvoice_content(String invoice_content) {
         this.invoice_content = invoice_content;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
     }
 
     public String getInvoice_title() {
