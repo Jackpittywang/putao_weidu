@@ -16,7 +16,7 @@
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/rl_bottom"
+        android:layout_above="@+id/ll_bottom"
         android:layout_below="@+id/navigation_bar">
 
         <LinearLayout
@@ -486,26 +486,27 @@
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rl_bottom"
+    <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:gravity="right"
+        android:background="@color/white"
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/btn_order_cancel"
+            android:id="@+id/btn_order_left"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/btn_order_operation"
             android:background="@drawable/btn_order_state_selector"
             android:text="取消订单"
             android:textColor="@color/service_btn_sel" />
 
         <Button
-            android:id="@+id/btn_order_operation"
+            android:id="@+id/btn_order_right"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -514,5 +515,5 @@
             android:text="立即支付"
             android:textColor="@color/text_color_white" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

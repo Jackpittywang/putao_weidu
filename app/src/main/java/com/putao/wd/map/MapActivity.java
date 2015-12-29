@@ -49,7 +49,7 @@ public class MapActivity extends PTWDActivity {
 
                                 try {
                                     mBaiduMap.setMapStatus(MapUtils.setCenter(latLng, 18));
-                                    mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_logistics_flow_latest));
+                                    mBaiduMap.addOverlay(MapUtils.addOverlay(latLng, result.getVenue(), R.drawable.icon_mappin));
                                     mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
                                         @Override
                                         public boolean onMarkerClick(Marker marker) {
@@ -59,7 +59,7 @@ public class MapActivity extends PTWDActivity {
                                     });
                                 } catch (Exception e) {
                                     finish();
-                                }finally {
+                                } finally {
                                     loading.dismiss();
                                 }
                             }

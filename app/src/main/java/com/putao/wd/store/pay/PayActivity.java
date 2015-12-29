@@ -1,4 +1,4 @@
-package com.putao.wd.store.cashier;
+package com.putao.wd.store.pay;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.OrderSubmitReturn;
-import com.putao.wd.pay.PayResult;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -27,8 +26,12 @@ import butterknife.OnClick;
  * 收银台
  * Created by wangou on 2015/12/08.
  */
-public class CashPayActivity extends PTWDActivity implements View.OnClickListener {
-    public static final String BUNDLE_ORDER_PAY = "order_pay";
+public class PayActivity extends PTWDActivity implements View.OnClickListener {
+    public static final String BUNDLE_ORDER_ID = "order_id";
+    public static final String BUNDLE_ORDER_SN = "order_sn";
+    public static final String BUNDLE_ORDER_DATE = "order_date";
+    public static final String BUNDLE_ORDER_PRICE = "order_price";
+
     private final int SDK_PAY_FLAG = 1;
     private final int SDK_CHECK_FLAG = 2;
 
@@ -39,20 +42,27 @@ public class CashPayActivity extends PTWDActivity implements View.OnClickListene
     @Bind(R.id.tv_cash_pay_summoney)
     TextView tv_cash_pay_summoney;//订单金额
 
-    private OrderSubmitReturn mOrderSubmitReturn;
+    private String order_id;
+    private String order_sn;
+    private String order_date;
+    private String order_price;
 
     private String orderInfo;
     private Handler mHandler;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_cash_pay;
+        return R.layout.activity_pay;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        mOrderSubmitReturn = (OrderSubmitReturn) args.getSerializable(BUNDLE_ORDER_PAY);
+        order_id = args.getString(BUNDLE_ORDER_ID);
+        order_sn = args.getString(BUNDLE_ORDER_SN);
+        order_date = args.getString(BUNDLE_ORDER_DATE);
+        order_price = args.getString(BUNDLE_ORDER_PRICE);
+
         initView();
         mHandler = new Handler() {
             @Override
@@ -82,16 +92,16 @@ public class CashPayActivity extends PTWDActivity implements View.OnClickListene
                 }
             }
         };
-        pay(mOrderSubmitReturn.getOrder_id());
+        pay(order_id);
     }
 
     /**
      * 初始化页面
      */
     private void initView() {
-        tv_order_sn.setText(mOrderSubmitReturn.getOrder_sn());
-        tv_order_date.setText(mOrderSubmitReturn.getTime());
-        tv_cash_pay_summoney.setText(mOrderSubmitReturn.getPrice());
+        tv_order_sn.setText(order_sn);
+        tv_order_date.setText(order_date);
+        tv_cash_pay_summoney.setText(order_price);
     }
 
     /**
@@ -116,7 +126,7 @@ public class CashPayActivity extends PTWDActivity implements View.OnClickListene
 
     @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{StoreApi.URL_PAY};
     }
 
     @OnClick(R.id.tv_pay)

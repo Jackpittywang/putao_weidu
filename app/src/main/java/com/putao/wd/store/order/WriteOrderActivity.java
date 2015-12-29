@@ -14,7 +14,7 @@ import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
 import com.putao.wd.model.OrderSubmitReturn;
-import com.putao.wd.store.cashier.CashPayActivity;
+import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
@@ -146,8 +146,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                             public void onSuccess(String url, OrderSubmitReturn result) {
                                 if (result != null) {
                                     Bundle bundle = new Bundle();
-                                    bundle.putSerializable(CashPayActivity.BUNDLE_ORDER_PAY, result);
-                                    startActivity(CashPayActivity.class, bundle);
+                                    bundle.putSerializable(PayActivity.BUNDLE_ORDER_PAY, result);
+                                    startActivity(PayActivity.class, bundle);
                                 }
                             }
                         });

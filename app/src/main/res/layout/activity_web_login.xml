@@ -78,22 +78,16 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_18sp" />
 
-        <LinearLayout
-            android:id="@+id/btn_cancel_login"
+        <TextView
+            android:id="@+id/tv_cancel_login"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:gravity="center"
-                android:text="取消登录"
-                android:textColor="@drawable/text_select"
-                android:textSize="@dimen/text_size_18sp" />
-        </LinearLayout>
-
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:gravity="center"
+            android:text="取消登录"
+            android:textColor="@drawable/text_select"
+            android:textSize="@dimen/text_size_18sp" />
     </LinearLayout>
 </RelativeLayout>

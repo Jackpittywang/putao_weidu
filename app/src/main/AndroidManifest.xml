@@ -173,9 +173,13 @@
         <activity
             android:name=".store.invoice.InvoiceInfoActivity"
             android:screenOrientation="portrait" />
-        <!--发票信息-->
+        <!--支付-->
         <activity
-            android:name=".store.cashier.CashPayActivity"
+            android:name=".store.pay.PayActivity"
+            android:screenOrientation="portrait" />
+        <!--支付成功-->
+        <activity
+            android:name=".store.pay.PaySuccessActivity"
             android:screenOrientation="portrait" />
         <!--管理-->
         <activity
@@ -269,9 +273,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".JointImageTestActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pay.PayAcitivty"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

@@ -45,7 +45,7 @@ public class WebLoginActivity extends PTWDActivity implements View.OnClickListen
         return new String[0];
     }
 
-    @OnClick({R.id.btn_login, R.id.btn_cancel_login})
+    @OnClick({R.id.btn_login, R.id.tv_cancel_login})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -55,7 +55,7 @@ public class WebLoginActivity extends PTWDActivity implements View.OnClickListen
                     public void onSuccess(String url, JSONObject result) {
                         int error_code = result.getInteger("error_code");
                         if (error_code == 0)
-                            ToastUtils.showToastLong(mContext,"葡萄官网登录成功");
+                            ToastUtils.showToastLong(mContext, "葡萄官网登录成功");
                         loading.dismiss();
                         finish();
                     }
@@ -66,7 +66,7 @@ public class WebLoginActivity extends PTWDActivity implements View.OnClickListen
                     }
                 });
                 break;
-            case R.id.btn_cancel_login://取消登录
+            case R.id.tv_cancel_login://取消登录
 
                 break;
         }

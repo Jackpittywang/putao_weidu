@@ -1,12 +1,12 @@
 package com.sunnybear.library.view.recycler;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sunnybear.library.controller.handler.WeakHandler;
 import com.sunnybear.library.util.Logger;
 
 import java.io.Serializable;
@@ -113,7 +113,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
                 if (mOnItemClickListener != null && !isProcess)
                     mOnItemClickListener.onItemClick(item, position);
                 isProcess = true;
-                new WeakHandler().postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         isProcess = false;
@@ -132,6 +132,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         });
         onBindItem(holder, item, position);
     }
+
 
     public void add(Item item) {
         int index = mItems.size();

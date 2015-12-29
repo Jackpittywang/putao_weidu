@@ -20,13 +20,14 @@ import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -121,17 +122,20 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     LinearLayout ll_goods_info;
     @Bind(R.id.sv_main)
     ScrollView sv_main;
-    @Bind(R.id.btn_order_cancel)
-    Button btn_order_cancel;
-    @Bind(R.id.btn_order_operation)
-    Button btn_order_operation;
-    @Bind(R.id.rl_bottom)
-    RelativeLayout rl_bottom;
+    @Bind(R.id.btn_order_left)
+    Button btn_order_left;
+    @Bind(R.id.btn_order_right)
+    Button btn_order_right;
+    @Bind(R.id.ll_bottom)
+    LinearLayout ll_bottom;
     @Bind(R.id.ll_receipt)
     LinearLayout ll_receipt;
 
-    private Order orderDto;
-    private OrdersAdapter adapter;
+    private OrderDetail mOrderDetail;
+    private OrdersAdapter mAdapter;
+    String mOrderId;
+    public static final String ORDER_DETAIL = "order_detail";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_detail;
@@ -140,17 +144,16 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        adapter = new OrdersAdapter(mContext, null);
+        mAdapter = new OrdersAdapter(mContext, null);
         //获取order数据
         Intent intent = getIntent();
         if (intent != null) {
-            orderDto = (Order) intent.getSerializableExtra(KEY_ORDER);
+            mOrderId = intent.getStringExtra(KEY_ORDER);
         }
         //初始化布局对象
         initComponent();
         getOrderDetail();
-        //刷新界面
-        refreshView();
+
     }
 
 
@@ -158,13 +161,16 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
      * 订单详情
      */
     private void getOrderDetail() {
-        networkRequest(OrderApi.getOrderDetail("367"), new SimpleFastJsonCallback<ArrayList<OrderDetail>>(OrderDetail.class, loading) {
+        networkRequest(OrderApi.getOrderDetail(mOrderId), new SimpleFastJsonCallback<OrderDetail>(OrderDetail.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<OrderDetail> result) {
+            public void onSuccess(String url, OrderDetail result) {
                 Logger.d(result.toString());
+                mOrderDetail = result;
+                refreshView();
             }
         });
     }
+
 
     @Override
     protected String[] getRequestUrls() {
@@ -187,7 +193,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
      */
     private void openShipmentDetailActivity() {
         Bundle bundle = new Bundle();
-        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, orderDto.getOrder_sn());
+        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, mOrderDetail.getOrder_sn());
         startActivity(OrderShipmentDetailActivity.class, bundle);
     }
 
@@ -196,34 +202,34 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     private void refreshView() {
-        if (orderDto == null) return;
+        if (mOrderDetail == null) return;
         //---------详情头----------//
-        tv_order_no.setText(orderDto.getOrder_sn());//设置订单号
-        tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(orderDto.getCreate_time()), "yyyy-MM-dd HH:mm:ss" + ""));//设置时间
-        tv_order_status.setText(OrderCommonState.getOrderStatusShowString(orderDto.getOrder_status()));//设置订单状态
-        tv_order_cost.setText("¥" + orderDto.getTotal_amount());//设置订单金额
+        tv_order_no.setText(mOrderDetail.getOrder_sn());//设置订单号
+        tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(mOrderDetail.getCreate_time()), "yyyy-MM-dd HH:mm:ss" + ""));//设置时间
+        tv_order_status.setText(OrderCommonState.getOrderStatusShowString(mOrderDetail.getOrder_status()));//设置订单状态
+        tv_order_cost.setText("¥" + mOrderDetail.getTotal_amount());//设置订单金额
         //---------收货信息----------//
-        tv_customer_name.setText(orderDto.getConsignee());  //设置收货人
-        tv_customer_address.setText(orderDto.getAddress());//设置收货地址
-        tv_customer_phone.setText(orderDto.getMobile());//设置电话号码
+        tv_customer_name.setText(mOrderDetail.getConsignee());  //设置收货人
+        tv_customer_address.setText(mOrderDetail.getAddress());//设置收货地址
+        tv_customer_phone.setText(mOrderDetail.getMobile());//设置电话号码
         //---------支付与配送方式----------//
-        tv_pay_method.setText("支付方式：" + orderDto.getPay_type());//设置支付方式
-        tv_shipment_method.setText("配送方式：" + orderDto.getDeliver_type());//设置配送方式
+        tv_pay_method.setText("支付方式：" + mOrderDetail.getPay_type());//设置支付方式
+        tv_shipment_method.setText("配送方式：" + mOrderDetail.getDeliver_type());//设置配送方式
         //---------发票区域----------//
-        ll_receipt.setVisibility(orderDto.getNeed_invoice() == 1 ? View.VISIBLE : View.GONE);
-        tv_receipt_type.setText("发票类型："+orderDto.getInvoice_type());//设置发票类型
-        tv_receipt_head.setText("发票抬头：" +orderDto.getInvoice_title());//设置发票抬头
-        tv_receipt_content.setText("发票内容："+ orderDto.getInvoice_content());//设置发票内容
+        ll_receipt.setVisibility(mOrderDetail.getNeed_invoice() == 1 ? View.VISIBLE : View.GONE);
+        tv_receipt_type.setText("发票类型：" + mOrderDetail.getInvoice_type());//设置发票类型
+        tv_receipt_head.setText("发票抬头：" + mOrderDetail.getInvoice_title());//设置发票抬头
+        tv_receipt_content.setText("发票内容：" + mOrderDetail.getInvoice_content());//设置发票内容
         //---------商品数量与费用----------//
-        tv_goods_total_number.setText(orderDto.getTotal_quantity());//设置商品数量
-        tv_cost.setText("¥" + orderDto.getProduct_money()); //设置货物费用
-        tv_shipment_fee.setText("¥" + orderDto.getExpress_money());//设置运费
-        tv_total_cost.setText("¥" + orderDto.getTotal_amount());//设置总金额
-        rv_goods.setAdapter(adapter);
-        adapter.addAll(orderDto.getProduct());
+        tv_goods_total_number.setText(mOrderDetail.getTotal_quantity());//设置商品数量
+        tv_cost.setText("¥" + mOrderDetail.getProduct_money()); //设置货物费用
+        tv_shipment_fee.setText("¥" + mOrderDetail.getExpress_money());//设置运费
+        tv_total_cost.setText("¥" + mOrderDetail.getTotal_amount());//设置总金额
+        rv_goods.setAdapter(mAdapter);
+        mAdapter.addAll(mOrderDetail.getProduct());
 
 
-/*        List<OrderProduct> goodsList = orderDto.getProduct();
+/*        List<OrderProduct> goodsList = mOrderDetail.getProduct();
         ll_goods.removeAllViews();
         int goodsTotalNumber = 0;
         int goodsNumber = goodsList.size();
@@ -232,8 +238,9 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             ll_goods.addView(goodsItem);
 //            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
         }*/
-        setOrderStatus(orderDto.getOrderStatusID());
+        setOrderStatus(mOrderDetail.getOrderStatusID());
     }
+
 
     /**
      * 设置订单状态的文字和顶部进度条显示
@@ -272,20 +279,20 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             case OrderCommonState.ORDER_CANCLED:
                 setProgress1();
                 rl_order_info.setVisibility(View.GONE);
-                rl_bottom.setVisibility(View.GONE);
+                ll_bottom.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_AFTER_SALE:
                 rl_order_info.setVisibility(View.GONE);
-                rl_bottom.setVisibility(View.GONE);
+                ll_bottom.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_REFUND_FINISH:
                 tv_order_info.setVisibility(View.GONE);
                 rl_order_info.setVisibility(View.GONE);
-                rl_bottom.setVisibility(View.GONE);
+                ll_bottom.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_EXCEPTION:
                 rl_order_info.setVisibility(View.GONE);
-                rl_bottom.setVisibility(View.GONE);
+                ll_bottom.setVisibility(View.GONE);
                 break;
 
         }
