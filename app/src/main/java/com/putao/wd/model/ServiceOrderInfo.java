@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class ServiceOrderInfo implements Serializable {
 
-    private String id;//售后id
-    private String order_sn;
+    private String id;
+    private String order_sn;//订单号
     private String sell_type;
     private String uid;
     private int order_status;
