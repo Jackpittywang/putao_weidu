@@ -53,8 +53,6 @@ public class ServiceOrderInfo implements Serializable {
     private int totalQuantity;
     private int banner_control;
     private int orderStatusID;
-    private List<ServiceProduct> product;//售后申请的商品数据
-    private List<ServiceOrderInfoExpress> express;//商品快递状态
 
     public String getId() {
         return id;
@@ -408,22 +406,6 @@ public class ServiceOrderInfo implements Serializable {
         this.orderStatusID = orderStatusID;
     }
 
-    public List<ServiceProduct> getProduct() {
-        return product;
-    }
-
-    public void setProduct(List<ServiceProduct> product) {
-        this.product = product;
-    }
-
-    public List<ServiceOrderInfoExpress> getExpress() {
-        return express;
-    }
-
-    public void setExpress(List<ServiceOrderInfoExpress> express) {
-        this.express = express;
-    }
-
     @Override
     public String toString() {
         return "ServiceOrderInfo{" +
@@ -471,8 +453,6 @@ public class ServiceOrderInfo implements Serializable {
                 ", totalQuantity=" + totalQuantity +
                 ", banner_control=" + banner_control +
                 ", orderStatusID=" + orderStatusID +
-                ", product=" + product +
-                ", express=" + express +
                 '}';
     }
 }
