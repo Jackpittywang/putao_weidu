@@ -1,9 +1,11 @@
 package com.putao.wd.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/12/29.
  */
-public class ExpressContent {
+public class ExpressContent implements Serializable{
     private String time;
     private String context;
     private String ftime;

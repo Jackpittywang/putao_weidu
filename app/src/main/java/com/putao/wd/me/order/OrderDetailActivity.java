@@ -15,13 +15,18 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
+import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -30,7 +35,7 @@ import butterknife.OnClick;
  * 订单详情
  * Created by yanguoqiang on 15/11/29.
  */
-public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER = "order";
     public static final String KEY_ORDER_ID = "order_id";
@@ -175,25 +180,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         return new String[0];
     }
 
-    @OnClick(R.id.ll_shipment)
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_shipment:// 全部
-                openShipmentDetailActivity();
-                break;
-        }
-    }
-
-
-    /**
-     * 打开包裹详情页面
-     */
-    private void openShipmentDetailActivity() {
-        Bundle bundle = new Bundle();
-        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, mOrderDetail.getOrder_sn());
-        startActivity(OrderShipmentDetailActivity.class, bundle);
-    }
 
     private void initComponent() {
 
@@ -228,27 +214,27 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             tv_no_shipment.setVisibility(View.GONE);
             rv_shipment.setAdapter(mShipmentAdapter);
             mShipmentAdapter.addAll(mOrderDetail.getExpress());
+            //物流详情页
+            rv_shipment.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(Serializable serializable, int position) {
+                    Bundle bundle = new Bundle();
+                    ArrayList<Express> expresses = mOrderDetail.getExpress();
+                    bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+                    bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, mOrderDetail.getExpress().size());
+                    bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, position);
+                    startActivity(OrderShipmentDetailActivity.class, bundle);
+                }
+            });
         }
         rv_goods.setAdapter(mAdapter);
         mAdapter.addAll(mOrderDetail.getProduct());
-
-
-/*        List<OrderProduct> goodsList = mOrderDetail.getProduct();
-        ll_goods.removeAllViews();
-        int goodsTotalNumber = 0;
-        int goodsNumber = goodsList.size();
-        for (int i = 0; i < goodsNumber; i++) {
-            OrderGoodsItem goodsItem = new OrderGoodsItem(this, goodsList.get(i));
-            ll_goods.addView(goodsItem);
-//            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
-        }*/
         setOrderStatus(mOrderDetail.getOrderStatusID());
     }
 
 
     /**
      * 设置订单状态的文字和顶部进度条显示
-     *
      * @param status
      */
     private void setOrderStatus(int status) {
@@ -360,5 +346,4 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         img_status_waiting_pay.setImageResource(R.drawable.img_details_order_steps_01_sel);
     }
 }
-
 

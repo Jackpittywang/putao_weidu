@@ -14,21 +14,54 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="物流状态" />
 
-    <HorizontalScrollView
-        android:id="@+id/hsv_package_list"
+    <!--  <HorizontalScrollView
+          android:id="@+id/hsv_package_list"
+          android:layout_width="match_parent"
+          android:layout_height="40dp">-->
+
+    <LinearLayout
+        android:id="@+id/ll_package_list"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_package_list"
+        <com.sunnybear.library.view.select.TitleBar
+            android:id="@+id/ll_title_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:divider="@color/color_EBEBEB"
+            android:padding="6dp">
 
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_package1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:is_active="true"
+                auto:title_text="包裹1" />
 
-        </LinearLayout>
-    </HorizontalScrollView>
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_package2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:is_active="false"
+                auto:title_text="包裹2" />
+        </com.sunnybear.library.view.select.TitleBar>
+    </LinearLayout>
+    <!--</HorizontalScrollView>-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -109,18 +142,19 @@
                 android:textColor="#985ec9"
                 android:textSize="@dimen/text_size_18sp" />
 
-            <LinearLayout
-                android:id="@+id/ll_package_shipment"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_EBEBEB"></View>
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_shipment_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-
-            </LinearLayout>
-
+                auto:divider_height="1px"
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
