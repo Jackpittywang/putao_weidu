@@ -14,19 +14,18 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.me.order.adapter.OrderListAdapter;
-import com.putao.wd.me.order.view.OrderGoodsItem;
-import com.putao.wd.model.Order;
+import com.putao.wd.me.order.adapter.ShipmentAdapter;
+import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
-import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
-import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -36,7 +35,7 @@ import butterknife.OnClick;
  * 订单详情
  * Created by yanguoqiang on 15/11/29.
  */
-public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER = "order";
     public static final String KEY_ORDER_ID = "order_id";
@@ -100,8 +99,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     LinearLayout ll_order_info;
     @Bind(R.id.tv_goods_title)
     TextView tv_goods_title;
-    @Bind(R.id.rv_goods)
-    BasicRecyclerView rv_goods;
     @Bind(R.id.tv_goods_total_number)
     TextView tv_goods_total_number;
     @Bind(R.id.tv_cost_text)
@@ -130,9 +127,14 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     LinearLayout ll_bottom;
     @Bind(R.id.ll_receipt)
     LinearLayout ll_receipt;
+    @Bind(R.id.rv_goods)
+    BasicRecyclerView rv_goods;
+    @Bind(R.id.rv_shipment)
+    BasicRecyclerView rv_shipment;
 
     private OrderDetail mOrderDetail;
     private OrdersAdapter mAdapter;
+    private ShipmentAdapter mShipmentAdapter;
     String mOrderId;
     public static final String ORDER_DETAIL = "order_detail";
 
@@ -145,6 +147,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         mAdapter = new OrdersAdapter(mContext, null);
+        mShipmentAdapter = new ShipmentAdapter(mContext, null);
         //获取order数据
         Intent intent = getIntent();
         if (intent != null) {
@@ -177,25 +180,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         return new String[0];
     }
 
-    @OnClick(R.id.ll_shipment)
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_shipment:// 全部
-                openShipmentDetailActivity();
-                break;
-        }
-    }
-
-
-    /**
-     * 打开包裹详情页面
-     */
-    private void openShipmentDetailActivity() {
-        Bundle bundle = new Bundle();
-        bundle.putString(OrderShipmentDetailActivity.KEY_ORDER_UUID, mOrderDetail.getOrder_sn());
-        startActivity(OrderShipmentDetailActivity.class, bundle);
-    }
 
     private void initComponent() {
 
@@ -210,7 +194,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_order_cost.setText("¥" + mOrderDetail.getTotal_amount());//设置订单金额
         //---------收货信息----------//
         tv_customer_name.setText(mOrderDetail.getConsignee());  //设置收货人
-        tv_customer_address.setText(mOrderDetail.getAddress());//设置收货地址
+        tv_customer_address.setText(mOrderDetail.getProvince() + " " + mOrderDetail.getCity() + " " + mOrderDetail.getAddress());//设置收货地址
         tv_customer_phone.setText(mOrderDetail.getMobile());//设置电话号码
         //---------支付与配送方式----------//
         tv_pay_method.setText("支付方式：" + mOrderDetail.getPay_type());//设置支付方式
@@ -225,26 +209,32 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_cost.setText("¥" + mOrderDetail.getProduct_money()); //设置货物费用
         tv_shipment_fee.setText("¥" + mOrderDetail.getExpress_money());//设置运费
         tv_total_cost.setText("¥" + mOrderDetail.getTotal_amount());//设置总金额
+        //设置物流信息
+        if (mOrderDetail.getExpress().size() > 0) {
+            tv_no_shipment.setVisibility(View.GONE);
+            rv_shipment.setAdapter(mShipmentAdapter);
+            mShipmentAdapter.addAll(mOrderDetail.getExpress());
+            //物流详情页
+            rv_shipment.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(Serializable serializable, int position) {
+                    Bundle bundle = new Bundle();
+                    ArrayList<Express> expresses = mOrderDetail.getExpress();
+                    bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+                    bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, mOrderDetail.getExpress().size());
+                    bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, position);
+                    startActivity(OrderShipmentDetailActivity.class, bundle);
+                }
+            });
+        }
         rv_goods.setAdapter(mAdapter);
         mAdapter.addAll(mOrderDetail.getProduct());
-
-
-/*        List<OrderProduct> goodsList = mOrderDetail.getProduct();
-        ll_goods.removeAllViews();
-        int goodsTotalNumber = 0;
-        int goodsNumber = goodsList.size();
-        for (int i = 0; i < goodsNumber; i++) {
-            OrderGoodsItem goodsItem = new OrderGoodsItem(this, goodsList.get(i));
-            ll_goods.addView(goodsItem);
-//            goodsTotalNumber = goodsTotalNumber + goodsList.get(i).getQuantity();
-        }*/
         setOrderStatus(mOrderDetail.getOrderStatusID());
     }
 
 
     /**
      * 设置订单状态的文字和顶部进度条显示
-     *
      * @param status
      */
     private void setOrderStatus(int status) {
@@ -252,47 +242,74 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         TextView tv_order_status = (TextView) findViewById(R.id.tv_order_status);
         tv_order_status.setText(statusStr);
         switch (status) {
-            case OrderCommonState.ORDER_PAY_WAIT:
+            case OrderCommonState.ORDER_PAY_WAIT://待支付
                 setProgress1();
+                ll_bottom.setVisibility(View.VISIBLE);
+                btn_order_left.setVisibility(View.VISIBLE);
+                btn_order_right.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT1);//设置商品信息
+                btn_order_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                btn_order_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
-            case OrderCommonState.ORDER_WAITING_SHIPMENT:
+            case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 setProgress2();
+                btn_order_right.setText("申请退款");
+                ll_bottom.setVisibility(View.VISIBLE);
+                btn_order_left.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT2);//设置商品信息
+                btn_order_right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
             case OrderCommonState.ORDER_GOOD_PREPARE:
                 setProgress2();
                 tv_order_info.setText(HINT2);//设置商品信息
                 break;
-            case OrderCommonState.ORDER_WAITING_SIGN:
+            case OrderCommonState.ORDER_WAITING_SIGN://已发货
                 setProgress3();
+                ll_bottom.setVisibility(View.VISIBLE);
+                btn_order_left.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT2);//设置商品信息
                 break;
             case OrderCommonState.ORDER_SALE_SERVICE:
                 setProgress4();
                 tv_order_info.setText(HINT2);//设置商品信息
                 break;
-            case OrderCommonState.ORDER_FINISH:
+
+
+            case OrderCommonState.ORDER_FINISH://已完成
                 setProgress4();
+                ll_bottom.setVisibility(View.VISIBLE);
+                btn_order_left.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT2);//设置商品信息
                 break;
+
             case OrderCommonState.ORDER_CANCLED:
                 setProgress1();
                 rl_order_info.setVisibility(View.GONE);
-                ll_bottom.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_AFTER_SALE:
                 rl_order_info.setVisibility(View.GONE);
-                ll_bottom.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_REFUND_FINISH:
                 tv_order_info.setVisibility(View.GONE);
                 rl_order_info.setVisibility(View.GONE);
-                ll_bottom.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_EXCEPTION:
                 rl_order_info.setVisibility(View.GONE);
-                ll_bottom.setVisibility(View.GONE);
                 break;
 
         }
@@ -329,5 +346,4 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         img_status_waiting_pay.setImageResource(R.drawable.img_details_order_steps_01_sel);
     }
 }
-
 

@@ -1,6 +1,7 @@
 package com.putao.wd.api;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
@@ -20,7 +21,8 @@ public class OrderApi {
     private static final String REQUEST_TYPE = "type";//订单状态
     private static final String REQUEST_PAGE = "page";//数据分页
 
-    private static final String REQUEST_ORDER_ID = "id";//订单id
+    private static final String REQUEST_ORDER_ID = "order_id";//订单id
+    private static final String REQUEST_ID = "id";//订单id
     private static final String REQUEST_REALNAME = "realname";//收货人姓名
     private static final String REQUEST_CITY_ID = "city_id";//市ID
     private static final String REQUEST_PROVINCE_ID = "province_id";//省ID
@@ -84,7 +86,7 @@ public class OrderApi {
      */
     public static Request getOrderDetail(String order_id) {
         return PTWDRequestHelper.store()
-                .addParam(REQUEST_ORDER_ID, order_id)
+                .addParam(REQUEST_ID, order_id)
                 .build(RequestMethod.POST, URL_ORDER_DETAIL);
     }
 
@@ -202,9 +204,14 @@ public class OrderApi {
      * @param page 数据分页
      */
     public static Request getServiceLists(String page) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.POST, URL_SERVICE_LIST);
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(REQUEST_PAGE, page);
+        return builder.build(RequestMethod.POST, URL_SERVICE_LIST);
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_PAGE, page)
+//                .build(RequestMethod.POST, URL_SERVICE_LIST);
     }
 
     /**

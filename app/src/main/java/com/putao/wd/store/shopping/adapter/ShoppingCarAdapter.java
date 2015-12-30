@@ -73,25 +73,35 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_count.setText(cart.getQt());
         holder.btn_sel.setState(cart.isSelect());
         showEdit(holder, cart);
-        if (!cart.isSelect()) {
-            holder.btn_sel.setState(false);
+//        if (!cart.isSelect()) {
+//            holder.btn_sel.setState(false);
+//        }
+        //修改开关状态
+        if (cart.isSelect()) {
+            selected.put(position, cart);
+            EventBusHelper.post(selected, EVENT_EDITABLE);
+        }else {
+            selected.remove(position);
+            if (selected.size() == 0)
+                cart.setEditable(false);
+            EventBusHelper.post(selected, EVENT_UNEDITABLE);
         }
-        holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
-            @Override
-            public void onSwitchClick(View v, boolean isSelect) {
-                cart.setIsSelect(isSelect);
-                if (isSelect) {
-                    selected.put(position, cart);
-                    EventBusHelper.post(selected, EVENT_EDITABLE);
-                } else {
-                    selected.remove(position);
-                    if (selected.size() == 0)
-                        cart.setEditable(false);
-                    EventBusHelper.post(selected, EVENT_UNEDITABLE);
-                }
-                replace(position, cart);
-            }
-        });
+//        holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
+//            @Override
+//            public void onSwitchClick(View v, boolean isSelect) {
+//                cart.setIsSelect(isSelect);
+//                if (isSelect) {
+//                    selected.put(position, cart);
+//                    EventBusHelper.post(selected, EVENT_EDITABLE);
+//                } else {
+//                    selected.remove(position);
+//                    if (selected.size() == 0)
+//                        cart.setEditable(false);
+//                    EventBusHelper.post(selected, EVENT_UNEDITABLE);
+//                }
+//                replace(position, cart);
+//            }
+//        });
         //修改购买数量
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override

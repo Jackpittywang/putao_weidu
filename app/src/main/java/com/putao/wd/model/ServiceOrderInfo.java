@@ -1,23 +1,26 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 订单详情
+ * 售后数据--售后
  * Created by guchenkai on 2015/12/9.
  */
-public class OrderDetail implements Serializable {
-    private String id;
+public class ServiceOrderInfo implements Serializable {
+
+    private String id;//售后id
     private String order_sn;
     private String sell_type;
     private String uid;
     private int order_status;
+    private String express_status;
     private int shipping_status;
     private int pay_status;
+    private String pay_trade_no;
+    private String pay_time;
     private String outer_order_sn;
-    private int need_invoice;
+    private String need_invoice;
     private String invoice_content;
     private String invoice_title;
     private String invoice_type;
@@ -31,25 +34,25 @@ public class OrderDetail implements Serializable {
     private String address;
     private String tel;
     private String mobile;
-    private String total_amount;  //总金额
-    private String express_money; //快递金额
-    private String product_money; //货物金额
-    private String total_quantity;//商品总数量
+    private String total_amount;
+    private String total_quantity;
+    private String note;
+    private String mall_ordercol;
     private String create_time;
     private String update_time;
-    private List<OrderProduct> product;
+    private String receive_shipping_time;
+    private String order_status_msg;
+    private String ip;
+    private String product_money;
+    private String express_money;
+    private String source;
     private String pay_type;
     private String deliver_type;
     private int serviceValid;
-    private int totalPrice;
+    private float totalPrice;
     private int totalQuantity;
     private int banner_control;
     private int orderStatusID;
-    private OrderDetail orderDetail;
-
-    private ArrayList<Express> express;//物流信息
-
-
 
     public String getId() {
         return id;
@@ -91,6 +94,14 @@ public class OrderDetail implements Serializable {
         this.order_status = order_status;
     }
 
+    public String getExpress_status() {
+        return express_status;
+    }
+
+    public void setExpress_status(String express_status) {
+        this.express_status = express_status;
+    }
+
     public int getShipping_status() {
         return shipping_status;
     }
@@ -107,6 +118,22 @@ public class OrderDetail implements Serializable {
         this.pay_status = pay_status;
     }
 
+    public String getPay_trade_no() {
+        return pay_trade_no;
+    }
+
+    public void setPay_trade_no(String pay_trade_no) {
+        this.pay_trade_no = pay_trade_no;
+    }
+
+    public String getPay_time() {
+        return pay_time;
+    }
+
+    public void setPay_time(String pay_time) {
+        this.pay_time = pay_time;
+    }
+
     public String getOuter_order_sn() {
         return outer_order_sn;
     }
@@ -115,11 +142,11 @@ public class OrderDetail implements Serializable {
         this.outer_order_sn = outer_order_sn;
     }
 
-    public int getNeed_invoice() {
+    public String getNeed_invoice() {
         return need_invoice;
     }
 
-    public void setNeed_invoice(int need_invoice) {
+    public void setNeed_invoice(String need_invoice) {
         this.need_invoice = need_invoice;
     }
 
@@ -235,28 +262,28 @@ public class OrderDetail implements Serializable {
         this.total_amount = total_amount;
     }
 
-    public String getExpress_money() {
-        return express_money;
-    }
-
-    public void setExpress_money(String express_money) {
-        this.express_money = express_money;
-    }
-
-    public String getProduct_money() {
-        return product_money;
-    }
-
-    public void setProduct_money(String product_money) {
-        this.product_money = product_money;
-    }
-
     public String getTotal_quantity() {
         return total_quantity;
     }
 
     public void setTotal_quantity(String total_quantity) {
         this.total_quantity = total_quantity;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getMall_ordercol() {
+        return mall_ordercol;
+    }
+
+    public void setMall_ordercol(String mall_ordercol) {
+        this.mall_ordercol = mall_ordercol;
     }
 
     public String getCreate_time() {
@@ -275,12 +302,52 @@ public class OrderDetail implements Serializable {
         this.update_time = update_time;
     }
 
-    public List<OrderProduct> getProduct() {
-        return product;
+    public String getReceive_shipping_time() {
+        return receive_shipping_time;
     }
 
-    public void setProduct(List<OrderProduct> product) {
-        this.product = product;
+    public void setReceive_shipping_time(String receive_shipping_time) {
+        this.receive_shipping_time = receive_shipping_time;
+    }
+
+    public String getOrder_status_msg() {
+        return order_status_msg;
+    }
+
+    public void setOrder_status_msg(String order_status_msg) {
+        this.order_status_msg = order_status_msg;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getProduct_money() {
+        return product_money;
+    }
+
+    public void setProduct_money(String product_money) {
+        this.product_money = product_money;
+    }
+
+    public String getExpress_money() {
+        return express_money;
+    }
+
+    public void setExpress_money(String express_money) {
+        this.express_money = express_money;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getPay_type() {
@@ -307,11 +374,11 @@ public class OrderDetail implements Serializable {
         this.serviceValid = serviceValid;
     }
 
-    public int getTotalPrice() {
+    public float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -339,34 +406,21 @@ public class OrderDetail implements Serializable {
         this.orderStatusID = orderStatusID;
     }
 
-    public OrderDetail getOrderDetail() {
-        return orderDetail;
-    }
-
-    public void setOrderDetail(OrderDetail orderDetail) {
-        this.orderDetail = orderDetail;
-    }
-
-    public ArrayList<Express> getExpress() {
-        return express;
-    }
-
-    public void setExpress(ArrayList<Express> express) {
-        this.express = express;
-    }
-
     @Override
     public String toString() {
-        return "OrderDetail{" +
+        return "ServiceOrderInfo{" +
                 "id='" + id + '\'' +
                 ", order_sn='" + order_sn + '\'' +
                 ", sell_type='" + sell_type + '\'' +
                 ", uid='" + uid + '\'' +
                 ", order_status=" + order_status +
+                ", express_status='" + express_status + '\'' +
                 ", shipping_status=" + shipping_status +
                 ", pay_status=" + pay_status +
+                ", pay_trade_no='" + pay_trade_no + '\'' +
+                ", pay_time='" + pay_time + '\'' +
                 ", outer_order_sn='" + outer_order_sn + '\'' +
-                ", need_invoice=" + need_invoice +
+                ", need_invoice='" + need_invoice + '\'' +
                 ", invoice_content='" + invoice_content + '\'' +
                 ", invoice_title='" + invoice_title + '\'' +
                 ", invoice_type='" + invoice_type + '\'' +
@@ -381,12 +435,17 @@ public class OrderDetail implements Serializable {
                 ", tel='" + tel + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", total_amount='" + total_amount + '\'' +
-                ", express_money='" + express_money + '\'' +
-                ", product_money='" + product_money + '\'' +
                 ", total_quantity='" + total_quantity + '\'' +
+                ", note='" + note + '\'' +
+                ", mall_ordercol='" + mall_ordercol + '\'' +
                 ", create_time='" + create_time + '\'' +
                 ", update_time='" + update_time + '\'' +
-                ", product=" + product +
+                ", receive_shipping_time='" + receive_shipping_time + '\'' +
+                ", order_status_msg='" + order_status_msg + '\'' +
+                ", ip='" + ip + '\'' +
+                ", product_money='" + product_money + '\'' +
+                ", express_money='" + express_money + '\'' +
+                ", source='" + source + '\'' +
                 ", pay_type='" + pay_type + '\'' +
                 ", deliver_type='" + deliver_type + '\'' +
                 ", serviceValid=" + serviceValid +
@@ -394,8 +453,6 @@ public class OrderDetail implements Serializable {
                 ", totalQuantity=" + totalQuantity +
                 ", banner_control=" + banner_control +
                 ", orderStatusID=" + orderStatusID +
-                ", orderDetail=" + orderDetail +
-                ", express='" + express + '\'' +
                 '}';
     }
 }

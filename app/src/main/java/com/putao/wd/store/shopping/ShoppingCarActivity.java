@@ -1,7 +1,6 @@
 package com.putao.wd.store.shopping;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,7 +22,9 @@ import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,9 +66,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private Map<Integer, Cart> mSelected;//记录进入编辑状态后选中的商品
     private int currentPosition;//当前修改的位置
     private int currClickPosition;//当前点击的位置
-    private boolean isSelectAll = false;
-    private boolean saveable = false;//保存按钮标志
-    private boolean isEditable = true;
+    private boolean isSelectAll;//全选
+    private boolean saveable;//保存按钮标志
 
     @Override
     protected int getLayoutId() {
@@ -77,7 +77,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        navigation_bar.setRightAction(false);
+        setBottomButtonStyle(false);
         btn_sel_all.setClickable(false);
 
         adapter = new ShoppingCarAdapter(mContext, null);
@@ -92,6 +92,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 loading.dismiss();
             }
         });
+        addListener();
     }
 
     @Override
@@ -99,62 +100,22 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         return new String[0];
     }
 
-
-    @OnClick({R.id.ll_closing, R.id.ll_all})
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_all://全选
-                isSelectAll = isSelectAll ? false : true;
-                btn_sel_all.setState(isSelectAll);
-                adapter.selAll(isSelectAll);
-                if (isSelectAll) {
-                    navigation_bar.setRightAction(true);
+    /**
+     * 添加监听器
+     */
+    private void addListener() {
+        rv_cars.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Serializable serializable, int position) {
+                Cart cart = adapter.getItem(position);
+                if (cart.isSelect()) {
+                    cart.setIsSelect(false);
                 } else {
-                    navigation_bar.setRightAction(false);
-                    setButtonStyle(EDIT, PAY, false);
+                    cart.setIsSelect(true);
                 }
-                break;
-            case R.id.ll_closing://去结算/删除
-                switch (tv_closing.getText().toString()) {
-                    case PAY:
-                        startActivity(WriteOrderActivity.class, getBundle());
-                        break;
-                    case DELETE:
-                        cartDelete(mSelected.get(currClickPosition).getPid());
-                        break;
-                }
-                break;
-        }
-    }
-
-    /**
-     * 产生“去结算”页的跳转Bundle，装载pid
-     */
-    private Bundle getBundle() {
-        Bundle bundle = new Bundle();
-        StringBuilder pid = new StringBuilder();
-        Set<Integer> keys = mSelected.keySet();
-        for(Integer key : keys) {
-            pid.append(mSelected.get(key).getPid() + "|");
-        }
-        bundle.putString(PRODUCT_ID, pid.substring(0, pid.length()-1));
-        return bundle;
-    }
-
-    /**
-     * 标题右边按钮点击事件
-     */
-    @Override
-    public void onRightAction() {
-        Logger.d("点击右上角");
-        if (!saveable) {//这里编辑操作的入口
-            setButtonStyle(SAVE, DELETE, true);
-            adapter.startEdit();
-        } else {//这里做保存操作
-            setButtonStyle(EDIT, PAY, false);
-            saveGoodsInfo();
-        }
+                adapter.replace(position, cart);
+            }
+        });
     }
 
     /**
@@ -186,27 +147,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 计算购物车商品总金额
-     */
-    private String caculateSumMoney(List<Cart> carts) {
-        String sum = "0";
-        for (Cart cart : carts) {
-            sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
-        }
-        return sum;
-    }
-
-    /**
-     * 设置不同状态时的Button显示
-     */
-    private void setButtonStyle(String topText, String bottomText, boolean canSave) {
-        setRightTitle(topText);
-        tv_closing.setText(bottomText);
-        saveable = canSave;
-        ll_money.setVisibility(canSave ? View.GONE : View.VISIBLE);
-    }
-
-    /**
      * 保存商品编辑信息
      */
     private void saveGoodsInfo() {
@@ -215,11 +155,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
                 ToastUtils.showToastShort(mContext, "编辑商品保存成功");
                 Logger.w("保存成功 = " + result.toString());
-                btn_sel_all.setState(false);
-//                navigation_bar.setRightAction(false);
-//                setRightTitleColor(R.color.text_color_gray);
-                setRightClickable(false);
 
+                initData();
                 Set<Integer> keys = mSelected.keySet();
                 String sum = "0.00";
                 for (Integer key : keys) {
@@ -252,17 +189,110 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
+     * 产生“去结算”页的跳转Bundle，装载pid
+     */
+    private Bundle getBundle() {
+        Bundle bundle = new Bundle();
+        StringBuilder pid = new StringBuilder();
+        Set<Integer> keys = mSelected.keySet();
+        for(Integer key : keys) {
+            pid.append(mSelected.get(key).getPid() + "|");
+        }
+        bundle.putString(PRODUCT_ID, pid.substring(0, pid.length() - 1));
+        return bundle;
+    }
+
+    /**
+     * 初始化相关控制值
+     */
+    private void initData() {
+        btn_sel_all.setState(false);
+        setBottomButtonStyle(false);
+        isSelectAll = false;
+        saveable = false;
+    }
+
+    /**
+     * 计算购物车商品总金额
+     */
+    private String caculateSumMoney(List<Cart> carts) {
+        String sum = "0";
+        for (Cart cart : carts) {
+            sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+        }
+        return sum;
+    }
+
+    /**
      * 设置商品价格
      */
     private void setGoodsPrice() {
         Set<Integer> keys = mSelected.keySet();
-        String sum = "0";
+        String sum = "0.00";
         for (Integer key : keys) {
             Cart cart = mSelected.get(key);
             String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
             sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), goodsCount));
         }
         tv_money.setText(sum);
+    }
+
+    /**
+     * 设置“编辑”按钮显示状态
+     */
+    private void setTopButtonStyle(String topText, String bottomText, boolean canSave) {
+        setRightTitle(topText);
+        tv_closing.setText(bottomText);
+        saveable = canSave;
+        ll_money.setVisibility(canSave ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * 设置“结算”按钮显示状态
+     */
+    private void setBottomButtonStyle(boolean canNext) {
+        navigation_bar.setRightAction(canNext);
+        tv_closing.setBackgroundResource(canNext ? R.color.text_main_color_nor : R.color.color_C2C2C2);
+    }
+
+    @OnClick({R.id.ll_closing, R.id.ll_all})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_all://全选
+                isSelectAll = isSelectAll ? false : true;
+                btn_sel_all.setState(isSelectAll);
+                adapter.selAll(isSelectAll);
+                if (isSelectAll) {
+                    setBottomButtonStyle(true);
+                } else {
+                    setTopButtonStyle(EDIT, PAY, false);
+                    setBottomButtonStyle(false);
+                }
+                break;
+            case R.id.ll_closing://去结算/删除
+                switch (tv_closing.getText().toString()) {
+                    case PAY:
+                        startActivity(WriteOrderActivity.class, getBundle());
+                        break;
+                    case DELETE:
+                        cartDelete(mSelected.get(currClickPosition).getPid());
+                        break;
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onRightAction() {
+        Logger.d("点击右上角");
+        if (!saveable) {//这里编辑操作的入口
+            setTopButtonStyle(SAVE, DELETE, true);
+            adapter.startEdit();
+        } else {//这里做保存操作
+            setTopButtonStyle(EDIT, PAY, false);
+            saveGoodsInfo();
+        }
     }
 
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
@@ -278,8 +308,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
+        setBottomButtonStyle(true);
         setGoodsPrice();
-        navigation_bar.setRightAction(true);
         if (selected.size() == adapter.getItems().size())
             btn_sel_all.setState(true);
         else
@@ -291,10 +321,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mSelected = selected;
         setGoodsPrice();
         if (selected.size() == 0) {
-            navigation_bar.setRightAction(false);
+            setBottomButtonStyle(false);
             setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
         }
-        setButtonStyle(EDIT, PAY, false);
+        setTopButtonStyle(EDIT, PAY, false);
         btn_sel_all.setState(false);
     }
 
@@ -311,4 +341,5 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mEditShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext, cart.getPid(), cart);
         mEditShoppingCarPopupWindow.show(rl_shopping_car);
     }
+
 }

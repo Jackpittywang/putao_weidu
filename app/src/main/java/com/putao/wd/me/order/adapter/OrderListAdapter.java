@@ -81,7 +81,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         switch (orderStatus) {
             case OrderCommonState.ORDER_PAY_WAIT:
 //                ToastUtils.showToastShort(mContext, "马上支付");
-                EventBusHelper.post(order.getId(), EVENT_PAY);
+                EventBusHelper.post(order, EVENT_PAY);
                 break;
         }
     }
