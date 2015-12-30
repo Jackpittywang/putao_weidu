@@ -10,8 +10,10 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
+import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -54,16 +56,31 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     public void onBindItem(ServiceListViewHolder holder, ServiceList serviceList, final int position) {
         holder.tv_service_no.setText(serviceList.getOrder_info().getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-        holder.tv_service_order_status.setText(checkStatus(serviceList.getStatus()));
+        holder.tv_service_order_status.setText(checkStatus(serviceList.getStatus(), holder));
 
-        adapter = new ServiceAdapter(context, serviceList.getProduct());
+        List<ServiceProduct> products = serviceList.getProduct();
+        adapter = new ServiceAdapter(context, products);
         holder.rv_service.setAdapter(adapter);
+
+        String totalPrice = "0";
+        int totalQt = 0;
+        if (products.size() == 1) {
+            totalPrice = MathUtils.multiplication(products.get(0).getSale_price(), products.get(0).getSale_quantity());
+            totalQt = Integer.parseInt(products.get(0).getSale_quantity());
+        } else {
+            for (ServiceProduct  sproduct : products) {
+                totalPrice = MathUtils.add(totalPrice, MathUtils.multiplication(sproduct.getSale_price(), sproduct.getSale_quantity()));
+                totalQt += Integer.parseInt(sproduct.getSale_quantity());
+            }
+        }
+        holder.tv_order_sum_count.setText(totalQt+"");
+        holder.tv_sum_money.setText(totalPrice);
     }
 
     /**
      * 匹配售后状态
      */
-    private String checkStatus(String status) {
+    private String checkStatus(String status, ServiceListViewHolder holder) {
         switch (status) {
             case "1":
                 return "申请售后";
@@ -72,15 +89,18 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "3":
                 return "售后已结束";
             case "4":
-                return "买家已发货";
+                holder.ll_operate.setVisibility(View.GONE);
+                return "买家已发货";//操作栏不显示
             case "5":
-                return "系统已收到货";
+                holder.ll_operate.setVisibility(View.GONE);
+                return "系统已收到货";//操作栏不显示
             case "6":
                 return "系统已发货";
             case "7":
                 return "买家已收货";
             case "8":
-                return "售后已完成";
+                holder.ll_operate.setVisibility(View.GONE);
+                return "售后已完成";//操作栏不显示
         }
         return "";
     }
@@ -90,6 +110,10 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
      * 售后视图
      */
     static class ServiceListViewHolder extends BasicViewHolder {
+        @Bind(R.id.ll_operate)
+        LinearLayout ll_operate;
+        @Bind(R.id.rv_service)
+        BasicRecyclerView rv_service;
         @Bind(R.id.tv_service_no)
         TextView tv_service_no;
         @Bind(R.id.tv_order_purchase_time)
@@ -104,8 +128,6 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         TextView tv_sum_carriage;
         @Bind(R.id.btn_service_right)
         Button btn_service_right;
-        @Bind(R.id.rv_service)
-        BasicRecyclerView rv_service;
 
         public ServiceListViewHolder(View itemView) {
             super(itemView);
