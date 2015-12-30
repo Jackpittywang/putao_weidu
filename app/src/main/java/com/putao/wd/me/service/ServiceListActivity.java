@@ -85,12 +85,11 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加监听器
      */
     private void addListener() {
-
         rv_service.setOnItemClickListener(new OnItemClickListener<ServiceList>() {
             @Override
             public void onItemClick(ServiceList ServiceList, int position) {
                 Bundle bundle = new Bundle();
-//                bundle.putSerializable(ServiceDetailActivity.KEY_ORDER, serviceDto);
+                bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, ServiceList.getId());
                 startActivity(ServiceDetailActivity.class);
             }
         });
