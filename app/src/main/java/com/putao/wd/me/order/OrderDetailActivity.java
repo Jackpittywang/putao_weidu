@@ -15,6 +15,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
+import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -25,6 +26,7 @@ import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -217,7 +219,10 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 @Override
                 public void onItemClick(Serializable serializable, int position) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, mOrderDetail.getExpress().get(position));
+                    ArrayList<Express> expresses = mOrderDetail.getExpress();
+                    bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+                    bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, mOrderDetail.getExpress().size());
+                    bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, position);
                     startActivity(OrderShipmentDetailActivity.class, bundle);
                 }
             });

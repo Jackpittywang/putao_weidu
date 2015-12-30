@@ -1,11 +1,11 @@
 package com.putao.wd.model;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2015/12/29.
  */
-public class Product {
+public class Product implements Serializable{
     private String id;
     private String order_id;
     private String product_id;
