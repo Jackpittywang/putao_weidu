@@ -3,6 +3,7 @@ package com.putao.wd.home.adapter;
 import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -40,7 +41,10 @@ public class ExploreDetailAdapter extends BasicAdapter<ExploreProductDetail, Exp
 
     @Override
     public void onBindItem(ExploreDetailViewHolder holder, ExploreProductDetail detail, int position) {
-        if (detail.getData() == null && detail.getHtml() == null) return;
+        if (detail.getData() == null && detail.getHtml() == null && detail.getIcon() == null) {
+            holder.rl_empty.setVisibility(View.VISIBLE);
+            return;
+        }
         List<SpannableStringBuilder> builders = HtmlUtils.getTexts(replaceHtml(detail.getData(), detail.getHtml()));
         holder.tv_1.setText(builders.get(0));
         holder.tv_2.setText(builders.get(1));
@@ -82,6 +86,8 @@ public class ExploreDetailAdapter extends BasicAdapter<ExploreProductDetail, Exp
         TextView tv_2;
         @Bind(R.id.tv_3)
         TextView tv_3;
+        @Bind(R.id.rl_empty)
+        RelativeLayout rl_empty;
 
         public ExploreDetailViewHolder(View itemView) {
             super(itemView);

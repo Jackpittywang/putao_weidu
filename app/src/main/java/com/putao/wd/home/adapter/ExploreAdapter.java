@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ExploreProduct;
+import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
@@ -93,7 +94,10 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
 
 //            List<ArrayList<ExploreProductDetail>> lists = ListUtils.group(exploreProduct.getDetails(), 2);
-            adapter = new ExploreDetailAdapter(context, exploreProduct.getDetails());
+            List<ExploreProductDetail> details = exploreProduct.getDetails();
+            if (details.size() % 2 != 0)
+                details.add(new ExploreProductDetail());
+            adapter = new ExploreDetailAdapter(context, details);
             viewHolder.rv_display_data.setAdapter(adapter);
 //            adapter = new ExploreDetailAdapter(context, exploreProduct.getDetails());
 //            viewHolder.gv_display_data.setAdapter(adapter);
