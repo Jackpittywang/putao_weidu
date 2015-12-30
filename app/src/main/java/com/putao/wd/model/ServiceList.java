@@ -12,9 +12,9 @@ public class ServiceList implements Serializable {
 
     private String id;
     private String uid;
-    private String service_type;
+    private String service_type;//售后类型--1换货/2退货/3退款
     private String order_id;
-    private String status;
+    private String status;//售后状态
     private String reply;
     private String area_id;
     private String area;

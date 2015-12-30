@@ -89,7 +89,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onItemClick(ServiceDto serviceDto, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ServiceDetailActivity.KEY_ORDER, serviceDto);
+//                bundle.putSerializable(ServiceDetailActivity.KEY_ORDER, serviceDto);
                 startActivity(ServiceDetailActivity.class, bundle);
             }
         });
