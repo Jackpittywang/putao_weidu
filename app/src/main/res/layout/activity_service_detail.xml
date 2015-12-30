@@ -16,7 +16,6 @@
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/rl_bottom"
         android:layout_below="@+id/navigation_bar">
 
         <LinearLayout

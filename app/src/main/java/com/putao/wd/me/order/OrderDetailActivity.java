@@ -1,6 +1,7 @@
 package com.putao.wd.me.order;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,12 +16,15 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
+import com.putao.wd.me.service.ServiceRefundActivity;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.putao.wd.store.pay.PayActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
@@ -235,6 +239,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
 
     /**
      * 设置订单状态的文字和顶部进度条显示
+     *
      * @param status
      */
     private void setOrderStatus(int status) {
@@ -251,26 +256,40 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 btn_order_left.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        networkRequest(OrderApi.orderCancel(mOrderDetail.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                loading.show();
+                                refreshView();
+                                loading.dismiss();
+                            }
+                        });
                     }
                 });
                 btn_order_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Bundle bundle = new Bundle();
+                        bundle.putString(PayActivity.BUNDLE_ORDER_ID, mOrderDetail.getId());
+                        bundle.putString(PayActivity.BUNDLE_ORDER_SN, mOrderDetail.getOrder_sn());
+                        bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, mOrderDetail.getTotal_amount());
+                        bundle.putString(PayActivity.BUNDLE_ORDER_DATE, mOrderDetail.getCreate_time());
+                        startActivity(PayActivity.class, bundle);
                     }
                 });
                 break;
             case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 setProgress2();
-                btn_order_right.setText("申请退款");
+                btn_order_left.setText("申请退款");
                 ll_bottom.setVisibility(View.VISIBLE);
                 btn_order_left.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT2);//设置商品信息
-                btn_order_right.setOnClickListener(new View.OnClickListener() {
+                btn_order_left.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ServiceRefundActivity.ORDER_ID, mOrderDetail.getId());
+                        startActivity(ServiceRefundActivity.class, bundle);
                     }
                 });
                 break;
@@ -297,11 +316,10 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 tv_order_info.setText(HINT2);//设置商品信息
                 break;
 
-            case OrderCommonState.ORDER_CANCLED:
-                setProgress1();
+            case OrderCommonState.ORDER_CANCLED://已取消
                 rl_order_info.setVisibility(View.GONE);
                 break;
-            case OrderCommonState.ORDER_AFTER_SALE:
+            case OrderCommonState.ORDER_AFTER_SALE://正在申请售后
                 rl_order_info.setVisibility(View.GONE);
                 break;
             case OrderCommonState.ORDER_REFUND_FINISH:

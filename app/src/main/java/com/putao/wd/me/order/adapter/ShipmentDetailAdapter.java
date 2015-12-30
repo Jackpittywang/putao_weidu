@@ -40,6 +40,9 @@ public class ShipmentDetailAdapter extends BasicAdapter<ExpressContent, Shipment
 
     @Override
     public void onBindItem(ShipmentViewHolder holder, ExpressContent realContent, int position) {
+        holder.tv_shipment_date.setText(realContent.getTime());
+        holder.tv_shipment_info.setText(realContent.getContext());
+        holder.img_status_icon.setBackgroundResource(R.drawable.icon_logistics_flow_old);
         if(position == 0){
             holder.tv_shipment_date.setTextColor(0xff313131);
             holder.tv_shipment_info.setTextColor(0xff313131);
@@ -51,9 +54,10 @@ public class ShipmentDetailAdapter extends BasicAdapter<ExpressContent, Shipment
         }else if(position == 2){
             holder.tv_shipment_date.setTextColor(0x88313131);
             holder.tv_shipment_info.setTextColor(0x88313131);
+        }else{
+            holder.tv_shipment_date.setTextColor(0x55313131);
+            holder.tv_shipment_info.setTextColor(0x55313131);
         }
-        holder.tv_shipment_date.setText(realContent.getTime());
-        holder.tv_shipment_info.setText(realContent.getContext());
     }
 
 

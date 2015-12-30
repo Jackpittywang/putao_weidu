@@ -114,10 +114,6 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
         ArrayList<ExpressContent> real_content = express.getReal_content();
         ShipmentDetailAdapter shipmentDetailAdapter = new ShipmentDetailAdapter(mContext, real_content);
         rv_shipment_detail.setAdapter(shipmentDetailAdapter);
-//        for (int i=0; i < packageCount; i++) {
-//            TitleItem titleItem = new TitleItem(mContext);
-//            ll_title_bar.addView(titleItem);
-//        }
     }
 
     @Override

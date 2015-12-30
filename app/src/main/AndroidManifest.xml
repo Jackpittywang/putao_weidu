@@ -225,6 +225,10 @@
         <activity
             android:name=".explore.DisPlayActivity"
             android:screenOrientation="portrait" />
+        <!-- 退款页面-->
+        <activity
+            android:name=".me.service.ServiceRefundActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
@@ -274,6 +278,9 @@
         <!--================测试Activity======================-->
         <activity
             android:name=".TestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".JointImageTestActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

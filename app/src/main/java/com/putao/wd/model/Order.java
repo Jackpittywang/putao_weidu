@@ -47,6 +47,8 @@ public class Order implements Serializable {
     private int banner_control;
     private int orderStatusID;
     private OrderDetail orderDetail;
+    private List<HistoryServiceProduct> historyServiceProduct;
+
 
     public String getId() {
         return id;
