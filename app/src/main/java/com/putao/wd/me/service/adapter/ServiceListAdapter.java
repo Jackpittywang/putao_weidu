@@ -4,23 +4,17 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceProduct;
-import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.MathUtils;
-import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,9 +48,6 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         holder.tv_service_order_status.setText(checkServiceType(serviceList.getService_type(), serviceList.getStatus(), holder));
 
         List<ServiceProduct> products = serviceList.getProduct();
-        adapter = new ServiceAdapter(context, products);
-        holder.rv_service.setAdapter(adapter);
-
         String totalPrice = "0";
         int totalQt = 0;
         if (products.size() == 1) {
@@ -70,6 +61,9 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         }
         holder.tv_order_sum_count.setText(totalQt + "");
         holder.tv_sum_money.setText(totalPrice);
+
+        adapter = new ServiceAdapter(context, products);
+        holder.rv_service_inner.setAdapter(adapter);
     }
 
     /**
@@ -180,8 +174,8 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     static class ServiceListViewHolder extends BasicViewHolder {
         @Bind(R.id.ll_operate)
         LinearLayout ll_operate;
-        @Bind(R.id.rv_service)
-        BasicRecyclerView rv_service;
+        @Bind(R.id.rv_service_inner)
+        BasicRecyclerView rv_service_inner;
         @Bind(R.id.tv_service_no)
         TextView tv_service_no;
         @Bind(R.id.tv_order_purchase_time)
