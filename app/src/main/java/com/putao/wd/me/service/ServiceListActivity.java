@@ -33,7 +33,6 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     @Bind(R.id.rl_no_service)
     RelativeLayout rl_no_service;//没有售后时的布局
 
-    private String TAG = ServiceListActivity.class.getName();
     private ServiceListAdapter adapter;
     private int page = 1;
 
@@ -52,7 +51,6 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
         getServiceList();
         addListener();
-//        refreshViewByType(0);
     }
 
     @Override
@@ -68,12 +66,14 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, Service result) {
                 Logger.w("售后 = " + result.toString());
-                if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                if (result.getCurrentPage() != result.getTotalPage() && result.getTotalPage() != 0) {
                     adapter.addAll(result.getData());
                     rl_no_service.setVisibility(View.GONE);
                     rv_service.setVisibility(View.VISIBLE);
                     rv_service.loadMoreComplete();
                     page++;
+                }else {
+                    rv_service.noMoreLoading();
                 }
                 loading.dismiss();
             }
@@ -93,21 +93,17 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                 startActivity(ServiceDetailActivity.class, bundle);
             }
         });
-    }
-
-    /**
-     * 根据类型刷新界面
-     *
-     * @param type
-     */
-    private void refreshViewByType(int type) {
-        Logger.i(TAG, "type clicked :" + type);
+        rv_service.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                getServiceList();
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
         }
     }
 
