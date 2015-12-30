@@ -35,6 +35,7 @@ public class StartApi {
 
     private static final String REQUEST_STATUS = "status";//状态
     private static final String REQUEST_UID = "uid";//用户的唯一标识ID
+    private static final String REQUEST_USER_LIKE = "is_user_like";//用户是否赞过
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/" : "http://api-event-dev.putao.com/";//基础url
@@ -65,11 +66,13 @@ public class StartApi {
     /**
      * 活动详情（查询）
      *
-     * @param action_id 活动ID
+     * @param action_id    活动ID
+     * @param is_user_like 是否被赞过
      */
-    public static Request getActionDetail(String action_id) {
+    public static Request getActionDetail(String action_id, boolean is_user_like) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_ACTION_ID, action_id)
+                .addParam(REQUEST_USER_LIKE, is_user_like ? "1" : "0")
                 .build(RequestMethod.POST, URL_ACTION_DETAIL);
     }
 

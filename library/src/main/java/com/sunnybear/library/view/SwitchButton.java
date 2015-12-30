@@ -77,6 +77,10 @@ public class SwitchButton extends Button implements View.OnClickListener {
             mOnSwitchClickListener.onSwitchClick(v, isOpen);
     }
 
+    public boolean getState() {
+        return isOpen;
+    }
+
     /**
      *
      */

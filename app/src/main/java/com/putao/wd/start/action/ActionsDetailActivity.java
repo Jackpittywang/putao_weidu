@@ -115,7 +115,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
 
         sb_cool_icon.setState(PreferenceUtils.getValue(action_id, false) ? true : false);
         sb_cool_icon.setClickable(false);
-        networkRequest(StartApi.getActionDetail(action_id), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
+        //TODO:是否被赞过
+        networkRequest(StartApi.getActionDetail(action_id, sb_cool_icon.getState()), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
                 actionDetail = result;
@@ -202,13 +203,13 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 } else {
                     UserInfo userInfo = AccountHelper.getCurrentUserInfo();
                     networkRequest(StartApi.coolAdd(action_id, userInfo.getNick_name(), "EVENT",
-                                    AccountHelper.getCurrentUid(), userInfo.getHead_img()),
+                            AccountHelper.getCurrentUid(), userInfo.getHead_img()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
                                     PreferenceUtils.save(action_id, true);
                                     sb_cool_icon.setState(true);
-                                    tv_count_cool.setText((Integer.parseInt(tv_count_cool.getText().toString())+1)+"");
+                                    tv_count_cool.setText((Integer.parseInt(tv_count_cool.getText().toString()) + 1) + "");
                                     loading.dismiss();
                                 }
                             });
