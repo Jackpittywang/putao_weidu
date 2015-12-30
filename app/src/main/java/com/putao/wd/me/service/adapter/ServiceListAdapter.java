@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Service;
+import com.putao.wd.model.ServiceList;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
@@ -22,18 +24,18 @@ import butterknife.Bind;
  * 售后列表
  * Created by wangou on 15/11/29.
  */
-public class ServiceListAdapter extends BasicAdapter<Service, ServiceListAdapter.ServiceListViewHolder> {
+public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceListAdapter.ServiceListViewHolder> {
 
-    public static final String ORDER_ID = "order_id";
-    private final int SERVICE_BTN_CHECK = 1;//取消申请
-    private final int SERVICE_BTN_OVER = 2;//申请售后
-    private final int SERVICE_BTN_AGREE = 3;//填写单号
-    private final int SERVICE_BTN_SEND = 4;//不显示按钮
+//    public static final String ORDER_ID = "order_id";
+//    private final int SERVICE_BTN_CHECK = 1;//取消申请
+//    private final int SERVICE_BTN_OVER = 2;//申请售后
+//    private final int SERVICE_BTN_AGREE = 3;//填写单号
+//    private final int SERVICE_BTN_SEND = 4;//不显示按钮
 
-    private OrdersAdapter adapter;
+    private ServiceAdapter adapter;
 
-    public ServiceListAdapter(Context context, List<Service> services) {
-        super(context, services);
+    public ServiceListAdapter(Context context, List<ServiceList> serviceLists) {
+        super(context, serviceLists);
         this.context = context;
     }
 
@@ -48,34 +50,34 @@ public class ServiceListAdapter extends BasicAdapter<Service, ServiceListAdapter
     }
 
     @Override
-    public void onBindItem(ServiceListViewHolder holder, Service service, final int position) {
+    public void onBindItem(ServiceListViewHolder holder, ServiceList serviceList, final int position) {
+//        holder.tv_service_no
 
 
-//        adapter = new OrdersAdapter(context, order.getProduct());
-//        holder.rv_service.setAdapter(adapter);
+
+
+        adapter = new ServiceAdapter(context, serviceList.getProduct());
+        holder.rv_service.setAdapter(adapter);
     }
 
 
-    /**
-     * 收货人地址布局
-     */
     static class ServiceListViewHolder extends BasicViewHolder {
+        @Bind(R.id.tv_service_no)
+        TextView tv_service_no;
+        @Bind(R.id.tv_order_purchase_time)
+        TextView tv_order_purchase_time;
+        @Bind(R.id.tv_service_order_status)
+        TextView tv_service_order_status;
+        @Bind(R.id.tv_order_sum_count)
+        TextView tv_order_sum_count;
+        @Bind(R.id.tv_sum_money)
+        TextView tv_sum_money;
+        @Bind(R.id.tv_sum_carriage)
+        TextView tv_sum_carriage;
+        @Bind(R.id.btn_service_right)
+        Button btn_service_right;
         @Bind(R.id.rv_service)
         BasicRecyclerView rv_service;
-//        @Bind(R.id.ll_goods)
-//        LinearLayout ll_goods;
-//        @Bind(R.id.rl_foot)
-//        RelativeLayout rl_foot;
-//        @Bind(R.id.tv_total_cost)
-//        TextView tv_total_cost;
-//        @Bind(R.id.tv_shipment_fee)
-//        TextView tv_shipment_fee;
-//        @Bind(R.id.tv_service_purchase_time)
-//        TextView tv_service_purchase_time;
-//        @Bind(R.id.tv_service_status)
-//        TextView tv_service_status;
-//        @Bind(R.id.btn_service_operation)
-//        Button btn_service_operation;
 
         public ServiceListViewHolder(View itemView) {
             super(itemView);

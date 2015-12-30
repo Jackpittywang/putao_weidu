@@ -14,6 +14,7 @@ import com.putao.wd.model.Service;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import butterknife.Bind;
 public class ServiceListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.rv_service)
-    BasicRecyclerView rv_service;//售后列表
+    LoadMoreRecyclerView rv_service;//售后列表
     @Bind(R.id.rl_no_service)
     RelativeLayout rl_no_service;//没有售后时的布局
 
@@ -49,23 +50,34 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         adapter = new ServiceListAdapter(mContext, null);
         rv_service.setAdapter(adapter);
 
-        networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                Logger.w("售后 = " + result.toString());
-
-
-            }
-        });
-
+        getServiceList();
         addListener();
 //        refreshViewByType(0);
     }
 
-
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    /**
+     * 获取售后列表
+     */
+    private void getServiceList() {
+        networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<Service>(Service.class, loading) {
+            @Override
+            public void onSuccess(String url, Service result) {
+                Logger.w("售后 = " + result.toString());
+                if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                    adapter.addAll(result.getData());
+                    rl_no_service.setVisibility(View.GONE);
+                    rv_service.setVisibility(View.VISIBLE);
+                    rv_service.loadMoreComplete();
+                    page++;
+                }
+                loading.dismiss();
+            }
+        });
     }
 
     /**
