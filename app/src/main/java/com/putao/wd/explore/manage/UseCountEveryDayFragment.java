@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.select.RadioBar;
 import com.sunnybear.library.view.select.RadioItem;
@@ -36,7 +35,7 @@ public class UseCountEveryDayFragment extends PTWDFragment implements RadioBar.O
     @Override
     public void onRightAction() {
         EventBusHelper.post(useCount, EVENT_USECOUNT_EVERYDAY);
-        ActivityManager.getInstance().finishCurrentActivity();
+        mActivity.finish();
     }
 
     @Override

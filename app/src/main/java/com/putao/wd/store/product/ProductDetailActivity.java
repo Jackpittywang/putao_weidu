@@ -12,6 +12,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
+import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.store.product.adapter.ProductBannerAdapter;
@@ -159,7 +160,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     private void addListener() {
-        mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
                 ShareTools.newInstance(Wechat.NAME)

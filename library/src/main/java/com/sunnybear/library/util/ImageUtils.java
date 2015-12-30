@@ -121,7 +121,7 @@ public final class ImageUtils {
      * @param view     view源
      * @param savePath 保存路径
      */
-    public static void cutOutViewToImage(ScrollView view, String savePath) {
+    public static void cutOutViewToImage(ScrollView view, String savePath, OnImageSaveCallback callback) {
         int mSrollViewHeight = 0;
         for (int i = 0; i < view.getChildCount(); i++) {
             View child = view.getChildAt(i);
@@ -138,8 +138,36 @@ public final class ImageUtils {
             FileOutputStream fos = new FileOutputStream(file);
             boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             Logger.d(isSuccess ? "保存图片成功" : "保存图片成功");
+            if (callback != null) callback.onImageSave(isSuccess);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 截取滚动屏画面保存到图片
+     *
+     * @param view     view源
+     * @param savePath 保存路径
+     */
+    public static void cutOutViewToImage(ScrollView view, String savePath) {
+        cutOutViewToImage(view, savePath, null);
+    }
+
+    /**
+     * 截取view画面保存至bitmap
+     *
+     * @param view view源
+     */
+    public static Bitmap cutOutViewToBitmap(View view) {
+        return Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+    }
+
+    /**
+     *
+     */
+    public interface OnImageSaveCallback {
+
+        void onImageSave(boolean isSuccess);
     }
 }

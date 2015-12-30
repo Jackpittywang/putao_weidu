@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_date"/>
+            android:src="@drawable/icon_date" />
 
         <TextView
             android:id="@+id/tv_date"
@@ -29,8 +29,7 @@
             android:lineSpacingExtra="4dp"
             android:text="2015-11-14"
             android:textColor="@color/text_color_red"
-            android:textSize="@dimen/text_size_18sp"
-            />
+            android:textSize="@dimen/text_size_18sp" />
 
     </LinearLayout>
 
@@ -46,8 +45,8 @@
             android:id="@+id/iv_user_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/icon_explore_bulb"/>
+            android:background="@drawable/icon_explore_bulb"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_introduct"
@@ -58,14 +57,23 @@
             android:lineSpacingExtra="4dp"
             android:text="小朋友昨天花了做多时间挑战淘淘向右走，昨天对空间技能兴趣更浓厚。"
             android:textColor="@color/color_313131"
-            android:textSize="@dimen/text_size_20sp"
-            />
+            android:textSize="@dimen/text_size_20sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_EBEBEB" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
 
 </LinearLayout>

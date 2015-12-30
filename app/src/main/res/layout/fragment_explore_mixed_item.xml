@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:auto="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/ll_explore_top"
-        layout="@layout/fragment_explore_include"/>
+        layout="@layout/fragment_explore_include" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,8 +27,7 @@
             auto:roundBottomRight="true"
             auto:roundTopLeft="true"
             auto:roundTopRight="true"
-            auto:roundedCornerRadius="4dp"
-            />
+            auto:roundedCornerRadius="4dp" />
 
         <TextView
             android:id="@+id/tv_skill_name"
@@ -37,8 +36,7 @@
             android:layout_marginLeft="@dimen/distance_8dp"
             android:text="淘淘向右走"
             android:textColor="@color/color_313131"
-            android:textSize="@dimen/text_size_20sp"
-            />
+            android:textSize="@dimen/text_size_20sp" />
 
     </LinearLayout>
 
@@ -50,8 +48,7 @@
         android:lineSpacingExtra="@dimen/distance_4dp"
         android:text="这里显示每个关卡背后的教育理念的主要文字，大概是一句话左右。完成多个关卡，则以分号隔开显示，一直向下展示。这里显示每个关卡背后的教育理念的主要文字，大概是一句话左右。完成多个关卡，则以分号隔开显示，一直向下展示。"
         android:textColor="@color/color_313131"
-        android:textSize="@dimen/text_size_20sp"
-        />
+        android:textSize="@dimen/text_size_20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,8 +81,7 @@
                             android:layout_width="0dp"
                             android:layout_height="90dp"
                             android:layout_weight="1"
-                            android:background="@color/half_transparent_bg"
-                            />
+                            android:background="@color/half_transparent_bg" />
 
                         <com.sunnybear.library.view.image.ImageDraweeView
                             android:id="@+id/iv_picture2"
@@ -93,8 +89,7 @@
                             android:layout_height="90dp"
                             android:layout_marginLeft="@dimen/distance_4dp"
                             android:layout_weight="1"
-                            android:background="@color/half_transparent_bg"
-                            />
+                            android:background="@color/half_transparent_bg" />
 
                     </LinearLayout>
 
@@ -108,8 +103,7 @@
                             android:layout_width="0dp"
                             android:layout_height="90dp"
                             android:layout_weight="1"
-                            android:background="@color/half_transparent_bg"
-                            />
+                            android:background="@color/half_transparent_bg" />
 
                         <com.sunnybear.library.view.image.ImageDraweeView
                             android:id="@+id/iv_picture5"
@@ -117,8 +111,7 @@
                             android:layout_height="90dp"
                             android:layout_marginLeft="@dimen/distance_4dp"
                             android:layout_weight="1"
-                            android:background="@color/half_transparent_bg"
-                            />
+                            android:background="@color/half_transparent_bg" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -128,8 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:background="@color/half_transparent_bg"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
 
             </FrameLayout>
 
@@ -145,8 +137,7 @@
                     android:layout_width="0dp"
                     android:layout_height="90dp"
                     android:layout_weight="1"
-                    android:background="@color/half_transparent_bg"
-                    />
+                    android:background="@color/half_transparent_bg" />
 
                 <com.sunnybear.library.view.image.ImageDraweeView
                     android:id="@+id/iv_picture8"
@@ -154,8 +145,7 @@
                     android:layout_height="90dp"
                     android:layout_marginLeft="@dimen/distance_4dp"
                     android:layout_weight="1"
-                    android:background="@color/half_transparent_bg"
-                    />
+                    android:background="@color/half_transparent_bg" />
             </LinearLayout>
 
         </LinearLayout>
@@ -174,8 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_weight="1"
-                android:background="@color/half_transparent_bg"
-                />
+                android:background="@color/half_transparent_bg" />
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/iv_picture6"
@@ -183,8 +172,7 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="@dimen/distance_4dp"
                 android:layout_weight="1"
-                android:background="@color/half_transparent_bg"
-                />
+                android:background="@color/half_transparent_bg" />
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/iv_picture9"
@@ -192,8 +180,7 @@
                 android:layout_height="90dp"
                 android:layout_marginTop="@dimen/distance_4dp"
                 android:layout_weight="1"
-                android:background="@color/half_transparent_bg"
-                />
+                android:background="@color/half_transparent_bg" />
         </LinearLayout>
 
     </LinearLayout>
@@ -209,7 +196,5 @@
         android:drawablePadding="4dp"
         android:text="去炫耀"
         android:textColor="@color/text_color_gray"
-        android:textSize="@dimen/text_size_16sp"
-        />
-
+        android:textSize="@dimen/text_size_16sp" />
 </LinearLayout>

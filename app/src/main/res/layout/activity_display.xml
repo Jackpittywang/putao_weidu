@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#01000000">
+
+    <ScrollView
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbarStyle="@null"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:src="@drawable/test_flaunt_taotao_bg_01" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="239dp"
+                android:padding="8dp">
+
+                <!--文字-->
+                <LinearLayout
+                    android:id="@+id/ll_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#CCF5F5F5"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:text="又进步啦! 昨天孩子和淘淘一起用七巧板拼出好多图形,深度挖掘了空间只能潜力"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_16sp" />
+                </LinearLayout>
+
+                <com.sunnybear.library.view.recycler.BasicRecyclerView
+                    android:id="@+id/rv_display_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ll_text"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:padding="10dp"
+                    auto:column_num="2"
+                    auto:divider_color="@color/transparent"
+                    auto:divider_height="1dp"
+                    auto:divider_width="1dp"
+                    auto:has_rank_divider="true"
+                    auto:has_row_divider="true"
+                    auto:is_inner="true"
+                    auto:layout_mode="grid" />
+
+                <!--公司logo-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rv_display_data">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="7dp"
+                        android:src="@drawable/img_explore_flaunte_logo" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

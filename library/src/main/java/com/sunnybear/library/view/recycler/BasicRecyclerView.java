@@ -96,7 +96,7 @@ public class BasicRecyclerView extends RecyclerView {
                     manager = new GridLayoutManager(context, column_num);
                 } else {
                     manager = new InnerGridLayoutManager(context, column_num);
-                    ((GridLayoutManager) manager).setSmoothScrollbarEnabled(true);
+//                    ((GridLayoutManager) manager).setSmoothScrollbarEnabled(true);
                 }
                 break;
         }

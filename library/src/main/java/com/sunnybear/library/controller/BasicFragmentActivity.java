@@ -126,7 +126,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
 
     @Override
     public void finish() {
-        ActivityManager.getInstance().removeCurrentActivity();
+//        ActivityManager.getInstance().removeCurrentActivity();
         super.finish();
     }
 

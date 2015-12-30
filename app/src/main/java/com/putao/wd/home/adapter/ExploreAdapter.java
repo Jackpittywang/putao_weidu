@@ -1,23 +1,21 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
-import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;
-import com.putao.wd.util.HtmlUtils;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -27,13 +25,17 @@ import butterknife.Bind;
  * Created by yanghx on 2015/12/9.
  */
 public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHolder> {
+    public static final String EVENT_DISPLAY = "display";
+
     private static final int TYPE_DETAIL = 1;
     private static final int TYPE_PLOT = 2;
     private final int TYPE_PICTURE_ONE = 1;
     private final int TYPE_PICTURE_FOUR = 4;
     private final int TYPE_PICTURE_NINE = 9;
     private final String DATE_PATTERN = "yyyy-MM-dd";
-    private List<SpannableStringBuilder> builders = new ArrayList<>();
+//    private List<SpannableStringBuilder> builders = new ArrayList<>();
+
+    private ExploreDetailAdapter adapter;
 
     public ExploreAdapter(Context context, List<ExploreProduct> exploreProducts) {
         super(context, exploreProducts);
@@ -75,8 +77,8 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
-        Logger.w("ExploreProduct === " + exploreProduct.toString());
+    public void onBindItem(BasicViewHolder holder, final ExploreProduct exploreProduct, int position) {
+        Logger.i("ExploreProduct === " + exploreProduct.toString());
         if (holder instanceof ExploerViewHolder) {
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
             if (position != 0) {
@@ -90,18 +92,27 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
             viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
 
-            List<ExploreProductDetail> details = exploreProduct.getDetails();
-            if (details.size() == 2) {
-                viewHolder.ll_content2.setVisibility(View.GONE);
-            }
-            if (null != details && details.size() > 0) {
-                for (int i = 0; i < details.size(); i++) {
-                    ExploreProductDetail productDetail = details.get(i);
-                    builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
-                    setContent(viewHolder, i, builders.size());
-                }
-            }
+//            List<ArrayList<ExploreProductDetail>> lists = ListUtils.group(exploreProduct.getDetails(), 2);
+            adapter = new ExploreDetailAdapter(context, exploreProduct.getDetails());
+            viewHolder.rv_display_data.setAdapter(adapter);
+//            adapter = new ExploreDetailAdapter(context, exploreProduct.getDetails());
+//            viewHolder.gv_display_data.setAdapter(adapter);
+//            List<ExploreProductDetail> details = exploreProduct.getDetails();
+//            if (details.size() == 2)
+//                viewHolder.ll_content2.setVisibility(View.GONE);
+//            if (null != details && details.size() > 0)
+//                for (int i = 0; i < details.size(); i++) {
+//                    ExploreProductDetail productDetail = details.get(i);
+//                    builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
+//                    setContent(viewHolder, i, builders.size());
+//                }
 
+            viewHolder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBusHelper.post(exploreProduct, EVENT_DISPLAY);
+                }
+            });
         } else if (holder instanceof ExploerMixedViewHolder) {
             ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
             if (position != 0) {
@@ -118,8 +129,13 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
                 setPlotImage(viewHolder, plot);
                 showPiture(viewHolder, 1);
             }
+            viewHolder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBusHelper.post(EVENT_DISPLAY, EVENT_DISPLAY);
+                }
+            });
         }
-
     }
 
     /**
@@ -132,21 +148,18 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     private String replaceHtml(List<String> data, String html) {
         boolean hasNull = false;
         for (String str : data) {
-            if(str == null){
+            if (str == null)
                 hasNull = true;
-            }
         }
-        if (hasNull) {
+        if (hasNull)
             for (int i = 0; i < data.size(); i++) {
-                if (i < data.size()-1) {
-                    html = html.replace("<param" + i + ">", data.get(i+1));
-                }
+                if (i < data.size() - 1)
+                    html = html.replace("<param" + i + ">", data.get(i + 1));
             }
-        } else {
+        else
             for (int i = 0; i < data.size(); i++) {
                 html = html.replace("<param" + i + ">", data.get(i));
             }
-        }
         return html;
     }
 
@@ -154,44 +167,40 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
      * 设置显示内容
      */
     private void setContent(ExploerViewHolder viewHolder, int index, int builderSize) {
-        switch (index) {
-            case 0:
-                viewHolder.tv_content_head1.setText(builders.get(0));
-                viewHolder.tv_content_center1.setText(builders.get(1));
-                if (builderSize == 2) {
-                    viewHolder.tv_content_footer1.setVisibility(View.GONE);
-                } else {
-                    viewHolder.tv_content_footer1.setText(builders.get(2));
-                }
-                break;
-            case 1:
-                viewHolder.tv_content_head2.setText(builders.get(0));
-                viewHolder.tv_content_center2.setText(builders.get(1));
-                if (builderSize == 2) {
-                    viewHolder.tv_content_footer2.setVisibility(View.GONE);
-                } else {
-                    viewHolder.tv_content_footer2.setText(builders.get(2));
-                }
-                break;
-            case 2:
-                viewHolder.tv_content_head3.setText(builders.get(0));
-                viewHolder.tv_content_center3.setText(builders.get(1));
-                if (builderSize == 2) {
-                    viewHolder.tv_content_footer3.setVisibility(View.GONE);
-                } else {
-                    viewHolder.tv_content_footer3.setText(builders.get(2));
-                }
-                break;
-            case 3:
-                viewHolder.tv_content_head4.setText(builders.get(0));
-                viewHolder.tv_content_center4.setText(builders.get(1));
-                if (builderSize == 2) {
-                    viewHolder.tv_content_footer4.setVisibility(View.GONE);
-                } else {
-                    viewHolder.tv_content_footer4.setText(builders.get(2));
-                }
-                break;
-        }
+//        switch (index) {
+//            case 0:
+//                viewHolder.tv_content_head1.setText(builders.get(0));
+//                viewHolder.tv_content_center1.setText(builders.get(1));
+//                if (builderSize == 2)
+//                    viewHolder.tv_content_footer1.setVisibility(View.GONE);
+//                else
+//                    viewHolder.tv_content_footer1.setText(builders.get(2));
+//                break;
+//            case 1:
+//                viewHolder.tv_content_head2.setText(builders.get(0));
+//                viewHolder.tv_content_center2.setText(builders.get(1));
+//                if (builderSize == 2)
+//                    viewHolder.tv_content_footer2.setVisibility(View.GONE);
+//                else
+//                    viewHolder.tv_content_footer2.setText(builders.get(2));
+//                break;
+//            case 2:
+//                viewHolder.tv_content_head3.setText(builders.get(0));
+//                viewHolder.tv_content_center3.setText(builders.get(1));
+//                if (builderSize == 2)
+//                    viewHolder.tv_content_footer3.setVisibility(View.GONE);
+//                else
+//                    viewHolder.tv_content_footer3.setText(builders.get(2));
+//                break;
+//            case 3:
+//                viewHolder.tv_content_head4.setText(builders.get(0));
+//                viewHolder.tv_content_center4.setText(builders.get(1));
+//                if (builderSize == 2)
+//                    viewHolder.tv_content_footer4.setVisibility(View.GONE);
+//                else
+//                    viewHolder.tv_content_footer4.setText(builders.get(2));
+//                break;
+//        }
     }
 
     /**
@@ -284,34 +293,38 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         ImageDraweeView iv_skill_icon;
         @Bind(R.id.tv_skill_name)
         TextView tv_skill_name;
-        @Bind(R.id.ll_content1)
-        LinearLayout ll_content1;
-        @Bind(R.id.ll_content2)
-        LinearLayout ll_content2;
-        @Bind(R.id.tv_content_head1)
-        TextView tv_content_head1;
-        @Bind(R.id.tv_content_center1)
-        TextView tv_content_center1;
-        @Bind(R.id.tv_content_footer1)
-        TextView tv_content_footer1;
-        @Bind(R.id.tv_content_head2)
-        TextView tv_content_head2;
-        @Bind(R.id.tv_content_center2)
-        TextView tv_content_center2;
-        @Bind(R.id.tv_content_footer2)
-        TextView tv_content_footer2;
-        @Bind(R.id.tv_content_head3)
-        TextView tv_content_head3;
-        @Bind(R.id.tv_content_center3)
-        TextView tv_content_center3;
-        @Bind(R.id.tv_content_footer3)
-        TextView tv_content_footer3;
-        @Bind(R.id.tv_content_head4)
-        TextView tv_content_head4;
-        @Bind(R.id.tv_content_center4)
-        TextView tv_content_center4;
-        @Bind(R.id.tv_content_footer4)
-        TextView tv_content_footer4;
+        @Bind(R.id.rv_display_data)
+        BasicRecyclerView rv_display_data;
+        //        @Bind(R.id.ll_content1)
+//        LinearLayout ll_content1;
+//        @Bind(R.id.ll_content2)
+//        LinearLayout ll_content2;
+//        @Bind(R.id.tv_content_head1)
+//        TextView tv_content_head1;
+//        @Bind(R.id.tv_content_center1)
+//        TextView tv_content_center1;
+//        @Bind(R.id.tv_content_footer1)
+//        TextView tv_content_footer1;
+//        @Bind(R.id.tv_content_head2)
+//        TextView tv_content_head2;
+//        @Bind(R.id.tv_content_center2)
+//        TextView tv_content_center2;
+//        @Bind(R.id.tv_content_footer2)
+//        TextView tv_content_footer2;
+//        @Bind(R.id.tv_content_head3)
+//        TextView tv_content_head3;
+//        @Bind(R.id.tv_content_center3)
+//        TextView tv_content_center3;
+//        @Bind(R.id.tv_content_footer3)
+//        TextView tv_content_footer3;
+//        @Bind(R.id.tv_content_head4)
+//        TextView tv_content_head4;
+//        @Bind(R.id.tv_content_center4)
+//        TextView tv_content_center4;
+//        @Bind(R.id.tv_content_footer4)
+//        TextView tv_content_footer4;
+        @Bind(R.id.tv_count_comment)
+        TextView tv_count_comment;
 
         public ExploerViewHolder(View itemView) {
             super(itemView);
@@ -362,6 +375,8 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         LinearLayout ll_picture78;
         @Bind(R.id.ll_picture369)
         LinearLayout ll_picture369;
+        @Bind(R.id.tv_count_comment)
+        TextView tv_count_comment;
 
         public ExploerMixedViewHolder(View itemView) {
             super(itemView);

@@ -52,7 +52,9 @@ public class ActivityManager {
      * 将指定的activity移出管理堆栈
      */
     public void removeCurrentActivity() {
-        activityStack.remove(getCurrentActivity());
+        Activity activity = getCurrentActivity();
+        if (activity != null)
+            activityStack.remove(activity);
     }
 
 

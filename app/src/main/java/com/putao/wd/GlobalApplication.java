@@ -33,9 +33,13 @@ public class GlobalApplication extends BasicApplication {
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
 
+    public static String shareImagePath;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        shareImagePath = sdCardPath + File.separator + "screenshot.jpg";
+
         installDataBase();
         //安装通行证
         AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");

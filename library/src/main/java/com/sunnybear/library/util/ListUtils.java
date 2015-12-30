@@ -78,4 +78,25 @@ public final class ListUtils {
         }
         return arrayMap;
     }
+
+    /**
+     * 归类List
+     *
+     * @param source
+     * @param groupIndex
+     * @param <T>
+     * @return
+     */
+    public static <T extends Serializable> List<ArrayList<T>> group(List<T> source, int groupIndex) {
+        List<ArrayList<T>> result = new ArrayList<>();
+        ArrayList<T> group = new ArrayList<>();
+        for (T t : source) {
+            group.add(t);
+            if (group.size() == groupIndex) {
+                result.add(group);
+                group.clear();
+            }
+        }
+        return result;
+    }
 }

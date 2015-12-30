@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.PreferenceUtils;
 
@@ -28,7 +27,7 @@ public class SplashActivity extends BasicFragmentActivity {
                     startActivity(GuidanceActivity.class);
                 else
                     startActivity(MainActivity.class);
-                ActivityManager.getInstance().finishCurrentActivity();
+                finish();
             }
         }, 3 * 1000);
     }

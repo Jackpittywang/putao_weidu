@@ -6,7 +6,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.model.ManagementEdit;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.select.RadioBar;
@@ -49,7 +48,7 @@ public class UseTimeEveryTimeFragment extends PTWDFragment implements RadioBar.O
             @Override
             public void onSuccess(String url, ManagementEdit result) {
                 EventBusHelper.post(useTime, EVENT_USETIME_EVERYTIME);
-                ActivityManager.getInstance().finishCurrentActivity();
+                mActivity.finish();
             }
         });
 

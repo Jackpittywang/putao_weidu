@@ -1,6 +1,5 @@
 package com.putao.wd.start.action;
 
-import android.accounts.Account;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.putao.wd.map.MapActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
 import com.putao.wd.model.UserInfo;
+import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.start.apply.ApplyActivity;
 import com.putao.wd.start.apply.ApplyListActivity;
@@ -171,7 +171,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 }
             }
         });
-        mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
 

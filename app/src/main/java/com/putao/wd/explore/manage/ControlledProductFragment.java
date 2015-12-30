@@ -5,11 +5,9 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.ControllItem;
 import com.putao.wd.explore.manage.adapter.ControlledProductAdapter;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -100,7 +98,7 @@ public class ControlledProductFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_PRODUT);
-        ActivityManager.getInstance().finishCurrentActivity();
+       mActivity.finish();
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -112,7 +113,7 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
 
     private void addListener() {
         vp_pics.addOnPageChangeListener(this);
-        mSharePopupWindow.setOnShareClickListener(new SharePopupWindow.OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
 

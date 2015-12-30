@@ -8,7 +8,6 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.me.address.adapter.CitySelectAdapter;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -71,7 +70,7 @@ public class DistrictFragment extends PTWDFragment<GlobalApplication> {
                 list.add(city_name);
                 list.add(s);
                 EventBusHelper.post(list, EVENT_DISTRICT_SELECT);
-                ActivityManager.getInstance().finishCurrentActivity();
+                mActivity.finish();
             }
         });
     }

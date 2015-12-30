@@ -20,7 +20,6 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.UserInfo;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -194,7 +193,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.i("保存用户信息");
-                        ActivityManager.getInstance().finishCurrentActivity();
+                       finish();
                     }
                 });
     }

@@ -63,20 +63,10 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         dismiss();
     }
 
-    /**
-     * 点击分享框
-     */
-    public interface OnShareClickListener {
-        void onWechat();
-
-        void onWechatFriend();
-
-//        void onQQFriend();
-//
-//        void onQQZone();
-//
-//        void onSinaWeibo();
-//
-//        void onCopyUrl();
+    @Override
+    public void dismiss() {
+        if (mOnShareClickListener != null)
+            mOnShareClickListener.onCancel();
+        super.dismiss();
     }
 }
