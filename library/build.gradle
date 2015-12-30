@@ -34,6 +34,6 @@ dependencies {
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'in.srain.cube:ultra-ptr:1.0.9@aar'
     compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1'
-    compile 'com.tencent.bugly:crashreport:1.2.7'
+    compile 'com.tencent.bugly:crashreport:1.2.8'
     compile 'cz.msebera.android:httpclient:4.4.1.1'
 }
