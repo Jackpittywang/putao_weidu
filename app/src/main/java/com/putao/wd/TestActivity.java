@@ -2,6 +2,7 @@ package com.putao.wd;
 
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.util.HtmlUtils;
@@ -12,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by guchenkai on 2015/12/8.
  */
 @Deprecated
-public class TestActivity extends BasicFragmentActivity {
+public class TestActivity extends BasicFragmentActivity implements View.OnClickListener {
     String html = "<font color=646464 size=14>昨日30分钟拼完</font>" +
             "<br>" +
             "<font color=313131 size=30>100</font><font color=313131 size=14>个</font><font color=646464 size=14>\\n七巧板</font>" +
@@ -54,5 +56,15 @@ public class TestActivity extends BasicFragmentActivity {
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    @OnClick(R.id.ll_show)
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_show:
+                loading.show();
+                break;
+        }
     }
 }

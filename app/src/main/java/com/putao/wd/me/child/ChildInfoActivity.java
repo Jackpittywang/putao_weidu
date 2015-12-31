@@ -105,6 +105,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                             isEditable = false;
                             cancelChoose();
                         }
+                        loading.dismiss();
                     }
                 });
 
@@ -197,6 +198,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
+                        loading.dismiss();
                         Logger.i(result + "-----------------");
                         ToastUtils.showToastShort(ChildInfoActivity.this, "保存成功！");
                         finish();

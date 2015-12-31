@@ -84,7 +84,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         mContext = this;
         mApp = (App) getApplication();
         mOkHttpClient = mApp.getOkHttpClient();
-        this.loading = LoadingHUD.getInstance(mContext);
+        this.loading = LoadingHUD.getInstance(this);
         loading.setSpinnerType(LoadingHUD.FADED_ROUND_SPINNER);
         this.args = getIntent().getExtras() != null ? getIntent().getExtras() : new Bundle();
         mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();

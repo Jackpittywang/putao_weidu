@@ -280,8 +280,5 @@
         <activity
             android:name=".TestActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".JointImageTestActivity"
-            android:screenOrientation="portrait" />
     </application>
 </manifest>

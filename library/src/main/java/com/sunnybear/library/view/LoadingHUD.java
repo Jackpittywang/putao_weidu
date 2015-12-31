@@ -45,9 +45,9 @@ public class LoadingHUD extends Dialog {
     }
 
     public static LoadingHUD getInstance(Context context) {
-        if (instance == null) {
-            instance = new LoadingHUD(context);
-        }
+//        if (instance == null) {
+        instance = new LoadingHUD(context);
+//        }
         return instance;
     }
 
@@ -92,11 +92,10 @@ public class LoadingHUD extends Dialog {
 
     @Override
     public void show() {
-        if (!((Activity) context).isFinishing()) {
+        if (!((Activity) context).isFinishing())
             super.show();
-        } else {
+        else
             instance = null;
-        }
     }
 
     public void dismissWithSuccess() {
