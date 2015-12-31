@@ -40,7 +40,7 @@ public class OrdersAdapter extends BasicAdapter<OrderProduct, OrdersAdapter.Orde
         holder.iv_car_icon.setImageURL(orderProduct.getReal_icon());
         holder.tv_title.setText(orderProduct.getProduct_name());
         holder.tv_money.setText(orderProduct.getPrice());
-        holder.tv_count.setText(orderProduct.getQuantity());
+        holder.tv_count.setText(orderProduct.getQuantity() + "");
         holder.tv_color.setText(orderProduct.getSku());
     }
 

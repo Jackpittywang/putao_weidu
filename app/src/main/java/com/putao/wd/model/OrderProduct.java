@@ -7,24 +7,27 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/9.
  */
 public class OrderProduct implements Serializable {
-    private String id;//id
+    private int id;//id
     private String order_id;//订单id
-    private String product_id;//商品id
+    private int product_id;//商品id
     private String product_number;//商品号
     private String icon;//商品图标
     private String product_name;//商品名称
-    private String quantity;//商品数量
+    private int quantity;//商品数量
     private String price;//商品金额
     private String real_icon;
     private String sku;//规格
     private String created_time;//创建时间
     private String updated_time;//更新时间
+    private String allowService;//申请售后返回字段,这个商品是否允许售后
+    private String allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
 
-    public String getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,11 +39,11 @@ public class OrderProduct implements Serializable {
         this.order_id = order_id;
     }
 
-    public String getProduct_id() {
+    public int getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(String product_id) {
+    public void setProduct_id(int product_id) {
         this.product_id = product_id;
     }
 
@@ -68,11 +71,11 @@ public class OrderProduct implements Serializable {
         this.product_name = product_name;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

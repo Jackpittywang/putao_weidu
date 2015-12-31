@@ -34,6 +34,12 @@ public class OrderApi {
     private static final String REQUEST_STATUS = "status";//是否为默认地址
     private static final String REQUEST_ADDRESS_ID = "id";//收货地址id
 
+    public static final String STATUS = "status";//待发货
+    public static final String SERVICE_TYPE = "service_type";//待发货
+    public static final String ADDRESSID = "addressId";//待发货
+    public static final String ALL_PRODUCT_ID = "all_product_id";//待发货
+    public static final String PRODUCT_DATA = "product_data";//待发货
+
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.test.putao.com/" : "http://api.store.test.putao.com/";//基础url
 
     public static void install(String base_url) {
@@ -51,7 +57,7 @@ public class OrderApi {
      * @param type 订单分类
      * @param page 数据分页
      */
-    public static Request   getOrderLists(String type, String page) {
+    public static Request getOrderLists(String type, String page) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PAGE, page)
@@ -73,6 +79,44 @@ public class OrderApi {
                 .addParam(REQUEST_ORDER_ID, order_id)
                 .build(RequestMethod.POST, URL_ORDER_CANCEL);
     }
+
+    /**
+     * 申请售后
+     */
+    public static final String URL_AFTER_SALE = BASE_URL + "service/apply";
+
+    /**
+     * 申请售后
+     *
+     * @param order_id 订单ID
+     */
+    public static Request orderAfterSale(String order_id) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_AFTER_SALE);
+    }
+
+    /**
+     * 提交售后
+     */
+    public static final String URL_SUBMIT_AFTER_SALE = BASE_URL + "service/doApply";
+
+    /**
+     * 提交售后
+     *
+     * @param order_id 订单ID
+     */
+    public static Request orderSubmitAfterSale(String order_id, String service_type, String addressId, String all_product_id, String product_data) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .addParam(SERVICE_TYPE, service_type)
+                .addParam(ADDRESSID, addressId)
+                .addParam(ALL_PRODUCT_ID, all_product_id)
+                .addParam(PRODUCT_DATA, product_data)
+                .addParam(STATUS, "1")
+                .build(RequestMethod.POST, URL_SUBMIT_AFTER_SALE);
+    }
+
 
     /**
      * 订单详情
@@ -222,9 +266,15 @@ public class OrderApi {
     /**
      * 售后详情
      */
-    public static Request getServiceDetail() {
-        return PTWDRequestHelper.store()
-                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
+    public static Request getServiceDetail(String id) {
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(REQUEST_ID, id);
+        return builder.build(RequestMethod.GET, URL_SERVICE_DETAIL);
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_ID, id)
+//                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
     }
 
     /**

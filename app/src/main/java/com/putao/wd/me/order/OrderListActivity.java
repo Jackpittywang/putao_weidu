@@ -1,6 +1,5 @@
 package com.putao.wd.me.order;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -117,6 +116,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
                         if (result != null && result.size() > 0) {
+                            adapter.clear();
                             rl_no_order.setVisibility(View.GONE);
                             adapter.addAll(result);
                             currentPage++;
@@ -170,6 +170,11 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 });
     }
 
+    /**
+     * 取消订单
+     *
+     * @param mId
+     */
     @Subcriber(tag = OrderListAdapter.EVENT_CANCEL_ORDER)
     public void eventCancelOrder(String mId) {
         networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -184,43 +189,45 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter.clear();
-    }
 
-    /*
+    /**
+     * 申请退款
+     *
+     * @param
+     */
     @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
-    public void eventAopplyRefund(String mId) {
-        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
-                loading.dismiss();
-            }
-        });
+    public void eventAopplyRefund(String orderId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(OrderRefundActivity.ORDER_ID, orderId);
+        startActivity(OrderRefundActivity.class, bundle);
     }
+    /*
+        @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
+        public void eventLookLogistics(String mId) {
+            networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+                @Override
+                public void onSuccess(String url, ArrayList<Order> result) {
+                    loading.dismiss();
+                }
+            });
+        }
 
-    @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
-    public void eventLookLogistics(String mId) {
-        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
-                loading.dismiss();
-            }
-        });
-    }
+        @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
+        public void eventSaleService(String mId) {
+            networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+                @Override
+                public void onSuccess(String url, ArrayList<Order> result) {
+                    loading.dismiss();
+                }
+            });
+        }
+    */
 
-    @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
-    public void eventSaleService(String mId) {
-        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Order> result) {
-                loading.dismiss();
-            }
-        });
-    }
-*/
+    /**
+     * 立即支付
+     *
+     * @param order
+     */
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
         Bundle bundle = new Bundle();
@@ -229,5 +236,11 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, order.getTotal_amount());
         bundle.putString(PayActivity.BUNDLE_ORDER_DATE, order.getCreate_time());
         startActivity(PayActivity.class, bundle);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.clear();
     }
 }

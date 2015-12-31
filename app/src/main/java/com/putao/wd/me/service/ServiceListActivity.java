@@ -90,7 +90,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             public void onItemClick(ServiceList ServiceList, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, ServiceList.getId());
-                startActivity(ServiceDetailActivity.class);
+                startActivity(ServiceDetailActivity.class, bundle);
             }
         });
         rv_service.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
