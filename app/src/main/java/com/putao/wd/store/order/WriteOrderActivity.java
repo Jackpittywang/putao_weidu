@@ -6,17 +6,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AddressListActivity;
-import com.putao.wd.me.address.adapter.AddressAdapter;
+import com.putao.wd.model.Address;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
 import com.putao.wd.model.OrderSubmitReturn;
-import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
+import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -82,6 +84,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         Bundle bundle = getIntent().getExtras();
         pid = bundle.getString(ShoppingCarActivity.PRODUCT_ID);
         Logger.w("pid = " + pid);
+        getDefaultAddress();
         networkRequest(StoreApi.orderConfirm("2", pid, ""),
                 new SimpleFastJsonCallback<OrderConfirm>(OrderConfirm.class, loading) {
                     @Override
@@ -90,7 +93,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                         if (null != result) {
                             adapter = new WriteOrderAdapter(mContext, getLastItem(result));
                             rv_orders.setAdapter(adapter);
-                            addressId = result.getAddress().getId();
                         }
                         loading.dismiss();
                     }
@@ -100,6 +102,20 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    /**
+     * 获取默认地址
+     */
+    private void getDefaultAddress() {
+        networkRequest(StoreApi.getDefaultAddress(), new SimpleFastJsonCallback<Address>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, Address result) {
+                Logger.d(result.toString());
+                setAddress(result);
+                loading.dismiss();
+            }
+        });
     }
 
     /**
@@ -131,22 +147,20 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_receiving_address:
+            case R.id.ll_receiving_address://选择地址
                 startActivity(AddressListActivity.class);
                 break;
-            case R.id.ll_need_invoice:
+            case R.id.ll_need_invoice://发票信息
                 startActivity(InvoiceInfoActivity.class);
                 break;
-            case R.id.tv_submit:
-//                String type, String pid, String address_id,String need_invoice, String invoice_type,
-//                String invoice_title,String invoice_content, String consignee, String mobile, String tel
+            case R.id.tv_submit://去结算
                 networkRequest(StoreApi.orderSubmit("2", pid, "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
                         new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
                             @Override
                             public void onSuccess(String url, OrderSubmitReturn result) {
                                 if (result != null) {
                                     Bundle bundle = new Bundle();
-                                    //bundle.putSerializable(PayActivity.BUNDLE_ORDER_PAY, result);
+                                    bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, result);
                                     startActivity(PayActivity.class, bundle);
                                 }
                             }
@@ -155,15 +169,46 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         }
     }
 
-    @Subcriber(tag = AddressAdapter.EVENT_ADDRESS)
-    public void eventAddress(String addressInfo) {
-        String[] split = addressInfo.split("/");
-        tv_name.setText(split[0]);
-        tv_address.setText(split[1]);
-        tv_phone.setText(split[2]);
-        consignee = split[0];
-        mobile = split[2];
+    @Subcriber(tag = AddressListActivity.EVENT_SELECT_ADDRESS)
+    public void eventSelectAddress(Address address) {
+        setAddress(address);
     }
+
+    /**
+     * 设置地址信息
+     */
+    private void setAddress(Address address) {
+        tv_name.setText(address.getRealname());
+        tv_address.setText(setAddressName(address));
+        tv_phone.setText(address.getMobile());
+        addressId = address.getId();
+        consignee = address.getRealname();
+        mobile = address.getMobile();
+    }
+
+    /**
+     * 设置地址
+     *
+     * @param address
+     */
+    private String setAddressName(Address address) {
+        JSONObject object = JSON.parseObject(address.getAddressName());
+        String addr = object.getString(address.getProvince_id()) +
+                object.getString(address.getCity_id()) +
+                object.getString(address.getArea_id()) +
+                address.getAddress();
+        return addr;
+    }
+
+//    @Subcriber(tag = AddressAdapter.EVENT_ADDRESS)
+//    public void eventAddress(String addressInfo) {
+//        String[] split = addressInfo.split("/");
+//        tv_name.setText(split[0]);
+//        tv_address.setText(split[1]);
+//        tv_phone.setText(split[2]);
+//        consignee = split[0];
+//        mobile = split[2];
+//    }
 
     @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
     public void eventInvoice(List<String> invoiceInfo) {

@@ -26,4 +26,13 @@
         <item>14岁</item>
         <item>15岁</item>
     </string-array>
+    <string-array name="refund_spinnername">
+        <item>拍错了/订单信息有误</item>
+        <item>不想要了</item>
+        <item>改选其他商品</item>
+        <item>收货信息/商品/发票信息错误</item>
+        <item>优惠券/礼品卡使用问题</item>
+        <item>支付遇到问题</item>
+        <item>不想买了</item>
+    </string-array>
 </resources>

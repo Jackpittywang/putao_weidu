@@ -69,10 +69,11 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         });
         holder.tv_order_no.setText(order.getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-        holder.tv_order_sum_count.setText(order.getTotalQuantity() + "");
+        holder.tv_order_sum_count.setText(order.getTotal_quantity() + "");
         holder.tv_sum_money.setText(order.getTotal_amount() + "");
         holder.tv_sum_carriage.setText(order.getExpress_money());
         adapter = new OrdersAdapter(context, order.getProduct());
+        holder.rv_orders.setVisibility(View.VISIBLE);
         holder.rv_orders.setAdapter(adapter);
     }
 
@@ -94,20 +95,17 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
     private void leftClick(Order order) {
         int orderStatus = order.getOrderStatusID();
         switch (orderStatus) {//取消订单按钮
-            case OrderCommonState.ORDER_PAY_WAIT:
-                EventBusHelper.post(order.getId(), EVENT_CANCEL_ORDER);
+            case OrderCommonState.ORDER_PAY_WAIT://待支付
+                EventBusHelper.post(order, EVENT_CANCEL_ORDER);
                 break;
-            case OrderCommonState.ORDER_WAITING_SHIPMENT:
+            case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
-//                ToastUtils.showToastShort(mContext, "申请退款");
                 break;
-            case OrderCommonState.ORDER_WAITING_SIGN:
-                EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
-//                ToastUtils.showToastShort(mContext, "查看物流");
+            case OrderCommonState.ORDER_WAITING_SIGN://已发货
+                EventBusHelper.post(order, EVENT_AOPPLY_REFUND);
                 break;
-            case OrderCommonState.ORDER_SALE_SERVICE:
-                EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
-//                ToastUtils.showToastShort(mContext, "申请售后");
+            case OrderCommonState.ORDER_SALE_SERVICE://已收货
+                EventBusHelper.post(order, EVENT_AOPPLY_REFUND);
                 break;
         }
     }
@@ -122,7 +120,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
             case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 holder.tv_order_status.setText("待发货");
                 holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
-                setBtn(holder, "您可以在签收后15天内申请售后", "申请退款", "");
+                setBtn(holder, "", "申请退款", "");
                 break;
             case OrderCommonState.ORDER_GOOD_PREPARE://正在准备商品中
                 holder.tv_order_status.setText("正在准备商品中");

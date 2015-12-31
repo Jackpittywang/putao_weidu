@@ -160,4 +160,9 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/divider_color</item>
     </style>
+    <!-- 申请售后理由 -->
+    <style name="service_spinner_style">
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">5dip</item>
+    </style>
 </resources>

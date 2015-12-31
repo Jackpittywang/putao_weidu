@@ -62,6 +62,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         getUserInfo();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         getOrderCount();
     }
 
