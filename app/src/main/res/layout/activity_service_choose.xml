@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ebebeb">
+
+    <!--标题栏-->
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/white"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="申请售后" />
+
+    <ScrollView
+        android:id="@+id/sv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/navigation_bar"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ebebeb"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_service_able_icon"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="#ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_service_able_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_20_19" />
+
+                <TextView
+                    android:id="@+id/tv_service_able_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/img_service_able_icon"
+                    android:text="可申请商品"
+                    android:textColor="@color/text_color_646464"
+                    android:textSize="@dimen/text_size_14sp" />
+            </RelativeLayout>
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_service_able"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
+
+            <RelativeLayout
+                android:id="@+id/rl_service_unable_icon"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_service_unable_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_20_26" />
+
+                <TextView
+                    android:id="@+id/tv_service_unable_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/img_service_unable_icon"
+                    android:text="不可申请商品"
+                    android:textColor="@color/text_color_646464"
+                    android:textSize="@dimen/text_size_14sp" />
+            </RelativeLayout>
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_service_unable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/btn_service_refund"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_order_express_selector"
+            android:enabled="false"
+            android:text="退款"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_16sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btn_service_back"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_order_express_selector"
+            android:enabled="false"
+            android:text="退货"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_16sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btn_service_change"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_order_express_selector"
+            android:enabled="false"
+            android:text="换货"
+            android:textColor="@color/text_color_white"
+            android:visibility="visible" />
+
+    </LinearLayout>
+</RelativeLayout>

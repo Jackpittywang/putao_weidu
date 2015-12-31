@@ -19,9 +19,8 @@ public class OrderProduct implements Serializable {
     private String sku;//规格
     private String created_time;//创建时间
     private String updated_time;//更新时间
-
-    private String allowService;//申请售后返回字段,这个商品是否允许售后
-    private String allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
+    private int allowService;//申请售后返回字段,这个商品是否允许售后
+    private int allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
 
     public String getId() {
         return id;
@@ -95,14 +94,6 @@ public class OrderProduct implements Serializable {
         this.real_icon = real_icon;
     }
 
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
     public String getCreated_time() {
         return created_time;
     }
@@ -119,19 +110,27 @@ public class OrderProduct implements Serializable {
         this.updated_time = updated_time;
     }
 
-    public String getAllowService() {
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public int getAllowService() {
         return allowService;
     }
 
-    public void setAllowService(String allowService) {
+    public void setAllowService(int allowService) {
         this.allowService = allowService;
     }
 
-    public String getAllowServiceQuantity() {
+    public int getAllowServiceQuantity() {
         return allowServiceQuantity;
     }
 
-    public void setAllowServiceQuantity(String allowServiceQuantity) {
+    public void setAllowServiceQuantity(int allowServiceQuantity) {
         this.allowServiceQuantity = allowServiceQuantity;
     }
 
@@ -140,11 +139,11 @@ public class OrderProduct implements Serializable {
         return "OrderProduct{" +
                 "id='" + id + '\'' +
                 ", order_id='" + order_id + '\'' +
-                ", product_id='" + product_id + '\'' +
+                ", product_id=" + product_id +
                 ", product_number='" + product_number + '\'' +
                 ", icon='" + icon + '\'' +
                 ", product_name='" + product_name + '\'' +
-                ", quantity='" + quantity + '\'' +
+                ", quantity=" + quantity +
                 ", price='" + price + '\'' +
                 ", real_icon='" + real_icon + '\'' +
                 ", sku='" + sku + '\'' +

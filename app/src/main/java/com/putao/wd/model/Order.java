@@ -3,6 +3,7 @@ package com.putao.wd.model;
 import com.putao.wd.me.order.OrderDetailActivity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +48,7 @@ public class Order implements Serializable {
     private int banner_control;
     private int orderStatusID;
     private OrderDetail orderDetail;
+    private ArrayList<Express> express;
     private List<HistoryServiceProduct> historyServiceProduct;
 
 
@@ -346,4 +348,64 @@ public class Order implements Serializable {
         this.orderStatusID = orderStatusID;
     }
 
+    public ArrayList<Express> getExpress() {
+        return express;
+    }
+
+    public void setExpress(ArrayList<Express> express) {
+        this.express = express;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", order_sn='" + order_sn + '\'' +
+                ", sell_type='" + sell_type + '\'' +
+                ", uid='" + uid + '\'' +
+                ", order_status=" + order_status +
+                ", shipping_status=" + shipping_status +
+                ", pay_status=" + pay_status +
+                ", outer_order_sn='" + outer_order_sn + '\'' +
+                ", need_invoice=" + need_invoice +
+                ", invoice_content='" + invoice_content + '\'' +
+                ", invoice_title='" + invoice_title + '\'' +
+                ", invoice_type='" + invoice_type + '\'' +
+                ", consignee='" + consignee + '\'' +
+                ", area_id='" + area_id + '\'' +
+                ", area='" + area + '\'' +
+                ", province_id='" + province_id + '\'' +
+                ", province='" + province + '\'' +
+                ", city_id='" + city_id + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", tel='" + tel + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", total_amount='" + total_amount + '\'' +
+                ", express_money='" + express_money + '\'' +
+                ", product_money='" + product_money + '\'' +
+                ", total_quantity='" + total_quantity + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", update_time='" + update_time + '\'' +
+                ", product=" + product +
+                ", pay_type='" + pay_type + '\'' +
+                ", deliver_type='" + deliver_type + '\'' +
+                ", serviceValid=" + serviceValid +
+                ", totalPrice=" + totalPrice +
+                ", totalQuantity=" + totalQuantity +
+                ", banner_control=" + banner_control +
+                ", orderStatusID=" + orderStatusID +
+                ", orderDetail=" + orderDetail +
+                ", express=" + express +
+                ", historyServiceProduct=" + historyServiceProduct +
+                '}';
+    }
+
+    public List<HistoryServiceProduct> getHistoryServiceProduct() {
+        return historyServiceProduct;
+    }
+
+    public void setHistoryServiceProduct(List<HistoryServiceProduct> historyServiceProduct) {
+        this.historyServiceProduct = historyServiceProduct;
+    }
 }

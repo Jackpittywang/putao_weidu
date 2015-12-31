@@ -45,7 +45,6 @@ public class OrderDetail implements Serializable {
     private int totalQuantity;
     private int banner_control;
     private int orderStatusID;
-    private OrderDetail orderDetail;
 
     private ArrayList<Express> express;//物流信息
 
@@ -339,14 +338,6 @@ public class OrderDetail implements Serializable {
         this.orderStatusID = orderStatusID;
     }
 
-    public OrderDetail getOrderDetail() {
-        return orderDetail;
-    }
-
-    public void setOrderDetail(OrderDetail orderDetail) {
-        this.orderDetail = orderDetail;
-    }
-
     public ArrayList<Express> getExpress() {
         return express;
     }
@@ -394,7 +385,6 @@ public class OrderDetail implements Serializable {
                 ", totalQuantity=" + totalQuantity +
                 ", banner_control=" + banner_control +
                 ", orderStatusID=" + orderStatusID +
-                ", orderDetail=" + orderDetail +
                 ", express='" + express + '\'' +
                 '}';
     }

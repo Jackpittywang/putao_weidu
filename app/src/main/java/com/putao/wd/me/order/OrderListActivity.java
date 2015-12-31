@@ -8,6 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
+import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Order;
 import com.putao.wd.store.pay.PayActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -188,11 +189,15 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                Logger.d("订单取消成功");
+                loading.show();
+                adapter.clear();
+                currentPage = 1;
+                getOrderLists(currentType, String.valueOf(currentPage));
                 loading.dismiss();
             }
         });
     }
+
 
     /**
      * 申请退款
@@ -205,6 +210,28 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         bundle.putString(OrderRefundActivity.ORDER_ID, orderId);
         startActivity(OrderRefundActivity.class, bundle);
     }
+    /*
+        @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
+        public void eventLookLogistics(String mId) {
+            networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+                @Override
+                public void onSuccess(String url, ArrayList<Order> result) {
+                    loading.dismiss();
+                }
+            });
+        }
+*/
+
+    /**
+     * 申请售后
+     */
+    @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
+    public void eventSaleService(String orderId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
+        startActivity(ServiceChooseActivity.class, bundle);
+    }
+
 
     /**
      * 立即支付
@@ -219,5 +246,11 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, order.getTotal_amount());
         bundle.putString(PayActivity.BUNDLE_ORDER_DATE, order.getCreate_time());
         startActivity(PayActivity.class, bundle);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.clear();
     }
 }
