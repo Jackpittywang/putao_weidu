@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.Logger;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by guchenkai on 2015/11/9.
  */
 public abstract class BasicAdapter<Item extends Serializable, VH extends BasicViewHolder> extends RecyclerView.Adapter<VH> {
-    protected Context context;
+    protected BasicFragmentActivity context;
     protected List<Item> mItems;
     private OnItemClickListener<Item> mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
@@ -41,7 +42,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     }
 
     public BasicAdapter(Context context, List<Item> items) {
-        this.context = context;
+        this.context = (BasicFragmentActivity) context;
         this.mItems = items != null ? items : new ArrayList<Item>();
     }
 

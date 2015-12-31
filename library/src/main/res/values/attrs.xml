@@ -186,4 +186,9 @@
         <attr name="dis_color" format="color|reference" />
         <attr name="nor_color" format="color|reference" />
     </declare-styleable>
+
+    <!--JumpLoadingLayout-->
+    <declare-styleable name="JumpLoadingLayout">
+        <attr name="jump_color" format="color|reference" />
+    </declare-styleable>
 </resources>

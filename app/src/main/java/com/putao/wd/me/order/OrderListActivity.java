@@ -43,7 +43,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     @Bind(R.id.ll_title_bar)
     TitleBar ll_title;
 
-    private String TAG = OrderListActivity.class.getName();
     private OrderListAdapter adapter;
 
     private int currentItem;//当前选中项目

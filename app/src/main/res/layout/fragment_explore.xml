@@ -72,4 +72,11 @@
             android:text="   立即扫一扫"
             android:textColor="@color/service_btn_nor" />
     </RelativeLayout>
+
+    <com.sunnybear.library.view.JumpLoadingLayout
+        android:id="@+id/jump_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:jump_color="@color/text_main_color_nor"
+        android:background="@color/white"/>
 </FrameLayout>
