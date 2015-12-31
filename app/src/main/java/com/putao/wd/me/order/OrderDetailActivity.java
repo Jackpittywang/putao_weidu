@@ -24,12 +24,10 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * 订单详情
@@ -210,7 +208,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
         tv_shipment_fee.setText("¥" + mOrderDetail.getExpress_money());//设置运费
         tv_total_cost.setText("¥" + mOrderDetail.getTotal_amount());//设置总金额
         //设置物流信息
-        if (mOrderDetail.getExpress().size() > 0) {
+        if (mOrderDetail.getExpress() != null && mOrderDetail.getExpress().size() > 0) {
             tv_no_shipment.setVisibility(View.GONE);
             rv_shipment.setAdapter(mShipmentAdapter);
             mShipmentAdapter.addAll(mOrderDetail.getExpress());
@@ -235,6 +233,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
 
     /**
      * 设置订单状态的文字和顶部进度条显示
+     *
      * @param status
      */
     private void setOrderStatus(int status) {
