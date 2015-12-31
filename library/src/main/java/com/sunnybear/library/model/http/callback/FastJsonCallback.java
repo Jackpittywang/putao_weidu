@@ -7,6 +7,10 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * FastJson解析json
@@ -31,6 +35,8 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
             onSuccess(url, (T) new String(result.getString("message")));
             return;
         }
+        if (StringUtils.equals(data, "[]") && !StringUtils.equals(getGenericClassName(), ArrayList.class.getName()))
+            data = null;
         JsonUtils.JsonType type = JsonUtils.getJSONType(data);
         switch (type) {
             case JSON_TYPE_OBJECT:
@@ -44,6 +50,24 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
                 Logger.e(JSONObjectCallback.TAG, "result=" + result.toJSONString());
                 break;
         }
+    }
+
+    /**
+     * 获取本类的泛型类型
+     *
+     * @return 泛型类型
+     */
+    private String getGenericClassName() {
+        Type genType = this.getClass().getGenericSuperclass();
+        Type generic = ((ParameterizedType) genType).getActualTypeArguments()[0];
+        try {
+            Field mRawTypeName = generic.getClass().getDeclaredField("rawTypeName");
+            mRawTypeName.setAccessible(true);
+            return (String) mRawTypeName.get(generic);
+        } catch (Exception e) {
+            Logger.e("获取泛型类型错误.", e);
+        }
+        return "";
     }
 
     /**
