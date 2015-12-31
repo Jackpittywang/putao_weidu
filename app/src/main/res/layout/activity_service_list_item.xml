@@ -63,7 +63,7 @@
 
     <!--订单列表-->
     <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@+id/rv_service"
+        android:id="@+id/rv_service_inner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_EBEBEB"
@@ -171,7 +171,7 @@
 
     <!--订单确认栏-->
     <LinearLayout
-        android:id="@+id/rl_comfirm"
+        android:id="@+id/ll_operate"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"

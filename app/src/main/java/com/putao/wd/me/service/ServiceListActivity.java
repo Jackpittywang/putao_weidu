@@ -11,13 +11,14 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
+import com.putao.wd.model.ServiceList;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.util.ArrayList;
+
+import java.io.Serializable;
 
 import butterknife.Bind;
 
@@ -84,13 +85,12 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加监听器
      */
     private void addListener() {
-        rv_service.setOnItemClickListener(new OnItemClickListener<ServiceDto>() {
-
+        rv_service.setOnItemClickListener(new OnItemClickListener<ServiceList>() {
             @Override
-            public void onItemClick(ServiceDto serviceDto, int position) {
+            public void onItemClick(ServiceList ServiceList, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ServiceDetailActivity.KEY_ORDER, serviceDto);
-                startActivity(ServiceDetailActivity.class, bundle);
+                bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, ServiceList.getId());
+                startActivity(ServiceDetailActivity.class);
             }
         });
         rv_service.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {

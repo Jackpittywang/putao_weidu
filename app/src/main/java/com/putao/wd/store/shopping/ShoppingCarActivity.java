@@ -104,10 +104,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 添加监听器
      */
     private void addListener() {
-        rv_cars.setOnItemClickListener(new OnItemClickListener() {
+        rv_cars.setOnItemClickListener(new OnItemClickListener<Cart>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
-                Cart cart = adapter.getItem(position);
+            public void onItemClick(Cart cart, int position) {
                 if (cart.isSelect()) {
                     cart.setIsSelect(false);
                 } else {

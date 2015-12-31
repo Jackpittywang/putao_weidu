@@ -38,11 +38,11 @@ public class ServiceAdapter extends BasicAdapter<ServiceProduct, ServiceAdapter.
 
     @Override
     public void onBindItem(ServiceViewHolder holder, ServiceProduct serviceProduct, int position) {
-//        holder.iv_car_icon.setImageURL(orderProduct.getReal_icon());
-//        holder.tv_title.setText(orderProduct.getProduct_name());
-//        holder.tv_money.setText(orderProduct.getPrice());
-//        holder.tv_count.setText(orderProduct.getQuantity());
-//        holder.tv_color.setText(orderProduct.getSku());
+        holder.iv_car_icon.setImageURL(serviceProduct.getReal_sale_icon());
+        holder.tv_title.setText(serviceProduct.getSale_product_name());
+        holder.tv_money.setText(serviceProduct.getSale_price());
+        holder.tv_count.setText(serviceProduct.getSale_quantity());
+        holder.tv_color.setText(serviceProduct.getSale_sku());
     }
 
     static class ServiceViewHolder extends BasicViewHolder {
