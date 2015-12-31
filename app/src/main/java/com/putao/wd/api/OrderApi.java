@@ -222,9 +222,15 @@ public class OrderApi {
     /**
      * 售后详情
      */
-    public static Request getServiceDetail() {
-        return PTWDRequestHelper.store()
-                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
+    public static Request getServiceDetail(String id) {
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(REQUEST_ID, id);
+        return builder.build(RequestMethod.GET, URL_SERVICE_DETAIL);
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_ID, id)
+//                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
     }
 
     /**
