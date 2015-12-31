@@ -27,6 +27,7 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,7 +58,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     private String mOrderId;
     private Order mOrder;
     private List<OrderProduct> mAbleProduct;
-    private Set<OrderProduct> mFocusProducts;
+    private List<OrderProduct> mFocusProducts;
     public static final String ORDER_ID = "orderId";
 
 
@@ -91,7 +92,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
      */
     private void initData() {
         mAbleProduct = new ArrayList<>();
-        mFocusProducts = new HashSet<>();
+        mFocusProducts = new ArrayList<>();
         mOrderId = args.getString(ORDER_ID);
         networkRequest(OrderApi.orderAfterSale(mOrderId),
                 new SimpleFastJsonCallback<Order>(Order.class, loading) {
@@ -197,9 +198,13 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_service_refund:
-                startActivity(OrderRefundActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(OrderRefundActivity.ORDER_ID,mOrderId);
+                bundle.putSerializable(OrderRefundActivity.REFUND_PRODUCT, (Serializable) mFocusProducts);
+                startActivity(OrderRefundActivity.class,bundle);
                 break;
             case R.id.btn_service_back:
+
                 break;
             case R.id.btn_service_change:
                 break;

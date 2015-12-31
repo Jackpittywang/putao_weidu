@@ -16,6 +16,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
+import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductData;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -23,6 +24,8 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +40,10 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER = "service";
     public static final String ORDER_ID = "orderId";
+    public static final String REFUND_PRODUCT = "refund_product";
     private Order mOrder;
     private String mOrderId;
+    ArrayList<OrderProduct> mProducts;
     private String[] mItems;
 
     @Bind(R.id.img_status1)
@@ -73,13 +78,14 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
         tv_service_status.setText("￥" + mOrder.getTotal_amount());
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mItems);
         service_spinner.setAdapter(stringArrayAdapter);
-        OrdersAdapter ordersAdapter = new OrdersAdapter(mContext, mOrder.getProduct());
+        OrdersAdapter ordersAdapter = new OrdersAdapter(mContext, mProducts);
         rv_goods.setAdapter(ordersAdapter);
 
     }
 
     private void initData() {
         mOrderId = args.getString(ORDER_ID);
+        mProducts = (ArrayList<OrderProduct>) args.getSerializable(REFUND_PRODUCT);
         mItems = getResources().getStringArray(R.array.refund_spinnername);
         networkRequest(OrderApi.orderAfterSale(mOrderId),
                 new SimpleFastJsonCallback<Order>(Order.class, loading) {
@@ -95,11 +101,10 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
     @Override
     public void onRightAction() {
         super.onRightAction();
-        List<OrderProduct> products = mOrder.getProduct();
         String allProductId = "";
         Map<String, ProductData> productDataMap = new HashMap<>();
         int productReason = service_spinner.getSelectedItemPosition()+1;//理由
-        for (OrderProduct product : products) {
+        for (OrderProduct product : mProducts) {
             allProductId = allProductId + "," + product.getProduct_id();
             ProductData productData = new ProductData();
             productData.setProduct_id(product.getId());

@@ -150,6 +150,7 @@
             android:background="@drawable/btn_order_express_selector"
             android:enabled="false"
             android:text="换货"
+            android:textSize="@dimen/text_size_16sp"
             android:textColor="@color/text_color_white"
             android:visibility="visible" />
 

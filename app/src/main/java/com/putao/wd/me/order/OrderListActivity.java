@@ -199,17 +199,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     }
 
 
-    /**
-     * 申请退款
-     *
-     * @param
-     */
-    @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
-    public void eventAopplyRefund(String orderId) {
-        Bundle bundle = new Bundle();
-        bundle.putString(OrderRefundActivity.ORDER_ID, orderId);
-        startActivity(OrderRefundActivity.class, bundle);
-    }
     /*
         @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
         public void eventLookLogistics(String mId) {

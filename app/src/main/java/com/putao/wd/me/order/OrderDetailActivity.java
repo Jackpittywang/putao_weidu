@@ -15,6 +15,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
+import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
@@ -284,8 +285,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(OrderRefundActivity.ORDER_ID, mOrderDetail.getId());
-                        startActivity(OrderRefundActivity.class, bundle);
+                        bundle.putString(ServiceChooseActivity.ORDER_ID, mOrderDetail.getId());
+                        startActivity(ServiceChooseActivity.class, bundle);
                     }
                 });
                 break;
