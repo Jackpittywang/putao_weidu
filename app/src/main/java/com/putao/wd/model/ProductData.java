@@ -6,18 +6,18 @@ import java.io.Serializable;
  * 活动列表
  * Created by guchenkai on 2015/12/18.
  */
-public class ProductData implements Serializable{
-    private int product_id;
+public class ProductData implements Serializable {
+    private String product_id;
     private int reason;
     private String image;
     private String description;
-    private int quantity;
+    private String quantity;
 
-    public int getProduct_id() {
+    public String getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(String product_id) {
         this.product_id = product_id;
     }
 
@@ -45,22 +45,22 @@ public class ProductData implements Serializable{
         this.description = description;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
     @Override
     public String toString() {
         return "ProductData{" +
-                "product_id=" + product_id +
+                "product_id='" + product_id + '\'' +
                 ", reason=" + reason +
                 ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
-                ", quantity=" + quantity +
+                ", quantity='" + quantity + '\'' +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.putao.wd.me.order.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +13,15 @@ import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.me.order.OrderCommonState;
 import com.putao.wd.model.Order;
+import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.List;
 
@@ -75,6 +79,14 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         adapter = new OrdersAdapter(context, order.getProduct());
         holder.rv_orders.setVisibility(View.VISIBLE);
         holder.rv_orders.setAdapter(adapter);
+        holder.rv_orders.setOnItemClickListener(new OnItemClickListener<OrderProduct>() {
+            @Override
+            public void onItemClick(OrderProduct product, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getProduct_id());
+                context.startActivity(ProductDetailActivity.class, bundle);
+            }
+        });
     }
 
     private void rightClick(Order order) {

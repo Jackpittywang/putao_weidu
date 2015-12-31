@@ -1,9 +1,9 @@
 package com.putao.wd.store.order;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -22,7 +22,6 @@ import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -56,6 +55,10 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     BasicRecyclerView rv_orders;//订单列表
     @Bind(R.id.tv_sum)
     TextView tv_sum;//总金额
+    @Bind(R.id.ll_receiving_address)
+    LinearLayout ll_receiving_address;//有收货地址时
+    @Bind(R.id.ll_no_receiving_address)
+    LinearLayout ll_no_receiving_address;//没有收货地址时
 
 
     private WriteOrderAdapter adapter;
@@ -79,7 +82,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         sticky_layout.canScrollView();
-        ImageUtils.fillXInImageView(mContext, iv_reapte_picbar, BitmapFactory.decodeResource(getResources(), R.drawable.img_cart_lace_stuff));
 
         Bundle bundle = getIntent().getExtras();
         pid = bundle.getString(ShoppingCarActivity.PRODUCT_ID);
@@ -112,7 +114,11 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             @Override
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
-                setAddress(result);
+                if (result != null) {
+                    ll_receiving_address.setVisibility(View.VISIBLE);
+                    ll_no_receiving_address.setVisibility(View.GONE);
+                    setAddress(result);
+                }
                 loading.dismiss();
             }
         });
@@ -171,6 +177,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
 
     @Subcriber(tag = AddressListActivity.EVENT_SELECT_ADDRESS)
     public void eventSelectAddress(Address address) {
+        ll_receiving_address.setVisibility(View.VISIBLE);
+        ll_no_receiving_address.setVisibility(View.GONE);
         setAddress(address);
     }
 
@@ -199,16 +207,6 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                 address.getAddress();
         return addr;
     }
-
-//    @Subcriber(tag = AddressAdapter.EVENT_ADDRESS)
-//    public void eventAddress(String addressInfo) {
-//        String[] split = addressInfo.split("/");
-//        tv_name.setText(split[0]);
-//        tv_address.setText(split[1]);
-//        tv_phone.setText(split[2]);
-//        consignee = split[0];
-//        mobile = split[2];
-//    }
 
     @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
     public void eventInvoice(List<String> invoiceInfo) {

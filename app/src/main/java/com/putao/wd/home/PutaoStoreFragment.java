@@ -152,7 +152,7 @@ public class PutaoStoreFragment extends PTWDFragment {
             @Override
             public void onItemClick(StoreProduct storeProduct, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ProductDetailActivity.PRODUCT_ID, storeProduct.getId());
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, storeProduct.getId());
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });

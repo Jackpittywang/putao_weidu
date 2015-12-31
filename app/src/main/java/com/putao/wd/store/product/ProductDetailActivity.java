@@ -40,7 +40,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  * Created by guchenkai on 2015/11/30.
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
-    public static final String PRODUCT_ID = "product_id";
+    public static final String BUNDLE_PRODUCT_ID = "product_id";
 
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
@@ -78,7 +78,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        product_id = args.getString(PRODUCT_ID);
+        product_id = args.getString(BUNDLE_PRODUCT_ID);
 
         sticky_layout.canScrollView();
         mSharePopupWindow = new SharePopupWindow(mContext);
