@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
@@ -12,10 +13,13 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceAdapter;
+import com.putao.wd.me.service.adapter.ServiceListAdapter;
+import com.putao.wd.model.Express;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
@@ -33,6 +37,7 @@ import butterknife.Bind;
  */
 public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     public static final String KEY_SERVICE_ID = "serviceId";
+    public static final String KEY_SERVICE_STATUS = "serviceStatus";
 
     @Bind(R.id.v_status_waiting_pay)
     View v_status_waiting_pay;
@@ -42,6 +47,16 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     View v_status_waiting_shipment;
     @Bind(R.id.img_status_waiting_shipment)
     ImageView img_status_waiting_shipment;
+    @Bind(R.id.v_status_waiting_sign)
+    View v_status_waiting_sign;
+    @Bind(R.id.img_status_waiting_sign)
+    ImageView img_status_waiting_sign;
+    @Bind(R.id.v_status_sale_service)
+    View v_status_sale_service;
+    @Bind(R.id.img_status_sale_service)
+    ImageView img_status_sale_service;
+    @Bind(R.id.rl_fill_order_no)
+    RelativeLayout rl_fill_order_no;
 
     @Bind(R.id.tv_service_no)
     TextView tv_service_no;
@@ -51,6 +66,8 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     TextView tv_service_order_status;
     @Bind(R.id.tv_service_info)
     TextView tv_service_info;
+    @Bind(R.id.tv_no_shipment)
+    TextView tv_no_shipment;
     @Bind(R.id.tv_customer_name)
     TextView tv_customer_name;
     @Bind(R.id.tv_customer_address)
@@ -84,6 +101,8 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 
 
     private ServiceAdapter adapter;
+    private String serviceStatus;
+
 
 
     @Override
@@ -98,7 +117,9 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         adapter = new ServiceAdapter(mContext, null);
         rv_service_detail.setAdapter(adapter);
 
-        String serviceId = getIntent().getExtras().getString(KEY_SERVICE_ID);
+        Bundle bundle = getIntent().getExtras();
+        String serviceId = bundle.getString(KEY_SERVICE_ID);
+        serviceStatus = bundle.getString(KEY_SERVICE_STATUS);
         networkRequest(OrderApi.getServiceDetail(serviceId), new SimpleFastJsonCallback<ArrayList<ServiceList>>(ServiceList.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<ServiceList> result) {
@@ -124,13 +145,17 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
      */
     private void setContent(ServiceList serviceList) {
         ServiceOrderInfo order_info = serviceList.getOrder_info();
+        List<Express> express = serviceList.getExpress();
+        checkServiceType(serviceList.getService_type());
         tv_service_no.setText(order_info.getOrder_sn());
         tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         tv_service_info.setText(serviceList.getDepiction());
+        tv_service_order_status.setText(serviceStatus);
+//        tv_no_shipment.setText();
         tv_customer_name.setText(order_info.getConsignee());
         tv_customer_address.setText(order_info.getAddress());
         tv_customer_phone.setText(order_info.getMobile());
-        tv_pay_method.setText("支付方式：" +  order_info.getPay_type());
+        tv_pay_method.setText("支付方式：" + order_info.getPay_type());
         tv_shipment_method.setText("配送方式：" + order_info.getDeliver_type());
         if ("1".equals(order_info.getNeed_invoice())) {
             tv_receipt_type.setText("发票类型：" + order_info.getInvoice_title());
@@ -143,10 +168,27 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         tv_cost.setText(order_info.getProduct_money());
         tv_shipment_fee.setText("0.00");
         tv_total_cost.setText(serviceList.getSaleTotalPrice() + "");
-
     }
 
+    /**
+     * 根据售后类型设置进度显示
+     */
+    private void checkServiceType(String service_type) {
+        switch (service_type) {
+            case "1"://1换货
 
+                break;
+            case "2"://2退货
+
+                break;
+            case "3"://3退款
+
+                rl_fill_order_no.setVisibility(View.GONE);
+                img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_nor);
+                break;
+        }
+
+    }
 
     //    @OnClick(R.id.ll_shipment)
     @Override
@@ -158,8 +200,6 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         }
     }
 
-}
-
 //    /**
 //     * 打开包裹详情页面
 //     */
@@ -170,52 +210,10 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 //    }
 //
 
+}
 
-//    /**
-//     * 设置订单状态的文字和顶部进度条显示
-//     *
-//     * @param status
-//     */
-//    private void setServiceStatus(int status) {
-//        String statusStr = ServiceCommonState.getServiceStatusShowString(status);
-//        TextView tv_service_status = (TextView) findViewById(R.id.tv_service_status);
-//        tv_service_status.setText(statusStr);
-//        if (status == ServiceCommonState.SERVICE_REFUND_CHECK || status == ServiceCommonState.SERVICE_REFUND_AGREE ||
-//                status == ServiceCommonState.SERVICE_REFUND_SEND || status == ServiceCommonState.SERVICE_REFUND_RECEIVE ||
-//                status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_CHECK ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_AGREE || status == ServiceCommonState.SERVICE_EXCHANGE_SEND ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommonState.SERVICE_EXCHANGE_BACK ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
-//            View v_status_waiting_pay = findViewById(R.id.v_status_waiting_pay);
-//            v_status_waiting_pay.setBackgroundColor(0xffffffff);
-//            ImageView img_status_waiting_pay = (ImageView) findViewById(R.id.img_status_waiting_pay);
-//            img_status_waiting_pay.setImageResource(R.drawable.img_details_as_steps_01_sel);
-//        }
-//        if (status == ServiceCommonState.SERVICE_REFUND_AGREE || status == ServiceCommonState.SERVICE_REFUND_SEND || status == ServiceCommonState.SERVICE_REFUND_RECEIVE ||
-//                status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_AGREE || status == ServiceCommonState.SERVICE_EXCHANGE_SEND ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommonState.SERVICE_EXCHANGE_BACK ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
-//            View v_status_waiting_shipment = findViewById(R.id.v_status_waiting_shipment);
-//            v_status_waiting_shipment.setBackgroundColor(0xffffffff);
-//            ImageView img_status_waiting_shipment = (ImageView) findViewById(R.id.img_status_waiting_shipment);
-//            img_status_waiting_shipment.setImageResource(R.drawable.img_details_as_steps_02_sel);
-//        }
-//        if (status == ServiceCommonState.SERVICE_REFUND_SEND || status == ServiceCommonState.SERVICE_REFUND_RECEIVE ||
-//                status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_SEND ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_RECEIVE || status == ServiceCommonState.SERVICE_EXCHANGE_BACK ||
-//                status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
-//            View v_status_waiting_sign = findViewById(R.id.v_status_waiting_sign);
-//            v_status_waiting_sign.setBackgroundColor(0xffffffff);
-//            ImageView img_status_waiting_sign = (ImageView) findViewById(R.id.img_status_waiting_sign);
-//            img_status_waiting_sign.setImageResource(R.drawable.img_details_as_steps_03_sel);
-//        }
-//        if (status == ServiceCommonState.SERVICE_REFUND_FINISH || status == ServiceCommonState.SERVICE_EXCHANGE_FINISH) {
-//            View v_status_sale_service = findViewById(R.id.v_status_sale_service);
-//            v_status_sale_service.setBackgroundColor(0xffffffff);
-//            ImageView img_status_sale_service = (ImageView) findViewById(R.id.img_status_sale_service);
-//            img_status_sale_service.setImageResource(R.drawable.img_details_as_steps_04_sel);
-//        }
-//    }
+
+
 
 
 

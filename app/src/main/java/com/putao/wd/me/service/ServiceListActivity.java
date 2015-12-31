@@ -8,7 +8,6 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
@@ -18,7 +17,6 @@ import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 
-import java.io.Serializable;
 
 import butterknife.Bind;
 
@@ -73,7 +71,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                     rv_service.setVisibility(View.VISIBLE);
                     rv_service.loadMoreComplete();
                     page++;
-                }else {
+                } else {
                     rv_service.noMoreLoading();
                 }
                 loading.dismiss();
@@ -90,6 +88,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             public void onItemClick(ServiceList ServiceList, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, ServiceList.getId());
+                bundle.putString(ServiceDetailActivity.KEY_SERVICE_STATUS, ServiceList.getStatusText());
                 startActivity(ServiceDetailActivity.class, bundle);
             }
         });

@@ -45,7 +45,9 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     public void onBindItem(ServiceListViewHolder holder, ServiceList serviceList, final int position) {
         holder.tv_service_no.setText(serviceList.getOrder_info().getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-        holder.tv_service_order_status.setText(checkServiceType(serviceList.getService_type(), serviceList.getStatus(), holder));
+        String statusText = checkServiceType(serviceList.getService_type(), serviceList.getStatus(), holder);
+        holder.tv_service_order_status.setText(statusText);
+        serviceList.setStatusText(statusText);
 
         List<ServiceProduct> products = serviceList.getProduct();
         String totalPrice = "0";

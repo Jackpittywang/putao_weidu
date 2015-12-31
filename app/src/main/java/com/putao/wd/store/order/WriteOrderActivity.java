@@ -92,7 +92,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                     @Override
                     public void onSuccess(String url, OrderConfirm result) {
                         Logger.w("填写订单 = " + result.toString());
-                        if (null != result) {
+                        if (result != null) {
                             adapter = new WriteOrderAdapter(mContext, getLastItem(result));
                             rv_orders.setAdapter(adapter);
                         }
@@ -149,11 +149,11 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         return products;
     }
 
-    @OnClick({R.id.ll_receiving_address, R.id.ll_need_invoice, R.id.tv_submit})
+    @OnClick({R.id.fl_address, R.id.ll_need_invoice, R.id.tv_submit})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_receiving_address://选择地址
+            case R.id.fl_address://选择地址
                 startActivity(AddressListActivity.class);
                 break;
             case R.id.ll_need_invoice://发票信息
