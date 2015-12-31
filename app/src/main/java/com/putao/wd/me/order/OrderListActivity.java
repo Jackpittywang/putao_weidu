@@ -12,6 +12,7 @@ import com.putao.wd.model.Order;
 import com.putao.wd.store.pay.PayActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
@@ -115,7 +116,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
-                        if (result != null && result.size() > 0) {
+                        if (result != null && result.size() > 0 && result.size() >= 20) {
                             adapter.clear();
                             rl_no_order.setVisibility(View.GONE);
                             adapter.addAll(result);
@@ -172,23 +173,27 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
 
     /**
      * 取消订单
-     *
-     * @param mId
      */
     @Subcriber(tag = OrderListAdapter.EVENT_CANCEL_ORDER)
-    public void eventCancelOrder(String mId) {
-        networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<String>(String.class, loading) {
+    public void eventCancelOrder(Order order) {
+        Order newOrder = order;
+        order.setOrderStatusID(OrderCommonState.ORDER_CANCLED);
+        switch (currentType) {
+            case TYPE_ALL:
+                adapter.replace(order, newOrder);
+                break;
+            case TYPE_WAITING_PAY:
+                adapter.delete(order);
+                break;
+        }
+        networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                loading.show();
-                adapter.clear();
-                currentPage = 1;
-                getOrderLists(currentType, String.valueOf(currentPage));
+                Logger.d("订单取消成功");
                 loading.dismiss();
             }
         });
     }
-
 
     /**
      * 申请退款
@@ -201,27 +206,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         bundle.putString(OrderRefundActivity.ORDER_ID, orderId);
         startActivity(OrderRefundActivity.class, bundle);
     }
-    /*
-        @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
-        public void eventLookLogistics(String mId) {
-            networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-                @Override
-                public void onSuccess(String url, ArrayList<Order> result) {
-                    loading.dismiss();
-                }
-            });
-        }
-
-        @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
-        public void eventSaleService(String mId) {
-            networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-                @Override
-                public void onSuccess(String url, ArrayList<Order> result) {
-                    loading.dismiss();
-                }
-            });
-        }
-    */
 
     /**
      * 立即支付
@@ -236,11 +220,5 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, order.getTotal_amount());
         bundle.putString(PayActivity.BUNDLE_ORDER_DATE, order.getCreate_time());
         startActivity(PayActivity.class, bundle);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter.clear();
     }
 }

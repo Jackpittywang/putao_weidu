@@ -95,20 +95,17 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
     private void leftClick(Order order) {
         int orderStatus = order.getOrderStatusID();
         switch (orderStatus) {//取消订单按钮
-            case OrderCommonState.ORDER_PAY_WAIT:
-                EventBusHelper.post(order.getId(), EVENT_CANCEL_ORDER);
+            case OrderCommonState.ORDER_PAY_WAIT://待支付
+                EventBusHelper.post(order, EVENT_CANCEL_ORDER);
                 break;
-            case OrderCommonState.ORDER_WAITING_SHIPMENT:
+            case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 EventBusHelper.post(order.getId(), EVENT_AOPPLY_REFUND);
-//                ToastUtils.showToastShort(mContext, "申请退款");
                 break;
-            case OrderCommonState.ORDER_WAITING_SIGN:
+            case OrderCommonState.ORDER_WAITING_SIGN://已发货
                 EventBusHelper.post(order, EVENT_AOPPLY_REFUND);
-//                ToastUtils.showToastShort(mContext, "查看物流");
                 break;
-            case OrderCommonState.ORDER_SALE_SERVICE:
+            case OrderCommonState.ORDER_SALE_SERVICE://已收货
                 EventBusHelper.post(order, EVENT_AOPPLY_REFUND);
-//                ToastUtils.showToastShort(mContext, "申请售后");
                 break;
         }
     }
