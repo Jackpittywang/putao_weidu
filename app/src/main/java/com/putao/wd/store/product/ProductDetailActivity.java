@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
@@ -97,7 +98,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
      * @param type       种类
      */
     private void loadHtml(String product_id, String type) {
-        String webUrl = "http://static.uzu.wang/weidu_event/uncdn/index.html?id=" + product_id + "&nav=" + type;
+        String base_url = GlobalApplication.isDebug ? "http://static.uzu.wang/weidu_event/" : "http://static.putaocdn.com/weidu/";
+        String webUrl = base_url + "uncdn/index.html?id=" + product_id + "&nav=" + type;
         wv_content.loadUrl(webUrl);
     }
 
@@ -113,8 +115,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 tv_product_title.setText(result.getTitle());
                 tv_product_intro.setText(result.getSubtitle());
                 tv_product_price.setText(result.getPrice());
-                //广告列表
 
+                //广告列表
                 if (result.getPictures() != null) {
                     bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), new BannerViewPager.OnPagerClickListenr() {
                         @Override
@@ -209,13 +211,13 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 loadHtml(product_id, "0");
                 break;
             case R.id.ti_parameter://规格参数
-//                wv_content.loadUrl("http://www.putao.com");
+                loadHtml(product_id, "1");
                 break;
             case R.id.ti_pack://包装清单
-//                wv_content.loadUrl("http://www.putao.com");
+                loadHtml(product_id, "2");
                 break;
             case R.id.ti_service://售后
-//                wv_content.loadUrl("http://www.putao.com");
+                loadHtml(product_id, "3");
                 break;
         }
     }
