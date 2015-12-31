@@ -1,5 +1,7 @@
 package com.putao.wd.model;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -86,6 +88,8 @@ public class ExploreProduct implements Serializable {
     }
 
     public List<ExploreProductDetail> getDetails() {
+        if (type == 1)
+            details = JSON.parseArray(data, ExploreProductDetail.class);
         return details;
     }
 
@@ -94,6 +98,8 @@ public class ExploreProduct implements Serializable {
     }
 
     public ExploreProductPlot getPlot() {
+        if (type == 2)
+            plot = JSON.parseObject(data, ExploreProductPlot.class);
         return plot;
     }
 
@@ -116,5 +122,4 @@ public class ExploreProduct implements Serializable {
                 ", plot=" + plot +
                 '}';
     }
-
 }

@@ -1,14 +1,19 @@
 package com.putao.wd.explore;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.home.adapter.ExploreDetailAdapter;
+import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -16,6 +21,8 @@ import com.putao.wd.share.ShareTools;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.image.BitmapLoader;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.List;
@@ -29,14 +36,20 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  * Created by guchenkai on 2015/12/30.
  */
 public class DisPlayActivity extends BasicFragmentActivity {
+    public static final String BUNDLE_DISPLAY_DETAILS = "exploreProduct";
+
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.root)
     ScrollView root;
+    @Bind(R.id.iv_share_icon)
+    ImageView iv_share_icon;
+    @Bind(R.id.tv_summary)
+    TextView tv_summary;
     @Bind(R.id.rv_display_data)
     BasicRecyclerView rv_display_data;
     private ExploreDetailAdapter adapter;
-    private List<ExploreProductDetail> details;
+    private ExploreProduct exploreProduct;
 
     private SharePopupWindow mSharePopupWindow;
 
@@ -52,9 +65,30 @@ public class DisPlayActivity extends BasicFragmentActivity {
         Logger.d("炫耀页面开启");
 
         mSharePopupWindow = new SharePopupWindow(mContext);
-        details = (List<ExploreProductDetail>) args.getSerializable("details");
+        exploreProduct = (ExploreProduct) args.getSerializable(BUNDLE_DISPLAY_DETAILS);
+        tv_summary.setText(exploreProduct.getBase_data_copies());
+
+        List<ExploreProductDetail> details = exploreProduct.getDetails();
+        if (details.size() % 2 != 0)
+            details.add(new ExploreProductDetail());
         adapter = new ExploreDetailAdapter(mContext, details);
         rv_display_data.setAdapter(adapter);
+
+        loading.show();
+        BitmapLoader.newInstance((Activity) mContext).load(exploreProduct.getBase_img_url(),
+                new BitmapLoader.BitmapCallback() {
+                    @Override
+                    public void onResult(Bitmap bitmap) {
+                        loading.dismiss();
+                        if (bitmap == null) {
+                            ToastUtils.showToastLong(mContext, "分享失败");
+                            finish();
+                            return;
+                        }
+                        iv_share_icon.setImageBitmap(bitmap);
+                        mHandler.sendEmptyMessageDelayed(0x01, 200);
+                    }
+                });
 
         mHandler = new Handler() {
             @Override
@@ -101,19 +135,7 @@ public class DisPlayActivity extends BasicFragmentActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mHandler.sendEmptyMessageDelayed(0x01, 200);
-    }
-
-    @Override
-    protected void onDestroy() {
-        Logger.d("炫耀页面关闭");
-        super.onDestroy();
-    }
-
-    @Override
     protected String[] getRequestUrls() {
-        return new String[0];
+        return new String[]{exploreProduct.getBase_img_url()};
     }
 }

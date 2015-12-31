@@ -25,7 +25,6 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -105,7 +104,7 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                             public void onSuccess(String url, Explore result) {
                                 Logger.i("探索号请求结果 = " + result.toString());
                                 if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                                    adapter.addAll(parseExplore(result));
+                                    adapter.addAll(result.getData());
                                     rv_content.loadMoreComplete();
                                     page++;
                                 } else {
@@ -126,8 +125,8 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                 new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
                     public void onSuccess(String url, Explore result) {
-                        if (result.getData() != null & result.getData().size() > 0) {
-                            adapter.addAll(parseExplore(result));
+                        if (result.getData() != null && result.getData().size() > 0) {
+                            adapter.addAll(result.getData());
                             rl_explor_empty.setVisibility(View.GONE);
                         } else {
                             rl_explor_empty.setVisibility(View.VISIBLE);
@@ -144,20 +143,20 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     /**
      * 解析数据
      */
-    private List<ExploreProduct> parseExplore(Explore result) {
-        List<ExploreProduct> datas = result.getData();
-        for (ExploreProduct data : datas) {
-            switch (data.getType()) {
-                case 1:
-                    data.setDetails(parseDetail(data.getData()));
-                    break;
-                default:
-                    data.setPlot(parsePlot(data.getData()));
-                    break;
-            }
-        }
-        return datas;
-    }
+//    private List<ExploreProduct> parseExplore(Explore result) {
+//        List<ExploreProduct> datas = result.getData();
+//        for (ExploreProduct data : datas) {
+//            switch (data.getType()) {
+//                case 1:
+//                    data.setDetails(parseDetail(data.getData()));
+//                    break;
+//                default:
+//                    data.setPlot(parsePlot(data.getData()));
+//                    break;
+//            }
+//        }
+//        return datas;
+//    }
 
     /**
      * 解析详情
@@ -185,11 +184,9 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     }
 
     @Subcriber(tag = ExploreAdapter.EVENT_DISPLAY)
-    public void eventDisplay(ExploreProduct detail) {
-//        mSharePopupWindow.show(fl_main);
+    public void eventDisplay(ExploreProduct exploreProduct) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("details", (Serializable) detail.getDetails());
+        bundle.putSerializable(DisPlayActivity.BUNDLE_DISPLAY_DETAILS, exploreProduct);
         startActivity(DisPlayActivity.class, bundle);
-//        startFragment(DisPlayFragment.class, bundle);
     }
 }

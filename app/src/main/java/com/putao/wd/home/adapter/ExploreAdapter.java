@@ -30,6 +30,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 
     private static final int TYPE_DETAIL = 1;
     private static final int TYPE_PLOT = 2;
+
     private final int TYPE_PICTURE_ONE = 1;
     private final int TYPE_PICTURE_FOUR = 4;
     private final int TYPE_PICTURE_NINE = 9;

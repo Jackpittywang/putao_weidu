@@ -1,7 +1,6 @@
 package com.putao.wd.me.setting;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 
 import com.putao.wd.GlobalApplication;
@@ -9,13 +8,11 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AboutUsActivity;
-import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.DownloadFileTask;
 import com.sunnybear.library.model.http.callback.DownloadFileCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 
 import java.io.IOException;
 
@@ -69,7 +66,6 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
         return new String[0];
     }
 
-    //-------|关于我们----------|修改密码
     @OnClick({R.id.si_about_us, R.id.si_modify_password, R.id.tv_exit})
     @Override
     public void onClick(View v) {
