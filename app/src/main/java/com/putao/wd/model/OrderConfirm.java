@@ -12,7 +12,7 @@ public class OrderConfirm implements Serializable {
     private List<OrderConfirmInvoices> invoices;
     private List<OrderConfirmProduct> product;
     private String shipping_fee;
-    private OrderConfirmAddress address;
+//    private OrderConfirmAddress address;
 
     public List<OrderConfirmInvoices> getInvoices() {
         return invoices;
@@ -38,13 +38,13 @@ public class OrderConfirm implements Serializable {
         this.shipping_fee = shipping_fee;
     }
 
-    public OrderConfirmAddress getAddress() {
-        return address;
-    }
-
-    public void setAddress(OrderConfirmAddress address) {
-        this.address = address;
-    }
+//    public OrderConfirmAddress getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(OrderConfirmAddress address) {
+//        this.address = address;
+//    }
 
     @Override
     public String toString() {
@@ -52,7 +52,7 @@ public class OrderConfirm implements Serializable {
                 "invoices=" + invoices +
                 ", product=" + product +
                 ", shipping_fee='" + shipping_fee + '\'' +
-                ", address=" + address +
+//                ", address=" + address +
                 '}';
     }
 }

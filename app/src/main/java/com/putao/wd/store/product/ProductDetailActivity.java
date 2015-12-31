@@ -18,7 +18,7 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
-import com.putao.wd.util.IndicatorUtils;
+import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -139,7 +139,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             public void onSuccess(String url, String result) {
                 Logger.d(result);
                 JSONObject object = JSON.parseObject(result);
-                IndicatorUtils.getInstance(mContext, navigation_bar.getRightView())
+                IndicatorHelper.getInstance(mContext, navigation_bar.getRightView())
                         .indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
                                 com.sunnybear.library.R.drawable.indicator_background, Color.WHITE);
             }

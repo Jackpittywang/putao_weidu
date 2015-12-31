@@ -24,7 +24,6 @@ import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -340,5 +339,4 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mEditShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext, cart.getPid(), cart);
         mEditShoppingCarPopupWindow.show(rl_shopping_car);
     }
-
 }

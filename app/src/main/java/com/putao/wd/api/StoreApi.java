@@ -308,4 +308,17 @@ public class StoreApi {
                 .addParam(REQUEST_ORDER_ID, order_id)
                 .build(RequestMethod.GET, URL_PAY);
     }
+
+    /**
+     * 获取默认地址
+     */
+    public static final String URL_DEFAULT_ADDRESS = BASE_URL + "address/getDefault";
+
+    /**
+     * 获取默认地址
+     */
+    public static Request getDefaultAddress() {
+        return PTWDRequestHelper.store()
+                .build(RequestMethod.GET, URL_DEFAULT_ADDRESS);
+    }
 }

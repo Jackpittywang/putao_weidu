@@ -13,13 +13,12 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.Address;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -30,6 +29,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/26.
  */
 public class AddressListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+    public static final String EVENT_SELECT_ADDRESS = "select_address";
+
     @Bind(R.id.rv_addresses)
     BasicRecyclerView rv_addresses;
     @Bind(R.id.rl_no_address)
@@ -62,9 +63,10 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
      * 收货地址列表
      */
     private void getAddressLists() {
-        rv_addresses.setOnItemClickListener(new OnItemClickListener() {
+        rv_addresses.setOnItemClickListener(new OnItemClickListener<Address>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
+            public void onItemClick(Address address, int position) {
+                EventBusHelper.post(address,EVENT_SELECT_ADDRESS);
                 finish();
             }
         });

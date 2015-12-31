@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
@@ -27,6 +29,8 @@ import butterknife.OnClick;
  * Created by wangou on 2015/12/08.
  */
 public class PayActivity extends PTWDActivity implements View.OnClickListener {
+    public static final String BUNDLE_ORDER_INFO = "order_info";
+
     public static final String BUNDLE_ORDER_ID = "order_id";
     public static final String BUNDLE_ORDER_SN = "order_sn";
     public static final String BUNDLE_ORDER_DATE = "order_date";
@@ -47,6 +51,8 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     private String order_date;
     private String order_price;
 
+    private OrderSubmitReturn mSubmitReturn;
+
     private String orderInfo;
     private Handler mHandler;
 
@@ -58,6 +64,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        mSubmitReturn = (OrderSubmitReturn) args.getSerializable(BUNDLE_ORDER_INFO);
         order_id = args.getString(BUNDLE_ORDER_ID);
         order_sn = args.getString(BUNDLE_ORDER_SN);
         order_date = args.getString(BUNDLE_ORDER_DATE);
@@ -92,16 +99,22 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                 }
             }
         };
-        pay(order_id);
+        pay(mSubmitReturn != null ? mSubmitReturn.getOrder_id() : order_id);
     }
 
     /**
      * 初始化页面
      */
     private void initView() {
-        tv_order_sn.setText(order_sn);
-        tv_order_date.setText(order_date);
-        tv_cash_pay_summoney.setText(order_price);
+        if (mSubmitReturn != null) {
+            tv_order_sn.setText(mSubmitReturn.getOrder_sn());
+            tv_order_date.setText(mSubmitReturn.getTime());
+            tv_cash_pay_summoney.setText(mSubmitReturn.getPrice());
+        } else {
+            tv_order_sn.setText(order_sn);
+            tv_order_date.setText(order_date);
+            tv_cash_pay_summoney.setText(order_price);
+        }
     }
 
     /**
@@ -125,6 +138,12 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     }
 
     @Override
+    public void onRightAction() {
+        startActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
     protected String[] getRequestUrls() {
         return new String[]{StoreApi.URL_PAY};
     }
@@ -134,6 +153,10 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_pay://马上支付
+                if (StringUtils.isEmpty(orderInfo)) {
+                    ToastUtils.showToastShort(mContext, "支付失败");
+                    return;
+                }
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -146,5 +169,15 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                 }).start();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+            startActivity(MainActivity.class);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

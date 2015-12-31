@@ -9,17 +9,17 @@ import com.sunnybear.library.view.BadgeView;
  * 指示工具
  * Created by guchenkai on 2015/12/28.
  */
-public class IndicatorUtils {
-    private static IndicatorUtils mInstance;
+public class IndicatorHelper {
+    private static IndicatorHelper mInstance;
     private BadgeView mIndicator;
 
-    public IndicatorUtils(Context context, View target) {
+    public IndicatorHelper(Context context, View target) {
         mIndicator = new BadgeView(context, target);
     }
 
-    public static IndicatorUtils getInstance(Context context, View target) {
+    public static IndicatorHelper getInstance(Context context, View target) {
         if (mInstance == null)
-            mInstance = new IndicatorUtils(context, target);
+            mInstance = new IndicatorHelper(context, target);
         return mInstance;
     }
 

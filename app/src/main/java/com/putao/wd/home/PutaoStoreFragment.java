@@ -17,7 +17,7 @@ import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
-import com.putao.wd.util.IndicatorUtils;
+import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BadgeView;
@@ -51,6 +51,8 @@ public class PutaoStoreFragment extends PTWDFragment {
     private ProductAdapter adapter;
     private StoreBannerAdapter bannerAdapter;
 
+    private IndicatorHelper mIndicatorHelper;
+
     private int currentPage = 1;
 
     @Override
@@ -64,6 +66,8 @@ public class PutaoStoreFragment extends PTWDFragment {
         addNavigation();
         setMainTitleColor(Color.WHITE);
         mHeader.attachTo(rv_content, true);
+
+        mIndicatorHelper = IndicatorHelper.getInstance(mActivity, navigation_bar.getRightView());
         adapter = new ProductAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();
@@ -114,9 +118,10 @@ public class PutaoStoreFragment extends PTWDFragment {
             public void onSuccess(String url, String result) {
                 Logger.d(result);
                 JSONObject object = JSON.parseObject(result);
-                IndicatorUtils.getInstance(mActivity, navigation_bar.getRightView())
-                        .indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
-                                com.sunnybear.library.R.drawable.indicator_background_2, Color.WHITE);
+                int count = object.getInteger("qt");
+                if (count != 0)
+                    mIndicatorHelper.indicator(count, BadgeView.POSITION_TOP_LEFT,
+                            com.sunnybear.library.R.drawable.indicator_background_2, Color.WHITE);
             }
         });
     }
@@ -175,6 +180,7 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     @Override
     public void onRightAction() {
+//        mIndicatorHelper.hide();
         startActivity(ShoppingCarActivity.class);
     }
 }
