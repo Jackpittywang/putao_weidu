@@ -40,6 +40,12 @@ public class ServiceList implements Serializable {
     private String depiction;
     private List<ServiceProduct> product;
     private ServiceOrderInfo order_info;
+    private List<Express> express;
+
+    //=========非接口传递值===========
+    private String statusText;//售后状态显示文本
+
+
 
     public String getId() {
         return id;
@@ -281,6 +287,22 @@ public class ServiceList implements Serializable {
         this.order_info = order_info;
     }
 
+    public List<Express> getExpress() {
+        return express;
+    }
+
+    public void setExpress(List<Express> express) {
+        this.express = express;
+    }
+
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
+    }
+
     @Override
     public String toString() {
         return "ServiceList{" +
@@ -314,6 +336,8 @@ public class ServiceList implements Serializable {
                 ", depiction='" + depiction + '\'' +
                 ", product=" + product +
                 ", order_info=" + order_info +
+                ", express=" + express +
                 '}';
     }
+
 }
