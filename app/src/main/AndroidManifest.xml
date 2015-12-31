@@ -225,10 +225,11 @@
         <activity
             android:name=".explore.DisPlayActivity"
             android:screenOrientation="portrait" />
-        <!-- 退款页面-->
+        <!--申请退款-->
         <activity
-            android:name=".me.service.ServiceRefundActivity"
+            android:name=".me.order.OrderRefundActivity"
             android:screenOrientation="portrait" />
+        <!-- 退款页面-->
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

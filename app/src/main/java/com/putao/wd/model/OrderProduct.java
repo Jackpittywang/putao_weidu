@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by guchenkai on 2015/12/9.
  */
 public class OrderProduct implements Serializable {
-    private String id;//id
+    private int id;//id
     private String order_id;//订单id
     private int product_id;//商品id
     private String product_number;//商品号
@@ -23,11 +23,11 @@ public class OrderProduct implements Serializable {
     private String allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

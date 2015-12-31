@@ -1,7 +1,6 @@
 package com.putao.wd.me.order;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
-import com.putao.wd.me.service.ServiceRefundActivity;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
@@ -24,7 +22,6 @@ import com.putao.wd.store.pay.PayActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
@@ -172,6 +169,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 Logger.d(result.toString());
                 mOrderDetail = result;
                 refreshView();
+                loading.dismiss();
             }
         });
     }
@@ -286,8 +284,8 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(ServiceRefundActivity.ORDER_ID, mOrderDetail.getId());
-                        startActivity(ServiceRefundActivity.class, bundle);
+                        bundle.putString(OrderRefundActivity.ORDER_ID, mOrderDetail.getId());
+                        startActivity(OrderRefundActivity.class, bundle);
                     }
                 });
                 break;

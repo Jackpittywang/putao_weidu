@@ -8,7 +8,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
-import com.putao.wd.me.service.ServiceRefundActivity;
 import com.putao.wd.model.Order;
 import com.putao.wd.store.pay.PayActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -199,8 +198,8 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
     public void eventAopplyRefund(String orderId) {
         Bundle bundle = new Bundle();
-        bundle.putString(ServiceRefundActivity.ORDER_ID, orderId);
-        startActivity(ServiceRefundActivity.class, bundle);
+        bundle.putString(OrderRefundActivity.ORDER_ID, orderId);
+        startActivity(OrderRefundActivity.class, bundle);
     }
     /*
         @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
@@ -242,7 +241,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         adapter.clear();
     }
 }
