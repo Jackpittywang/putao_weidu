@@ -193,7 +193,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         Bundle bundle = new Bundle();
         StringBuilder pid = new StringBuilder();
         Set<Integer> keys = mSelected.keySet();
-        for(Integer key : keys) {
+        for (Integer key : keys) {
             pid.append(mSelected.get(key).getPid() + "|");
         }
         bundle.putString(PRODUCT_ID, pid.substring(0, pid.length() - 1));
@@ -250,7 +250,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     private void setBottomButtonStyle(boolean canNext) {
         navigation_bar.setRightAction(canNext);
-        tv_closing.setBackgroundResource(canNext ? R.color.text_main_color_nor : R.color.color_C2C2C2);
+        ll_closing.setClickable(canNext);
+        ll_closing.setBackgroundResource(canNext ? R.color.text_main_color_nor : R.color.color_C2C2C2);
     }
 
     @OnClick({R.id.ll_closing, R.id.ll_all})

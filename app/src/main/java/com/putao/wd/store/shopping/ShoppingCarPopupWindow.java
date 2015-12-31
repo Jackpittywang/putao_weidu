@@ -91,6 +91,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                         List<Norms> normses = SpecUtils.getNormses(result.getSpec());
                         normses.add(new Norms());
                         adapter.addAll(normses);
+                        loading.dismiss();
                     }
                 });
     }
@@ -101,6 +102,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "添加成功！");
                 Logger.d(result.toString());
+                loading.dismiss();
             }
         });
     }
@@ -147,7 +149,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 ll_join_car.setClickable(true);
                 tv_product_price.setText(sku.getPrice());
                 adapter.resetAmount();
-                if(MathUtils.compare(mCount, sku.getQuantity())) {
+                if (MathUtils.compare(mCount, sku.getQuantity())) {
                     ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
                     ll_join_car.setClickable(false);
                 }

@@ -60,13 +60,14 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
     private String getGenericClassName() {
         Type genType = this.getClass().getGenericSuperclass();
         Type generic = ((ParameterizedType) genType).getActualTypeArguments()[0];
-        try {
-            Field mRawTypeName = generic.getClass().getDeclaredField("rawTypeName");
-            mRawTypeName.setAccessible(true);
-            return (String) mRawTypeName.get(generic);
-        } catch (Exception e) {
-            Logger.e("获取泛型类型错误.", e);
-        }
+        if (!(generic instanceof Class))
+            try {
+                Field mRawTypeName = generic.getClass().getDeclaredField("rawTypeName");
+                mRawTypeName.setAccessible(true);
+                return (String) mRawTypeName.get(generic);
+            } catch (Exception e) {
+                Logger.e("获取泛型类型错误.", e);
+            }
         return "";
     }
 

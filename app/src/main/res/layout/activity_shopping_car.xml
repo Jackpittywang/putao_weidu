@@ -164,6 +164,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:background="@color/text_main_color_sel"
+            android:clickable="false"
             android:orientation="horizontal">
 
             <TextView

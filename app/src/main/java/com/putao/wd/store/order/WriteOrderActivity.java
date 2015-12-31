@@ -55,6 +55,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     BasicRecyclerView rv_orders;//订单列表
     @Bind(R.id.tv_sum)
     TextView tv_sum;//总金额
+    @Bind(R.id.ll_submit)
+    LinearLayout ll_submit;
     @Bind(R.id.ll_receiving_address)
     LinearLayout ll_receiving_address;//有收货地址时
     @Bind(R.id.ll_no_receiving_address)
@@ -118,6 +120,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                     ll_receiving_address.setVisibility(View.VISIBLE);
                     ll_no_receiving_address.setVisibility(View.GONE);
                     setAddress(result);
+                    ll_submit.setBackgroundResource(R.color.text_main_color_nor);
+                    ll_submit.setClickable(true);
                 }
                 loading.dismiss();
             }
@@ -149,7 +153,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         return products;
     }
 
-    @OnClick({R.id.fl_address, R.id.ll_need_invoice, R.id.tv_submit})
+    @OnClick({R.id.fl_address, R.id.ll_need_invoice, R.id.ll_submit})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -159,7 +163,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             case R.id.ll_need_invoice://发票信息
                 startActivity(InvoiceInfoActivity.class);
                 break;
-            case R.id.tv_submit://去结算
+            case R.id.ll_submit://去结算
                 networkRequest(StoreApi.orderSubmit("2", pid, "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
                         new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
                             @Override
