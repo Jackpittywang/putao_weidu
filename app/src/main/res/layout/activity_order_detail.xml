@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/navigation_bar">
+        android:layout_below="@+id/navigation_bar"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,6 +175,7 @@
                     android:text="---- : -- --"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
+
                 <RelativeLayout
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
@@ -241,7 +244,6 @@
                     android:textColor="@color/text_color_646464"
                     android:textSize="@dimen/text_size_14sp" />
             </RelativeLayout>
-
 
 
             <TextView
@@ -504,8 +506,8 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:visibility="gone"
-        android:gravity="right">
+        android:gravity="right"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btn_order_left"
@@ -514,8 +516,8 @@
             android:layout_margin="10dp"
             android:background="@drawable/btn_order_state_selector"
             android:text="取消订单"
-            android:visibility="gone"
-            android:textColor="@color/service_btn_sel" />
+            android:textColor="@color/service_btn_sel"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_order_right"

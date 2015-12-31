@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.provider.Settings;
 
 /**
@@ -22,6 +23,13 @@ public final class AppUtils {
      */
     public static String getDeviceId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    /**
+     * 获取设备名称
+     */
+    public static String getDeviceName() {
+        return new Build().MODEL;
     }
 
     /**

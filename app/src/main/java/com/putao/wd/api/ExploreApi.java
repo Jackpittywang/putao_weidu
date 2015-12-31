@@ -7,7 +7,6 @@ import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
-import com.sunnybear.library.util.StringUtils;
 
 /**
  * 探索号接口
@@ -39,18 +38,33 @@ public class ExploreApi {
     /**
      * 成长日记首页接口（查询）
      */
+//    public static Request getDiaryIndex(String page) {
+//        FormEncodingRequestBuilder builder = PTWDRequestHelper.explore()
+//                .addParam(REQUEST_SLAVE_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+//                .addParam(REQUEST_PAGE, page);
+////                .addParam(REQUEST_START_TIME, start_time)
+////                .addParam(REQUEST_END_TIME, end_time);
+////        if (!StringUtils.isEmpty(slave_device_id))
+////            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
+//        return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
+//    }
+
+    /**
+     * 成长日记首页接口（查询）(暂时使用)
+     */
     public static Request getDiaryIndex(String page) {
         FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000265")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000529")
                 .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
                 .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+                .addParam(REQUEST_SLAVE_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(REQUEST_PAGE, page);
 //                .addParam(REQUEST_START_TIME, start_time)
 //                .addParam(REQUEST_END_TIME, end_time);
 //        if (!StringUtils.isEmpty(slave_device_id))
 //            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
-        return builder.build(RequestMethod.POST, URL_DIARY_INDEX);
+        return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
     }
 
     /**
@@ -71,6 +85,8 @@ public class ExploreApi {
                 .build(RequestMethod.POST, URL_SCAN_ADD);
     }
 
+    public static final String url_scan_add_deivce = BASE_URL + "get/captcha";
+
     /**
      * 扫码关注产品（维度客户端添加）
      *
@@ -79,7 +95,7 @@ public class ExploreApi {
     public static Request addDevice(String captcha_token) {
         return PTWDRequestHelper.explore()
                 .addParam(CAPTCHA_TOKEN, captcha_token)
-                .addParam(REQUEST_MASTER_DEVICE_NAME, "")
+                .addParam(REQUEST_MASTER_DEVICE_NAME, AppUtils.getDeviceName())
                 .build(RequestMethod.POST, URL_SCAN_ADD);
     }
 

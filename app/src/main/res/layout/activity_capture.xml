@@ -41,7 +41,7 @@
             android:layout_height="220dp"
             android:layout_marginTop="35dp"
             android:src="@drawable/scan_lightline"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </FrameLayout>
 
     <TextView
@@ -51,6 +51,30 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="将二维码对准方形扫描框内"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:drawableLeft="@drawable/icon_16_05"
+        android:drawablePadding="5dp"
+        android:padding="8dp"
+        android:text="二维码在哪里?"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:drawableLeft="@drawable/icon_16_05"
+        android:drawablePadding="5dp"
+        android:padding="8dp"
+        android:text="每个APP产品的二维码都需要关注吗?"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_18sp" />
 

@@ -34,7 +34,7 @@
                     android:layout_width="88dp"
                     android:layout_height="88dp"
                     android:layout_gravity="center_horizontal"
-                    auto:placeholderImage="@drawable/img_head_q"
+                    auto:placeholderImage="@drawable/img_head_default"
                     auto:roundingBorderColor="@color/white"
                     auto:roundingBorderWidth="1dp" />
 

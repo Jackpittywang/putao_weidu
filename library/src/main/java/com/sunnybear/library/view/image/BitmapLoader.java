@@ -3,7 +3,6 @@ package com.sunnybear.library.view.image;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.Toast;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -39,11 +38,6 @@ public class BitmapLoader {
         final Request request = new Request.Builder().url(url).get().build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
-                Toast.makeText(mActivity, "图片加载错误", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
             public void onResponse(Response response) throws IOException {
                 byte[] data = response.body().bytes();
                 final Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -56,11 +50,20 @@ public class BitmapLoader {
                         }
                     });
             }
+
+            @Override
+            public void onFailure(Request request, IOException e) {
+                if (callback != null)
+                    callback.onResult(null);
+            }
         });
     }
 
+    /**
+     *
+     */
     public interface BitmapCallback {
 
-        public void onResult(Bitmap bitmap);
+        void onResult(Bitmap bitmap);
     }
 }

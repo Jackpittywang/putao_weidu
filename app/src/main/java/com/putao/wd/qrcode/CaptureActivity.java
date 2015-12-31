@@ -111,7 +111,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     }
 
     private void initAnimation() {
-        animation = new TranslateAnimation(0, 0,-scanCropView.getHeight(), scanCropView.getHeight());
+        animation = new TranslateAnimation(0, 0, -scanCropView.getHeight(), scanCropView.getHeight());
         animation.setDuration(500);
         animation.setRepeatCount(Integer.MAX_VALUE);
         animation.setInterpolator(new LinearInterpolator());
@@ -277,18 +277,17 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     public void onSuccess(String url, JSONObject result) {
                         Logger.d(result.toString());
                         int http_code = result.getInteger("http_code");
-                        if (http_code == 200) {
+                        if (http_code == 200)
                             ToastUtils.showToastLong(mContext, "添加成功");
-                        } else {
+                        else
                             ToastUtils.showToastLong(mContext, "添加失败");
-                        }
                         loading.dismiss();
                         finish();
                     }
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
-                        //loading.dismiss();
+                        loading.dismiss();
                     }
                 });
                 break;
