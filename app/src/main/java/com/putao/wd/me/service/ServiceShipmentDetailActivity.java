@@ -58,17 +58,16 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-
         addNavigation();
 
-        serviceUuid = args.getString(KEY_ORDER_UUID);
-        if (serviceUuid == null) serviceUuid = "";
-
-        initComponent();
-        //开始请求包裹信息;
-
-        //初始化物流信息
-        initShipmentData();
+//        serviceUuid = args.getString(KEY_ORDER_UUID);
+//        if (serviceUuid == null) serviceUuid = "";
+//
+//        initComponent();
+//        //开始请求包裹信息;
+//
+//        //初始化物流信息
+//        initShipmentData();
 
     }
 

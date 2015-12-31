@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 订单详情
@@ -99,10 +100,8 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Bind(R.id.ll_invoice)
     LinearLayout ll_invoice;
 
-
     private ServiceAdapter adapter;
     private String serviceStatus;
-
 
 
     @Override
@@ -146,7 +145,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     private void setContent(ServiceList serviceList) {
         ServiceOrderInfo order_info = serviceList.getOrder_info();
         List<Express> express = serviceList.getExpress();
-        checkServiceType(serviceList.getService_type());
+        checkServiceType(serviceList.getService_type()+serviceList.getStatus());
         tv_service_no.setText(order_info.getOrder_sn());
         tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         tv_service_info.setText(serviceList.getDepiction());
@@ -173,42 +172,108 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     /**
      * 根据售后类型设置进度显示
      */
-    private void checkServiceType(String service_type) {
-        switch (service_type) {
-            case "1"://1换货
-
+    private void checkServiceType(String status) {
+        switch (status) {
+            case "11"://1换货
+                selectStepDeal();
                 break;
-            case "2"://2退货
-
+            case "12":
+            case "14":
+            case "15":
+            case "16":
+            case "17":
+                selectStepExpress();
                 break;
-            case "3"://3退款
-
-                rl_fill_order_no.setVisibility(View.GONE);
-                img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_nor);
+            case "13":
+            case "18":
+                selectStepComplete();
+                break;
+            case "21"://2退货
+                selectStepDeal();
+                break;
+            case "22":
+            case "24":
+            case "25":
+                selectStepExpress();
+                break;
+            case "23":
+            case "28":
+                selectStepComplete();
+                break;
+            case "31"://3退款
+                setBackMoneyStep();
+                selectStepDeal();
+                break;
+            case "33":
+            case "38":
+                setBackMoneyStepComplete();
                 break;
         }
 
     }
 
-    //    @OnClick(R.id.ll_shipment)
+    /**
+     * 设置"处理中"选中
+     */
+    private void selectStepDeal() {
+        v_status_waiting_shipment.setBackgroundResource(R.color.text_color_F5F5F5);
+        img_status_waiting_shipment.setImageResource(R.drawable.img_details_as_steps_02_sel);
+    }
+
+    /**
+     * 设置"物流"选中
+     */
+    private void selectStepExpress() {
+        selectStepDeal();
+        v_status_waiting_sign.setBackgroundResource(R.color.text_color_F5F5F5);
+        img_status_waiting_sign.setImageResource(R.drawable.img_details_as_steps_03_sel);
+    }
+
+    /**
+     * 设置"完成"选中
+     */
+    private void selectStepComplete() {
+        selectStepExpress();
+        v_status_sale_service.setBackgroundResource(R.color.text_color_F5F5F5);
+        img_status_sale_service.setImageResource(R.drawable.img_details_as_steps_04_sel);
+    }
+
+    /**
+     * 设置"退款"进度显示
+     */
+    private void setBackMoneyStep() {
+        rl_fill_order_no.setVisibility(View.GONE);
+        img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_nor);
+    }
+
+    /**
+     * 设置"退款"进度完成
+     */
+    private void setBackMoneyStepComplete() {
+        setBackMoneyStep();
+        selectStepDeal();
+        v_status_sale_service.setBackgroundResource(R.color.text_color_F5F5F5);
+        img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_sel);
+    }
+
+    @OnClick(R.id.ll_shipment)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.ll_shipment:// 全部
-//                openShipmentDetailActivity();
-//                break;
+            case R.id.ll_shipment:// 全部
+                openShipmentDetailActivity();
+                break;
         }
     }
 
-//    /**
-//     * 打开包裹详情页面
-//     */
-//    private void openShipmentDetailActivity() {
-//        Bundle bundle = new Bundle();
+    /**
+     * 打开包裹详情页面
+     */
+    private void openShipmentDetailActivity() {
+        Bundle bundle = new Bundle();
 //        bundle.putString(ServiceShipmentDetailActivity.KEY_ORDER_UUID, serviceDto.getServiceNo());
-//        startActivity(ServiceShipmentDetailActivity.class, bundle);
-//    }
-//
+        startActivity(ServiceShipmentDetailActivity.class, bundle);
+    }
 
 }
 
