@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 订单详情
@@ -255,25 +256,24 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_sel);
     }
 
-    //    @OnClick(R.id.ll_shipment)
+    @OnClick(R.id.ll_shipment)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.ll_shipment:// 全部
-//                openShipmentDetailActivity();
-//                break;
+            case R.id.ll_shipment:// 全部
+                openShipmentDetailActivity();
+                break;
         }
     }
 
-//    /**
-//     * 打开包裹详情页面
-//     */
-//    private void openShipmentDetailActivity() {
-//        Bundle bundle = new Bundle();
+    /**
+     * 打开包裹详情页面
+     */
+    private void openShipmentDetailActivity() {
+        Bundle bundle = new Bundle();
 //        bundle.putString(ServiceShipmentDetailActivity.KEY_ORDER_UUID, serviceDto.getServiceNo());
-//        startActivity(ServiceShipmentDetailActivity.class, bundle);
-//    }
-//
+        startActivity(ServiceShipmentDetailActivity.class, bundle);
+    }
 
 }
 

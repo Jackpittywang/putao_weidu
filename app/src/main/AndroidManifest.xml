@@ -205,6 +205,10 @@
         <activity
             android:name=".me.service.ServiceDetailActivity"
             android:screenOrientation="portrait" />
+        <!--售后包裹界面-->
+        <activity
+            android:name=".me.service.ServiceShipmentDetailActivity"
+            android:screenOrientation="portrait" />
         <!--图片浏览-->
         <activity
             android:name=".start.browse.PictrueBrowseActivity"
