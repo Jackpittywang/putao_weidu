@@ -16,7 +16,7 @@ public class ServiceOrderInfo implements Serializable {
     private int order_status;
     private String express_status;
     private int shipping_status;
-    private int pay_status;
+    private int pay_status;//支付状态--0未付款/1已全额付款/2退款/3部分款
     private String pay_trade_no;
     private String pay_time;
     private String outer_order_sn;

@@ -309,40 +309,47 @@
                     android:layout_marginTop="10dp"
                     android:background="#e1e1e1"/>
 
-                <TextView
-                    android:id="@+id/tv_receipt_type"
+                <LinearLayout
+                    android:id="@+id/ll_invoice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="发票类型："
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_receipt_head"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="发票抬头："
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    <TextView
+                        android:id="@+id/tv_receipt_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="发票类型："
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_16sp"/>
 
-                <TextView
-                    android:id="@+id/tv_receipt_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="发票内容："
-                    android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    <TextView
+                        android:id="@+id/tv_receipt_head"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="发票抬头："
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_16sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_receipt_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="发票内容："
+                        android:textColor="#313131"
+                        android:textSize="@dimen/text_size_16sp"/>
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_goods_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:paddingLeft="10dp"
-                android:gravity="center_vertical"
-                android:text="商品信息"
                 android:layout_marginTop="10dp"
                 android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="商品信息"
                 android:textColor="#646464"
                 android:textSize="@dimen/text_size_16sp"/>
 
@@ -355,7 +362,7 @@
                 auto:divider_color="@color/white"
                 auto:divider_height="1px"
                 auto:has_row_divider="true"
-                auto:is_inner="true" />
+                auto:is_inner="true"/>
 
             <LinearLayout
                 android:id="@+id/ll_goods_info"
