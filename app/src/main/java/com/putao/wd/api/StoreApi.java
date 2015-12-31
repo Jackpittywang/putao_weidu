@@ -296,7 +296,7 @@ public class StoreApi {
     /**
      * 手机支付
      */
-    public static final String URL_PAY = BASE_URL + "pay/order/mobile";
+    public static final String URL_PAY = BASE_URL + "pay/mobile/order";
 
     /**
      * 手机支付

@@ -229,6 +229,10 @@
         <activity
             android:name=".me.order.OrderRefundActivity"
             android:screenOrientation="portrait" />
+        <!--申请售后选择页面-->
+        <activity
+            android:name=".me.service.ServiceChooseActivity"
+            android:screenOrientation="portrait" />
         <!-- 退款页面-->
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->

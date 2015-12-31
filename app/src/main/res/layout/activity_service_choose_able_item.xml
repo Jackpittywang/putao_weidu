@@ -7,6 +7,15 @@
     android:padding="10dp">
 
 
+    <!--选择按钮-->
+    <com.sunnybear.library.view.SwitchButton
+        android:id="@+id/btn_sel"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        auto:norDrawable="@drawable/check_box_nor"
+        auto:selDrawable="@drawable/check_box_sel" />
     <!--商品图片-->
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_car_icon"
