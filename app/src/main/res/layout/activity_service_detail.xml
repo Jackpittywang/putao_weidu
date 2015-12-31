@@ -86,6 +86,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_fill_order_no"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
