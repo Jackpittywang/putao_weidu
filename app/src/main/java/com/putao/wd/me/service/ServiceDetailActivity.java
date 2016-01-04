@@ -3,7 +3,6 @@ package com.putao.wd.me.service;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +23,6 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -310,10 +308,6 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 })
                 .show();
     }
-
-
-
-
 }
 
 

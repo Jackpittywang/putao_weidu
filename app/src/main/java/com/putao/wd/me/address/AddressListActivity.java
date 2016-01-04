@@ -1,5 +1,7 @@
 package com.putao.wd.me.address;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -16,8 +18,10 @@ import com.putao.wd.model.Address;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.OnItemLongClickListener;
 
 import java.util.ArrayList;
 
@@ -62,12 +66,27 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         adapter = new AddressAdapter(mContext, null);
         rv_addresses.setAdapter(adapter);
         getAddressLists();
+
+        addListener();
     }
 
     /**
      * 收货地址列表
      */
     private void getAddressLists() {
+        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Address> result) {
+                if (result != null && result.size() > 0) {
+                    adapter.addAll(result);
+                    rl_no_address.setVisibility(View.GONE);
+                }
+                loading.dismiss();
+            }
+        });
+    }
+
+    private void addListener() {
         rv_addresses.setOnItemClickListener(new OnItemClickListener<Address>() {
             @Override
             public void onItemClick(Address address, int position) {
@@ -77,14 +96,31 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                 }
             }
         });
-        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
+        rv_addresses.setOnItemLongClickListener(new OnItemLongClickListener<Address>() {
             @Override
-            public void onSuccess(String url, ArrayList<Address> result) {
-                if (result != null && result.size() > 0) {
-                    adapter.addAll(result);
-                    rl_no_address.setVisibility(View.GONE);
-                }
-                loading.dismiss();
+            public void onItemLongClick(final Address address, int position) {
+                new AlertDialog.Builder(mContext)
+                        .setTitle("删除收货地址")
+                        .setMessage("是否删除该条收货地址")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                networkRequest(OrderApi.addressDelete(address.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+                                    @Override
+                                    public void onSuccess(String url, String result) {
+                                        Logger.d(result.toString());
+                                        loading.dismiss();
+                                    }
+                                });
+                                adapter.delete(address);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
             }
         });
     }
