@@ -1,6 +1,7 @@
 package com.putao.wd.me.service.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -9,11 +10,13 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceProduct;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.List;
 
@@ -66,6 +69,14 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
 
         adapter = new ServiceAdapter(context, products);
         holder.rv_service_inner.setAdapter(adapter);
+        holder.rv_service_inner.setOnItemClickListener(new OnItemClickListener<ServiceProduct>() {
+            @Override
+            public void onItemClick(ServiceProduct product, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getSale_product_id());
+                context.startActivity(ProductDetailActivity.class, bundle);
+            }
+        });
     }
 
     /**

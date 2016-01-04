@@ -162,7 +162,9 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_address://选择地址
-                startActivity(AddressListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(AddressListActivity.BUNDLE_IS_CLOSE, true);
+                startActivity(AddressListActivity.class, bundle);
                 break;
             case R.id.ll_need_invoice://发票信息
                 startActivity(InvoiceInfoActivity.class);

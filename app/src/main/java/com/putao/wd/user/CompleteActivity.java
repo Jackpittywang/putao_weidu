@@ -14,12 +14,14 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.UserInfo;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -41,6 +43,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/29.
  */
 public class CompleteActivity extends PTWDActivity implements View.OnClickListener {
+    public static final String EVENT_USER_INFO_SAVE_SUCCESS = "user_info_save_success";
+
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
     @Bind(R.id.iv_header_icon)
@@ -193,6 +197,8 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.i("保存用户信息");
+                        EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
+                        startActivity(MainActivity.class);
                         finish();
                     }
                 });

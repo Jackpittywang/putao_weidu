@@ -30,6 +30,7 @@ import butterknife.OnClick;
  */
 public class AddressListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     public static final String EVENT_SELECT_ADDRESS = "select_address";
+    public static final String BUNDLE_IS_CLOSE = "is_close";
 
     @Bind(R.id.rv_addresses)
     BasicRecyclerView rv_addresses;
@@ -42,6 +43,8 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     private CityDBManager mCityDBManager;
     private DistrictDBManager mDistrictDBManager;
 
+    private boolean isClose = false;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_list;
@@ -49,11 +52,13 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        addNavigation();
+        isClose = args.getBoolean(BUNDLE_IS_CLOSE);
+
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
         mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
         mDistrictDBManager = (DistrictDBManager) mApp.getDataBaseManager(DistrictDBManager.class);
 
-        addNavigation();
         adapter = new AddressAdapter(mContext, null);
         rv_addresses.setAdapter(adapter);
         getAddressLists();
@@ -66,8 +71,10 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         rv_addresses.setOnItemClickListener(new OnItemClickListener<Address>() {
             @Override
             public void onItemClick(Address address, int position) {
-                EventBusHelper.post(address,EVENT_SELECT_ADDRESS);
-                finish();
+                if (isClose) {
+                    EventBusHelper.post(address, EVENT_SELECT_ADDRESS);
+                    finish();
+                }
             }
         });
         networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {

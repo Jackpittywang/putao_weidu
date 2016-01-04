@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
@@ -61,13 +62,15 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        getUserInfo();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getOrderCount();
+        if (!MainActivity.isNotRefreshUserInfo) {
+            getOrderCount();
+            getUserInfo();
+        }
     }
 
     /**

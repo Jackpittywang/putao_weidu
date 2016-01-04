@@ -66,21 +66,24 @@ public class CityDBManager extends DataBaseManager<CityDB, String> {
 
     /**
      * 根据城市名称获得城市id
-     * @param cityName 城市名称
+     *
+     * @param province_id 省区id
+     * @param cityName    城市名称
      * @return 城市id
      */
-    public String getCityId(String cityName) {
-        CityDB cityDB=getQueryBuilder().where(CityDBDao.Properties.Name.eq(cityName)).uniqueOrThrow();
+    public String getCityId(String province_id, String cityName) {
+        CityDB cityDB = getQueryBuilder().where(CityDBDao.Properties.Province_id.eq(province_id), CityDBDao.Properties.Name.eq(cityName)).uniqueOrThrow();
         return cityDB.getCity_id();
     }
 
     /**
      * 根据城市名称获得城市id
+     *
      * @param cityId 城市名称
      * @return 城市id
      */
     public String getCityNameByCityId(String cityId) {
-        CityDB cityDB=getQueryBuilder().where(CityDBDao.Properties.City_id.eq(cityId)).uniqueOrThrow();
+        CityDB cityDB = getQueryBuilder().where(CityDBDao.Properties.City_id.eq(cityId)).uniqueOrThrow();
         return cityDB.getName();
     }
 }

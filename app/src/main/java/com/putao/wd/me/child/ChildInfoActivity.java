@@ -1,7 +1,6 @@
 package com.putao.wd.me.child;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,8 +81,20 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
         mTvIdentity = tv_identity.getText().toString();
         mTvSex = tv_sex.getText().toString();
         mTvBirthday = tv_birthday.getText().toString();
-        return (TextUtils.isEmpty(mEtNickname) || TextUtils.isEmpty(mTvIdentity)
-                || TextUtils.isEmpty(mTvSex) || TextUtils.isEmpty(mTvBirthday));
+        if (StringUtils.isEmpty(mEtNickname)) {
+            ToastUtils.showToastShort(mContext, "昵称不能为空");
+            return false;
+        } else if (StringUtils.isEmpty(mTvIdentity)) {
+            ToastUtils.showToastShort(mContext, "请选择身份");
+            return false;
+        } else if (StringUtils.isEmpty(mTvSex)) {
+            ToastUtils.showToastShort(mContext, "请选择性别");
+            return false;
+        } else if (StringUtils.isEmpty(mTvBirthday)) {
+            ToastUtils.showToastShort(mContext, "请选择生日");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -190,19 +201,16 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
 
     @Override
     public void onRightAction() {
-        if (checkInfo()) {
-            ToastUtils.showToastShort(this, "孩子信息没有填写完整");
-            return;
-        }
-        networkRequest(UserApi.setChildInfo(AccountHelper.getChildInfo().getBaby_id() + "", mEtNickname, mTvIdentity, mTvSex, mTvBirthday),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        loading.dismiss();
-                        Logger.i(result + "-----------------");
-                        ToastUtils.showToastShort(ChildInfoActivity.this, "保存成功！");
-                        finish();
-                    }
-                });
+        if (checkInfo())
+            networkRequest(UserApi.setChildInfo(AccountHelper.getChildInfo().getBaby_id() + "", mEtNickname, mTvIdentity, mTvSex, mTvBirthday),
+                    new SimpleFastJsonCallback<String>(String.class, loading) {
+                        @Override
+                        public void onSuccess(String url, String result) {
+                            loading.dismiss();
+                            Logger.i(result + "-----------------");
+                            ToastUtils.showToastShort(ChildInfoActivity.this, "保存成功！");
+                            finish();
+                        }
+                    });
     }
 }

@@ -12,6 +12,7 @@ import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.me.setting.SettingActivity;
+import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -26,6 +27,8 @@ import butterknife.Bind;
  */
 public class MainActivity extends BasicFragmentActivity<GlobalApplication> implements TabBar.TabItemSelectedListener {
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static boolean isNotRefreshUserInfo = false;
+
     @Bind(R.id.tb_tab)
     TabBar tb_tab;
     @Bind(R.id.ti_start_circle)
@@ -55,10 +58,6 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         addHome();
         mFragments = new SparseArray<>();
         addFragment();
-//        ti_start_circle.show(4);//显示指示数字
-//        ti_explore.show(4);//显示指示数字
-//        ti_store.show(4);//显示指示数字
-//        ti_me.show(4);//显示指示数字
         addListener();
     }
 
@@ -184,14 +183,21 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
+        isNotRefreshUserInfo = true;
         setCurrentItem(R.id.ti_start_circle);
         tb_tab.setTabItemSelected(R.id.ti_start_circle);
     }
 
     @Subcriber(tag = LoginActivity.EVENT_CANCEL_LOGIN)
-    public void enentCancelLogin(String tag) {
+    public void eventCancelLogin(String tag) {
         setCurrentItem(R.id.ti_start_circle);
         tb_tab.setTabItemSelected(R.id.ti_start_circle);
+    }
+
+    @Subcriber(tag = CompleteActivity.EVENT_USER_INFO_SAVE_SUCCESS)
+    public void eventUserInfoSaveSuccess(String tag) {
+        setCurrentItem(R.id.ti_me);
+        tb_tab.setTabItemSelected(R.id.ti_me);
     }
 
     /**

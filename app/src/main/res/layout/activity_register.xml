@@ -104,7 +104,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/text_size_16sp"
                 auto:click_background="@color/text_main_color_nor"
-                auto:countdown_time="10"
+                auto:countdown_time="60"
                 auto:text_after="获取验证码($s后重发)"
                 auto:text_before="获取验证码"
                 auto:unclick_background="@color/text_color_gray" />
