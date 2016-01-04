@@ -13,13 +13,10 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceAdapter;
-import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Express;
-import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
@@ -180,6 +177,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         switch (status) {
             case "11"://1换货
                 selectStepDeal();
+                btn_execute.setText("填写快递单号");
                 break;
             case "12":
             case "14":
@@ -260,14 +258,17 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_sel);
     }
 
-    @OnClick(R.id.ll_shipment)
+    @OnClick({R.id.ll_shipment, R.id.btn_execute})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_shipment:// 全部
+            case R.id.ll_shipment:// 查看物流信息
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable)express);
                 startActivity(ServiceShipmentDetailActivity.class, bundle);
+                break;
+            case R.id.btn_execute:
+                startActivity(ServiceExpressNumberActivity.class);
                 break;
         }
     }
