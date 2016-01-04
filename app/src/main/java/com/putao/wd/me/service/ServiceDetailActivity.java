@@ -217,7 +217,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 setBackMoneyStepComplete();
                 break;
         }
-        btn_execute.setVisibility(View.VISIBLE);
+//        btn_execute.setVisibility(View.VISIBLE);
     }
 
     /**
