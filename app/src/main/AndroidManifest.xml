@@ -209,6 +209,10 @@
         <activity
             android:name=".me.service.ServiceShipmentDetailActivity"
             android:screenOrientation="portrait" />
+        <!--售后填写快递单号-->
+        <activity
+            android:name=".me.service.ServiceExpressNumberActivity"
+            android:screenOrientation="portrait" />
         <!--图片浏览-->
         <activity
             android:name=".start.browse.PictrueBrowseActivity"
