@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
@@ -24,6 +25,8 @@ import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
@@ -83,6 +86,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        ll_submit.setClickable(false);
         sticky_layout.canScrollView();
 
         Bundle bundle = getIntent().getExtras();
@@ -120,7 +124,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                     ll_receiving_address.setVisibility(View.VISIBLE);
                     ll_no_receiving_address.setVisibility(View.GONE);
                     setAddress(result);
-                    ll_submit.setBackgroundResource(R.color.text_main_color_nor);
+                    ll_submit.setBackgroundColor(ColorConstant.MAIN_COLOR_NOR);
                     ll_submit.setClickable(true);
                 }
                 loading.dismiss();
@@ -164,6 +168,10 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                 startActivity(InvoiceInfoActivity.class);
                 break;
             case R.id.ll_submit://去结算
+                if (StringUtils.isEmpty(addressId)) {
+                    ToastUtils.showToastShort(mContext, "请填写收货地址");
+                    return;
+                }
                 networkRequest(StoreApi.orderSubmit("2", pid, "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
                         new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
                             @Override
@@ -184,6 +192,8 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         ll_receiving_address.setVisibility(View.VISIBLE);
         ll_no_receiving_address.setVisibility(View.GONE);
         setAddress(address);
+        ll_submit.setBackgroundColor(ColorConstant.MAIN_COLOR_NOR);
+        ll_submit.setClickable(true);
     }
 
     /**

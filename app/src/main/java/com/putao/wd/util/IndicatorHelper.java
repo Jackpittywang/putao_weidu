@@ -36,6 +36,7 @@ public class IndicatorHelper {
         mIndicator.setBackgroundResource(backgroundResId);
         mIndicator.setText(String.valueOf(count));
         mIndicator.setTextColor(textColor);
+        mIndicator.setBadgeMargin(-10, -15);
         mIndicator.show();
     }
 

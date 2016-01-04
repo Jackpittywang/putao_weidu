@@ -121,7 +121,7 @@ public final class ImageUtils {
      * @param view     view源
      * @param savePath 保存路径
      */
-    public static void cutOutViewToImage(ScrollView view, String savePath, OnImageSaveCallback callback) {
+    public static void cutOutScrollViewToImage(ScrollView view, String savePath, OnImageSaveCallback callback) {
         int mSrollViewHeight = 0;
         for (int i = 0; i < view.getChildCount(); i++) {
             View child = view.getChildAt(i);
@@ -150,7 +150,47 @@ public final class ImageUtils {
      * @param view     view源
      * @param savePath 保存路径
      */
-    public static void cutOutViewToImage(ScrollView view, String savePath) {
+    public static void cutOutScrollViewToImage(ScrollView view, String savePath) {
+        cutOutScrollViewToImage(view, savePath, null);
+    }
+
+    /**
+     * 截取画面保存到图片
+     *
+     * @param view     view源
+     * @param savePath 保存路径
+     */
+    public static void cutOutViewToImage(View view, String savePath, OnImageSaveCallback callback) {
+//        int mSrollViewHeight = 0;
+//        for (int i = 0; i < view.getChildCount(); i++) {
+//            View child = view.getChildAt(i);
+//            if (child instanceof LinearLayout || child instanceof RelativeLayout) {
+//                child.setBackgroundResource(R.color.white);
+//                mSrollViewHeight += child.getHeight();
+//            }
+//        }
+        view.setBackgroundResource(R.color.white);
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        File file = new File(savePath);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            Logger.d(isSuccess ? "保存图片成功" : "保存图片成功");
+            if (callback != null) callback.onImageSave(isSuccess);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 截取画面保存到图片
+     *
+     * @param view     view源
+     * @param savePath 保存路径
+     */
+    public static void cutOutViewToImage(View view, String savePath) {
         cutOutViewToImage(view, savePath, null);
     }
 

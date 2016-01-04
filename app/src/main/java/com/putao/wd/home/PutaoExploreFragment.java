@@ -10,10 +10,12 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.explore.DisPlayActivity;
+import com.putao.wd.explore.PlotActivity;
 import com.putao.wd.explore.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
+import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -155,5 +157,12 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         Bundle bundle = new Bundle();
         bundle.putSerializable(DisPlayActivity.BUNDLE_DISPLAY_DETAILS, exploreProduct);
         startActivity(DisPlayActivity.class, bundle);
+    }
+
+    @Subcriber(tag = ExploreAdapter.EVENT_DISPLAY)
+    public void eventDisplay(ExploreProductPlot plot) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, plot);
+        startActivity(PlotActivity.class, bundle);
     }
 }

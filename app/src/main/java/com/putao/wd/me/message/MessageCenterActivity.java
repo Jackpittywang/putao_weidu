@@ -7,7 +7,6 @@ import android.util.SparseArray;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
@@ -48,6 +47,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
             }
         };
         vp_message.setAdapter(adapter);
+        vp_message.setOffscreenPageLimit(mFragments.size());
         addListener();
     }
 

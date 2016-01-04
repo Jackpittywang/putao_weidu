@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.explore.PlotPreviewDialog;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;
@@ -38,6 +39,8 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 //    private List<SpannableStringBuilder> builders = new ArrayList<>();
 
     private ExploreDetailAdapter adapter;
+
+    private PlotPreviewDialog dialog;
 
     public ExploreAdapter(Context context, List<ExploreProduct> exploreProducts) {
         super(context, exploreProducts);
@@ -128,7 +131,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             }
             viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
             viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
-            ExploreProductPlot plot = exploreProduct.getPlot();
+            final ExploreProductPlot plot = exploreProduct.getPlot();
             if (plot != null) {
                 viewHolder.tv_content.setText(plot.getContent());
                 setPlotImage(viewHolder, plot);
@@ -137,7 +140,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
             viewHolder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBusHelper.post(EVENT_DISPLAY, EVENT_DISPLAY);
+                    EventBusHelper.post(plot, EVENT_DISPLAY);
                 }
             });
         }
@@ -240,12 +243,18 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     /**
      * 设置plot中教育理念下面的显示图片
      */
-    private void setPlotImage(ExploerMixedViewHolder viewHolder, ExploreProductPlot plot) {
-        if (plot.getImg_list() == null) {
+    private void setPlotImage(ExploerMixedViewHolder viewHolder, final ExploreProductPlot plot) {
+        if (plot.getImg_list() == null)
             viewHolder.iv_one_picture.setImageURL(plot.getImg_url());
-        } else {
+        else
             viewHolder.iv_one_picture.setImageURL(plot.getImg_list());
-        }
+        dialog = new PlotPreviewDialog(context, plot);
+        viewHolder.iv_one_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
     }
 
     /**

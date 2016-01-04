@@ -229,6 +229,10 @@
         <activity
             android:name=".explore.DisPlayActivity"
             android:screenOrientation="portrait" />
+        <!--教育理念页面-->
+        <activity
+            android:name=".explore.PlotActivity"
+            android:screenOrientation="portrait" />
         <!--申请退款-->
         <activity
             android:name=".me.order.OrderRefundActivity"
