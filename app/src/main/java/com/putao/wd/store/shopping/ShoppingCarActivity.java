@@ -140,6 +140,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 ToastUtils.showToastShort(mContext, "购物车删除成功");
                 Logger.w("购物车删除成功 = " + result.toString());
                 getCart();
+                initData();
+                adapter.finishEdit();
             }
         });
     }
