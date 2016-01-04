@@ -43,7 +43,9 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
         addNavigation();
 
         express = (List<Express>)getIntent().getSerializableExtra(KEY_EXPRESS_INFO);
-        initContent(express.get(0));
+        if (null != express && express.size() > 0) {
+            initContent(express.get(0));
+        }
 
     }
 

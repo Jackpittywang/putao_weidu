@@ -1,6 +1,7 @@
 package com.putao.wd.me.service;
 
 import android.os.Bundle;
+import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -149,7 +150,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         tv_service_info.setText(serviceList.getDepiction());
         tv_service_order_status.setText(serviceStatus);
-        if (null != express) {
+        if (null != express && express.size() > 0) {
             tv_no_shipment.setText(express.get(0).getExpress_message());
         }
         tv_customer_name.setText(order_info.getConsignee());
