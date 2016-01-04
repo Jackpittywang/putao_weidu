@@ -193,7 +193,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.i("保存用户信息");
-                       finish();
+                        finish();
                     }
                 });
     }

@@ -110,8 +110,6 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
             mAbleProduct.add(product);
             adapterAble.add(product);
         }
-        //TODO
-        btn_service_back.setEnabled(true);
     }
 
 
