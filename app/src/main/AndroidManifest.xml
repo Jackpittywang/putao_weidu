@@ -235,11 +235,15 @@
             android:screenOrientation="portrait" />
         <!--申请退款-->
         <activity
-            android:name=".me.order.OrderRefundActivity"
+            android:name=".me.service.ServiceRefundActivity"
             android:screenOrientation="portrait" />
         <!--申请售后选择页面-->
         <activity
             android:name=".me.service.ServiceChooseActivity"
+            android:screenOrientation="portrait" />
+        <!--申请退货-->
+        <activity
+            android:name=".me.service.ServiceBackActivity"
             android:screenOrientation="portrait" />
         <!-- 退款页面-->
         <!-- ===============================业务activity定义在这条线之上================================== -->

@@ -3,16 +3,18 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:id="@+id/rl_back_detail"
+    android:background="#ebebeb">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="申请退款"
+        auto:nav_main_title="填写退货信息"
         auto:nav_right_title="提交" />
 
+    <!--android:layout_above="@+id/rl_bottom"-->
     <ScrollView
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
@@ -53,15 +55,15 @@
                             android:layout_width="0dp"
                             android:layout_height="4dp"
                             android:layout_weight="1"
-                            android:background="#ffffff" />
+                            android:background="@color/text_color_F5F5F5" />
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/img_status1"
+                        android:id="@+id/img_status_waiting_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_refund_steps_01_sel" />
+                        android:src="@drawable/img_details_as_steps_01_sel" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -77,11 +79,33 @@
                         android:background="#d5acf7" />
 
                     <ImageView
-                        android:id="@+id/img_status2"
+                        android:id="@+id/img_status_waiting_shipment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_refund_steps_02_nor" />
+                        android:src="@drawable/img_details_as_steps_02_nor" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_fill_order_no"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/v_status_waiting_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="47dp"
+                        android:background="#d5acf7" />
+
+                    <ImageView
+                        android:id="@+id/img_status_waiting_sign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_details_as_steps_03_nor" />
 
                 </RelativeLayout>
 
@@ -112,11 +136,11 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/img_status3"
+                        android:id="@+id/img_status_sale_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_refund_steps_03_nor" />
+                        android:src="@drawable/img_details_as_steps_04_nor" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -125,65 +149,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="#ffffff"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center_vertical"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <TextView
-                    android:id="@+id/tv_service_no_text"
+                    android:id="@+id/tv_service_money_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="退款金额"
-                    android:textColor="#313131"
+                    android:text="退货金额"
+                    android:textColor="#646464"
                     android:textSize="@dimen/text_size_18sp" />
 
                 <TextView
-                    android:id="@+id/tv_service_status"
+                    android:id="@+id/tv_service_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="right"
-                    android:text="￥399"
+                    android:text="￥399.00"
                     android:textColor="#ed5564"
                     android:textSize="@dimen/text_size_18sp" />
             </RelativeLayout>
 
-            <!--订单列表-->
+                <!--售后列表-->
+
             <com.sunnybear.library.view.recycler.BasicRecyclerView
-                android:id="@+id/rv_goods"
+                android:id="@+id/rv_service_back_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                auto:divider_color="@color/color_EBEBEB"
                 auto:divider_height="1px"
                 auto:has_row_divider="true"
-                auto:is_inner="true" />
+                auto:is_inner="true" />>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_EBEBEB"></View>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Spinner
-                    android:id="@+id/service_spinner"
-                    style="@style/service_spinner_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"
-                    android:animationCache="true"></Spinner>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:paddingRight="15dp"
-                    android:src="@drawable/btn_arrow_down"/>
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

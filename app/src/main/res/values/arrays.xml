@@ -27,6 +27,7 @@
         <item>15岁</item>
     </string-array>
     <string-array name="refund_spinnername">
+        <item>退款原因</item>
         <item>拍错了/订单信息有误</item>
         <item>不想要了</item>
         <item>改选其他商品</item>
@@ -34,5 +35,25 @@
         <item>优惠券/礼品卡使用问题</item>
         <item>支付遇到问题</item>
         <item>不想买了</item>
+    </string-array>
+    <string-array name="back_spinnername">
+        <item>退货原因</item>
+        <item>不想要/不需要该商品</item>
+        <item>外包装完好，商品存在质量问题</item>
+        <item>外包装破损，导致商品破损</item>
+        <item>收到的商品与产品描述不一致</item>
+        <item>做工问题/工艺瑕疵/掉漆/褪色</item>
+        <item>少件/空包裹/错发/漏发</item>
+        <item>发票问题</item>
+        <item>性价比不高</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="change_spinnername">
+        <item>换货原因</item>
+        <item>外包装完好，商品存在质量问题</item>
+        <item>外包装破损，导致商品破损</item>
+        <item>做工问题/工艺瑕疵/掉漆/褪色</item>
+        <item>发货问题</item>
+        <item>其他</item>
     </string-array>
 </resources>

@@ -2,30 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
-
-
-    <!--商品图片-->
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_car_icon"
-        style="@style/image_round_4dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="8dp" />
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    >
 
     <!--商品信息-->
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/iv_car_icon">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="8dp">
+
+
+        <!--商品图片-->
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_car_icon"
+            style="@style/image_round_4dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
 
         <LinearLayout
+            android:id="@+id/ll_product_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="65dp"
+            android:layout_toRightOf="@id/iv_car_icon"
             android:orientation="vertical">
 
             <!--商品标题-->
@@ -127,4 +132,47 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:background="@color/color_EBEBEB"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <Spinner
+            android:id="@+id/service_spinner"
+            style="@style/service_spinner_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animationCache="true"
+            android:spinnerMode="dialog"></Spinner>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@drawable/btn_arrow_down" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:background="@color/color_EBEBEB"></View>
+
+    <GridView
+        android:id="@+id/gv_service_back_image"
+        android:layout_width="match_parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_height="100dp"
+        android:numColumns="4"
+        />
 </LinearLayout>
