@@ -32,7 +32,7 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
     public static final String KEY_ORDER_UUID = "serviceUuid";
     @Bind(R.id.ll_package_list)
     LinearLayout ll_package_list;// 放包裹列表的布局
-    @Bind(R.id.hsv_package_list)
+//    @Bind(R.id.hsv_package_list)
     HorizontalScrollView hsv_package_list;// 包裹列表的horizontalscrollview
     @Bind(R.id.tv_service_goods_text)
     TextView tv_service_goods_text;

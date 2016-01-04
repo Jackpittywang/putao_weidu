@@ -3,7 +3,8 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fl_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,6 +78,6 @@
         android:id="@+id/jump_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        auto:jump_color="@color/text_main_color_nor"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        auto:jump_color="@color/text_main_color_nor" />
 </FrameLayout>
