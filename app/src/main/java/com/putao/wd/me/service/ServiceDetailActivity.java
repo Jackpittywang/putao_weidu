@@ -3,6 +3,7 @@ package com.putao.wd.me.service;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,10 +20,13 @@ import com.putao.wd.model.Express;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -290,11 +294,12 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(ServiceList.class, loading) {
+                        networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                Logger.d("取消售后 = " + result.toString());
-//                                startActivity(ServiceListActivity.class);
+                                ToastUtils.showToastShort(mContext, "取消售后");
+                                startActivity(ServiceListActivity.class);
+                                ActivityManager.getInstance().removeCurrentActivity();
                                 loading.dismiss();
                             }
                         });

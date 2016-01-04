@@ -253,14 +253,14 @@ public class OrderApi {
      *  取消售后
      */
     public static Request cancelService(String serviceId) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
-        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
-                .addParam(REQUEST_ID, serviceId);
-        return builder.build(RequestMethod.POST, URL_CANCEL_SALE);
-//        return PTWDRequestHelper.store()
+//        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+//        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
 //                .addParam(REQUEST_ID, serviceId);
-//                .build(RequestMethod.POST, URL_Cancel_SALE);
+//        return builder.build(RequestMethod.POST, URL_CANCEL_SALE);
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ID, serviceId)
+                .build(RequestMethod.POST, URL_CANCEL_SALE);
     }
 
     /**
@@ -295,14 +295,14 @@ public class OrderApi {
      * @param page 取第几页
      */
     public static Request getServiceLists(String page) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
-        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
-                .addParam(REQUEST_PAGE, page);
-        return builder.build(RequestMethod.POST, URL_SERVICE_LIST);
-//        return PTWDRequestHelper.store()
-//                .addParam(REQUEST_PAGE, page)
-//                .build(RequestMethod.POST, URL_SERVICE_LIST);
+//        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+//        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+//                .addParam(REQUEST_PAGE, page);
+//        return builder.build(RequestMethod.POST, URL_SERVICE_LIST);
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_PAGE, page)
+                .build(RequestMethod.POST, URL_SERVICE_LIST);
     }
 
     /**
@@ -314,14 +314,14 @@ public class OrderApi {
      * 售后详情
      */
     public static Request getServiceDetail(String id) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
-        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
-                .addParam(REQUEST_ID, id);
-        return builder.build(RequestMethod.GET, URL_SERVICE_DETAIL);
-//        return PTWDRequestHelper.store()
-//                .addParam(REQUEST_ID, id)
-//                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
+//        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+//        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+//                .addParam(REQUEST_ID, id);
+//        return builder.build(RequestMethod.GET, URL_SERVICE_DETAIL);
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ID, id)
+                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
     }
 
     /**
@@ -337,14 +337,14 @@ public class OrderApi {
      */
     @Deprecated
     public static Request getExpressService(String order_id) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
-        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
-                .addParam(REQUEST_ORDER_ID, order_id);
-        return builder.build(RequestMethod.GET, URL_EXPRESS_SERVICE);
-//        return PTWDRequestHelper.store()
-//                .addParam(REQUEST_ORDER_ID, order_id)
-//                .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
+//        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+//        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+//                .addParam(REQUEST_ORDER_ID, order_id);
+//        return builder.build(RequestMethod.GET, URL_EXPRESS_SERVICE);
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
     }
 
 }
