@@ -2,36 +2,24 @@ package com.putao.wd.me.service;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.me.order.OrderRefundActivity;
-import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.service.adapter.ServiceChooseAdapter;
-import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
-import com.putao.wd.model.Product;
-import com.putao.wd.model.Service;
-import com.putao.wd.model.ServiceList;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.Bind;
 
@@ -52,6 +40,8 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     Button btn_service_back;//退货按钮
     @Bind(R.id.btn_service_change)
     Button btn_service_change;//换货按钮
+
+    public static final String SERVICE_PRODUCT = "service_product";
 
     private ServiceChooseAdapter adapterAble;
     private OrdersAdapter adapterUnable;
@@ -104,6 +94,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
                         adapterAble.clear();
                         adapterUnable.clear();
                         chooseData();
+                        loading.dismiss();
                     }
                 });
     }
@@ -119,6 +110,8 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
             mAbleProduct.add(product);
             adapterAble.add(product);
         }
+        //TODO
+        btn_service_back.setEnabled(true);
     }
 
 
@@ -196,15 +189,15 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
 
     @Override
     public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ServiceRefundActivity.ORDER_ID,mOrderId);
+        bundle.putSerializable(SERVICE_PRODUCT, (Serializable) mOrder.getProduct());
         switch (v.getId()){
             case R.id.btn_service_refund:
-                Bundle bundle = new Bundle();
-                bundle.putString(OrderRefundActivity.ORDER_ID,mOrderId);
-                bundle.putSerializable(OrderRefundActivity.REFUND_PRODUCT, (Serializable) mFocusProducts);
-                startActivity(OrderRefundActivity.class,bundle);
+                startActivity(ServiceRefundActivity.class,bundle);
                 break;
             case R.id.btn_service_back:
-
+                startActivity(ServiceBackActivity.class,bundle);
                 break;
             case R.id.btn_service_change:
                 break;

@@ -1,4 +1,4 @@
-package com.putao.wd.me.order;
+package com.putao.wd.me.service;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
-import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductData;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -24,10 +23,8 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -36,11 +33,10 @@ import butterknife.Bind;
  * 订单详情
  * Created by wangou on 15/11/29.
  */
-public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
+public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER = "service";
     public static final String ORDER_ID = "orderId";
-    public static final String REFUND_PRODUCT = "refund_product";
     private Order mOrder;
     private String mOrderId;
     ArrayList<OrderProduct> mProducts;
@@ -62,7 +58,7 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
     View v_status_waiting_pay;
 
     private ServiceDto serviceDto;
-
+    private double totalPrice;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_service_refund_detail;
@@ -75,7 +71,7 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
     }
 
     private void initView() {
-        tv_service_status.setText("￥" + mOrder.getTotal_amount());
+        tv_service_status.setText("￥" + totalPrice);
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mItems);
         service_spinner.setAdapter(stringArrayAdapter);
         OrdersAdapter ordersAdapter = new OrdersAdapter(mContext, mProducts);
@@ -85,25 +81,27 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
 
     private void initData() {
         mOrderId = args.getString(ORDER_ID);
-        mProducts = (ArrayList<OrderProduct>) args.getSerializable(REFUND_PRODUCT);
+        mProducts = (ArrayList<OrderProduct>) args.getSerializable(ServiceChooseActivity.SERVICE_PRODUCT);
         mItems = getResources().getStringArray(R.array.refund_spinnername);
-        networkRequest(OrderApi.orderAfterSale(mOrderId),
-                new SimpleFastJsonCallback<Order>(Order.class, loading) {
-                    @Override
-                    public void onSuccess(String url, Order result) {
-                        Logger.d(result.toString());
-                        mOrder = result;
-                        initView();
-                    }
-                });
+        totalPrice = 0;
+        for (OrderProduct product : mProducts) {
+            double price = Double.parseDouble(product.getPrice());
+            int quantity = Integer.parseInt(product.getQuantity());
+            totalPrice += price * quantity;
+        }
+        initView();
     }
 
     @Override
     public void onRightAction() {
         super.onRightAction();
+        int productReason = service_spinner.getSelectedItemPosition();//理由
+        if(productReason == 0 ){
+            ToastUtils.showToastShort(mContext,"请选择退款原因");
+            return;
+        }
         String allProductId = "";
         Map<String, ProductData> productDataMap = new HashMap<>();
-        int productReason = service_spinner.getSelectedItemPosition()+1;//理由
         for (OrderProduct product : mProducts) {
             allProductId = allProductId + "," + product.getProduct_id();
             ProductData productData = new ProductData();
@@ -112,21 +110,21 @@ public class OrderRefundActivity extends PTWDActivity<GlobalApplication> {
             productData.setDescription("");
             productData.setImage("");
             productData.setQuantity(product.getQuantity());
-            productDataMap.put(product.getProduct_id()+"",productData);
+            productDataMap.put(product.getProduct_id() + "", productData);
         }
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.putAll(productDataMap);
         String str = jsonObject.toJSONString();
 
-        networkRequest(OrderApi.orderSubmitAfterSale(mOrder.getId(), "3", "", allProductId.substring(1),jsonObject.toJSONString()),
+        networkRequest(OrderApi.orderSubmitAfterSale(mOrderId, "3", "", allProductId.substring(1), jsonObject.toJSONString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
                         img_status1.setImageResource(R.drawable.img_details_refund_steps_01_sel);
                         v_status_waiting_pay.setBackgroundColor(Color.WHITE);
-                        ToastUtils.showToastShort(mContext,"申请提交成功,请等待审核");
+                        ToastUtils.showToastShort(mContext, "申请提交成功,请等待审核");
                         loading.dismiss();
                     }
 
