@@ -208,5 +208,4 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             super(itemView);
         }
     }
-
 }
