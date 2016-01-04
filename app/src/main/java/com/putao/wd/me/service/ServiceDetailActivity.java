@@ -26,6 +26,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +102,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     LinearLayout ll_invoice;
 
     private ServiceAdapter adapter;
+    private List<Express> express;
     private String serviceStatus;
 
 
@@ -144,7 +146,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
      */
     private void setContent(ServiceList serviceList) {
         ServiceOrderInfo order_info = serviceList.getOrder_info();
-        List<Express> express = serviceList.getExpress();
+        express = serviceList.getExpress();
         checkServiceType(serviceList.getService_type() + serviceList.getStatus());
         tv_service_no.setText(order_info.getOrder_sn());
         tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
@@ -264,7 +266,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         switch (v.getId()) {
             case R.id.ll_shipment:// 全部
                 Bundle bundle = new Bundle();
-//                bundle.putString(ServiceShipmentDetailActivity.KEY_ORDER_UUID, serviceDto.getServiceNo());
+                bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable)express);
                 startActivity(ServiceShipmentDetailActivity.class, bundle);
                 break;
         }

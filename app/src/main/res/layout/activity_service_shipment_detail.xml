@@ -38,7 +38,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,8 +72,7 @@
                 android:background="@color/white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:padding="10dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -118,14 +120,14 @@
                 android:textSize="@dimen/text_size_18sp" />
 
             <LinearLayout
-                android:id="@+id/ll_package_shipment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:visibility="gone">
-            </LinearLayout>
+            android:id="@+id/ll_package_shipment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+        </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
