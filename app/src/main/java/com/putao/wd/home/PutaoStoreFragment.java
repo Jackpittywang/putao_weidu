@@ -73,10 +73,8 @@ public class PutaoStoreFragment extends PTWDFragment {
         addListener();
         //广告位
         getStoreHome();
-        getCartCount();
         refresh();
     }
-
 
     /**
      * 获取葡商城首页信息
@@ -122,6 +120,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                 if (count != 0)
                     mIndicatorHelper.indicator(count, BadgeView.POSITION_TOP_LEFT,
                             com.sunnybear.library.R.drawable.indicator_background_2, Color.WHITE);
+                loading.dismiss();
             }
         });
     }
@@ -164,7 +163,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         super.onStart();
         if (isStop)
             isStop = bl_banner.startAutoScroll();
-        loading.dismiss();
+        getCartCount();
     }
 
     @Override

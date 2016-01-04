@@ -1,6 +1,5 @@
 package com.putao.wd.store.product;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -71,6 +70,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     private String shareUrl;//分享的Url
 
+    private IndicatorHelper mIndicatorHelper;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_detail;
@@ -82,11 +83,11 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         product_id = args.getString(BUNDLE_PRODUCT_ID);
 
         sticky_layout.canScrollView();
+        mIndicatorHelper = IndicatorHelper.getInstance(mContext, navigation_bar.getRightView());
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
 
         getProductDetail(product_id);
-        getCartCount();
 
         stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
     }
@@ -141,9 +142,9 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             public void onSuccess(String url, String result) {
                 Logger.d(result);
                 JSONObject object = JSON.parseObject(result);
-                IndicatorHelper.getInstance(mContext, navigation_bar.getRightView())
-                        .indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
-                                com.sunnybear.library.R.drawable.indicator_background, Color.WHITE);
+                mIndicatorHelper.indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
+                        com.sunnybear.library.R.drawable.indicator_background, R.color.text_main_color_nor);
+                loading.dismiss();
             }
         });
     }
@@ -153,6 +154,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         super.onStart();
         if (isStop)
             isStop = bl_banner.startAutoScroll();
+        getCartCount();
     }
 
     @Override
