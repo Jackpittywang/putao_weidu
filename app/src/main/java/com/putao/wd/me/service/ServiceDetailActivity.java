@@ -193,6 +193,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 break;
             case "21"://2退货
                 selectStepDeal();
+                btn_execute.setText("填写快递单号");
                 break;
             case "22":
             case "24":
@@ -206,6 +207,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             case "31"://3退款
                 setBackMoneyStep();
                 selectStepDeal();
+                btn_execute.setText("填写快递单号");
                 break;
             case "33":
             case "38":
@@ -230,6 +232,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         selectStepDeal();
         v_status_waiting_sign.setBackgroundResource(R.color.text_color_F5F5F5);
         img_status_waiting_sign.setImageResource(R.drawable.img_details_as_steps_03_sel);
+        btn_execute.setVisibility(View.GONE);
     }
 
     /**
@@ -257,6 +260,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         selectStepDeal();
         v_status_sale_service.setBackgroundResource(R.color.text_color_F5F5F5);
         img_status_sale_service.setImageResource(R.drawable.img_details_refund_steps_03_sel);
+        btn_execute.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.ll_shipment, R.id.btn_execute})
