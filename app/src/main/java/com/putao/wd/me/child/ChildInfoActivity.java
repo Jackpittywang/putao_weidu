@@ -82,8 +82,8 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
         mTvIdentity = tv_identity.getText().toString();
         mTvSex = tv_sex.getText().toString();
         mTvBirthday = tv_birthday.getText().toString();
-        return !(TextUtils.isEmpty(mEtNickname) && TextUtils.isEmpty(mTvIdentity)
-                && TextUtils.isEmpty(mTvSex) && TextUtils.isEmpty(mTvBirthday));
+        return (TextUtils.isEmpty(mEtNickname) || TextUtils.isEmpty(mTvIdentity)
+                || TextUtils.isEmpty(mTvSex) || TextUtils.isEmpty(mTvBirthday));
     }
 
     /**
@@ -190,7 +190,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
 
     @Override
     public void onRightAction() {
-        if (!checkInfo()) {
+        if (checkInfo()) {
             ToastUtils.showToastShort(this, "孩子信息没有填写完整");
             return;
         }
