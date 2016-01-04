@@ -29,27 +29,18 @@ import butterknife.Bind;
  */
 public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
 
-    public static final String KEY_ORDER_UUID = "serviceUuid";
-    @Bind(R.id.ll_package_list)
-    LinearLayout ll_package_list;// 放包裹列表的布局
-    @Bind(R.id.hsv_package_list)
-    HorizontalScrollView hsv_package_list;// 包裹列表的horizontalscrollview
-    @Bind(R.id.tv_service_goods_text)
-    TextView tv_service_goods_text;
-    @Bind(R.id.img_goods)
-    ImageDraweeView img_goods;
-    @Bind(R.id.tv_name)
-    TextView tv_name;
-    @Bind(R.id.tv_number)
-    TextView tv_number;
-    @Bind(R.id.tv_shipment_text)
-    TextView tv_shipment_text;
-    @Bind(R.id.tv_package_status)
-    TextView tv_package_status;
+//    public static final String KEY_ORDER_UUID = "serviceUuid";
+
+    @Bind(R.id.tv_company_name)
+    TextView tv_company_name;
+    @Bind(R.id.tv_express_number)
+    TextView tv_express_number;
+    @Bind(R.id.tv_express_status)
+    TextView tv_express_status;
     @Bind(R.id.ll_package_shipment)
     LinearLayout ll_package_shipment;
 
-    private String serviceUuid = "";
+//    private String serviceUuid = "";
 
     @Override
     protected int getLayoutId() {
@@ -85,7 +76,7 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
         serviceShipmentDto.setShipmentInfoList(infoArr);
 
         //刷新界面
-        refreshView(serviceShipmentDto);
+//        refreshView(serviceShipmentDto);
     }
 
 
@@ -115,47 +106,47 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
 //        ll_package_shipment = (LinearLayout) findViewById(R.id.ll_package_shipment);
     }
 
-    private void refreshView(ServiceShipmentDto serviceShipmentDto) {
+//    private void refreshView(ServiceShipmentDto serviceShipmentDto) {
+//
+//        img_goods.setImageURL(serviceShipmentDto.getIconUrl());
+//        tv_name.setText(serviceShipmentDto.getName());
+//        tv_number.setText("共" + serviceShipmentDto.getNumber() + "件");
+//
+//        List<String> infoArr = serviceShipmentDto.getShipmentInfoList();
+//        if (infoArr == null || infoArr.size() < 1) {
+//            tv_package_status.setText("还没有物流信息");
+//            tv_package_status.setTextColor(0xff959595);
+//            ll_package_shipment.setVisibility(View.INVISIBLE);
+//            return;
+//        }
+//        tv_package_status.setText("有物流信息");
+//        tv_package_status.setTextColor(0xff985ec9);
+//        ll_package_shipment.setVisibility(View.VISIBLE);
+//        ll_package_shipment.removeAllViews();
+//        int infoSize = infoArr.size();
+//        for (int i = 0; i < infoSize; i++) {
+//            ServiceShipmentInfoItemDto serviceShipmentInfoItemDto = new ServiceShipmentInfoItemDto();
+//            if (i == 0) serviceShipmentInfoItemDto.setShowHighLightImage(true);
+//            else
+//                serviceShipmentInfoItemDto.setShowHighLightImage(false);
+//
+//            if (i == 0) { // 第一个
+//                serviceShipmentInfoItemDto.setShowTopLine(false);
+//                serviceShipmentInfoItemDto.setShowBottomLine(true);
+//            } else if (infoSize > 1 && i == infoSize - 1) { //最后一个
+//                serviceShipmentInfoItemDto.setShowTopLine(true);
+//                serviceShipmentInfoItemDto.setShowBottomLine(false);
+//            } else { //中间的
+//                serviceShipmentInfoItemDto.setShowTopLine(true);
+//                serviceShipmentInfoItemDto.setShowBottomLine(true);
+//            }
+//            serviceShipmentInfoItemDto.setShipmentInfo(infoArr.get(i));
+//            ServiceShipmentInfoItem serviceShipmentInfoItem = new ServiceShipmentInfoItem(this, serviceShipmentInfoItemDto);
+//            ll_package_shipment.addView(serviceShipmentInfoItem);
+//        }
 
-        img_goods.setImageURL(serviceShipmentDto.getIconUrl());
-        tv_name.setText(serviceShipmentDto.getName());
-        tv_number.setText("共" + serviceShipmentDto.getNumber() + "件");
 
-        List<String> infoArr = serviceShipmentDto.getShipmentInfoList();
-        if (infoArr == null || infoArr.size() < 1) {
-            tv_package_status.setText("还没有物流信息");
-            tv_package_status.setTextColor(0xff959595);
-            ll_package_shipment.setVisibility(View.INVISIBLE);
-            return;
-        }
-        tv_package_status.setText("有物流信息");
-        tv_package_status.setTextColor(0xff985ec9);
-        ll_package_shipment.setVisibility(View.VISIBLE);
-        ll_package_shipment.removeAllViews();
-        int infoSize = infoArr.size();
-        for (int i = 0; i < infoSize; i++) {
-            ServiceShipmentInfoItemDto serviceShipmentInfoItemDto = new ServiceShipmentInfoItemDto();
-            if (i == 0) serviceShipmentInfoItemDto.setShowHighLightImage(true);
-            else
-                serviceShipmentInfoItemDto.setShowHighLightImage(false);
-
-            if (i == 0) { // 第一个
-                serviceShipmentInfoItemDto.setShowTopLine(false);
-                serviceShipmentInfoItemDto.setShowBottomLine(true);
-            } else if (infoSize > 1 && i == infoSize - 1) { //最后一个
-                serviceShipmentInfoItemDto.setShowTopLine(true);
-                serviceShipmentInfoItemDto.setShowBottomLine(false);
-            } else { //中间的
-                serviceShipmentInfoItemDto.setShowTopLine(true);
-                serviceShipmentInfoItemDto.setShowBottomLine(true);
-            }
-            serviceShipmentInfoItemDto.setShipmentInfo(infoArr.get(i));
-            ServiceShipmentInfoItem serviceShipmentInfoItem = new ServiceShipmentInfoItem(this, serviceShipmentInfoItemDto);
-            ll_package_shipment.addView(serviceShipmentInfoItem);
-        }
-
-
-    }
+//    }
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {

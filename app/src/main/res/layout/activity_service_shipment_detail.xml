@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="物流公司"
                 android:textColor="@color/text_color_646464"
                 android:textSize="@dimen/text_size_16sp" />
@@ -40,27 +40,18 @@
                 android:background="@color/white"
                 android:padding="10dp">
 
-                <com.sunnybear.library.view.image.ImageDraweeView
-                    android:id="@+id/img_goods"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:visibility="gone"
-                    android:layout_centerVertical="true" />
-
                 <TextView
-                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/img_goods"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="物流公司"
+                    android:text="物流公司: "
                     android:textColor="#313131"
                     android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
-                    android:id="@+id/tv_number"
+                    android:id="@+id/tv_company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/img_goods"
@@ -72,25 +63,57 @@
                     android:textSize="@dimen/text_size_14sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_goods"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="快递单号: "
+                    android:textColor="#313131"
+                    android:textSize="@dimen/text_size_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_express_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/img_goods"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/img_goods"
+                    android:layout_toRightOf="@+id/img_goods"
+                    android:text="0000000000000"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_14sp" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_shipment_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="物流状态"
                 android:textColor="@color/text_color_646464"
                 android:textSize="@dimen/text_size_16sp" />
 
             <TextView
-                android:id="@+id/tv_package_status"
+                android:id="@+id/tv_express_status"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="#ffffff"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="您的包裹已被签收"
+                android:text="状态文字显示"
                 android:textColor="#985ec9"
                 android:textSize="@dimen/text_size_18sp" />
 
@@ -102,8 +125,6 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="gone">
-
-
             </LinearLayout>
 
         </LinearLayout>
