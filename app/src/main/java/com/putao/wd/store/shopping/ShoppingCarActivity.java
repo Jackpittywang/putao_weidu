@@ -147,31 +147,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
-     * 保存商品编辑信息
-     */
-    private void saveGoodsInfo() {
-        networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
-            @Override
-            public void onSuccess(String url, ShopCarItem result) {
-                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
-                Logger.w("保存成功 = " + result.toString());
-
-                initData();
-                Set<Integer> keys = mSelected.keySet();
-                String sum = "0.00";
-                for (Integer key : keys) {
-                    Cart cart = mSelected.get(key);
-                    cart.setQt(cart.getGoodsCount());
-                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
-                }
-                tv_money.setText(sum);
-                adapter.finishEdit();
-                loading.dismiss();
-            }
-        });
-    }
-
-    /**
      * 获取请求List
      */
     private List<CartEdit> getReqParam() {
@@ -277,7 +252,17 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         startActivity(WriteOrderActivity.class, getBundle());
                         break;
                     case DELETE:
-                        cartDelete(mSelected.get(currClickPosition).getPid());
+//                        cartDelete(mSelected.get(currClickPosition).getPid());
+                        networkRequest(StoreApi.multiManage(new ArrayList<CartEdit>()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+                            @Override
+                            public void onSuccess(String url, ShopCarItem result) {
+                                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
+                                Logger.w("保存成功 = " + result.toString());
+                                initData();
+                                adapter.finishEdit();
+                                getCart();
+                            }
+                        });
                         break;
                 }
                 break;
@@ -292,7 +277,25 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
-            saveGoodsInfo();
+            networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+                @Override
+                public void onSuccess(String url, ShopCarItem result) {
+                    ToastUtils.showToastShort(mContext, "编辑商品保存成功");
+                    Logger.w("保存成功 = " + result.toString());
+
+                    initData();
+                    Set<Integer> keys = mSelected.keySet();
+                    String sum = "0.00";
+                    for (Integer key : keys) {
+                        Cart cart = mSelected.get(key);
+                        cart.setQt(cart.getGoodsCount());
+                        sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+                    }
+                    tv_money.setText(sum);
+                    adapter.finishEdit();
+                    loading.dismiss();
+                }
+            });
         }
     }
 
