@@ -1,6 +1,8 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 订单里的商品数据--订单
@@ -21,6 +23,8 @@ public class OrderProduct implements Serializable {
     private String updated_time;//更新时间
     private int allowService;//申请售后返回字段,这个商品是否允许售后
     private int allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
+    private List<ServiceBackImage> serviceBackImage = new ArrayList<ServiceBackImage>();
+    private int reason;
 
     public String getId() {
         return id;
@@ -134,23 +138,41 @@ public class OrderProduct implements Serializable {
         this.allowServiceQuantity = allowServiceQuantity;
     }
 
+    public List<ServiceBackImage> getServiceBackImage() {
+        return serviceBackImage;
+    }
+
+    public void setServiceBackImage(List<ServiceBackImage> serviceBackImage) {
+        this.serviceBackImage = serviceBackImage;
+    }
+
+    public int getReason() {
+        return reason;
+    }
+
+    public void setReason(int reason) {
+        this.reason = reason;
+    }
+
     @Override
     public String toString() {
         return "OrderProduct{" +
                 "id='" + id + '\'' +
                 ", order_id='" + order_id + '\'' +
-                ", product_id=" + product_id +
+                ", product_id='" + product_id + '\'' +
                 ", product_number='" + product_number + '\'' +
                 ", icon='" + icon + '\'' +
                 ", product_name='" + product_name + '\'' +
-                ", quantity=" + quantity +
+                ", quantity='" + quantity + '\'' +
                 ", price='" + price + '\'' +
                 ", real_icon='" + real_icon + '\'' +
                 ", sku='" + sku + '\'' +
                 ", created_time='" + created_time + '\'' +
                 ", updated_time='" + updated_time + '\'' +
-                ", allowService='" + allowService + '\'' +
-                ", allowServiceQuantity='" + allowServiceQuantity + '\'' +
+                ", allowService=" + allowService +
+                ", allowServiceQuantity=" + allowServiceQuantity +
+                ", serviceBackImage=" + serviceBackImage +
+                ", reason=" + reason +
                 '}';
     }
 }

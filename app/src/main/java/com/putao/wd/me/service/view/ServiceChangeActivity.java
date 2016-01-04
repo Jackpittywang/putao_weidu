@@ -1,9 +1,8 @@
-package com.putao.wd.me.service;
+package com.putao.wd.me.service.view;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +21,8 @@ import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
-import com.putao.wd.me.service.adapter.BackListAdapter;
+import com.putao.wd.me.service.ServiceChooseActivity;
+import com.putao.wd.me.service.adapter.ChangeListAdapter;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ProductData;
@@ -49,7 +49,7 @@ import butterknife.Bind;
  * 退货列表
  * Created by wangou on 15/12/7.
  */
-public class ServiceBackActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class ServiceChangeActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.tv_service_money)
     TextView tv_service_money;//退货金额
@@ -62,7 +62,7 @@ public class ServiceBackActivity extends PTWDActivity<GlobalApplication> impleme
     private final int CAMERA_REQCODE = 2;
     private int position;
     private SelectPopupWindow mSelectPopupWindow;
-    private BackListAdapter adapter;
+    private ChangeListAdapter adapter;
     public static final String ORDER_ID = "orderId";
     private Order mOrder;
     private String mOrderId;
@@ -101,7 +101,7 @@ public class ServiceBackActivity extends PTWDActivity<GlobalApplication> impleme
 
     private void initView() {
         tv_service_money.setText("￥" + totalPrice);
-        adapter = new BackListAdapter(mContext, mProducts);
+        adapter = new ChangeListAdapter(mContext, mProducts);
         rv_service_back_list.setAdapter(adapter);
     }
 
@@ -111,7 +111,7 @@ public class ServiceBackActivity extends PTWDActivity<GlobalApplication> impleme
     private void initData() {
         mOrderId = args.getString(ORDER_ID);
         mProducts = (ArrayList<OrderProduct>) args.getSerializable(ServiceChooseActivity.SERVICE_PRODUCT);
-        mItems = getResources().getStringArray(R.array.back_spinnername);
+        mItems = getResources().getStringArray(R.array.change_spinnername);
         totalPrice = 0;
         for (OrderProduct product : mProducts) {
             double price = Double.parseDouble(product.getPrice());
@@ -137,7 +137,7 @@ public class ServiceBackActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     //选择图片源
-    @Subcriber(tag = BackListAdapter.CHOOSE_IMAGE)
+    @Subcriber(tag = ChangeListAdapter.CHOOSE_IMAGE)
     public void chooseImage(int position) {
         this.position = position;
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
@@ -149,7 +149,7 @@ public class ServiceBackActivity extends PTWDActivity<GlobalApplication> impleme
 
             @Override
             public void onSecondClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, ALBUM_REQCODE);
             }
         };
@@ -236,7 +236,7 @@ public class ServiceBackActivity extends PTWDActivity<GlobalApplication> impleme
         jsonObject.putAll(productDataMap);
         String str = jsonObject.toJSONString();
 
-        networkRequest(OrderApi.orderSubmitAfterSale(mOrderId, "2", "", allProductId.substring(1), jsonObject.toJSONString()),
+        networkRequest(OrderApi.orderSubmitAfterSale(mOrderId, "3", "", allProductId.substring(1), jsonObject.toJSONString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {

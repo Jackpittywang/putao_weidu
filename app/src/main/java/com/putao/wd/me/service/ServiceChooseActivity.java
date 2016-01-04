@@ -9,6 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceChooseAdapter;
+import com.putao.wd.me.service.view.ServiceChangeActivity;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
@@ -189,7 +190,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         bundle.putString(ServiceRefundActivity.ORDER_ID,mOrderId);
-        bundle.putSerializable(SERVICE_PRODUCT, (Serializable) mOrder.getProduct());
+        bundle.putSerializable(SERVICE_PRODUCT, (Serializable) mFocusProducts);
         switch (v.getId()){
             case R.id.btn_service_refund:
                 startActivity(ServiceRefundActivity.class,bundle);
@@ -198,6 +199,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
                 startActivity(ServiceBackActivity.class,bundle);
                 break;
             case R.id.btn_service_change:
+                startActivity(ServiceChangeActivity.class,bundle);
                 break;
         }
     }
