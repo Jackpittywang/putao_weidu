@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -264,5 +265,33 @@ public final class FileUtils {
         if (file.exists())
             return file.delete();
         return false;
+    }
+
+    /**
+     * 获得文件内容
+     *
+     * @param filePath 文件路径
+     * @return 文件内容
+     */
+    public static String getFileContent(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));//构造一个BufferedReader类来读取文件
+                String result = null;
+                String s = null;
+                while ((s = br.readLine()) != null) {//使用readLine方法，一次读一行
+                    result = result + "\n" + s;
+                }
+                br.close();
+                return result;
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.e(e);
+            }
+        } else {
+            return "文件不存在";
+        }
+        return "";
     }
 }

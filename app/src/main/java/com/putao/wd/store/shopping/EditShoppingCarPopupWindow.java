@@ -90,6 +90,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
                         skus = result.getSku();
                         normses = SpecUtils.getNormses(result.getSpec());
                         adapter.addAll(normses);
+                        loading.dismiss();
                     }
                 });
     }
@@ -103,7 +104,6 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
-
             }
         });
     }
@@ -165,9 +165,8 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
         SpecUtils.addTag(mSelTags, tag, mSpecItemCount);
         if (mSelTags.size() == mSpecItemCount) {
             sku = SpecUtils.getProductSku(skus, mSelTags);
-            if (sku != null) {
+            if (sku != null)
                 iv_product_icon.setImageURL(sku.getIcon());
-            }
         }
     }
 }

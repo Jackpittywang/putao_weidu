@@ -38,26 +38,8 @@ public class ExploreApi {
     /**
      * 成长日记首页接口（查询）
      */
-//    public static Request getDiaryIndex(String page) {
-//        FormEncodingRequestBuilder builder = PTWDRequestHelper.explore()
-//                .addParam(REQUEST_SLAVE_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
-//                .addParam(REQUEST_PAGE, page);
-////                .addParam(REQUEST_START_TIME, start_time)
-////                .addParam(REQUEST_END_TIME, end_time);
-////        if (!StringUtils.isEmpty(slave_device_id))
-////            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
-//        return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
-//    }
-
-    /**
-     * 成长日记首页接口（查询）(暂时使用)
-     */
     public static Request getDiaryIndex(String page) {
-        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000529")
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
-                .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+        FormEncodingRequestBuilder builder = PTWDRequestHelper.explore()
                 .addParam(REQUEST_SLAVE_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(REQUEST_PAGE, page);
 //                .addParam(REQUEST_START_TIME, start_time)
@@ -66,6 +48,24 @@ public class ExploreApi {
 //            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
         return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
     }
+
+//    /**
+//     * 成长日记首页接口（查询）(暂时使用)
+//     */
+//    public static Request getDiaryIndex(String page) {
+//        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance()
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000529")
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+//                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
+//                .addParam(REQUEST_SLAVE_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+//                .addParam(REQUEST_PAGE, page);
+////                .addParam(REQUEST_START_TIME, start_time)
+////                .addParam(REQUEST_END_TIME, end_time);
+////        if (!StringUtils.isEmpty(slave_device_id))
+////            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
+//        return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
+//    }
 
     /**
      * 扫码关注产品（添加）

@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
-import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -61,10 +60,9 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
             }
         };
         vp_guidance.setAdapter(adapter);
+        vp_guidance.setOffscreenPageLimit(icons.length);
         ci_indicator.setViewPager(vp_guidance);
         vp_guidance.addOnPageChangeListener(this);
-
-        parseRegions();//解析城市列表
     }
 
     /**
@@ -109,18 +107,6 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
     @Override
     public void onPageScrollStateChanged(int state) {
 
-    }
-
-    /**
-     * 解析城市列表
-     */
-    private void parseRegions() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DistrictUtils.insertRegion();
-            }
-        }).start();
     }
 
     @Override

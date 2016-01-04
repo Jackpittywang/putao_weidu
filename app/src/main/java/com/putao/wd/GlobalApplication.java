@@ -3,6 +3,7 @@ package com.putao.wd;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baidu.mapapi.SDKInitializer;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.db.CityDBManager;
@@ -10,12 +11,20 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.model.http.DownloadFileTask;
+import com.sunnybear.library.model.http.callback.DownloadFileCallback;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
+import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.SDCardUtils;
+import com.sunnybear.library.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,17 +42,22 @@ public class GlobalApplication extends BasicApplication {
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
 
+    private DownloadFileTask task;
     public static String shareImagePath;
+    public static String resourcePath;
 
     @Override
     public void onCreate() {
         super.onCreate();
         shareImagePath = sdCardPath + File.separator + "screenshot.jpg";
+        resourcePath = sdCardPath + File.separator + "patch";
 
         installDataBase();
         //安装通行证
         AccountApi.install("1", app_id, "515d7213721042a5ac31c2de95d2c7a7");
-        parseEmoji();//表情解析
+        checkResource();
+//        decompressionPatch();
+//        parseEmoji();//表情解析
         //开启shareSDK
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
@@ -87,6 +101,18 @@ public class GlobalApplication extends BasicApplication {
     }
 
     /**
+     * 解压资源包
+     */
+    private void decompressionPatch() {
+        try {
+            FileUtils.unZipInAsset(getApplicationContext(), "patch_10002_10003.zip", "patch", true);
+            parseRegions();//解析城市列表
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 解析emoji表情
      */
     private void parseEmoji() {
@@ -96,27 +122,100 @@ public class GlobalApplication extends BasicApplication {
                 @Override
                 public void run() {
                     mEmojis = new ConcurrentHashMap<>();
-                    try {
-                        FileUtils.unZipInAsset(getApplicationContext(), "emoji.zip", "", true);//解压表情包
-                        Logger.d("表情包解压完成");
-                        File emoji = new File(GlobalApplication.sdCardPath + File.separator + "emoji", "set.txt");
-                        String source = FileUtils.readFile(emoji).replace("\uFEFF", "");
-                        Logger.d(source);
-                        String[] sources = source.split("\\n");
-                        for (String s : sources) {
-                            String[] s1 = s.split(",");
-                            mEmojis.put(s1[0], GlobalApplication.sdCardPath + File.separator + "emoji" + File.separator + s1[1]);
-                        }
-                        GlobalApplication.setEmojis(mEmojis);
-                        getDiskFileCacheHelper().put(MAP_EMOJI, mEmojis);
-                    } catch (IOException e) {
-                        Logger.e("表情包解压失败", e);
+//                        FileUtils.unZipInAsset(getApplicationContext(), "emoji.zip", "", true);//解压表情包
+//                        Logger.d("表情包解压完成");
+                    File emoji = new File(resourcePath + File.separator + "biaoqing", "set.txt");
+                    String source = FileUtils.readFile(emoji).replace("\uFEFF", "");
+                    Logger.d(source);
+                    String[] sources = source.split("\\n");
+                    for (String s : sources) {
+                        String[] s1 = s.split(",");
+                        mEmojis.put(s1[0], resourcePath + File.separator + "biaoqing" + File.separator + s1[1]);
                     }
+                    GlobalApplication.setEmojis(mEmojis);
+                    getDiskFileCacheHelper().put(MAP_EMOJI, mEmojis);
+                    Logger.d("表情包设置完成");
                 }
             }).start();
         else
             GlobalApplication.setEmojis(mEmojis);
     }
+
+    /**
+     * 解析城市列表
+     */
+    private void parseRegions() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DistrictUtils.insertRegion();
+            }
+        }).start();
+    }
+
+    /**
+     * 验证资源版本
+     */
+    private void checkResource() {
+        getOkHttpClient().newCall(FormEncodingRequestBuilder.newInstance()
+                .addParam("appid", app_id)
+                .addParam("client_id", "1")
+                .addParam("client_secret", "d3159867d3525452773206e189ef6966")
+                .addParam("op_id", "1")
+                .addParam("resource_version", PreferenceUtils.getValue("resource_version", "10000"))
+                .addParam("game_id", "game_id")
+                .addParam("app_version", AppUtils.getVersionName(getApplicationContext()).substring(1))
+                .build(RequestMethod.GET, "http://source.start.wang/client/resource"))
+                .enqueue(new JSONObjectCallback() {
+                    @Override
+                    public void onSuccess(String url, JSONObject result) {
+                        Logger.d(result.toJSONString());
+                        if (!StringUtils.equals(result.getString("status"), "200")) return;
+                        JSONObject object = result.getJSONObject("data");
+                        String last_resource_version = object.getString("last_resource_version");
+                        String last_version = object.getString("last_version");
+                        PreferenceUtils.save("resource_version", last_resource_version);
+                        if (!StringUtils.equals(last_version, last_resource_version)) {
+                            task = new DownloadFileTask("http://static.uzu.wang/source/app_5/resource/patch_" + last_version + "_" + last_resource_version + ".zip",
+                                    new DownloadFileCallback() {
+                                        @Override
+                                        public void onStart() {
+                                            Logger.d("下载开始");
+                                        }
+
+                                        @Override
+                                        public void onProgress(int progress, long networkSpeed) {
+                                            Logger.d("progress:" + progress + ",networkSpeed:" + networkSpeed);
+                                        }
+
+                                        @Override
+                                        public void onFinish(boolean isSuccess) {
+                                            Logger.i(isSuccess ? "下载成功" : "下载失败");
+                                            if (isSuccess)
+                                                try {
+                                                    FileUtils.unZipInSdCard(task.getDownloadFile().getAbsolutePath(), "patch", true);
+                                                    FileUtils.delete(task.getDownloadFile());
+                                                    parseEmoji();//表情解析
+                                                    parseRegions();//解析城市列表
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                        }
+                                    });
+                            task.execute();
+                        } else {
+                            decompressionPatch();
+                            parseEmoji();//表情解析
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+
+                    }
+                });
+    }
+
 
     @Override
     protected String getBuglyKey() {

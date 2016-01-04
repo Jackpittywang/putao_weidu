@@ -10,9 +10,10 @@ import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.entity.CityDB;
 import com.putao.wd.db.entity.DistrictDB;
 import com.putao.wd.db.entity.ProvinceDB;
+import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ResourcesUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +33,9 @@ public class DistrictUtils {
      * 插入地区列表
      */
     public static void insertRegion() {
-        String result = ResourcesUtils.getAssetsTextFile(GlobalApplication.getInstance(), "city.json");
-        list = JSON.parseObject(result);//城市列表
+//        String result = ResourcesUtils.getAssetsTextFile(GlobalApplication.getInstance(), "city.json");
+        String result = FileUtils.getFileContent(GlobalApplication.resourcePath + File.separator + "region" + File.separator + "region.json");
+        list = JSON.parseObject(result.substring(result.indexOf("{"), result.length()));//城市列表
         Logger.w("城市列表获取完成");
         insertProvince();
         Logger.w("省份插入数据库成功");

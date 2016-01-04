@@ -143,8 +143,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
+                loading.dismiss();
             }
-
         });
     }
 
@@ -181,6 +181,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         mAddress.setProvince_id(mProvinceDBManager.getProvinceId(provinceName));
         mAddress.setCity_id(mCityDBManager.getCityId(cityName));
         mAddress.setArea_id(mDistrictDBManager.getDistrictId(districtName));
+
+        String addressName = "{\"" + mAddress.getProvince_id() + "\":\"" + provinceName + "\",\"" + mAddress.getCity_id() + "\":\"" + cityName + "\",\"" + mAddress.getArea_id() + "\":\"" + districtName + "\"}";
+        mAddress.setAddressName(addressName);
     }
 
     /**

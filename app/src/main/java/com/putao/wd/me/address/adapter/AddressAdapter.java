@@ -8,10 +8,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AddressEditActivity;
 import com.putao.wd.model.Address;
-import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -54,12 +52,11 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
                 index = position;
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AddressEditActivity.BUNDLE_KEY_ADDRESS, address);
-                ((PTWDActivity) context).startActivity(AddressEditActivity.class, bundle);
+                context.startActivity(AddressEditActivity.class, bundle);
             }
         });
-
-        String addressInfo = address.getRealname()+ "/" + addr + "/" + address.getMobile();
-        EventBusHelper.post(addressInfo, EVENT_ADDRESS);
+//        String addressInfo = address.getRealname() + "/" + addr + "/" + address.getMobile();
+//        EventBusHelper.post(addressInfo, EVENT_ADDRESS);
     }
 
     /**

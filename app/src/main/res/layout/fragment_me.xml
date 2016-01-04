@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
-                    android:text="这里显示用户的昵称"
+                    android:text="葡星人"
                     android:textColor="@color/text_color_white"
                     android:textSize="@dimen/text_size_18sp" />
             </LinearLayout>
