@@ -296,6 +296,7 @@ public class OrderApi {
     /**
      * 售后物流信息
      */
+    @Deprecated
     public static final String URL_EXPRESS_SERVICE = BASE_URL + "express/service";
 
     /**
@@ -303,10 +304,16 @@ public class OrderApi {
      *
      * @param order_id 订单ID
      */
+    @Deprecated
     public static Request getExpressService(String order_id) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_ORDER_ID, order_id)
-                .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(REQUEST_ORDER_ID, order_id);
+        return builder.build(RequestMethod.GET, URL_EXPRESS_SERVICE);
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_ORDER_ID, order_id)
+//                .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
     }
 
     /**
@@ -321,4 +328,5 @@ public class OrderApi {
         return PTWDRequestHelper.user()
                 .build(RequestMethod.GET, URL_ORDER_COUNT);
     }
+
 }
