@@ -145,12 +145,14 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     private void setContent(ServiceList serviceList) {
         ServiceOrderInfo order_info = serviceList.getOrder_info();
         List<Express> express = serviceList.getExpress();
-        checkServiceType(serviceList.getService_type()+serviceList.getStatus());
+        checkServiceType(serviceList.getService_type() + serviceList.getStatus());
         tv_service_no.setText(order_info.getOrder_sn());
         tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         tv_service_info.setText(serviceList.getDepiction());
         tv_service_order_status.setText(serviceStatus);
-//        tv_no_shipment.setText();
+        if (null != express) {
+            tv_no_shipment.setText(express.get(0).getExpress_message());
+        }
         tv_customer_name.setText(order_info.getConsignee());
         tv_customer_address.setText(order_info.getAddress());
         tv_customer_phone.setText(order_info.getMobile());
@@ -261,18 +263,11 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_shipment:// 全部
-                openShipmentDetailActivity();
+                Bundle bundle = new Bundle();
+//                bundle.putString(ServiceShipmentDetailActivity.KEY_ORDER_UUID, serviceDto.getServiceNo());
+                startActivity(ServiceShipmentDetailActivity.class, bundle);
                 break;
         }
-    }
-
-    /**
-     * 打开包裹详情页面
-     */
-    private void openShipmentDetailActivity() {
-        Bundle bundle = new Bundle();
-//        bundle.putString(ServiceShipmentDetailActivity.KEY_ORDER_UUID, serviceDto.getServiceNo());
-        startActivity(ServiceShipmentDetailActivity.class, bundle);
     }
 
 }
