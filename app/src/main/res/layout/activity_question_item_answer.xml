@@ -23,7 +23,7 @@
             app:roundAsCircle="true" />
     </RelativeLayout>
 
-    <TextView
+    <com.sunnybear.library.view.emoji.EmojiTextView
         android:id="@+id/question_item_answer_context"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

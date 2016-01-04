@@ -92,7 +92,7 @@ public final class AccountHelper {
      * @return
      */
     public static boolean isLogin() {
-        return !StringUtils.isEmpty(getCurrentUid()) && !StringUtils.isEmpty(getCurrentToken()) && getCurrentUserInfo() != null;
+        return !StringUtils.isEmpty(getCurrentUid()) && !StringUtils.isEmpty(getCurrentToken()) || getCurrentUserInfo() != null;
     }
 
     /**

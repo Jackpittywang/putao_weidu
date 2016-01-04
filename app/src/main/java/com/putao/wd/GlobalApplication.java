@@ -58,6 +58,7 @@ public class GlobalApplication extends BasicApplication {
         checkResource();
 //        decompressionPatch();
 //        parseEmoji();//表情解析
+        setEmojis((ConcurrentHashMap<String, String>) getDiskFileCacheHelper().getAsSerializable(MAP_EMOJI));
         //开启shareSDK
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化

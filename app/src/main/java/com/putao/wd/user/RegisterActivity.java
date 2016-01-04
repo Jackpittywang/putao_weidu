@@ -109,7 +109,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
 
             @Override
             public void onError(String error_msg) {
-                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登陆吧");
+                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
             }
         });
     }

@@ -179,8 +179,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         tv_district.setText(districtName);
 
         mAddress.setProvince_id(mProvinceDBManager.getProvinceId(provinceName));
-        mAddress.setCity_id(mCityDBManager.getCityId(cityName));
-        mAddress.setArea_id(mDistrictDBManager.getDistrictId(districtName));
+        mAddress.setCity_id(mCityDBManager.getCityId(mAddress.getProvince_id(), cityName));
+        mAddress.setArea_id(mDistrictDBManager.getDistrictId(mAddress.getProvince_id(), mAddress.getCity_id(), districtName));
 
         String addressName = "{\"" + mAddress.getProvince_id() + "\":\"" + provinceName + "\",\"" + mAddress.getCity_id() + "\":\"" + cityName + "\",\"" + mAddress.getArea_id() + "\":\"" + districtName + "\"}";
         mAddress.setAddressName(addressName);
