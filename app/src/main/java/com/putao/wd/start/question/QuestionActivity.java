@@ -12,8 +12,10 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Question;
 import com.putao.wd.model.UserInfo;
+import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.start.question.adapter.QuestionAdapter;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.emoji.Emoji;
@@ -96,6 +98,8 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                                 getQuestionList();
                             }
                         });
+                et_msg.setText("");
+                vp_emojis.setVisibility(View.GONE);
                 break;
         }
     }
@@ -118,5 +122,15 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                         }
                     }
                 });
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
+    public void eventClickEmoji(Emoji emoji) {
+        et_msg.append(emoji.getName());
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
+    public void eventDeleteEmoji(Emoji emoji) {
+        et_msg.delete();
     }
 }

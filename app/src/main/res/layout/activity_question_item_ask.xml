@@ -25,7 +25,7 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <TextView
+        <com.sunnybear.library.view.emoji.EmojiTextView
             android:id="@+id/question_item_ask_context"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

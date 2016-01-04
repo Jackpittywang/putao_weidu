@@ -9,6 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.Question;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -80,7 +81,7 @@ public class QuestionAdapter extends BasicAdapter<Question, BasicViewHolder> {
         List<String> replyList = question.getReply();
         if (replyList != null && replyList.size() > 0) {
             viewHolder.question_item_answer_context.setText(replyList.get(0));
-        }else{
+        } else {
             viewHolder.ll_question_item_answer.setVisibility(View.GONE);
         }
         viewHolder.question_item_ask_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
@@ -104,13 +105,13 @@ public class QuestionAdapter extends BasicAdapter<Question, BasicViewHolder> {
         TextView question_item_ask_time;
 
         @Bind(R.id.question_item_ask_context)
-        TextView question_item_ask_context;
+        EmojiTextView question_item_ask_context;
 
         @Bind(R.id.question_item_ask_icon)
         ImageDraweeView question_item_ask_icon;
 
         @Bind(R.id.question_item_answer_context)
-        TextView question_item_answer_context;
+        EmojiTextView question_item_answer_context;
 
         @Bind(R.id.question_item_answer_icon)
         ImageDraweeView question_item_answer_icon;
