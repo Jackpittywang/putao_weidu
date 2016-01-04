@@ -81,44 +81,6 @@ public class OrderApi {
     }
 
     /**
-     * 申请售后
-     */
-    public static final String URL_AFTER_SALE = BASE_URL + "service/apply";
-
-    /**
-     * 申请售后
-     *
-     * @param order_id 订单ID
-     */
-    public static Request orderAfterSale(String order_id) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_ORDER_ID, order_id)
-                .build(RequestMethod.POST, URL_AFTER_SALE);
-    }
-
-    /**
-     * 提交售后
-     */
-    public static final String URL_SUBMIT_AFTER_SALE = BASE_URL + "service/doApply";
-
-    /**
-     * 提交售后
-     *
-     * @param order_id 订单ID
-     */
-    public static Request orderSubmitAfterSale(String order_id, String service_type, String addressId, String all_product_id, String product_data) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_ORDER_ID, order_id)
-                .addParam(SERVICE_TYPE, service_type)
-                .addParam(ADDRESSID, addressId)
-                .addParam(ALL_PRODUCT_ID, all_product_id)
-                .addParam(PRODUCT_DATA, product_data)
-                .addParam(STATUS, "1")
-                .build(RequestMethod.POST, URL_SUBMIT_AFTER_SALE);
-    }
-
-
-    /**
      * 订单详情
      */
     public static final String URL_ORDER_DETAIL = BASE_URL + "order/detail";
@@ -238,14 +200,99 @@ public class OrderApi {
     }
 
     /**
+     * 订单物流信息
+     */
+    public static final String URL_EXPRESS_ORDER = BASE_URL + "express/order";
+
+    /**
+     * 订单物流信息
+     *
+     * @param order_id 订单ID
+     */
+    public static Request getExpressOrder(String order_id) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_EXPRESS_ORDER);
+    }
+
+    /**
+     * 获得订单数量
+     */
+    public static final String URL_ORDER_COUNT = BASE_URL + "order/order/getOrderCount";
+
+    /**
+     * 获得订单数量
+     */
+    public static Request getOrderCount() {
+        return PTWDRequestHelper.user()
+                .build(RequestMethod.GET, URL_ORDER_COUNT);
+    }
+
+    /**
+     * 申请售后
+     */
+    public static final String URL_AFTER_SALE = BASE_URL + "service/apply";
+
+    /**
+     * 申请售后
+     *
+     * @param order_id 订单ID
+     */
+    public static Request orderAfterSale(String order_id) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_AFTER_SALE);
+    }
+
+    /**
+     *  取消售后
+     */
+    public static final String URL_CANCEL_SALE = BASE_URL + "service/cancel";
+
+    /**
+     *  取消售后
+     */
+    public static Request cancelService(String serviceId) {
+        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
+        builder.addParam(PTWDRequestHelper.REQUEST_KEY_UID, "60000417")
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(REQUEST_ID, serviceId);
+        return builder.build(RequestMethod.POST, URL_CANCEL_SALE);
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_ID, serviceId);
+//                .build(RequestMethod.POST, URL_Cancel_SALE);
+    }
+
+    /**
+     * 提交售后
+     */
+    public static final String URL_SUBMIT_AFTER_SALE = BASE_URL + "service/doApply";
+
+    /**
+     * 提交售后
+     *
+     * @param order_id 订单ID
+     */
+    public static Request orderSubmitAfterSale(String order_id, String service_type, String addressId, String all_product_id, String product_data) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .addParam(SERVICE_TYPE, service_type)
+                .addParam(ADDRESSID, addressId)
+                .addParam(ALL_PRODUCT_ID, all_product_id)
+                .addParam(PRODUCT_DATA, product_data)
+                .addParam(STATUS, "1")
+                .build(RequestMethod.POST, URL_SUBMIT_AFTER_SALE);
+    }
+
+    /**
      * 售后列表
      */
     public static final String URL_SERVICE_LIST = BASE_URL + "service/lists";
 
     /**
-     * 数据分页
+     * 售后列表
      *
-     * @param page 数据分页
+     * @param page 取第几页
      */
     public static Request getServiceLists(String page) {
         FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
@@ -278,22 +325,6 @@ public class OrderApi {
     }
 
     /**
-     * 订单物流信息
-     */
-    public static final String URL_EXPRESS_ORDER = BASE_URL + "express/order";
-
-    /**
-     * 订单物流信息
-     *
-     * @param order_id 订单ID
-     */
-    public static Request getExpressOrder(String order_id) {
-        return PTWDRequestHelper.store()
-                .addParam(REQUEST_ORDER_ID, order_id)
-                .build(RequestMethod.POST, URL_EXPRESS_ORDER);
-    }
-
-    /**
      * 售后物流信息
      */
     @Deprecated
@@ -314,19 +345,6 @@ public class OrderApi {
 //        return PTWDRequestHelper.store()
 //                .addParam(REQUEST_ORDER_ID, order_id)
 //                .build(RequestMethod.POST, URL_EXPRESS_SERVICE);
-    }
-
-    /**
-     * 获得订单数量
-     */
-    public static final String URL_ORDER_COUNT = BASE_URL + "order/order/getOrderCount";
-
-    /**
-     * 获得订单数量
-     */
-    public static Request getOrderCount() {
-        return PTWDRequestHelper.user()
-                .build(RequestMethod.GET, URL_ORDER_COUNT);
     }
 
 }

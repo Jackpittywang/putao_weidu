@@ -1,5 +1,7 @@
 package com.putao.wd.me.service;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Size;
 import android.view.View;
@@ -102,6 +104,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     private ServiceAdapter adapter;
     private List<Express> express;
     private String serviceStatus;
+    private String serviceId;
 
 
     @Override
@@ -117,7 +120,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         rv_service_detail.setAdapter(adapter);
 
         Bundle bundle = getIntent().getExtras();
-        String serviceId = bundle.getString(KEY_SERVICE_ID);
+        serviceId = bundle.getString(KEY_SERVICE_ID);
         serviceStatus = bundle.getString(KEY_SERVICE_STATUS);
         networkRequest(OrderApi.getServiceDetail(serviceId), new SimpleFastJsonCallback<ArrayList<ServiceList>>(ServiceList.class, loading) {
             @Override
@@ -214,7 +217,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 setBackMoneyStepComplete();
                 break;
         }
-
+        btn_execute.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -269,14 +272,47 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         switch (v.getId()) {
             case R.id.ll_shipment:// 查看物流信息
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable)express);
+                bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable) express);
                 startActivity(ServiceShipmentDetailActivity.class, bundle);
                 break;
             case R.id.btn_execute:
-                startActivity(ServiceExpressNumberActivity.class);
+                if ("取消申请".equals(btn_execute.getText())) {
+                    showDialog();
+                }else {
+                    startActivity(ServiceExpressNumberActivity.class);
+                }
                 break;
         }
     }
+
+    private void showDialog() {
+        new AlertDialog.Builder(mContext)
+                .setTitle("提示")
+                .setMessage("确定取消")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(ServiceList.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                Logger.d("取消售后 = " + result.toString());
+//                                startActivity(ServiceListActivity.class);
+                                loading.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+
+
 
 }
 
