@@ -86,6 +86,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
                 cart.setEditable(false);
             EventBusHelper.post(selected, EVENT_UNEDITABLE);
         }
+        holder.btn_sel.setClickable(false);
 //        holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
 //            @Override
 //            public void onSwitchClick(View v, boolean isSelect) {
