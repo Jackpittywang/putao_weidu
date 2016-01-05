@@ -121,8 +121,23 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                             @Override
                             public void onSuccess(String url, String result) {
                                 ToastUtils.showToastShort(mContext, "取消售后");
-//                                ActivityManager.getInstance().removeCurrentActivity();
-                                loading.dismiss();
+                                page--;
+                                networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<Service>(Service.class, loading) {
+                                    @Override
+                                    public void onSuccess(String url, Service result) {
+                                        Logger.w("售后 = " + result.toString());
+                                        if (result.getCurrentPage() <= result.getTotalPage() && result.getTotalPage() != 0) {
+                                            adapter.replaceAll(result.getData());
+                                            rl_no_service.setVisibility(View.GONE);
+                                            rv_service.setVisibility(View.VISIBLE);
+                                            rv_service.loadMoreComplete();
+                                            page++;
+                                        } else {
+                                            rv_service.noMoreLoading();
+                                        }
+                                        loading.dismiss();
+                                    }
+                                });
                             }
                         });
                     }
