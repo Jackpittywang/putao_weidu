@@ -27,7 +27,6 @@
         <item>15岁</item>
     </string-array>
     <string-array name="refund_spinnername">
-        <item>退款原因</item>
         <item>拍错了/订单信息有误</item>
         <item>不想要了</item>
         <item>改选其他商品</item>

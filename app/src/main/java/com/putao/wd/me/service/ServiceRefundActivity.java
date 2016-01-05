@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.ColorConstant;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
@@ -20,7 +21,9 @@ import com.putao.wd.model.ProductData;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.picker.OptionPicker;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -28,19 +31,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 订单详情
  * Created by wangou on 15/11/29.
  */
-public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
-
-    public static final String KEY_ORDER = "service";
-    public static final String ORDER_ID = "orderId";
-    private Order mOrder;
-    private String mOrderId;
-    ArrayList<OrderProduct> mProducts;
-    private String[] mItems;
+public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener{
 
     @Bind(R.id.img_status1)
     ImageView img_status1;
@@ -48,17 +45,26 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
     ImageView img_status2;
     @Bind(R.id.img_status3)
     ImageView img_status3;
-    @Bind(R.id.service_spinner)
-    Spinner service_spinner;
     @Bind(R.id.rv_goods)
     BasicRecyclerView rv_goods;
     @Bind(R.id.tv_service_status)
     TextView tv_service_status;
+    @Bind(R.id.tv_reason)
+    TextView tv_reason;
     @Bind(R.id.v_status_waiting_pay)
     View v_status_waiting_pay;
 
     private ServiceDto serviceDto;
     private double totalPrice;
+    public static final String KEY_ORDER = "service";
+    public static final String ORDER_ID = "orderId";
+    private Order mOrder;
+    private String mOrderId;
+    ArrayList<OrderProduct> mProducts;
+    private String[] mItems;
+    private OptionPicker mReasonPicker;//退款理由选择
+    private int reasonNum;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_service_refund_detail;
@@ -73,7 +79,6 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
     private void initView() {
         tv_service_status.setText("￥" + totalPrice);
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mItems);
-        service_spinner.setAdapter(stringArrayAdapter);
         OrdersAdapter ordersAdapter = new OrdersAdapter(mContext, mProducts);
         rv_goods.setAdapter(ordersAdapter);
 
@@ -95,9 +100,8 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
     @Override
     public void onRightAction() {
         super.onRightAction();
-        int productReason = service_spinner.getSelectedItemPosition();//理由
-        if(productReason == 0 ){
-            ToastUtils.showToastShort(mContext,"请选择退款原因");
+        if (reasonNum == 0) {
+            ToastUtils.showToastShort(mContext, "请选择退款原因");
             return;
         }
         String allProductId = "";
@@ -106,7 +110,7 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
             allProductId = allProductId + "," + product.getProduct_id();
             ProductData productData = new ProductData();
             productData.setProduct_id(product.getId());
-            productData.setReason(productReason);
+            productData.setReason(reasonNum);
             productData.setDescription("");
             productData.setImage("");
             productData.setQuantity(product.getQuantity());
@@ -133,8 +137,42 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
                 });
     }
 
+    private String[] stringArray;
+    /**
+     * 初始化理由选择器
+     */
+    private void initFamilyPicker() {
+        stringArray = ResourcesUtils.getStringArray(mContext, R.array.refund_spinnername);
+        mReasonPicker = new OptionPicker(this, ResourcesUtils.getStringArray(mContext, R.array.refund_spinnername));
+        mReasonPicker.setTextColor(ColorConstant.MAIN_COLOR_SEL, ColorConstant.MAIN_COLOR_NOR);
+        mReasonPicker.setLineColor(ColorConstant.MAIN_COLOR_NOR);
+        mReasonPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(String option) {
+                tv_reason.setText(option);
+                tv_reason.setTextColor(0xff313131);
+                int i = 0;
+                for (String str : stringArray) {
+                    i++;
+                    if (str.equals(option)) break;
+                }
+                reasonNum = i;
+            }
+        });
+        mReasonPicker.show();
+    }
+
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+    @OnClick({R.id.tv_reason})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case  R.id.tv_reason:
+                initFamilyPicker();
+                break;
+        }
     }
 }

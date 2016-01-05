@@ -22,9 +22,6 @@ import butterknife.Bind;
  */
 public class ServiceChooseAdapter extends BasicAdapter<OrderProduct, ServiceChooseAdapter.ServiceChooseViewHolder> {
 
-    public final static String PRODUCT_CHOOSE = "product_choose";
-    public final static String PRODUCT_CHOOSE_POSITION = "product_choose_position";
-    public final static String PRODUCT_CHOOSE_ISFOCUS = "product_choose_isfocus";
 
     public ServiceChooseAdapter(Context context, List<OrderProduct> orderProducts) {
         super(context, orderProducts);
@@ -42,22 +39,14 @@ public class ServiceChooseAdapter extends BasicAdapter<OrderProduct, ServiceChoo
 
 
     @Override
-    public void onBindItem(final ServiceChooseViewHolder holder, final OrderProduct orderProduct, final int position) {
+    public void onBindItem(ServiceChooseViewHolder holder, OrderProduct orderProduct, int position) {
         holder.iv_car_icon.setImageURL(orderProduct.getReal_icon());
         holder.tv_title.setText(orderProduct.getProduct_name());
         holder.tv_money.setText(orderProduct.getPrice());
         holder.tv_count.setText(orderProduct.getQuantity() + "");
         holder.tv_color.setText(orderProduct.getSku());
-        holder.btn_sel.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
-                                                    @Override
-                                                    public void onSwitchClick(View v, boolean isSelect) {
-                                                        Bundle bundle = new Bundle();
-                                                        bundle.putInt(PRODUCT_CHOOSE_POSITION, position);
-                                                        bundle.putBoolean(PRODUCT_CHOOSE_ISFOCUS, isSelect);
-                                                        EventBusHelper.post(bundle, PRODUCT_CHOOSE);
-                                                    }
-                                                }
-        );
+        holder.btn_sel.setState(orderProduct.isSelect());
+        holder.btn_sel.setClickable(false);
     }
 
     /**

@@ -39,11 +39,11 @@ public class ChangeBackListAdapter extends BasicAdapter<OrderProduct, ChangeBack
     private List<ServiceBackImage> mList;
     private String mNoReason;
 
-    public ChangeBackListAdapter(Context context, List<OrderProduct> orderProducts) {
+    public ChangeBackListAdapter(Context context, List<OrderProduct> orderProducts,String serviceWay) {
         super(context, orderProducts);
         mList = new ArrayList<>();
         mItems = context.getResources().getStringArray(R.array.back_spinnername);
-        if ("1".equals(ServiceChangeBackActivity.mServiceWay)) {
+        if ("1".equals(serviceWay)) {
             mNoReason = "换货原因";
         } else {
             mNoReason = "退货原因";

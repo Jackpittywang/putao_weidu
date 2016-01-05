@@ -147,6 +147,11 @@
                     android:textSize="@dimen/text_size_18sp" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_EBEBEB"></View>
+
             <!--订单列表-->
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:id="@+id/rv_goods"
@@ -165,24 +170,37 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
-                <Spinner
-                    android:id="@+id/service_spinner"
-                    style="@style/service_spinner_style"
+                <TextView
+                    android:id="@+id/tv_reason"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"
-                    android:animationCache="true"></Spinner>
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="@dimen/distance_8dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:hint="退款原因"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="#c2c2c2"
+                    android:textColorHint="#646464"
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:paddingRight="15dp"
-                    android:src="@drawable/btn_arrow_down"/>
+                    android:src="@drawable/btn_arrow_down" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_EBEBEB"></View>
         </LinearLayout>
     </ScrollView>
 

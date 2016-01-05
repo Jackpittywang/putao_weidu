@@ -431,7 +431,4 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mEditShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext, cart.getPid(), cart);
         mEditShoppingCarPopupWindow.show(rl_shopping_car);
     }
-
-
-
 }

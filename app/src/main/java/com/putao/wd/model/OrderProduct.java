@@ -25,6 +25,7 @@ public class OrderProduct implements Serializable {
     private int allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
     private List<ServiceBackImage> serviceBackImage = new ArrayList<ServiceBackImage>();
     private String reason;
+    private boolean isSelect;
 
     public String getId() {
         return id;
@@ -152,6 +153,14 @@ public class OrderProduct implements Serializable {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
     }
 
     @Override
