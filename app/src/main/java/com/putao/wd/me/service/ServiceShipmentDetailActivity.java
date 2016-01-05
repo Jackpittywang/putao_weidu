@@ -32,8 +32,6 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
     TextView tv_express_number;
     @Bind(R.id.tv_express_status)
     TextView tv_express_status;
-    @Bind(R.id.ll_package_shipment)
-    LinearLayout ll_package_shipment;
     @Bind(R.id.rv_shipment_detail)
     BasicRecyclerView rv_shipment_detail;
 
@@ -68,6 +66,7 @@ public class ServiceShipmentDetailActivity extends PTWDActivity<GlobalApplicatio
         tv_company_name.setText(express.getExpress_name());
         tv_express_number.setText(express.getExpress_code());
         tv_express_status.setText(express.getExpress_message());
+        //填充物流信息
         ArrayList<ExpressContent> real_content = express.getReal_content();
         ShipmentDetailAdapter shipmentDetailAdapter = new ShipmentDetailAdapter(mContext, real_content);
         rv_shipment_detail.setAdapter(shipmentDetailAdapter);
