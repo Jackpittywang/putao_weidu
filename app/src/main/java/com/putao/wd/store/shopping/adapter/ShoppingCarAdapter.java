@@ -33,7 +33,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public static final String EVENT_UNEDITABLE = "uneditable";//不可编辑
     public static final String EVENT_EDIT_NORMS = "edit_norms";//编辑规格
     public static final String EVENT_EDIT_COUNT = "edit_count";//编辑数量
-    public static final String EVENT_CURR_CLICK = "curr_click";//当前点击位置
+//    public static final String EVENT_CURR_CLICK = "curr_click";//当前点击位置
 
     public static final String BUNDLE_POSITION = "position";
     public static final String BUNDLE_CART = "cart";
@@ -59,7 +59,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public void onBindItem(final ShoppingCarViewHolder holder, final Cart cart, final int position) {
         holder.tv_big_title.setText(!cart.isNull() ? "商品信息" : "无效商品");
         setTitle(holder, cart, position);//设置标题
-        EventBusHelper.post(position, EVENT_CURR_CLICK);
+//        EventBusHelper.post(position, EVENT_CURR_CLICK);
 
         holder.iv_car_icon.setImageURL(cart.getIcon());
         holder.tv_title.setText(cart.getTitle());

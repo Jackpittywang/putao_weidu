@@ -25,6 +25,7 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,7 @@ import butterknife.OnClick;
  */
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener {
     public static final String PRODUCT_ID = "productId";
+    public static final String SHOPPING_CAR = "购物车";
     private final String PAY = "去结算";
     private final String DELETE = "删除";
     private final String SAVE = "保存";
@@ -64,7 +66,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private EditShoppingCarPopupWindow mEditShoppingCarPopupWindow;//购物车弹窗
     private Map<Integer, Cart> mSelected;//记录进入编辑状态后选中的商品
     private int currentPosition;//当前修改的位置
-    private int currClickPosition;//当前点击的位置
+//    private int currClickPosition;//当前点击的位置
     private boolean isSelectAll;//全选
     private boolean saveable;//保存按钮标志
 
@@ -85,7 +87,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 adapter.addAll(result.getUse());
-                setTitle("购物车(" + result.getUse().size() + ")");
+                if (result.getUse().size() == 0) {
+                    navigation_bar.setMainTitle(SHOPPING_CAR);
+                }else {
+                    navigation_bar.setMainTitle(SHOPPING_CAR+"(" + result.getUse().size() + ")");
+                }
 //                btn_sel_all.setState(true);
 //                adapter.selAll(true);
 //                tv_money.setText(caculateSumMoney(result.getUse()));
@@ -135,7 +141,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 商品编辑保存
      */
     private void saveEdit() {
-        networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+        networkRequest(StoreApi.multiManage(getReqParam(mSelected)), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 ToastUtils.showToastShort(mContext, "编辑商品保存成功");
@@ -156,31 +162,31 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         });
     }
 
-    /**
-     * 删除购物车
-     */
-    private void cartDelete(String pid) {
-        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                ToastUtils.showToastShort(mContext, "购物车删除成功");
-                Logger.w("购物车删除成功 = " + result.toString());
-                getCart();
-                initData();
-                adapter.finishEdit();
-            }
-        });
-    }
+//    /**
+//     * 删除购物车
+//     */
+//    private void cartDelete(String pid) {
+//        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
+//            @Override
+//            public void onSuccess(String url, String result) {
+//                ToastUtils.showToastShort(mContext, "购物车删除成功");
+//                Logger.w("购物车删除成功 = " + result.toString());
+//                getCart();
+//                initData();
+//                adapter.finishEdit();
+//            }
+//        });
+//    }
 
     /**
      * 获取请求List
      */
-    private List<CartEdit> getReqParam() {
+    private List<CartEdit> getReqParam(Map<Integer, Cart> map) {
         List<CartEdit> cartEdits = new ArrayList<>();
-        Set<Integer> keys = mSelected.keySet();
+        Set<Integer> keys = map.keySet();
         for (Integer key : keys) {
             CartEdit cartEdit = new CartEdit();
-            Cart cart = mSelected.get(key);
+            Cart cart = map.get(key);
             cartEdit.setPid(cart.getPid());
             cartEdit.setQt(cart.getGoodsCount());
             cart.setEditable(false);
@@ -279,11 +285,21 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         break;
                     case DELETE:
 //                        cartDelete(mSelected.get(currClickPosition).getPid());
-                        networkRequest(StoreApi.multiManage(new ArrayList<CartEdit>()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+                        List<CartEdit> reqList;
+                        if(btn_sel_all.getState()){
+                            reqList = new ArrayList<>();
+                        }else {
+                            Map<Integer, Cart> noSelect = new HashMap<>();
+                            for(int i = 0; i < adapter.getItems().size(); i++) {
+                                if(!mSelected.containsKey(i)){
+                                    noSelect.put(i, adapter.getItem(i));
+                                }
+                            }
+                            reqList = getReqParam(noSelect);
+                        }
+                        networkRequest(StoreApi.multiManage(reqList), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
                             @Override
                             public void onSuccess(String url, ShopCarItem result) {
-                                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
-                                Logger.w("保存成功 = " + result.toString());
                                 initData();
                                 adapter.finishEdit();
                                 getCart();
@@ -312,10 +328,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         adapter.editNorms(currentPosition, cart);
     }
 
-    @Subcriber(tag = ShoppingCarAdapter.EVENT_CURR_CLICK)
-    public void eventcurrClick(int position) {
-        currClickPosition = position;
-    }
+//    @Subcriber(tag = ShoppingCarAdapter.EVENT_CURR_CLICK)
+//    public void eventcurrClick(int position) {
+//        currClickPosition = position;
+//    }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
