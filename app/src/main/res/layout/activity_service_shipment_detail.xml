@@ -119,15 +119,14 @@
                 android:textColor="#985ec9"
                 android:textSize="@dimen/text_size_18sp" />
 
-            <LinearLayout
-            android:id="@+id/ll_package_shipment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:visibility="gone">
-        </LinearLayout>
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_shipment_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
 
         </LinearLayout>
     </ScrollView>

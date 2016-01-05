@@ -24,10 +24,10 @@ import butterknife.Bind;
 
 /**
  * 退货列表适配器
- * <p/>
+ *
  * Created by yanghx on 2015/12/30.
  */
-public class BackListAdapter extends BasicAdapter<OrderProduct, BackListAdapter.ServiceViewHolder> {
+public class ChangeListAdapter extends BasicAdapter<OrderProduct, ChangeListAdapter.ServiceViewHolder> {
 
     public static final String CHOOSE_IMAGE = "choose_image";
 
@@ -35,8 +35,7 @@ public class BackListAdapter extends BasicAdapter<OrderProduct, BackListAdapter.
     private ArrayAdapter<String> mStringArrayAdapter;
     private ServiceImageAdapter mServiceImageAdapter;
     private List<ServiceBackImage> mList;
-
-    public BackListAdapter(Context context, List<OrderProduct> orderProducts) {
+    public ChangeListAdapter(Context context, List<OrderProduct> orderProducts) {
         super(context, orderProducts);
         mList = new ArrayList<>();
         mItems = context.getResources().getStringArray(R.array.back_spinnername);
@@ -62,7 +61,7 @@ public class BackListAdapter extends BasicAdapter<OrderProduct, BackListAdapter.
         holder.tv_color.setText(orderProduct.getSku());
         holder.service_spinner.setAdapter(mStringArrayAdapter);
         mList = orderProduct.getServiceBackImage();
-        mServiceImageAdapter = new ServiceImageAdapter(context, mList);
+        mServiceImageAdapter = new ServiceImageAdapter(context,mList);
         holder.gv_service_back_image.setAdapter(mServiceImageAdapter);
         holder.gv_service_back_image.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,7 +75,7 @@ public class BackListAdapter extends BasicAdapter<OrderProduct, BackListAdapter.
         holder.service_spinner.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
             @Override
             public void onChildViewAdded(View parent, View child) {
-                orderProduct.setReason(holder.service_spinner.getSelectedItemPosition());
+                orderProduct.setReason( holder.service_spinner.getSelectedItemPosition());
             }
 
             @Override

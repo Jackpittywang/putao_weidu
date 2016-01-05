@@ -12,6 +12,7 @@ public class ProductData implements Serializable {
     private String image;
     private String description;
     private String quantity;
+    private String sha1;
 
     public String getProduct_id() {
         return product_id;

@@ -287,6 +287,9 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         }
     }
 
+    /**
+     * 取消订单dialog
+     */
     private void showDialog() {
         new AlertDialog.Builder(mContext)
                 .setTitle("提示")
