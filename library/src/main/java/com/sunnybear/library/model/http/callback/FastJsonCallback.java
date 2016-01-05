@@ -27,11 +27,13 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
     @Override
     public final void onSuccess(String url, JSONObject result) {
         String data = result.getString("data");
-        if (StringUtils.isEmpty(data) && StringUtils.equals(result.getString("http_code"), "200")) {
+        if (!StringUtils.isEmpty(data) && String.class.equals(clazz)) {
+            onSuccess(url, (T) data);
+            return;
+        } else if (StringUtils.isEmpty(data) && StringUtils.equals(result.getString("http_code"), "200")) {
             onSuccess(url, (T) new String(""));
             return;
-        }
-        if (StringUtils.isEmpty(data) && !StringUtils.equals(result.getString("http_code"), "200")) {
+        } else if (StringUtils.isEmpty(data) && !StringUtils.equals(result.getString("http_code"), "200")) {
             onSuccess(url, (T) new String(result.getString("msg")));
             return;
         }

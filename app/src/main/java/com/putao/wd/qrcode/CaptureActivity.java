@@ -24,6 +24,7 @@ import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.bubble.TooltipView;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -49,6 +50,11 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
     ImageView scanCropView;
     @Bind(R.id.scan_line)
     ImageView scan_line;
+
+    @Bind(R.id.ttv_question_1)
+    TooltipView ttv_question_1;
+    @Bind(R.id.ttv_question_2)
+    TooltipView ttv_question_2;
 
     private Rect mCropRect = null;
     private boolean barcodeScanned = false;
@@ -122,12 +128,21 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
         return new String[0];
     }
 
-    @OnClick({R.id.left_title,})
+    @OnClick({R.id.tv_question_1, R.id.tv_question_2, R.id.capture_container})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.left_title:
-                finish();
+            case R.id.tv_question_1:
+                ttv_question_1.setVisibility(ttv_question_1.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                ttv_question_2.setVisibility(View.GONE);
+                break;
+            case R.id.tv_question_2:
+                ttv_question_2.setVisibility(ttv_question_2.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                ttv_question_1.setVisibility(View.GONE);
+                break;
+            case R.id.capture_container:
+                ttv_question_1.setVisibility(View.GONE);
+                ttv_question_2.setVisibility(View.GONE);
                 break;
         }
     }

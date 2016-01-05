@@ -112,10 +112,11 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
         networkRequest(OrderApi.addressAdd(realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
-                new SimpleFastJsonCallback<Address>(Address.class, loading) {
+                new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
-                    public void onSuccess(String url, Address result) {
+                    public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
+                        EventBusHelper.post(EVENT_ADDRESS_ADD, EVENT_ADDRESS_ADD);
                         loading.dismiss();
                     }
                 });
@@ -130,6 +131,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
+                        EventBusHelper.post(EVENT_ADDRESS_UPDATE, EVENT_ADDRESS_UPDATE);
                         loading.dismiss();
                     }
                 });
@@ -200,7 +202,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         mAddress.setAddress(et_street.getText().toString());
         if (StringUtils.equals(mAddress.getStatus(), "1"))
             EventBusHelper.post(mAddress, EVENT_ADDRESS_IS_DEFAULT);
-        if (isAdd) {
+        if (isAdd)
             addressAdd(mAddress.getRealname(),
                     mAddress.getCity_id(),
                     mAddress.getProvince_id(),
@@ -209,16 +211,13 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                     mAddress.getMobile(),
                     null, null,
                     mAddress.getStatus());
-            EventBusHelper.post(mAddress, EVENT_ADDRESS_ADD);
-        } else {
+        else
             addressUpdate(mAddress.getId(),
                     mAddress.getRealname(), mAddress.getCity_id(),
                     mAddress.getProvince_id(),
                     mAddress.getArea_id(),
                     mAddress.getAddress(), mAddress.getMobile(),
                     null, null, mAddress.getStatus());
-            EventBusHelper.post(mAddress, EVENT_ADDRESS_UPDATE);
-        }
         finish();
     }
 

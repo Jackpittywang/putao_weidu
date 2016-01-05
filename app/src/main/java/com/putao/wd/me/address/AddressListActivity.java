@@ -49,6 +49,8 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 
     private boolean isClose = false;
 
+    private AlertDialog mDeleteDialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_list;
@@ -99,7 +101,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         rv_addresses.setOnItemLongClickListener(new OnItemLongClickListener<Address>() {
             @Override
             public void onItemLongClick(final Address address, int position) {
-                new AlertDialog.Builder(mContext)
+                mDeleteDialog = new AlertDialog.Builder(mContext)
                         .setTitle("删除收货地址")
                         .setMessage("是否删除该条收货地址")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -109,16 +111,17 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                                     @Override
                                     public void onSuccess(String url, String result) {
                                         Logger.d(result.toString());
+                                        adapter.delete(address);
                                         loading.dismiss();
                                     }
                                 });
-                                adapter.delete(address);
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                mDeleteDialog.dismiss();
                             }
                         }).show();
             }
@@ -141,13 +144,28 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_ADD)
-    public void eventAddressAdd(Address address) {
-        adapter.add(address);
+    public void eventAddressAdd(String tag) {
+//        adapter.add(address);
+        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Address> result) {
+                if (result != null && result.size() > 0)
+                    adapter.replaceAll(result);
+                loading.dismiss();
+            }
+        });
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
-    public void eventAddressUpdate(Address address) {
-        adapter.replace(adapter.getEditPosition(), address);
+    public void eventAddressUpdate(String tag) {
+        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
+            @Override
+            public void onSuccess(String url, ArrayList<Address> result) {
+                if (result != null && result.size() > 0)
+                    adapter.replaceAll(result);
+                loading.dismiss();
+            }
+        });
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)

@@ -47,7 +47,11 @@ public final class FormEncodingRequestBuilder {
      * @return RequestHelper实例
      */
     public FormEncodingRequestBuilder addHeader(String name, String value) {
-        headers.put(name, value);
+        try {
+            headers.put(name, value);
+        } catch (NullPointerException e) {
+            Logger.e(TAG, "设置头参数为空,参数名:" + name + ",参数值:" + value);
+        }
         return this;
     }
 
@@ -59,7 +63,11 @@ public final class FormEncodingRequestBuilder {
      * @return RequestHelper实例
      */
     public FormEncodingRequestBuilder addParam(String name, String value) {
-        params.put(name, value);
+        try {
+            params.put(name, value);
+        } catch (NullPointerException e) {
+            Logger.e(TAG, "设置参数为空,参数名:" + name + ",参数值:" + value);
+        }
         return this;
     }
 
