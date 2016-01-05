@@ -368,7 +368,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private void showDeleteDialog(final String pid) {
         new AlertDialog.Builder(mContext)
                 .setTitle("提示")
-                .setMessage("确定取消")
+                .setMessage("确定删除")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
