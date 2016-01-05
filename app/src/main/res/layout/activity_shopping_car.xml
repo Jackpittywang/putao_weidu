@@ -31,15 +31,15 @@
             android:layout_marginBottom="48dp"
             auto:divider_color="@color/white"
             auto:divider_height="1px"
-            auto:has_row_divider="true" />
+            auto:has_row_divider="true"
+            android:visibility="gone"/>
 
         <!--空页面-->
         <RelativeLayout
             android:id="@+id/rl_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background"
-            android:visibility="gone">
+            android:background="@color/layout_background">
 
             <LinearLayout
                 android:layout_width="wrap_content"

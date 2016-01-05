@@ -86,11 +86,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
-                adapter.addAll(result.getUse());
-                if (result.getUse().size() == 0) {
-                    navigation_bar.setMainTitle(SHOPPING_CAR);
-                }else {
-                    navigation_bar.setMainTitle(SHOPPING_CAR+"(" + result.getUse().size() + ")");
+                List<Cart> carts = result.getUse();
+                setTitleCount(carts);
+                if (null != carts && carts.size() > 0) {
+                    adapter.addAll(result.getUse());
+                    rl_empty.setVisibility(View.GONE);
+                    rv_cars.setVisibility(View.VISIBLE);
                 }
 //                btn_sel_all.setState(true);
 //                adapter.selAll(true);
@@ -115,6 +116,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onItemClick(Cart cart, int position) {
                 if (cart.isSelect()) {
                     cart.setIsSelect(false);
+                    cart.setEditable(false);
                 } else {
                     cart.setIsSelect(true);
                 }
@@ -130,11 +132,28 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         networkRequest(StoreApi.getCart(), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
-                adapter.replaceAll(result.getUse());
-                tv_money.setText(caculateSumMoney(result.getUse()));
+                List<Cart> carts = result.getUse();
+                setTitleCount(carts);
+                if (null != carts && carts.size() > 0) {
+                    adapter.replaceAll(carts);
+                }else {
+                    rv_cars.setVisibility(View.GONE);
+                    rl_empty.setVisibility(View.VISIBLE);
+                }
                 loading.dismiss();
             }
         });
+    }
+
+    /**
+     * 设置标题购物车数量
+     */
+    private void setTitleCount(List<Cart> carts) {
+        if(null != carts && carts.size() > 0) {
+            navigation_bar.setMainTitle(SHOPPING_CAR + "(" + carts.size() + ")");
+        }else {
+            navigation_bar.setMainTitle(SHOPPING_CAR);
+        }
     }
 
     /**
@@ -144,9 +163,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         networkRequest(StoreApi.multiManage(getReqParam(mSelected)), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
-                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
-                Logger.w("保存成功 = " + result.toString());
+//                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
+//                Logger.w("保存成功 = " + result.toString());
 
+                setTitleCount(result.getUse());
                 initData();
                 Set<Integer> keys = mSelected.keySet();
                 String sum = "0.00";
@@ -193,6 +213,25 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             cartEdits.add(cartEdit);
         }
         return cartEdits;
+    }
+
+    /**
+     * 获取删除的请求List
+     */
+    private List<CartEdit> getReqDelete() {
+        List<CartEdit> reqList;
+        if(btn_sel_all.getState()){
+            reqList = new ArrayList<>();
+        }else {
+            Map<Integer, Cart> noSelect = new HashMap<>();
+            for(int i = 0; i < adapter.getItems().size(); i++) {
+                if(!mSelected.containsKey(i)){
+                    noSelect.put(i, adapter.getItem(i));
+                }
+            }
+            reqList = getReqParam(noSelect);
+        }
+        return reqList;
     }
 
     /**
@@ -285,19 +324,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         break;
                     case DELETE:
 //                        cartDelete(mSelected.get(currClickPosition).getPid());
-                        List<CartEdit> reqList;
-                        if(btn_sel_all.getState()){
-                            reqList = new ArrayList<>();
-                        }else {
-                            Map<Integer, Cart> noSelect = new HashMap<>();
-                            for(int i = 0; i < adapter.getItems().size(); i++) {
-                                if(!mSelected.containsKey(i)){
-                                    noSelect.put(i, adapter.getItem(i));
-                                }
-                            }
-                            reqList = getReqParam(noSelect);
-                        }
-                        networkRequest(StoreApi.multiManage(reqList), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+                        networkRequest(StoreApi.multiManage(getReqDelete()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
                             @Override
                             public void onSuccess(String url, ShopCarItem result) {
                                 initData();
@@ -351,8 +378,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         if (selected.size() == 0) {
             setBottomButtonStyle(false);
             setRightTitleColor(ColorConstant.MAIN_COLOR_DIS);
+            setTopButtonStyle(EDIT, PAY, false);
+            initData();
         }
-        setTopButtonStyle(EDIT, PAY, false);
         btn_sel_all.setState(false);
     }
 
