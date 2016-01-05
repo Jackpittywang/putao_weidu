@@ -1,5 +1,7 @@
 package com.putao.wd.store.shopping;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 
 import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Cart;
@@ -15,6 +18,7 @@ import com.putao.wd.model.CartEdit;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -23,7 +27,9 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.OnItemLongClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,6 +129,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 adapter.replace(position, cart);
             }
         });
+        rv_cars.setOnItemLongClickListener(new OnItemLongClickListener<Cart>() {
+            @Override
+            public void onItemLongClick(Cart cart, int position) {
+                showDeleteDialog(cart.getPid());
+            }
+        });
     }
 
     /**
@@ -136,7 +148,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 setTitleCount(carts);
                 if (null != carts && carts.size() > 0) {
                     adapter.replaceAll(carts);
-                }else {
+                } else {
                     rv_cars.setVisibility(View.GONE);
                     rl_empty.setVisibility(View.VISIBLE);
                 }
@@ -182,21 +194,21 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         });
     }
 
-//    /**
-//     * 删除购物车
-//     */
-//    private void cartDelete(String pid) {
-//        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
-//            @Override
-//            public void onSuccess(String url, String result) {
-//                ToastUtils.showToastShort(mContext, "购物车删除成功");
-//                Logger.w("购物车删除成功 = " + result.toString());
-//                getCart();
-//                initData();
-//                adapter.finishEdit();
-//            }
-//        });
-//    }
+    /**
+     * 删除购物车--单条长按删除
+     */
+    private void cartDelete(String pid) {
+        networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "购物车删除成功");
+                Logger.w("购物车删除成功 = " + result.toString());
+                getCart();
+                initData();
+                adapter.finishEdit();
+            }
+        });
+    }
 
     /**
      * 获取请求List
@@ -324,7 +336,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         startActivity(WriteOrderActivity.class, getBundle());
                         break;
                     case DELETE:
-//                        cartDelete(mSelected.get(currClickPosition).getPid());
                         networkRequest(StoreApi.multiManage(getReqDelete()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
                             @Override
                             public void onSuccess(String url, ShopCarItem result) {
@@ -349,6 +360,28 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             setTopButtonStyle(EDIT, PAY, false);
             saveEdit();
         }
+    }
+
+    /**
+     * 删除dialog
+     */
+    private void showDeleteDialog(final String pid) {
+        new AlertDialog.Builder(mContext)
+                .setTitle("提示")
+                .setMessage("确定取消")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cartDelete(pid);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
     }
 
     @Subcriber(tag = EditShoppingCarPopupWindow.EVENT_UPDATE_NORMS)
@@ -398,4 +431,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mEditShoppingCarPopupWindow = new EditShoppingCarPopupWindow(mContext, cart.getPid(), cart);
         mEditShoppingCarPopupWindow.show(rl_shopping_car);
     }
+
+
+
 }
