@@ -121,6 +121,7 @@ public class BasicRecyclerView extends RecyclerView {
                     .build();
             addItemDecoration(decoration);
         }
+        setHasFixedSize(true);
     }
 
     @Override

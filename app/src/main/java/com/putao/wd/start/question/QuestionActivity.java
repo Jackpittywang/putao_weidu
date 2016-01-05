@@ -118,6 +118,7 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
                             rl_no_question.setVisibility(View.GONE);
                             rv_messages.setVisibility(View.VISIBLE);
                             adapter.addAll(result);
+                            rv_messages.scrollToPosition(result.size() - 1);
                             loading.dismiss();
                         }
                     }
