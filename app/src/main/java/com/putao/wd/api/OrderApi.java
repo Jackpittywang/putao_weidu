@@ -40,6 +40,9 @@ public class OrderApi {
     public static final String ALL_PRODUCT_ID = "all_product_id";//待发货
     public static final String PRODUCT_DATA = "product_data";//待发货
 
+    public static final String REQUEST_EXPRESS_NAME = "express_name";//快递公司
+    public static final String REQUEST_EXPRESS_CODE = "express_code";//快递单号
+
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.test.putao.com/" : "http://api.store.test.putao.com/";//基础url
 
     public static void install(String base_url) {
@@ -322,6 +325,26 @@ public class OrderApi {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_ID, id)
                 .build(RequestMethod.GET, URL_SERVICE_DETAIL);
+    }
+
+    /**
+     * 填写快递单号
+     */
+    public static final String URL_FILL_EXPRESS = BASE_URL + "service/writeExpress";
+
+    /**
+     * 填写快递单号
+     *
+     * @param service_id     售后ID
+     * @param express_type   快递公司type
+     * @param express_code   快递单号
+     */
+    public static Request fillExpress(String service_id, String express_type, String express_code) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_ID, service_id)
+                .addParam(REQUEST_EXPRESS_NAME, express_type)
+                .addParam(REQUEST_EXPRESS_CODE, express_code)
+                .build(RequestMethod.POST, URL_FILL_EXPRESS);
     }
 
     /**
