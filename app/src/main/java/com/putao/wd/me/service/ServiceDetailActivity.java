@@ -211,7 +211,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             case "31"://3退款
                 setBackMoneyStep();
                 selectStepDeal();
-                btn_execute.setText("填写快递单号");
+                btn_execute.setText("取消申请");
                 break;
             case "33":
             case "38":
@@ -302,8 +302,8 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                             @Override
                             public void onSuccess(String url, String result) {
                                 ToastUtils.showToastShort(mContext, "取消售后");
-                                startActivity(ServiceListActivity.class);
                                 ActivityManager.getInstance().removeCurrentActivity();
+                                finish();
                                 loading.dismiss();
                             }
                         });

@@ -121,8 +121,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                             @Override
                             public void onSuccess(String url, String result) {
                                 ToastUtils.showToastShort(mContext, "取消售后");
-                                startActivity(ServiceListActivity.class);
-                                ActivityManager.getInstance().removeCurrentActivity();
+//                                ActivityManager.getInstance().removeCurrentActivity();
                                 loading.dismiss();
                             }
                         });
