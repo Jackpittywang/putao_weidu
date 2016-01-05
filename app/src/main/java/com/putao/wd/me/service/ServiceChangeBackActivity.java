@@ -93,7 +93,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
     private ArrayList<OrderProduct> mProducts;
     private String[] mItems;
     List<ServiceBackImage> serviceBackImages;
-    public static String mServiceWay;
+    private String mServiceWay;
     private double totalPrice;
 
     private OptionPicker mReasonPicker;//退款理由选择
@@ -127,7 +127,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
 
     private void initView() {
         tv_service_money.setText("￥" + totalPrice);
-        adapter = new ChangeBackListAdapter(mContext, mProducts);
+        adapter = new ChangeBackListAdapter(mContext, mProducts,mServiceWay);
         rv_service_back_list.setAdapter(adapter);
         if ("1".equals(mServiceWay)) {
             navigation_bar.setMainTitle("请填写换货信息");
@@ -261,7 +261,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
             sha1 = FileUtils.getSHA1ByFile(uploadFile);
             serviceBackImage.setSha1(sha1);
             getUploadToken();
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(position);
             loading.dismiss();
         }
     }
@@ -272,12 +272,12 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
             String reason = product.getReason();
             if (null == reason) {
                 if ("1".equals(mServiceWay)) {
-                    if (null == addressId||"".equals(addressId)){
+                    if (null == addressId || "".equals(addressId)) {
                         ToastUtils.showToastShort(mContext, "请选择收货人地址");
                         return;
                     }
                     ToastUtils.showToastShort(mContext, "请选择换货原因");
-                }else{
+                } else {
                     ToastUtils.showToastShort(mContext, "请选择退货原因");
                 }
                 loading.dismiss();
@@ -382,7 +382,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
             @Override
             public void onOptionPicked(String option) {
                 mProducts.get(position).setReason(option);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemChanged(position);
             }
         });
         mReasonPicker.show();

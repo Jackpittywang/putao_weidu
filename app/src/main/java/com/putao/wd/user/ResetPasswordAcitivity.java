@@ -49,7 +49,6 @@ public class ResetPasswordAcitivity extends PTWDActivity implements View.OnClick
         return new String[0];
     }
 
-    //-------|完成---------------|设置密码是否可见layout可点击区域
     @OnClick({R.id.btn_complete, R.id.ll_password_visible})
     @Override
     public void onClick(View v) {
@@ -69,7 +68,6 @@ public class ResetPasswordAcitivity extends PTWDActivity implements View.OnClick
                 }
                 removeCursor(et_password);
                 break;
-
         }
     }
 

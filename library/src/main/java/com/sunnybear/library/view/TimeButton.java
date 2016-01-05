@@ -89,10 +89,8 @@ public class TimeButton extends TextView implements View.OnClickListener {
 
     public void reset() {
         clearTimer();
-        setEnabled(true);
-        setText(mTextBefore);
-        if (mClickBackgroundResId != 0)
-            setTextColor(mClickBackgroundResId);
+        setClickable(true);
+        initView();
     }
 
     private void clearTimer() {
@@ -100,11 +98,6 @@ public class TimeButton extends TextView implements View.OnClickListener {
         mTt = null;
         if (mT != null) mT.cancel();
         mT = null;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
     }
 
     @Override
@@ -121,7 +114,7 @@ public class TimeButton extends TextView implements View.OnClickListener {
         setText(replace(mTextAfter, (int) (mTime / 1000)));
         if (mUnClickBackgroundResId != -1)
             setTextColor(mUnClickBackgroundResId);
-        setEnabled(false);
+        setClickable(false);
         mT.schedule(mTt, 0, 1000);
         if (mL != null) mL.onClick(v);
     }

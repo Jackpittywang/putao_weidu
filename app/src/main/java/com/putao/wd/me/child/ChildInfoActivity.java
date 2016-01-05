@@ -84,13 +84,16 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
         if (StringUtils.isEmpty(mEtNickname)) {
             ToastUtils.showToastShort(mContext, "昵称不能为空");
             return false;
-        } else if (StringUtils.isEmpty(mTvIdentity)) {
+        }
+        if (StringUtils.isEmpty(mTvIdentity)) {
             ToastUtils.showToastShort(mContext, "请选择身份");
             return false;
-        } else if (StringUtils.isEmpty(mTvSex)) {
+        }
+        if (StringUtils.isEmpty(mTvSex)) {
             ToastUtils.showToastShort(mContext, "请选择性别");
             return false;
-        } else if (StringUtils.isEmpty(mTvBirthday)) {
+        }
+        if (StringUtils.isEmpty(mTvBirthday)) {
             ToastUtils.showToastShort(mContext, "请选择生日");
             return false;
         }
@@ -105,22 +108,22 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        if (StringUtils.isEmpty(result)) return;
-                        ChildInfo list = JSON.parseObject(result, ChildInfo.class);
-                        if (result != null) {
-                            et_nickname.setText(list.getBaby_name());
-                            tv_identity.setText(list.getRelation());
-                            tv_sex.setText(list.getSex());
-                            tv_birthday.setText(list.getBirthday());
-                            AccountHelper.setChildInfo(list);
-                            isEditable = false;
-                            cancelChoose();
+                        if (!StringUtils.isEmpty(result)) {
+                            ChildInfo info = JSON.parseObject(result, ChildInfo.class);
+                            if (result != null) {
+                                et_nickname.setText(info.getBaby_name());
+                                et_nickname.setSelection(info.getBaby_name().length());
+                                tv_identity.setText(info.getRelation());
+                                tv_sex.setText(!StringUtils.equals(info.getSex(), "F") ? "男" : "女");
+                                tv_birthday.setText(info.getBirthday());
+                                AccountHelper.setChildInfo(info);
+                                isEditable = false;
+                                cancelChoose();
+                            }
                         }
                         loading.dismiss();
                     }
                 });
-
-
     }
 
     /**

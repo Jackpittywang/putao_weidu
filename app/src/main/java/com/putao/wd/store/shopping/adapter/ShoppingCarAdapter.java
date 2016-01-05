@@ -65,7 +65,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         holder.tv_title.setText(cart.getTitle());
         holder.tv_sku.setText(cart.getSku());
         holder.tv_money.setText(cart.getPrice());
-        if (!StringUtils.isEmpty(cart.getQt())){
+        if (!StringUtils.isEmpty(cart.getQt())) {
             holder.asl_num_sel.setCount(Integer.parseInt(cart.getQt()));
             cart.setGoodsCount(cart.getQt());
         }
@@ -80,7 +80,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         if (cart.isSelect()) {
             selected.put(position, cart);
             EventBusHelper.post(selected, EVENT_EDITABLE);
-        }else {
+        } else {
             selected.remove(position);
             if (selected.size() == 0)
                 cart.setEditable(false);

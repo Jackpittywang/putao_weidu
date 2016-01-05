@@ -1,12 +1,15 @@
 package com.putao.wd;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.task.SuperTask;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 
 import java.util.ArrayList;
@@ -63,7 +66,20 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_show:
-                loading.show();
+//                loading.show();
+                SuperTask.with(this)
+                        .assign(new SuperTask.TaskDescription<String>() {
+                            @Override
+                            public String onBackground() {
+                                return "你个傻叉";
+                            }
+                        })
+                        .finish(new SuperTask.FinishListener<String>() {
+                            @Override
+                            public void onFinish(@Nullable String result) {
+                                Logger.d(result);
+                            }
+                        }).execute();
                 break;
         }
     }

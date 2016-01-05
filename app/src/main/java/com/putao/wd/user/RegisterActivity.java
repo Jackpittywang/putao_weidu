@@ -3,20 +3,24 @@ package com.putao.wd.user;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
+import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.TimeButton;
 
 import butterknife.Bind;
@@ -26,7 +30,7 @@ import butterknife.OnClick;
  * 注册页面
  * Created by guchenkai on 2015/11/29.
  */
-public class RegisterActivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
+public class RegisterActivity extends PTWDActivity implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
     @Bind(R.id.et_mobile)
     CleanableEditText et_mobile;
     @Bind(R.id.et_graph_verify)
@@ -39,6 +43,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     Button btn_next;
     @Bind(R.id.tb_get_verify)
     TimeButton tb_get_verify;
+    @Bind(R.id.btn_is_look)
+    SwitchButton btn_is_look;
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +57,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
         et_mobile.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
         et_sms_verify.addTextChangedListener(this);
+        btn_is_look.setOnSwitchClickListener(this);
     }
 
     @Override
@@ -90,25 +97,37 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onSwitchClick(View v, boolean isSelect) {
+        if (!isSelect) //加密
+            et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        else //不加密
+            et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+    }
+
     /**
      * 获取验证码
      */
     private void getVerifyCode() {
         String mobile = et_mobile.getText().toString().trim();
-//        if (StringUtils.isEmpty(mobile) || StringUtils.checkMobileFormat(mobile)) {
-//            ToastUtils.showToastLong(mContext, "您输入的手机号码有误，请再检查一下吧");
-//            tb_get_verify.reset();
-//            return;
-//        }
+        if (StringUtils.isEmpty(mobile)) {
+            tb_get_verify.reset();
+            ToastUtils.showToastLong(mContext, "请输入手机号码");
+            return;
+        }
         networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
                 Logger.d(result.toJSONString());
-                ToastUtils.showToastLong(mContext, "1234");
+                if (GlobalApplication.isDebug)
+                    ToastUtils.showToastLong(mContext, "1234");
+                else
+                    ToastUtils.showToastLong(mContext, "验证码已发送");
             }
 
             @Override
             public void onError(String error_msg) {
+                tb_get_verify.reset();
                 ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
             }
         });
@@ -133,11 +152,5 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void afterTextChanged(Editable s) {
 
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
     }
 }

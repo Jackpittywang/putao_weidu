@@ -166,6 +166,19 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     }
 
     /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    public void networkRequestNoLoading(Request request, Callback callback) {
+        if (request == null)
+            throw new NullPointerException("request为空");
+//        loading.show();
+        mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
      * 添加fragment显示
      *
      * @param targetClass 目标fragment

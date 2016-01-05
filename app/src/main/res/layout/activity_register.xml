@@ -134,15 +134,33 @@
             android:layout_below="@id/rl_sms_verify"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.CleanableEditText
-                android:id="@+id/et_password"
-                style="@style/WeiduText.EditText"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:drawableRight="@drawable/close_selector"
-                android:hint="@string/login_password"
-                android:inputType="textPassword" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.sunnybear.library.view.CleanableEditText
+                    android:id="@+id/et_password"
+                    style="@style/WeiduText.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="0.8"
+                    android:background="@null"
+                    android:drawableRight="@drawable/close_selector"
+                    android:hint="@string/login_password"
+                    android:inputType="textPassword" />
+
+                <com.sunnybear.library.view.SwitchButton
+                    android:id="@+id/btn_is_look"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    auto:norDrawable="@drawable/icon_20_11"
+                    auto:selDrawable="@drawable/icon_20_10" />
+            </LinearLayout>
+
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"

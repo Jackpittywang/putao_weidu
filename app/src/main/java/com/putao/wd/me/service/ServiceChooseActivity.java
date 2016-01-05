@@ -12,10 +12,12 @@ import com.putao.wd.me.service.adapter.ServiceChooseAdapter;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +30,11 @@ import butterknife.Bind;
  * 售后列表
  * Created by wangou on 15/12/7.
  */
-public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener{
+public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, OnItemClickListener<OrderProduct> {
+
+    public final String PRODUCT_CHOOSE = "product_choose";
+    public String PRODUCT_CHOOSE_POSITION = "product_choose_position";
+    public String PRODUCT_CHOOSE_ISFOCUS = "product_choose_isfocus";
 
     @Bind(R.id.rv_service_able)
     BasicRecyclerView rv_service_able;//可以售后列表
@@ -111,25 +117,26 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
             mAbleProduct.add(product);
             adapterAble.add(product);
         }
+        rv_service_able.setOnItemClickListener(this);
     }
 
 
     /**
      * 申请售后
      */
-    @Subcriber(tag = ServiceChooseAdapter.PRODUCT_CHOOSE)
+    @Subcriber(tag = PRODUCT_CHOOSE)
     public void changeBtn(Bundle bundle) {
         boolean refund = true;
         boolean back = true;
         boolean change = true;
-        int position = bundle.getInt(ServiceChooseAdapter.PRODUCT_CHOOSE_POSITION);
-        boolean isFocus = bundle.getBoolean(ServiceChooseAdapter.PRODUCT_CHOOSE_ISFOCUS);
+        int position = bundle.getInt(PRODUCT_CHOOSE_POSITION);
+        boolean isFocus = bundle.getBoolean(PRODUCT_CHOOSE_ISFOCUS);
         if (isFocus) {
             mFocusProducts.add(mAbleProduct.get(position));
         } else {
             mFocusProducts.remove(mAbleProduct.get(position));
         }
-        if (mFocusProducts.size()==0){
+        if (mFocusProducts.size() == 0) {
             btn_service_refund.setEnabled(false);
             btn_service_back.setEnabled(false);
             btn_service_change.setEnabled(false);
@@ -137,7 +144,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
         }
         for (OrderProduct product : mFocusProducts) {
             int allowService = product.getAllowService();
-            switch (allowService){
+            switch (allowService) {
                 case 1:
                     change = change && true;
                     back = back && false;
@@ -191,7 +198,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
         Bundle bundle = new Bundle();
         bundle.putString(ServiceRefundActivity.ORDER_ID, mOrderId);
         bundle.putSerializable(SERVICE_PRODUCT, (Serializable) mFocusProducts);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_service_refund:
                 bundle.putString(SERVICE_WAY, 3 + "");
                 startActivity(ServiceRefundActivity.class, bundle);
@@ -201,9 +208,19 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
                 startActivity(ServiceChangeBackActivity.class, bundle);
                 break;
             case R.id.btn_service_change:
-                bundle.putString(SERVICE_WAY,1+"");
-                startActivity(ServiceChangeBackActivity.class,bundle);
+                bundle.putString(SERVICE_WAY, 1 + "");
+                startActivity(ServiceChangeBackActivity.class, bundle);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(OrderProduct orderProduct, int position) {
+        orderProduct.setIsSelect(!orderProduct.isSelect());
+        adapterAble.notifyItemChanged(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt(PRODUCT_CHOOSE_POSITION, position);
+        bundle.putBoolean(PRODUCT_CHOOSE_ISFOCUS, orderProduct.isSelect());
+        EventBusHelper.post(bundle, PRODUCT_CHOOSE);
     }
 }
