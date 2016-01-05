@@ -246,12 +246,9 @@
             android:name=".me.service.ServiceChooseActivity"
             android:screenOrientation="portrait" />
         <!--申请退货-->
-        <activity
-            android:name=".me.service.ServiceBackActivity"
-            android:screenOrientation="portrait" />
         <!--申请换货-->
         <activity
-            android:name=".me.service.view.ServiceChangeActivity"
+            android:name=".me.service.ServiceChangeBackActivity"
             android:screenOrientation="portrait" />
         <!-- 退款页面-->
         <!-- ===============================业务activity定义在这条线之上================================== -->

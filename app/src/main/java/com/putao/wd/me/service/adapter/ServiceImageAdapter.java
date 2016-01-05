@@ -75,7 +75,7 @@ public class ServiceImageAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = View.inflate(mContext, R.layout.activity_service_image_item, null);
             holder = new ImageHolder();
-            holder.btn_image_add = (ImageButton) convertView.findViewById(R.id.btn_image_add);
+            holder.iv_image_add = (ImageView) convertView.findViewById(R.id.iv_image_add);
             holder.btn_image_remove = (Button) convertView.findViewById(R.id.btn_image_remove);
             holder.rl_image = (RelativeLayout) convertView.findViewById(R.id.rl_image);
             holder.iv_no_image = (ImageView) convertView.findViewById(R.id.iv_no_image);
@@ -93,7 +93,7 @@ public class ServiceImageAdapter extends BaseAdapter {
         } else {
             holder.rl_image.setVisibility(View.VISIBLE);
             holder.iv_no_image.setVisibility(View.GONE);
-            holder.btn_image_add.setImageBitmap(bitmaps.get(position).getBitmap());
+            holder.iv_image_add.setImageBitmap(bitmaps.get(position).getBitmap());
             holder.btn_image_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -108,7 +108,7 @@ public class ServiceImageAdapter extends BaseAdapter {
 
 
     static class ImageHolder {
-        ImageButton btn_image_add;
+        ImageView iv_image_add;
         Button btn_image_remove;
         RelativeLayout rl_image;
         ImageView iv_no_image;

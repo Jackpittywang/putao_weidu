@@ -24,7 +24,7 @@ public class OrderProduct implements Serializable {
     private int allowService;//申请售后返回字段,这个商品是否允许售后
     private int allowServiceQuantity;//申请售后返回字段,这个商品最多可以售后的数量
     private List<ServiceBackImage> serviceBackImage = new ArrayList<ServiceBackImage>();
-    private int reason;
+    private String reason;
 
     public String getId() {
         return id;
@@ -146,11 +146,11 @@ public class OrderProduct implements Serializable {
         this.serviceBackImage = serviceBackImage;
     }
 
-    public int getReason() {
+    public String getReason() {
         return reason;
     }
 
-    public void setReason(int reason) {
+    public void setReason(String reason) {
         this.reason = reason;
     }
 
