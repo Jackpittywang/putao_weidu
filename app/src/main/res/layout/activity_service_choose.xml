@@ -97,7 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                auto:divider_height="1px"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1dp"
                 auto:has_row_divider="true"
                 auto:is_inner="true" />
 

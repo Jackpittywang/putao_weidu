@@ -23,7 +23,6 @@ import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 
-
 import butterknife.Bind;
 
 
@@ -72,7 +71,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, Service result) {
                 Logger.w("售后 = " + result.toString());
-                if (result.getCurrentPage() != result.getTotalPage() && result.getTotalPage() != 0) {
+                if (result.getCurrentPage() <= result.getTotalPage() && result.getTotalPage() != 0) {
                     adapter.addAll(result.getData());
                     rl_no_service.setVisibility(View.GONE);
                     rv_service.setVisibility(View.VISIBLE);
@@ -129,7 +128,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                         });
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener(){
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -146,11 +145,11 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
 
     @Subcriber(tag = ServiceListAdapter.EVENT_RIGHT_CLICK)
     public void eventClick(View v) {
-        switch(((Button)v).getText().toString()) {
-            case ServiceListAdapter.SERVICE_CANCEL :
+        switch (((Button) v).getText().toString()) {
+            case ServiceListAdapter.SERVICE_CANCEL:
                 showDialog();
                 break;
-            case ServiceListAdapter.SERVICE_FILL_EXPRESS :
+            case ServiceListAdapter.SERVICE_FILL_EXPRESS:
                 startActivity(ServiceExpressNumberActivity.class);
                 break;
         }

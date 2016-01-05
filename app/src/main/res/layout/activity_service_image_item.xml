@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="60dp"
+    android:layout_marginRight="5dp"
     android:background="@color/color_EBEBEB"
     android:gravity="center">
 
@@ -10,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/btn_image_add"
+        <ImageView
+            android:id="@+id/iv_image_add"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -32,7 +33,7 @@
     <ImageView
         android:id="@+id/iv_no_image"
         android:layout_width="20dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:src="@drawable/icon_20_28" />
 

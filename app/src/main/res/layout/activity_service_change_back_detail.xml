@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_back_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_back_detail"
     android:background="#ebebeb">
 
     <!--标题栏-->
@@ -145,12 +145,124 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <FrameLayout
+                android:id="@+id/fl_address"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+
+                <!--收货地址-->
+                <LinearLayout
+                    android:id="@+id/ll_receiving_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/icon_20_17" />
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="收货人姓名"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_size_18sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:lineSpacingExtra="5dp"
+                            android:text="上海上海市徐汇区宜山路810号贝岭大厦14楼葡萄科技"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:text="电话号码"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_16sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/btn_arrow" />
+
+                </LinearLayout>
+
+                <!--没有默认收货地址-->
+                <LinearLayout
+                    android:id="@+id/ll_no_receiving_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/icon_20_17" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:text="尚未选择收货人地址"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_16sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_reapte_picbar"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/img_cart_lace" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="#ffffff"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
@@ -174,16 +286,18 @@
                     android:textSize="@dimen/text_size_18sp" />
             </RelativeLayout>
 
-                <!--售后列表-->
+
+            <!--售后列表-->
 
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:id="@+id/rv_service_back_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                auto:divider_height="1px"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="5dp"
                 auto:has_row_divider="true"
-                auto:is_inner="true" />>
+                auto:is_inner="true" />
 
         </LinearLayout>
     </ScrollView>
