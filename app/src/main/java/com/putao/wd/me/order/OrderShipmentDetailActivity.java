@@ -1,16 +1,12 @@
 package com.putao.wd.me.order;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.OrderShipmentDto;
 import com.putao.wd.me.order.adapter.ShipmentDetailAdapter;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.ExpressContent;

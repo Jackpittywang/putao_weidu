@@ -26,7 +26,6 @@ public class ShipmentDetailAdapter extends BasicAdapter<ExpressContent, Shipment
     }
 
 
-
     @Override
     public int getLayoutId(int viewType) {
         return R.layout.activity_order_shipment_info_item;
@@ -43,20 +42,11 @@ public class ShipmentDetailAdapter extends BasicAdapter<ExpressContent, Shipment
         holder.tv_shipment_date.setText(realContent.getTime());
         holder.tv_shipment_info.setText(realContent.getContext());
         holder.img_status_icon.setBackgroundResource(R.drawable.icon_logistics_flow_old);
-        if(position == 0){
-            holder.tv_shipment_date.setTextColor(0xff313131);
-            holder.tv_shipment_info.setTextColor(0xff313131);
+        holder.tv_shipment_date.setTextColor(0xff313131 - (0xff - 0x55) / getItemCount() * position * 1000000);
+        holder.tv_shipment_info.setTextColor(0xff313131 - (0xff - 0x55) / getItemCount() * position * 1000000);
+        if (position == 0) {
             holder.img_status_icon.setBackgroundResource(R.drawable.icon_logistics_flow_latest);
             holder.v_top_line_cover.setVisibility(View.GONE);
-        }else if(position == 1){
-            holder.tv_shipment_date.setTextColor(0xbb313131);
-            holder.tv_shipment_info.setTextColor(0xbb313131);
-        }else if(position == 2){
-            holder.tv_shipment_date.setTextColor(0x88313131);
-            holder.tv_shipment_info.setTextColor(0x88313131);
-        }else{
-            holder.tv_shipment_date.setTextColor(0x55313131);
-            holder.tv_shipment_info.setTextColor(0x55313131);
         }
     }
 
@@ -73,6 +63,7 @@ public class ShipmentDetailAdapter extends BasicAdapter<ExpressContent, Shipment
         View img_status_icon;//点
         @Bind(R.id.v_top_line_cover)
         View v_top_line_cover;//上部分线
+
         public ShipmentViewHolder(View itemView) {
             super(itemView);
         }

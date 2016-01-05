@@ -190,7 +190,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         bundle.putString(ServiceRefundActivity.ORDER_ID,mOrderId);
-        bundle.putSerializable(SERVICE_PRODUCT, (Serializable) mFocusProducts);
+        bundle.putSerializable(SERVICE_PRODUCT, (Serializable)mFocusProducts);
         switch (v.getId()){
             case R.id.btn_service_refund:
                 startActivity(ServiceRefundActivity.class,bundle);
