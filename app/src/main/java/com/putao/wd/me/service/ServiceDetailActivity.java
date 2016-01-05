@@ -277,9 +277,9 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 startActivity(ServiceShipmentDetailActivity.class, bundle);
                 break;
             case R.id.btn_execute:
-                if (!"取消申请".equals(btn_execute.getText())) {
+                if ("取消申请".equals(btn_execute.getText())) {
                     showDialog();
-                }else {
+                } else {
                     Bundle bundle1 = new Bundle();
                     bundle1.putString(ServiceExpressNumberActivity.KEY_SERVICE_ID, serviceId);
                     startActivity(ServiceExpressNumberActivity.class, bundle1);
@@ -301,15 +301,14 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                         networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                ToastUtils.showToastShort(mContext, "取消售后");
                                 ActivityManager.getInstance().removeCurrentActivity();
-                                finish();
+                                startActivity(ServiceListActivity.class);
                                 loading.dismiss();
                             }
                         });
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener(){
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
