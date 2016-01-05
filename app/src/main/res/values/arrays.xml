@@ -37,7 +37,6 @@
         <item>不想买了</item>
     </string-array>
     <string-array name="back_spinnername">
-        <item>退货原因</item>
         <item>不想要/不需要该商品</item>
         <item>外包装完好，商品存在质量问题</item>
         <item>外包装破损，导致商品破损</item>
@@ -49,7 +48,6 @@
         <item>其他</item>
     </string-array>
     <string-array name="change_spinnername">
-        <item>换货原因</item>
         <item>外包装完好，商品存在质量问题</item>
         <item>外包装破损，导致商品破损</item>
         <item>做工问题/工艺瑕疵/掉漆/褪色</item>

@@ -9,7 +9,6 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceChooseAdapter;
-import com.putao.wd.me.service.view.ServiceChangeActivity;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
@@ -51,6 +50,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     private List<OrderProduct> mAbleProduct;
     private List<OrderProduct> mFocusProducts;
     public static final String ORDER_ID = "orderId";
+    public static final String SERVICE_WAY = "service_way";
 
 
     @Override
@@ -189,17 +189,20 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
-        bundle.putString(ServiceRefundActivity.ORDER_ID,mOrderId);
-        bundle.putSerializable(SERVICE_PRODUCT, (Serializable)mFocusProducts);
+        bundle.putString(ServiceRefundActivity.ORDER_ID, mOrderId);
+        bundle.putSerializable(SERVICE_PRODUCT, (Serializable) mFocusProducts);
         switch (v.getId()){
             case R.id.btn_service_refund:
-                startActivity(ServiceRefundActivity.class,bundle);
+                bundle.putString(SERVICE_WAY, 3 + "");
+                startActivity(ServiceRefundActivity.class, bundle);
                 break;
             case R.id.btn_service_back:
-                startActivity(ServiceBackActivity.class,bundle);
+                bundle.putString(SERVICE_WAY, 2 + "");
+                startActivity(ServiceChangeBackActivity.class, bundle);
                 break;
             case R.id.btn_service_change:
-                startActivity(ServiceChangeActivity.class,bundle);
+                bundle.putString(SERVICE_WAY,1+"");
+                startActivity(ServiceChangeBackActivity.class,bundle);
                 break;
         }
     }

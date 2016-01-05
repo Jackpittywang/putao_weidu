@@ -3,7 +3,6 @@ package com.putao.wd.me.service;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -212,7 +211,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             case "31"://3退款
                 setBackMoneyStep();
                 selectStepDeal();
-                btn_execute.setText("填写快递单号");
+                btn_execute.setText("取消申请");
                 break;
             case "33":
             case "38":
@@ -278,10 +277,12 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 startActivity(ServiceShipmentDetailActivity.class, bundle);
                 break;
             case R.id.btn_execute:
-                if ("取消申请".equals(btn_execute.getText())) {
+                if (!"取消申请".equals(btn_execute.getText())) {
                     showDialog();
                 }else {
-                    startActivity(ServiceExpressNumberActivity.class);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString(ServiceExpressNumberActivity.KEY_SERVICE_ID, serviceId);
+                    startActivity(ServiceExpressNumberActivity.class, bundle1);
                 }
                 break;
         }
@@ -301,8 +302,8 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                             @Override
                             public void onSuccess(String url, String result) {
                                 ToastUtils.showToastShort(mContext, "取消售后");
-                                startActivity(ServiceListActivity.class);
                                 ActivityManager.getInstance().removeCurrentActivity();
+                                finish();
                                 loading.dismiss();
                             }
                         });
