@@ -277,7 +277,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         String sum = "0.00";
         for (Integer key : keys) {
             Cart cart = mSelected.get(key);
-            String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
+//            String goodsCount = cart.isEditable() ? cart.getQt() : cart.getGoodsCount();
+            String goodsCount = cart.isEditable() ? cart.getGoodsCount() : cart.getQt();
             sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), goodsCount));
         }
         tv_money.setText(sum);
@@ -290,7 +291,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         setRightTitle(topText);
         tv_closing.setText(bottomText);
         saveable = canSave;
-        ll_money.setVisibility(canSave ? View.GONE : View.VISIBLE);
+//        ll_money.setVisibility(canSave ? View.GONE : View.VISIBLE);
     }
 
     /**
