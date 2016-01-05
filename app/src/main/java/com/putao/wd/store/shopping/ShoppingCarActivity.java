@@ -85,6 +85,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 adapter.addAll(result.getUse());
+                setTitle("购物车(" + result.getUse().size() + ")");
 //                btn_sel_all.setState(true);
 //                adapter.selAll(true);
 //                tv_money.setText(caculateSumMoney(result.getUse()));
@@ -125,6 +126,31 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
                 adapter.replaceAll(result.getUse());
                 tv_money.setText(caculateSumMoney(result.getUse()));
+                loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 商品编辑保存
+     */
+    private void saveEdit() {
+        networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+            @Override
+            public void onSuccess(String url, ShopCarItem result) {
+                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
+                Logger.w("保存成功 = " + result.toString());
+
+                initData();
+                Set<Integer> keys = mSelected.keySet();
+                String sum = "0.00";
+                for (Integer key : keys) {
+                    Cart cart = mSelected.get(key);
+                    cart.setQt(cart.getGoodsCount());
+                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+                }
+                tv_money.setText(sum);
+                adapter.finishEdit();
                 loading.dismiss();
             }
         });
@@ -277,25 +303,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             adapter.startEdit();
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
-            networkRequest(StoreApi.multiManage(getReqParam()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
-                @Override
-                public void onSuccess(String url, ShopCarItem result) {
-                    ToastUtils.showToastShort(mContext, "编辑商品保存成功");
-                    Logger.w("保存成功 = " + result.toString());
-
-                    initData();
-                    Set<Integer> keys = mSelected.keySet();
-                    String sum = "0.00";
-                    for (Integer key : keys) {
-                        Cart cart = mSelected.get(key);
-                        cart.setQt(cart.getGoodsCount());
-                        sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
-                    }
-                    tv_money.setText(sum);
-                    adapter.finishEdit();
-                    loading.dismiss();
-                }
-            });
+            saveEdit();
         }
     }
 
