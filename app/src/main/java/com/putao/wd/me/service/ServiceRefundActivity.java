@@ -122,8 +122,6 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
-                        img_status1.setImageResource(R.drawable.img_details_refund_steps_01_sel);
-                        v_status_waiting_pay.setBackgroundColor(Color.WHITE);
                         ToastUtils.showToastShort(mContext, "申请提交成功,请等待审核");
                         loading.dismiss();
                     }

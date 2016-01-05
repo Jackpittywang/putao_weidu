@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
-import com.putao.wd.me.service.Bimp;
 import com.putao.wd.model.ServiceBackImage;
 
 import java.util.List;
@@ -28,9 +27,11 @@ public class ServiceImageAdapter extends BaseAdapter {
     private String[] mItems;
     private ArrayAdapter<String> mStringArrayAdapter;
     private Context mContext;
+    private  List<ServiceBackImage> bitmaps;
 
     public ServiceImageAdapter(Context context, List<ServiceBackImage> bitmaps) {
         mContext = context;
+        this.bitmaps = bitmaps;
     }
 
 
@@ -45,16 +46,11 @@ public class ServiceImageAdapter extends BaseAdapter {
         this.shape = shape;
     }
 
-
-    public void update() {
-        loading();
-    }
-
     public int getCount() {
-        if (Bimp.tempSelectBitmap.size() == 9) {
-            return 9;
+        if (bitmaps.size() == 3) {
+            return 3;
         }
-        return (Bimp.tempSelectBitmap.size() + 1);
+        return (bitmaps.size() + 1);
     }
 
     public Object getItem(int arg0) {
@@ -75,7 +71,7 @@ public class ServiceImageAdapter extends BaseAdapter {
 
     ImageHolder holder = null;
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = View.inflate(mContext, R.layout.activity_service_image_item, null);
             holder = new ImageHolder();
@@ -88,7 +84,7 @@ public class ServiceImageAdapter extends BaseAdapter {
             holder = (ImageHolder) convertView.getTag();
         }
 
-        if (position == Bimp.tempSelectBitmap.size()) {
+        if (position == bitmaps.size()) {
             holder.rl_image.setVisibility(View.GONE);
             holder.iv_no_image.setVisibility(View.VISIBLE);
             if (position == 5) {
@@ -97,12 +93,18 @@ public class ServiceImageAdapter extends BaseAdapter {
         } else {
             holder.rl_image.setVisibility(View.VISIBLE);
             holder.iv_no_image.setVisibility(View.GONE);
-            holder.btn_image_add.setImageBitmap(Bimp.tempSelectBitmap.get(position).getBitmap());
+            holder.btn_image_add.setImageBitmap(bitmaps.get(position).getBitmap());
+            holder.btn_image_remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bitmaps.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
         }
 
         return convertView;
     }
-
 
 
     static class ImageHolder {
@@ -112,25 +114,7 @@ public class ServiceImageAdapter extends BaseAdapter {
         ImageView iv_no_image;
     }
 
-    public void loading() {
-        new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    if (Bimp.max == Bimp.tempSelectBitmap.size()) {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                        break;
-                    } else {
-                        Bimp.max += 1;
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                }
-            }
-        }).start();
-    }
+
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {

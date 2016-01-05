@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class ServiceBackImage implements Serializable {
     private Bitmap bitmap;
     private String URL;
+    private String sha1;
 
     public Bitmap getBitmap() {
         return bitmap;
@@ -23,6 +24,14 @@ public class ServiceBackImage implements Serializable {
         return URL;
     }
 
+    public String getSha1() {
+        return sha1;
+    }
+
+    public void setSha1(String sha1) {
+        this.sha1 = sha1;
+    }
+
     public void setURL(String URL) {
         this.URL = URL;
     }
@@ -32,6 +41,7 @@ public class ServiceBackImage implements Serializable {
         return "ServiceBackImage{" +
                 "bitmap=" + bitmap +
                 ", URL='" + URL + '\'' +
+                ", sha1='" + sha1 + '\'' +
                 '}';
     }
 }
