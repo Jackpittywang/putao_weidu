@@ -1,7 +1,10 @@
 package com.putao.wd.me.service;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
@@ -11,8 +14,11 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
@@ -33,6 +39,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     RelativeLayout rl_no_service;//没有售后时的布局
 
     private ServiceListAdapter adapter;
+    private String serviceId;
     private int page = 1;
 
 
@@ -86,8 +93,9 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         rv_service.setOnItemClickListener(new OnItemClickListener<ServiceList>() {
             @Override
             public void onItemClick(ServiceList ServiceList, int position) {
+                serviceId = ServiceList.getId();
                 Bundle bundle = new Bundle();
-                bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, ServiceList.getId());
+                bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, serviceId);
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_STATUS, ServiceList.getStatusText());
                 startActivity(ServiceDetailActivity.class, bundle);
             }
@@ -100,9 +108,51 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         });
     }
 
+    /**
+     * 取消订单dialog
+     */
+    private void showDialog() {
+        new AlertDialog.Builder(mContext)
+                .setTitle("提示")
+                .setMessage("确定取消")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                ToastUtils.showToastShort(mContext, "取消售后");
+                                startActivity(ServiceListActivity.class);
+                                ActivityManager.getInstance().removeCurrentActivity();
+                                loading.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+        }
+    }
+
+    @Subcriber(tag = ServiceListAdapter.EVENT_RIGHT_CLICK)
+    public void eventClick(View v) {
+        switch(((Button)v).getText().toString()) {
+            case ServiceListAdapter.SERVICE_CANCEL :
+                showDialog();
+                break;
+            case ServiceListAdapter.SERVICE_FILL_EXPRESS :
+                startActivity(ServiceExpressNumberActivity.class);
+                break;
         }
     }
 

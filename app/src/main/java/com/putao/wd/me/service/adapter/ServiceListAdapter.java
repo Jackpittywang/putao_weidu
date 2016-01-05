@@ -1,18 +1,27 @@
 package com.putao.wd.me.service.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.OrderApi;
+import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.store.product.ProductDetailActivity;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.MathUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -28,6 +37,9 @@ import butterknife.Bind;
  */
 public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceListAdapter.ServiceListViewHolder> {
 
+    public static final String EVENT_RIGHT_CLICK = "right_click";
+    public static final String SERVICE_CANCEL = "取消申请";
+    public static final String SERVICE_FILL_EXPRESS = "填写快递单号";
     private ServiceAdapter adapter;
 
     public ServiceListAdapter(Context context, List<ServiceList> serviceLists) {
@@ -66,6 +78,12 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         }
         holder.tv_order_sum_count.setText(totalQt + "");
         holder.tv_sum_money.setText(totalPrice);
+        holder.btn_service_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusHelper.post(v, EVENT_RIGHT_CLICK);
+            }
+        });
 
         adapter = new ServiceAdapter(context, products);
         holder.rv_service_inner.setAdapter(adapter);
@@ -101,11 +119,11 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         switch (status) {
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
-                holder.btn_service_right.setText("取消申请");
+                holder.btn_service_right.setText(SERVICE_CANCEL);
                 return "换货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
-                holder.btn_service_right.setText("填写快递单号");
+                holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
                 return "同意请求";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);
@@ -136,11 +154,11 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         switch (status) {
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
-                holder.btn_service_right.setText("取消申请");
+                holder.btn_service_right.setText(SERVICE_CANCEL);
                 return "退货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
-                holder.btn_service_right.setText("填写快递单号");
+                holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
                 return "同意请求";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);
@@ -165,7 +183,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         switch (status) {
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
-                holder.btn_service_right.setText("取消申请");
+                holder.btn_service_right.setText(SERVICE_CANCEL);
                 return "退款请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.GONE);
@@ -179,7 +197,6 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         }
         return "";
     }
-
 
     /**
      * 售后视图
