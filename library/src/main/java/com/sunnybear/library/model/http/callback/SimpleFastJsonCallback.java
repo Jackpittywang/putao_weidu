@@ -1,6 +1,8 @@
 package com.sunnybear.library.model.http.callback;
 
+import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.LoadingHUD;
 
 import java.io.Serializable;
@@ -22,6 +24,7 @@ public abstract class SimpleFastJsonCallback<T extends Serializable> extends Fas
     @Override
     public void onFailure(String url, int statusCode, String msg) {
         Logger.e("请求错误:url=" + url + ",statusCode=" + statusCode + ",错误信息=" + msg);
+        ToastUtils.showToastLong(BasicApplication.getInstance(), msg);
         if (loading != null) loading.dismiss();
     }
 }

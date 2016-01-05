@@ -1,12 +1,15 @@
 package com.putao.wd.api;
 
-import com.facebook.common.internal.DoNotStrip;
+import android.content.Context;
+
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
 
 /**
@@ -197,5 +200,22 @@ public class UserApi {
                 .addParam(SEX, sex)
                 .addParam(BIRTHDAY, birthday)
                 .build(RequestMethod.POST, URL_CHILD_SET);
+    }
+
+    /**
+     * 资源更新
+     *
+     * @param context 上下文
+     */
+    public static Request resourceUpload(Context context) {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam("appid", GlobalApplication.app_id)
+                .addParam("client_id", "1")
+                .addParam("client_secret", "d3159867d3525452773206e189ef6966")
+                .addParam("op_id", "1")
+                .addParam("resource_version", PreferenceUtils.getValue("resource_version", "10000"))
+                .addParam("game_id", "game_id")
+                .addParam("app_version", AppUtils.getVersionName(context).substring(1))
+                .build(RequestMethod.GET, "http://source.start.wang/client/resource");
     }
 }

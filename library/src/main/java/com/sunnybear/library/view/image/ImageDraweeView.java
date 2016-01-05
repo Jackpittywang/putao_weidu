@@ -86,6 +86,17 @@ public class ImageDraweeView extends SimpleDraweeView {
     }
 
     /**
+     * 设置ScaleType
+     *
+     * @param scaleType ScaleType
+     */
+    public void setScaleType(ScalingUtils.ScaleType scaleType) {
+        GenericDraweeHierarchy hierarchy = getHierarchy();
+        hierarchy.setActualImageScaleType(scaleType);
+        setHierarchy(hierarchy);
+    }
+
+    /**
      * 设置默认图片
      *
      * @param resId 默认图片资源id

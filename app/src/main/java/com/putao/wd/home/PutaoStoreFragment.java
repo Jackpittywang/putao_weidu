@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
@@ -20,6 +19,7 @@ import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BadgeView;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -62,7 +62,6 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        Logger.d(MainActivity.TAG, "PutaoStoreFragment启动");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         mHeader.attachTo(rv_content, true);
@@ -83,13 +82,19 @@ public class PutaoStoreFragment extends PTWDFragment {
         networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
             @Override
             public void onSuccess(String url, StoreHome result) {
-                List<StoreBanner> banners = result.getBanner();
+                final List<StoreBanner> banners = result.getBanner();
                 //初始化广告位
                 if (banners != null && banners.size() > 0) {
-                    bannerAdapter = new StoreBannerAdapter(mActivity, result.getBanner(), new BannerViewPager.OnPagerClickListenr() {
+                    bannerAdapter = new StoreBannerAdapter(mActivity, banners, new BannerViewPager.OnPagerClickListenr() {
                         @Override
                         public void onPagerClick(int position) {
-
+                            StoreBanner banner = banners.get(position);
+                            String project_id = banner.getItem_id();
+                            if (!StringUtils.isEmpty(project_id)) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, project_id);
+                                startActivity(ProductDetailActivity.class, bundle);
+                            }
                         }
                     });
                     bl_banner.setAdapter(bannerAdapter);

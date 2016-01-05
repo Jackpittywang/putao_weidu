@@ -3,10 +3,13 @@ package com.putao.wd.user;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
@@ -15,12 +18,13 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
+import com.sunnybear.library.view.SwitchButton;
+import com.sunnybear.library.view.TimeButton;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -29,7 +33,7 @@ import butterknife.OnClick;
  * 忘记密码
  * create by wangou
  */
-public class ForgetPasswordActivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
+public class ForgetPasswordActivity extends PTWDActivity implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
     @Bind(R.id.btn_nextstep)
     Button btn_nextstep;//下一步
     @Bind(R.id.et_mobile)
@@ -38,6 +42,10 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
     CleanableEditText et_sms_verify;//获取验证码
     @Bind(R.id.et_password)
     CleanableEditText et_password;//密码
+    @Bind(R.id.btn_lock)
+    SwitchButton btn_lock;
+    @Bind(R.id.tb_get_verify)
+    TimeButton tb_get_verify;
 
     @Override
     protected int getLayoutId() {
@@ -49,6 +57,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         addNavigation();
         et_mobile.addTextChangedListener(this);
         //et_password.addTextChangedListener(this);
+        btn_lock.setOnSwitchClickListener(this);
     }
 
     @Override
@@ -56,7 +65,6 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         return new String[0];
     }
 
-    //-------|下一步-------------|获取验证码
     @OnClick({R.id.btn_nextstep, R.id.tb_get_verify})
     @Override
     public void onClick(View v) {
@@ -94,10 +102,10 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                     });
                 }
 //                    startActivity(ResetPasswordAcitivity.class);
-
                 break;
             case R.id.tb_get_verify://获取验证码
                 if (StringUtils.isEmpty(mobile)) {
+                    tb_get_verify.reset();
                     ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
@@ -117,9 +125,13 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         }
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    @Override
+    public void onSwitchClick(View v, boolean isSelect) {
+        if (!isSelect) //加密
+            et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        else //不加密
+            et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
     }
 
     @Override
@@ -131,6 +143,11 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             btn_nextstep.setClickable(false);
             btn_nextstep.setBackgroundResource(R.drawable.btn_los_focus);
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
     }
 
     @Override
@@ -146,16 +163,11 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             @Override
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
-                loading.dismiss();
-                ActivityManager.getInstance().finishActivity(LoginActivity.class);
+                EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+                startActivity(MainActivity.class);
                 finish();
+                loading.dismiss();
             }
         });
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
     }
 }

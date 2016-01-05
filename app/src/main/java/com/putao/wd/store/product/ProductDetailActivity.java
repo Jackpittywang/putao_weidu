@@ -21,14 +21,12 @@ import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BadgeView;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 import com.sunnybear.library.view.viewpager.BannerLayout;
-import com.sunnybear.library.view.viewpager.BannerViewPager;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -119,12 +117,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
                 //广告列表
                 if (result.getPictures() != null) {
-                    bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), new BannerViewPager.OnPagerClickListenr() {
-                        @Override
-                        public void onPagerClick(int position) {
-                            ToastUtils.showToastLong(mContext, "点击第" + position + "项");
-                        }
-                    }));
+                    bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), null));
                     bl_banner.setOffscreenPageLimit(result.getPictures().size());//缓存页面数
                 }
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());

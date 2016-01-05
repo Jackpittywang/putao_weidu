@@ -20,6 +20,7 @@ import com.putao.wd.model.OrderCount;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.question.QuestionActivity;
 import com.putao.wd.user.CompleteActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -110,8 +111,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     }
 
     @Subcriber(tag = EVENT_EDIT_USER_INFO)
-    public void EventEditUserInfo(String tag) {
+    public void eventEditUserInfo(String tag) {
         getUserInfo();
+    }
+
+    @Subcriber(tag = LoginActivity.EVENT_LOGIN)
+    public void eventLogin(String tag) {
+        getUserInfo();
+        getOrderCount();
     }
 
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
