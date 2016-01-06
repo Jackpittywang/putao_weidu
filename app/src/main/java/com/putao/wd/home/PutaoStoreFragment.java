@@ -123,9 +123,10 @@ public class PutaoStoreFragment extends PTWDFragment {
                 JSONObject object = JSON.parseObject(result);
                 int count = object.getInteger("qt");
                 if (count != 0) {
+                    navigation_bar.hideRrightTitleIcon(false);
                     navigation_bar.setRightTitleIcon(count + "");
                 } else {
-                    navigation_bar.hideRrightTitleIcon();
+                    navigation_bar.hideRrightTitleIcon(true);
                 }
 //                    mIndicatorHelper.indicator(count, BadgeView.POSITION_TOP_LEFT,
 //                            com.sunnybear.library.R.drawable.indicator_background_2, Color.WHITE);

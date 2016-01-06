@@ -115,7 +115,6 @@ public class NavigationBar extends RelativeLayout {
             setId(R.id.navigation_bar);
         //setRightTitleIcon
         if(mHasRightIcon){
-            mRightIconView.setVisibility(View.VISIBLE);
             mRightIconView.setBackground(mRightIconDrawable);
             mRightIconView.setTextColor(mRightIconTextColor);
         }
@@ -237,8 +236,8 @@ public class NavigationBar extends RelativeLayout {
     /**
      * hide shopping car count
      */
-    public void hideRrightTitleIcon() {
-        mRightIconView.setVisibility(View.GONE);
+    public void hideRrightTitleIcon(boolean isHide) {
+        mRightIconView.setVisibility(isHide ? View.GONE : View.VISIBLE);
     }
 
     /**
