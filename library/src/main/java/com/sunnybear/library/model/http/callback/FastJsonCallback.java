@@ -85,7 +85,5 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
      * @param url 网络地址
      * @param msg 消息
      */
-    public void onFinish(String url, String msg) {
-        Logger.w("服务器消息:" + msg);
-    }
+    public abstract void onFinish(String url, String msg);
 }
