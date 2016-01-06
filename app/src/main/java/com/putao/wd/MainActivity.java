@@ -121,9 +121,9 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      * 验证登录状态
      */
     private void checkLogin() {
-        if (!AccountHelper.isLogin())
-            startActivity(LoginActivity.class);
-        else
+//        if (!AccountHelper.isLogin())
+//            startActivity(LoginActivity.class);
+//        else
             setCurrentItem(currentItemId);
     }
 
@@ -176,10 +176,10 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         return fragment;
     }
 
-    @Subcriber(tag = LoginActivity.EVENT_LOGIN)
-    public void eventLogin(String tag) {
-        setCurrentItem(currentItemId);
-    }
+//    @Subcriber(tag = LoginActivity.EVENT_LOGIN)
+//    public void eventLogin(String tag) {
+//        setCurrentItem(currentItemId);
+//    }
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
@@ -188,11 +188,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         tb_tab.setTabItemSelected(R.id.ti_start_circle);
     }
 
-    @Subcriber(tag = LoginActivity.EVENT_CANCEL_LOGIN)
-    public void eventCancelLogin(String tag) {
-        setCurrentItem(R.id.ti_start_circle);
-        tb_tab.setTabItemSelected(R.id.ti_start_circle);
-    }
+//    @Subcriber(tag = LoginActivity.EVENT_CANCEL_LOGIN)
+//    public void eventCancelLogin(String tag) {
+//        setCurrentItem(R.id.ti_start_circle);
+//        tb_tab.setTabItemSelected(R.id.ti_start_circle);
+//    }
 
     @Subcriber(tag = CompleteActivity.EVENT_USER_INFO_SAVE_SUCCESS)
     public void eventUserInfoSaveSuccess(String tag) {

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.me.actions.MyActionsActivity;
@@ -68,7 +69,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        if (!MainActivity.isNotRefreshUserInfo) {
+        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             getOrderCount();
             getUserInfo();
         }
@@ -126,6 +127,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
+        if (!AccountHelper.isLogin()) {
+            toLoginActivity(v, bundle);
+            return;
+        }
         switch (v.getId()) {
             case R.id.iv_setting:
                 startActivity(SettingActivity.class);
@@ -175,4 +180,55 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
         }
     }
+
+    /**
+     * put进目标activity供登录后跳转
+     */
+    private void toLoginActivity(View v, Bundle bundle){
+        switch (v.getId()) {
+            case R.id.iv_setting:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, SettingActivity.class);
+                break;
+            case R.id.si_order://我的订单
+                bundle.putInt(OrderListActivity.TYPE_INDEX, 0);
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+                break;
+            case R.id.si_child_info://孩子信息
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ChildInfoActivity.class);
+                break;
+            case R.id.si_address://收货地址
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, AddressListActivity.class);
+                break;
+            case R.id.si_action://我参与的活动
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MyActionsActivity.class);
+                break;
+            case R.id.si_question://我的提问
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, QuestionActivity.class);
+                break;
+            case R.id.iv_user_icon://完善用户信息
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
+                break;
+            case R.id.si_message://消息中心
+                si_message.hide();
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MessageCenterActivity.class);
+                break;
+            case R.id.btn_pay://待付款
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+                break;
+            case R.id.btn_deliver://待发货
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+                break;
+            case R.id.btn_take_deliver://待收货
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+                break;
+            case R.id.btn_after_sale://售后
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ServiceListActivity.class);
+                break;
+        }
+        startActivity(LoginActivity.class, bundle);
+    }
+
 }

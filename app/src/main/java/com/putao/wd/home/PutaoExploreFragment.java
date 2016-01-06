@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.explore.DisPlayActivity;
@@ -19,6 +21,7 @@ import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -72,8 +75,16 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
 
             }
         });
-        getDiaryIndex();
-        addListener();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+            jump_loading.setVisibility(View.VISIBLE);
+            getDiaryIndex();
+            addListener();
+        }
     }
 
     @Override
@@ -145,6 +156,11 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
+        if (!AccountHelper.isLogin()) {
+            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
+            startActivity(LoginActivity.class, bundle);
+            return;
+        }
         switch (v.getId()) {
             case R.id.btn_explore_empty://扫描二维码
                 startActivity(CaptureActivity.class);
