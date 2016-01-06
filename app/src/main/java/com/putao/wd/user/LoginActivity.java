@@ -21,6 +21,8 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 
+import java.io.Serializable;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -31,6 +33,8 @@ import butterknife.OnClick;
 public class LoginActivity extends PTWDActivity implements View.OnClickListener, TextWatcher {
     public static final String EVENT_LOGIN = "login";
     public static final String EVENT_CANCEL_LOGIN = "cancel_login";
+
+    public static final String TERMINAL_ACTIVITY = "terminal";
 
     @Bind(R.id.et_mobile)
     CleanableEditText et_mobile;
@@ -100,7 +104,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
             @Override
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
-                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+//                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                startActivity((Class)args.getSerializable(TERMINAL_ACTIVITY), args);
                 loading.dismiss();
                 finish();
             }
