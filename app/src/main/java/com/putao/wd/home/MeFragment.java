@@ -122,6 +122,12 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         getOrderCount();
     }
 
+    @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
+    public void eventLogout(String tag) {
+        iv_user_icon.setDefaultImage(R.drawable.img_head_default);
+        tv_user_nickname.setText("葡星人");
+    }
+
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
             , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
@@ -184,7 +190,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     /**
      * put进目标activity供登录后跳转
      */
-    private void toLoginActivity(View v, Bundle bundle){
+    private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
             case R.id.iv_setting:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, SettingActivity.class);
@@ -230,5 +236,4 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         }
         startActivity(LoginActivity.class, bundle);
     }
-
 }
