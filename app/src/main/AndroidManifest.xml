@@ -245,10 +245,17 @@
         <activity
             android:name=".me.service.ServiceChooseActivity"
             android:screenOrientation="portrait" />
-        <!--申请退货-->
-        <!--申请换货-->
+        <!--申请退换货-->
         <activity
             android:name=".me.service.ServiceChangeBackActivity"
+            android:screenOrientation="portrait" />
+        <!--修改昵称-->
+        <activity
+            android:name=".user.NickActivity"
+            android:screenOrientation="portrait" />
+        <!--修改用户简介-->
+        <activity
+            android:name=".user.UserInfoActivity"
             android:screenOrientation="portrait" />
         <!-- 退款页面-->
         <!-- ===============================业务activity定义在这条线之上================================== -->

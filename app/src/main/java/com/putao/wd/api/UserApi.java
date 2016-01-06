@@ -67,19 +67,35 @@ public class UserApi {
     /**
      * 完善用户信息（更新）
      *
-     * @param nick_name 昵称
-     * @param profile   简介
      * @param ext       图片后缀
      * @param filename  文件名
      * @param filehash  文件hash
      */
-    public static Request userEdit(String nick_name, String profile, String ext, String filename, String filehash) {
+    public static Request userEdit(String ext, String filename, String filehash) {
         return PTWDRequestHelper.explore()
-                .addParam(REQUEST_NICK_NAME, nick_name)
-                .addParam(REQUEST_PROFILE, profile)
                 .addParam(REQUEST_EXT, ext)
                 .addParam(REQUEST_FILENAME, filename)
                 .addParam(REQUEST_FILEHASH, filehash)
+                .build(RequestMethod.POST, URL_USER_EDIT);
+    }
+
+    /**
+     * 保存昵称
+     *
+     * @param nick_name 昵称
+     */
+    public static Request userNick(String nick_name) {
+        return PTWDRequestHelper.explore()
+                .addParam(REQUEST_NICK_NAME, nick_name)
+                .build(RequestMethod.POST, URL_USER_EDIT);
+    }
+    /**
+     * 保存昵称
+     * @param user_info 用户简介
+     */
+    public static Request userInfo(String user_info) {
+        return PTWDRequestHelper.explore()
+                .addParam(REQUEST_PROFILE, user_info)
                 .build(RequestMethod.POST, URL_USER_EDIT);
     }
 

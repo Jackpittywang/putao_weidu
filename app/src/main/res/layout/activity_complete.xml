@@ -4,100 +4,158 @@
     android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_bg_signup"
+    android:background="@color/layout_background"
     android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
-        android:background="@color/transparent"
+        android:background="@color/white"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="完善用户信息"
+        auto:nav_main_title="个人信息"
         auto:nav_main_title_color="@color/text_color"
-        auto:nav_right_title="保存"
         auto:nav_right_title_color="@drawable/text_select" />
 
-    <RelativeLayout
+    <!--间隔线-->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!--用户昵称-->
-        <LinearLayout
-            android:id="@+id/ll_nickname"
+        android:layout_height="1px"
+        android:background="@color/divider_color" />
+
+    <!--头像-->
+    <RelativeLayout
+        android:id="@+id/rl_header_icon"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="头像"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_header_icon"
+            style="@style/image_circle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            auto:placeholderImage="@drawable/img_head_signup" />
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_header_icon"
-            android:orientation="vertical">
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/btn_arrow" />
 
-            <com.sunnybear.library.view.CleanableEditText
-                android:id="@+id/et_nickname"
-                style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:drawableRight="@drawable/close_selector"
-                android:hint="用戶昵称" />
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
-
-        <!--个人简介-->
-        <LinearLayout
-            android:id="@+id/ll_intro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_nickname"
-            android:orientation="vertical">
-
-            <com.sunnybear.library.view.CleanableEditText
-                android:id="@+id/et_intro"
-                style="@style/WeiduText.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableRight="@drawable/close_selector"
-                android:hint="个人简介"
-                android:maxLength="100"
-                android:paddingBottom="16dp"
-                android:paddingTop="16dp"
-                android:singleLine="false" />
-            <!--间隔线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
-        <!--头像-->
-        <RelativeLayout
-            android:id="@+id/rl_header_icon"
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-            <FrameLayout
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_centerInParent="true">
-
-                <com.sunnybear.library.view.image.ImageDraweeView
-                    android:id="@+id/iv_header_icon"
-                    style="@style/image_circle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    auto:placeholderImage="@drawable/img_head_signup" />
-
-                <ImageView
-                    android:id="@+id/iv_select_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="bottom|right"
-                    android:src="@drawable/icon_20_12" />
-            </FrameLayout>
-        </RelativeLayout>
     </RelativeLayout>
+
+    <!--用户昵称-->
+    <RelativeLayout
+        android:id="@+id/rl_nick_name"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white">
+
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dp"
+            android:background="@color/divider_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="昵称"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical"
+            android:maxEms="11"
+            android:singleLine="true"
+            android:text="这里显示用户昵称"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/btn_arrow" />
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_color" />
+    </RelativeLayout>
+
+    <!--个人简介-->
+    <RelativeLayout
+        android:id="@+id/rl_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white">
+
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="个人简介"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_user_info"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical"
+            android:maxEms="11"
+            android:singleLine="true"
+            android:hint="这个用户很懒"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/btn_arrow" />
+        <!--间隔线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_color" />
+    </RelativeLayout>
+
 </LinearLayout>
