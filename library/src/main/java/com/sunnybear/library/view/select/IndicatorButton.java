@@ -82,7 +82,10 @@ public class IndicatorButton extends LinearLayout {
     }
 
     public void show(int count) {
-        if (count == 0) return;
+        if (count == 0) {
+            hide();
+            return;
+        }
         mIndicator = new BadgeView(getContext(), mMainView);
         mIndicator.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         mIndicator.setBackgroundResource(R.drawable.indicator_background);
