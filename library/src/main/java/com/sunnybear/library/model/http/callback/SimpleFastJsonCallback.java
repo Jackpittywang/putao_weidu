@@ -29,4 +29,10 @@ public abstract class SimpleFastJsonCallback<T extends Serializable> extends Fas
             ToastUtils.showToastLong(BasicApplication.getInstance(), msg);
         if (loading != null) loading.dismiss();
     }
+
+    @Override
+    public void onFinish(String url, String msg) {
+        Logger.w("服务器消息:" + msg);
+        if (loading != null) loading.dismiss();
+    }
 }
