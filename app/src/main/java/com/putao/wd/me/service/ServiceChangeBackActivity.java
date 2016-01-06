@@ -105,7 +105,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Bundle bundle = (Bundle) msg.obj;
+            loading.dismiss();
         }
     };
 
@@ -127,7 +127,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
 
     private void initView() {
         tv_service_money.setText("￥" + totalPrice);
-        adapter = new ChangeBackListAdapter(mContext, mProducts,mServiceWay);
+        adapter = new ChangeBackListAdapter(mContext, mProducts, mServiceWay);
         rv_service_back_list.setAdapter(adapter);
         if ("1".equals(mServiceWay)) {
             navigation_bar.setMainTitle("请填写换货信息");
@@ -257,12 +257,11 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
             serviceBackImage.setBitmap(bitmap);
             serviceBackImage.setURL(filePath);
             mProducts.get(position).getServiceBackImage().add(serviceBackImage);
-            uploadFile = new File(serviceBackImage.getURL());
+            uploadFile = new File(filePath);
             sha1 = FileUtils.getSHA1ByFile(uploadFile);
             serviceBackImage.setSha1(sha1);
             getUploadToken();
             adapter.notifyItemChanged(position);
-            loading.dismiss();
         }
     }
 
@@ -317,7 +316,6 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.putAll(productDataMap);
-        Logger.d("-----++" + jsonObject.toJSONString());
 
         networkRequest(OrderApi.orderSubmitAfterSale(mOrderId, mServiceWay, addressId, allProductId.substring(1), jsonObject.toJSONString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -348,6 +346,9 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
         });
     }
 
+    /**
+     * 文件上传
+     */
     private void uploadFile() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -356,6 +357,8 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());
+                        Message message = new Message();
+                        mHandler.sendMessage(message);
                     }
                 });
             }
@@ -407,7 +410,11 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
         }
     }
 
-
+    /**
+     * 地址选择结果接收
+     *
+     * @param address
+     */
     @Subcriber(tag = AddressListActivity.EVENT_SELECT_ADDRESS)
     public void eventSelectAddress(Address address) {
         ll_receiving_address.setVisibility(View.VISIBLE);

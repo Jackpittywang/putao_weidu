@@ -161,7 +161,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
         networkRequest(ExploreApi.managementSetall(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
             public void onSuccess(String url, Management result) {
-                ToastUtils.showToastShort(mContext,"指令发送成功");
+                ToastUtils.showToastShort(mContext, "指令发送成功");
                 btn_stopuse.setEnabled(false);
                 loading.dismiss();
             }
