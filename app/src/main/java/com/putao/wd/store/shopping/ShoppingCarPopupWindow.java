@@ -14,6 +14,7 @@ import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.store.shopping.adapter.NormsSelectAdapter;
 import com.putao.wd.store.shopping.util.SpecUtils;
 import com.sunnybear.library.controller.BasicPopupWindow;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
-//    public static final String EVENT_JOIN_CAR = "join_car";
+    public static final String EVENT_REFRESH_TITLE_COUNT = "title_count";
 
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
@@ -102,7 +103,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "添加成功！");
                 Logger.d(result.toString());
-                loading.dismiss();
+                EventBusHelper.post(EVENT_REFRESH_TITLE_COUNT, EVENT_REFRESH_TITLE_COUNT);
             }
         });
     }
