@@ -10,6 +10,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -30,7 +32,6 @@ import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.io.File;
@@ -44,19 +45,29 @@ import butterknife.OnClick;
  */
 public class CompleteActivity extends PTWDActivity implements View.OnClickListener {
     public static final String EVENT_USER_INFO_SAVE_SUCCESS = "user_info_save_success";
-
+    public static final String NICK_NAME = "nick_name";
+    public static final String USER_INFO = "user_info";
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
+    @Bind(R.id.rl_header_icon)
+    RelativeLayout rl_header_icon;
     @Bind(R.id.iv_header_icon)
     ImageDraweeView iv_header_icon;
-    @Bind(R.id.et_nickname)
-    CleanableEditText et_nickname;
-    @Bind(R.id.et_intro)
-    CleanableEditText et_intro;
+    @Bind(R.id.rl_nick_name)
+    RelativeLayout rl_nick_name;
+    @Bind(R.id.tv_nick_name)
+    TextView tv_nick_name;
+    @Bind(R.id.rl_user_info)
+    RelativeLayout rl_user_info;
+    @Bind(R.id.tv_user_info)
+    TextView tv_user_info;
+
 
     private SelectPopupWindow mSelectPopupWindow;
     private final int CAMERA_REQCODE = 1;
     private final int ALBUM_REQCODE = 2;
+    private final int CHANGE_NICK = 3;
+    private final int CHANGE_INFO = 4;
     //=====================上传相关===========================
     private String uploadToken;//上传token
     private File uploadFile;//上传文件
@@ -84,16 +95,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
-
-        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
-            @Override
-            public void onSuccess(String url, UserInfo result) {
-                iv_header_icon.setImageURL(result.getHead_img());
-                et_nickname.setText(result.getNick_name());
-                et_intro.setText(result.getProfile());
-                loading.dismiss();
-            }
-        });
+        initInfo();
 
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
@@ -110,17 +112,42 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         };
     }
 
+    private void initInfo() {
+        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                iv_header_icon.setImageURL(result.getHead_img());
+                tv_nick_name.setText(result.getNick_name());
+                tv_user_info.setText(result.getProfile());
+                loading.dismiss();
+            }
+        });
+    }
+
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
 
-    @OnClick(R.id.iv_select_icon)
+    @OnClick({R.id.rl_header_icon, R.id.rl_nick_name, R.id.rl_user_info})
     @Override
     public void onClick(View v) {
+        Bundle bundle = new Bundle();
         switch (v.getId()) {
-            case R.id.iv_select_icon://选择用户头像
+            case R.id.rl_header_icon://选择用户头像
                 mSelectPopupWindow.show(ll_main);
+                break;
+            case R.id.rl_nick_name://选择用户头像
+                bundle.putString(NICK_NAME, tv_nick_name.getText().toString());
+                Intent nickIntent = new Intent(this, NickActivity.class);
+                nickIntent.putExtra(NICK_NAME, bundle);
+                startActivityForResult(nickIntent, CHANGE_NICK);
+                break;
+            case R.id.rl_user_info://选择用户头像
+                bundle.putString(USER_INFO, tv_user_info.getText().toString());
+                Intent infoiIntent = new Intent(this, UserInfoActivity.class);
+                infoiIntent.putExtra(USER_INFO, bundle);
+                startActivityForResult(infoiIntent, CHANGE_INFO);
                 break;
         }
     }
@@ -192,7 +219,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
      * 上传PHP服务器
      */
     private void upload(String ext, String filename, String filehash) {
-        networkRequest(UserApi.userEdit(nick_name, profile, ext, filename, filehash),
+        networkRequest(UserApi.userEdit(ext, filename, filehash),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
@@ -203,19 +230,6 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                         finish();
                     }
                 });
-    }
-
-    /**
-     * 保存用户信息
-     * by yanghx
-     * 请求参数 String类型 昵称、图片url、个人简介
-     */
-    @Override
-    public void onRightAction() {
-        super.onRightAction();
-        nick_name = et_nickname.getText().toString();
-        profile = et_intro.getText().toString();
-        checkSha1(filePath);
     }
 
     @Override
@@ -229,6 +243,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
 //                    bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.setDefaultImage(bitmap);
                     ImageUtils.bitmapOutSdCard(bitmap, filePath);
+                    checkSha1(filePath);
                     break;
                 case ALBUM_REQCODE://相册选择
                     ToastUtils.showToastShort(this, "系统图库返回");
@@ -237,7 +252,6 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     Cursor cursor = getContentResolver().query(selectedImage,
                             filePathColumn, null, null, null);
                     cursor.moveToFirst();
-
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String picturePath = cursor.getString(columnIndex);
 
@@ -246,8 +260,17 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.resize(320, 320).setDefaultImage(bitmap);
                     ImageUtils.bitmapOutSdCard(bitmap, filePath);
+                    checkSha1(filePath);
                     break;
             }
+        }
+        switch (requestCode) {
+            case CHANGE_NICK:
+                initInfo();
+                break;
+            case CHANGE_INFO:
+                initInfo();
+                break;
         }
     }
 }
