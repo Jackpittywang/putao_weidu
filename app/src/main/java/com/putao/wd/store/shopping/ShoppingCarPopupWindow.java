@@ -1,18 +1,21 @@
 package com.putao.wd.store.shopping;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Norms;
 import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.store.shopping.adapter.NormsSelectAdapter;
 import com.putao.wd.store.shopping.util.SpecUtils;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicPopupWindow;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -36,6 +39,7 @@ import butterknife.OnClick;
  */
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
     public static final String EVENT_REFRESH_TITLE_COUNT = "title_count";
+    public static final String EVENT_TO_LOGIN = "to_login";
 
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
@@ -113,6 +117,10 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_join_car://加入购物车
+                if (!AccountHelper.isLogin()) {
+                    EventBusHelper.post(EVENT_TO_LOGIN, EVENT_TO_LOGIN);
+                    return;
+                }
                 ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
                 if (!MathUtils.compare(mCount, sku.getQuantity()))
                     carAdd(sku.getPid(), mCount);

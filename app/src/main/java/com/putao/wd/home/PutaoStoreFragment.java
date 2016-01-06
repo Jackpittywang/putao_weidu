@@ -5,7 +5,9 @@ import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ProductAdapter;
@@ -14,8 +16,10 @@ import com.putao.wd.model.StoreBanner;
 import com.putao.wd.model.StoreHome;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
+import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.putao.wd.user.LoginActivity;
 import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -72,7 +76,6 @@ public class PutaoStoreFragment extends PTWDFragment {
         addListener();
         //广告位
         getStoreHome();
-        getCartCount();
         refresh();
     }
 
@@ -174,6 +177,9 @@ public class PutaoStoreFragment extends PTWDFragment {
         super.onStart();
         if (isStop)
             isStop = bl_banner.startAutoScroll();
+        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+            getCartCount();
+        }
     }
 
     @Override
@@ -190,6 +196,12 @@ public class PutaoStoreFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
 //        mIndicatorHelper.hide();
+        if (!AccountHelper.isLogin()) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ShoppingCarActivity.class);
+            startActivity(LoginActivity.class, bundle);
+            return;
+        }
         startActivity(ShoppingCarActivity.class);
     }
 
