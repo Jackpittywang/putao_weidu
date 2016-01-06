@@ -88,6 +88,7 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
             jump_loading.setVisibility(View.VISIBLE);
             getDiaryIndex();
             addListener();
+            checkDevices();
         }
     }
 
@@ -206,9 +207,4 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         startActivity(PlotActivity.class, bundle);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        checkDevices();
-    }
 }
