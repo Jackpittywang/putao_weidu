@@ -39,16 +39,21 @@ public class NavigationBar extends RelativeLayout {
 
     private Drawable mLeftDrawable;
     private Drawable mRightDrawable;
-
     private Drawable mMainDrawable;
 
     private View mLeftView;
     private View mRightView;
     private TextView mMainView;//TODO: make it support custom main view
+    private TextView mRightIconView;
 
-    private int mDividerColor = -1;
     private ActionsListener mListener;
+
     private boolean mHasDivider = true;
+    private int mDividerColor = -1;
+
+    private boolean mHasRightIcon = false;//top right icon for shopping car
+    private Drawable mRightIconDrawable;
+    private int mRightIconTextColor;
 
     public NavigationBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -77,9 +82,11 @@ public class NavigationBar extends RelativeLayout {
         mRightDrawable = array.getDrawable(R.styleable.NavigationBar_nav_right_icon);
         mDividerColor = array.getColor(R.styleable.NavigationBar_nav_divider_color, -1);
         mHasDivider = array.getBoolean(R.styleable.NavigationBar_nav_has_divider, true);
+        mHasRightIcon = array.getBoolean(R.styleable.NavigationBar_nav_has_right_title_icon, false);
+        mRightIconDrawable = array.getDrawable(R.styleable.NavigationBar_nav_right_title_icon_background);
+        mRightIconTextColor = array.getColor(R.styleable.NavigationBar_nav_right_title_icon_text_color, -1);
 
         array.recycle();
-
 
         //TODO://use custom view to do this to improve performance
         //setTitles
@@ -87,6 +94,7 @@ public class NavigationBar extends RelativeLayout {
         mMainView = (TextView) v.findViewById(R.id.main_title);
         TextView leftTitle = (TextView) v.findViewById(R.id.left_title);
         TextView rightTitle = (TextView) v.findViewById(R.id.right_title);
+        mRightIconView = (TextView) v.findViewById(R.id.right_title_icon);
 
         mLeftView = leftTitle;
         mRightView = rightTitle;
@@ -105,6 +113,12 @@ public class NavigationBar extends RelativeLayout {
         //setId
         if (getId() == View.NO_ID)
             setId(R.id.navigation_bar);
+        //setRightTitleIcon
+        if(mHasRightIcon){
+            mRightIconView.setVisibility(View.VISIBLE);
+            mRightIconView.setBackground(mRightIconDrawable);
+            mRightIconView.setTextColor(mRightIconTextColor);
+        }
     }
 
     public void setMainTitle(String title) {
@@ -199,7 +213,6 @@ public class NavigationBar extends RelativeLayout {
         return mLeftView;
     }
 
-
     /**
      * getRightView
      */
@@ -212,6 +225,20 @@ public class NavigationBar extends RelativeLayout {
      */
     public View getMainView() {
         return mMainView;
+    }
+
+    /**
+     * set shopping car count
+     */
+    public void setRightTitleIcon(String count) {
+        mRightIconView.setText(count);
+    }
+
+    /**
+     * hide shopping car count
+     */
+    public void hideRrightTitleIcon() {
+        mRightIconView.setVisibility(View.GONE);
     }
 
     /**

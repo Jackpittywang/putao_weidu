@@ -66,9 +66,10 @@ public class NotifyFragment extends BasicFragment {
                     @Override
                     public void onSuccess(String url, Notify result) {
                         List<NotifyDetail> details = result.getData();
-                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE)
+                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
                             rl_no_message.setVisibility(View.GONE);
-                        adapter.addAll(details);
+                            adapter.addAll(details);
+                        }
                         if (result.getTotal_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
                             rv_content.loadMoreComplete();

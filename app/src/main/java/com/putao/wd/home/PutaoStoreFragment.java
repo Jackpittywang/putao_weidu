@@ -66,7 +66,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         setMainTitleColor(Color.WHITE);
         mHeader.attachTo(rv_content, true);
 
-        mIndicatorHelper = IndicatorHelper.getInstance(mActivity, navigation_bar.getRightView());
+//        mIndicatorHelper = IndicatorHelper.getInstance(mActivity, navigation_bar.getRightView());
         adapter = new ProductAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();
@@ -122,9 +122,13 @@ public class PutaoStoreFragment extends PTWDFragment {
                 Logger.d(result);
                 JSONObject object = JSON.parseObject(result);
                 int count = object.getInteger("qt");
-                if (count != 0)
-                    mIndicatorHelper.indicator(count, BadgeView.POSITION_TOP_LEFT,
-                            com.sunnybear.library.R.drawable.indicator_background_2, Color.WHITE);
+                if (count != 0) {
+                    navigation_bar.setRightTitleIcon(count + "");
+                } else {
+                    navigation_bar.hideRrightTitleIcon();
+                }
+//                    mIndicatorHelper.indicator(count, BadgeView.POSITION_TOP_LEFT,
+//                            com.sunnybear.library.R.drawable.indicator_background_2, Color.WHITE);
                 loading.dismiss();
             }
         });
