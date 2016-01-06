@@ -110,6 +110,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     @Override
     protected void onStop() {
         super.onStop();
+        loading.dismiss();
         //Activity停止时取消所有请求
         String[] urls = getRequestUrls();
         for (String url : urls) {

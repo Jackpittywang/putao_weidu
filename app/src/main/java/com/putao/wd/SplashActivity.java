@@ -86,11 +86,6 @@ public class SplashActivity extends BasicFragmentActivity {
                                 task = new DownloadFileTask(downloadUrl,
                                         new DownloadFileCallback() {
                                             @Override
-                                            public void onStart() {
-                                                Logger.d("下载开始");
-                                            }
-
-                                            @Override
                                             public void onProgress(int progress, long networkSpeed) {
                                                 Logger.d("progress:" + progress + ",networkSpeed:" + networkSpeed);
                                             }

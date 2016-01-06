@@ -198,6 +198,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     public void onSuccess(String url, String result) {
                         Logger.i("保存用户信息");
                         EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
+                        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
                         startActivity(MainActivity.class);
                         finish();
                     }
