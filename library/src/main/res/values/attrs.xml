@@ -51,6 +51,9 @@
         <attr name="nav_right_title_size" format="dimension|reference" />
         <attr name="nav_divider_color" format="color" />
         <attr name="nav_has_divider" format="boolean" />
+        <attr name="nav_has_right_title_icon" format="boolean" />
+        <attr name="nav_right_title_icon_background" format="reference" />
+        <attr name="nav_right_title_icon_text_color" format="color" />
     </declare-styleable>
 
     <!--CleanableEditText-->

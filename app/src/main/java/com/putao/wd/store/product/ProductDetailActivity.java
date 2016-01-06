@@ -81,7 +81,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         product_id = args.getString(BUNDLE_PRODUCT_ID);
 
         sticky_layout.canScrollView();
-        mIndicatorHelper = IndicatorHelper.getInstance(mContext, navigation_bar.getRightView());
+//        mIndicatorHelper = IndicatorHelper.getInstance(mContext, navigation_bar.getRightView());
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
 
@@ -135,8 +135,14 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
             public void onSuccess(String url, String result) {
                 Logger.d(result);
                 JSONObject object = JSON.parseObject(result);
-                mIndicatorHelper.indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
-                        com.sunnybear.library.R.drawable.indicator_background, R.color.text_main_color_nor);
+                int count = object.getInteger("qt");
+                if (count != 0) {
+                    navigation_bar.setRightTitleIcon(count + "");
+                } else {
+                    navigation_bar.hideRrightTitleIcon();
+                }
+//                mIndicatorHelper.indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
+//                        com.sunnybear.library.R.drawable.indicator_background, R.color.text_main_color_nor);
                 loading.dismiss();
             }
         });
