@@ -116,7 +116,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
-                        if (result != null && result.size() > 0 && result.size() >= 20) {
+                        if (result != null && result.size() > 0) {
                             adapter.clear();
                             rl_no_order.setVisibility(View.GONE);
                             adapter.addAll(result);

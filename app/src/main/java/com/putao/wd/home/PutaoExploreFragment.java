@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
@@ -16,6 +17,7 @@ import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.Explore;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductPlot;
+import com.putao.wd.model.Management;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -41,6 +43,8 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     RelativeLayout rl_explor_empty;
     @Bind(R.id.jump_loading)
     JumpLoadingLayout jump_loading;
+    @Bind(R.id.ll_date_empty)
+    LinearLayout ll_date_empty;
 
     private ExploreAdapter adapter;
     private int page = 1;
@@ -118,7 +122,7 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     }
 
     /**
-     * 获得探索号产品列表
+     * 获得陪伴成长日志
      */
     private void getDiaryIndex() {
         networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
@@ -128,14 +132,34 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                         jump_loading.setVisibility(View.GONE);
                         if (result.getData() != null && result.getData().size() > 0) {
                             adapter.addAll(result.getData());
-                            rl_explor_empty.setVisibility(View.GONE);
+                            ll_date_empty.setVisibility(View.GONE);
+                            rv_content.setVisibility(View.VISIBLE);
                         } else {
-                            rl_explor_empty.setVisibility(View.VISIBLE);
+                            ll_date_empty.setVisibility(View.VISIBLE);
+                            rv_content.setVisibility(View.GONE);
                         }
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             rv_content.loadMoreComplete();
                             page++;
                         } else rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 是否已经添加设备
+     */
+    private void checkDevices() {
+        networkRequest(ExploreApi.getManagement(),
+                new SimpleFastJsonCallback<Management>(Management.class, loading) {
+                    @Override
+                    public void onSuccess(String url, Management result) {
+                        if (result.getSlave_device_list() != null && result.getSlave_device_list().size() > 0) {
+                            rl_explor_empty.setVisibility(View.GONE);
+                        } else {
+                            rl_explor_empty.setVisibility(View.VISIBLE);
+                        }
                         loading.dismiss();
                     }
                 });
@@ -164,5 +188,11 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
         Bundle bundle = new Bundle();
         bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, plot);
         startActivity(PlotActivity.class, bundle);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkDevices();
     }
 }

@@ -19,6 +19,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.explore.AttentionSuccessActivity;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -292,9 +293,10 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     public void onSuccess(String url, JSONObject result) {
                         Logger.d(result.toString());
                         int http_code = result.getInteger("http_code");
-                        if (http_code == 200)
+                        if (http_code == 200) {
                             ToastUtils.showToastLong(mContext, "添加成功");
-                        else
+                            startActivity(AttentionSuccessActivity.class);
+                        } else
                             ToastUtils.showToastLong(mContext, "添加失败");
                         loading.dismiss();
                         finish();

@@ -21,6 +21,12 @@ public class AttentionSuccessActivity extends PTWDActivity {
     }
 
     @Override
+    public void onRightAction() {
+        super.onRightAction();
+        finish();
+    }
+
+    @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
