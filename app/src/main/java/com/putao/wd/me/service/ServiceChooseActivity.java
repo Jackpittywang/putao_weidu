@@ -214,6 +214,7 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
         }
     }
 
+
     @Override
     public void onItemClick(OrderProduct orderProduct, int position) {
         orderProduct.setIsSelect(!orderProduct.isSelect());

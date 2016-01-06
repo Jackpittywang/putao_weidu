@@ -136,8 +136,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
-                bundle.putInt(OrderListActivity.TYPE_INDEX, 0);
-                startActivity(OrderListActivity.class);
+                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
+                startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.si_child_info://孩子信息
                 startActivity(ChildInfoActivity.class);

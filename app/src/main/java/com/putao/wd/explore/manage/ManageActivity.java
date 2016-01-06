@@ -127,7 +127,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                         .setCancelable(false)
                         .setPositiveButton("停止", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-
+                                managementSetall();
                             }
                         })
                         .setNegativeButton("再玩玩", new DialogInterface.OnClickListener() {
@@ -157,6 +157,17 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
         }
     }
 
+    private void managementSetall() {
+        networkRequest(ExploreApi.managementSetall(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
+            @Override
+            public void onSuccess(String url, Management result) {
+                ToastUtils.showToastShort(mContext,"指令发送成功");
+                btn_stopuse.setEnabled(false);
+                loading.dismiss();
+            }
+        });
+    }
+
     /**
      * 设备数量显示
      */
@@ -164,7 +175,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
         int count = 0;
         if (fromEvent) {
             count = devices.size();
-        }else {
+        } else {
             deviceNum = devices.size();
             for (ManagementDevice device : devices) {
                 if (device.getStatus().equals("1")) {
@@ -181,8 +192,8 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     private void setProductText(List<ManagementProduct> products, boolean fromEvent) {
         int count = 0;
         if (fromEvent) {
-         count = products.size();
-        }else {
+            count = products.size();
+        } else {
             productNum = products.size();
             for (ManagementProduct product : products) {
                 if (product.getStatus() == 1) {

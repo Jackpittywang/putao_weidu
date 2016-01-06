@@ -27,9 +27,32 @@
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             auto:divider_color="@color/divider_color"
             auto:divider_height="1px"
             auto:has_row_divider="true" />
+
+        <LinearLayout
+            android:id="@+id/ll_date_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_EBEBEB"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_explore_nodata" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="孩子还没有成长记数据" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <!--空页面-->
@@ -38,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/img_explore_empty_bg"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/iv_explore_empty_arrow"

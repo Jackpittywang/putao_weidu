@@ -26,7 +26,7 @@ public class UserApi {
     private static final String REQUEST_PAGE = "page";//页码
     private static final String REQUEST_TYPE = "type";//类型
     private static final String REQUEST_MSG = "message";//提问问题
-
+    public static final String HAS_DEVICE = "has_device";//是否已经添加设备
 
     private static final String BABY_ID = "baby_id";//孩子ID
     private static final String BABY_NAME = "baby_name";//孩子昵称

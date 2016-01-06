@@ -23,6 +23,7 @@ public class ExploreApi {
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
+    private static final String STATUS = "status";//控制设备名称
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/";//基础url
 
@@ -133,6 +134,21 @@ public class ExploreApi {
                 .addParam(REQUEST_EDIT_LIST, edit_list)
                 .build(RequestMethod.POST, URL_MANAGEMENT_EDIT);
     }
+
+    /**
+     * 立即停止使用所有产品
+     */
+    public static final String URL_MANAGEMENT_SETALL = BASE_URL + "management/setall";
+
+    /**
+     * 立即停止使用所有产品
+     */
+    public static Request managementSetall() {
+        return PTWDRequestHelper.explore()
+                .addParam(STATUS, "-1")
+                .build(RequestMethod.POST, URL_MANAGEMENT_SETALL);
+    }
+
 
     /**
      * 剧情理念详情（查询）
