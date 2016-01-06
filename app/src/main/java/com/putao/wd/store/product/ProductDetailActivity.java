@@ -19,6 +19,7 @@ import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.util.IndicatorHelper;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BadgeView;
@@ -222,5 +223,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 loadHtml(product_id, "3");
                 break;
         }
+    }
+
+    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_REFRESH_TITLE_COUNT)
+    public void eventRefreshCount(String tag) {
+        getCartCount();
     }
 }
