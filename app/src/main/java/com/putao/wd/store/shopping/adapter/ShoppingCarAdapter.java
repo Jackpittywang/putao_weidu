@@ -217,47 +217,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         }
     }
 
-
-//    /**
-//     * 更新Item显示编辑
-//     */
-//    public void updateItem() {
-//        ToastUtils.showToastShort(context, "updateItem");
-//        Set<Integer> keys = map.keySet();
-//        for (Integer key : keys) {
-//            Cart shoppingCar = map.get(key);
-//            shoppingCar.setEditable(true);
-//            replace(key, shoppingCar);
-//        }
-//    }
-//
-//    /**
-//     * 更新Item显示恢复不可编辑状态
-//     */
-//    public void recoverItem() {
-//        ToastUtils.showToastShort(context, "recoverItem");
-//        Set<Integer> keys = selectedmap.keySet();
-//        for (Integer key : keys) {
-//            Cart shoppingCar = selectedmap.get(key);
-//            shoppingCar.setEditable(false);
-//            replace(key, shoppingCar);
-//        }
-//    }
-
-//    /**
-//     * 根据修改操作实时更新UI的规格参数
-//     */
-//    public void updateUINorm(int position, Cart updateCart) {
-//        Cart cart = ShoppingCarts.get(position);
-//        cart.setPid(updateCart.getPid());
-//        cart.setPrice(updateCart.getPrice());
-//        cart.setSku(updateCart.getSku());
-//        replace(position, cart);
-//        ShoppingCarts.set(position, cart);
-////        map.put(position, cart);
-//    }
-
-
     /**
      * 购物车视图
      */

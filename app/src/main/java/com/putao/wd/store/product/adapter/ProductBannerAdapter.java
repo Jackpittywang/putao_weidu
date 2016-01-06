@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.drawee.drawable.ScalingUtils;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.viewpager.BannerAdapter;
@@ -37,7 +36,7 @@ public class ProductBannerAdapter extends BannerAdapter {
         ImageDraweeView imageView = new ImageDraweeView(context);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) DensityUtil.px2dp(context, 200));
         imageView.setLayoutParams(params);
-        imageView.setScaleType(ScalingUtils.ScaleType.FIT_XY);
+//        imageView.setScaleType(ScalingUtils.ScaleType.FIT_START);
         String banner = banners.get(position);
         imageView.setImageURL(banner);
         return imageView;

@@ -61,7 +61,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="1dp"
-            android:textSize="@dimen/text_size_8sp"/>
+            android:textSize="@dimen/text_size_8sp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

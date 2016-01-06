@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
@@ -18,7 +20,7 @@ import com.putao.wd.model.CartEdit;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
-import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -51,6 +53,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private final String SAVE = "保存";
     private final String EDIT = "编辑";
 
+    public static final String EVENT_DELETE_CART = "delete_cart";
+
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -72,7 +76,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private EditShoppingCarPopupWindow mEditShoppingCarPopupWindow;//购物车弹窗
     private Map<Integer, Cart> mSelected;//记录进入编辑状态后选中的商品
     private int currentPosition;//当前修改的位置
-//    private int currClickPosition;//当前点击的位置
+    //    private int currClickPosition;//当前点击的位置
     private boolean isSelectAll;//全选
     private boolean saveable;//保存按钮标志
 
@@ -93,16 +97,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
-                setTitleCount(carts);
                 if (null != carts && carts.size() > 0) {
                     adapter.addAll(result.getUse());
                     rl_empty.setVisibility(View.GONE);
                     rv_cars.setVisibility(View.VISIBLE);
                 }
-//                btn_sel_all.setState(true);
-//                adapter.selAll(true);
-//                tv_money.setText(caculateSumMoney(result.getUse()));
-                loading.dismiss();
+                getCartCount();
             }
         });
         addListener();
@@ -138,6 +138,21 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     /**
+     * 获得购物车数量
+     */
+    private void getCartCount() {
+        networkRequest(StoreApi.getCartCount(), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                JSONObject object = JSON.parseObject(result);
+                int count = object.getInteger("qt");
+                setTitleCount(count);
+                loading.dismiss();
+            }
+        });
+    }
+
+    /**
      * 查看购物车
      */
     private void getCart() {
@@ -145,14 +160,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
-                setTitleCount(carts);
                 if (null != carts && carts.size() > 0) {
                     adapter.replaceAll(carts);
                 } else {
                     rv_cars.setVisibility(View.GONE);
                     rl_empty.setVisibility(View.VISIBLE);
                 }
-                loading.dismiss();
+                getCartCount();
             }
         });
     }
@@ -160,9 +174,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 设置标题购物车数量
      */
-    private void setTitleCount(List<Cart> carts) {
-        if(null != carts && carts.size() > 0) {
-            navigation_bar.setMainTitle(SHOPPING_CAR + "(" + carts.size() + ")");
+    private void setTitleCount(int count) {
+        if(count != 0) {
+            navigation_bar.setMainTitle(SHOPPING_CAR + "(" + count + ")");
         }else {
             navigation_bar.setMainTitle(SHOPPING_CAR);
         }
@@ -172,12 +186,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 商品编辑保存
      */
     private void saveEdit() {
-        networkRequest(StoreApi.multiManage(getReqParam(mSelected)), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+        networkRequest(StoreApi.multiManage(getReqParam(adapter.getItems())), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
             @Override
             public void onSuccess(String url, ShopCarItem result) {
 //                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
 //                Logger.w("保存成功 = " + result.toString());
-                setTitleCount(result.getUse());
                 initData();
                 Set<Integer> keys = mSelected.keySet();
                 String sum = "0.00";
@@ -188,7 +201,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 }
                 tv_money.setText(sum);
                 adapter.finishEdit();
-                loading.dismiss();
+                getCartCount();
             }
         });
     }
@@ -202,6 +215,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, String result) {
 //                ToastUtils.showToastShort(mContext, "购物车删除成功");
 //                Logger.w("购物车删除成功 = " + result.toString());
+                EventBusHelper.post(EVENT_DELETE_CART, EVENT_DELETE_CART);
                 getCart();
                 initData();
                 adapter.finishEdit();
@@ -212,12 +226,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 获取请求List
      */
-    private List<CartEdit> getReqParam(Map<Integer, Cart> map) {
+    private List<CartEdit> getReqParam(List<Cart> carts) {
         List<CartEdit> cartEdits = new ArrayList<>();
-        Set<Integer> keys = map.keySet();
-        for (Integer key : keys) {
+        for (Cart cart : carts) {
             CartEdit cartEdit = new CartEdit();
-            Cart cart = map.get(key);
             cartEdit.setPid(cart.getPid());
             cartEdit.setQt(cart.getGoodsCount());
             cart.setEditable(false);
@@ -234,10 +246,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         if(btn_sel_all.getState()){
             reqList = new ArrayList<>();
         }else {
-            Map<Integer, Cart> noSelect = new HashMap<>();
+            List<Cart> noSelect = new ArrayList<>();
             for(int i = 0; i < adapter.getItems().size(); i++) {
                 if(!mSelected.containsKey(i)){
-                    noSelect.put(i, adapter.getItem(i));
+                    noSelect.add(adapter.getItem(i));
                 }
             }
             reqList = getReqParam(noSelect);
