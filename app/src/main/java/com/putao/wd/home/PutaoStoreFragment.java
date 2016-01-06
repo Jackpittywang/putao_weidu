@@ -17,10 +17,10 @@ import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.util.IndicatorHelper;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.view.BadgeView;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -72,6 +72,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         addListener();
         //广告位
         getStoreHome();
+        getCartCount();
         refresh();
     }
 
@@ -173,7 +174,6 @@ public class PutaoStoreFragment extends PTWDFragment {
         super.onStart();
         if (isStop)
             isStop = bl_banner.startAutoScroll();
-        getCartCount();
     }
 
     @Override
@@ -191,5 +191,10 @@ public class PutaoStoreFragment extends PTWDFragment {
     public void onRightAction() {
 //        mIndicatorHelper.hide();
         startActivity(ShoppingCarActivity.class);
+    }
+
+    @Subcriber(tag = ShoppingCarActivity.EVENT_DELETE_CART)
+    public void eventDeleteCart(String tag) {
+        getCartCount();
     }
 }

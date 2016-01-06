@@ -16,7 +16,6 @@ import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.Address;
 import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -67,9 +66,15 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 
         adapter = new AddressAdapter(mContext, null);
         rv_addresses.setAdapter(adapter);
-        getAddressLists();
+//        getAddressLists();
 
         addListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getAddressLists();
     }
 
     /**
@@ -80,9 +85,9 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, ArrayList<Address> result) {
                 if (result != null && result.size() > 0) {
-                    adapter.addAll(result);
+                    adapter.replaceAll(result);
                     rl_no_address.setVisibility(View.GONE);
-                }
+                } else rl_no_address.setVisibility(View.VISIBLE);
                 loading.dismiss();
             }
         });
@@ -112,7 +117,9 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                                     public void onSuccess(String url, String result) {
                                         Logger.d(result.toString());
                                         adapter.delete(address);
-                                        loading.dismiss();
+                                        getAddressLists();
+//                                        EventBusHelper.post(address, AddressEditActivity.EVENT_ADDRESS_DELETE);
+//                                        loading.dismiss();
                                     }
                                 });
                             }
@@ -143,33 +150,36 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         }
     }
 
-    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_ADD)
-    public void eventAddressAdd(String tag) {
-//        adapter.add(address);
-        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Address> result) {
-                if (result != null && result.size() > 0)
-                    adapter.replaceAll(result);
-                loading.dismiss();
-            }
-        });
-    }
-
-    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
-    public void eventAddressUpdate(String tag) {
-        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
-            @Override
-            public void onSuccess(String url, ArrayList<Address> result) {
-                if (result != null && result.size() > 0)
-                    adapter.replaceAll(result);
-                loading.dismiss();
-            }
-        });
-    }
-
-    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
-    public void eventAddressDelete(Address address) {
-        adapter.delete(adapter.getEditPosition());
-    }
+    //    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_ADD)
+//    public void eventAddressAdd(String tag) {
+////        adapter.add(address);
+//        rl_no_address.setVisibility(View.GONE);
+//        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<Address> result) {
+//                if (result != null && result.size() > 0)
+//                    adapter.replaceAll(result);
+//                loading.dismiss();
+//            }
+//        });
+//    }
+//
+//    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
+//    public void eventAddressUpdate(String tag) {
+//        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ArrayList<Address> result) {
+//                if (result != null && result.size() > 0)
+//                    adapter.replaceAll(result);
+//                loading.dismiss();
+//            }
+//        });
+//    }
+//
+//    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
+//    public void eventAddressDelete(Address address) {
+//        adapter.delete(adapter.getEditPosition());
+//        if (adapter.getItemCount() == 0)
+//            rl_no_address.setVisibility(View.VISIBLE);
+//    }
 }

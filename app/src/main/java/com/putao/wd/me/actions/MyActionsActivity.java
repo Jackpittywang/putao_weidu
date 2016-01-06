@@ -73,6 +73,7 @@ public class MyActionsActivity extends PTWDActivity {
                 new SimpleFastJsonCallback<MeActions>(MeActions.class, loading) {
                     @Override
                     public void onSuccess(String url, MeActions result) {
+                        loading.dismiss();
                         if (result.getTotal_page() == 0) {
                             rl_no_action.setVisibility(View.VISIBLE);
                             return;
@@ -81,7 +82,6 @@ public class MyActionsActivity extends PTWDActivity {
                             currentPage++;
                             rv_acitions.loadMoreComplete();
                         } else rv_acitions.noMoreLoading();
-                        loading.dismiss();
                     }
                 });
     }

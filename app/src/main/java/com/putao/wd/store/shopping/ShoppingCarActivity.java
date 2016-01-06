@@ -20,7 +20,7 @@ import com.putao.wd.model.CartEdit;
 import com.putao.wd.model.ShopCarItem;
 import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.shopping.adapter.ShoppingCarAdapter;
-import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -53,6 +53,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private final String SAVE = "保存";
     private final String EDIT = "编辑";
 
+    public static final String EVENT_DELETE_CART = "delete_cart";
+
     @Bind(R.id.rv_cars)
     BasicRecyclerView rv_cars;
     @Bind(R.id.btn_sel_all)
@@ -74,7 +76,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     private EditShoppingCarPopupWindow mEditShoppingCarPopupWindow;//购物车弹窗
     private Map<Integer, Cart> mSelected;//记录进入编辑状态后选中的商品
     private int currentPosition;//当前修改的位置
-//    private int currClickPosition;//当前点击的位置
+    //    private int currClickPosition;//当前点击的位置
     private boolean isSelectAll;//全选
     private boolean saveable;//保存按钮标志
 
@@ -213,6 +215,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, String result) {
 //                ToastUtils.showToastShort(mContext, "购物车删除成功");
 //                Logger.w("购物车删除成功 = " + result.toString());
+                EventBusHelper.post(EVENT_DELETE_CART, EVENT_DELETE_CART);
                 getCart();
                 initData();
                 adapter.finishEdit();

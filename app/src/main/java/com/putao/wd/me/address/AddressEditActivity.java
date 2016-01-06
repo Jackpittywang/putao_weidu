@@ -36,9 +36,9 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/27.
  */
 public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
-    public static final String EVENT_ADDRESS_ADD = "address_add";
-    public static final String EVENT_ADDRESS_UPDATE = "address_update";
-    public static final String EVENT_ADDRESS_DELETE = "address_delete";
+//    public static final String EVENT_ADDRESS_ADD = "address_add";
+//    public static final String EVENT_ADDRESS_UPDATE = "address_update";
+//    public static final String EVENT_ADDRESS_DELETE = "address_delete";
     public static final String EVENT_ADDRESS_IS_DEFAULT = "address_is_default";
     public static final String BUNDLE_KEY_ADDRESS = "address";
 
@@ -116,7 +116,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
-                        EventBusHelper.post(EVENT_ADDRESS_ADD, EVENT_ADDRESS_ADD);
+//                        EventBusHelper.post(EVENT_ADDRESS_ADD, EVENT_ADDRESS_ADD);
                         loading.dismiss();
                     }
                 });
@@ -131,7 +131,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
-                        EventBusHelper.post(EVENT_ADDRESS_UPDATE, EVENT_ADDRESS_UPDATE);
+//                        EventBusHelper.post(EVENT_ADDRESS_UPDATE, EVENT_ADDRESS_UPDATE);
                         loading.dismiss();
                     }
                 });
@@ -161,7 +161,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
                 addressDelete(mAddress.getId() + "");
-                EventBusHelper.post(mAddress, EVENT_ADDRESS_DELETE);
+//                EventBusHelper.post(mAddress, EVENT_ADDRESS_DELETE);
                 finish();
                 break;
             case R.id.ll_city_sel://地区选择
@@ -193,10 +193,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
     @Override
     public void onRightAction() {
-        if (!checkData()) {
-            ToastUtils.showToastShort(mContext, "您还有地址信息没有填写哟!");
-            return;
-        }
+        if (!checkData()) return;
+//            ToastUtils.showToastShort(mContext, "您还有地址信息没有填写哟!");
         mAddress.setRealname(et_name.getText().toString());
         mAddress.setMobile(et_phone.getText().toString());
         mAddress.setAddress(et_street.getText().toString());
