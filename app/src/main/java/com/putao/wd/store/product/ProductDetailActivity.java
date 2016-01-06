@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ProductDetail;
@@ -18,6 +19,7 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
+import com.putao.wd.user.LoginActivity;
 import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -204,6 +206,12 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     @Override
     public void onRightAction() {
+        if (!AccountHelper.isLogin()) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ShoppingCarActivity.class);
+            startActivity(LoginActivity.class, bundle);
+            return;
+        }
         startActivity(ShoppingCarActivity.class);
     }
 
@@ -229,4 +237,12 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     public void eventRefreshCount(String tag) {
         getCartCount();
     }
+
+    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_TO_LOGIN)
+    public void eventToLogin(String tag) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ShoppingCarActivity.class);
+        startActivity(LoginActivity.class, bundle);
+    }
+
 }

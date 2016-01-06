@@ -180,8 +180,8 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     @OnClick({R.id.btn_explore_empty})
     @Override
     public void onClick(View v) {
-        Bundle bundle = new Bundle();
         if (!AccountHelper.isLogin()) {
+            Bundle bundle = new Bundle();
             bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
             startActivity(LoginActivity.class, bundle);
             return;
