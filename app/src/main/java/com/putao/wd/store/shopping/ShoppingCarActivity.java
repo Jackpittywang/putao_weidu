@@ -177,7 +177,6 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
 //                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
 //                Logger.w("保存成功 = " + result.toString());
-
                 setTitleCount(result.getUse());
                 initData();
                 Set<Integer> keys = mSelected.keySet();
@@ -201,8 +200,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         networkRequest(StoreApi.cartDelete(pid), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                ToastUtils.showToastShort(mContext, "购物车删除成功");
-                Logger.w("购物车删除成功 = " + result.toString());
+//                ToastUtils.showToastShort(mContext, "购物车删除成功");
+//                Logger.w("购物车删除成功 = " + result.toString());
                 getCart();
                 initData();
                 adapter.finishEdit();
