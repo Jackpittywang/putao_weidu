@@ -1,5 +1,8 @@
 package com.putao.wd.me.order;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -57,6 +60,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     private String currentType = TYPE_ALL;
 
     private AlipayHelper mAlipayHelper;
+    private String order_id;
 
     @Override
     protected int getLayoutId() {
@@ -81,10 +85,14 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
             @Override
             public void onPayResult(boolean isSuccess, String msg) {
-                if (isSuccess)
+                if (isSuccess) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
                     startActivity(PaySuccessActivity.class);
-                else
+//                    MainActivity.isNotRefreshUserInfo = false;
+                } else {
                     ToastUtils.showToastShort(mContext, "支付失败");
+                }
             }
 
             @Override
@@ -228,7 +236,8 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
         MainActivity.isNotRefreshUserInfo = false;
-        networkRequest(StoreApi.pay(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+        order_id = order.getId();
+        networkRequest(StoreApi.pay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 if (!StringUtils.isEmpty(result)) {
@@ -257,7 +266,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      * 取消订单dialog
      */
     private void showDialog(final Order order) {
-        new AlertDialog.Builder(mContext)
+        AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle("提示")
                 .setMessage("确定取消")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -289,6 +298,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
                 })
                 .show();
