@@ -69,10 +69,23 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+        if (!AccountHelper.isLogin()) {
+            hideNum();
+        } else if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+            MainActivity.isNotRefreshUserInfo = true;
             getOrderCount();
             getUserInfo();
         }
+    }
+
+    /**
+     * 订单上数字没有登录则不显示
+     */
+    private void hideNum() {
+        btn_pay.hide();
+        btn_deliver.hide();
+        btn_take_deliver.hide();
+        btn_after_sale.hide();
     }
 
     /**
