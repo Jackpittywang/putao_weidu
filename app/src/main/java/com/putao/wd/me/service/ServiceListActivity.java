@@ -161,7 +161,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         String button_id = (String) bundle.get(ServiceListAdapter.BUTTON_ID);
         switch (button_id) {
             case ServiceListAdapter.SERVICE_CANCEL:
-                serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_CANCEL);
+                serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_ID);
                 showDialog();
                 break;
             case ServiceListAdapter.SERVICE_FILL_EXPRESS:
