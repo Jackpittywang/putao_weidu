@@ -73,6 +73,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             hideNum();
         } else if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             MainActivity.isNotRefreshUserInfo = true;
+            hideNum();
             getOrderCount();
             getUserInfo();
         }
