@@ -3,7 +3,6 @@ package com.putao.wd.store.pay;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -79,7 +78,10 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                     @Override
                     public void onPayResult(boolean isSuccess, String msg) {
                         if (isSuccess) {
-                            startActivity(PaySuccessActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
+                            startActivity(PaySuccessActivity.class, bundle);
+                            MainActivity.isNotRefreshUserInfo = false;
                         } else {
                             ToastUtils.showToastShort(mContext, "支付失败");
                         }

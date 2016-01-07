@@ -42,7 +42,7 @@ public class PaySuccessActivity extends PTWDActivity implements View.OnClickList
                 break;
             case R.id.tv_look_order://查看订单
                 ActivityManager.getInstance().popOtherActivity(MainActivity.class);
-                startActivity(OrderDetailActivity.class,args);
+                startActivity(OrderDetailActivity.class, args);
                 finish();
                 break;
         }
