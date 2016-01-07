@@ -86,6 +86,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                         startActivity(CompleteActivity.class);
                         finish();
                         loading.dismiss();
+                        finish();
                     }
 
                     @Override

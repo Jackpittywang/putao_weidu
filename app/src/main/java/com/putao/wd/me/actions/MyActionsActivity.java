@@ -74,6 +74,8 @@ public class MyActionsActivity extends PTWDActivity {
                     @Override
                     public void onSuccess(String url, MeActions result) {
                         loading.dismiss();
+//                        if (result.getEventList() != null && result.getEventList().size() > 0)
+//                            adapter.addAll(result.getEventList());
                         if (result.getTotal_page() == 0) {
                             rl_no_action.setVisibility(View.VISIBLE);
                             return;

@@ -2,7 +2,13 @@ package com.putao.wd.share;
 
 import android.content.Context;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.wechat.favorite.WechatFavorite;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
+import cn.sharesdk.wechat.utils.WechatHelper;
 
 /**
  * 分享工具
@@ -92,5 +98,28 @@ public class ShareTools {
         mOnekeyShare.disableSSOWhenAuthorize();
 //        mOnekeyShare.setShareContentCustomizeCallback(new ReflectableShareContentCustomizeCallback());
         mOnekeyShare.show(context);
+    }
+
+    /**
+     * 微信网页分享
+     */
+    public static void wechatWebShare(Context context, boolean isWechat, String title, String text, String imageUrl, String url) {
+        WechatHelper.ShareParams params = null;
+        if (isWechat)
+            params = new Wechat.ShareParams();
+        else
+            params = new WechatFavorite.ShareParams();
+        params.title = title;
+        params.text = text;
+        params.imageUrl = imageUrl;
+        params.url = url;
+        params.setShareType(Platform.SHARE_WEBPAGE);
+
+        Platform plat = null;
+        if (isWechat)
+            plat = ShareSDK.getPlatform(Wechat.NAME);
+        else
+            plat = ShareSDK.getPlatform(WechatMoments.NAME);
+        plat.share(params);
     }
 }
