@@ -97,6 +97,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
+                for(Cart cart : result.getUseless()) {
+                    cart.setIsNull(true);
+                    carts.add(cart);
+                }
                 if (null != carts && carts.size() > 0) {
                     adapter.addAll(result.getUse());
                     rl_empty.setVisibility(View.GONE);
@@ -160,6 +164,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
+                for(Cart cart : result.getUseless()) {
+                    cart.setIsNull(true);
+                    carts.add(cart);
+                }
                 if (null != carts && carts.size() > 0) {
                     adapter.replaceAll(carts);
                 } else {
