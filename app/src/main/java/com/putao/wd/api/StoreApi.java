@@ -21,6 +21,7 @@ public class StoreApi {
     private static final String REQUEST_OLD_PID = "old_pid";//旧商品id
     private static final String REQUEST_NEW_PID = "new_pid";//新商品id
     private static final String REQUEST_PRODUCTS = "products";//产品(批量编辑购物车用）
+    private static final String REQUEST_PAGE = "page";
     //发票相关
     private static final String REQUEST_iNVOICE_ID = "id";//发票ID
     private static final String REQUEST_INVOICE_TYPE = "type";//旧商品id
@@ -48,13 +49,15 @@ public class StoreApi {
     /**
      * 商城首页
      */
+//    public static final String URL_STORE_HOME = BASE_URL + "home/index_v2";
     public static final String URL_STORE_HOME = BASE_URL + "home/index";
 
     /**
      * 商城首页
      */
-    public static Request getStoreHome() {
+    public static Request getStoreHome(String page) {
         return PTWDRequestHelper.store()
+                .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.POST, URL_STORE_HOME);
     }
 

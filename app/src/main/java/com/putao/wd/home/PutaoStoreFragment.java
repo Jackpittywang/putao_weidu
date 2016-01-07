@@ -19,7 +19,6 @@ import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.user.LoginActivity;
-import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -54,8 +53,6 @@ public class PutaoStoreFragment extends PTWDFragment {
     private ProductAdapter adapter;
     private StoreBannerAdapter bannerAdapter;
 
-    private IndicatorHelper mIndicatorHelper;
-
     private int currentPage = 1;
 
     @Override
@@ -82,7 +79,20 @@ public class PutaoStoreFragment extends PTWDFragment {
      * 获取葡商城首页信息
      */
     private void getStoreHome() {
-        networkRequest(StoreApi.getStoreHome(), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
+//        networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)),
+//                new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
+//                    @Override
+//                    public void onSuccess(String url, StoreProductHome result) {
+//                        List<StoreProduct> products = result.getData();
+//                        if (products != null && products.size() > 0)
+//                            adapter.addAll(products);
+//                        if (result.getTotal_page() != 0 && result.getTotal_page() != result.getCurrent_page()) {
+//                            currentPage++;
+//                            rv_content.loadMoreComplete();
+//                        } else rv_content.noMoreLoading();
+//                    }
+//                });
+        networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
             @Override
             public void onSuccess(String url, StoreHome result) {
                 final List<StoreBanner> banners = result.getBanner();
@@ -104,6 +114,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                     bl_banner.setAdapter(bannerAdapter);
                     bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
                 }
+
                 //初始化商品列表
                 StoreProductHome productHome = result.getProduct();
                 adapter.addAll(productHome.getData());
