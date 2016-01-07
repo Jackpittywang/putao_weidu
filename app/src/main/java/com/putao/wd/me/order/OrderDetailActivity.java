@@ -150,9 +150,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
         mShipmentAdapter = new ShipmentAdapter(mContext, null);
         //获取order数据
         Intent intent = getIntent();
-        if (intent != null) {
-            mOrderId = intent.getStringExtra(KEY_ORDER);
-        }
+        mOrderId = args.getString(KEY_ORDER);
         //初始化布局对象
         initComponent();
         getOrderDetail();

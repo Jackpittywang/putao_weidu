@@ -94,7 +94,7 @@ public class ActivityManager {
      * 结束所有的activity
      */
     public void finishAllActivity() {
-        while (getCurrentActivity() == null) {
+        while (getCurrentActivity() != null) {
             finishActivity(getCurrentActivity());
         }
         activityStack.clear();
