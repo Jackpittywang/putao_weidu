@@ -78,12 +78,16 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 //        }
         //修改开关状态
         if (cart.isSelect()) {
-            selected.put(position, cart);
+            if(!cart.isNull()) {
+                selected.put(position, cart);
+            }
             EventBusHelper.post(selected, EVENT_EDITABLE);
         } else {
-            selected.remove(position);
-            if (selected.size() == 0)
-                cart.setEditable(false);
+            if(!cart.isNull()) {
+                selected.remove(position);
+                if (selected.size() == 0)
+                    cart.setEditable(false);
+            }
             EventBusHelper.post(selected, EVENT_UNEDITABLE);
         }
         holder.btn_sel.setClickable(false);
@@ -164,17 +168,19 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     public void selAll(boolean isSelect) {
         List<Cart> cars = getItems();
         for (Cart cart : cars) {
-            int index = cars.indexOf(cart);
-            cart.setIsSelect(isSelect);
-            if (isSelect) {
-                selected.put(index, cart);
-            } else {
-                selected.remove(index);
-                cart.setEditable(false);
-                cart.setIsSelect(false);
+            if (!cart.isNull()) {
+                int index = cars.indexOf(cart);
+                cart.setIsSelect(isSelect);
+                if (isSelect) {
+                    selected.put(index, cart);
+                } else {
+                    selected.remove(index);
+                    cart.setEditable(false);
+                    cart.setIsSelect(false);
+                }
+                EventBusHelper.post(selected, EVENT_EDITABLE);
+                replace(index, cart);
             }
-            EventBusHelper.post(selected, EVENT_EDITABLE);
-            replace(index, cart);
         }
     }
 
