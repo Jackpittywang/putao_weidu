@@ -66,7 +66,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         mSubmitReturn = (OrderSubmitReturn) args.getSerializable(BUNDLE_ORDER_INFO);
-        order_id = args.getString(BUNDLE_ORDER_ID);
+        order_id = args.getString(OrderDetailActivity.KEY_ORDER);
         order_sn = args.getString(BUNDLE_ORDER_SN);
         order_date = args.getString(BUNDLE_ORDER_DATE);
         order_price = args.getString(BUNDLE_ORDER_PRICE);

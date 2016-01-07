@@ -9,18 +9,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
-import com.putao.wd.store.pay.PayActivity;
+import com.putao.wd.store.pay.PaySuccessActivity;
+import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
@@ -86,8 +91,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 if (isSuccess) {
                     Bundle bundle = new Bundle();
                     bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
-                    startActivity(PaySuccessActivity.class);
-//                    MainActivity.isNotRefreshUserInfo = false;
+                    startActivity(PaySuccessActivity.class, bundle);
                 } else {
                     ToastUtils.showToastShort(mContext, "支付失败");
                 }

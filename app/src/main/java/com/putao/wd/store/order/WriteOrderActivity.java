@@ -14,6 +14,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.order.OrderDetailActivity;
 import com.putao.wd.model.Address;
 import com.putao.wd.model.OrderConfirm;
 import com.putao.wd.model.OrderConfirmProduct;
@@ -181,6 +182,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                             public void onSuccess(String url, OrderSubmitReturn result) {
                                 if (result != null) {
                                     Bundle bundle = new Bundle();
+                                    bundle.putString(OrderDetailActivity.KEY_ORDER,result.getOrder_id());
                                     bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, result);
                                     startActivity(PayActivity.class, bundle);
                                     MainActivity.isNotRefreshUserInfo = false;
