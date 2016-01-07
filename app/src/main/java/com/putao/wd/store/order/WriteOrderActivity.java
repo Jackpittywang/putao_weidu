@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.ColorConstant;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
@@ -182,6 +183,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                                     Bundle bundle = new Bundle();
                                     bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, result);
                                     startActivity(PayActivity.class, bundle);
+                                    MainActivity.isNotRefreshUserInfo = false;
                                 }
                             }
                         });
