@@ -68,7 +68,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     CleanableEditText et_company;
     //发票内容
     @Bind(R.id.btn_invoice_info)
-    SwitchButton btn_invoice_info;//需要明细
+    SwitchButton btn_invoice_info;//商品明细
     @Bind(R.id.btn_electronic_product)
     SwitchButton btn_electronic_product;//电子产品
     @Bind(R.id.btn_toy)

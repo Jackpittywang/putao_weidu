@@ -124,8 +124,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 tv_actionsdetail_status.setText(result.getStatus());
                 tv_actionsdetail_title.setText(result.getLabel());
                 tv_actionsdetail_resume.setText(result.getTitle());
-                tv_count_cool.setText(result.getCountCool() + "");
-                tv_count_comment.setText(result.getCountComment() + "");
+                tv_count_cool.setText(result.getCount_cool() != 0 ? result.getCount_cool() + "" : "赞");
+                tv_count_comment.setText(result.getCount_comment() != 0 ? result.getCount_comment() + "" : "评论");
                 tv_personinfo_address.setText(result.getLocation());
                 List<RegUser> reg_user = result.getReg_user();
                 if (reg_user.size() > 4)
@@ -275,11 +275,11 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
     public void eventClickComment(boolean isCool) {
         if (isCool) {
-            actionDetail.setCountCool(actionDetail.getCountCool() + 1);
-            tv_count_comment.setText(actionDetail.getCountCool() + "");
+            actionDetail.setCount_cool(actionDetail.getCount_cool() + 1);
+            tv_count_comment.setText(actionDetail.getCount_cool() + "");
         } else {
-            actionDetail.setCountCool(actionDetail.getCountCool() - 1);
-            tv_count_comment.setText(actionDetail.getCountCool() + "");
+            actionDetail.setCount_cool(actionDetail.getCount_cool() - 1);
+            tv_count_comment.setText(actionDetail.getCount_cool() + "");
         }
     }
 
@@ -287,11 +287,11 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @Subcriber(tag = CommentActivity.EVENT_COUNT_COMMENT)
     public void eventClickCoool(boolean isComment) {
         if (isComment) {
-            actionDetail.setCountCool(actionDetail.getCountComment() + 1);
-            tv_count_comment.setText(actionDetail.getCountComment() + "");
+            actionDetail.setCount_comment(actionDetail.getCount_comment() + 1);
+            tv_count_comment.setText(actionDetail.getCount_comment() + "");
         } else {
-            actionDetail.setCountCool(actionDetail.getCountComment() - 1);
-            tv_count_comment.setText(actionDetail.getCountComment() + "");
+            actionDetail.setCount_comment(actionDetail.getCount_comment() - 1);
+            tv_count_comment.setText(actionDetail.getCount_comment() + "");
         }
     }
 

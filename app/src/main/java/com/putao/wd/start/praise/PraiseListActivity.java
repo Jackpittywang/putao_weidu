@@ -68,7 +68,8 @@ public class PraiseListActivity extends PTWDActivity<GlobalApplication> implemen
             @Override
             public void onSuccess(String url, Cool result) {
                 Logger.i("赞列表获取成功");
-                adapter.addAll(result.getEventCoolList().getUser_list());
+                if (result.getEventCoolList().getUser_list() != null && result.getEventCoolList().getUser_list().size() > 0)
+                    adapter.addAll(result.getEventCoolList().getUser_list());
                 if (result.getCurrent_page() != result.getTotal_page()) {
                     rv_content.loadMoreComplete();
                     page++;
