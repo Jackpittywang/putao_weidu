@@ -7,8 +7,8 @@ import java.util.List;
  * Created by wango on 2015/12/12.
  */
 public class ShopCarItem implements Serializable {
-    private List<Cart> use;//
-    private List<Cart> useless;//
+    private List<Cart> use;//有效商品
+    private List<Cart> useless;//无效商品
 
 
     public List<Cart> getUse() {

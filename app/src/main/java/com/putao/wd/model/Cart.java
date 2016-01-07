@@ -16,7 +16,7 @@ public class Cart implements Serializable {
     private String subtitle;//子标题
 
     //非接口返回字段
-    private boolean isNull;
+    private boolean isNull;//判断是否是无效商品
     private boolean isSelect;
     private boolean editable;
     private String color;

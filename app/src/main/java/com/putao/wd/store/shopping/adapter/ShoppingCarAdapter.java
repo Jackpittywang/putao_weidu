@@ -137,6 +137,9 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
             if (previCar.isNull() == curCart.isNull()) {
                 holder.tv_big_title.setVisibility(View.GONE);
                 holder.divider.setVisibility(View.GONE);
+            } else {
+                holder.tv_big_title.setVisibility(View.VISIBLE);
+                holder.divider.setVisibility(View.GONE);
             }
         } else {
             holder.tv_big_title.setVisibility(View.VISIBLE);
