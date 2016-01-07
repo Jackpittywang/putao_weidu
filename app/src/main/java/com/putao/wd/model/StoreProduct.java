@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class StoreProduct implements Serializable {
     private String id;
     private String title;
+    private String image;
     private String subtitle;
     private String price;
     private String icon;
@@ -29,6 +30,14 @@ public class StoreProduct implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getSubtitle() {
@@ -76,11 +85,12 @@ public class StoreProduct implements Serializable {
         return "StoreProduct{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", price='" + price + '\'' +
+                ", icon='" + icon + '\'' +
                 ", stock='" + stock + '\'' +
                 ", lock='" + lock + '\'' +
-                ", icon='" + icon + '\'' +
                 '}';
     }
 }

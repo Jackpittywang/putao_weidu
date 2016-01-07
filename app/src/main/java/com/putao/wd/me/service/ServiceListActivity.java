@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -119,7 +120,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                         networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                ToastUtils.showToastShort(mContext, "取消售后");
+                                MainActivity.isNotRefreshUserInfo = false;
                                 page--;
                                 networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<Service>(Service.class, loading) {
                                     @Override
@@ -135,6 +136,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                                             rv_service.noMoreLoading();
                                         }
                                         loading.dismiss();
+                                        ToastUtils.showToastShort(mContext, "取消售后成功");
                                     }
                                 });
                             }
@@ -161,7 +163,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         String button_id = (String) bundle.get(ServiceListAdapter.BUTTON_ID);
         switch (button_id) {
             case ServiceListAdapter.SERVICE_CANCEL:
-                serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_CANCEL);
+                serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_ID);
                 showDialog();
                 break;
             case ServiceListAdapter.SERVICE_FILL_EXPRESS:

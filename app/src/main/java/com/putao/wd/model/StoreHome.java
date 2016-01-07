@@ -7,6 +7,7 @@ import java.util.List;
  * 商城首页
  * Created by guchenkai on 2015/12/8.
  */
+@Deprecated
 public class StoreHome implements Serializable {
     private List<StoreBanner> banner;//Banner列表
     private StoreProductHome product;//商品列表
