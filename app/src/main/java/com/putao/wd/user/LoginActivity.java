@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
@@ -58,6 +59,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         addNavigation();
         et_mobile.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
+        MainActivity.isNotRefreshUserInfo = false;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -189,7 +190,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                loading.show();
+                MainActivity.isNotRefreshUserInfo = false;
                 adapter.clear();
                 currentPage = 1;
                 getOrderLists(currentType, String.valueOf(currentPage));
@@ -199,23 +200,12 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     }
 
 
-    /*
-        @Subcriber(tag = OrderListAdapter.EVENT_LOOK_LOGISTICS)
-        public void eventLookLogistics(String mId) {
-            networkRequest(OrderApi.orderCancel(mId), new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
-                @Override
-                public void onSuccess(String url, ArrayList<Order> result) {
-                    loading.dismiss();
-                }
-            });
-        }
-*/
-
     /**
      * 申请售后
      */
     @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
     public void eventSaleService(String orderId) {
+        MainActivity.isNotRefreshUserInfo = false;
         Bundle bundle = new Bundle();
         bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
         startActivity(ServiceChooseActivity.class, bundle);
@@ -229,6 +219,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      */
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
+        MainActivity.isNotRefreshUserInfo = false;
         Bundle bundle = new Bundle();
         bundle.putString(PayActivity.BUNDLE_ORDER_ID, order.getId());
         bundle.putString(PayActivity.BUNDLE_ORDER_SN, order.getOrder_sn());
