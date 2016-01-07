@@ -26,6 +26,7 @@ public class ActionDetail implements Serializable {
     private int count_cool;//赞的数量
     private int count_comment;//评论的数量
     private boolean isParticipate;//是否报名参加
+    private boolean is_user_like;//是否点过赞
     private List<RegUser> reg_user;//报名用户
 
 
@@ -161,6 +162,14 @@ public class ActionDetail implements Serializable {
         this.explanation = explanation;
     }
 
+    public boolean is_user_like() {
+        return is_user_like;
+    }
+
+    public void setIs_user_like(boolean is_user_like) {
+        this.is_user_like = is_user_like;
+    }
+
     public String getStatus() {
         switch (status) {
             case "ONGOING":
@@ -220,6 +229,7 @@ public class ActionDetail implements Serializable {
                 ", count_cool=" + count_cool +
                 ", count_comment=" + count_comment +
                 ", isParticipate=" + isParticipate +
+                ", is_user_like=" + is_user_like +
                 ", reg_user=" + reg_user +
                 '}';
     }

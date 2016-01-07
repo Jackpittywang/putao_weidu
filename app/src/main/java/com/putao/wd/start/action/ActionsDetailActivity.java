@@ -15,6 +15,13 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.map.MapActivity;
+import com.putao.wd.me.actions.MyActionsActivity;
+import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.child.ChildInfoActivity;
+import com.putao.wd.me.message.MessageCenterActivity;
+import com.putao.wd.me.order.OrderListActivity;
+import com.putao.wd.me.service.ServiceListActivity;
+import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
 import com.putao.wd.model.UserInfo;
@@ -25,11 +32,13 @@ import com.putao.wd.start.apply.ApplyListActivity;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
+import com.putao.wd.start.question.QuestionActivity;
+import com.putao.wd.user.CompleteActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -54,6 +63,7 @@ import butterknife.OnClick;
  */
 public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     public static final String BUNDLE_ACTION_ID = "action_id";
+    private boolean mIsUserLike;
 
     @Bind(R.id.sticky_layout)
     StickyHeaderLayout sticky_layout;
@@ -112,14 +122,15 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
         adapter = new UserIconAdapter(mContext, null);
         rv_actionsdetail_applyusers.setAdapter(adapter);
         action_id = args.getString(BUNDLE_ACTION_ID);
-
-        sb_cool_icon.setState(PreferenceUtils.getValue(action_id, false) ? true : false);
         sb_cool_icon.setClickable(false);
-        //TODO:是否被赞过
+        ll_cool.setClickable(false);//设置没有加载完成点赞按钮不可以点击
         networkRequest(StartApi.getActionDetail(action_id, sb_cool_icon.getState()), new SimpleFastJsonCallback<ActionDetail>(ActionDetail.class, loading) {
             @Override
             public void onSuccess(String url, ActionDetail result) {
                 actionDetail = result;
+                mIsUserLike = result.is_user_like();
+                ll_cool.setClickable(true);//释放点赞按钮点击
+                sb_cool_icon.setState(mIsUserLike); //设置是不是被赞的按钮样式
                 iv_actionssdetail_header.setImageURL(result.getBanner_url());
                 tv_actionsdetail_status.setText(result.getStatus());
                 tv_actionsdetail_title.setText(result.getLabel());
@@ -193,12 +204,17 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
     @OnClick({R.id.ll_join_list, R.id.ll_cool, R.id.ll_comment, R.id.tv_join, R.id.tv_personinfo_address})
     @Override
     public void onClick(View v) {
+        if (!AccountHelper.isLogin()) {
+            Bundle bundle = new Bundle();
+            toLoginActivity(v, bundle);
+            return;
+        }
         switch (v.getId()) {
             case R.id.ll_join_list:
                 startActivity(ApplyListActivity.class, args);
                 break;
             case R.id.ll_cool:
-                if (PreferenceUtils.getValue(action_id, false)) {
+                if (mIsUserLike) {
                     startActivity(PraiseListActivity.class, args);
                 } else {
                     UserInfo userInfo = AccountHelper.getCurrentUserInfo();
@@ -207,9 +223,9 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
-                                    PreferenceUtils.save(action_id, true);
                                     sb_cool_icon.setState(true);
                                     tv_count_cool.setText((Integer.parseInt(tv_count_cool.getText().toString()) + 1) + "");
+                                    mIsUserLike = true;
                                     loading.dismiss();
                                 }
                             });
@@ -225,6 +241,15 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 startActivity(MapActivity.class, args);
                 break;
         }
+    }
+
+    /**
+     * put进目标activity供登录后跳转
+     */
+    private void toLoginActivity(View v, Bundle bundle) {
+        bundle.putString(BUNDLE_ACTION_ID,action_id);
+        bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ActionsDetailActivity.class);
+        startActivity(LoginActivity.class, bundle);
     }
 
     @Override
