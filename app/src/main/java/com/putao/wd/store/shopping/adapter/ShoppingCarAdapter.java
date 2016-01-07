@@ -210,18 +210,6 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
     }
 
     /**
-     * 无效商品置为原始状态
-     */
-    public void initUselessState(int useCount) {
-        List<Cart> carts = getItems();
-        for(int i = useCount; i < carts.size(); i++) {
-            Cart cart = carts.get(i);
-            cart.setIsSelect(false);
-            notifyItemChanged(i);
-        }
-    }
-
-    /**
      * 显示编辑状态Item
      */
     private void showEdit(ShoppingCarViewHolder holder, Cart cart) {
