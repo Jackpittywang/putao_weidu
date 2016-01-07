@@ -180,8 +180,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 添加无效商品到适配器数据源
      */
     private void addUselessProducts(List<Cart> carts, List<Cart> cartsUseless) {
+        useCount = carts.size();
         if(null != cartsUseless && cartsUseless.size() > 0) {
-            useCount = carts.size();
             for(Cart cart : cartsUseless) {
                 cart.setIsNull(true);
                 carts.add(cart);
