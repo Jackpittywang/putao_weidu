@@ -209,13 +209,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
 //                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
 //                Logger.w("保存成功 = " + result.toString());
-//                Set<Integer> keys = mSelected.keySet();
 //                String sum = "0.00";
-//                for (Integer key : keys) {
-//                    Cart cart = mSelected.get(key);
-//                    cart.setQt(cart.getGoodsCount());
+                Set<Integer> keys = mSelected.keySet();
+                for (Integer key : keys) {
+                    Cart cart = mSelected.get(key);
+                    cart.setQt(cart.getGoodsCount());
 //                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
-//                }
+                }
                 if (useCount < adapter.getItems().size()) {
                     adapter.initUselessState(useCount);
                 }
@@ -387,6 +387,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         Logger.d("点击右上角");
         if (!saveable) {//这里编辑操作的入口
             setTopButtonStyle(SAVE, DELETE, true);
+            setBottomButtonStyle(true);
             adapter.startEdit();
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
@@ -429,11 +430,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
+        navigation_bar.setRightAction(true);
         if(selected.size() != 0) {
-            setBottomButtonStyle(true);
             setGoodsPrice();
-        } else {
-            navigation_bar.setRightAction(true);
         }
         if (selected.size() == useCount)
             btn_sel_all.setState(true);
