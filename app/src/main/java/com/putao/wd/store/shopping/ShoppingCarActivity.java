@@ -98,11 +98,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
-                useCount = carts.size();
-                for(Cart cart : result.getUseless()) {
-                    cart.setIsNull(true);
-                    carts.add(cart);
-                }
+                List<Cart> cartsUseless = result.getUseless();
+                addUselessProducts(carts, cartsUseless);
                 if (null != carts && carts.size() > 0) {
                     adapter.addAll(result.getUse());
                     rl_empty.setVisibility(View.GONE);
@@ -166,11 +163,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
-                useCount = carts.size();
-                for(Cart cart : result.getUseless()) {
-                    cart.setIsNull(true);
-                    carts.add(cart);
-                }
+                List<Cart> cartsUseless = result.getUseless();
+                addUselessProducts(carts, cartsUseless);
                 if (null != carts && carts.size() > 0) {
                     adapter.replaceAll(carts);
                 } else {
@@ -180,6 +174,19 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 getCartCount();
             }
         });
+    }
+
+    /**
+     * 添加无效商品到适配器数据源
+     */
+    private void addUselessProducts(List<Cart> carts, List<Cart> cartsUseless) {
+        useCount = carts.size();
+        if(null != cartsUseless && cartsUseless.size() > 0) {
+            for(Cart cart : cartsUseless) {
+                cart.setIsNull(true);
+                carts.add(cart);
+            }
+        }
     }
 
     /**
@@ -202,15 +209,18 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
 //                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
 //                Logger.w("保存成功 = " + result.toString());
-                initData();
+//                String sum = "0.00";
                 Set<Integer> keys = mSelected.keySet();
-                String sum = "0.00";
                 for (Integer key : keys) {
                     Cart cart = mSelected.get(key);
                     cart.setQt(cart.getGoodsCount());
-                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+//                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
                 }
-                tv_money.setText(sum);
+                if (useCount < adapter.getItems().size()) {
+                    adapter.initUselessState(useCount);
+                }
+                initData();
+                tv_money.setText("0.00");
                 adapter.finishEdit();
                 getCartCount();
             }
@@ -377,6 +387,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         Logger.d("点击右上角");
         if (!saveable) {//这里编辑操作的入口
             setTopButtonStyle(SAVE, DELETE, true);
+            if (mSelected.size() == 0) {
+                setBottomButtonStyle(true);
+            }
             adapter.startEdit();
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
@@ -419,9 +432,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
-        setBottomButtonStyle(true);
-        setGoodsPrice();
-        if (selected.size() == useCount)
+        navigation_bar.setRightAction(true);
+        if(selected.size() != 0) {
+            setBottomButtonStyle(true);
+            setGoodsPrice();
+        }
+        if (useCount != 0 && selected.size() == useCount)
             btn_sel_all.setState(true);
         else
             btn_sel_all.setState(false);
