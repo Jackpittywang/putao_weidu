@@ -227,7 +227,8 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
-                adapter.addAll(result.getComment());
+                if (result.getComment() != null && result.getComment().size() > 0)
+                    adapter.addAll(result.getComment());
                 if (result.getCurrent_page() != result.getTotal_page()) {
                     hasComment = true;
                     rv_content.loadMoreComplete();

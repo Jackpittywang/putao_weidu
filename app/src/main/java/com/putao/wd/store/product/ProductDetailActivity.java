@@ -20,11 +20,9 @@ import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.user.LoginActivity;
-import com.putao.wd.util.IndicatorHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.BadgeView;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
@@ -33,8 +31,6 @@ import com.sunnybear.library.view.viewpager.BannerLayout;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * 商品详情
@@ -42,6 +38,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     public static final String BUNDLE_PRODUCT_ID = "product_id";
+    public static final String BUNDLE_PRODUCT_IMAGE = "product_imag";
 
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
@@ -69,9 +66,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     private String product_id;//产品id
 
-    private String shareUrl;//分享的Url
-
-    private IndicatorHelper mIndicatorHelper;
+    private ProductDetail detail = null;
+    private String imageUrl;//商品图片
 
     @Override
     protected int getLayoutId() {
@@ -82,6 +78,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         product_id = args.getString(BUNDLE_PRODUCT_ID);
+        imageUrl = args.getString(BUNDLE_PRODUCT_IMAGE);
 
         sticky_layout.canScrollView();
 //        mIndicatorHelper = IndicatorHelper.getInstance(mContext, navigation_bar.getRightView());
@@ -112,8 +109,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
+                detail = result;
                 loadHtml(result.getId(), "0");
-                shareUrl = result.getShare();
                 tv_product_title.setText(result.getTitle());
                 tv_product_intro.setText(result.getSubtitle());
                 tv_product_price.setText(result.getPrice());
@@ -170,18 +167,20 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.newInstance(Wechat.NAME)
-                        .setTitle("葡萄纬度")
-                        .setText("葡萄纬度分享给您")
-                        .setUrl(shareUrl).execute(mContext);
+//                ShareTools.newInstance(Wechat.NAME)
+//                        .setTitle("葡萄纬度")
+//                        .setText("葡萄纬度分享给您")
+//                        .setUrl(shareUrl).execute(mContext);
+                ShareTools.wechatWebShare(mContext, true, detail.getTitle(), detail.getSubtitle(), imageUrl, detail.getShare());
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.newInstance(WechatMoments.NAME)
-                        .setTitle("葡萄纬度")
-                        .setText("葡萄纬度分享给您")
-                        .setUrl(shareUrl).execute(mContext);
+//                ShareTools.newInstance(WechatMoments.NAME)
+//                        .setTitle("葡萄纬度")
+//                        .setText("葡萄纬度分享给您")
+//                        .setUrl(shareUrl).execute(mContext);
+                ShareTools.wechatWebShare(mContext, false, detail.getTitle(), detail.getSubtitle(), imageUrl, detail.getShare());
             }
         });
     }

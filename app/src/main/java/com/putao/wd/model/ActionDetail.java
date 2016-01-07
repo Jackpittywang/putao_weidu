@@ -23,8 +23,8 @@ public class ActionDetail implements Serializable {
     private String explanation;//活动说明
     private String site;//活动现场
     private String wonderful_review;//精彩回顾
-    private int countCool;//赞的数量
-    private int countComment;//评论的数量
+    private int count_cool;//赞的数量
+    private int count_comment;//评论的数量
     private boolean isParticipate;//是否报名参加
     private List<RegUser> reg_user;//报名用户
 
@@ -125,20 +125,24 @@ public class ActionDetail implements Serializable {
         this.wonderful_review = wonderful_review;
     }
 
-    public int getCountCool() {
-        return countCool;
+    public int getCount_cool() {
+        return count_cool;
     }
 
-    public void setCountCool(int countCool) {
-        this.countCool = countCool;
+    public void setCount_cool(int count_cool) {
+        this.count_cool = count_cool;
     }
 
-    public int getCountComment() {
-        return countComment;
+    public int getCount_comment() {
+        return count_comment;
     }
 
-    public void setCountComment(int countComment) {
-        this.countComment = countComment;
+    public void setCount_comment(int count_comment) {
+        this.count_comment = count_comment;
+    }
+
+    public void setParticipate(boolean participate) {
+        isParticipate = participate;
     }
 
     public List<RegUser> getReg_user() {
@@ -203,8 +207,8 @@ public class ActionDetail implements Serializable {
                 ", html_url='" + html_url + '\'' +
                 ", title='" + title + '\'' +
                 ", label='" + label + '\'' +
-                ", start_time=" + start_time +
-                ", end_time=" + end_time +
+                ", start_time='" + start_time + '\'' +
+                ", end_time='" + end_time + '\'' +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
@@ -213,8 +217,9 @@ public class ActionDetail implements Serializable {
                 ", explanation='" + explanation + '\'' +
                 ", site='" + site + '\'' +
                 ", wonderful_review='" + wonderful_review + '\'' +
-                ", countCool=" + countCool +
-                ", countComment=" + countComment +
+                ", count_cool=" + count_cool +
+                ", count_comment=" + count_comment +
+                ", isParticipate=" + isParticipate +
                 ", reg_user=" + reg_user +
                 '}';
     }

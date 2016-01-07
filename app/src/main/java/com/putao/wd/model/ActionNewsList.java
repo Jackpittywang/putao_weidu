@@ -6,7 +6,7 @@ import java.util.List;
  * 活动列表
  * Created by guchenkai on 2015/12/18.
  */
-public class AcitonNewsList extends Page {
+public class ActionNewsList extends Page {
     private List<ActionNews> getEventList;
 
     public List<ActionNews> getGetEventList() {

@@ -16,7 +16,6 @@ import com.putao.wd.model.StoreBanner;
 import com.putao.wd.model.StoreHome;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
-import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.user.LoginActivity;
@@ -97,6 +96,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                             if (!StringUtils.isEmpty(project_id)) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, project_id);
+                                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_IMAGE, banner.getImage());
                                 startActivity(ProductDetailActivity.class, bundle);
                             }
                         }
@@ -166,6 +166,7 @@ public class PutaoStoreFragment extends PTWDFragment {
             public void onItemClick(StoreProduct storeProduct, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, storeProduct.getId());
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_IMAGE, storeProduct.getIcon());
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });
