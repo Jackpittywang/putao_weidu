@@ -294,7 +294,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 break;
             case OrderCommonState.ORDER_WAITING_SIGN://已发货
                 setProgress3();
-                ll_bottom.setVisibility(View.VISIBLE);
+                ll_bottom.setVisibility(View.GONE);
                 btn_order_left.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT2);//设置商品信息
                 break;
@@ -309,6 +309,15 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 ll_bottom.setVisibility(View.VISIBLE);
                 btn_order_left.setVisibility(View.VISIBLE);
                 tv_order_info.setText(HINT2);//设置商品信息
+                btn_order_left.setText("申请售后");
+                btn_order_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ServiceChooseActivity.ORDER_ID, mOrderDetail.getId());
+                        startActivity(ServiceChooseActivity.class, bundle);
+                    }
+                });
                 break;
 
             case OrderCommonState.ORDER_CANCLED://已取消
