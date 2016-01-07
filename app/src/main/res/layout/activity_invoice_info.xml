@@ -40,8 +40,8 @@
                 android:id="@+id/btn_noneed_invoice"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 auto:isSelect="true"
                 auto:norDrawable="@drawable/check_box_nor"
                 auto:selDrawable="@drawable/check_box_sel" />
@@ -49,9 +49,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="不需要发票"
-                android:layout_gravity="center_vertical"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_size_18sp" />
         </LinearLayout>
@@ -67,8 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="8dp">
 
             <com.sunnybear.library.view.SwitchButton
@@ -108,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <com.sunnybear.library.view.SwitchButton
@@ -141,8 +141,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <com.sunnybear.library.view.SwitchButton
@@ -181,12 +181,12 @@
                 android:textSize="14sp" />
             <!--需要明细-->
             <LinearLayout
-                android:layout_width="match_parent"
                 android:id="@+id/ll_info"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <com.sunnybear.library.view.SwitchButton
@@ -202,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="需要明细"
+                    android:text="商品明细"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_size_18sp" />
             </LinearLayout>
@@ -218,8 +218,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <com.sunnybear.library.view.SwitchButton
@@ -250,8 +250,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <com.sunnybear.library.view.SwitchButton

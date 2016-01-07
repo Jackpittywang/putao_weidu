@@ -2,7 +2,6 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
@@ -12,7 +11,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
 import com.putao.wd.home.adapter.StartBannerAdapter;
 import com.putao.wd.me.setting.SettingActivity;
-import com.putao.wd.model.AcitonNewsList;
+import com.putao.wd.model.ActionNewsList;
 import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.Banner;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -110,9 +109,9 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
      */
     private void getActionList() {
         networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
+                , new SimpleFastJsonCallback<ActionNewsList>(ActionNewsList.class, loading) {
             @Override
-            public void onSuccess(String url, AcitonNewsList result) {
+            public void onSuccess(String url, ActionNewsList result) {
 //                        cacheEnterDisk(url, result);
                 adapter.addAll(result.getGetEventList());
                 if (result.getCurrent_page() != result.getTotal_page())
@@ -134,9 +133,9 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
                 currentPage = 1;
                 rv_content.reset();
                 networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                        , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
+                        , new SimpleFastJsonCallback<ActionNewsList>(ActionNewsList.class, loading) {
                     @Override
-                    public void onSuccess(String url, AcitonNewsList result) {
+                    public void onSuccess(String url, ActionNewsList result) {
                         adapter.replaceAll(result.getGetEventList());
                         if (result.getCurrent_page() != result.getTotal_page())
                             currentPage++;
@@ -207,9 +206,9 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
                 break;
         }
         networkRequest(StartApi.getActionList(String.valueOf(currentPage), currentStatus, currentType)
-                , new SimpleFastJsonCallback<AcitonNewsList>(AcitonNewsList.class, loading) {
+                , new SimpleFastJsonCallback<ActionNewsList>(ActionNewsList.class, loading) {
             @Override
-            public void onSuccess(String url, AcitonNewsList result) {
+            public void onSuccess(String url, ActionNewsList result) {
                 adapter.replaceAll(result.getGetEventList());
                 if (result.getCurrent_page() != result.getTotal_page())
                     currentPage++;

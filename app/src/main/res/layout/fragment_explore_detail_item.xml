@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="200dp">
+             android:layout_width="match_parent"
+             android:layout_height="200dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/color_EBEBEB"
@@ -14,31 +14,35 @@
             android:id="@+id/tv_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="挑战极限挑战" />
+            android:text="挑战极限挑战"/>
 
         <TextView
             android:id="@+id/tv_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@id/tv_1"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="103次\n" />
+            android:lines="2"
+            android:text="103次\n"/>
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_gravity="center_horizontal|bottom"-->
 
         <TextView
             android:id="@+id/tv_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:gravity="center"
             android:padding="4dp"
-            android:text="仅有3%的孩子能成功完成极限挑战" />
-    </LinearLayout>
+            android:text="仅有3%的孩子能成功完成极限挑战"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_empty"
@@ -51,6 +55,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/img_explore_data_ocd" />
+            android:src="@drawable/img_explore_data_ocd"/>
     </RelativeLayout>
 </FrameLayout>
