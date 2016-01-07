@@ -157,9 +157,11 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = ServiceListAdapter.EVENT_RIGHT_CLICK)
-    public void eventClick(View v) {
-        switch (((Button) v).getText().toString()) {
+    public void eventClick(Bundle bundle) {
+        String button_id = (String) bundle.get(ServiceListAdapter.BUTTON_ID);
+        switch (button_id) {
             case ServiceListAdapter.SERVICE_CANCEL:
+                serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_CANCEL);
                 showDialog();
                 break;
             case ServiceListAdapter.SERVICE_FILL_EXPRESS:

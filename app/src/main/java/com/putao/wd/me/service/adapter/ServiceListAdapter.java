@@ -40,6 +40,8 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     public static final String EVENT_RIGHT_CLICK = "right_click";
     public static final String SERVICE_CANCEL = "取消申请";
     public static final String SERVICE_FILL_EXPRESS = "填写快递单号";
+    public static final String BUTTON_ID = "button_id";
+    public static final String SERVICE_ID = "service_id";
     private ServiceAdapter adapter;
 
     public ServiceListAdapter(Context context, List<ServiceList> serviceLists) {
@@ -57,7 +59,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     }
 
     @Override
-    public void onBindItem(ServiceListViewHolder holder, ServiceList serviceList, final int position) {
+    public void onBindItem(ServiceListViewHolder holder, final ServiceList serviceList, final int position) {
         holder.tv_service_no.setText(serviceList.getOrder_info().getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
         String statusText = checkServiceType(serviceList.getService_type(), serviceList.getStatus(), holder);
@@ -81,7 +83,10 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         holder.btn_service_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBusHelper.post(v, EVENT_RIGHT_CLICK);
+                Bundle bundle = new Bundle();
+                bundle.putString(BUTTON_ID, SERVICE_CANCEL);
+                bundle.putString(SERVICE_ID,serviceList.getId());
+                EventBusHelper.post(bundle, EVENT_RIGHT_CLICK);
             }
         });
 
@@ -120,6 +125,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
+                holder.btn_service_right.setBackgroundResource(R.drawable.btn_order_state_selector);
                 return "换货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
