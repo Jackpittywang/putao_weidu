@@ -82,6 +82,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                         AccountHelper.login(result);
                         startActivity(CompleteActivity.class);
                         loading.dismiss();
+                        finish();
                     }
 
                     @Override

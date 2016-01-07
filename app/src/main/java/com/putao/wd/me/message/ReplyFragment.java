@@ -66,9 +66,10 @@ public class ReplyFragment extends BasicFragment {
                     @Override
                     public void onSuccess(String url, Reply result) {
                         List<ReplyDetail> details = result.getReply();
-                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE)
+                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
                             rl_no_message.setVisibility(View.GONE);
-                        adapter.addAll(details);
+                            adapter.addAll(details);
+                        }
                         if (result.getTotal_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
                             rv_content.loadMoreComplete();
