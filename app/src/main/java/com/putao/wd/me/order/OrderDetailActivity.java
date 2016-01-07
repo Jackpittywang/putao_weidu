@@ -156,7 +156,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
         //初始化布局对象
         initComponent();
         getOrderDetail();
-
     }
 
 
