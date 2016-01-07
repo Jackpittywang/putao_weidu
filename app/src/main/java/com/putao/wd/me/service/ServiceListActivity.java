@@ -121,7 +121,6 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                             @Override
                             public void onSuccess(String url, String result) {
                                 MainActivity.isNotRefreshUserInfo = false;
-                                ToastUtils.showToastShort(mContext, "取消售后成功");
                                 page--;
                                 networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<Service>(Service.class, loading) {
                                     @Override
@@ -137,6 +136,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                                             rv_service.noMoreLoading();
                                         }
                                         loading.dismiss();
+                                        ToastUtils.showToastShort(mContext, "取消售后成功");
                                     }
                                 });
                             }
