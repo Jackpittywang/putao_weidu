@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -119,7 +120,8 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                         networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                ToastUtils.showToastShort(mContext, "取消售后");
+                                MainActivity.isNotRefreshUserInfo = false;
+                                ToastUtils.showToastShort(mContext, "取消售后成功");
                                 page--;
                                 networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<Service>(Service.class, loading) {
                                     @Override
