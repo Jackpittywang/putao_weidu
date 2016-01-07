@@ -48,10 +48,10 @@ import butterknife.OnClick;
 public class ShoppingCarActivity extends PTWDActivity implements View.OnClickListener {
     public static final String PRODUCT_ID = "productId";
     public static final String SHOPPING_CAR = "购物车";
-    private final String PAY = "去结算";
-    private final String DELETE = "删除";
-    private final String SAVE = "保存";
-    private final String EDIT = "编辑";
+    private static final String PAY = "去结算";
+    private static final String DELETE = "删除";
+    private static final String SAVE = "保存";
+    private static final String EDIT = "编辑";
 
     public static final String EVENT_DELETE_CART = "delete_cart";
 
@@ -79,6 +79,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     //    private int currClickPosition;//当前点击的位置
     private boolean isSelectAll;//全选
     private boolean saveable;//保存按钮标志
+    private int useCount;
 
     @Override
     protected int getLayoutId() {
@@ -97,6 +98,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
+                useCount = carts.size();
                 for(Cart cart : result.getUseless()) {
                     cart.setIsNull(true);
                     carts.add(cart);
@@ -164,6 +166,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
+                useCount = carts.size();
                 for(Cart cart : result.getUseless()) {
                     cart.setIsNull(true);
                     carts.add(cart);
@@ -418,7 +421,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mSelected = selected;
         setBottomButtonStyle(true);
         setGoodsPrice();
-        if (selected.size() == adapter.getItems().size())
+        if (selected.size() == useCount)
             btn_sel_all.setState(true);
         else
             btn_sel_all.setState(false);
@@ -434,7 +437,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             setTopButtonStyle(EDIT, PAY, false);
             initData();
         }
-        btn_sel_all.setState(false);
+        if(selected.size() != useCount) {
+            btn_sel_all.setState(false);
+        }
     }
 
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDIT_COUNT)
