@@ -1,5 +1,7 @@
 package com.putao.wd.me.order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -177,26 +179,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      */
     @Subcriber(tag = OrderListAdapter.EVENT_CANCEL_ORDER)
     public void eventCancelOrder(Order order) {
-        Order newOrder = order;
-        order.setOrderStatusID(OrderCommonState.ORDER_CANCLED);
-        switch (currentType) {
-            case TYPE_ALL:
-                adapter.replace(order, newOrder);
-                break;
-            case TYPE_WAITING_PAY:
-                adapter.delete(order);
-                break;
-        }
-        networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                MainActivity.isNotRefreshUserInfo = false;
-                adapter.clear();
-                currentPage = 1;
-                getOrderLists(currentType, String.valueOf(currentPage));
-                loading.dismiss();
-            }
-        });
+        showDialog(order);
     }
 
 
@@ -233,4 +216,46 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         super.onDestroy();
         adapter.clear();
     }
+
+    /**
+     * 取消订单dialog
+     */
+    private void showDialog(final Order order) {
+        new AlertDialog.Builder(mContext)
+                .setTitle("提示")
+                .setMessage("确定取消")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Order newOrder = order;
+                        order.setOrderStatusID(OrderCommonState.ORDER_CANCLED);
+                        switch (currentType) {
+                            case TYPE_ALL:
+                                adapter.replace(order, newOrder);
+                                break;
+                            case TYPE_WAITING_PAY:
+                                adapter.delete(order);
+                                break;
+                        }
+                        networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                MainActivity.isNotRefreshUserInfo = false;
+                                adapter.clear();
+                                currentPage = 1;
+                                getOrderLists(currentType, String.valueOf(currentPage));
+                                loading.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
 }
