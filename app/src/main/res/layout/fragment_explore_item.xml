@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/ll_explore_top"
-        layout="@layout/fragment_explore_include" />
+        layout="@layout/fragment_explore_include"/>
 
     <!--图片标题-->
     <LinearLayout
@@ -27,7 +27,7 @@
             auto:roundBottomRight="true"
             auto:roundTopLeft="true"
             auto:roundTopRight="true"
-            auto:roundedCornerRadius="4dp" />
+            auto:roundedCornerRadius="4dp"/>
 
         <TextView
             android:id="@+id/tv_skill_name"
@@ -36,7 +36,7 @@
             android:layout_marginLeft="@dimen/distance_8dp"
             android:text="淘淘向右走"
             android:textColor="@color/color_313131"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_20sp"/>
     </LinearLayout>
 
     <!--&lt;!&ndash;第一行&ndash;&gt;-->
@@ -258,8 +258,8 @@
         android:id="@+id/rv_display_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="@color/white"
-        android:padding="10dp"
         auto:column_num="2"
         auto:divider_color="@color/transparent"
         auto:divider_height="1dp"
@@ -267,7 +267,7 @@
         auto:has_rank_divider="true"
         auto:has_row_divider="true"
         auto:is_inner="true"
-        auto:layout_mode="grid" />
+        auto:layout_mode="grid"/>
 
     <!--去炫耀-->
     <TextView
@@ -275,11 +275,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="-2dp"
         android:drawableLeft="@drawable/icon_16_06"
         android:drawablePadding="4dp"
         android:text="去炫耀"
         android:textColor="@color/text_color_gray"
         android:textSize="@dimen/text_size_16sp"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 </LinearLayout>
