@@ -16,6 +16,7 @@ import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -80,6 +81,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(JSONObject result) {
                         AccountHelper.login(result);
+                        ActivityManager.getInstance().removeCurrentActivity();
+                        ActivityManager.getInstance().finishCurrentActivity();
                         startActivity(CompleteActivity.class);
                         finish();
                         loading.dismiss();
