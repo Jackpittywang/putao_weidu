@@ -2,6 +2,9 @@ package com.putao.wd.me.order;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -54,6 +57,9 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     private int currentPage = 1;
     private String currentType = TYPE_ALL;
 
+    private AlipayHelper mAlipayHelper;
+    private String order_id;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_list;
@@ -72,6 +78,31 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
 
         setCurrentItem();
         getOrderLists(currentType, String.valueOf(currentPage));
+
+        mAlipayHelper = new AlipayHelper();
+        mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
+            @Override
+            public void onPayResult(boolean isSuccess, String msg) {
+                if (isSuccess) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
+                    startActivity(PaySuccessActivity.class);
+//                    MainActivity.isNotRefreshUserInfo = false;
+                } else {
+                    ToastUtils.showToastShort(mContext, "支付失败");
+                }
+            }
+
+            @Override
+            public void onPayVerify(String msg) {
+                ToastUtils.showToastShort(mContext, msg);
+            }
+
+            @Override
+            public void onPayCancel(String msg) {
+                ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
+            }
+        });
     }
 
     /**
@@ -196,7 +227,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         startActivity(ServiceChooseActivity.class, bundle);
     }
 
-
     /**
      * 立即支付
      *
@@ -205,12 +235,24 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
         MainActivity.isNotRefreshUserInfo = false;
-        Bundle bundle = new Bundle();
-        bundle.putString(PayActivity.BUNDLE_ORDER_ID, order.getId());
-        bundle.putString(PayActivity.BUNDLE_ORDER_SN, order.getOrder_sn());
-        bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, order.getTotal_amount());
-        bundle.putString(PayActivity.BUNDLE_ORDER_DATE, order.getCreate_time());
-        startActivity(PayActivity.class, bundle);
+        order_id = order.getId();
+        networkRequest(StoreApi.pay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                if (!StringUtils.isEmpty(result)) {
+                    JSONObject object = JSON.parseObject(result);
+                    String orderInfo = object.getString("code");
+                    if (StringUtils.isEmpty(orderInfo)) {
+                        ToastUtils.showToastShort(mContext, "支付失败");
+                        return;
+                    }
+                    mAlipayHelper.pay((Activity) mContext, orderInfo);
+                } else {
+                    ToastUtils.showToastLong(mContext, "无法支付");
+                }
+                loading.dismiss();
+            }
+        });
     }
 
     @Override
@@ -223,7 +265,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      * 取消订单dialog
      */
     private void showDialog(final Order order) {
-        new AlertDialog.Builder(mContext)
+        AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle("提示")
                 .setMessage("确定取消")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -252,6 +294,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
                 })
                 .show();
