@@ -1,6 +1,7 @@
 package com.putao.wd.store.pay;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,8 @@ import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.me.order.OrderDetailActivity;
+import com.putao.wd.model.OrderDetail;
 import com.putao.wd.model.OrderSubmitReturn;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
@@ -81,9 +84,12 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                         String resultInfo = payResult.getResult();
                         String resultStatus = payResult.getResultStatus();
                         // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
-                        if (TextUtils.equals(resultStatus, "9000"))
-                            startActivity(PaySuccessActivity.class);
-                        else
+                        if (TextUtils.equals(resultStatus, "9000")) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
+                            startActivity(PaySuccessActivity.class, bundle);
+                            MainActivity.isNotRefreshUserInfo = false;
+                        } else
                             // 判断resultStatus 为非“9000”则代表可能支付失败
                             // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                             if (TextUtils.equals(resultStatus, "8000"))
