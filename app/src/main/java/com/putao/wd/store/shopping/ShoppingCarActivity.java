@@ -98,11 +98,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
-                useCount = carts.size();
-                for(Cart cart : result.getUseless()) {
-                    cart.setIsNull(true);
-                    carts.add(cart);
-                }
+                List<Cart> cartsUseless = result.getUseless();
+                addUselessProducts(carts, cartsUseless);
                 if (null != carts && carts.size() > 0) {
                     adapter.addAll(result.getUse());
                     rl_empty.setVisibility(View.GONE);
@@ -166,11 +163,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             @Override
             public void onSuccess(String url, ShopCarItem result) {
                 List<Cart> carts = result.getUse();
-                useCount = carts.size();
-                for(Cart cart : result.getUseless()) {
-                    cart.setIsNull(true);
-                    carts.add(cart);
-                }
+                List<Cart> cartsUseless = result.getUseless();
+                addUselessProducts(carts, cartsUseless);
                 if (null != carts && carts.size() > 0) {
                     adapter.replaceAll(carts);
                 } else {
@@ -180,6 +174,19 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 getCartCount();
             }
         });
+    }
+
+    /**
+     * 添加无效商品到适配器数据源
+     */
+    private void addUselessProducts(List<Cart> carts, List<Cart> cartsUseless) {
+        if(null != cartsUseless && cartsUseless.size() > 0) {
+            useCount = carts.size();
+            for(Cart cart : cartsUseless) {
+                cart.setIsNull(true);
+                carts.add(cart);
+            }
+        }
     }
 
     /**
@@ -202,15 +209,18 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             public void onSuccess(String url, ShopCarItem result) {
 //                ToastUtils.showToastShort(mContext, "编辑商品保存成功");
 //                Logger.w("保存成功 = " + result.toString());
-                initData();
-                Set<Integer> keys = mSelected.keySet();
-                String sum = "0.00";
-                for (Integer key : keys) {
-                    Cart cart = mSelected.get(key);
-                    cart.setQt(cart.getGoodsCount());
-                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+//                Set<Integer> keys = mSelected.keySet();
+//                String sum = "0.00";
+//                for (Integer key : keys) {
+//                    Cart cart = mSelected.get(key);
+//                    cart.setQt(cart.getGoodsCount());
+//                    sum = MathUtils.add(sum, MathUtils.multiplication(cart.getPrice(), cart.getQt()));
+//                }
+                if (useCount < adapter.getItems().size()) {
+                    adapter.initUselessState(useCount);
                 }
-                tv_money.setText(sum);
+                initData();
+                tv_money.setText("0.00");
                 adapter.finishEdit();
                 getCartCount();
             }
@@ -419,8 +429,12 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     @Subcriber(tag = ShoppingCarAdapter.EVENT_EDITABLE)
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
-        setBottomButtonStyle(true);
-        setGoodsPrice();
+        if(selected.size() != 0) {
+            setBottomButtonStyle(true);
+            setGoodsPrice();
+        } else {
+            navigation_bar.setRightAction(true);
+        }
         if (selected.size() == useCount)
             btn_sel_all.setState(true);
         else
