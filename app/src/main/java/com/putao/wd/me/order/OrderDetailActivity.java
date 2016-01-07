@@ -1,5 +1,7 @@
 package com.putao.wd.me.order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,15 +13,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Express;
+import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.putao.wd.store.pay.PayActivity;
+import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
@@ -39,6 +44,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String KEY_ORDER = "order";
     public static final String KEY_ORDER_ID = "order_id";
+    public static final String CANCEL_ORDER = "cancel_order";
     private static final String HINT1 = "请在24小时之内支付订单，逾期未付款，订单将自动关闭";
     private static final String HINT2 = "您可以在签收后15天内申请售后";
     @Bind(R.id.v_status_waiting_pay)
@@ -251,14 +257,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 btn_order_left.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        networkRequest(OrderApi.orderCancel(mOrderDetail.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
-                            @Override
-                            public void onSuccess(String url, String result) {
-                                loading.show();
-                                refreshView();
-                                loading.dismiss();
-                            }
-                        });
+                        showDialog(mOrderDetail.getId());
                     }
                 });
                 btn_order_right.setOnClickListener(new View.OnClickListener() {
@@ -326,6 +325,36 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 break;
 
         }
+    }
+
+
+    /**
+     * 取消订单dialog
+     */
+    private void showDialog(final String orderId) {
+        new AlertDialog.Builder(mContext)
+                .setTitle("提示")
+                .setMessage("确定取消")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        networkRequest(OrderApi.orderCancel(orderId), new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                EventBusHelper.post(mOrderDetail, CANCEL_ORDER);
+                                MainActivity.isNotRefreshUserInfo = false;
+                                finish();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
     }
 
     private void setProgress4() {
