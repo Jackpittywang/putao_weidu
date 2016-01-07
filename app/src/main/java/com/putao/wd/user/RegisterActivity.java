@@ -81,6 +81,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                     public void onSuccess(JSONObject result) {
                         AccountHelper.login(result);
                         startActivity(CompleteActivity.class);
+                        finish();
                         loading.dismiss();
                     }
 
