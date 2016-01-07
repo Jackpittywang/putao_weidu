@@ -387,7 +387,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         Logger.d("点击右上角");
         if (!saveable) {//这里编辑操作的入口
             setTopButtonStyle(SAVE, DELETE, true);
-            setBottomButtonStyle(true);
+            if (mSelected.size() == 0) {
+                setBottomButtonStyle(true);
+            }
             adapter.startEdit();
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
@@ -432,9 +434,10 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         mSelected = selected;
         navigation_bar.setRightAction(true);
         if(selected.size() != 0) {
+            setBottomButtonStyle(true);
             setGoodsPrice();
         }
-        if (selected.size() == useCount)
+        if (useCount != 0 && selected.size() == useCount)
             btn_sel_all.setState(true);
         else
             btn_sel_all.setState(false);
