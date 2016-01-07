@@ -170,7 +170,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                 startActivity(OrderListActivity.class, bundle);
                 break;
-            case R.id.btn_deliver://待发货
+            case R.id.btn_deliver://待发货\
 //                btn_deliver.hide();
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
                 startActivity(OrderListActivity.class, bundle);

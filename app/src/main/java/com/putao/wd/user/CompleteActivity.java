@@ -96,6 +96,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         addNavigation();
         filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
         initInfo();
+        MainActivity.isNotRefreshUserInfo = false;
 
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override

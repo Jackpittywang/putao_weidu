@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -63,6 +64,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         currentType = args.getString(TYPE_INDEX, TYPE_ALL);
         adapter = new OrderListAdapter(mContext, null);
         rv_order.setAdapter(adapter);
+        MainActivity.isNotRefreshUserInfo = false;
 
         addListener();
 
