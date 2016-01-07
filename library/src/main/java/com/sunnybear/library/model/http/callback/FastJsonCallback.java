@@ -34,7 +34,7 @@ public abstract class FastJsonCallback<T extends Serializable> extends JSONObjec
             onSuccess(url, (T) new String(""));
             return;
         } else if (StringUtils.isEmpty(data) && !StringUtils.equals(result.getString("http_code"), "200")) {
-            onFinish(url, new String(result.getString("msg")));
+            onFinish(url, result.getString("msg") != null ? result.getString("msg") : "");
             return;
         }
         if (StringUtils.equals(data, "[]") && !StringUtils.equals(getGenericClassName(), ArrayList.class.getName()))

@@ -13,6 +13,8 @@ import com.putao.wd.model.Cart;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 
@@ -33,7 +35,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     public static final String INVOICE_NEED = "需要发票";
     public static final String INVOICE_PERSONAL = "个人";
     public static final String INVOICE_COMPANY = "单位";
-    public static final String INVOICE_DETAIL = "需要明细";
+    public static final String INVOICE_DETAIL = "商品明细";
     public static final String INVOICE_ELECTRONIC = "电子产品";
     public static final String INVOICE_PLAY = "玩具";
 
@@ -88,10 +90,6 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
         addNavigation();
         cancelBtn();
     }
-
-//    private void initInfo() {
-//        need_invoice = 0 + "";
-//    }
 
     private void cancelBtn() {
         btn_noneed_invoice.setClickable(false);
@@ -148,6 +146,7 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
                 btn_person.setState(false);
                 btn_company.setState(true);
                 et_company.setVisibility(View.VISIBLE);
+                invoice_type = "";
                 break;
             case R.id.ll_info:
                 btn_invoice_info.setState(true);
@@ -175,6 +174,10 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
      */
     @Override
     public void onRightAction() {
+        if (StringUtils.isEmpty(invoice_type)) {
+            ToastUtils.showToastLong(mContext, "发票抬头不能为空");
+            return;
+        }
         List<String> invoiceInfo = new ArrayList<>();
         invoiceInfo.add(need_invoice);
         invoiceInfo.add(invoice_type);

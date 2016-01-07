@@ -1,22 +1,25 @@
 package com.putao.wd.me.order;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Order;
-import com.putao.wd.store.pay.PayActivity;
+import com.putao.wd.store.pay.PaySuccessActivity;
+import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
@@ -53,6 +56,8 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     private int currentPage = 1;
     private String currentType = TYPE_ALL;
 
+    private AlipayHelper mAlipayHelper;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_list;
@@ -71,6 +76,27 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
 
         setCurrentItem();
         getOrderLists(currentType, String.valueOf(currentPage));
+
+        mAlipayHelper = new AlipayHelper();
+        mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
+            @Override
+            public void onPayResult(boolean isSuccess, String msg) {
+                if (isSuccess)
+                    startActivity(PaySuccessActivity.class);
+                else
+                    ToastUtils.showToastShort(mContext, "支付失败");
+            }
+
+            @Override
+            public void onPayVerify(String msg) {
+                ToastUtils.showToastShort(mContext, msg);
+            }
+
+            @Override
+            public void onPayCancel(String msg) {
+                ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
+            }
+        });
     }
 
     /**
@@ -194,7 +220,6 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         startActivity(ServiceChooseActivity.class, bundle);
     }
 
-
     /**
      * 立即支付
      *
@@ -203,12 +228,23 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
         MainActivity.isNotRefreshUserInfo = false;
-        Bundle bundle = new Bundle();
-        bundle.putString(PayActivity.BUNDLE_ORDER_ID, order.getId());
-        bundle.putString(PayActivity.BUNDLE_ORDER_SN, order.getOrder_sn());
-        bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, order.getTotal_amount());
-        bundle.putString(PayActivity.BUNDLE_ORDER_DATE, order.getCreate_time());
-        startActivity(PayActivity.class, bundle);
+        networkRequest(StoreApi.pay(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                if (!StringUtils.isEmpty(result)) {
+                    JSONObject object = JSON.parseObject(result);
+                    String orderInfo = object.getString("code");
+                    if (StringUtils.isEmpty(orderInfo)) {
+                        ToastUtils.showToastShort(mContext, "支付失败");
+                        return;
+                    }
+                    mAlipayHelper.pay((Activity) mContext, orderInfo);
+                } else {
+                    ToastUtils.showToastLong(mContext, "无法支付");
+                }
+                loading.dismiss();
+            }
+        });
     }
 
     @Override
