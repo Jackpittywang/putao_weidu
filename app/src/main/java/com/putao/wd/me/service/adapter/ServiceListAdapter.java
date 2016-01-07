@@ -62,7 +62,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     public void onBindItem(ServiceListViewHolder holder, final ServiceList serviceList, final int position) {
         holder.tv_service_no.setText(serviceList.getOrder_info().getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(serviceList.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-        String statusText = checkServiceType(serviceList.getService_type(), serviceList.getStatus(), holder);
+        String statusText = checkServiceType(serviceList.getId(), serviceList.getService_type(), serviceList.getStatus(), holder);
         holder.tv_service_order_status.setText(statusText);
         serviceList.setStatusText(statusText);
 
@@ -80,15 +80,6 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
         }
         holder.tv_order_sum_count.setText(totalQt + "");
         holder.tv_sum_money.setText(totalPrice);
-        holder.btn_service_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString(BUTTON_ID, SERVICE_CANCEL);
-                bundle.putString(SERVICE_ID,serviceList.getId());
-                EventBusHelper.post(bundle, EVENT_RIGHT_CLICK);
-            }
-        });
 
         adapter = new ServiceAdapter(context, products);
         holder.rv_service_inner.setAdapter(adapter);
@@ -105,14 +96,14 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     /**
      * 匹配售后类型
      */
-    private String checkServiceType(String service_type, String status, ServiceListViewHolder holder) {
+    private String checkServiceType(final String id, String service_type, String status, ServiceListViewHolder holder) {
         switch (service_type) {
             case "1"://1换货
-                return checkStatusReplace(service_type, status, holder);
+                return checkStatusReplace(id, service_type, status, holder);
             case "2"://2退货
-                return checkStatusBackProduct(service_type, status, holder);
+                return checkStatusBackProduct(id, service_type, status, holder);
             case "3"://3退款
-                return checkStatusBackMoney(service_type, status, holder);
+                return checkStatusBackMoney(id, service_type, status, holder);
         }
         return "";
     }
@@ -120,16 +111,18 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     /**
      * 匹配售后状态--换货
      */
-    private String checkStatusReplace(String service_type, String status, ServiceListViewHolder holder) {
+    private String checkStatusReplace(final String id, String service_type, String status, ServiceListViewHolder holder) {
         switch (status) {
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
                 holder.btn_service_right.setBackgroundResource(R.drawable.btn_order_state_selector);
+                cancelService(holder, id);
                 return "换货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
+                serviceFillExpress(holder);
                 return "同意请求";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);
@@ -154,13 +147,46 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     }
 
     /**
+     * 填写快递单号
+     */
+    private void serviceFillExpress(ServiceListViewHolder holder) {
+        holder.btn_service_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(BUTTON_ID, SERVICE_FILL_EXPRESS);
+                EventBusHelper.post(bundle, EVENT_RIGHT_CLICK);
+            }
+        });
+    }
+
+    /**
+     * 取消申请售后
+     *
+     * @param holder
+     * @param id
+     */
+    private void cancelService(ServiceListViewHolder holder, final String id) {
+        holder.btn_service_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(BUTTON_ID, SERVICE_CANCEL);
+                bundle.putString(SERVICE_ID, id);
+                EventBusHelper.post(bundle, EVENT_RIGHT_CLICK);
+            }
+        });
+    }
+
+    /**
      * 匹配售后状态--退货
      */
-    private String checkStatusBackProduct(String service_type, String status, ServiceListViewHolder holder) {
+    private String checkStatusBackProduct(String id, String service_type, String status, ServiceListViewHolder holder) {
         switch (status) {
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
+                cancelService(holder, id);
                 return "退货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
@@ -185,11 +211,12 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     /**
      * 匹配售后状态--退款
      */
-    private String checkStatusBackMoney(String service_type, String status, ServiceListViewHolder holder) {
+    private String checkStatusBackMoney(String id, String service_type, String status, ServiceListViewHolder holder) {
         switch (status) {
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
+                cancelService(holder, id);
                 return "退款请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.GONE);

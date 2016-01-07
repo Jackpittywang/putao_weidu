@@ -158,7 +158,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
             public void onItemClick(ActionNews actionNewsList, int position) {
                 Bundle bundle = new Bundle();
                 ActionNews actionNews = adapter.getItem(position);
-                bundle.putString("action_id", actionNews.getId());
+                bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, actionNews.getId());
                 startActivity(ActionsDetailActivity.class, bundle);
             }
         });

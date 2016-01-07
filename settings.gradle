@@ -1,1 +1,1 @@
-include ':app', ':library', ':dbgenerate'
+include ':app', ':library', ':dbgenerate', ':vitamio'

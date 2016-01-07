@@ -3,6 +3,7 @@ package com.putao.wd.store.pay;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.me.order.OrderDetailActivity;
 import com.putao.wd.model.OrderSubmitReturn;
 import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -72,31 +74,36 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
 
         initView();
         mAlipayHelper = new AlipayHelper();
-        mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
-            @Override
-            public void onPayResult(boolean isSuccess, String msg) {
-                if (isSuccess)
-                    startActivity(PaySuccessActivity.class);
-                else
-                    ToastUtils.showToastShort(mContext, "支付失败");
-            }
+        mAlipayHelper.setOnAlipayCallback(
+                new AlipayHelper.OnAlipayCallback() {
+                    @Override
+                    public void onPayResult(boolean isSuccess, String msg) {
+                        if (isSuccess) {
+                            startActivity(PaySuccessActivity.class);
+                        } else {
+                            ToastUtils.showToastShort(mContext, "支付失败");
+                        }
+                    }
 
-            @Override
-            public void onPayVerify(String msg) {
-                ToastUtils.showToastShort(mContext, msg);
-            }
+                    @Override
+                    public void onPayVerify(String msg) {
+                        ToastUtils.showToastShort(mContext, msg);
+                    }
 
-            @Override
-            public void onPayCancel(String msg) {
-                ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
-            }
-        });
+                    @Override
+                    public void onPayCancel(String msg) {
+                        ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
+                    }
+                }
+
+        );
         pay(mSubmitReturn != null ? mSubmitReturn.getOrder_id() : order_id);
     }
 
     /**
      * 初始化页面
      */
+
     private void initView() {
         if (mSubmitReturn != null) {
             tv_order_sn.setText(mSubmitReturn.getOrder_sn());
