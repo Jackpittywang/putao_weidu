@@ -38,10 +38,11 @@ import butterknife.Bind;
 public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceListAdapter.ServiceListViewHolder> {
 
     public static final String EVENT_RIGHT_CLICK = "right_click";
-    public static final String SERVICE_CANCEL = "取消申请";
-    public static final String SERVICE_FILL_EXPRESS = "填写快递单号";
     public static final String BUTTON_ID = "button_id";
     public static final String SERVICE_ID = "service_id";
+    public static final String SERVICE_CANCEL = "取消申请";
+    public static final String SERVICE_FILL_EXPRESS = "填写快递单号";
+
     private ServiceAdapter adapter;
 
     public ServiceListAdapter(Context context, List<ServiceList> serviceLists) {
@@ -91,6 +92,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
                 context.startActivity(ProductDetailActivity.class, bundle);
             }
         });
+
     }
 
     /**
@@ -191,6 +193,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
+                serviceFillExpress(holder);
                 return "同意请求";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);

@@ -2,6 +2,8 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
@@ -55,6 +57,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     BannerLayout bl_banner;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
+    @Bind(R.id.rl_no_content)
+    RelativeLayout rl_no_content;
 
     private ActionNewsAdapter adapter;
     private boolean isStop;//广告栏是否被停止
@@ -114,8 +118,11 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
             public void onSuccess(String url, ActionNewsList result) {
 //                        cacheEnterDisk(url, result);
                 adapter.addAll(result.getGetEventList());
-                if (result.getCurrent_page() != result.getTotal_page())
+                if (result.getCurrent_page() != result.getTotal_page()) {
+                    rl_no_content.setVisibility(View.GONE);
+                    rv_content.setVisibility(View.VISIBLE);
                     currentPage++;
+                }
                 else
                     rv_content.noMoreLoading();
                 loading.dismiss();
