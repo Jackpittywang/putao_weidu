@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:auto="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ebebeb">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ebebeb">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="售后详情"/>
+        auto:nav_main_title="售后详情" />
 
     <!--android:layout_above="@+id/rl_bottom"-->
     <ScrollView
@@ -46,14 +46,14 @@
                             android:layout_width="0dp"
                             android:layout_height="4dp"
                             android:layout_weight="1"
-                            android:background="#00ffffff"/>
+                            android:background="#00ffffff" />
 
                         <View
                             android:id="@+id/v_status_waiting_pay"
                             android:layout_width="0dp"
                             android:layout_height="4dp"
                             android:layout_weight="1"
-                            android:background="@color/text_color_F5F5F5"/>
+                            android:background="@color/text_color_F5F5F5" />
                     </LinearLayout>
 
                     <ImageView
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_as_steps_01_sel"/>
+                        android:src="@drawable/img_details_as_steps_01_sel" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -74,14 +74,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_marginTop="47dp"
-                        android:background="#d5acf7"/>
+                        android:background="#d5acf7" />
 
                     <ImageView
                         android:id="@+id/img_status_waiting_shipment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_as_steps_02_nor"/>
+                        android:src="@drawable/img_details_as_steps_02_nor" />
 
                 </RelativeLayout>
 
@@ -96,14 +96,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_marginTop="47dp"
-                        android:background="#d5acf7"/>
+                        android:background="#d5acf7" />
 
                     <ImageView
                         android:id="@+id/img_status_waiting_sign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_as_steps_03_nor"/>
+                        android:src="@drawable/img_details_as_steps_03_nor" />
 
                 </RelativeLayout>
 
@@ -123,13 +123,13 @@
                             android:layout_width="0dp"
                             android:layout_height="4dp"
                             android:layout_weight="1"
-                            android:background="#d5acf7"/>
+                            android:background="#d5acf7" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="4dp"
                             android:layout_weight="1"
-                            android:background="#00ffffff"/>
+                            android:background="#00ffffff" />
 
                     </LinearLayout>
 
@@ -138,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/img_details_as_steps_04_nor"/>
+                        android:src="@drawable/img_details_as_steps_04_nor" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:text="订单号"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_14sp"/>
+                    android:textSize="@dimen/text_size_14sp" />
 
                 <TextView
                     android:id="@+id/tv_service_no"
@@ -168,7 +168,7 @@
                     android:layout_marginTop="5dp"
                     android:text="2015112614082887661001"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
                     android:id="@+id/tv_order_purchase_time"
@@ -178,7 +178,7 @@
                     android:layout_marginTop="5dp"
                     android:text="2015-08-02 13:48:37"
                     android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_14sp"/>
+                    android:textSize="@dimen/text_size_14sp" />
 
                 <TextView
                     android:id="@+id/tv_service_order_status"
@@ -189,7 +189,7 @@
                     android:text="待支付"
                     android:textColor="@color/text_color_red"
                     android:textSize="@dimen/text_size_16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <TextView
@@ -206,7 +206,7 @@
                 android:paddingTop="10dp"
                 android:text="提示信息"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp"/>
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -215,7 +215,7 @@
                 android:layout_marginTop="20dp"
                 android:text="物流状态"
                 android:textColor="#646464"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_16sp" />
 
             <LinearLayout
                 android:id="@+id/ll_shipment"
@@ -233,7 +233,7 @@
                     android:gravity="center_vertical"
                     android:text="还没有物流信息"
                     android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
             </LinearLayout>
 
             <TextView
@@ -243,7 +243,7 @@
                 android:layout_marginTop="20dp"
                 android:text="订单信息"
                 android:textColor="#646464"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_16sp" />
 
             <LinearLayout
                 android:id="@+id/ll_service_info"
@@ -261,7 +261,7 @@
                     android:singleLine="true"
                     android:text="收货人姓名"
                     android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
                     android:id="@+id/tv_customer_address"
@@ -269,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:text="收货人地址"
                     android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
                     android:id="@+id/tv_customer_phone"
@@ -278,14 +278,14 @@
                     android:singleLine="true"
                     android:text="13800000000"
                     android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="#e1e1e1"/>
+                    android:background="#e1e1e1" />
 
                 <TextView
                     android:id="@+id/tv_pay_method"
@@ -293,7 +293,7 @@
                     android:layout_height="wrap_content"
                     android:text="支付方式："
                     android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
                     android:id="@+id/tv_shipment_method"
@@ -301,14 +301,14 @@
                     android:layout_height="wrap_content"
                     android:text="配送方式："
                     android:textColor="#313131"
-                    android:textSize="@dimen/text_size_16sp"/>
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="#e1e1e1"/>
+                    android:background="#e1e1e1" />
 
                 <LinearLayout
                     android:id="@+id/ll_invoice"
@@ -322,7 +322,7 @@
                         android:layout_height="wrap_content"
                         android:text="发票类型："
                         android:textColor="#313131"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <TextView
                         android:id="@+id/tv_receipt_head"
@@ -330,7 +330,7 @@
                         android:layout_height="wrap_content"
                         android:text="发票抬头："
                         android:textColor="#313131"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <TextView
                         android:id="@+id/tv_receipt_content"
@@ -338,7 +338,7 @@
                         android:layout_height="wrap_content"
                         android:text="发票内容："
                         android:textColor="#313131"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -352,7 +352,7 @@
                 android:paddingLeft="10dp"
                 android:text="商品信息"
                 android:textColor="#646464"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_16sp" />
 
             <!--订单列表-->
             <com.sunnybear.library.view.recycler.BasicRecyclerView
@@ -363,7 +363,7 @@
                 auto:divider_color="@color/white"
                 auto:divider_height="1px"
                 auto:has_row_divider="true"
-                auto:is_inner="true"/>
+                auto:is_inner="true" />
 
             <LinearLayout
                 android:id="@+id/ll_goods_info"
@@ -389,7 +389,7 @@
                         android:layout_toLeftOf="@+id/tv_cost_text"
                         android:text="--"
                         android:textColor="#ed5564"
-                        android:textSize="@dimen/text_size_14sp"/>
+                        android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
                         android:id="@+id/tv_cost_text"
@@ -399,7 +399,7 @@
                         android:gravity="end"
                         android:text="件商品 合计："
                         android:textColor="#313131"
-                        android:textSize="@dimen/text_size_14sp"/>
+                        android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
                         android:id="@+id/tv_cost"
@@ -409,7 +409,7 @@
                         android:gravity="end"
                         android:text="¥ ------"
                         android:textColor="#313131"
-                        android:textSize="@dimen/text_size_14sp"/>
+                        android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
                         android:id="@+id/tv_shipment_fee_text"
@@ -419,7 +419,7 @@
                         android:layout_toLeftOf="@+id/tv_shipment_fee"
                         android:gravity="right"
                         android:text="含运费："
-                        android:textColor="#313131"/>
+                        android:textColor="#313131" />
 
                     <TextView
                         android:id="@+id/tv_shipment_fee"
@@ -429,7 +429,7 @@
                         android:layout_below="@id/tv_cost"
                         android:gravity="right"
                         android:text="¥ ---"
-                        android:textColor="#313131"/>
+                        android:textColor="#313131" />
 
                     <TextView
                         android:id="@+id/tv_total_cost_text"
@@ -439,7 +439,7 @@
                         android:layout_toLeftOf="@+id/tv_total_cost"
                         android:gravity="end"
                         android:text="合计："
-                        android:textColor="#313131"/>
+                        android:textColor="#313131" />
 
                     <TextView
                         android:id="@+id/tv_total_cost"
@@ -449,21 +449,23 @@
                         android:layout_below="@id/tv_shipment_fee"
                         android:gravity="end"
                         android:text="¥ ------"
-                        android:textColor="#ed5564"/>
+                        android:textColor="#ed5564" />
                 </RelativeLayout>
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_execute"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
                 android:layout_margin="10dp"
                 android:background="@drawable/btn_order_state_selector"
                 android:gravity="center"
-                android:layout_gravity="right"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="取消申请"
                 android:textColor="#985CC9"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </LinearLayout>
     </ScrollView>
