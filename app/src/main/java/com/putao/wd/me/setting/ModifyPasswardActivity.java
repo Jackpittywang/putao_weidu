@@ -61,6 +61,7 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
         String etPwRepeat = et_pw_repeat.getText().toString();
         if (etPwOld.length() < 6 || etPwNew.length() < 6 || etPwRepeat.length() < 6) {
             btn_change.setEnabled(false);
+            btn_change.setBackgroundResource(R.drawable.text_userinfo_limit_shape);
             return;
         }
         btn_change.setEnabled(true);
@@ -77,7 +78,7 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
         String oldPassword = et_pw_old.getText().toString();
         String newPassword = et_pw_new.getText().toString();
         String repeatPassword = et_pw_repeat.getText().toString();
-        check(oldPassword, newPassword, repeatPassword);
+        check(newPassword, repeatPassword);
         networkRequest(AccountApi.updatePassword(oldPassword, newPassword, repeatPassword), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
@@ -95,15 +96,11 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
     /**
      * 验证数据
      *
-     * @param oldPassword
      * @param newPassword
      * @param repeatPassword
      */
-    private void check(String oldPassword, String newPassword, String repeatPassword) {
-        if (StringUtils.isEmpty(oldPassword)) {
-            ToastUtils.showToastShort(mContext, "请输入旧密码");
-            return;
-        } else if (StringUtils.isEmpty(newPassword)) {
+    private void check(String newPassword, String repeatPassword) {
+        if (StringUtils.isEmpty(newPassword)) {
             ToastUtils.showToastShort(mContext, "请输入新密码");
             return;
         } else if (!StringUtils.equals(newPassword, repeatPassword)) {

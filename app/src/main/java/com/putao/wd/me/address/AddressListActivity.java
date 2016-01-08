@@ -57,10 +57,10 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     protected int getLayoutId() {
         return R.layout.activity_address_list;
     }
-
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+
         isClose = args.getBoolean(BUNDLE_IS_CLOSE);
 
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
