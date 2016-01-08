@@ -86,6 +86,7 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
     public void onStart() {
         super.onStart();
         if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+            rl_explor_empty.setVisibility(View.VISIBLE);
             jump_loading.setVisibility(View.VISIBLE);
             getDiaryIndex();
             addListener();
@@ -168,7 +169,7 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        if(!"".equals(result)) {
+                        if (!"".equals(result)) {
                             Management management = JSON.parseObject(result, Management.class);
                             if (management.getSlave_device_list() != null && management.getSlave_device_list().size() > 0) {
                                 rl_explor_empty.setVisibility(View.GONE);
