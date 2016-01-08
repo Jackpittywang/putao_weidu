@@ -36,9 +36,9 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/27.
  */
 public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
-//    public static final String EVENT_ADDRESS_ADD = "address_add";
-//    public static final String EVENT_ADDRESS_UPDATE = "address_update";
-//    public static final String EVENT_ADDRESS_DELETE = "address_delete";
+    //    public static final String EVENT_ADDRESS_ADD = "address_add";
+    public static final String EVENT_ADDRESS_UPDATE = "address_update";
+    //    public static final String EVENT_ADDRESS_DELETE = "address_delete";
     public static final String EVENT_ADDRESS_IS_DEFAULT = "address_is_default";
     public static final String BUNDLE_KEY_ADDRESS = "address";
 
@@ -64,6 +64,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     private DistrictDBManager mDistrictDBManager;
 
     private Address mAddress;
+    boolean isAddressEmpty = false;
 
     private boolean isAdd = false;//是否是新增地址
 
@@ -75,6 +76,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        isAddressEmpty = args.getBoolean(AddressListActivity.IS_ADDRESS_EMPTY);
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
         mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
         mDistrictDBManager = (DistrictDBManager) mApp.getDataBaseManager(DistrictDBManager.class);
@@ -111,12 +113,14 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加收货地址
      */
     private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
+        if (isAddressEmpty = true)
+            status = "1";
         networkRequest(OrderApi.addressAdd(realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
-//                        EventBusHelper.post(EVENT_ADDRESS_ADD, EVENT_ADDRESS_ADD);
+                        EventBusHelper.post("", EVENT_ADDRESS_UPDATE);
                         loading.dismiss();
                     }
                 });
@@ -126,12 +130,14 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 更新收货地址
      */
     private void addressUpdate(String address_id, String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
+        if (isAddressEmpty = true)
+            status = "1";
         networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.d(result.toString());
-//                        EventBusHelper.post(EVENT_ADDRESS_UPDATE, EVENT_ADDRESS_UPDATE);
+                        EventBusHelper.post("", EVENT_ADDRESS_UPDATE);
                         loading.dismiss();
                     }
                 });
@@ -161,7 +167,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
                 addressDelete(mAddress.getId() + "");
-//                EventBusHelper.post(mAddress, EVENT_ADDRESS_DELETE);
+                EventBusHelper.post("", EVENT_ADDRESS_UPDATE);
                 finish();
                 break;
             case R.id.ll_city_sel://地区选择
