@@ -182,9 +182,9 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         switch (status) {
             case "11"://1换货
                 selectStepDeal();
-                btn_execute.setText("填写快递单号");
                 break;
             case "12":
+                btn_execute.setText("填写快递单号");
             case "14":
             case "15":
             case "16":
@@ -197,9 +197,9 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 break;
             case "21"://2退货
                 selectStepDeal();
-                btn_execute.setText("填写快递单号");
                 break;
             case "22":
+                btn_execute.setText("填写快递单号");
             case "24":
             case "25":
                 selectStepExpress();
