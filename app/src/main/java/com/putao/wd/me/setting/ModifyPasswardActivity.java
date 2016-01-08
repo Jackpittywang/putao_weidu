@@ -78,7 +78,7 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
         String oldPassword = et_pw_old.getText().toString();
         String newPassword = et_pw_new.getText().toString();
         String repeatPassword = et_pw_repeat.getText().toString();
-        check(newPassword, repeatPassword);
+        if(! check(newPassword, repeatPassword)) return;
         networkRequest(AccountApi.updatePassword(oldPassword, newPassword, repeatPassword), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
@@ -99,14 +99,15 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
      * @param newPassword
      * @param repeatPassword
      */
-    private void check(String newPassword, String repeatPassword) {
+    private boolean check(String newPassword, String repeatPassword) {
         if (StringUtils.isEmpty(newPassword)) {
             ToastUtils.showToastShort(mContext, "请输入新密码");
-            return;
+            return false;
         } else if (!StringUtils.equals(newPassword, repeatPassword)) {
             ToastUtils.showToastShort(mContext, "两次输入的密码不一致");
-            return;
+            return false;
         }
+        return true;
     }
 
     @Override
