@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -12,6 +13,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.start.question.QuestionActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
 
 import butterknife.Bind;
@@ -58,5 +60,11 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     @Override
     public void onParsePutaoUrl(String scheme, JSONObject result) {
         Logger.w("葡萄籽 = " + result.toString());
+        String url = result.getString("url");
+        if (!StringUtils.isEmpty(url)) {
+            args.putString(CommonQuestionActivity.URL_QUESTION, url);
+            startActivity(CommonQuestionActivity.class, args);
+        }
     }
+
 }
