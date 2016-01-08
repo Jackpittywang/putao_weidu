@@ -182,7 +182,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                             public void onSuccess(String url, OrderSubmitReturn result) {
                                 if (result != null) {
                                     Bundle bundle = new Bundle();
-                                    bundle.putString(OrderDetailActivity.KEY_ORDER,result.getOrder_id());
+                                    bundle.putString(OrderDetailActivity.KEY_ORDER, result.getOrder_id());
                                     bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, result);
                                     startActivity(PayActivity.class, bundle);
                                     MainActivity.isNotRefreshUserInfo = false;
@@ -231,8 +231,9 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @Subcriber(tag = InvoiceInfoActivity.EVENT_INVOICE)
     public void eventInvoice(List<String> invoiceInfo) {
         if (!invoiceInfo.get(0).equals(InvoiceInfoActivity.INVOICE_NEEDNOT)) {
+            String invoiceContent = invoiceInfo.get(2);
             tv_Invoice_type.setText(invoiceInfo.get(1));
-            tv_Invoice_content.setText(invoiceInfo.get(2));
+            tv_Invoice_content.setText(invoiceContent);
             tv_Invoice_content.setVisibility(View.VISIBLE);
             need_invoice = "1";
             if (invoiceInfo.get(1).equals(InvoiceInfoActivity.INVOICE_PERSONAL)) {
@@ -242,7 +243,12 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                 invoice_type = "2";
                 invoice_title = invoiceInfo.get(1);
             }
-            invoice_content = invoiceInfo.get(2);
+            if (invoiceContent.equals(InvoiceInfoActivity.INVOICE_DETAIL))
+                invoice_content = "1";
+            else if (invoiceContent.equals(InvoiceInfoActivity.INVOICE_ELECTRONIC))
+                invoice_content = "2";
+            else if (invoiceContent.equals(InvoiceInfoActivity.INVOICE_PLAY))
+                invoice_content = "3";
         } else {
             tv_Invoice_type.setText(InvoiceInfoActivity.INVOICE_NEEDNOT);
             tv_Invoice_content.setVisibility(View.GONE);
