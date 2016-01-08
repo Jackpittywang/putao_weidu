@@ -1,5 +1,7 @@
 package com.putao.wd.me.order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +19,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Order;
+import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.pay.PaySuccessActivity;
 import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.eventbus.Subcriber;
@@ -88,8 +91,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 if (isSuccess) {
                     Bundle bundle = new Bundle();
                     bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
-                    startActivity(PaySuccessActivity.class);
-//                    MainActivity.isNotRefreshUserInfo = false;
+                    startActivity(PaySuccessActivity.class, bundle);
                 } else {
                     ToastUtils.showToastShort(mContext, "支付失败");
                 }
@@ -159,6 +161,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                             adapter.addAll(result);
                             currentPage++;
                         } else {
+                            rl_no_order.setVisibility(View.VISIBLE);
                             rv_order.noMoreLoading();
                         }
                         loading.dismiss();
@@ -272,30 +275,27 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Order newOrder = order;
-                        order.setOrderStatusID(OrderCommonState.ORDER_CANCLED);
-                        switch (currentType) {
-                            case TYPE_ALL:
-                                adapter.replace(order, newOrder);
-                                break;
-                            case TYPE_WAITING_PAY:
-                                adapter.delete(order);
-                                break;
-                        }
                         networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
                                 MainActivity.isNotRefreshUserInfo = false;
-                                adapter.clear();
+                                switch (currentType) {
+                                    case TYPE_ALL:
+                                        Order newOrder = order;
+                                        order.setOrderStatusID(OrderCommonState.ORDER_CANCLED);
+                                        adapter.replace(order, newOrder);
+                                        break;
+                                    case TYPE_WAITING_PAY:
+                                        adapter.delete(order);
+                                        break;
+                                }
                                 currentPage = 1;
-                                getOrderLists(currentType, String.valueOf(currentPage));
                                 loading.dismiss();
                             }
                         });
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -303,5 +303,13 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 })
                 .show();
     }
+
+
+    @Subcriber(tag = OrderDetailActivity.CANCEL_ORDER)
+    public void detailCancel(OrderDetail orderid) {
+        adapter.clear();
+        getOrderLists(currentType, String.valueOf(currentPage));
+    }
+
 
 }
