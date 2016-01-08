@@ -198,7 +198,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 mSharePopupWindow.show(ll_main);
                 break;
             case R.id.ll_join_car://加入购物车
-                mShoppingCarPopupWindow.show(ll_main);
+                mShoppingCarPopupWindow.getProductSpec();
                 break;
         }
     }
@@ -242,6 +242,11 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         Bundle bundle = new Bundle();
         bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ShoppingCarActivity.class);
         startActivity(LoginActivity.class, bundle);
+    }
+
+    @Subcriber(tag = ShoppingCarPopupWindow.EVENT_GET_PRODUCT_SPEC)
+    public void eventGetProductSpec(String tag) {
+        mShoppingCarPopupWindow.show(ll_main);
     }
 
 }
