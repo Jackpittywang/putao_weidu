@@ -16,6 +16,7 @@ import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.me.address.adapter.AddressAdapter;
 import com.putao.wd.model.Address;
 import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -34,6 +35,7 @@ import butterknife.OnClick;
 public class AddressListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     public static final String EVENT_SELECT_ADDRESS = "select_address";
     public static final String BUNDLE_IS_CLOSE = "is_close";
+    public static final String IS_ADDRESS_EMPTY = "is_address_empty";
 
     @Bind(R.id.rv_addresses)
     BasicRecyclerView rv_addresses;
@@ -45,6 +47,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     private ProvinceDBManager mProvinceDBManager;
     private CityDBManager mCityDBManager;
     private DistrictDBManager mDistrictDBManager;
+    private boolean isAddressEmpty = true;
 
     private boolean isClose = false;
 
@@ -85,6 +88,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, ArrayList<Address> result) {
                 if (result != null && result.size() > 0) {
+                    isAddressEmpty = false;
                     adapter.replaceAll(result);
                     rl_no_address.setVisibility(View.GONE);
                 } else rl_no_address.setVisibility(View.VISIBLE);
@@ -145,7 +149,9 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_add_address://新增地址
-                startActivity(AddressEditActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(IS_ADDRESS_EMPTY, isAddressEmpty);
+                startActivity(AddressEditActivity.class, bundle);
                 break;
         }
     }
@@ -164,17 +170,10 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
 //        });
 //    }
 //
-//    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
-//    public void eventAddressUpdate(String tag) {
-//        networkRequest(OrderApi.getAddressLists(), new SimpleFastJsonCallback<ArrayList<Address>>(Address.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<Address> result) {
-//                if (result != null && result.size() > 0)
-//                    adapter.replaceAll(result);
-//                loading.dismiss();
-//            }
-//        });
-//    }
+    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_UPDATE)
+    public void eventAddressUpdate(String tag) {
+        getAddressLists();
+    }
 //
 //    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
 //    public void eventAddressDelete(Address address) {
