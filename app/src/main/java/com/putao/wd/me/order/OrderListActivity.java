@@ -18,6 +18,7 @@ import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
+import com.putao.wd.model.Express;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.store.pay.PaySuccessActivity;
@@ -229,6 +230,18 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         Bundle bundle = new Bundle();
         bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
         startActivity(ServiceChooseActivity.class, bundle);
+    }
+    /**
+     * 查看物流
+     */
+    @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
+    public void quereRefund(Order order) {
+        Bundle bundle = new Bundle();
+        ArrayList<Express> expresses = order.getExpress();
+        bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+//        bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, expresses.size());
+        bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, 0);
+        startActivity(OrderShipmentDetailActivity.class, bundle);
     }
 
     /**

@@ -67,6 +67,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:textColor="@color/service_btn_nor"
+                android:padding="10dp"
+                android:background="@drawable/btn_order_state_selector"
                 android:text="新增地址" />
         </RelativeLayout>
     </FrameLayout>

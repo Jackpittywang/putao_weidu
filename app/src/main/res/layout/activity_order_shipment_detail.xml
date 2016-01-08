@@ -86,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:id="@+id/rl_product"
                 android:background="@color/white"
                 android:padding="10dp">
 
@@ -138,7 +139,7 @@
                 android:background="#ffffff"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="您的包裹已被签收"
+                android:text="暂无物流信息"
                 android:textColor="#985ec9"
                 android:textSize="@dimen/text_size_18sp" />
 

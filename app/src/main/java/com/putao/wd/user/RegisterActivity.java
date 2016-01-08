@@ -24,6 +24,9 @@ import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.TimeButton;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -115,8 +118,17 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
      */
     private void getVerifyCode() {
         String mobile = et_mobile.getText().toString().trim();
-        if (StringUtils.isEmpty(mobile)) {
+        String value = et_mobile.getText().toString();
+        String regExp = "^[1]([3|7|5|8]{1}\\d{1})\\d{8}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(value);
+        if (!m.matches()) {
             tb_get_verify.reset();
+            ToastUtils.showToastShort(mContext, "请输入正确的手机号码");
+            return;
+        }
+        if (StringUtils.isEmpty(mobile)) {
+
             ToastUtils.showToastLong(mContext, "请输入手机号码");
             return;
         }
