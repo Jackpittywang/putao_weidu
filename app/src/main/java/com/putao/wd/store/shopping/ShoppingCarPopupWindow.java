@@ -40,6 +40,7 @@ import butterknife.OnClick;
 public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnClickListener {
     public static final String EVENT_REFRESH_TITLE_COUNT = "title_count";
     public static final String EVENT_TO_LOGIN = "to_login";
+    public static final String EVENT_GET_PRODUCT_SPEC = "get_product_spec";
 
     @Bind(R.id.iv_product_icon)
     ImageDraweeView iv_product_icon;
@@ -73,7 +74,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         ll_join_car.setClickable(false);
         adapter = new NormsSelectAdapter(mActivity, null);
         rv_norms.setAdapter(adapter);
-        getProductSpec(pid);
+//        getProductSpec();
     }
 
     @Override
@@ -83,10 +84,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
     /**
      * 获取商品规格
-     *
-     * @param product_id 产品id
      */
-    private void getProductSpec(String product_id) {
+    public void getProductSpec() {
         mActivity.networkRequest(StoreApi.getProductSpce(product_id),
                 new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
                     @Override
@@ -95,7 +94,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                         skus = result.getSku();
                         List<Norms> normses = SpecUtils.getNormses(result.getSpec());
                         normses.add(new Norms());
-                        adapter.addAll(normses);
+                        adapter.replaceAll(normses);
+                        EventBusHelper.post(EVENT_GET_PRODUCT_SPEC, EVENT_GET_PRODUCT_SPEC);
                         loading.dismiss();
                     }
                 });

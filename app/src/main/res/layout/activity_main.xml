@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+    <!--分割线-->
+    <View
+        android:id="@+id/line_horizontal"
+        style="@style/line_horizontal"
+        android:layout_above="@+id/tb_tab"/>
     <!--标题栏-->
     <com.sunnybear.library.view.select.TabBar
         android:id="@+id/tb_tab"
@@ -18,28 +23,28 @@
             style="@style/style_tab_bar"
             auto:active="true"
             auto:activeDrawable="@drawable/tab_bar_c_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_c_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_c_nor"/>
 
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_explore"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_p_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_p_nor"/>
 
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_store"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_store_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_store_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_store_nor"/>
 
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_me"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_me_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_me_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_me_nor"/>
     </com.sunnybear.library.view.select.TabBar>
 
     <!--主页面-->
@@ -47,5 +52,5 @@
         android:id="@id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tb_tab" />
+        android:layout_above="@id/line_horizontal"/>
 </RelativeLayout>
