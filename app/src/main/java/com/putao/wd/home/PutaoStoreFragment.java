@@ -158,15 +158,63 @@ public class PutaoStoreFragment extends PTWDFragment {
             @Override
             public void onRefresh() {
                 adapter.clear();
-                getStoreHome();
-                loading.dismiss();
+//                getStoreHome();
+                networkRequest(StoreApi.getStoreHome("1"), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
+                    @Override
+                    public void onSuccess(String url, StoreHome result) {
+                        final List<StoreBanner> banners = result.getBanner();
+                        //初始化广告位
+                        if (banners != null && banners.size() > 0) {
+                            bannerAdapter = new StoreBannerAdapter(mActivity, banners, new BannerViewPager.OnPagerClickListenr() {
+                                @Override
+                                public void onPagerClick(int position) {
+                                    StoreBanner banner = banners.get(position);
+                                    String project_id = banner.getItem_id();
+                                    if (!StringUtils.isEmpty(project_id)) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, project_id);
+                                        bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_IMAGE, banner.getImage());
+                                        startActivity(ProductDetailActivity.class, bundle);
+                                    }
+                                }
+                            });
+                            bl_banner.setAdapter(bannerAdapter);
+                            bl_banner.setOffscreenPageLimit(banners.size());//缓存页面数
+                        }
+
+                        //初始化商品列表
+                        StoreProductHome productHome = result.getProduct();
+                        adapter.addAll(productHome.getData());
+                        if (productHome.getCurrent_page() != productHome.getTotal_page()) {
+                            rv_content.loadMoreComplete();
+//                            currentPage++;
+                        } else rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+
+//                loading.dismiss();
                 ptl_refresh.refreshComplete();
             }
         });
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                rv_content.loadMoreComplete();
+                networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)), new SimpleFastJsonCallback<StoreHome>(StoreHome.class, loading) {
+                    @Override
+                    public void onSuccess(String url, StoreHome result) {
+                        //初始化商品列表
+                        StoreProductHome productHome = result.getProduct();
+                        adapter.addAll(productHome.getData());
+                        if (productHome.getCurrent_page() != productHome.getTotal_page()) {
+                            rv_content.loadMoreComplete();
+                            currentPage++;
+                        } else rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+
+//                rv_content.loadMoreComplete();
             }
         });
     }
