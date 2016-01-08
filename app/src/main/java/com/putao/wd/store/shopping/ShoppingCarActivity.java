@@ -352,14 +352,16 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_all://全选
-                isSelectAll = isSelectAll ? false : true;
-                btn_sel_all.setState(isSelectAll);
-                adapter.selAll(isSelectAll);
-                if (isSelectAll) {
-                    setBottomButtonStyle(true);
-                } else {
-                    setTopButtonStyle(EDIT, PAY, false);
-                    setBottomButtonStyle(false);
+                if(useCount != 0){
+                    isSelectAll = isSelectAll ? false : true;
+                    btn_sel_all.setState(isSelectAll);
+                    adapter.selAll(isSelectAll);
+                    if (isSelectAll) {
+                        setBottomButtonStyle(true);
+                    } else {
+                        setTopButtonStyle(EDIT, PAY, false);
+                        setBottomButtonStyle(false);
+                    }
                 }
                 break;
             case R.id.ll_closing://去结算/删除
