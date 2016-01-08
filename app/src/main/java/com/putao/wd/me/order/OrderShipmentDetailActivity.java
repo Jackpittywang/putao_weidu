@@ -1,7 +1,9 @@
 package com.putao.wd.me.order;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
@@ -41,6 +43,8 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     TextView tv_number;
     @Bind(R.id.tv_shipment_text)
     TextView tv_shipment_text;
+    @Bind(R.id.rl_product)
+    RelativeLayout rl_product;
     @Bind(R.id.tv_package_status)
     TextView tv_package_status;
     @Bind(R.id.ll_package_list)
@@ -67,14 +71,17 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
+        if (expresses == null || expresses.size() == 0) {
+            rl_product.setVisibility(View.GONE);
+            return;
+        }
         ininDate();
         addListener();
         refreshView(express);
     }
 
     private void ininDate() {
-        expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
-        if (expresses == null || expresses.size() == 0) finish();
         packageIndex = args.getInt(PACKAGINDEX);
         express = expresses.get(packageIndex);
     }

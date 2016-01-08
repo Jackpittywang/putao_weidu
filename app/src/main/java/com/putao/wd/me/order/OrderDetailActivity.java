@@ -292,9 +292,21 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 break;
             case OrderCommonState.ORDER_WAITING_SIGN://已发货
                 setProgress3();
-                ll_bottom.setVisibility(View.GONE);
+                ll_bottom.setVisibility(View.VISIBLE);
                 btn_order_left.setVisibility(View.VISIBLE);
+                btn_order_left.setText("查看物流");
                 tv_order_info.setText(HINT2);//设置商品信息
+                btn_order_left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        ArrayList<Express> expresses = mOrderDetail.getExpress();
+                        bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+                        bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, mOrderDetail.getExpress().size());
+                        bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, 0);
+                        startActivity(OrderShipmentDetailActivity.class, bundle);
+                    }
+                });
                 break;
             case OrderCommonState.ORDER_SALE_SERVICE:
                 setProgress4();

@@ -139,12 +139,6 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onRightAction() {
-        startActivity(MainActivity.class);
-        finish();
-    }
-
-    @Override
     protected String[] getRequestUrls() {
         return new String[]{StoreApi.URL_PAY};
     }
@@ -171,5 +165,12 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        startActivity(MainActivity.class);
+        finish();
     }
 }

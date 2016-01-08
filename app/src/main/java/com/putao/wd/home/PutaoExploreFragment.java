@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
@@ -164,13 +165,16 @@ public class PutaoExploreFragment extends PTWDFragment implements View.OnClickLi
      */
     private void checkDevices() {
         networkRequest(ExploreApi.getManagement(),
-                new SimpleFastJsonCallback<Management>(Management.class, loading) {
+                new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
-                    public void onSuccess(String url, Management result) {
-                        if (result.getSlave_device_list() != null && result.getSlave_device_list().size() > 0) {
-                            rl_explor_empty.setVisibility(View.GONE);
-                        } else {
-                            rl_explor_empty.setVisibility(View.VISIBLE);
+                    public void onSuccess(String url, String result) {
+                        if(!"".equals(result)) {
+                            Management management = JSON.parseObject(result, Management.class);
+                            if (management.getSlave_device_list() != null && management.getSlave_device_list().size() > 0) {
+                                rl_explor_empty.setVisibility(View.GONE);
+                            } else {
+                                rl_explor_empty.setVisibility(View.VISIBLE);
+                            }
                         }
                         loading.dismiss();
                     }
