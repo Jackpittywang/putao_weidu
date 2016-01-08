@@ -159,10 +159,14 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                             adapter.clear();
                             rl_no_order.setVisibility(View.GONE);
                             adapter.addAll(result);
+                            rv_order.loadMoreComplete();
                             currentPage++;
-                        } else {
-                            rl_no_order.setVisibility(View.VISIBLE);
+                        } else if(currentPage > 1) {
+                            rv_order.loadMoreComplete();
                             rv_order.noMoreLoading();
+                        } else {
+                            rv_order.loadMoreComplete();
+                            rl_no_order.setVisibility(View.VISIBLE);
                         }
                         loading.dismiss();
                     }
