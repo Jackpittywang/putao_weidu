@@ -12,7 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
-import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Cart;
@@ -25,15 +24,12 @@ import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.recycler.OnItemLongClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -126,8 +122,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 if (cart.isSelect()) {
                     cart.setIsSelect(false);
                     cart.setEditable(false);
+                    if(cart.isNull()) {
+                        cart.setIsSelectUseless(false);
+                    }
                 } else {
                     cart.setIsSelect(true);
+                    if(cart.isNull()) {
+                        cart.setIsSelectUseless(true);
+                    }
                 }
                 adapter.replace(position, cart);
             }
@@ -249,12 +251,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     private List<CartEdit> getReqParam(List<Cart> carts) {
         List<CartEdit> cartEdits = new ArrayList<>();
-        for (Cart cart : carts) {
-            CartEdit cartEdit = new CartEdit();
-            cartEdit.setPid(cart.getPid());
-            cartEdit.setQt(cart.getGoodsCount());
-            cart.setEditable(false);
-            cartEdits.add(cartEdit);
+        if(carts.size() > 0) {
+            for (Cart cart : carts) {
+                CartEdit cartEdit = new CartEdit();
+                cartEdit.setPid(cart.getPid());
+                cartEdit.setQt(cart.getGoodsCount());
+                cart.setEditable(false);
+                cartEdits.add(cartEdit);
+            }
         }
         return cartEdits;
     }
@@ -262,15 +266,16 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     /**
      * 获取删除的请求List
      */
-    private List<CartEdit> getReqDelete() {
+    private List<CartEdit> getDeleteReq() {
         List<CartEdit> reqList;
         if(btn_sel_all.getState()){
             reqList = new ArrayList<>();
         }else {
             List<Cart> noSelect = new ArrayList<>();
             for(int i = 0; i < adapter.getItems().size(); i++) {
-                if(!mSelected.containsKey(i)){
-                    noSelect.add(adapter.getItem(i));
+                Cart cart = adapter.getItem(i);
+                if(!mSelected.containsKey(i) && !cart.isSelectUseless()){
+                    noSelect.add(cart);
                 }
             }
             reqList = getReqParam(noSelect);
@@ -370,7 +375,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         startActivity(WriteOrderActivity.class, getBundle());
                         break;
                     case DELETE:
-                        networkRequest(StoreApi.multiManage(getReqDelete()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
+                        networkRequest(StoreApi.multiManage(getDeleteReq()), new SimpleFastJsonCallback<ShopCarItem>(ShopCarItem.class, loading) {
                             @Override
                             public void onSuccess(String url, ShopCarItem result) {
                                 initData();

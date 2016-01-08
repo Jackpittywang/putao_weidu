@@ -19,6 +19,7 @@ public class Cart implements Serializable {
     private boolean isNull;//判断是否是无效商品
     private boolean isSelect;
     private boolean editable;
+    private boolean isSelectUseless;
     private String color;
     private String goodsCount;//保存编辑时的商品数量，供保存时使用
 
@@ -117,6 +118,14 @@ public class Cart implements Serializable {
 
     public void setGoodsCount(String goodsCount) {
         this.goodsCount = goodsCount;
+    }
+
+    public boolean isSelectUseless() {
+        return isSelectUseless;
+    }
+
+    public void setIsSelectUseless(boolean isSelectUseless) {
+        this.isSelectUseless = isSelectUseless;
     }
 
     @Override

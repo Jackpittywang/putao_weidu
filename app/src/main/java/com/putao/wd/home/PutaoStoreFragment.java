@@ -191,6 +191,8 @@ public class PutaoStoreFragment extends PTWDFragment {
             isStop = bl_banner.startAutoScroll();
         if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             getCartCount();
+        } else {
+            navigation_bar.hideRrightTitleIcon(true);
         }
     }
 
