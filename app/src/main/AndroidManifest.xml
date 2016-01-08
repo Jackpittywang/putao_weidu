@@ -161,6 +161,10 @@
         <activity
             android:name=".start.putaozi.GrapestoneActivity"
             android:screenOrientation="portrait" />
+        <!-- 葡萄籽常见问题 -->
+        <activity
+            android:name=".start.putaozi.CommonQuestionActivity"
+            android:screenOrientation="portrait" />
         <!--图片介绍-->
         <activity
             android:name=".start.action.PictrueInfoActivity"
