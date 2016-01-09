@@ -124,7 +124,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
-                serviceFillExpress(holder);
+                serviceFillExpress(holder, id);
                 return "同意请求";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);
@@ -151,12 +151,13 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
     /**
      * 填写快递单号
      */
-    private void serviceFillExpress(ServiceListViewHolder holder) {
+    private void serviceFillExpress(ServiceListViewHolder holder, final String id) {
         holder.btn_service_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString(BUTTON_ID, SERVICE_FILL_EXPRESS);
+                bundle.putString(SERVICE_ID, id);
                 EventBusHelper.post(bundle, EVENT_RIGHT_CLICK);
             }
         });
@@ -193,7 +194,7 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
-                serviceFillExpress(holder);
+                serviceFillExpress(holder, id);
                 return "同意请求";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);

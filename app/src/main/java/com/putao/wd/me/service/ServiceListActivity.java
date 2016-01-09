@@ -54,8 +54,13 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
         adapter = new ServiceListAdapter(mContext, null);
         rv_service.setAdapter(adapter);
 
-        getServiceList();
         addListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getServiceList();
     }
 
     @Override
@@ -161,13 +166,14 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     @Subcriber(tag = ServiceListAdapter.EVENT_RIGHT_CLICK)
     public void eventClick(Bundle bundle) {
         String button_id = (String) bundle.get(ServiceListAdapter.BUTTON_ID);
+        serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_ID);
         switch (button_id) {
             case ServiceListAdapter.SERVICE_CANCEL:
-                serviceId = (String) bundle.get(ServiceListAdapter.SERVICE_ID);
                 showDialog();
                 break;
             case ServiceListAdapter.SERVICE_FILL_EXPRESS:
-                startActivity(ServiceExpressNumberActivity.class);
+                bundle.putString(ServiceExpressNumberActivity.KEY_SERVICE_ID, serviceId);
+                startActivity(ServiceExpressNumberActivity.class, bundle);
                 break;
         }
     }
