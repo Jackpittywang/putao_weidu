@@ -11,6 +11,7 @@ import com.putao.wd.model.Praise;
 import com.putao.wd.model.PraiseDetail;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class PraiseFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+        Logger.d("MessageCenterActivity", "PraiseFragment启动");
         adapter = new PraiseAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();

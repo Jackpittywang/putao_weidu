@@ -17,13 +17,10 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
-
-import java.io.Serializable;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -103,16 +100,23 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
      * 验证登录
      */
     private void checkLogin() {
-        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
-            @Override
-            public void onSuccess(String url, UserInfo result) {
-                AccountHelper.setUserInfo(result);
+        networkRequest(UserApi.getUserInfo(),
+                new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+                    @Override
+                    public void onSuccess(String url, UserInfo result) {
+                        AccountHelper.setUserInfo(result);
 //                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-                startActivity((Class)args.getSerializable(TERMINAL_ACTIVITY), args);
-                loading.dismiss();
-                finish();
-            }
-        });
+                        startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                        loading.dismiss();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastLong(mContext, "登录失败请重新登录");
+                    }
+                });
     }
 
     @Override
