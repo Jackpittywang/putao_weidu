@@ -124,6 +124,12 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 AccountHelper.setUserInfo(result);
                 loading.dismiss();
             }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                ToastUtils.showToastLong(mContext, "登录失败请重新登录");
+            }
         });
     }
 

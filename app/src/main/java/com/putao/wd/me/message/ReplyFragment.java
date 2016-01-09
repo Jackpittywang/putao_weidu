@@ -11,6 +11,7 @@ import com.putao.wd.model.Reply;
 import com.putao.wd.model.ReplyDetail;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class ReplyFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+        Logger.d("MessageCenterActivity","ReplyFragment启动");
         adapter = new ReplyAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();

@@ -26,6 +26,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.IndicatorButton;
@@ -92,14 +93,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
      * 获取用户信息
      */
     private void getUserInfo() {
-        networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
-            @Override
-            public void onSuccess(String url, UserInfo result) {
-                iv_user_icon.setImageURL(result.getHead_img());
-                tv_user_nickname.setText(result.getNick_name());
-                loading.dismiss();
-            }
-        });
+        networkRequest(UserApi.getUserInfo(),
+                new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+                    @Override
+                    public void onSuccess(String url, UserInfo result) {
+                        iv_user_icon.setImageURL(result.getHead_img());
+                        tv_user_nickname.setText(result.getNick_name());
+                        loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastLong(mActivity, "登录失败请重新登录");
+                    }
+                });
     }
 
     /**
