@@ -68,7 +68,7 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
         if (holder instanceof NormsSelectViewHolder) {
             NormsSelectViewHolder viewHolder = (NormsSelectViewHolder) holder;
             viewHolder.tv_title.setText(norms.getTitle());
-            viewHolder.tb_tag.addTags(norms.getTags(), 0);
+            viewHolder.tb_tag.replaceAllTag(norms.getTags(), 0);
             EventBusHelper.post(viewHolder.tb_tag.getTag(0), EVENT_DEFAULT_TAG);//传递默认选中值
             viewHolder.tb_tag.setonTagItemCheckListener(new TagBar.OnTagItemCheckListener() {
                 @Override

@@ -144,8 +144,9 @@ public class TagBar extends FlowLayout implements OnClickListener {
      * @param tags            标签组
      * @param defaultPosition 默认选中项
      */
-    private void replaceAllTag(List<Tag> tags, Integer defaultPosition) {
+    public void replaceAllTag(List<Tag> tags, Integer defaultPosition) {
         mTags.clear();
+        removeAllViews();
         addTags(tags, defaultPosition);
     }
 
