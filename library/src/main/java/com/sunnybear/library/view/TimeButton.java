@@ -88,9 +88,14 @@ public class TimeButton extends TextView implements View.OnClickListener {
     }
 
     public void reset() {
-        clearTimer();
-        setClickable(true);
-        initView();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                clearTimer();
+                setClickable(true);
+                initView();
+            }
+        }, 200);
     }
 
     private void clearTimer() {
