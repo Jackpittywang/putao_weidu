@@ -15,13 +15,6 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.map.MapActivity;
-import com.putao.wd.me.actions.MyActionsActivity;
-import com.putao.wd.me.address.AddressListActivity;
-import com.putao.wd.me.child.ChildInfoActivity;
-import com.putao.wd.me.message.MessageCenterActivity;
-import com.putao.wd.me.order.OrderListActivity;
-import com.putao.wd.me.service.ServiceListActivity;
-import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.RegUser;
 import com.putao.wd.model.UserInfo;
@@ -32,8 +25,6 @@ import com.putao.wd.start.apply.ApplyListActivity;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
-import com.putao.wd.start.question.QuestionActivity;
-import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -210,10 +201,10 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
             return;
         }
         switch (v.getId()) {
-            case R.id.ll_join_list:
+            case R.id.ll_join_list://报名列表
                 startActivity(ApplyListActivity.class, args);
                 break;
-            case R.id.ll_cool:
+            case R.id.ll_cool://点赞
                 if (mIsUserLike) {
                     startActivity(PraiseListActivity.class, args);
                 } else {
@@ -231,13 +222,13 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                             });
                 }
                 break;
-            case R.id.ll_comment:
+            case R.id.ll_comment://评论
                 startActivity(CommentActivity.class, args);
                 break;
-            case R.id.tv_join:
+            case R.id.tv_join://我要参加
                 startActivity(ApplyActivity.class, args);
                 break;
-            case R.id.tv_personinfo_address:
+            case R.id.tv_personinfo_address://地址
                 startActivity(MapActivity.class, args);
                 break;
         }
@@ -247,7 +238,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
      * put进目标activity供登录后跳转
      */
     private void toLoginActivity(View v, Bundle bundle) {
-        bundle.putString(BUNDLE_ACTION_ID,action_id);
+        bundle.putString(BUNDLE_ACTION_ID, action_id);
         bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ActionsDetailActivity.class);
         startActivity(LoginActivity.class, bundle);
     }
