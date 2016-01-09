@@ -91,18 +91,19 @@
                 android:id="@+id/et_sms_verify"
                 style="@style/WeiduText.EditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
-                android:hint="@string/sms_verify" />
+                android:hint="@string/sms_verify"
+                android:minHeight="48dp" />
 
             <com.sunnybear.library.view.TimeButton
                 android:id="@+id/tb_get_verify"
                 android:layout_width="88dp"
-                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:minHeight="48dp"
                 android:textSize="@dimen/text_size_16sp"
                 auto:click_background="@color/text_main_color_nor"
@@ -122,7 +123,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_below="@id/et_sms_verify"
+                android:layout_below="@id/tb_get_verify"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:background="@color/divider_color" />
