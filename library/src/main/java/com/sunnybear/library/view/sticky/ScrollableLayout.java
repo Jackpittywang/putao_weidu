@@ -143,7 +143,7 @@ public class ScrollableLayout extends FrameLayout {
 
     private OnScrollStateListener mOnScrollStateListener;//滚动状态监听
 
-    public void setmOnScrollStateListener(OnScrollStateListener onScrollStateListener) {
+    public void setOnScrollStateListener(OnScrollStateListener onScrollStateListener) {
         mOnScrollStateListener = onScrollStateListener;
     }
 
@@ -406,12 +406,14 @@ public class ScrollableLayout extends FrameLayout {
                 if (!isScrollTop && currentY == 0) {
                     isScrollTop = true;
                     Logger.d("整个布局滚动到顶");
-//                    mOnScrollStateListener.onScrollTop();
+                    if (mOnScrollStateListener != null)
+                        mOnScrollStateListener.onScrollTop();
                 }
                 if (!isStartScrollTop && currentY < mMaxScrollY) {
                     isStartScrollTop = true;
                     Logger.d("开始向上滚动");
-//                    mOnScrollStateListener.onStartScrollTop();
+                    if (mOnScrollStateListener != null)
+                        mOnScrollStateListener.onScroll(currentY);
                 }
                 // if not dragging draggable then return, else do not return
                 if (!mIsDraggingDraggable
@@ -426,7 +428,8 @@ public class ScrollableLayout extends FrameLayout {
                 if (!isScrollBottom && currentY == mMaxScrollY) {
                     isScrollBottom = true;
                     Logger.d("底部布局开始滚动");
-//                    mOnScrollStateListener.onScrollBottom();
+                    if (mOnScrollStateListener != null)
+                        mOnScrollStateListener.onScrollBottom();
                 }
                 if (currentY == mMaxScrollY
                         && !mCanScrollVerticallyDelegate.canScrollVertically(direction)) {
@@ -831,13 +834,15 @@ public class ScrollableLayout extends FrameLayout {
         void onScrollTop();
 
         /**
-         * 开始向上滚动
-         */
-        void onStartScrollTop();
-
-        /**
          * 向下滚动到底部
          */
         void onScrollBottom();
+
+        /**
+         * 开始向上滚动
+         *
+         * @param scrollY 滚动距离
+         */
+        void onScroll(int scrollY);
     }
 }
