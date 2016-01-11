@@ -18,6 +18,7 @@ import butterknife.Bind;
  * 商城产品列表适配器
  * Created by guchenkai on 2015/11/30.
  */
+@Deprecated
 public class ProductAdapter extends LoadMoreAdapter<StoreProduct,ProductAdapter.ProductViewHolder> {
 
     public ProductAdapter(Context context, List<StoreProduct> productItems) {

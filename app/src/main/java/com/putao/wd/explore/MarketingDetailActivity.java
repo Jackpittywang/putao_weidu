@@ -1,6 +1,9 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
@@ -16,15 +19,24 @@ import butterknife.Bind;
  * 创想
  * Created by guchenkai on 2016/1/11.
  */
-public class MarketingActivity extends PTWDActivity {
-    @Bind(R.id.rv_marketing)
-    LoadMoreRecyclerView rv_marketing;
+public class MarketingDetailActivity extends PTWDActivity {
+    @Bind(R.id.iv_close)
+    ImageView iv_close;
+    @Bind(R.id.iv_top)
+    ImageView iv_top;
+    @Bind(R.id.tv_title)
+    TextView tv_title;
+    @Bind(R.id.tv_digest)
+    TextView tv_digest;
+    @Bind(R.id.web)
+    WebView web;
+
 
     private List<Marketing> markets;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_marketing;
+        return R.layout.activity_marketing_detail;
     }
 
     @Override
@@ -33,8 +45,6 @@ public class MarketingActivity extends PTWDActivity {
     }
 
     private void initView() {
-        MarketingAdapter marketingAdapter = new MarketingAdapter(mContext,markets);
-        rv_marketing.setAdapter(marketingAdapter);
     }
 
     private void initData() {

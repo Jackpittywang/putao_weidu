@@ -77,15 +77,14 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        product_id = args.getString(BUNDLE_PRODUCT_ID);
-        imageUrl = args.getString(BUNDLE_PRODUCT_IMAGE);
+//        product_id = args.getString(BUNDLE_PRODUCT_ID);
+//        imageUrl = args.getString(BUNDLE_PRODUCT_IMAGE);
 
         sticky_layout.canScrollView();
-//        mIndicatorHelper = IndicatorHelper.getInstance(mContext, navigation_bar.getRightView());
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
 
-        getProductDetail(product_id);
+//        getProductDetail(product_id);
 
         stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
     }
@@ -142,8 +141,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 } else {
                     navigation_bar.hideRrightTitleIcon(true);
                 }
-//                mIndicatorHelper.indicator(object.getInteger("qt"), BadgeView.POSITION_TOP_LEFT,
-//                        com.sunnybear.library.R.drawable.indicator_background, R.color.text_main_color_nor);
                 loading.dismiss();
             }
         });
