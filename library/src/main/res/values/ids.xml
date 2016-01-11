@@ -13,4 +13,6 @@
     <item name="stickyHeaderLayout_header" type="id" />
     <item name="stickyHeaderLayout_sticky" type="id" />
     <item name="stickyHeaderLayout_scrollable" type="id" />
+    <!--ConvenientBanner-->
+    <item name="cb_item_tag" type="id"></item>
 </resources>

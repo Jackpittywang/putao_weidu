@@ -214,4 +214,16 @@
             <enum name="anchored_view" value="3" />
         </attr>
     </declare-styleable>
+
+    <!--ConvenientBanner-->
+    <declare-styleable name="ConvenientBanner">
+        <attr name="canLoop" format="boolean" />
+        <attr name="manualPageable" format="boolean" />
+        <attr name="autoTurningTime" format="integer" />
+        <attr name="align" format="enum">
+            <enum name="ALIGN_PARENT_LEFT" value="0" />
+            <enum name="ALIGN_PARENT_RIGHT" value="1" />
+            <enum name="CENTER_HORIZONTAL" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>
