@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/layout_background"
-              android:orientation="vertical"
-              android:paddingLeft="15dp"
-              android:paddingRight="15dp">
+              android:background="#705e5a"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,8 +44,8 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:padding="15dp"/>
 
 </LinearLayout>
