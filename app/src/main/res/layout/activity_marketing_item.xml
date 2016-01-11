@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/distance_8dp">
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marketing_sign_shape"
+        android:padding="5dp"
+        android:text="研发中"
+        android:textColor="@color/color_C2C2C2"
+        android:textSize="@dimen/text_size_12sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv_icon"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            android:text="陪孩子一起学数学"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_toLeftOf="@id/iv_icon"
+            android:lineSpacingExtra="2dp"
+            android:paddingRight="10dp"
+            android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
+            android:textColor="@color/color_C2C2C2"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_comment" />
+
+            <TextView
+                android:id="@+id/tv_count_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="1234"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/ll_comment"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/sb_cool_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                auto:isSelect="false"
+                auto:norDrawable="@drawable/btn_support_nor"
+                auto:selDrawable="@drawable/btn_support_sel" />
+
+            <TextView
+                android:id="@+id/tv_count_cool"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="1234"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_20sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/img_head_default" />
+    </RelativeLayout>
+
+</LinearLayout>
