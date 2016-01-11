@@ -35,7 +35,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 葡商城
+ * 精选
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStoreFragment extends PTWDFragment {

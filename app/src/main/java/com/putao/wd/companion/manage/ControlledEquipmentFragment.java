@@ -1,11 +1,11 @@
-package com.putao.wd.explore.manage;
+package com.putao.wd.companion.manage;
 
 import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.explore.manage.adapter.ControlledEquipmentAdapter;
+import com.putao.wd.companion.manage.adapter.ControlledEquipmentAdapter;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementDevice;
 import com.sunnybear.library.eventbus.EventBusHelper;

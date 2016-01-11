@@ -131,7 +131,7 @@
             android:screenOrientation="portrait" />
         <!-- 关注成功 -->
         <activity
-            android:name=".explore.AttentionSuccessActivity"
+            android:name=".companion.AttentionSuccessActivity"
             android:screenOrientation="portrait" />
         <!-- 购物车 -->
         <activity
@@ -187,11 +187,11 @@
             android:screenOrientation="portrait" />
         <!--管理-->
         <activity
-            android:name=".explore.manage.ManageActivity"
+            android:name=".companion.manage.ManageActivity"
             android:screenOrientation="portrait" />
         <!--管理设置-->
         <activity
-            android:name=".explore.manage.ManagerSettingsActivity"
+            android:name=".companion.manage.ManagerSettingsActivity"
             android:screenOrientation="portrait" />
         <!--活动地址-->
         <activity
@@ -235,11 +235,11 @@
             android:screenOrientation="portrait" />
         <!--炫耀页面-->
         <activity
-            android:name=".explore.DisPlayActivity"
+            android:name=".companion.DisPlayActivity"
             android:screenOrientation="portrait" />
         <!--教育理念页面-->
         <activity
-            android:name=".explore.PlotActivity"
+            android:name=".companion.PlotActivity"
             android:screenOrientation="portrait" />
         <!--申请退款-->
         <activity
@@ -260,6 +260,10 @@
         <!--修改用户简介-->
         <activity
             android:name=".user.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <!--创想-->
+        <activity
+            android:name=".explore.MarketingActivity"
             android:screenOrientation="portrait" />
         <!-- 退款页面-->
         <!-- ===============================业务activity定义在这条线之上================================== -->

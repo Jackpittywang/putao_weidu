@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.explore.PlotPreviewDialog;
+import com.putao.wd.companion.PlotPreviewDialog;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;

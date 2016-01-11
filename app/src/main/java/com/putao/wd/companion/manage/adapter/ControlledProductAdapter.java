@@ -1,4 +1,4 @@
-package com.putao.wd.explore.manage.adapter;
+package com.putao.wd.companion.manage.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.ControllItem;
 import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;

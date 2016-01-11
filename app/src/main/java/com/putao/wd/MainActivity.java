@@ -6,14 +6,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.home.MeFragment;
-import com.putao.wd.home.PutaoExploreFragment;
+import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.user.CompleteActivity;
-import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.view.select.TabBar;
@@ -41,7 +39,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     TabItem ti_me;
 
     private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
-    private PutaoExploreFragment mPutaoExploreFragment;//探索号
+    private PutaoCompanionFragment mPutaoExploreFragment;//探索号
     private PutaoStoreFragment mPutaoStoreFragment;//葡商城
     private MeFragment mMeFragment;//我
 
@@ -72,7 +70,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 
     private void addFragment() {
         mFragments.put(R.id.ti_start_circle, PutaoStartCircleFragment.class);
-        mFragments.put(R.id.ti_explore, PutaoExploreFragment.class);
+        mFragments.put(R.id.ti_explore, PutaoCompanionFragment.class);
         mFragments.put(R.id.ti_store, PutaoStoreFragment.class);
         mFragments.put(R.id.ti_me, MeFragment.class);
     }
@@ -152,8 +150,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         hideFragment(fragmentTransaction);
         if (PutaoStartCircleFragment.class.equals(fragmentClass))
             mPutaoStartCircleFragment = (PutaoStartCircleFragment) showFragment(fragmentTransaction, mPutaoStartCircleFragment, PutaoStartCircleFragment.class);
-        else if (PutaoExploreFragment.class.equals(fragmentClass))
-            mPutaoExploreFragment = (PutaoExploreFragment) showFragment(fragmentTransaction, mPutaoExploreFragment, PutaoExploreFragment.class);
+        else if (PutaoCompanionFragment.class.equals(fragmentClass))
+            mPutaoExploreFragment = (PutaoCompanionFragment) showFragment(fragmentTransaction, mPutaoExploreFragment, PutaoCompanionFragment.class);
         else if (PutaoStoreFragment.class.equals(fragmentClass))
             mPutaoStoreFragment = (PutaoStoreFragment) showFragment(fragmentTransaction, mPutaoStoreFragment, PutaoStoreFragment.class);
         else if (MeFragment.class.equals(fragmentClass))

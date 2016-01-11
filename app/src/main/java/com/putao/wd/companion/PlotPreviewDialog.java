@@ -1,4 +1,4 @@
-package com.putao.wd.explore;
+package com.putao.wd.companion;
 
 import android.app.Activity;
 import android.app.Dialog;

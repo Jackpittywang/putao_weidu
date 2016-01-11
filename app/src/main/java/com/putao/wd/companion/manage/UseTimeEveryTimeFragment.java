@@ -1,4 +1,4 @@
-package com.putao.wd.explore.manage;
+package com.putao.wd.companion.manage;
 
 import android.os.Bundle;
 

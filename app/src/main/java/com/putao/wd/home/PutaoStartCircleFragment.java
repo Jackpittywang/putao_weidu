@@ -40,6 +40,7 @@ import butterknife.Bind;
  * 葡星圈
  * Created by guchenkai on 2015/11/25.
  */
+@Deprecated
 public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.OnTitleItemSelectedListener {
     private static final String STATUS_ONGOING = "ONGOING";//进行中
     //    private static final String STATUS_CLOSE = "CLOSE";//截止

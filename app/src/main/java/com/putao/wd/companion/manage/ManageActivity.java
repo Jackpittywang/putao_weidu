@@ -1,4 +1,4 @@
-package com.putao.wd.explore.manage;
+package com.putao.wd.companion.manage;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,12 +17,9 @@ import com.putao.wd.model.ManagementDevice;
 import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;

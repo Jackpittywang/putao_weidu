@@ -2,28 +2,21 @@ package com.putao.wd.explore;
 
 import android.os.Bundle;
 
-import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
 /**
- * 关注成功
- * Created by guchenkai on 2015/12/3.
+ * 创想
+ * Created by guchenkai on 2016/1/11.
  */
-public class AttentionSuccessActivity extends PTWDActivity {
+public class MarketingActivity extends PTWDActivity {
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_attention_success;
+        return 0;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
-    }
 
-    @Override
-    public void onRightAction() {
-        super.onRightAction();
-        finish();
     }
 
     @Override
