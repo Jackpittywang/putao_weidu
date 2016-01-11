@@ -175,4 +175,19 @@ public final class DateUtils {
         Date date = mTimeFormat.parse("2015-12-8 18:08:00");
         System.out.print(timeCalculate((int) (date.getTime() / 1000)));
     }
+
+    /**
+     * 把long时间转换成时间格式字符串
+     *
+     * @param time 时间
+     * @return
+     */
+    public static String generateTime(long time) {
+        int totalSeconds = (int) (time / 1000);
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
+
+        return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
 }

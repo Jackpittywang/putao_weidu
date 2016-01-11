@@ -62,6 +62,7 @@ bugly {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
+    compile project(':vitamio')
 }
 
 //编译结束后删除unaligned包

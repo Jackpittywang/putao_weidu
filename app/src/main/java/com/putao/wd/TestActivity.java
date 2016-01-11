@@ -1,15 +1,13 @@
 package com.putao.wd;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.util.HtmlUtils;
+import com.putao.wd.video.VideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.controller.task.SuperTask;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 
 import java.util.ArrayList;
@@ -67,19 +65,24 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ll_show:
 //                loading.show();
-                SuperTask.with(this)
-                        .assign(new SuperTask.TaskDescription<String>() {
-                            @Override
-                            public String onBackground() {
-                                return "你个傻叉";
-                            }
-                        })
-                        .finish(new SuperTask.FinishListener<String>() {
-                            @Override
-                            public void onFinish(@Nullable String result) {
-                                Logger.d(result);
-                            }
-                        }).execute();
+//                SuperTask.with(this)
+//                        .assign(new SuperTask.TaskDescription<String>() {
+//                            @Override
+//                            public String onBackground() {
+//                                return "你个傻叉";
+//                            }
+//                        })
+//                        .finish(new SuperTask.FinishListener<String>() {
+//                            @Override
+//                            public void onFinish(@Nullable String result) {
+//                                Logger.d(result);
+//                            }
+//                        }).execute();
+                Bundle bundle = new Bundle();
+//                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, "http://mp4.28mtv.com/mp41/景甜-心上人[68mtv.com].mp4");
+                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL,
+                        "http://mp4.28mtv.com/mp41/景甜-心上人[68mtv.com].mp4");
+                startActivity(VideoPlayerActivity.class, bundle);
                 break;
         }
     }

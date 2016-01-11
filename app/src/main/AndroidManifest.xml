@@ -265,7 +265,10 @@
         <activity
             android:name=".explore.MarketingActivity"
             android:screenOrientation="portrait" />
-        <!-- 退款页面-->
+        <!--视频播放-->
+        <activity
+            android:name=".video.VideoPlayerActivity"
+            android:screenOrientation="landscape" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
@@ -312,6 +315,13 @@
                 <action android:name="com.putao.wd.PUSH" />
             </intent-filter>
         </service>
+        <!--声明vitamio-->
+        <activity
+            android:name="io.vov.vitamio.activity.InitActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <!--================测试Activity======================-->
         <activity
             android:name=".TestActivity"

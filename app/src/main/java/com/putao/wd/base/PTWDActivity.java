@@ -1,13 +1,9 @@
 package com.putao.wd.base;
 
 import com.putao.wd.R;
-import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.model.http.callback.FastJsonCallback;
 import com.sunnybear.library.view.NavigationBar;
-
-import java.io.Serializable;
 
 import butterknife.Bind;
 
@@ -18,22 +14,6 @@ import butterknife.Bind;
 public abstract class PTWDActivity<App extends BasicApplication> extends BasicFragmentActivity<App> implements NavigationBar.ActionsListener {
     @Bind(R.id.navigation_bar)
     public NavigationBar navigation_bar;
-
-    /**
-     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
-     *
-     * @param request  request主体
-     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
-     */
-    protected <T extends Serializable> void networkRequestCache(Request request, FastJsonCallback callback) {
-        String url = request.urlString();
-        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
-        if (cacheData != null) {
-            callback.onSuccess(url, cacheData);
-            return;
-        }
-        networkRequest(request, callback);
-    }
 
     /**
      * 添加标题栏
