@@ -265,6 +265,10 @@
         <activity
             android:name=".explore.MarketingActivity"
             android:screenOrientation="portrait" />
+        <!--创想正文-->
+        <activity
+            android:name=".explore.MarketingDetailActivity"
+            android:screenOrientation="portrait" />
         <!--视频播放-->
         <activity
             android:name=".video.VideoPlayerActivity"
