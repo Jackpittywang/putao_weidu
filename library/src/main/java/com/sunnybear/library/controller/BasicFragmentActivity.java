@@ -203,7 +203,6 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         long pastTime = !StringUtils.isEmpty(mDiskFileCacheHelper.getAsString(url + "_past_time")) ?
                 Long.parseLong(mDiskFileCacheHelper.getAsString(url + "_past_time")) : currentTime + pastTimer;
         mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(pastTime));//存入过期时间
-
     }
 
     /**
