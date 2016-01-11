@@ -231,10 +231,8 @@ public class ConvenientBanner<T> extends LinearLayout {
             Field mScroller = null;
             mScroller = ViewPager.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);
-            scroller = new ViewPagerScroller(
-                    viewPager.getContext());
+            scroller = new ViewPagerScroller(viewPager.getContext());
             mScroller.set(viewPager, scroller);
-
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
