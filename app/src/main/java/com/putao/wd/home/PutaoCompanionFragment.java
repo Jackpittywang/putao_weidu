@@ -38,6 +38,7 @@ import butterknife.OnClick;
  * 陪伴
  * Created by guchenkai on 2015/11/25.
  */
+@Deprecated
 public class PutaoCompanionFragment extends PTWDFragment implements View.OnClickListener {
     @Bind(R.id.fl_main)
     FrameLayout fl_main;
