@@ -10,7 +10,6 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
-import com.putao.wd.me.actions.MyActionsActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.me.child.ChildInfoActivity;
 import com.putao.wd.me.message.MessageCenterActivity;
@@ -19,7 +18,7 @@ import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.model.OrderCount;
 import com.putao.wd.model.UserInfo;
-import com.putao.wd.start.question.QuestionActivity;
+import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
@@ -149,7 +148,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         tv_user_nickname.setText("葡星人");
     }
 
-    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, R.id.si_action, R.id.si_question, R.id.iv_user_icon
+    @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
             , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
     @Override
     public void onClick(View v) {
@@ -172,12 +171,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             case R.id.si_address://收货地址
                 startActivity(AddressListActivity.class);
                 break;
-            case R.id.si_action://我参与的活动
+            /*case R.id.si_action://我参与的活动
                 startActivity(MyActionsActivity.class);
 //                startActivity(WriteOrderActivity.class);
-                break;
-            case R.id.si_question://我的提问
-                startActivity(QuestionActivity.class);
+                break;*/
+            case R.id.si_question://葡萄籽
+//                startActivity(QuestionActivity.class);
+                startActivity(GrapestoneActivity.class);
                 break;
             case R.id.iv_user_icon://完善用户信息
                 startActivity(CompleteActivity.class);
@@ -226,12 +226,12 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             case R.id.si_address://收货地址
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, AddressListActivity.class);
                 break;
-            case R.id.si_action://我参与的活动
+            /*case R.id.si_action://我参与的活动
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MyActionsActivity.class);
-                break;
-            case R.id.si_question://我的提问
+                break;*/
+            /*case R.id.si_question://我的提问
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, QuestionActivity.class);
-                break;
+                break;*/
             case R.id.iv_user_icon://完善用户信息
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
                 break;

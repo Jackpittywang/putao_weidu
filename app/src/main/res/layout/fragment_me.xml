@@ -162,29 +162,35 @@
                 auto:setting_icon="@drawable/icon_20_06"
                 auto:setting_text="@string/address" />
 
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_action"
-                style="@style/style_setting"
-                android:layout_marginTop="8dp"
-                auto:setting_icon="@drawable/icon_20_07"
-                auto:setting_text="@string/action" />
+            <!--<com.sunnybear.library.view.SettingItem-->
+            <!--android:id="@+id/si_action"-->
+            <!--style="@style/style_setting"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--auto:setting_icon="@drawable/icon_20_07"-->
+            <!--auto:setting_text="@string/action" />-->
 
-            <com.sunnybear.library.view.SettingItem
-                android:id="@+id/si_question"
-                style="@style/style_setting"
-                auto:setting_icon="@drawable/icon_20_08"
-                auto:setting_text="@string/question" />
+            <!--<com.sunnybear.library.view.SettingItem-->
+            <!--android:id="@+id/si_question"-->
+            <!--style="@style/style_setting"-->
+            <!--auto:setting_icon="@drawable/icon_20_08"-->
+            <!--auto:setting_text="@string/question" />-->
 
             <com.sunnybear.library.view.SettingItem
                 android:id="@+id/si_message"
                 style="@style/style_setting"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
                 auto:setting_divider="bottom"
                 auto:setting_icon="@drawable/icon_20_09"
                 auto:setting_indicator_background="@drawable/setting_indicator"
                 auto:setting_indicator_color="@color/text_main_color_nor"
                 auto:setting_text="@string/message" />
+
+            <com.sunnybear.library.view.SettingItem
+                android:id="@+id/si_question"
+                style="@style/style_setting"
+                android:layout_marginBottom="20dp"
+                auto:setting_icon="@drawable/icon_20_29"
+                auto:setting_text="葡萄籽" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
