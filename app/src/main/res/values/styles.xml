@@ -166,4 +166,5 @@
         <item name="android:background">@color/white</item>
         <item name="android:paddingLeft">5dip</item>
     </style>
+
 </resources>

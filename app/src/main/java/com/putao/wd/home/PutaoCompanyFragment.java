@@ -1,17 +1,15 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
-import com.sunnybear.library.controller.eventbus.Subcriber;
 
 /**
  * 陪伴
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoCompanyFragment extends PTWDFragment implements View.OnClickListener {
+public class PutaoCompanyFragment extends PTWDFragment {
 
     @Override
     protected int getLayoutId() {
@@ -24,13 +22,19 @@ public class PutaoCompanyFragment extends PTWDFragment implements View.OnClickLi
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        initTips();
+    }
+
+    private void initTips() {
+
+    }
+
+    @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
 
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
