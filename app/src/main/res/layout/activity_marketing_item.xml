@@ -29,10 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/color_313131"
             android:layout_toLeftOf="@id/iv_icon"
             android:paddingRight="10dp"
             android:text="陪孩子一起学数学"
+            android:textColor="@color/color_313131"
             android:textSize="@dimen/text_size_18sp" />
 
         <TextView
@@ -41,11 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
             android:layout_marginBottom="10dp"
-            android:layout_toLeftOf="@id/iv_icon"
-            android:lineSpacingExtra="7dp"
-            android:maxLines="3"
             android:layout_toLeftOf="@+id/iv_icon"
             android:lineSpacingExtra="2dp"
+            android:maxLines="3"
             android:paddingRight="10dp"
             android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
             android:textColor="@color/color_C2C2C2"
