@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Norms;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.recycler.BasicAdapter;

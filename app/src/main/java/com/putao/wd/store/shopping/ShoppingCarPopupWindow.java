@@ -1,7 +1,6 @@
 package com.putao.wd.store.shopping;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,10 +14,9 @@ import com.putao.wd.model.ProductNorms;
 import com.putao.wd.model.ProductNormsSku;
 import com.putao.wd.store.shopping.adapter.NormsSelectAdapter;
 import com.putao.wd.store.shopping.util.SpecUtils;
-import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicPopupWindow;
-import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.MathUtils;

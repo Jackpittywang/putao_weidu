@@ -10,7 +10,7 @@ import com.putao.wd.companion.PlotPreviewDialog;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;

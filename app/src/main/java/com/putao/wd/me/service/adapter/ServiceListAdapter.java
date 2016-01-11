@@ -1,27 +1,19 @@
 package com.putao.wd.me.service.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.api.OrderApi;
-import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.store.product.ProductDetailActivity;
-import com.sunnybear.library.controller.ActivityManager;
-import com.sunnybear.library.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.MathUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;

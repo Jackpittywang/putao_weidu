@@ -13,7 +13,7 @@ import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 

@@ -32,7 +32,7 @@ import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ProductData;
 import com.putao.wd.model.ServiceBackImage;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.FileUtils;

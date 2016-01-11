@@ -15,7 +15,7 @@ import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.start.question.adapter.QuestionAdapter;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.emoji.Emoji;

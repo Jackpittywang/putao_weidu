@@ -1,13 +1,12 @@
 package com.putao.wd.me.service.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.OrderProduct;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;

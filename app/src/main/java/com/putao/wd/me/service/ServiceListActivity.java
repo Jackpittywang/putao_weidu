@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
@@ -15,7 +14,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;

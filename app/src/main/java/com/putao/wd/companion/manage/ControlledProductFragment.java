@@ -8,7 +8,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.companion.manage.adapter.ControlledProductAdapter;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;

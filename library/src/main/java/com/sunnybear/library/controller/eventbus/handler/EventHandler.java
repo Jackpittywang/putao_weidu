@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.sunnybear.library.eventbus.handler;
+package com.sunnybear.library.controller.eventbus.handler;
 
-import com.sunnybear.library.eventbus.Subscription;
+import com.sunnybear.library.controller.eventbus.Subscription;
 
 /**
  * 事件处理接口

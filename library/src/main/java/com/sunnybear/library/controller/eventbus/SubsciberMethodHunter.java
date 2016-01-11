@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.sunnybear.library.eventbus;
+package com.sunnybear.library.controller.eventbus;
 
 import android.util.Log;
 

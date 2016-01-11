@@ -15,7 +15,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementDevice;
 import com.putao.wd.model.ManagementProduct;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;

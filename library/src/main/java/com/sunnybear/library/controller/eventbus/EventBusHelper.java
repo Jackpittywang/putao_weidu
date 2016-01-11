@@ -1,4 +1,4 @@
-package com.sunnybear.library.eventbus;
+package com.sunnybear.library.controller.eventbus;
 
 /**
  * 事件总线帮助

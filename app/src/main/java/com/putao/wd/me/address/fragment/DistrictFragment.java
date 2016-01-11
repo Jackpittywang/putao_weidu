@@ -8,7 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.me.address.adapter.CitySelectAdapter;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 

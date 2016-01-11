@@ -26,7 +26,7 @@ import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.putao.wd.user.LoginActivity;
-import com.sunnybear.library.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;

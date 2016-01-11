@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.start.comment.adapter.EmojiAdapter;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
