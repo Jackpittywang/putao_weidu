@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,25 +13,69 @@
         android:layout_height="320dp"
         android:background="@drawable/img_p_cover">
 
-        <com.sunnybear.library.view.NavigationBar
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@null"></com.sunnybear.library.view.NavigationBar>
+            android:layout_height="?attr/actionBarSize"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/img_p_cover_title" />
+            <TextView
+                android:id="@+id/tv_title_bar_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="管理"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="陪伴"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_22sp" />
+
+            <ImageView
+                android:id="@+id/iv_title_bar_right1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_scan_selector" />
+
+
+            <ImageView
+                android:id="@+id/iv_title_bar_right2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@id/iv_title_bar_right1"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_scan_selector" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 
     <LinearLayout
+        android:id="@+id/ll_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="210dp"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/img_p_cover_title" />
 
         <Button
             android:id="@+id/btn_explore_empty"
@@ -44,8 +89,8 @@
             android:paddingLeft="45dp"
             android:paddingRight="45dp"
             android:text="   扫一扫"
-            android:textSize="@dimen/text_size_18sp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -82,6 +127,46 @@
                 android:textSize="@dimen/text_size_16sp" />
 
         </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_no_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="160dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/img_p_cover_title" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:text="智能应用"
+                android:textSize="16sp" />
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                auto:layout_mode="grid" />
+        </LinearLayout>
 
     </LinearLayout>
 

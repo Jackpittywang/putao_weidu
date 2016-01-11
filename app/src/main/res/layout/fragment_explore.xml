@@ -60,6 +60,7 @@
         android:id="@+id/rl_explor_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:background="@drawable/img_explore_empty_bg">
 
         <TextView
