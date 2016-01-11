@@ -8,8 +8,9 @@ import android.view.KeyEvent;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
+import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStartCircleFragment;
-import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.home.PutaoPickFragment;
 import com.putao.wd.me.setting.SettingActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
@@ -38,9 +39,10 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Bind(R.id.ti_me)
     TabItem ti_me;
 
-    private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
-    private PutaoCompanionFragment mPutaoExploreFragment;//探索号
-    private PutaoStoreFragment mPutaoStoreFragment;//葡商城
+//    private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
+    private PutaoExploreFragment mPutaoExploreFragment;//探索
+    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
+    private PutaoPickFragment mPutaoPickFragment;//精选
     private MeFragment mMeFragment;//我
 
     private SparseArray<Class<? extends Fragment>> mFragments;
@@ -63,15 +65,15 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      * 设置主页
      */
     private void addHome() {
-        mPutaoStartCircleFragment = (PutaoStartCircleFragment) Fragment.instantiate(mContext, PutaoStartCircleFragment.class.getName());
+        mPutaoExploreFragment = (PutaoExploreFragment) Fragment.instantiate(mContext, PutaoExploreFragment.class.getName());
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, mPutaoStartCircleFragment).commit();
+                .add(R.id.fragment_container, mPutaoExploreFragment).commit();
     }
 
     private void addFragment() {
-        mFragments.put(R.id.ti_start_circle, PutaoStartCircleFragment.class);
+        mFragments.put(R.id.ti_start_circle, PutaoExploreFragment.class);
         mFragments.put(R.id.ti_explore, PutaoCompanionFragment.class);
-        mFragments.put(R.id.ti_store, PutaoStoreFragment.class);
+        mFragments.put(R.id.ti_store, PutaoPickFragment.class);
         mFragments.put(R.id.ti_me, MeFragment.class);
     }
 
@@ -129,12 +131,12 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      * 隐藏fragment
      */
     private void hideFragment(FragmentTransaction fragmentTransaction) {
-        if (mPutaoStartCircleFragment != null)
-            fragmentTransaction.hide(mPutaoStartCircleFragment);
         if (mPutaoExploreFragment != null)
             fragmentTransaction.hide(mPutaoExploreFragment);
-        if (mPutaoStoreFragment != null)
-            fragmentTransaction.hide(mPutaoStoreFragment);
+        if (mPutaoCompanionFragment != null)
+            fragmentTransaction.hide(mPutaoCompanionFragment);
+        if (mPutaoPickFragment != null)
+            fragmentTransaction.hide(mPutaoPickFragment);
         if (mMeFragment != null)
             fragmentTransaction.hide(mMeFragment);
     }
@@ -148,12 +150,12 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         Class<? extends Fragment> fragmentClass = mFragments.get(resId);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         hideFragment(fragmentTransaction);
-        if (PutaoStartCircleFragment.class.equals(fragmentClass))
-            mPutaoStartCircleFragment = (PutaoStartCircleFragment) showFragment(fragmentTransaction, mPutaoStartCircleFragment, PutaoStartCircleFragment.class);
+        if (PutaoExploreFragment.class.equals(fragmentClass))
+            mPutaoExploreFragment = (PutaoExploreFragment) showFragment(fragmentTransaction, mPutaoExploreFragment, PutaoExploreFragment.class);
         else if (PutaoCompanionFragment.class.equals(fragmentClass))
-            mPutaoExploreFragment = (PutaoCompanionFragment) showFragment(fragmentTransaction, mPutaoExploreFragment, PutaoCompanionFragment.class);
-        else if (PutaoStoreFragment.class.equals(fragmentClass))
-            mPutaoStoreFragment = (PutaoStoreFragment) showFragment(fragmentTransaction, mPutaoStoreFragment, PutaoStoreFragment.class);
+            mPutaoCompanionFragment = (PutaoCompanionFragment) showFragment(fragmentTransaction, mPutaoCompanionFragment, PutaoCompanionFragment.class);
+        else if (PutaoPickFragment.class.equals(fragmentClass))
+            mPutaoPickFragment = (PutaoPickFragment) showFragment(fragmentTransaction, mPutaoPickFragment, PutaoPickFragment.class);
         else if (MeFragment.class.equals(fragmentClass))
             mMeFragment = (MeFragment) showFragment(fragmentTransaction, mMeFragment, MeFragment.class);
         fragmentTransaction.commitAllowingStateLoss();
