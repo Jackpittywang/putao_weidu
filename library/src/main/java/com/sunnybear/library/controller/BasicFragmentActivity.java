@@ -23,7 +23,7 @@ import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.handler.WeakHandler;
-import com.sunnybear.library.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.FastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.KeyboardUtils;
