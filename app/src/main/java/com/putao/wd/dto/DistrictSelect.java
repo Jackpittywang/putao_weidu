@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 地区选择model
  * Created by guchenkai on 2015/12/7.
  */
+@Deprecated
 public class DistrictSelect implements Serializable {
     private String provinceName;//省份
     private String cityName;//城市
