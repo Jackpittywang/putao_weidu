@@ -8,9 +8,41 @@ import java.io.Serializable;
  */
 public class PagerExplore implements Serializable {
 
+    private int imageUrl;
+    private String title;
+    private String content;
 
+    public int getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(int imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "PagerExplore{" +
+                "imageUrl=" + imageUrl +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 
 }

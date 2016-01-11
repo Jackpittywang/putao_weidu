@@ -3,13 +3,14 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#705e5a"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,6 +47,8 @@
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:overScrollMode="never"/>
 
 </LinearLayout>
