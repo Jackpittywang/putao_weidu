@@ -1,22 +1,21 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.explore.ExploreCommonFragment;
+import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.view.image.ImageDraweeView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,8 +34,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Bind(R.id.vp_content)
     ViewPager vp_content;
 
-    private LayoutInflater inflater;
-    private List<View> lists;
+    private FragmentPagerAdapter pagerAdapter;
+    private SparseArray<Fragment> mFragments;
 
     @Override
     protected int getLayoutId() {
@@ -45,7 +44,18 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        ExplorePagerAdapter pagerAdapter = new ExplorePagerAdapter(getData());
+        addFragment();
+        pagerAdapter = new FragmentPagerAdapter(getFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return mFragments.size();
+            }
+        };
         vp_content.setAdapter(pagerAdapter);
         vp_content.setCurrentItem(0);
     }
@@ -69,78 +79,105 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     }
 
     /**
-     * viewpager临时数据
+     * 初始化Fragment
      */
-    private List<View> getData() {
-        lists = new ArrayList<>();
-        inflater = LayoutInflater.from(mActivity);
-        for (int i = 0; i < 8; i++) {
-            View view = inflater.inflate(R.layout.fragment_nexplore_item, null);
-            lists.add(view);
-        }
-        return lists;
+    private void addFragment() {
+        mFragments = new SparseArray<>();
+        mFragments.put(0, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(1, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(2, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(3, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(4, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(5, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(6, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
+        mFragments.put(7, Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
     }
 
     /**
-     * ViewPager适配器
+     * viewpager临时数据
      */
-    class ExplorePagerAdapter extends PagerAdapter {
+//    private List<View> getData() {
+//        lists = new ArrayList<>();
+//        inflater = LayoutInflater.from(mActivity);
+//        View view = null;
+//        for (int i = 0; i < 8; i++) {
+//            if (i != 7) {
+//                view = inflater.inflate(R.layout.fragment_nexplore_item, null);
+//            } else {
+//                view = inflater.inflate(R.layout.fragment_nexplore_item, null);
+//            }
+//            lists.add(view);
+//        }
+//        return lists;
+//    }
 
-        private List<View> lists;
 
-        public ExplorePagerAdapter(List<View> lists) {
-            this.lists = lists;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            View view = lists.get(position);
-            container.addView(view);
-            initItemView(view);
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(lists.get(position));
-        }
-
-        @Override
-        public int getCount() {
-            return lists.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        /**
-         * viewpager中item注册点击事件
-         */
-        private void initItemView(View view) {
-            ImageDraweeView iv_video = (ImageDraweeView) view.findViewById(R.id.iv_video);
-            iv_video.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(CaptureActivity.class);
-                }
-            });
-            TextView tv_title = (TextView) view.findViewById(R.id.tv_count_comment);
-            tv_title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(MarketingActivity.class);
-                }
-            });
-            view.findViewById(R.id.ll_count_cool).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(MarketingActivity.class);
-                }
-            });
-        }
-
-    }
+//    /**
+//     * ViewPager适配器
+//     */
+//    class ExplorePagerAdapter extends PagerAdapter {
+//
+//        private List<View> views;
+//        private List<PagerExplore> datas;
+//
+//        public ExplorePagerAdapter(List<View> views, List<PagerExplore> datas) {
+//            this.views = lists;
+//            this.datas = datas;
+//        }
+//
+//        @Override
+//        public Object instantiateItem(ViewGroup container, int position) {
+//            View view = views.get(position);
+//            container.addView(view);
+//            initItemView(view);
+//            return view;
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+//            container.removeView(views.get(position));
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return views.size();
+//        }
+//
+//        @Override
+//        public boolean isViewFromObject(View arg0, Object arg1) {
+//            return arg0 == arg1;
+//        }
+//
+//        /**
+//         * viewpager中item注册点击事件
+//         */
+//        private void initItemView(View view) {
+//            ImageDraweeView iv_video = (ImageDraweeView) view.findViewById(R.id.iv_video);
+//            iv_video.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(CaptureActivity.class);
+//                }
+//            });
+//            TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+//            tv_title.setText("探索首页");
+//            TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
+//            tv_content.setText("内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容");
+//            TextView tv_count_comment = (TextView) view.findViewById(R.id.tv_count_comment);
+//            tv_count_comment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(MarketingActivity.class);
+//                }
+//            });
+//            view.findViewById(R.id.ll_count_cool).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(MarketingActivity.class);
+//                }
+//            });
+//        }
+//
+//    }
 
 }
