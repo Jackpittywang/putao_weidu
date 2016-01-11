@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sunnybear.library.view.image.ImageDraweeView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sunnybear.library.view.image.ImageDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/iv_product"
     style="@style/image_round_4dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="centerCrop"/>
+    android:layout_height="wrap_content"
+    auto:aspect_ratio="2" />
 
 
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

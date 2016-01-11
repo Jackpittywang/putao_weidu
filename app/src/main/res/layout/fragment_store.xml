@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:auto="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         auto:nav_main_title="精选"
-        auto:nav_main_title_size="@dimen/text_size_8sp"/>
+        auto:nav_main_title_size="@dimen/text_size_8sp" />
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
@@ -24,76 +24,73 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/img_bg_store"
-            auto:has_row_divider="true"
-            auto:divider_height="10dp"/>
+            auto:divider_height="10dp"
+            auto:has_row_divider="true" />
 
     </com.sunnybear.library.view.PullToRefreshLayout>
 
 </LinearLayout>
 
 
+    <!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:auto="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/white"
+                  android:orientation="vertical">
 
+    &lt;!&ndash;标题栏&ndash;&gt;
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/text_main_color_nor"
+        auto:nav_main_title="萄商城"
+        auto:nav_main_title_color="#FFFFFF"
+        auto:nav_main_title_size="@dimen/text_size_8sp"
+        auto:nav_has_right_title_icon="true"
+        auto:nav_right_title_icon_background="@drawable/indicator_background_2"
+        auto:nav_right_title_icon_text_color="#FFFFFF"
+        auto:nav_right_icon="@drawable/btn_shopping_car_selector" />
 
-
-<!--
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:auto="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
-
-&lt;!&ndash;标题栏&ndash;&gt;
-<com.sunnybear.library.view.NavigationBar
-    style="@style/style_navigation_bar"
-    android:background="@color/text_main_color_nor"
-    auto:nav_main_title="萄商城"
-    auto:nav_main_title_color="#FFFFFF"
-    auto:nav_main_title_size="@dimen/text_size_8sp"
-    auto:nav_has_right_title_icon="true"
-    auto:nav_right_title_icon_background="@drawable/indicator_background_2"
-    auto:nav_right_title_icon_text_color="#FFFFFF"
-    auto:nav_right_icon="@drawable/btn_shopping_car_selector" />
-
-&lt;!&ndash;内容区&ndash;&gt;
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.sunnybear.library.view.PullToRefreshLayout
-        android:id="@+id/ptl_refresh"
+    &lt;!&ndash;内容区&ndash;&gt;
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        auto:refresh_layout="@layout/sky_wheel_refresh_header"
-        auto:refresh_layout_height="120">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <com.sunnybear.library.view.PullToRefreshLayout
+            android:id="@+id/ptl_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            &lt;!&ndash;列表&ndash;&gt;
-            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/img_bg_store"
-                auto:has_row_divider="false" />
+            android:layout_height="match_parent"
+            auto:refresh_layout="@layout/sky_wheel_refresh_header"
+            auto:refresh_layout_height="120">
 
-            &lt;!&ndash;头部布局&ndash;&gt;
-            <com.sunnybear.library.view.recycler.RecyclerViewHeader
-                android:id="@+id/rvh_header"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center_horizontal">
-
-                <com.sunnybear.library.view.viewpager.BannerLayout
-                    android:id="@+id/bl_banner"
+                android:layout_height="match_parent">
+                &lt;!&ndash;列表&ndash;&gt;
+                <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                    android:id="@+id/rv_content"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    auto:fill_color="@color/text_main_color_nor"
-                    auto:intervalTime="2"
-                    auto:page_color="@color/text_color_gray" />
-            </com.sunnybear.library.view.recycler.RecyclerViewHeader>
-        </FrameLayout>
-    </com.sunnybear.library.view.PullToRefreshLayout>
-</FrameLayout>
-</LinearLayout>-->
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_bg_store"
+                    auto:has_row_divider="false" />
+
+                &lt;!&ndash;头部布局&ndash;&gt;
+                <com.sunnybear.library.view.recycler.RecyclerViewHeader
+                    android:id="@+id/rvh_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center_horizontal">
+
+                    <com.sunnybear.library.view.viewpager.BannerLayout
+                        android:id="@+id/bl_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        auto:fill_color="@color/text_main_color_nor"
+                        auto:intervalTime="2"
+                        auto:page_color="@color/text_color_gray" />
+                </com.sunnybear.library.view.recycler.RecyclerViewHeader>
+            </FrameLayout>
+        </com.sunnybear.library.view.PullToRefreshLayout>
+    </FrameLayout>
+    </LinearLayout>-->

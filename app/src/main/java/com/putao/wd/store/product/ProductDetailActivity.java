@@ -38,7 +38,7 @@ import butterknife.OnClick;
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     public static final String BUNDLE_PRODUCT_ID = "product_id";
-    public static final String BUNDLE_PRODUCT_IMAGE = "product_imag";
+    public static final String BUNDLE_PRODUCT_ICON = "product_icon";
 
     @Bind(R.id.ll_main)
     LinearLayout ll_main;
@@ -77,14 +77,14 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-//        product_id = args.getString(BUNDLE_PRODUCT_ID);
-//        imageUrl = args.getString(BUNDLE_PRODUCT_IMAGE);
+        product_id = args.getString(BUNDLE_PRODUCT_ID);
+        imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
 
         sticky_layout.canScrollView();
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
 
-//        getProductDetail(product_id);
+        getProductDetail(product_id);
 
         stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
     }

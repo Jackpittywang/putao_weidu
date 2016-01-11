@@ -258,6 +258,8 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
                     mMediaPlayer.start();
                     if (mMediaBufferingIndicator != null)
                         mMediaBufferingIndicator.setVisibility(View.GONE);
+                } else if (what == MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED) {
+                    Log.d("download rate:" + extra);
                 }
             }
             return true;

@@ -1,6 +1,7 @@
 package com.putao.wd;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
@@ -79,9 +80,9 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
 //                            }
 //                        }).execute();
                 Bundle bundle = new Bundle();
-//                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, "http://mp4.28mtv.com/mp41/景甜-心上人[68mtv.com].mp4");
+                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4");
                 bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL,
-                        "http://mp4.28mtv.com/mp41/景甜-心上人[68mtv.com].mp4");
+                        "http://movie.ks.js.cn/flv/other/2014/06/20-2.flv");
                 startActivity(VideoPlayerActivity.class, bundle);
                 break;
         }

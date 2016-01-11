@@ -90,6 +90,7 @@ public class VideoPlayerActivity extends BasicFragmentActivity implements View.O
             }
         });
         vv_video.setVideoURI(Uri.parse(video_url));
+//        vv_video.setVideoLayout(VideoView.VIDEO_LAYOUT_FIT_PARENT, 0);//全屏
     }
 
     /**

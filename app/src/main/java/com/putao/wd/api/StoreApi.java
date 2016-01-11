@@ -49,8 +49,8 @@ public class StoreApi {
     /**
      * 商城首页
      */
-//    public static final String URL_STORE_HOME = BASE_URL + "home/index_v2";
-    public static final String URL_STORE_HOME = BASE_URL + "home/index";
+    public static final String URL_STORE_HOME = BASE_URL + "home/index_v2";
+//    public static final String URL_STORE_HOME = BASE_URL + "home/index";
 
     /**
      * 商城首页

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.StoreItem;
+import com.putao.wd.model.StoreProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
@@ -17,10 +17,10 @@ import butterknife.Bind;
  * 精选首页适配器
  * Created by yanghx on 2016/1/11.
  */
-public class StoreAdapter extends LoadMoreAdapter<StoreItem, StoreAdapter.StoreViewHolder> {
+public class StoreAdapter extends LoadMoreAdapter<StoreProduct, StoreAdapter.StoreViewHolder> {
 
-    public StoreAdapter(Context context, List<StoreItem> strings) {
-        super(context, strings);
+    public StoreAdapter(Context context, List<StoreProduct> products) {
+        super(context, products);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class StoreAdapter extends LoadMoreAdapter<StoreItem, StoreAdapter.StoreV
     }
 
     @Override
-    public void onBindItem(StoreViewHolder holder, StoreItem item, int position) {
-        holder.iv_product.setBackgroundResource(item.getIamgeURL());
+    public void onBindItem(StoreViewHolder holder, StoreProduct product, int position) {
+        holder.iv_product.setImageURL(product.getImage());
     }
 
     /**

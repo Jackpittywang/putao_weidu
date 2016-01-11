@@ -45,10 +45,10 @@ public class ImageDraweeView extends SimpleDraweeView {
         if (mRatio != -1f)
             setAspectRatio(mRatio);
         array.recycle();
-        init(context);
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
         GenericDraweeHierarchy hierarchy = getHierarchy();
         hierarchy.setFadeDuration(300);//淡入淡出
         setHierarchy(hierarchy);

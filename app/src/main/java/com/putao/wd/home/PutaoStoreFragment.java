@@ -3,16 +3,17 @@ package com.putao.wd.home;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.dto.StoreItem;
 import com.putao.wd.home.adapter.StoreAdapter;
+import com.putao.wd.model.StoreProduct;
+import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.store.product.ProductDetailActivity;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -22,13 +23,14 @@ import butterknife.Bind;
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStoreFragment extends PTWDFragment {
-
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
 
     private StoreAdapter adapter;
+
+    private int currentpage = 1;
 
     @Override
     protected int getLayoutId() {
@@ -39,9 +41,53 @@ public class PutaoStoreFragment extends PTWDFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
 
-        adapter = new StoreAdapter(mActivity, getData());
+        adapter = new StoreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();
+
+        getStoreHome();
+    }
+
+    /**
+     * 加载商品列表
+     */
+    private void getStoreHome() {
+        networkRequest(StoreApi.getStoreHome(String.valueOf(currentpage)),
+                new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
+                    @Override
+                    public void onSuccess(String url, StoreProductHome result) {
+                        List<StoreProduct> products = result.getData();
+                        if (products != null && products.size() > 0)
+                            adapter.addAll(products);
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                            currentpage++;
+                            rv_content.loadMoreComplete();
+                        } else rv_content.noMoreLoading();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 刷新商品列表
+     */
+    private void refreshStoreHome() {
+        currentpage = 1;
+        networkRequest(StoreApi.getStoreHome(String.valueOf(currentpage)),
+                new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
+                    @Override
+                    public void onSuccess(String url, StoreProductHome result) {
+                        List<StoreProduct> products = result.getData();
+                        if (products != null && products.size() > 0)
+                            adapter.replaceAll(products);
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                            currentpage++;
+                            rv_content.loadMoreComplete();
+                        } else rv_content.noMoreLoading();
+                        ptl_refresh.refreshComplete();
+                        loading.dismiss();
+                    }
+                });
     }
 
     @Override
@@ -50,29 +96,29 @@ public class PutaoStoreFragment extends PTWDFragment {
     }
 
     private void addListener() {
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
+            public void onRefresh() {
+                refreshStoreHome();
+            }
+        });
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                getStoreHome();
+            }
+        });
+        rv_content.setOnItemClickListener(new OnItemClickListener<StoreProduct>() {
+            @Override
+            public void onItemClick(StoreProduct product, int position) {
                 Bundle bundle = new Bundle();
-//                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, storeProduct.getId());
-//                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_IMAGE, storeProduct.getIcon());
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getIcon());
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });
     }
-
-    private List<StoreItem> getData() {
-        List<StoreItem> lists = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            StoreItem storeItem = new StoreItem();
-            storeItem.setIamgeURL(R.drawable.test_flaunt_taotao_bg_01);
-            lists.add(storeItem);
-        }
-        return lists;
-    }
-
 }
-
 
 
 //public class PutaoStoreFragment extends PTWDFragment {

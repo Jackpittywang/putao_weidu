@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by yanghx on 2016/1/11.
  */
+@Deprecated
 public class StoreItem implements Serializable {
     private int iamgeURL;
 
