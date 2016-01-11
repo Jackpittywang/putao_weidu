@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by yanguoqiang on 15/11/29.
  */
+@Deprecated
 public class OrderGoodsDto implements Serializable {
 
     // 商品数量
