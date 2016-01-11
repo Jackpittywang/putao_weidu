@@ -29,10 +29,6 @@ public class StickyHeaderLayout extends ScrollableLayout {
 
     public StickyHeaderLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-    private void init(Context context) {
     }
 
     public void setMinusView(View minusView) {
