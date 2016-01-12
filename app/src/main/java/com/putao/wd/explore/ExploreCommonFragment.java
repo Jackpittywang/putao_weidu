@@ -1,11 +1,13 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.explore.adapter.ExploreCommonAdapter;
 import com.putao.wd.model.PagerExplore;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
@@ -19,21 +21,27 @@ import butterknife.Bind;
  */
 public class ExploreCommonFragment extends BasicFragment {
 
-    @Bind(R.id.rv_content)
-    BasicRecyclerView rv_content;
+//    @Bind(R.id.rv_content)
+//    BasicRecyclerView rv_content;
+    @Bind(R.id.iv_video)
+    ImageDraweeView iv_video;
+    @Bind(R.id.tv_title)
+    TextView tv_title;
+    @Bind(R.id.tv_content)
+    TextView tv_content;
 
     private ExploreCommonAdapter adapter;
     private List<PagerExplore> list;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_nexplore_common;
+        return R.layout.fragment_nexplore_item;
     }
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        adapter = new ExploreCommonAdapter(mActivity, getTest());
-        rv_content.setAdapter(adapter);
+//        adapter = new ExploreCommonAdapter(mActivity, getTest());
+//        rv_content.setAdapter(adapter);
     }
 
     @Override
@@ -41,14 +49,19 @@ public class ExploreCommonFragment extends BasicFragment {
         return new String[0];
     }
 
-    private List<PagerExplore> getTest() {
-        List<PagerExplore> list = new ArrayList<>();
-        PagerExplore pagerExplore = new PagerExplore();
-        pagerExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
-        pagerExplore.setTitle("这里是title");
-        pagerExplore.setContent("这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content");
-        list.add(pagerExplore);
-        return list;
+    private void getTest() {
+        tv_title.setText("这里是title");
+        tv_content.setText("这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content");
     }
+
+//    private List<PagerExplore> getTest() {
+//        List<PagerExplore> list = new ArrayList<>();
+//        PagerExplore pagerExplore = new PagerExplore();
+//        pagerExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
+//        pagerExplore.setTitle("这里是title");
+//        pagerExplore.setContent("这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content");
+//        list.add(pagerExplore);
+//        return list;
+//    }
 
 }

@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.explore.ExploreCommonFragment;
@@ -27,8 +28,8 @@ import butterknife.OnClick;
  */
 public class PutaoExploreFragment extends BasicFragment implements View.OnClickListener {
 
-    @Bind(R.id.iv_thinking)
-    ImageView iv_thinking;
+    @Bind(R.id.tv_thinking)
+    TextView tv_thinking;
     @Bind(R.id.iv_scan)
     ImageView iv_scan;
     @Bind(R.id.vp_content)
@@ -65,11 +66,11 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         return new String[0];
     }
 
-    @OnClick({R.id.iv_thinking, R.id.iv_scan})
+    @OnClick({R.id.tv_thinking, R.id.iv_scan})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_thinking:
+            case R.id.tv_thinking:
                 startActivity(MarketingActivity.class);
                 break;
             case R.id.iv_scan:
