@@ -11,10 +11,9 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
-import com.putao.wd.home.adapter.StartBannerAdapter;
 import com.putao.wd.me.setting.SettingActivity;
-import com.putao.wd.model.ActionNewsList;
 import com.putao.wd.model.ActionNews;
+import com.putao.wd.model.ActionNewsList;
 import com.putao.wd.model.Banner;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.start.action.ActionsDetailActivity;
@@ -22,15 +21,12 @@ import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
-import com.sunnybear.library.view.viewpager.BannerLayout;
-import com.sunnybear.library.view.viewpager.BannerViewPager;
 
 import java.util.ArrayList;
 
@@ -54,8 +50,8 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.stickyHeaderLayout_scrollable)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.bl_banner)
-    BannerLayout bl_banner;
+//    @Bind(R.id.bl_banner)
+//    BannerLayout bl_banner;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar ll_title;
     @Bind(R.id.rl_no_content)
@@ -97,13 +93,13 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
             @Override
             public void onSuccess(String url, final ArrayList<Banner> result) {
                 cacheEnterDisk(url, result);
-                bl_banner.setAdapter(new StartBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
-                    @Override
-                    public void onPagerClick(int position) {
-                        ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
-                    }
-                }));
-                bl_banner.setOffscreenPageLimit(result.size());//缓存页面数
+//                bl_banner.setAdapter(new StartBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
+//                    @Override
+//                    public void onPagerClick(int position) {
+//                        ToastUtils.showToastLong(mActivity, "点击第" + position + "项");
+//                    }
+//                }));
+//                bl_banner.setOffscreenPageLimit(result.size());//缓存页面数
 //                        loading.dismiss();
             }
         });
@@ -176,14 +172,14 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
     @Override
     public void onStart() {
         super.onStart();
-        if (isStop)
-            isStop = bl_banner.startAutoScroll();
+//        if (isStop)
+//            isStop = bl_banner.startAutoScroll();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        isStop = bl_banner.stopAutoScroll();
+//        isStop = bl_banner.stopAutoScroll();
     }
 
     @Override

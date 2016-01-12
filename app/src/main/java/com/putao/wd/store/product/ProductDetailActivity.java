@@ -1,7 +1,9 @@
 package com.putao.wd.store.product;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,18 +18,22 @@ import com.putao.wd.model.ProductDetail;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
-import com.putao.wd.store.product.adapter.ProductBannerAdapter;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.sticky.StickyHeaderLayout;
-import com.sunnybear.library.view.viewpager.BannerLayout;
+import com.sunnybear.library.view.viewpager.banner.ConvenientBanner;
+import com.sunnybear.library.view.viewpager.banner.holder.CBViewHolderCreator;
+import com.sunnybear.library.view.viewpager.banner.holder.Holder;
+import com.sunnybear.library.view.viewpager.transformer.CardsTransformer;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -52,14 +58,12 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     TextView tv_product_intro;
     @Bind(R.id.tv_product_price)
     TextView tv_product_price;
-    @Bind(R.id.bl_banner)
-    BannerLayout bl_banner;
+    @Bind(R.id.cb_banner)
+    ConvenientBanner<String> cb_banner;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar stickyHeaderLayout_sticky;
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;//加入购物车
-
-    private boolean isStop;//广告栏是否被停止
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
@@ -116,13 +120,40 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
                 //广告列表
                 if (result.getPictures() != null) {
-                    bl_banner.setAdapter(new ProductBannerAdapter(mContext, result.getPictures(), null));
-                    bl_banner.setOffscreenPageLimit(result.getPictures().size());//缓存页面数
+                    cb_banner.setPages(new CBViewHolderCreator<ImageHolderView>() {
+                        @Override
+                        public ImageHolderView createHolder() {
+                            return new ImageHolderView();
+                        }
+                    }, result.getPictures())
+                            .setPageIndicator(new int[]{R.drawable.icon_logistics_flow_old, R.drawable.icon_logistics_flow_latest})
+                            .setPageTransformer(new CardsTransformer());
+                    cb_banner.getViewPager().setOffscreenPageLimit(result.getPictures().size());
                 }
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());
                 loading.dismiss();
             }
         });
+    }
+
+    /**
+     *
+     */
+    static class ImageHolderView implements Holder<String> {
+        private ImageDraweeView imageView;
+
+        @Override
+        public View createView(Context context) {
+            imageView = new ImageDraweeView(context);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) DensityUtil.px2dp(context, 200));
+            imageView.setLayoutParams(params);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, String data) {
+            imageView.setImageURL(data);
+        }
     }
 
     /**
@@ -149,34 +180,18 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     public void onStart() {
         super.onStart();
-        if (isStop)
-            isStop = bl_banner.startAutoScroll();
         getCartCount();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        isStop = bl_banner.stopAutoScroll();
     }
 
     private void addListener() {
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-//                ShareTools.newInstance(Wechat.NAME)
-//                        .setTitle("葡萄纬度")
-//                        .setText("葡萄纬度分享给您")
-//                        .setUrl(shareUrl).execute(mContext);
                 ShareTools.wechatWebShare(mContext, true, detail.getTitle(), detail.getSubtitle(), imageUrl, detail.getShare());
             }
 
             @Override
             public void onWechatFriend() {
-//                ShareTools.newInstance(WechatMoments.NAME)
-//                        .setTitle("葡萄纬度")
-//                        .setText("葡萄纬度分享给您")
-//                        .setUrl(shareUrl).execute(mContext);
                 ShareTools.wechatWebShare(mContext, false, detail.getTitle(), detail.getSubtitle(), imageUrl, detail.getShare());
             }
         });
@@ -245,5 +260,4 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     public void eventGetProductSpec(String tag) {
         mShoppingCarPopupWindow.show(ll_main);
     }
-
 }

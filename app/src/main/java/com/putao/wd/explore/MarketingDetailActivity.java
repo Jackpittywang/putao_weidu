@@ -8,9 +8,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.explore.adapter.MarketingAdapter;
 import com.putao.wd.model.Marketing;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.List;
 
@@ -50,14 +48,7 @@ public class MarketingDetailActivity extends PTWDActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        initData();
-    }
 
-    private void initView() {
-    }
-
-    private void initData() {
-        initView();
     }
 
     @Override
