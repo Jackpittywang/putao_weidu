@@ -20,6 +20,7 @@ import butterknife.Bind;
  * 探索--首页--前7项适配器
  * Created by yanghx on 2016/1/11.
  */
+@Deprecated
 public class ExploreCommonAdapter extends BasicAdapter<PagerExplore, ExploreCommonAdapter.CommonViewHolder>{
 
 

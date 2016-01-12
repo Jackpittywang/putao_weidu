@@ -51,15 +51,30 @@
         android:gravity="center_vertical|right"
         android:padding="15dp">
 
-        <TextView
-            android:id="@+id/tv_count_comment"
+        <LinearLayout
+            android:id="@+id/ll_count_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/btn_comment"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="comment"
-            android:textSize="@dimen/text_size_20sp"/>
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_comment"/>
+
+            <TextView
+                android:id="@+id/tv_count_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="comment"
+                android:textSize="@dimen/text_size_20sp"/>
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:id="@+id/ll_count_cool"

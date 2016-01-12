@@ -21,14 +21,20 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_24sp"/>
 
-        <ImageView
-            android:id="@+id/iv_thinking"
+        <TextView
+            android:id="@+id/tv_thinking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/btn_scan_selector"/>
+            android:drawableLeft="@drawable/icon_20_30"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:padding="6dp"
+            android:background="@drawable/text_radius_background"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14sp"
+            android:text="创想"/>
 
 
         <ImageView
@@ -37,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/iv_thinking"
+            android:layout_toLeftOf="@id/tv_thinking"
             android:scaleType="centerInside"
             android:src="@drawable/btn_scan_selector"/>
 
