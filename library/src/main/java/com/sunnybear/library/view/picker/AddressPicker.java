@@ -36,9 +36,8 @@ public class AddressPicker extends WheelPicker {
 
     @Override
     protected View initContentView() {
-        if (data.size() == 0) {
+        if (data.size() == 0)
             throw new IllegalArgumentException("please initial options at first, can't be empty");
-        }
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
