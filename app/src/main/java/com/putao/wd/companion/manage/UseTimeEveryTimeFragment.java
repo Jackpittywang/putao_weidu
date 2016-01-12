@@ -43,7 +43,6 @@ public class UseTimeEveryTimeFragment extends PTWDFragment implements RadioBar.O
 
     @Override
     public void onRightAction() {
-        //TODO
         networkRequest(ExploreApi.managementEdit(""), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
             @Override
             public void onSuccess(String url, ManagementEdit result) {
@@ -51,8 +50,6 @@ public class UseTimeEveryTimeFragment extends PTWDFragment implements RadioBar.O
                 mActivity.finish();
             }
         });
-
-
     }
 
     @Override
@@ -75,5 +72,4 @@ public class UseTimeEveryTimeFragment extends PTWDFragment implements RadioBar.O
                 break;
         }
     }
-
 }
