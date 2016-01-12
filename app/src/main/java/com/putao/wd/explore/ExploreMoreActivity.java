@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.select.DynamicTitleBar;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
@@ -22,7 +23,7 @@ public class ExploreMoreActivity extends PTWDActivity {
     @Bind(R.id.tb_bar)
     DynamicTitleBar tb_bar;
     @Bind(R.id.rv_more)
-    DynamicTitleBar rv_more;
+    LoadMoreRecyclerView rv_more;
 
     private String[] titles = new String[]{"牛人说", "玩物志", "葡萄+"};
 
