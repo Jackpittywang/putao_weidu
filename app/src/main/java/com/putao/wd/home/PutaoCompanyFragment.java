@@ -25,7 +25,9 @@ import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ import butterknife.Bind;
  * 陪伴
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener {
+public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener {
 
     @Bind(R.id.tv_title_bar_left)
     TextView tv_title_bar_left;
@@ -69,6 +71,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
         iv_title_bar_right1.setOnClickListener(this);
         iv_title_bar_right2.setOnClickListener(this);
         btn_explore_empty.setOnClickListener(this);
+        rv_products.setOnItemClickListener(this);
     }
 
     @Override
@@ -127,6 +130,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
         ll_empty.setVisibility(View.VISIBLE);
         ll_no_empty.setVisibility(View.GONE);
         tv_title_bar_left.setEnabled(false);
+        tv_title_bar_left.setTextColor(getResources().getColor(R.color.text_color_gray));
     }
 
 
@@ -181,5 +185,10 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
             mProductsAdapter = new ProductsAdapter(mActivity, icons);
             rv_products.setAdapter(mProductsAdapter);
         }
+    }
+
+    @Override
+    public void onItemClick(Serializable serializable, int position) {
+
     }
 }
