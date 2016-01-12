@@ -20,7 +20,7 @@ public class MarketingActivity extends PTWDActivity {
     @Bind(R.id.rv_marketing)
     LoadMoreRecyclerView rv_marketing;
 
-    private List<Marketing> markets;
+    private MarketingAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -29,16 +29,9 @@ public class MarketingActivity extends PTWDActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        initData();
-    }
-
-    private void initView() {
-        MarketingAdapter marketingAdapter = new MarketingAdapter(mContext,markets);
-        rv_marketing.setAdapter(marketingAdapter);
-    }
-
-    private void initData() {
-        initView();
+        addNavigation();
+        adapter = new MarketingAdapter(mContext, null);
+        rv_marketing.setAdapter(adapter);
     }
 
     @Override
