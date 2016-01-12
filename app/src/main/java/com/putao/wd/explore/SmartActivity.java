@@ -1,26 +1,28 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.explore.adapter.MarketingAdapter;
-import com.putao.wd.model.Marketing;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-
-import java.util.List;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 
 import butterknife.Bind;
 
 /**
- * 创想
+ * 陪伴多元智能
  * Created by guchenkai on 2016/1/11.
  */
 public class SmartActivity extends PTWDActivity {
-    @Bind(R.id.rv_marketing)
-    LoadMoreRecyclerView rv_marketing;
+    @Bind(R.id.iv_rotate)
+    ImageView iv_rotate;
 
-    private List<Marketing> markets;
+    public final static String SMART_LIST = "SMART_LIST";
+    SmartListFragment mSmartListFragment;
 
     @Override
     protected int getLayoutId() {
@@ -28,21 +30,50 @@ public class SmartActivity extends PTWDActivity {
     }
 
     @Override
-    protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        initData();
+    public void onViewCreatedFinish(Bundle savedInstanceState) {
+        addNavigation();
+        mSmartListFragment = new SmartListFragment();
+        Animation operatingAnim = AnimationUtils.loadAnimation(mContext, R.anim.smart_rotate);
+        operatingAnim.setInterpolator(new LinearInterpolator());
+        if (operatingAnim != null)
+            iv_rotate.startAnimation(operatingAnim);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fl_smart, mSmartListFragment, SMART_LIST).commit();
     }
 
-    private void initView() {
-        MarketingAdapter marketingAdapter = new MarketingAdapter(mContext,markets);
-        rv_marketing.setAdapter(marketingAdapter);
-    }
 
-    private void initData() {
-        initView();
+    @Override
+    public void onRightAction() {
+        super.onRightAction();
+        onBack();
     }
 
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
+
+    @Subcriber(tag = SMART_LIST)
+    public void eventDisplay(Bundle bundle) {
+        SmartDetailFragment smartDetailFragment = new SmartDetailFragment();
+        smartDetailFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_smart, smartDetailFragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBack();
+    }
+
+    private void onBack() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SMART_LIST);
+        if (null != fragment && fragment.isVisible()) {
+            finish();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fl_smart, mSmartListFragment, SMART_LIST).commit();
+        }
+    }
+
+
 }

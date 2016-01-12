@@ -35,6 +35,15 @@
         <item>支付遇到问题</item>
         <item>不想买了</item>
     </string-array>
+    <string-array name="smart_list">
+        <item>小Q大冒险</item>
+        <item>图图世界</item>
+        <item>哈泥海洋</item>
+        <item>麦斯丝</item>
+        <item>淘淘向右走</item>
+        <item>班得瑞的花园</item>
+        <item>旋转吧！魔方</item>
+    </string-array>
     <string-array name="back_spinnername">
         <item>不想要/不需要该商品</item>
         <item>外包装完好，商品存在质量问题</item>
