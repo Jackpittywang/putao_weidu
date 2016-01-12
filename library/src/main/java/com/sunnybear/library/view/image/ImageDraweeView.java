@@ -25,10 +25,6 @@ import com.sunnybear.library.util.ResourcesUtils;
  * Created by guchenkai on 2015/11/4.
  */
 public class ImageDraweeView extends SimpleDraweeView {
-    public static int placeholderImage;
-    public static int progressBarImage;
-    public static int failureImage;
-    public static int retryImage;
     private ResizeOptions mResizeOptions;
     private PictureProcessor mProcessor;
 
