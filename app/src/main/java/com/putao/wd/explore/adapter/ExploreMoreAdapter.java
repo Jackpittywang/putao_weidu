@@ -29,7 +29,7 @@ public class ExploreMoreAdapter extends BasicAdapter<PagerExplore, ExploreMoreAd
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount()-1) {
+        if (position%2 == 0) {
             return TYPE_LEFT;
         }
         return TYPE_RIGHT;
