@@ -1,6 +1,8 @@
 package com.putao.wd.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +15,18 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.companion.manage.ManageActivity;
+import com.putao.wd.home.adapter.ProductsAdapter;
+import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Management;
+import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -39,6 +48,10 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     LinearLayout ll_no_empty;
     @Bind(R.id.btn_explore_empty)
     Button btn_explore_empty;
+    @Bind(R.id.rv_products)
+    BasicRecyclerView rv_products;
+
+    ProductsAdapter mProductsAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -47,7 +60,6 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        checkDevices();
         addListener();
     }
 
@@ -76,9 +88,8 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                             if (management.getSlave_device_list() != null && management.getSlave_device_list().size() > 0) {
                                 ll_empty.setVisibility(View.GONE);
                                 ll_no_empty.setVisibility(View.VISIBLE);
-                            } else {
-                                ll_empty.setVisibility(View.VISIBLE);
-                                ll_no_empty.setVisibility(View.GONE);
+                                tv_title_bar_left.setTextColor(Color.WHITE);
+                                getManagement();
                             }
                         }
                         loading.dismiss();
@@ -86,11 +97,42 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                 });
     }
 
+    private void getManagement() {
+        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
+            @Override
+            public void onSuccess(String url, Management result) {
+                if (null != result) {
+                    mProductsAdapter.clear();
+                    List<ManagementProduct> products = result.getProduct_list();
+                    for (int i = 0; i < 6; i++) {
+                        if (i < products.size())
+                            mProductsAdapter.add(products.get(i).getProduct_icon());
+                        else
+                            mProductsAdapter.add("");
+                    }
+                    for (ManagementProduct product : result.getProduct_list()) {
+                    }
+                }
+                loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 没有登录或没有绑定设备时的界面
+     */
+    private void empty() {
+        ll_empty.setVisibility(View.VISIBLE);
+        ll_no_empty.setVisibility(View.GONE);
+        tv_title_bar_left.setEnabled(false);
+    }
+
 
     @Override
     public void onClick(View v) {
         if (!AccountHelper.isLogin()) {
             Bundle bundle = new Bundle();
+            toLoginActivity(v, bundle);
             bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
             startActivity(LoginActivity.class, bundle);
             return;
@@ -107,6 +149,34 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
             case R.id.btn_explore_empty:
                 startActivity(CaptureActivity.class);
                 break;
+        }
+    }
+
+    private void toLoginActivity(View v, Bundle bundle) {
+        switch (v.getId()) {
+            case R.id.tv_title_bar_left:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
+                break;
+            case R.id.iv_title_bar_right1:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
+                break;
+            case R.id.iv_title_bar_right2:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        empty();
+        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+            addListener();
+            checkDevices();
+            ArrayList<String> icons = new ArrayList<>();
+            mProductsAdapter = new ProductsAdapter(mActivity, icons);
+            rv_products.setAdapter(mProductsAdapter);
         }
     }
 }

@@ -273,6 +273,10 @@
         <activity
             android:name=".video.VideoPlayerActivity"
             android:screenOrientation="landscape" />
+        <!--多元智能-->
+        <activity
+            android:name=".explore.SmartActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

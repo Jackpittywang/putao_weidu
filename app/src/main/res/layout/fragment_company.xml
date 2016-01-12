@@ -26,7 +26,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:text="管理"
-                android:textColor="@color/text_color_gray"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18sp" />
 
             <TextView
@@ -151,20 +151,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/company_shadow"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:drawableLeft="@drawable/img_carve_up_l"
+                android:drawableRight="@drawable/img_carve_up_r"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
-                android:text="智能应用"
+                android:text="  智能应用  "
+                android:textColor="@color/text_color_646464"
                 android:textSize="16sp" />
 
             <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_products"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="25dp"
+                auto:column_num="3"
                 auto:layout_mode="grid" />
         </LinearLayout>
 

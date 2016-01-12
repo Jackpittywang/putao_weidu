@@ -145,6 +145,14 @@
         <item name="roundTopRight">true</item>
         <item name="roundedCornerRadius">4dp</item>
     </style>
+    <!--10dp的圆角图片加载样式-->
+    <style name="image_round_10dp" parent="image_style">
+        <item name="roundBottomLeft">true</item>
+        <item name="roundBottomRight">true</item>
+        <item name="roundTopLeft">true</item>
+        <item name="roundTopRight">true</item>
+        <item name="roundedCornerRadius">10dp</item>
+    </style>
     <!--圆形图片加载样式-->
     <style name="image_circle" parent="image_style">
         <item name="roundAsCircle">true</item>
