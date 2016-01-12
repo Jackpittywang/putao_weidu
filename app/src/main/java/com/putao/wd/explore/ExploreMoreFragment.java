@@ -56,7 +56,7 @@ public class ExploreMoreFragment extends BasicFragment {
     private List<PagerExplore> getTest() {
         List<PagerExplore> list = new ArrayList<>();
         PagerExplore pagerExplore = null;
-       for(int i = 0; i < 2; i ++) {
+       for(int i = 0; i < 3; i ++) {
            pagerExplore = new PagerExplore();
            pagerExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
            list.add(pagerExplore);
