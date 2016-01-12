@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanyFragment;
-import com.putao.wd.home.PutaoCompanyFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.me.setting.SettingActivity;
@@ -39,11 +38,11 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     @Bind(R.id.ti_me)
     TabItem ti_me;
 
-//    private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
+    //    private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
     private PutaoExploreFragment mPutaoExploreFragment;//探索
- //   private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
+    //   private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
     private PutaoStoreFragment mPutaoStoreFragment;//精选
-//    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
+    //    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
     private PutaoCompanyFragment mPutaoCompanyFragment;//陪伴
     private MeFragment mMeFragment;//我
 
@@ -61,6 +60,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         mFragments = new SparseArray<>();
         addFragment();
         addListener();
+
+//        tb_tab.setBackgroundColor(Color.TRANSPARENT);
     }
 
     /**
@@ -126,7 +127,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 //        if (!AccountHelper.isLogin())
 //            startActivity(LoginActivity.class);
 //        else
-            setCurrentItem(currentItemId);
+        setCurrentItem(currentItemId);
     }
 
     /**
