@@ -69,10 +69,40 @@ public class TitleItem extends LinearLayout {
 
     public void setActive(boolean isActive) {
         mTitleView.setTextColor(isActive ? mActiveColor : mInActiveColor);
-        mIndicator.setVisibility(isActive ? VISIBLE : GONE);
+        mIndicator.setVisibility(isActive ? VISIBLE : INVISIBLE);
     }
 
     public boolean isActive() {
         return isActive;
+    }
+
+    /**
+     * 设置title
+     *
+     * @param title title文字
+     */
+    public void setTitle(String title) {
+        mTitleView.setText(title);
+    }
+
+    /**
+     * 获得title
+     *
+     * @return title文字
+     */
+    public String getTitle() {
+        return mTitleView.getText().toString();
+    }
+
+    public void setActiveColor(int activeColor) {
+        mActiveColor = activeColor;
+    }
+
+    public void setInActiveColor(int inActiveColor) {
+        mInActiveColor = inActiveColor;
+    }
+
+    public void setIndicatorColor(int indicatorColor) {
+        mIndicatorColor = indicatorColor;
     }
 }

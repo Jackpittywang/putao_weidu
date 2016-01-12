@@ -9,9 +9,14 @@ import android.widget.TextView;
 import com.putao.wd.util.HtmlUtils;
 import com.putao.wd.video.VideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
+import com.sunnybear.library.view.select.DynamicTitleBar;
+import com.sunnybear.library.view.select.TitleBar;
+import com.sunnybear.library.view.select.TitleItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,6 +40,10 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
     TextView tv_3;
     @Bind(R.id.tv_emoji)
     EmojiTextView tv_emoji;
+    @Bind(R.id.tb_bar)
+    DynamicTitleBar tb_bar;
+
+    private String[] titles = new String[]{"牛人说", "玩物志", "葡萄+"};
 
 //    private List<HtmlInfo> htmlInfos = new ArrayList<>();
 
@@ -53,6 +62,14 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
         tv_3.setText(builders.get(2));
 
         tv_emoji.setText("[呲牙][呲牙][呲牙]呲牙[大笑][萌]");
+
+        tb_bar.addTitles(Arrays.asList(titles), 0);
+        tb_bar.setOnTitleItemSelectedListener(new TitleBar.OnTitleItemSelectedListener() {
+            @Override
+            public void onTitleItemSelected(TitleItem item, int position) {
+                ToastUtils.showToastLong(mContext, "点击了第" + position + "项");
+            }
+        });
     }
 
     @Override
