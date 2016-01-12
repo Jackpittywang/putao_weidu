@@ -7,7 +7,9 @@ import com.putao.wd.explore.adapter.ExploreMoreAdapter;
 import com.putao.wd.model.PagerExplore;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +35,23 @@ public class ExploreMoreFragment extends BasicFragment {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         adapter = new ExploreMoreAdapter(mActivity, getTest());
         rv_content.setAdapter(adapter);
-
+        addListener();
     }
 
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
+
+    private void addListener() {
+        rv_content.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Serializable serializable, int position) {
+                startActivity(ExploreMoreActivity.class);
+            }
+        });
+    }
+
 
     private List<PagerExplore> getTest() {
         List<PagerExplore> list = new ArrayList<>();

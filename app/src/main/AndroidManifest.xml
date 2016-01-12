@@ -273,6 +273,10 @@
         <activity
             android:name=".video.VideoPlayerActivity"
             android:screenOrientation="landscape" />
+        <!--更多内容-->
+        <activity
+            android:name=".explore.ExploreMoreActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
