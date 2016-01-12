@@ -48,14 +48,7 @@ public class ExploreDetailActivity extends PTWDActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        initData();
-    }
 
-    private void initView() {
-    }
-
-    private void initData() {
-        initView();
     }
 
     @Override
