@@ -16,9 +16,8 @@ import com.sunnybear.library.util.DensityUtil;
 /**
  * 带确定及取消按钮的
  *
- * @author 李玉江[QQ:1032694760]
  * @since 2015/10/21
- * Created By Android Studio
+ * Created By guchenkai
  */
 public abstract class ConfirmPopup<V extends View> extends BottomPopup<View> implements View.OnClickListener {
     protected static final String TAG_SUBMIT = "submit";

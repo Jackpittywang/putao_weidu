@@ -15,9 +15,8 @@ import java.util.Arrays;
 /**
  * 单项选择器
  *
- * @author 李玉江[QQ:1032694760]
  * @since 2015/9/29
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class OptionPicker extends WheelPicker {
     protected ArrayList<String> options = new ArrayList<String>();

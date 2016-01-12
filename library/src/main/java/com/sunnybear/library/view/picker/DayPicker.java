@@ -6,7 +6,7 @@ import com.sunnybear.library.view.picker.util.DateUtils;
 
 /**
  * 天数选择器
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class DayPicker extends OptionPicker {
 

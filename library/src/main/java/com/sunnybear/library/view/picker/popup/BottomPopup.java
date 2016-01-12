@@ -11,9 +11,8 @@ import com.sunnybear.library.util.Logger;
 /**
  * 底部弹窗基类
  *
- * @author 李玉江[QQ:1023694760]
  * @since 2015/7/19
- * Created by IntelliJ IDEA
+ * Created by guchenkai
  */
 public abstract class BottomPopup<V extends View> {
     protected static final int MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT;

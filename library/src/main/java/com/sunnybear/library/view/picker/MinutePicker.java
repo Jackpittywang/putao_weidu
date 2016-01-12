@@ -7,7 +7,7 @@ import com.sunnybear.library.view.picker.util.DateUtils;
 /**
  * 分钟选择器
  * <p/>
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class MinutePicker extends OptionPicker {
 

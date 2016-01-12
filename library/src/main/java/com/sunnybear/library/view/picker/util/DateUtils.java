@@ -14,9 +14,8 @@ import java.util.List;
 /**
  * 日期时间工具类
  *
- * @author 李玉江[QQ:1023694760]
  * @version 2015/8/5
- *          Created by IntelliJ IDEA 14.1
+ *          Created by guchenkai
  */
 public class DateUtils extends android.text.format.DateUtils {
 

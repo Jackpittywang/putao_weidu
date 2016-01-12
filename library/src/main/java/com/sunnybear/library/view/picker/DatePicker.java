@@ -15,9 +15,8 @@ import java.util.ArrayList;
 /**
  * 日期选择器
  *
- * @author 李玉江[QQ:1032694760]
  * @since 2015/12/14
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class DatePicker extends WheelPicker {
     private OnDatePickListener onDatePickListener;
@@ -25,8 +24,6 @@ public class DatePicker extends WheelPicker {
     private int startYear = 1970, endYear = 2050;
     private int selectedYear = 0, selectedMonth = 0, selectedDay = 0;
     private Mode mode = Mode.YEAR_MONTH_DAY;
-
-    private String mDefaultYear, mDefaultMonth, mDefaultDat;
 
     public enum Mode {
         //年月日
@@ -133,8 +130,8 @@ public class DatePicker extends WheelPicker {
             for (int i = startYear; i <= endYear; i++) {
                 years.add(String.valueOf(i));
             }
-            yearView.setItems(years, 42);//TODO:设置默认值
-            yearView.setSelection(42);
+            yearView.setItems(years, 42);//TODO:设置默认值,2012年1月1日
+            yearView.setSelection(42);//TODO:设置默认值,2012年1月1日
             yearView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
                 @Override
                 public void onSelected(int selectedIndex, String item) {

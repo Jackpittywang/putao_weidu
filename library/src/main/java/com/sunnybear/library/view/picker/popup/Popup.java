@@ -15,7 +15,6 @@ import com.sunnybear.library.util.Logger;
 /**
  * 弹窗
  *
- * @author 李玉江[QQ:1023694760]
  * @version 2015-10-19
  * @see android.widget.PopupWindow
  */

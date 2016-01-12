@@ -5,9 +5,8 @@ import android.app.Activity;
 /**
  * 星座选择器
  *
- * @author 李玉江[QQ:1032694760]
  * @since 2015/12/15
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class ConstellationPicker extends OptionPicker {
 

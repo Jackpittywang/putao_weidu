@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * 基于原版修改：可设置颜色、设置文字大小、分隔线是否可见、去掉回弹阴影、修正以便支持联动效果
  *
- * @author 李玉江[QQ:1023694760]
  * @version 2015-12-17
  * @link https://github.com/wangjiegulu/WheelView
  */
