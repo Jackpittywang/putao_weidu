@@ -15,6 +15,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.companion.manage.ManageActivity;
+import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Management;
@@ -89,6 +90,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                                 ll_empty.setVisibility(View.GONE);
                                 ll_no_empty.setVisibility(View.VISIBLE);
                                 tv_title_bar_left.setTextColor(Color.WHITE);
+                                tv_title_bar_left.setEnabled(true);
                                 getManagement();
                             }
                         }
@@ -142,6 +144,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                 startActivity(ManageActivity.class);
                 break;
             case R.id.iv_title_bar_right1:
+                startActivity(SmartActivity.class);
                 break;
             case R.id.iv_title_bar_right2:
                 startActivity(CaptureActivity.class);
