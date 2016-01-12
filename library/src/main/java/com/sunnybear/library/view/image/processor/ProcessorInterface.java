@@ -1,5 +1,6 @@
-package com.sunnybear.library.view.image;
+package com.sunnybear.library.view.image.processor;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 /**
@@ -8,5 +9,5 @@ import android.graphics.Bitmap;
  */
 public interface ProcessorInterface {
 
-    void process(Bitmap bitmap);
+    void process(Context context, Bitmap bitmap);
 }

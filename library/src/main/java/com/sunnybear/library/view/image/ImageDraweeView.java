@@ -19,6 +19,8 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.sunnybear.library.R;
 import com.sunnybear.library.util.ResourcesUtils;
+import com.sunnybear.library.view.image.processor.PictureProcessor;
+import com.sunnybear.library.view.image.processor.ProcessorInterface;
 
 /**
  * 图片加载控件
@@ -45,14 +47,14 @@ public class ImageDraweeView extends SimpleDraweeView {
         if (mDefaultDrawable != null)
             setDefaultImage(mDefaultDrawable);
         array.recycle();
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
         hierarchy.setFadeDuration(300);//淡入淡出
         setHierarchy(hierarchy);
-        mProcessor = new PictureProcessor();
+        mProcessor = new PictureProcessor(context);
     }
 
     public ImageDraweeView resize(int width, int height) {
@@ -70,8 +72,9 @@ public class ImageDraweeView extends SimpleDraweeView {
      *
      * @param processor 加载后处理器
      */
-    public void addProcessor(ProcessorInterface processor) {
+    public ImageDraweeView addProcessor(ProcessorInterface processor) {
         mProcessor.addProcessor(processor);
+        return this;
     }
 
     /**

@@ -30,7 +30,7 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     private StoreAdapter adapter;
 
-    private int currentpage = 1;
+    private int currentPage = 1;
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +52,7 @@ public class PutaoStoreFragment extends PTWDFragment {
      * 加载商品列表
      */
     private void getStoreHome() {
-        networkRequest(StoreApi.getStoreHome(String.valueOf(currentpage)),
+        networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
                     @Override
                     public void onSuccess(String url, StoreProductHome result) {
@@ -60,7 +60,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                         if (products != null && products.size() > 0)
                             adapter.addAll(products);
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
-                            currentpage++;
+                            currentPage++;
                             rv_content.loadMoreComplete();
                         } else rv_content.noMoreLoading();
                         loading.dismiss();
@@ -72,8 +72,8 @@ public class PutaoStoreFragment extends PTWDFragment {
      * 刷新商品列表
      */
     private void refreshStoreHome() {
-        currentpage = 1;
-        networkRequest(StoreApi.getStoreHome(String.valueOf(currentpage)),
+        currentPage = 1;
+        networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
                     @Override
                     public void onSuccess(String url, StoreProductHome result) {
@@ -81,7 +81,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                         if (products != null && products.size() > 0)
                             adapter.replaceAll(products);
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
-                            currentpage++;
+                            currentPage++;
                             rv_content.loadMoreComplete();
                         } else rv_content.noMoreLoading();
                         ptl_refresh.refreshComplete();
