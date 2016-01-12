@@ -29,10 +29,11 @@ public class ImageDraweeView extends SimpleDraweeView {
     public static int progressBarImage;
     public static int failureImage;
     public static int retryImage;
-    private float mRatio;
     private ResizeOptions mResizeOptions;
-
     private PictureProcessor mProcessor;
+
+    private float mRatio;
+    private Drawable mDefaultDrawable;
 
     public ImageDraweeView(Context context) {
         this(context, null);
@@ -44,6 +45,9 @@ public class ImageDraweeView extends SimpleDraweeView {
         mRatio = array.getFloat(R.styleable.ImageDraweeView_aspect_ratio, -1f);
         if (mRatio != -1f)
             setAspectRatio(mRatio);
+        mDefaultDrawable = array.getDrawable(R.styleable.ImageDraweeView_default_drawable);
+        if (mDefaultDrawable != null)
+            setDefaultImage(mDefaultDrawable);
         array.recycle();
         init();
     }
@@ -86,17 +90,6 @@ public class ImageDraweeView extends SimpleDraweeView {
     }
 
     /**
-     * 设置ScaleType
-     *
-     * @param scaleType ScaleType
-     */
-    public void setScaleType(ScalingUtils.ScaleType scaleType) {
-        GenericDraweeHierarchy hierarchy = getHierarchy();
-        hierarchy.setActualImageScaleType(scaleType);
-        setHierarchy(hierarchy);
-    }
-
-    /**
      * 设置默认图片
      *
      * @param resId 默认图片资源id
@@ -105,6 +98,28 @@ public class ImageDraweeView extends SimpleDraweeView {
         Drawable drawable = ResourcesUtils.getDrawable(getContext(), resId);
         GenericDraweeHierarchy hierarchy = getHierarchy();
         hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FOCUS_CROP);
+        setHierarchy(hierarchy);
+    }
+
+    /**
+     * 设置默认图片
+     *
+     * @param drawable 默认图片
+     */
+    public void setDefaultImage(Drawable drawable) {
+        GenericDraweeHierarchy hierarchy = getHierarchy();
+        hierarchy.setPlaceholderImage(drawable, ScalingUtils.ScaleType.FOCUS_CROP);
+        setHierarchy(hierarchy);
+    }
+
+    /**
+     * 设置ScaleType
+     *
+     * @param scaleType ScaleType
+     */
+    public void setScaleType(ScalingUtils.ScaleType scaleType) {
+        GenericDraweeHierarchy hierarchy = getHierarchy();
+        hierarchy.setActualImageScaleType(scaleType);
         setHierarchy(hierarchy);
     }
 
