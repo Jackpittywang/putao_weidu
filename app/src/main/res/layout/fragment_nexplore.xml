@@ -26,14 +26,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/text_radius_background"
             android:drawableLeft="@drawable/icon_20_30"
             android:drawablePadding="4dp"
             android:gravity="center"
             android:padding="6dp"
-            android:background="@drawable/text_radius_background"
+            android:text="创想"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14sp"
-            android:text="创想"/>
+            android:textSize="@dimen/text_size_14sp"/>
 
 
         <ImageView
@@ -54,6 +54,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
+        android:background="@color/white"
         android:overScrollMode="never"/>
 
 </LinearLayout>
