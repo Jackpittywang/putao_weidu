@@ -273,6 +273,10 @@
         <activity
             android:name=".video.VideoPlayerActivity"
             android:screenOrientation="landscape" />
+        <!--更多内容-->
+        <activity
+            android:name=".explore.ExploreMoreActivity"
+            android:screenOrientation="portrait" />
         <!--多元智能-->
         <activity
             android:name=".explore.SmartActivity"

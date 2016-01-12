@@ -11,11 +11,9 @@ import java.util.ArrayList;
 
 /**
  * 地址选择器（包括省级、地级、县级）。
- * 地址数据见示例项目的“city.json”，来源于国家统计局官网（http://www.stats.gov.cn/tjsj/tjbz/xzqhdm）
  *
- * @author 李玉江[QQ:1032694760]
  * @since 2015/12/15
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class AddressPicker extends WheelPicker {
     private ArrayList<Province> data = new ArrayList<Province>();
@@ -38,9 +36,8 @@ public class AddressPicker extends WheelPicker {
 
     @Override
     protected View initContentView() {
-        if (data.size() == 0) {
+        if (data.size() == 0)
             throw new IllegalArgumentException("please initial options at first, can't be empty");
-        }
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);

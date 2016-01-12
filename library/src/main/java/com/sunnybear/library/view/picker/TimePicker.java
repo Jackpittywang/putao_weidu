@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * 时间选择器
  * <p/>
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class TimePicker extends WheelPicker {
     private OnTimePickListener onTimePickListener;

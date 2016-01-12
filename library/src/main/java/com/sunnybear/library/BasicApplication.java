@@ -67,7 +67,7 @@ public abstract class BasicApplication extends Application {
         //网络缓存最大时间
         maxAge = getNetworkCacheMaxAgeTime();
         //磁盘文件缓存器
-        mDiskFileCacheHelper = DiskFileCacheHelper.get(getApplicationContext(), "putao_weidu");
+        mDiskFileCacheHelper = DiskFileCacheHelper.get(getApplicationContext(), getLogTag());
         //数据库调试
         QueryBuilder.LOG_SQL = isDebug();
         QueryBuilder.LOG_VALUES = isDebug();

@@ -5,9 +5,8 @@ import android.app.Activity;
 /**
  * 性别
  *
- * @author 李玉江[QQ:1032694760]
  * @since 2015/12/15
- * Created By Android Studio
+ * Created By guchenkai
  */
 public class SexPicker extends OptionPicker {
 
