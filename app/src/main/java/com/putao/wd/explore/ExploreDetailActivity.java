@@ -9,16 +9,17 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Marketing;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 
 import java.util.List;
 
 import butterknife.Bind;
 
 /**
- * 创想
+ * 首页详情
  * Created by guchenkai on 2016/1/11.
  */
-public class ExploreDetailActivity extends PTWDActivity {
+public class ExploreDetailActivity extends BasicFragmentActivity {
     @Bind(R.id.iv_close)
     ImageView iv_close;
     @Bind(R.id.iv_top)
