@@ -21,6 +21,8 @@ public class ExploreMoreActivity extends PTWDActivity {
 
     @Bind(R.id.tb_bar)
     DynamicTitleBar tb_bar;
+    @Bind(R.id.rv_more)
+    DynamicTitleBar rv_more;
 
     private String[] titles = new String[]{"牛人说", "玩物志", "葡萄+"};
 
