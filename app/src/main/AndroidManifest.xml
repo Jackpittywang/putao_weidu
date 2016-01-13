@@ -290,6 +290,10 @@
         <activity
             android:name=".explore.ExploreDetailActivity"
             android:screenOrientation="portrait" />
+        <!--我-->
+        <activity
+            android:name=".me.MeActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

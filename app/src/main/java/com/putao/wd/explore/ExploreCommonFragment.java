@@ -31,12 +31,12 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     @Bind(R.id.tv_content)
     TextView tv_content;
 
-    private ExploreCommonAdapter adapter;
-    private List<PagerExplore> list;
+//    private ExploreCommonAdapter adapter;
+//    private List<PagerExplore> list;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_nexplore_item;
+        return R.layout.fragment_nexplore_common;
     }
 
     @Override

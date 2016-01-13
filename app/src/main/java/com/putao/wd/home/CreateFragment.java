@@ -1,34 +1,29 @@
 package com.putao.wd.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
-import com.putao.wd.me.order.OrderListActivity;
+import com.putao.wd.me.MeActivity;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,11 +32,12 @@ import butterknife.Bind;
  * 陪伴
  * Created by guchenkai on 2015/11/25.
  */
-@Deprecated
-public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener {
+public class CreateFragment extends BasicFragment implements View.OnClickListener {
 
-    @Bind(R.id.tv_title_bar_left)
-    TextView tv_title_bar_left;
+    /*@Bind(R.id.tv_title_bar_left)
+    TextView tv_title_bar_left;*/
+    @Bind(R.id.iv_user_icon)
+    ImageDraweeView iv_user_icon;
     @Bind(R.id.iv_title_bar_right1)
     ImageView iv_title_bar_right1;
     @Bind(R.id.iv_title_bar_right2)
@@ -68,11 +64,10 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     }
 
     private void addListener() {
-        tv_title_bar_left.setOnClickListener(this);
+        iv_user_icon.setOnClickListener(this);
         iv_title_bar_right1.setOnClickListener(this);
         iv_title_bar_right2.setOnClickListener(this);
         btn_explore_empty.setOnClickListener(this);
-        rv_products.setOnItemClickListener(this);
     }
 
     @Override
@@ -93,8 +88,8 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                             if (management.getSlave_device_list() != null && management.getSlave_device_list().size() > 0) {
                                 ll_empty.setVisibility(View.GONE);
                                 ll_no_empty.setVisibility(View.VISIBLE);
-                                tv_title_bar_left.setTextColor(Color.WHITE);
-                                tv_title_bar_left.setEnabled(true);
+//                                tv_title_bar_left.setTextColor(Color.WHITE);
+//                                tv_title_bar_left.setEnabled(true);
                                 getManagement();
                             }
                         }
@@ -116,8 +111,6 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                         else
                             mProductsAdapter.add("");
                     }
-                    for (ManagementProduct product : result.getProduct_list()) {
-                    }
                 }
                 loading.dismiss();
             }
@@ -130,8 +123,9 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     private void empty() {
         ll_empty.setVisibility(View.VISIBLE);
         ll_no_empty.setVisibility(View.GONE);
-        tv_title_bar_left.setEnabled(false);
-        tv_title_bar_left.setTextColor(getResources().getColor(R.color.text_color_gray));
+        iv_user_icon.setDefaultImage(R.drawable.img_head_default);
+//        tv_title_bar_left.setEnabled(false);
+//        tv_title_bar_left.setTextColor(getResources().getColor(R.color.text_color_gray));
     }
 
 
@@ -145,8 +139,8 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
             return;
         }
         switch (v.getId()) {
-            case R.id.tv_title_bar_left:
-                startActivity(ManageActivity.class);
+            case R.id.iv_user_icon:
+                startActivity(MeActivity.class);
                 break;
             case R.id.iv_title_bar_right1:
                 startActivity(SmartActivity.class);
@@ -162,8 +156,8 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
 
     private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
-            case R.id.tv_title_bar_left:
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
+            case R.id.iv_user_icon:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MeActivity.class);
                 break;
             case R.id.iv_title_bar_right1:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
@@ -182,14 +176,14 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
         if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             addListener();
             checkDevices();
-            ArrayList<String> icons = new ArrayList<>();
-            mProductsAdapter = new ProductsAdapter(mActivity, icons);
+            mProductsAdapter = new ProductsAdapter(mActivity, null);
             rv_products.setAdapter(mProductsAdapter);
+            rv_products.setOnItemClickListener(new OnItemClickListener<String>() {
+                @Override
+                public void onItemClick(String serializable, int position) {
+
+                }
+            });
         }
-    }
-
-    @Override
-    public void onItemClick(Serializable serializable, int position) {
-
     }
 }

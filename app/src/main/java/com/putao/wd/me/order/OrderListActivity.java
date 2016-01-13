@@ -160,7 +160,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                             adapter.addAll(result);
                             rv_order.loadMoreComplete();
                             currentPage++;
-                        } else if(currentPage > 1) {
+                        } else if (currentPage > 1) {
                             rv_order.loadMoreComplete();
                             rv_order.noMoreLoading();
                         } else {
@@ -233,6 +233,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
         startActivity(ServiceChooseActivity.class, bundle);
     }
+
     /**
      * 查看物流
      */

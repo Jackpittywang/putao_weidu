@@ -7,7 +7,7 @@ import android.util.SparseArray;
 import android.view.KeyEvent;
 
 import com.putao.wd.home.MeFragment;
-import com.putao.wd.home.PutaoCompanionFragment;
+import com.putao.wd.home.PutaoCompanyFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.me.setting.SettingActivity;
@@ -43,8 +43,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     private PutaoExploreFragment mPutaoExploreFragment;//探索
     //   private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
     private PutaoStoreFragment mPutaoStoreFragment;//精选
-    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
-    //    private PutaoCompanyFragment mPutaoCompanyFragment;//陪伴
+    //    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
+    private PutaoCompanyFragment mPutaoCompanyFragment;//陪伴
     private MeFragment mMeFragment;//我
 
     private SparseArray<Class<? extends Fragment>> mFragments;
@@ -76,8 +76,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 
     private void addFragment() {
         mFragments.put(R.id.ti_start_circle, PutaoExploreFragment.class);
-//        mFragments.put(R.id.ti_explore, PutaoCompanyFragment.class);
-        mFragments.put(R.id.ti_explore, PutaoCompanionFragment.class);
+        mFragments.put(R.id.ti_explore, PutaoCompanyFragment.class);
         mFragments.put(R.id.ti_store, PutaoStoreFragment.class);
         mFragments.put(R.id.ti_me, MeFragment.class);
     }
@@ -86,7 +85,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
      * 添加监听器
      */
     private void addListener() {
-        tb_tab.setOnTabItemSelectedListener(this);
+        tb_tab.setTabItemSelectedListener(this);
     }
 
     @Override
@@ -138,10 +137,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     private void hideFragment(FragmentTransaction fragmentTransaction) {
         if (mPutaoExploreFragment != null)
             fragmentTransaction.hide(mPutaoExploreFragment);
-//        if (mPutaoCompanyFragment != null)
-//            fragmentTransaction.hide(mPutaoCompanyFragment);
-        if (mPutaoCompanionFragment != null)
-            fragmentTransaction.hide(mPutaoCompanionFragment);
+        if (mPutaoCompanyFragment != null)
+            fragmentTransaction.hide(mPutaoCompanyFragment);
         if (mPutaoStoreFragment != null)
             fragmentTransaction.hide(mPutaoStoreFragment);
         if (mMeFragment != null)
@@ -159,9 +156,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         hideFragment(fragmentTransaction);
         if (PutaoExploreFragment.class.equals(fragmentClass))
             mPutaoExploreFragment = (PutaoExploreFragment) showFragment(fragmentTransaction, mPutaoExploreFragment, PutaoExploreFragment.class);
-        else if (PutaoCompanionFragment.class.equals(fragmentClass))
-//            mPutaoCompanyFragment = (PutaoCompanyFragment) showFragment(fragmentTransaction, mPutaoCompanyFragment, PutaoCompanyFragment.class);
-            mPutaoCompanionFragment = (PutaoCompanionFragment) showFragment(fragmentTransaction, mPutaoCompanionFragment, PutaoCompanionFragment.class);
+        else if (PutaoCompanyFragment.class.equals(fragmentClass))
+            mPutaoCompanyFragment = (PutaoCompanyFragment) showFragment(fragmentTransaction, mPutaoCompanyFragment, PutaoCompanyFragment.class);
         else if (PutaoStoreFragment.class.equals(fragmentClass))
             mPutaoStoreFragment = (PutaoStoreFragment) showFragment(fragmentTransaction, mPutaoStoreFragment, PutaoStoreFragment.class);
         else if (MeFragment.class.equals(fragmentClass))

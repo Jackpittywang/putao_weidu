@@ -17,15 +17,23 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
-            <TextView
-                android:id="@+id/tv_title_bar_left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
-                android:text="管理"
-                android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_18sp" />
+            <!-- <TextView
+                 android:id="@+id/tv_title_bar_left"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:layout_alignParentLeft="true"
+                 android:gravity="center"
+                 android:text="管理"
+                 android:textColor="@color/text_color_gray"
+                 android:textSize="@dimen/text_size_18sp" />-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_user_icon"
+                style="@style/image_circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                auto:placeholderImage="@drawable/img_head_default"
+                auto:roundingBorderWidth="1dp" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -3,7 +3,6 @@ package com.putao.wd.explore.adapter;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -30,7 +29,7 @@ public class ExploreCommonAdapter extends BasicAdapter<PagerExplore, ExploreComm
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.fragment_nexplore_item;
+        return R.layout.fragment_nexplore_common;
     }
 
     @Override
