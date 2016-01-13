@@ -15,9 +15,7 @@ import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.BasicFragment;
-
-
-import java.util.List;
+import com.sunnybear.library.util.Logger;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -45,6 +43,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        Logger.d("PutaoExploreFragment启动");
         addFragment();
         pagerAdapter = new FragmentPagerAdapter(getFragmentManager()) {
             @Override

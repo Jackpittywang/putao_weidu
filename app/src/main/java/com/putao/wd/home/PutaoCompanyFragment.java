@@ -2,7 +2,6 @@ package com.putao.wd.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import com.putao.wd.api.ExploreApi;
 import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
-import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -37,6 +35,7 @@ import butterknife.Bind;
  * 陪伴
  * Created by guchenkai on 2015/11/25.
  */
+@Deprecated
 public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener {
 
     @Bind(R.id.tv_title_bar_left)

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--分割线-->
+    <View
+        android:id="@+id/line_horizontal"
+        style="@style/line_horizontal"
+        android:layout_above="@+id/tb_tab" />
+    <!--标题栏-->
+    <com.sunnybear.library.view.select.TabBar
+        android:id="@+id/tb_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <!--探索-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_explore"
+            style="@style/style_tab_bar"
+            auto:active="true"
+            auto:activeDrawable="@drawable/tab_bar_c_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_c_nor" />
+
+        <!--创造-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_create"
+            style="@style/style_tab_bar"
+            auto:active="false"
+            auto:activeDrawable="@drawable/tab_bar_p_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
+
+        <!--精选-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_store"
+            style="@style/style_tab_bar"
+            auto:active="false"
+            auto:activeDrawable="@drawable/tab_bar_store_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_store_nor" />
+
+        <!--陪伴-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_companion"
+            style="@style/style_tab_bar"
+            auto:active="false"
+            auto:activeDrawable="@drawable/tab_bar_p_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
+    </com.sunnybear.library.view.select.TabBar>
+
+    <!--主页面-->
+    <com.sunnybear.library.view.viewpager.UnScrollableViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/line_horizontal" />
+</RelativeLayout>

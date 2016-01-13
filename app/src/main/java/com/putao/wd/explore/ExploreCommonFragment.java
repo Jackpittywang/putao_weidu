@@ -10,9 +10,7 @@ import com.putao.wd.model.PagerExplore;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -80,5 +78,4 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
 //        list.add(pagerExplore);
 //        return list;
 //    }
-
 }

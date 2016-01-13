@@ -10,6 +10,7 @@ import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -19,7 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 精选
+ * 精选(首页)
  * Created by guchenkai on 2015/11/25.
  */
 public class PutaoStoreFragment extends PTWDFragment {
@@ -39,6 +40,7 @@ public class PutaoStoreFragment extends PTWDFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        Logger.d("PutaoStoreFragment启动");
         addNavigation();
 
         adapter = new StoreAdapter(mActivity, null);

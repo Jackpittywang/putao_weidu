@@ -4,9 +4,7 @@
     android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_EBEBEB"
-    android:orientation="vertical">
-
+    android:background="@color/color_EBEBEB">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,7 +44,6 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/btn_scan_selector" />
 
-
             <ImageView
                 android:id="@+id/iv_title_bar_right2"
                 android:layout_width="wrap_content"
@@ -58,9 +55,7 @@
                 android:src="@drawable/btn_scan_selector" />
 
         </RelativeLayout>
-
     </RelativeLayout>
-
 
     <LinearLayout
         android:id="@+id/ll_empty"
@@ -127,7 +122,6 @@
                 android:textSize="@dimen/text_size_16sp" />
 
         </RelativeLayout>
-
     </LinearLayout>
 
     <LinearLayout

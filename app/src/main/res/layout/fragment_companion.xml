@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_EBEBEB">
+
+    <!--底图-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_p_cover" />
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_user_icon"
+            style="@style/image_circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            auto:placeholderImage="@drawable/img_head_default" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_title_bar_left"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:gravity="center"-->
+        <!--android:text="管理"-->
+        <!--android:textColor="@color/text_color_gray"-->
+        <!--android:textSize="@dimen/text_size_18sp" />-->
+
+        <!-- <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerInParent="true"
+             android:text="陪伴"
+             android:textColor="@color/white"
+             android:textSize="@dimen/text_size_22sp" />-->
+
+        <ImageView
+            android:id="@+id/iv_title_bar_right1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/btn_scan_selector" />
+
+        <ImageView
+            android:id="@+id/iv_title_bar_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/iv_title_bar_right1"
+            android:scaleType="centerInside"
+            android:src="@drawable/btn_scan_selector" />
+    </RelativeLayout>
+
+    <!--文字-->
+    <ImageView
+        android:id="@+id/iv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="140dp"
+        android:src="@drawable/img_p_cover_title" />
+
+    <!--扫一扫-->
+    <Button
+        android:id="@+id/btn_explore_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_below="@id/iv_text"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/btn_radius_background_shape"
+        android:drawableLeft="@drawable/btn_20_scan_w_sel"
+        android:gravity="center"
+        android:paddingLeft="45dp"
+        android:paddingRight="45dp"
+        android:text="   扫一扫"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <!--卡片-->
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_explore_empty"
+        android:layout_marginTop="30dp"
+        auto:cardElevation="6dp"
+        auto:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:id="@+id/tv_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_explore_nodata" />
+
+            <!--<TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_image"
+                android:paddingLeft="5dp"
+                android:paddingRight="20dp"
+                android:text="提示"
+                android:textSize="20sp" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_image"
+                android:paddingLeft="5dp"
+                android:paddingRight="20dp"
+                android:text="扫一扫可以帮您深度挖掘孩子的内在潜质,捕捉孩子的敏感期"
+                android:textSize="@dimen/text_size_16sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

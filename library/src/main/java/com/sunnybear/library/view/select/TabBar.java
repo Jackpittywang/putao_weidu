@@ -15,7 +15,7 @@ import com.sunnybear.library.util.Logger;
  */
 public class TabBar extends LinearLayout implements View.OnClickListener {
     private static final String TAG = TabBar.class.getSimpleName();
-    private TabItemSelectedListener mTabItemSelectedListener;
+    private OnTabItemSelectedListener mTabItemSelectedListener;
     private TabItem mLastSelectedItem = null;
 
     private SparseIntArray array;
@@ -35,7 +35,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
         mTabItemArray = new SparseArray<>();
     }
 
-    public void setTabItemSelectedListener(TabItemSelectedListener tabItemSelectedListener) {
+    public void setOnTabItemSelectedListener(OnTabItemSelectedListener tabItemSelectedListener) {
         mTabItemSelectedListener = tabItemSelectedListener;
     }
 
@@ -106,7 +106,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
     /**
      * TabItem选择监听器
      */
-    public interface TabItemSelectedListener {
+    public interface OnTabItemSelectedListener {
 
         void onTabItemSelected(TabItem item, int position);
     }

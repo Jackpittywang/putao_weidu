@@ -71,7 +71,7 @@ public class SplashActivity extends BasicFragmentActivity {
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivity(MainActivity.class);
+                                        startActivity(IndexActivity.class);
                                         finish();
                                     }
                                 }, 3 * 1000);
@@ -111,7 +111,7 @@ public class SplashActivity extends BasicFragmentActivity {
                                                                         Logger.d("表情包设置完成");
                                                                         mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
                                                                         GlobalApplication.setEmojis(result);
-                                                                        startActivity(MainActivity.class);
+                                                                        startActivity(IndexActivity.class);
                                                                         finish();
                                                                     }
                                                                 }).execute();
@@ -126,7 +126,7 @@ public class SplashActivity extends BasicFragmentActivity {
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivity(MainActivity.class);
+                                        startActivity(IndexActivity.class);
                                         finish();
                                     }
                                 }, 3 * 1000);
@@ -139,7 +139,7 @@ public class SplashActivity extends BasicFragmentActivity {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    startActivity(MainActivity.class);
+                                    startActivity(IndexActivity.class);
                                     finish();
                                 }
                             }, 3 * 1000);
