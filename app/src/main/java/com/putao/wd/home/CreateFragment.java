@@ -1,24 +1,19 @@
 package com.putao.wd.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.me.MeActivity;
-import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -29,8 +24,6 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -39,7 +32,7 @@ import butterknife.Bind;
  * 陪伴
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener {
+public class CreateFragment extends BasicFragment implements View.OnClickListener {
 
     /*@Bind(R.id.tv_title_bar_left)
     TextView tv_title_bar_left;*/
