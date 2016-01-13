@@ -9,7 +9,7 @@
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_video"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="300dp"
         android:layout_alignParentTop="true"
         auto:placeholderImage="@drawable/test_flaunt_taotao_bg_01"
         auto:placeholderImageScaleType="centerCrop" />

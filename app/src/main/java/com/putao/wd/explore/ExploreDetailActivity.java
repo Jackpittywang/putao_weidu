@@ -70,7 +70,6 @@ public class ExploreDetailActivity extends BasicFragmentActivity {
         mFragments.put(4, Fragment.instantiate(mContext, ExploreDetailFragment.class.getName()));
         mFragments.put(5, Fragment.instantiate(mContext, ExploreDetailFragment.class.getName()));
         mFragments.put(6, Fragment.instantiate(mContext, ExploreDetailFragment.class.getName()));
-        mFragments.put(7, Fragment.instantiate(mContext, ExploreDetailFragment.class.getName()));
     }
 
 }
