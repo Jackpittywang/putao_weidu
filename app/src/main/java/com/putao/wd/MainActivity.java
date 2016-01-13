@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
-import com.putao.wd.home.MeFragment;
+import com.putao.wd.me.MeActivity;
 import com.putao.wd.home.PutaoCompanyFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
@@ -44,7 +44,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
     private PutaoStoreFragment mPutaoStoreFragment;//精选
     //    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
     private PutaoCompanyFragment mPutaoCompanyFragment;//陪伴
-    private MeFragment mMeFragment;//我
+//    private MeActivity mMeFragment;//我
 
     private SparseArray<Class<? extends Fragment>> mFragments;
     private int currentItemId;//当前的itemId
@@ -77,7 +77,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
         mFragments.put(R.id.ti_start_circle, PutaoExploreFragment.class);
         mFragments.put(R.id.ti_explore, PutaoCompanyFragment.class);
         mFragments.put(R.id.ti_store, PutaoStoreFragment.class);
-        mFragments.put(R.id.ti_me, MeFragment.class);
+//        mFragments.put(R.id.ti_me, MeActivity.class);
     }
 
     /**
@@ -140,8 +140,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
             fragmentTransaction.hide(mPutaoCompanyFragment);
         if (mPutaoStoreFragment != null)
             fragmentTransaction.hide(mPutaoStoreFragment);
-        if (mMeFragment != null)
-            fragmentTransaction.hide(mMeFragment);
+//        if (mMeFragment != null)
+//            fragmentTransaction.hide(mMeFragment);
     }
 
     /**
@@ -159,8 +159,8 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
             mPutaoCompanyFragment = (PutaoCompanyFragment) showFragment(fragmentTransaction, mPutaoCompanyFragment, PutaoCompanyFragment.class);
         else if (PutaoStoreFragment.class.equals(fragmentClass))
             mPutaoStoreFragment = (PutaoStoreFragment) showFragment(fragmentTransaction, mPutaoStoreFragment, PutaoStoreFragment.class);
-        else if (MeFragment.class.equals(fragmentClass))
-            mMeFragment = (MeFragment) showFragment(fragmentTransaction, mMeFragment, MeFragment.class);
+//        else if (MeActivity.class.equals(fragmentClass))
+//            mMeFragment = (MeActivity) showFragment(fragmentTransaction, mMeFragment, MeActivity.class);
         fragmentTransaction.commitAllowingStateLoss();
     }
 
