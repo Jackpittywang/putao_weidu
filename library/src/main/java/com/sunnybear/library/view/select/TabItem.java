@@ -48,7 +48,6 @@ public class TabItem extends View {
         array.recycle();
     }
 
-
     private void updateIndicator(Context context) {
         if (mNotificationSize == -1)
             mIndicator = new IndicatorDrawable(context, true, mIndicatorRadius);
