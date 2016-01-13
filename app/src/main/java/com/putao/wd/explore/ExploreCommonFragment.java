@@ -10,9 +10,7 @@ import com.putao.wd.model.PagerExplore;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,12 +31,12 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     @Bind(R.id.tv_content)
     TextView tv_content;
 
-    private ExploreCommonAdapter adapter;
-    private List<PagerExplore> list;
+//    private ExploreCommonAdapter adapter;
+//    private List<PagerExplore> list;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_nexplore_item;
+        return R.layout.fragment_nexplore_common;
     }
 
     @Override

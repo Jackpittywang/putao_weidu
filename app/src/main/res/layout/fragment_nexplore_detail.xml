@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/iv_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/icon_40_11"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="和孩子一起打造创作空间"
+            android:textSize="16sp"/>
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_user_icon"
+            style="@style/image_circle"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center_horizontal"
+            auto:placeholderImage="@drawable/img_head_default"
+            auto:roundingBorderWidth="1dp"/>
+
+        <TextView
+            android:id="@+id/tv_digest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="这里显示作者的名字"
+            android:textColor="@color/text_color_gray"
+            android:textSize="14sp"/>
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/img_carve_up_article"/>
+
+        <WebView
+            android:id="@+id/web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/ll_bottom"
+        android:background="@color/divider_color"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:weightSum="12">
+
+        <LinearLayout
+            android:id="@+id/ll_close"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/btn_20_close_p_nor"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="22dp"
+                android:background="@color/divider_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cool"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/sb_cool_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                auto:isSelect="false"
+                auto:norDrawable="@drawable/btn_support_nor"
+                auto:selDrawable="@drawable/btn_support_sel"/>
+
+            <TextView
+                android:id="@+id/tv_count_cool"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="赞"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="@color/divider_color"/>
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_comment"/>
+
+            <TextView
+                android:id="@+id/tv_count_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="评论"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="@color/divider_color"/>
+
+        <LinearLayout
+            android:id="@+id/ll_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_20_share_w_sel"/>
+
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="分享"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
