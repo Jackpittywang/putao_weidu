@@ -12,6 +12,11 @@ android {
         renderscriptTargetApi 14
         renderscriptSupportModeEnabled true
     }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -27,7 +32,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
+    compile 'com.squareup.okhttp:okhttp:2.7.2'
     compile 'com.squareup.okio:okio:1.6.0'
     compile 'com.alibaba:fastjson:1.2.7'
     compile 'com.google.code.gson:gson:2.4'
