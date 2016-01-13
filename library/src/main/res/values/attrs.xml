@@ -226,5 +226,7 @@
             <enum name="ALIGN_PARENT_RIGHT" value="1" />
             <enum name="CENTER_HORIZONTAL" value="2" />
         </attr>
+        <attr name="pageDrawable" format="reference" />
+        <attr name="fillDrawable" format="reference" />
     </declare-styleable>
 </resources>

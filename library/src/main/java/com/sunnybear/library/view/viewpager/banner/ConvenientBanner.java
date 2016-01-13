@@ -2,6 +2,7 @@ package com.sunnybear.library.view.viewpager.banner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.PageTransformer;
 import android.util.AttributeSet;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class ConvenientBanner<T> extends LinearLayout {
     private List<T> mDatas;
-    private int[] page_indicatorId;
+    private Drawable[] page_indicatorId;
     private ArrayList<ImageView> mPointViews = new ArrayList<>();
     private CBPageChangeListener pageChangeListener;
     private ViewPager.OnPageChangeListener onPageChangeListener;
@@ -45,6 +46,9 @@ public class ConvenientBanner<T> extends LinearLayout {
     private boolean canTurn = false;
     private boolean manualPageable = true;//是否手动干预
     private boolean canLoop = true;//控制循环与否
+
+    private Drawable mPageDrawable;//选中的图片
+    private Drawable mFillDrawable;//未选中图片
 
     public enum PageIndicatorAlign {
         ALIGN_PARENT_LEFT, ALIGN_PARENT_RIGHT, CENTER_HORIZONTAL
@@ -76,6 +80,8 @@ public class ConvenientBanner<T> extends LinearLayout {
         manualPageable = array.getBoolean(R.styleable.ConvenientBanner_manualPageable, true);
         autoTurningTime = array.getInt(R.styleable.ConvenientBanner_autoTurningTime, 0) * 1000;
         align = array.getInt(R.styleable.ConvenientBanner_align, 2);
+        mPageDrawable = array.getDrawable(R.styleable.ConvenientBanner_pageDrawable);
+        mFillDrawable = array.getDrawable(R.styleable.ConvenientBanner_fillDrawable);
         array.recycle();
         init(context);
     }
@@ -100,6 +106,8 @@ public class ConvenientBanner<T> extends LinearLayout {
                 break;
         }
         setPageIndicatorAlign(indicatorAlign);
+        if (mPageDrawable != null && mFillDrawable != null)
+            page_indicatorId = new Drawable[]{mFillDrawable, mPageDrawable};
         initViewPagerScroll();
     }
 
@@ -110,6 +118,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         startTurning(autoTurningTime);
         if (page_indicatorId != null)
             setPageIndicator(page_indicatorId);
+        viewPager.setOffscreenPageLimit(datas.size());
         return this;
     }
 
@@ -138,7 +147,7 @@ public class ConvenientBanner<T> extends LinearLayout {
      *
      * @param page_indicatorId
      */
-    public ConvenientBanner setPageIndicator(int[] page_indicatorId) {
+    public ConvenientBanner setPageIndicator(Drawable[] page_indicatorId) {
         loPageTurningPoint.removeAllViews();
         mPointViews.clear();
         this.page_indicatorId = page_indicatorId;
@@ -148,9 +157,9 @@ public class ConvenientBanner<T> extends LinearLayout {
             ImageView pointView = new ImageView(getContext());
             pointView.setPadding(10, 0, 10, 0);
             if (mPointViews.isEmpty())
-                pointView.setImageResource(page_indicatorId[1]);
+                pointView.setImageDrawable(page_indicatorId[1]);
             else
-                pointView.setImageResource(page_indicatorId[0]);
+                pointView.setImageDrawable(page_indicatorId[0]);
             mPointViews.add(pointView);
             loPageTurningPoint.addView(pointView);
         }

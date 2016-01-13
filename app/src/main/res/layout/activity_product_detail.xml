@@ -39,7 +39,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     auto:align="CENTER_HORIZONTAL"
-                    auto:autoTurningTime="2" />
+                    auto:autoTurningTime="2"
+                    auto:fillDrawable="@drawable/icon_logistics_flow_old"
+                    auto:pageDrawable="@drawable/icon_logistics_flow_latest" />
 
                 <View
                     android:layout_width="match_parent"

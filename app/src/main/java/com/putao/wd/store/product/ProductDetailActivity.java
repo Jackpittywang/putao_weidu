@@ -126,9 +126,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                             return new ImageHolderView();
                         }
                     }, result.getPictures())
-                            .setPageIndicator(new int[]{R.drawable.icon_logistics_flow_old, R.drawable.icon_logistics_flow_latest})
                             .setPageTransformer(new CardsTransformer());
-                    cb_banner.getViewPager().setOffscreenPageLimit(result.getPictures().size());
                 }
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());
                 loading.dismiss();
@@ -137,7 +135,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     /**
-     *
+     * 广告页适配器
      */
     static class ImageHolderView implements Holder<String> {
         private ImageDraweeView imageView;
