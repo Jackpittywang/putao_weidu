@@ -16,24 +16,24 @@ import butterknife.Bind;
  * Created by yanghx on 2016/1/13.
  */
 public class ExploreDetailFragment extends BasicFragment {
-    @Bind(R.id.iv_close)
-    ImageView iv_close;
-    @Bind(R.id.iv_top)
-    ImageView iv_top;
-    @Bind(R.id.iv_user_icon)
-    ImageView iv_user_icon;
-    @Bind(R.id.tv_title)
-    TextView tv_title;
-    @Bind(R.id.tv_digest)
-    TextView tv_digest;
-    @Bind(R.id.web)
-    WebView web;
-    @Bind(R.id.ll_cool)
-    LinearLayout ll_cool;
-    @Bind(R.id.ll_comment)
-    LinearLayout ll_comment;
-    @Bind(R.id.ll_share)
-    LinearLayout ll_share;
+//    @Bind(R.id.iv_close)
+//    ImageView iv_close;
+//    @Bind(R.id.iv_top)
+//    ImageView iv_top;
+//    @Bind(R.id.iv_user_icon)
+//    ImageView iv_user_icon;
+//    @Bind(R.id.tv_title)
+//    TextView tv_title;
+//    @Bind(R.id.tv_digest)
+//    TextView tv_digest;
+//    @Bind(R.id.web)
+//    WebView web;
+//    @Bind(R.id.ll_cool)
+//    LinearLayout ll_cool;
+//    @Bind(R.id.ll_comment)
+//    LinearLayout ll_comment;
+//    @Bind(R.id.ll_share)
+//    LinearLayout ll_share;
 
 
     @Override

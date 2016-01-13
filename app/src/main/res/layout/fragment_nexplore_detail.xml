@@ -2,28 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:auto="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl_top"
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_top"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginBottom="20dp">
-
-            <ImageView
-                android:id="@+id/iv_top"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/icon_40_11"/>
-
-        </RelativeLayout>
+            android:layout_marginBottom="20dp"
+            auto:placeholderImage="@drawable/icon_40_11"
+            auto:placeholderImageScaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -33,43 +27,24 @@
             android:text="和孩子一起打造创作空间"
             android:textSize="16sp"/>
 
-        <com.sunnybear.library.view.image.ImageDraweeView
-            android:id="@+id/iv_user_icon"
-            style="@style/image_circle"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
-            android:layout_gravity="center_horizontal"
-            auto:placeholderImage="@drawable/img_head_default"
-            auto:roundingBorderWidth="1dp"/>
-
-        <TextView
-            android:id="@+id/tv_digest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:text="这里显示作者的名字"
-            android:textColor="@color/text_color_gray"
-            android:textSize="14sp"/>
-
         <View
             android:layout_width="200dp"
             android:layout_height="10dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/img_carve_up_article"/>
 
-        <WebView
-            android:id="@+id/web"
+        <com.sunnybear.library.view.BasicWebView
+            android:id="@+id/wb_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/ll_bottom"
-        android:background="@color/divider_color"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/ll_bottom"
+            android:background="@color/divider_color"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_bottom"
