@@ -43,7 +43,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
-        addFragment();
+        addFragments();
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -78,7 +78,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     /**
      * 初始化Fragment
      */
-    private void addFragment() {
+    private void addFragments() {
         mFragments = new SparseArray<>();
         mFragments.put(0, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
         mFragments.put(1, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
