@@ -33,7 +33,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Bind(R.id.vp_content)
     ViewPager vp_content;
 
-    private FragmentPagerAdapter pagerAdapter;
     private SparseArray<Fragment> mFragments;
 
     @Override
@@ -45,7 +44,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         addFragment();
-        pagerAdapter = new FragmentPagerAdapter(getFragmentManager()) {
+        vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return mFragments.get(position);
@@ -55,9 +54,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
             public int getCount() {
                 return mFragments.size();
             }
-        };
-        vp_content.setAdapter(pagerAdapter);
-        vp_content.setCurrentItem(0);
+        });
     }
 
     @Override

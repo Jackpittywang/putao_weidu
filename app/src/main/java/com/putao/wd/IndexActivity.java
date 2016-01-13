@@ -64,8 +64,7 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
                 return mFragments.size();
             }
         });
-        vp_content.setOffscreenPageLimit(1);
-        vp_content.setPageTransformer(true, null);
+        vp_content.setOffscreenPageLimit(4);
     }
 
     /**
@@ -104,7 +103,7 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
 
                 break;
         }
-        vp_content.setCurrentItem(position);
+        vp_content.setCurrentItem(position, false);
     }
 
     /**
