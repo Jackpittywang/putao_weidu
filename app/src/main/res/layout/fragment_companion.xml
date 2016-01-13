@@ -101,38 +101,10 @@
         auto:cardElevation="6dp"
         auto:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/tv_image"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:paddingTop="20dp">
-
-            <ImageView
-                android:id="@+id/tv_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_explore_nodata" />
-
-            <!--<TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_image"
-                android:paddingLeft="5dp"
-                android:paddingRight="20dp"
-                android:text="提示"
-                android:textSize="20sp" />-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/tv_image"
-                android:paddingLeft="5dp"
-                android:paddingRight="20dp"
-                android:text="扫一扫可以帮您深度挖掘孩子的内在潜质,捕捉孩子的敏感期"
-                android:textSize="@dimen/text_size_16sp" />
-        </RelativeLayout>
+            android:src="@drawable/img_p_tip_01" />
     </android.support.v7.widget.CardView>
 </RelativeLayout>
