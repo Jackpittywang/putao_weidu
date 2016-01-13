@@ -22,7 +22,6 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.util.List;
 
@@ -173,17 +172,17 @@ public class CreateFragment extends BasicFragment implements View.OnClickListene
     public void onStart() {
         super.onStart();
         empty();
-        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
-            addListener();
-            checkDevices();
-            mProductsAdapter = new ProductsAdapter(mActivity, null);
-            rv_products.setAdapter(mProductsAdapter);
-            rv_products.setOnItemClickListener(new OnItemClickListener<String>() {
-                @Override
-                public void onItemClick(String serializable, int position) {
-
-                }
-            });
-        }
+//        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+//            addListener();
+//            checkDevices();
+//            mProductsAdapter = new ProductsAdapter(mActivity, null);
+//            rv_products.setAdapter(mProductsAdapter);
+//            rv_products.setOnItemClickListener(new OnItemClickListener<String>() {
+//                @Override
+//                public void onItemClick(String serializable, int position) {
+//
+//                }
+//            });
+//        }
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
@@ -97,7 +98,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         addNavigation();
         filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
         initInfo();
-        MainActivity.isNotRefreshUserInfo = false;
+        IndexActivity.isNotRefreshUserInfo = false;
 
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
-import com.putao.wd.MainActivity;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -20,7 +20,6 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
-
 
 import butterknife.Bind;
 
@@ -124,7 +123,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                         networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                MainActivity.isNotRefreshUserInfo = false;
+                                IndexActivity.isNotRefreshUserInfo = false;
                                 page--;
                                 networkRequest(OrderApi.getServiceLists(String.valueOf(page)), new SimpleFastJsonCallback<Service>(Service.class, loading) {
                                     @Override

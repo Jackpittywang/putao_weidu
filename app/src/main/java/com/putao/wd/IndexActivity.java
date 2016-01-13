@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 
 import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoCreatedFragment;
@@ -104,5 +105,21 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
                 break;
         }
         vp_content.setCurrentItem(position);
+    }
+
+    /**
+     * 返回键
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            stopService(new Intent(GlobalApplication.ACTION_PUSH_SERVICE));
+            return exit();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
@@ -20,7 +19,6 @@ import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -72,7 +70,7 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        Logger.d(MainActivity.TAG, "PutaoStartCircleFragment启动");
+//        Logger.d(MainActivity.TAG, "PutaoStartCircleFragment启动");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         sticky_layout.canScrollView();

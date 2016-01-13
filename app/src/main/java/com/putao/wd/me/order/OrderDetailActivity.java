@@ -13,7 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
-import com.putao.wd.MainActivity;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -361,7 +361,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                             @Override
                             public void onSuccess(String url, String result) {
                                 EventBusHelper.post(mOrderDetail, CANCEL_ORDER);
-                                MainActivity.isNotRefreshUserInfo = false;
+                                IndexActivity.isNotRefreshUserInfo = false;
                                 finish();
                             }
                         });

@@ -1,23 +1,18 @@
 package com.putao.wd.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
-import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -28,7 +23,6 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,8 +34,8 @@ import butterknife.Bind;
 @Deprecated
 public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener {
 
-    @Bind(R.id.tv_title_bar_left)
-    TextView tv_title_bar_left;
+//    @Bind(R.id.tv_title_bar_left)
+//    TextView tv_title_bar_left;
     @Bind(R.id.iv_title_bar_right1)
     ImageView iv_title_bar_right1;
     @Bind(R.id.iv_title_bar_right2)
@@ -68,7 +62,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     }
 
     private void addListener() {
-        tv_title_bar_left.setOnClickListener(this);
+//        tv_title_bar_left.setOnClickListener(this);
         iv_title_bar_right1.setOnClickListener(this);
         iv_title_bar_right2.setOnClickListener(this);
         btn_explore_empty.setOnClickListener(this);
@@ -93,8 +87,8 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                             if (management.getSlave_device_list() != null && management.getSlave_device_list().size() > 0) {
                                 ll_empty.setVisibility(View.GONE);
                                 ll_no_empty.setVisibility(View.VISIBLE);
-                                tv_title_bar_left.setTextColor(Color.WHITE);
-                                tv_title_bar_left.setEnabled(true);
+//                                tv_title_bar_left.setTextColor(Color.WHITE);
+//                                tv_title_bar_left.setEnabled(true);
                                 getManagement();
                             }
                         }
@@ -130,8 +124,8 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     private void empty() {
         ll_empty.setVisibility(View.VISIBLE);
         ll_no_empty.setVisibility(View.GONE);
-        tv_title_bar_left.setEnabled(false);
-        tv_title_bar_left.setTextColor(getResources().getColor(R.color.text_color_gray));
+//        tv_title_bar_left.setEnabled(false);
+//        tv_title_bar_left.setTextColor(getResources().getColor(R.color.text_color_gray));
     }
 
 
@@ -145,9 +139,9 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
             return;
         }
         switch (v.getId()) {
-            case R.id.tv_title_bar_left:
-                startActivity(ManageActivity.class);
-                break;
+//            case R.id.tv_title_bar_left:
+//                startActivity(ManageActivity.class);
+//                break;
             case R.id.iv_title_bar_right1:
                 startActivity(SmartActivity.class);
                 break;
@@ -162,9 +156,9 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
 
     private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
-            case R.id.tv_title_bar_left:
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
-                break;
+//            case R.id.tv_title_bar_left:
+//                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
+//                break;
             case R.id.iv_title_bar_right1:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MainActivity.class);
                 break;
@@ -179,13 +173,13 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     public void onStart() {
         super.onStart();
         empty();
-        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
-            addListener();
-            checkDevices();
-            ArrayList<String> icons = new ArrayList<>();
-            mProductsAdapter = new ProductsAdapter(mActivity, icons);
-            rv_products.setAdapter(mProductsAdapter);
-        }
+//        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+//            addListener();
+//            checkDevices();
+//            ArrayList<String> icons = new ArrayList<>();
+//            mProductsAdapter = new ProductsAdapter(mActivity, icons);
+//            rv_products.setAdapter(mProductsAdapter);
+//        }
     }
 
     @Override

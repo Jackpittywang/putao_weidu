@@ -1,15 +1,15 @@
 package com.putao.wd.me.order;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.putao.wd.MainActivity;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
@@ -228,7 +228,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      */
     @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
     public void eventSaleService(String orderId) {
-        MainActivity.isNotRefreshUserInfo = false;
+        IndexActivity.isNotRefreshUserInfo = false;
         Bundle bundle = new Bundle();
         bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
         startActivity(ServiceChooseActivity.class, bundle);
@@ -254,7 +254,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      */
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
-        MainActivity.isNotRefreshUserInfo = false;
+        IndexActivity.isNotRefreshUserInfo = false;
         order_id = order.getId();
         networkRequest(StoreApi.pay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
@@ -294,7 +294,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                         networkRequest(OrderApi.orderCancel(order.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                MainActivity.isNotRefreshUserInfo = false;
+                                IndexActivity.isNotRefreshUserInfo = false;
                                 switch (currentType) {
                                     case TYPE_ALL:
                                         Order newOrder = order;

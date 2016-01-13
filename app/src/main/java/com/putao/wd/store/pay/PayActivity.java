@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
@@ -81,7 +82,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                             Bundle bundle = new Bundle();
                             bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
                             startActivity(PaySuccessActivity.class, bundle);
-                            MainActivity.isNotRefreshUserInfo = false;
+                            IndexActivity.isNotRefreshUserInfo = false;
                         } else {
                             ToastUtils.showToastShort(mContext, "支付失败");
                         }

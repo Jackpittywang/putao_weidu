@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
@@ -86,13 +85,13 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
     @Override
     public void onStart() {
         super.onStart();
-        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
-            rl_explor_empty.setVisibility(View.VISIBLE);
-            jump_loading.setVisibility(View.VISIBLE);
-            getDiaryIndex();
-            addListener();
-            checkDevices();
-        }
+//        if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+//            rl_explor_empty.setVisibility(View.VISIBLE);
+//            jump_loading.setVisibility(View.VISIBLE);
+//            getDiaryIndex();
+//            addListener();
+//            checkDevices();
+//        }
     }
 
     @Override

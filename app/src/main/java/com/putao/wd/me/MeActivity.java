@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.putao.wd.MainActivity;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.OrderApi;
@@ -71,7 +71,7 @@ public class MeActivity extends BasicFragmentActivity implements View.OnClickLis
         super.onStart();
         if (!AccountHelper.isLogin()) {
             hideNum();
-        } else if (!MainActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+        } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             hideNum();
             getUserInfo();
             getOrderCount();
