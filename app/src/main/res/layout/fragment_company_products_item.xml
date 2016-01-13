@@ -7,8 +7,8 @@
         android:id="@+id/iv_product"
         style="@style/image_round_10dp"
         android:layout_gravity="center_horizontal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="20dp"
         android:background="@color/text_color_F5F5F5" />
 </FrameLayout>

@@ -34,8 +34,6 @@ import butterknife.Bind;
 @Deprecated
 public class PutaoCompanyFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener {
 
-//    @Bind(R.id.tv_title_bar_left)
-//    TextView tv_title_bar_left;
     @Bind(R.id.iv_title_bar_right1)
     ImageView iv_title_bar_right1;
     @Bind(R.id.iv_title_bar_right2)
