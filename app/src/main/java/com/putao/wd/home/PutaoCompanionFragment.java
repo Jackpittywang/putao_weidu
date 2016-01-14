@@ -13,9 +13,11 @@ import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.me.MeActivity;
+import com.putao.wd.model.DiaryApp;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -54,6 +56,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     ImageDraweeView iv_user_icon;
 
     ProductsAdapter mProductsAdapter;
+    private List<DiaryApp> mDiaryApps;
 
     @Override
     protected int getLayoutId() {
@@ -80,41 +83,20 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
      * 是否已经添加设备
      */
     private void checkDevices() {
-        networkRequest(ExploreApi.getManagement(),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(ExploreApi.getDiaryApp(),
+                new SimpleFastJsonCallback<ArrayList<DiaryApp>>(DiaryApp.class, loading) {
                     @Override
-                    public void onSuccess(String url, String result) {
-                        if (!"".equals(result)) {
-                            Management management = JSON.parseObject(result, Management.class);
-                            if (management.getSlave_device_list() != null && management.getSlave_device_list().size() > 0) {
-                                cv_empty.setVisibility(View.GONE);
-                                cv_no_empty.setVisibility(View.VISIBLE);
-                                btn_explore_empty.setVisibility(View.GONE);
-                                getManagement();
-                            }
+                    public void onSuccess(String url, ArrayList<DiaryApp> result) {
+                        if (null != result && result.size() > 0) {
+                            cv_empty.setVisibility(View.GONE);
+                            cv_no_empty.setVisibility(View.VISIBLE);
+                            btn_explore_empty.setVisibility(View.GONE);
+                            mProductsAdapter.replaceAll(result);
+                            mDiaryApps = result;
                         }
                         loading.dismiss();
                     }
                 });
-    }
-
-    private void getManagement() {
-        networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
-            @Override
-            public void onSuccess(String url, Management result) {
-                if (null != result) {
-                    mProductsAdapter.clear();
-                    List<ManagementProduct> products = result.getProduct_list();
-                    for (int i = 0; i < 6; i++) {
-                        if (i < products.size())
-                            mProductsAdapter.add(products.get(i).getProduct_icon());
-                        else
-                            mProductsAdapter.add("");
-                    }
-                }
-                loading.dismiss();
-            }
-        });
     }
 
     /**
@@ -184,6 +166,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onItemClick(Serializable serializable, int position) {
-
+        Bundle bundle = new Bundle();
+        bundle.putString(ExploreApi.REQUEST_PRODUCT_ID, mDiaryApps.get(position).getProduct_id());
+        startActivity(DiaryActivity.class);
     }
 }
