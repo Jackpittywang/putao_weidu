@@ -1,7 +1,7 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
-import android.webkit.WebView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * 探索--详情
  * Created by yanghx on 2016/1/13.
  */
-public class ExploreDetailFragment extends BasicFragment implements ViewGroup.OnClickListener{
+public class ExploreDetailFragment extends BasicFragment implements View.OnClickListener{
 
     @Bind(R.id.iv_top)
     ImageDraweeView iv_top;
