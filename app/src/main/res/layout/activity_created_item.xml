@@ -8,7 +8,7 @@
     android:paddingTop="15dp">
 
     <com.sunnybear.library.view.image.RatioImageView
-        android:id="@+id/tv_sign"
+        android:id="@+id/iv_sign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"

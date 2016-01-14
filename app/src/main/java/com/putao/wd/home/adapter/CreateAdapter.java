@@ -9,6 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.explore.adapter.MarketingAdapter;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.view.image.RatioImageView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
@@ -37,22 +38,12 @@ public class CreateAdapter extends LoadMoreAdapter<Marketing, CreateAdapter.Crea
 
     @Override
     public void onBindItem(CreateHolder holder, Marketing marketing, int position) {
-
+        holder.iv_sign.setBackgroundResource(R.drawable.img_p_cover);
     }
 
     static class CreateHolder extends BasicViewHolder {
-        @Bind(R.id.tv_sign)
-        TextView tv_sign;
-        @Bind(R.id.tv_title)
-        TextView tv_title;
-        @Bind(R.id.tv_content)
-        TextView tv_content;
-        @Bind(R.id.tv_count_comment)
-        TextView tv_count_comment;
-        @Bind(R.id.tv_count_cool)
-        TextView tv_count_cool;
-        @Bind(R.id.iv_news_icon)
-        ImageView iv_news_icon;
+        @Bind(R.id.iv_sign)
+        RatioImageView iv_sign;
 
         public CreateHolder(View itemView) {
             super(itemView);
