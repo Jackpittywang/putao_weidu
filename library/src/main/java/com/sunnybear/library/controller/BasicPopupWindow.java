@@ -2,6 +2,7 @@ package com.sunnybear.library.controller;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     private View mRootView;
     private ViewGroup mMainLayout;
 
-    protected BasicFragmentActivity mActivity;
+    protected FragmentActivity mActivity;
     protected LoadingHUD loading;
 
     /**
@@ -38,8 +39,9 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     public BasicPopupWindow(Context context) {
         super(context);
         mContext = context;
-        mActivity = (BasicFragmentActivity) context;
-        this.loading = mActivity.loading;
+        mActivity = (FragmentActivity) context;
+        if (mActivity instanceof BasicFragmentActivity)
+            this.loading = ((BasicFragmentActivity) mActivity).loading;
         int layoutId = getLayoutId();
         if (layoutId == 0)
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
