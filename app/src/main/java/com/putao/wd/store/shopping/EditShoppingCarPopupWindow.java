@@ -82,7 +82,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
      * @param product_id 产品id
      */
     private void getProductSpec(String product_id) {
-        mActivity.networkRequest(StoreApi.getProductSpce(product_id),
+        networkRequest(StoreApi.getProductSpce(product_id),
                 new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
                     @Override
                     public void onSuccess(String url, ProductNorms result) {
@@ -100,7 +100,7 @@ public class EditShoppingCarPopupWindow extends BasicPopupWindow implements View
      * 更改商品规格购物车
      */
     private void cartChange(String old_pid, String new_pid) {
-        mActivity.networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(StoreApi.cartChange(old_pid, new_pid), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());

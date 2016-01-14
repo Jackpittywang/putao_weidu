@@ -12,17 +12,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:background="@color/white"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <com.sunnybear.library.view.image.ImageDraweeView
-                android:id="@+id/iv_top"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginBottom="20dp"
-                auto:placeholderImage="@drawable/icon_40_11"
-                auto:placeholderImageScaleType="centerCrop"/>
+                android:layout_height="300dp">
+
+                <com.sunnybear.library.view.image.ImageDraweeView
+                    android:id="@+id/iv_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    auto:placeholderImage="@drawable/icon_40_11"
+                    auto:placeholderImageScaleType="centerCrop"/>
+
+                <ImageView
+                    android:id="@+id/iv_player"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/btn_player_selector"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_title"
