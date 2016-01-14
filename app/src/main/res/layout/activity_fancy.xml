@@ -7,13 +7,13 @@
 
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
+        android:background="@color/white"
         auto:nav_has_divider="true"
-        auto:nav_has_right_title_icon="true"
-        auto:nav_right_icon="@drawable/icon_explore_bulb"
-        auto:nav_main_title="为孩子创造" />
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="奇思妙想" />
 
     <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-        android:id="@+id/rv_created"
+        android:id="@+id/rv_fancy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         auto:divider_height="10dp"
