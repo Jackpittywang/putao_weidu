@@ -31,8 +31,8 @@
             android:id="@+id/ti_create"
             style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/tab_bar_p_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
+            auto:activeDrawable="@drawable/tab_bar_create_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_create_nor" />
 
         <!--精选-->
         <com.sunnybear.library.view.select.TabItem
