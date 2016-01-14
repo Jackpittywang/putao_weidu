@@ -294,6 +294,10 @@
         <activity
             android:name=".me.MeActivity"
             android:screenOrientation="portrait" />
+        <!--创造详情-->
+        <activity
+            android:name=".created.CreatedDetailActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity
