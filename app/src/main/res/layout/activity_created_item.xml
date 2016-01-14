@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:layout_gravity="right"
         android:layout_marginTop="-20dp"
-        android:background="@color/blue"
+        auto:roundingBorderColor="@color/white"
         auto:placeholderImage="@drawable/img_head_default"
         auto:roundingBorderWidth="1dp" />
 
@@ -107,8 +107,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 auto:isSelect="false"
-                auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel" />
+                auto:norDrawable="@drawable/icon_16_12"
+                auto:selDrawable="@drawable/icon_16_11" />
 
             <TextView
                 android:id="@+id/tv_count_cool"
@@ -142,8 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 auto:isSelect="false"
-                auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel" />
+                auto:norDrawable="@drawable/icon_16_15"
+                auto:selDrawable="@drawable/icon_16_14" />
 
             <TextView
                 android:id="@+id/tv_count_not_cool"
