@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.LoadingHUD;
@@ -76,6 +78,11 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK)
             dismiss();
         return false;
+    }
+
+    public void networkRequest(Request Request, Callback Callback) {
+        if (mActivity instanceof BasicFragmentActivity)
+            ((BasicFragmentActivity) mActivity).networkRequest(Request, Callback);
     }
 
     /**
