@@ -39,7 +39,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     @Bind(R.id.ll_share)
     LinearLayout ll_share;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_nexplore_detail;
