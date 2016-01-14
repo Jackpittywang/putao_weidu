@@ -5,15 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.explore.adapter.ExploreCommonAdapter;
-import com.putao.wd.model.PagerExplore;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;

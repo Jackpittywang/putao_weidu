@@ -81,4 +81,8 @@ public class ExploreDetailFragment extends BasicFragment implements ViewGroup.On
                 break;
         }
     }
+
 }
+
+
+

@@ -5,17 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.Marketing;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 
-import java.util.List;
 
 import butterknife.Bind;
 
