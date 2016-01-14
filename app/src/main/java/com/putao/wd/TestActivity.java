@@ -1,16 +1,14 @@
 package com.putao.wd;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.util.HtmlUtils;
-import com.putao.wd.video.VideoPlayerActivity;
+import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.select.DynamicTitleBar;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
@@ -38,8 +36,8 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
     TextView tv_2;
     @Bind(R.id.tv_3)
     TextView tv_3;
-    @Bind(R.id.tv_emoji)
-    EmojiTextView tv_emoji;
+    //    @Bind(R.id.tv_emoji)
+//    EmojiTextView tv_emoji;
     @Bind(R.id.tb_bar)
     DynamicTitleBar tb_bar;
 
@@ -61,7 +59,7 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
         tv_2.setText(builders.get(1));
         tv_3.setText(builders.get(2));
 
-        tv_emoji.setText("[呲牙][呲牙][呲牙]呲牙[大笑][萌]");
+//        tv_emoji.setText("[呲牙][呲牙][呲牙]呲牙[大笑][萌]");
 
         tb_bar.addTitles(Arrays.asList(titles), 0);
         tb_bar.setOnTitleItemSelectedListener(new TitleBar.OnTitleItemSelectedListener() {
@@ -97,10 +95,12 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
 //                            }
 //                        }).execute();
                 Bundle bundle = new Bundle();
-                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4");
-                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL,
-                        "http://movie.ks.js.cn/flv/other/2014/06/20-2.flv");
-                startActivity(VideoPlayerActivity.class, bundle);
+//                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4");
+//                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL,
+//                        "http://movie.ks.js.cn/flv/other/2014/06/20-2.flv");
+//                startActivity(VideoPlayerActivity.class, bundle);
+                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
+                startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
         }
     }

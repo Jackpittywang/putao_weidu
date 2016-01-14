@@ -274,10 +274,6 @@
         <activity
             android:name=".explore.MarketingDetailActivity"
             android:screenOrientation="portrait" />
-        <!--视频播放-->
-        <activity
-            android:name=".video.VideoPlayerActivity"
-            android:screenOrientation="landscape" />
         <!--更多内容-->
         <activity
             android:name=".explore.ExploreMoreActivity"
@@ -311,6 +307,16 @@
         <activity
             android:name=".qrcode.CaptureActivity"
             android:screenOrientation="portrait" />
+        <!--视频播放-->
+        <activity
+            android:name=".video.VideoPlayerActivity"
+            android:screenOrientation="landscape" />
+        <!--优酷视频播放-->
+        <activity
+            android:name=".video.YoukuVideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask" />
         <!-- shareSDK -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -359,6 +365,13 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <!--优酷视频播放配置-->
+        <meta-data
+            android:name="client_id"
+            android:value="5c30db50b42ae8c4" />
+        <meta-data
+            android:name="client_secret"
+            android:value="af183bd09956bb36837e4d96e518c8b6" />
         <!--================测试Activity======================-->
         <activity
             android:name=".TestActivity"

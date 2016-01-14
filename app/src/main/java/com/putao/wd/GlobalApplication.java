@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -16,6 +17,7 @@ import com.sunnybear.library.model.http.DownloadFileTask;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
+import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,6 +38,8 @@ public class GlobalApplication extends BasicApplication {
     public static String shareImagePath;
     public static String resourcePath;
 
+    public static YoukuPlayerBaseConfiguration mYoukuPlayerBaseConfiguration;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,6 +53,37 @@ public class GlobalApplication extends BasicApplication {
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
+        //初始化优酷播放器
+        mYoukuPlayerBaseConfiguration = new YoukuPlayerBaseConfiguration(getApplicationContext()) {
+            /**
+             * 通过覆写该方法，返回“正在缓存视频信息的界面”，
+             * 则在状态栏点击下载信息时可以自动跳转到所设定的界面.
+             * 用户需要定义自己的缓存界面
+             */
+            @Override
+            public Class<? extends Activity> getCachingActivityClass() {
+                return null;
+            }
+
+            /**
+             * 通过覆写该方法，返回“已经缓存视频信息的界面”，
+             * 则在状态栏点击下载信息时可以自动跳转到所设定的界面.
+             * 用户需要定义自己的已缓存界面
+             */
+            @Override
+            public Class<? extends Activity> getCachedActivityClass() {
+                return null;
+            }
+
+            /**
+             * 配置视频的缓存路径，格式举例： /appname/videocache/
+             * 如果返回空，则视频默认缓存路径为： /应用程序包名/videocache/
+             */
+            @Override
+            public String configDownloadPath() {
+                return sdCardPath + File.separator + "videocache";
+            }
+        };
         //启动推送
 //        startService(new Intent(ACTION_PUSH_SERVICE));
     }

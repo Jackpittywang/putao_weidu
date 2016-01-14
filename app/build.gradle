@@ -80,6 +80,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
     compile project(':vitamio')
+    compile project(':youku_player_open_sdk')
 }
 
 //编译结束后删除unaligned包
