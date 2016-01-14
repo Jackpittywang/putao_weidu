@@ -1,12 +1,10 @@
 package com.putao.wd.created;
 
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.view.BasicWebView;
 
 import butterknife.Bind;
 
@@ -15,10 +13,8 @@ import butterknife.Bind;
  * Created by guchenkai on 2016/1/11.
  */
 public class CreatedDetailActivity extends PTWDActivity {
-    @Bind(R.id.web)
-    WebView web;
-
-
+    @Bind(R.id.wv_content)
+    BasicWebView wv_content;
 
     @Override
     protected int getLayoutId() {
@@ -28,15 +24,7 @@ public class CreatedDetailActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        web.setWebViewClient(new WebViewClient(){
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        web.loadUrl("http://i4k.co/?p=5266");
+        wv_content.loadUrl("http://3g.qq.com");
     }
 
     @Override

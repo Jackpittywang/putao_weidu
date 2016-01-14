@@ -84,7 +84,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
      * 获取商品规格
      */
     public void getProductSpec() {
-        mActivity.networkRequest(StoreApi.getProductSpce(product_id),
+        networkRequest(StoreApi.getProductSpce(product_id),
                 new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
                     @Override
                     public void onSuccess(String url, ProductNorms result) {
@@ -100,7 +100,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     }
 
     private void carAdd(String pid, String qt) {
-        mActivity.networkRequest(StoreApi.cartAdd(pid, qt), new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(StoreApi.cartAdd(pid, qt), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "添加成功！");

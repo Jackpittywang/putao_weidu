@@ -229,4 +229,9 @@
         <attr name="pageDrawable" format="reference" />
         <attr name="fillDrawable" format="reference" />
     </declare-styleable>
+
+    <!--CircleTextView-->
+    <declare-styleable name="CircleTextView">
+        <attr name="background_color" format="color|reference" />
+    </declare-styleable>
 </resources>

@@ -6,6 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         android:background="@color/white"
@@ -13,17 +14,19 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="创造详情" />
 
+    <!--内容-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/navigation_bar_height">
+        android:layout_below="@id/navigation_bar"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
-
 
             <RelativeLayout
                 android:id="@+id/rl_top"
@@ -36,7 +39,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_40_11" />
-
             </RelativeLayout>
 
             <TextView
@@ -46,7 +48,6 @@
                 android:layout_marginBottom="20dp"
                 android:text="和孩子一起打造创作空间"
                 android:textSize="16sp" />
-
 
             <TextView
                 android:id="@+id/tv_digest"
@@ -65,8 +66,8 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/img_carve_up_article" />
 
-            <WebView
-                android:id="@+id/web"
+            <com.sunnybear.library.view.BasicWebView
+                android:id="@+id/wv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -94,6 +95,7 @@
         android:layout_above="@+id/ll_bottom"
         android:background="@color/divider_color" />
 
+    <!--底部操作栏-->
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
@@ -103,7 +105,6 @@
         android:gravity="center"
         android:weightSum="12">
 
-
         <LinearLayout
             android:id="@+id/ll_cool"
             android:layout_width="0dp"
@@ -111,7 +112,6 @@
             android:layout_weight="4"
             android:gravity="center"
             android:orientation="horizontal">
-
 
             <com.sunnybear.library.view.SwitchButton
                 android:id="@+id/sb_cool_icon"
@@ -192,6 +192,7 @@
 
     </LinearLayout>
 
+    <!--悬浮按钮-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -200,54 +201,29 @@
         android:gravity="center_horizontal|top"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cd_cool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="60dp"
-            auto:cardBackgroundColor="#48cfae"
-            auto:cardCornerRadius="24dp">
+        <com.sunnybear.library.view.CircleTextView
+            android:id="@+id/btn_support"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:drawableTop="@drawable/icon_16_10"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="支持"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp"
+            auto:background_color="#48CFAE" />
 
-            <ImageView
-                android:id="@+id/iv_cool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_16_10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="支持"
-                android:textColor="@color/text_color_white" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cd_not_cool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            auto:cardBackgroundColor="#ed5564"
-            auto:cardCornerRadius="24dp">
-
-            <ImageView
-                android:id="@+id/iv_not_cool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_16_13" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="反对"
-                android:textColor="@color/text_color_white" />
-        </android.support.v7.widget.CardView>
-
+        <com.sunnybear.library.view.CircleTextView
+            android:id="@+id/btn_no_support"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="60dp"
+            android:drawableTop="@drawable/icon_16_13"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="无感"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp"
+            auto:background_color="#ED5564" />
     </LinearLayout>
 </RelativeLayout>
