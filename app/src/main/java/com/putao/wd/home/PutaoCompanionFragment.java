@@ -14,6 +14,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.companion.DiaryActivity;
+import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.me.MeActivity;
@@ -54,6 +55,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     BasicRecyclerView rv_products;
     @Bind(R.id.iv_user_icon)
     ImageDraweeView iv_user_icon;
+    @Bind(R.id.iv_smart)
+    ImageView iv_smart;
 
     ProductsAdapter mProductsAdapter;
     private List<DiaryApp> mDiaryApps;
@@ -72,6 +75,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         iv_title_bar_right1.setOnClickListener(this);
         iv_title_bar_right2.setOnClickListener(this);
         btn_explore_empty.setOnClickListener(this);
+        iv_smart.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +97,9 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                             btn_explore_empty.setVisibility(View.GONE);
                             mProductsAdapter.replaceAll(result);
                             mDiaryApps = result;
+                            for (int i = result.size(); i < 6; i++) {
+                                mProductsAdapter.add(new DiaryApp());
+                            }
                         }
                         loading.dismiss();
                     }
@@ -113,6 +120,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         if (!AccountHelper.isLogin()) {
+            if (v.getId() == R.id.iv_smart) return;
             Bundle bundle = new Bundle();
             toLoginActivity(v, bundle);
             bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
@@ -124,13 +132,16 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                 startActivity(MeActivity.class);
                 break;
             case R.id.iv_title_bar_right1:
-                startActivity(SmartActivity.class);
+                startActivity(ManageActivity.class);
                 break;
             case R.id.iv_title_bar_right2:
                 startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_explore_empty:
                 startActivity(CaptureActivity.class);
+                break;
+            case R.id.iv_smart:
+                startActivity(SmartActivity.class);
                 break;
         }
     }
@@ -166,8 +177,10 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onItemClick(Serializable serializable, int position) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ExploreApi.REQUEST_PRODUCT_ID, mDiaryApps.get(position).getProduct_id());
-        startActivity(DiaryActivity.class);
+        if (mDiaryApps.size() > position) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(DiaryActivity.DIARY_APP, mDiaryApps.get(position));
+            startActivity(DiaryActivity.class, bundle);
+        }
     }
 }

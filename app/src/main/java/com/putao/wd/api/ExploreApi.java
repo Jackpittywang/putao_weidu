@@ -16,7 +16,7 @@ public class ExploreApi {
     private static final String REQUEST_SLAVE_DEVICE_ID = "slave_device_id";//关联设备唯一id，无关注设备时不请求
     private static final String REQUEST_START_TIME = "start_time";//起始时间的时间戳
     private static final String REQUEST_END_TIME = "end_time";//结束时间的时间戳
-    public static final String REQUEST_PRODUCT_ID = "product_id";//产品id
+    private static final String REQUEST_PRODUCT_ID = "product_id";//产品id
     private static final String REQUEST_EDIT_LIST = "edit_list";//用户修改的数据列表
     private static final String REQUEST_PLOT_ID = "plot_id";//剧情理念详情id
     private static final String REQUEST_PAGE = "page";//页码
