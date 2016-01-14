@@ -49,6 +49,16 @@
                 android:text="和孩子一起打造创作空间"
                 android:textSize="16sp" />
 
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_user_icon"
+                style="@style/image_circle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerVertical="true"
+                auto:placeholderImage="@drawable/img_head_default" />
+
+
             <TextView
                 android:id="@+id/tv_digest"
                 android:layout_width="wrap_content"

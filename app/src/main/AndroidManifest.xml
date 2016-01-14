@@ -298,6 +298,10 @@
         <activity
             android:name=".created.CreatedDetailActivity"
             android:screenOrientation="portrait" />
+        <!--奇思妙想-->
+        <activity
+            android:name=".created.FancyActivity"
+            android:screenOrientation="portrait" />
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

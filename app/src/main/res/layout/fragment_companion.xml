@@ -51,7 +51,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/btn_scan_selector" />
+            android:src="@drawable/btn_20_control_w_selector" />
 
         <ImageView
             android:id="@+id/iv_title_bar_right2"
@@ -61,7 +61,7 @@
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@id/iv_title_bar_right1"
             android:scaleType="centerInside"
-            android:src="@drawable/btn_scan_selector" />
+            android:src="@drawable/btn_20_scan_w_selector" />
     </RelativeLayout>
 
     <!--文字-->
