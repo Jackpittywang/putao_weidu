@@ -42,6 +42,7 @@ public class PutaoCreatedFragment extends PTWDFragment implements OnItemClickLis
         adapter.add(new Marketing());
         adapter.add(new Marketing());
         rv_created.setOnItemClickListener(this);
+        rv_created.noMoreLoading();
     }
 
     @Override

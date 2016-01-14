@@ -14,7 +14,7 @@
         android:id="@+id/rv_created"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        auto:divider_height="5dp"
+        auto:divider_height="10dp"
         auto:divider_color="@color/divider_color"
         auto:has_row_divider="true" />
 
