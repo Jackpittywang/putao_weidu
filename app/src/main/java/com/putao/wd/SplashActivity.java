@@ -62,79 +62,74 @@ public class SplashActivity extends BasicFragmentActivity {
                         }
                     }).execute();
         else
-            networkRequestNoLoading(UserApi.resourceUpload(mContext), new JSONObjectCallback() {
-                        @Override
-                        public void onSuccess(String url, JSONObject result) {
-                            Logger.d(result.toJSONString());
-                            if (!StringUtils.equals(result.getString("status"), "200")) {
-                                GlobalApplication.setEmojis((ConcurrentHashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GlobalApplication.MAP_EMOJI));
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivity(IndexActivity.class);
-                                        finish();
-                                    }
-                                }, 3 * 1000);
-                                return;
-                            }
-                            JSONObject object = result.getJSONObject("data");
-                            String last_resource_version = object.getString("last_resource_version");
-                            String last_version = object.getString("last_version");
-                            PreferenceUtils.save("resource_version", last_resource_version);
-                            if (!StringUtils.equals(last_version, last_resource_version)) {
-                                String downloadUrl = "http://static.uzu.wang/source/app_5/resource/patch_" + last_version + "_" + last_resource_version + ".zip";
-                                task = new DownloadFileTask(downloadUrl,
-                                        new DownloadFileCallback() {
-                                            @Override
-                                            public void onProgress(int progress, long networkSpeed) {
-                                                Logger.d("progress:" + progress + ",networkSpeed:" + networkSpeed);
-                                            }
+            startActivity(IndexActivity.class);
+//        updateResource();
+    }
 
-                                            @Override
-                                            public void onFinish(boolean isSuccess) {
-                                                Logger.i(isSuccess ? "下载成功" : "下载失败");
-                                                if (isSuccess)
-                                                    try {
-                                                        FileUtils.unZipInSdCard(task.getDownloadFile().getAbsolutePath(), "patch", true);
-                                                        FileUtils.delete(task.getDownloadFile());
-                                                        SuperTask.with(SplashActivity.this)
-                                                                .assign(new SuperTask.TaskDescription<ConcurrentHashMap<String, String>>() {
-                                                                    @Override
-                                                                    public ConcurrentHashMap<String, String> onBackground() {
-                                                                        DistrictUtils.insertRegion();
-                                                                        return parseEmoji();
-                                                                    }
-                                                                })
-                                                                .finish(new SuperTask.FinishListener<ConcurrentHashMap<String, String>>() {
-                                                                    @Override
-                                                                    public void onFinish(@Nullable ConcurrentHashMap<String, String> result) {
-                                                                        Logger.d("表情包设置完成");
-                                                                        mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
-                                                                        GlobalApplication.setEmojis(result);
-                                                                        startActivity(IndexActivity.class);
-                                                                        finish();
-                                                                    }
-                                                                }).execute();
-                                                    } catch (IOException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                            }
-                                        });
-                                task.execute();
-                            } else {
-                                GlobalApplication.setEmojis((ConcurrentHashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GlobalApplication.MAP_EMOJI));
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivity(IndexActivity.class);
-                                        finish();
-                                    }
-                                }, 3 * 1000);
-                            }
+    /**
+     * 请求资源更新
+     */
+    private void updateResource() {
+        networkRequestNoLoading(UserApi.resourceUpload(mContext), new JSONObjectCallback() {
+                    @Override
+                    public void onSuccess(String url, JSONObject result) {
+                        Logger.d(result.toJSONString());
+                        if (!StringUtils.equals(result.getString("status"), "200")) {
+                            GlobalApplication.setEmojis((ConcurrentHashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GlobalApplication.MAP_EMOJI));
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(IndexActivity.class);
+                                    finish();
+                                }
+                            }, 3 * 1000);
+                            return;
                         }
+                        JSONObject object = result.getJSONObject("data");
+                        String last_resource_version = object.getString("last_resource_version");
+                        String last_version = object.getString("last_version");
+                        PreferenceUtils.save("resource_version", last_resource_version);
+                        if (!StringUtils.equals(last_version, last_resource_version)) {
+                            String downloadUrl = "http://static.uzu.wang/source/app_5/resource/patch_" + last_version + "_" + last_resource_version + ".zip";
+                            task = new DownloadFileTask(downloadUrl,
+                                    new DownloadFileCallback() {
+                                        @Override
+                                        public void onProgress(int progress, long networkSpeed) {
+                                            Logger.d("progress:" + progress + ",networkSpeed:" + networkSpeed);
+                                        }
 
-                        @Override
-                        public void onFailure(String url, int statusCode, String msg) {
+                                        @Override
+                                        public void onFinish(boolean isSuccess) {
+                                            Logger.i(isSuccess ? "下载成功" : "下载失败");
+                                            if (isSuccess)
+                                                try {
+                                                    FileUtils.unZipInSdCard(task.getDownloadFile().getAbsolutePath(), "patch", true);
+                                                    FileUtils.delete(task.getDownloadFile());
+                                                    SuperTask.with(SplashActivity.this)
+                                                            .assign(new SuperTask.TaskDescription<ConcurrentHashMap<String, String>>() {
+                                                                @Override
+                                                                public ConcurrentHashMap<String, String> onBackground() {
+                                                                    DistrictUtils.insertRegion();
+                                                                    return parseEmoji();
+                                                                }
+                                                            })
+                                                            .finish(new SuperTask.FinishListener<ConcurrentHashMap<String, String>>() {
+                                                                @Override
+                                                                public void onFinish(@Nullable ConcurrentHashMap<String, String> result) {
+                                                                    Logger.d("表情包设置完成");
+                                                                    mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
+                                                                    GlobalApplication.setEmojis(result);
+                                                                    startActivity(IndexActivity.class);
+                                                                    finish();
+                                                                }
+                                                            }).execute();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                        }
+                                    });
+                            task.execute();
+                        } else {
                             GlobalApplication.setEmojis((ConcurrentHashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GlobalApplication.MAP_EMOJI));
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -145,7 +140,20 @@ public class SplashActivity extends BasicFragmentActivity {
                             }, 3 * 1000);
                         }
                     }
-            );
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        GlobalApplication.setEmojis((ConcurrentHashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GlobalApplication.MAP_EMOJI));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(IndexActivity.class);
+                                finish();
+                            }
+                        }, 3 * 1000);
+                    }
+                }
+        );
     }
 
     /**

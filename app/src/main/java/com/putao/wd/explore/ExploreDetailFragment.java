@@ -1,13 +1,13 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.view.BasicWebView;
 
 import butterknife.Bind;
 
@@ -26,8 +26,8 @@ public class ExploreDetailFragment extends BasicFragment {
     TextView tv_title;
     @Bind(R.id.tv_digest)
     TextView tv_digest;
-    @Bind(R.id.web)
-    WebView web;
+    @Bind(R.id.wv_content)
+    BasicWebView wv_content;
     @Bind(R.id.ll_cool)
     LinearLayout ll_cool;
     @Bind(R.id.ll_comment)

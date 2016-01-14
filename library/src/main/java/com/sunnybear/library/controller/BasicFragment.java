@@ -1,9 +1,11 @@
 package com.sunnybear.library.controller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -28,7 +30,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BasicFragment<App extends BasicApplication> extends Fragment {
     private View mFragmentView = null;
-    protected BasicFragmentActivity mActivity;
+    protected FragmentActivity mActivity;
 
     //fragment管理器
     protected FragmentManager mFragmentManager;
@@ -67,7 +69,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = (BasicFragmentActivity) activity;
+        mActivity = (FragmentActivity) activity;
         mApp = (App) mActivity.getApplication();
         this.loading = LoadingHUD.getInstance(mActivity);
         loading.setSpinnerType(LoadingHUD.FADED_ROUND_SPINNER);
@@ -206,7 +208,13 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param args        传递参数
      */
     protected void startActivity(Class<? extends Activity> targetClass, Bundle args) {
-        mActivity.startActivity(targetClass, args);
+        if (mActivity instanceof BasicFragmentActivity) {
+            ((BasicFragmentActivity) mActivity).startActivity(targetClass, args);
+        } else {
+            Intent intent = new Intent(mActivity, targetClass);
+            intent.putExtras(args);
+            mActivity.startActivity(intent);
+        }
     }
 
     /**
@@ -215,7 +223,10 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param targetClass 目标Activity类型
      */
     protected void startActivity(Class<? extends Activity> targetClass) {
-        mActivity.startActivity(targetClass);
+        if (mActivity instanceof BasicFragmentActivity)
+            ((BasicFragmentActivity) mActivity).startActivity(targetClass);
+        else
+            mActivity.startActivity(new Intent(mActivity, targetClass));
     }
 
     /**
