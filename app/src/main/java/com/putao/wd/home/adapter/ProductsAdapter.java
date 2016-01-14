@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.companion.PlotPreviewDialog;
+import com.putao.wd.model.DiaryApp;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;
@@ -30,11 +31,11 @@ import butterknife.Bind;
  * 探索号适配器
  * Created by yanghx on 2015/12/9.
  */
-public class ProductsAdapter extends BasicAdapter<String, ProductsAdapter.ProductsViewHolder> {
+public class ProductsAdapter extends BasicAdapter<DiaryApp, ProductsAdapter.ProductsViewHolder> {
 
 
-    public ProductsAdapter(Context context, List<String> strings) {
-        super(context, strings);
+    public ProductsAdapter(Context context, List<DiaryApp> diaryApps) {
+        super(context, diaryApps);
     }
 
     @Override
@@ -48,11 +49,11 @@ public class ProductsAdapter extends BasicAdapter<String, ProductsAdapter.Produc
     }
 
     @Override
-    public void onBindItem(ProductsAdapter.ProductsViewHolder holder, String s, int position) {
-        if (TextUtils.isEmpty(s))
+    public void onBindItem(ProductsAdapter.ProductsViewHolder holder, DiaryApp diaryApp, int position) {
+        if (TextUtils.isEmpty(diaryApp.getProduct_icon()))
             holder.iv_product.setDefaultImage(R.color.background_F5F5F5);
         else
-            holder.iv_product.setImageURL(s);
+            holder.iv_product.setImageURL(diaryApp.getProduct_icon());
     }
 
     static class ProductsViewHolder extends BasicViewHolder {

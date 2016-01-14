@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            android:background="@color/white"
+            auto:nav_left_icon="@drawable/btn_20_back_p_nor"
+            auto:nav_main_title="葡萄陪伴成长记"
+            auto:nav_main_title_color="@color/white"
+            auto:nav_main_title_size="@dimen/text_size_8sp"
+            auto:nav_right_title_color="@color/white" />
+
+        <!-- 有数据 -->
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            auto:divider_color="@color/divider_color"
+            auto:divider_height="1px"
+            auto:has_row_divider="true" />
+
+        <LinearLayout
+            android:id="@+id/ll_date_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_EBEBEB"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_explore_nodata" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="孩子还没有成长记数据" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--空页面-->
+    <RelativeLayout
+        android:id="@+id/rl_explor_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@drawable/img_explore_empty_bg">
+
+        <TextView
+            android:id="@+id/iv_explore_empty_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="40dp"
+            android:text="扫一扫"
+            android:textSize="@dimen/text_size_22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_explore_empty_arrow"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="帮您深度挖掘孩子的内在潜质、捕捉孩子\n的敏感期" />
+
+        <Button
+            android:id="@+id/btn_explore_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/btn_order_state_selector"
+            android:drawableLeft="@drawable/btn_explore_empty_selector"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="   立即扫一扫"
+            android:textColor="@color/service_btn_nor" />
+    </RelativeLayout>
+
+    <com.sunnybear.library.view.JumpLoadingLayout
+        android:id="@+id/jump_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        auto:jump_color="@color/text_main_color_nor"
+        android:visibility="gone"/>
+</FrameLayout>

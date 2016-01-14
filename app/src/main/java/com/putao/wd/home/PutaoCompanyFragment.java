@@ -75,7 +75,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
     /**
      * 是否已经添加设备
      */
-    private void checkDevices() {
+  /*  private void checkDevices() {
         networkRequest(ExploreApi.getManagement(),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
@@ -93,9 +93,9 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                         loading.dismiss();
                     }
                 });
-    }
+    }*/
 
-    private void getManagement() {
+    /*private void getManagement() {
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
             public void onSuccess(String url, Management result) {
@@ -114,7 +114,7 @@ public class PutaoCompanyFragment extends BasicFragment implements View.OnClickL
                 loading.dismiss();
             }
         });
-    }
+    }*/
 
     /**
      * 没有登录或没有绑定设备时的界面
