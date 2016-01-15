@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Marketing;
-import com.sunnybear.library.view.image.RatioImageView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 

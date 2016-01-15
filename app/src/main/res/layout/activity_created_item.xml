@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <!--标题图-->
-    <com.sunnybear.library.view.image.RatioImageView
+    <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_sign"
+        style="@style/image_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:textColor="@color/color_C2C2C2"
-        android:textSize="@dimen/text_size_12sp" />
+        auto:aspect_ratio="2"
+        auto:default_drawable="@drawable/img_p_cover" />
 
     <!--头像-->
     <com.sunnybear.library.view.image.ImageDraweeView
@@ -23,11 +23,11 @@
         android:layout_gravity="right"
         android:layout_marginRight="15dp"
         android:layout_marginTop="-20dp"
-        auto:roundingBorderColor="@color/white"
         auto:placeholderImage="@drawable/img_head_default"
+        auto:roundingBorderColor="@color/white"
         auto:roundingBorderWidth="1dp" />
 
-<!--标题-->
+    <!--标题-->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"

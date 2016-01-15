@@ -166,7 +166,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         super.onStart();
         empty();
         addClickListener();
-        if (AccountHelper.isLogin()) {
+        if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             mProductsAdapter = new ProductsAdapter(mActivity, null);
             rv_products.setAdapter(mProductsAdapter);
             checkDevices();
