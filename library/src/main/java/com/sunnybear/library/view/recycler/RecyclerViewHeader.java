@@ -163,7 +163,6 @@ public class RecyclerViewHeader extends RelativeLayout {
         int height = 0;
         View view = getChildAt(0);
         if (view instanceof ScrollView) {
-
             for (int i = 0; i < ((ScrollView) view).getChildCount(); i++) {
                 View child = ((ScrollView) view).getChildAt(i);
                 if (child instanceof LinearLayout || child instanceof RelativeLayout || child instanceof FrameLayout) {
