@@ -261,7 +261,7 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                 && null != mMediaPlayerDelegate.videoInfo
                 && !mMediaPlayerDelegate.videoInfo.IsSendVV) {
             if (PlayerUtil
-                    .isBaiduQvodSource(mMediaPlayerDelegate.videoInfo.mSource)) {
+                    .isBaiduQvodSource(mMediaPlayerDelegate.videoInfo.mSource))
                 Track.onError(mContext,
                         mMediaPlayerDelegate.videoInfo.getVid(), Profile.GUID,
                         StaticsUtil.PLAY_TYPE_NET, PlayCode.VIDEO_LOADING_FAIL,
@@ -269,8 +269,8 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                         mMediaPlayerDelegate.videoInfo.getCurrentQuality(),
                         mMediaPlayerDelegate.videoInfo.getProgress(),
                         mMediaPlayerDelegate.isFullScreen);
-            } else if (!StaticsUtil.PLAY_TYPE_LOCAL
-                    .equals(mMediaPlayerDelegate.videoInfo.playType)) {
+            else if (!StaticsUtil.PLAY_TYPE_LOCAL
+                    .equals(mMediaPlayerDelegate.videoInfo.playType))
                 Track.onError(mContext,
                         mMediaPlayerDelegate.videoInfo.getVid(), Profile.GUID,
                         mMediaPlayerDelegate.videoInfo.playType,
@@ -279,16 +279,15 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                         mMediaPlayerDelegate.videoInfo.getCurrentQuality(),
                         mMediaPlayerDelegate.videoInfo.getProgress(),
                         mMediaPlayerDelegate.isFullScreen);
-            }
         }
 
         if (null != mMediaPlayerDelegate.videoInfo
                 && StaticsUtil.PLAY_TYPE_LOCAL
-                .equals(mMediaPlayerDelegate.videoInfo.playType)) {
+                .equals(mMediaPlayerDelegate.videoInfo.playType))
             if (what == MPPErrorCode.MEDIA_INFO_DATA_SOURCE_ERROR
                     || what == MPPErrorCode.MEDIA_INFO_NETWORK_CHECK
                     || what == MPPErrorCode.MEDIA_INFO_NETWORK_DISSCONNECTED
-                    || what == MPPErrorCode.MEDIA_INFO_SEEK_ERROR) {
+                    || what == MPPErrorCode.MEDIA_INFO_SEEK_ERROR)
                 Track.onError(mContext,
                         mMediaPlayerDelegate.videoInfo.getVid(), Profile.GUID,
                         mMediaPlayerDelegate.videoInfo.playType,
@@ -297,13 +296,11 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                         mMediaPlayerDelegate.videoInfo.getCurrentQuality(),
                         mMediaPlayerDelegate.videoInfo.getProgress(),
                         mMediaPlayerDelegate.isFullScreen);
-            }
-        }
 
         // 使用系统播放器播放的时候
         if (!PlayerUtil.useUplayer() && what == 1
                 && mMediaPlayerDelegate != null
-                && mMediaPlayerDelegate.videoInfo != null) {
+                && mMediaPlayerDelegate.videoInfo != null)
             Track.onError(mContext, mMediaPlayerDelegate.videoInfo.getVid(),
                     Profile.GUID, mMediaPlayerDelegate.videoInfo.playType,
                     PlayCode.VIDEO_LOADING_FAIL,
@@ -311,7 +308,6 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                     mMediaPlayerDelegate.videoInfo.getCurrentQuality(),
                     mMediaPlayerDelegate.videoInfo.getProgress(),
                     mMediaPlayerDelegate.isFullScreen);
-        }
 
         Track.changeVideoQualityOnError(mActivity);
         Track.mIsChangingLanguage = false;
@@ -375,9 +371,8 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                 mMediaPlayerDelegate.videoInfo.paidSended = true;
             }
             if (mMediaPlayerDelegate.videoInfo.getLookTen() == 1
-                    && currentPosition / 1000 >= 600) {
+                    && currentPosition / 1000 >= 600)
                 mBasePlayerManager.onPayClick();
-            }
         }
         setPlayerBlackGone();
     }
@@ -385,17 +380,16 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
     @Override
     public void onLoadedListener() {
         setDebugText("缓冲完成onLoadedListener");
-        if (!firstOnloaded) {
+        if (!firstOnloaded)
             firstOnloaded = true;
-        }
-        if (surfaceBlack.getVisibility() == View.VISIBLE) {
+
+        if (surfaceBlack.getVisibility() == View.VISIBLE)
             setPlayerBlackGone();
-        }
+
         // Track.onRealVideoFirstLoadEnd();
         Track.onChangVideoQualityEnd(mActivity);
-        if (Track.mIsChangingLanguage) {
+        if (Track.mIsChangingLanguage)
             Track.mIsChangingLanguage = false;
-        }
     }
 
     @Override
@@ -414,11 +408,10 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
      */
     public void resizeMediaPlayer(boolean force) {
         if (mMediaPlayerDelegate != null) {
-            if (mMediaPlayerDelegate.isFullScreen) {
+            if (mMediaPlayerDelegate.isFullScreen)
                 videoSize = sp.getInt("video_size", 100);
-            } else {
+            else
                 videoSize = 100;
-            }
             resizeVideoView(videoSize, force);
         }
     }
@@ -438,9 +431,8 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
      * 全屏的时候设置全屏
      */
     public void setFullscreenBack() {
-        if (fullScreenLayoutParams == null) {
+        if (fullScreenLayoutParams == null)
             throw new IllegalArgumentException("Full screen LayoutParams does not be set. Do you forget call setFullScreenLayoutParams(ViewGroup.LayoutParams)? ");
-        }
         this.setLayoutParams(fullScreenLayoutParams);
 //		this.setLayoutParams(new LinearLayout.LayoutParams(
 //				LinearLayout.LayoutParams.MATCH_PARENT,
@@ -463,11 +455,10 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
     /**
      * 设置竖屏布局
      */
-    public void setVerticalLayout()// 设置竖屏布局
-    {
-        if (smallScreenLayoutParams == null) {
+    public void setVerticalLayout() {// 设置竖屏布局
+        if (smallScreenLayoutParams == null)
             throw new IllegalArgumentException("Small screen LayoutParams does not be set. Do you forget call setSmallScreenLayoutParams(ViewGroup.LayoutParams)? ");
-        }
+
         this.setLayoutParams(smallScreenLayoutParams);
 //		this.setLayoutParams(new LinearLayout.LayoutParams(
 //				LinearLayout.LayoutParams.MATCH_PARENT,
@@ -500,13 +491,12 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                 : mMediaPlayerDelegate.mediaPlayer.getVideoOrientation();
         if (lastpercent == percent && fullWidth == lastFullWidth
                 && fullHeight == lastFullHeight
-                && lastOrientation == orientation && !force) {
+                && lastOrientation == orientation && !force)
             return;
-        }
 
-        if (mMediaPlayerDelegate == null) {
+        if (mMediaPlayerDelegate == null)
             return;
-        }
+
         if (percent == -1) {// 满屏
             if (mMediaPlayerDelegate.isFullScreen) {
                 showWidth = fullWidth;
@@ -554,7 +544,6 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
             if (showHeight > resizeScreenHeight) {
                 showHeight = resizeScreenHeight;
                 showWidth = resizeScreenHeight * videoWidth / videoHeight;
-            } else {
             }
         }
 
@@ -591,9 +580,9 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
                 .getLayoutParams();
         topPara.height = topWidth;
         topPara.width = fullWidth;
-        if (topWidth > 0) {
+        if (topWidth > 0)
             topPara.bottomMargin = 1;
-        }
+
         topSpace.setLayoutParams(topPara);
         topSpace.requestLayout();
         RelativeLayout.LayoutParams bottomPara = (RelativeLayout.LayoutParams) bottomSpace
@@ -610,10 +599,10 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
         ++showHeight;
         Logger.e("PlayFlow", "changeVideoSize-->" + "showWidth-->" + showWidth
                 + "showHeight-->" + showHeight);
-        if (mMediaPlayerDelegate.mediaPlayer != null) {
+        if (mMediaPlayerDelegate.mediaPlayer != null)
             mMediaPlayerDelegate.mediaPlayer.changeVideoSize(showWidth,
                     showHeight);
-        }
+
         lastFullHeight = fullHeight;
         lastFullWidth = fullWidth;
         lastpercent = percent;
@@ -762,7 +751,7 @@ public class YoukuPlayerView extends PluginOverlay implements DetailMessage,
     /**
      * 初始化接口
      *
-     * @param mYoukuBaseActivity
+     * @param basePlayerManager
      * @param platformId
      * @param pid                各平台注册
      * @param useSystemPlayer    强制硬解接口，使用这个参数将只能够播放m3u8
