@@ -192,6 +192,9 @@
                 android:id="@+id/rv_created_correlation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                auto:has_row_divider="true"
+                auto:divider_height="1dp"
+                auto:divider_color="@color/divider_color"
                 auto:is_inner="true" />
 
             <View

@@ -4,10 +4,10 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.home.adapter.CreateAdapter;
+import com.putao.wd.created.adapter.CreateDetailAdapter;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.view.BasicWebView;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import butterknife.Bind;
 
@@ -19,8 +19,8 @@ public class CreatedDetailActivity extends PTWDActivity {
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
     @Bind(R.id.rv_created_correlation)
-    LoadMoreRecyclerView rv_created_correlation;
-    private CreateAdapter adapter;
+    BasicRecyclerView rv_created_correlation;
+    private CreateDetailAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -31,7 +31,7 @@ public class CreatedDetailActivity extends PTWDActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         wv_content.loadUrl("http://3g.qq.com");
-        adapter = new CreateAdapter(mContext, null);
+        adapter = new CreateDetailAdapter(mContext, null);
         rv_created_correlation.setAdapter(adapter);
         adapter.add(new Marketing());
         adapter.add(new Marketing());

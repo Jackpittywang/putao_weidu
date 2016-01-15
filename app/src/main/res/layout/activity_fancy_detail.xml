@@ -54,8 +54,8 @@
                 style="@style/image_circle"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
                 auto:placeholderImage="@drawable/img_head_default" />
 
 
@@ -95,7 +95,11 @@
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:id="@+id/rv_created_correlation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1dp"
+                auto:has_row_divider="true"
+                auto:is_inner="true"/>
         </LinearLayout>
     </ScrollView>
 

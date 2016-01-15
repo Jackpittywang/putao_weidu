@@ -10,12 +10,11 @@ import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 
-import butterknife.Bind;
 
 /**
  * Created by Administrator on 2016/1/13.
  */
-public class FancyAdapter extends LoadMoreAdapter<Marketing, FancyAdapter.CreateHolder> {
+public class FancyAdapter extends LoadMoreAdapter<Marketing, FancyAdapter.FancyHolder> {
 
     public FancyAdapter(Context context, List<Marketing> marketings) {
         super(context, marketings);
@@ -27,17 +26,17 @@ public class FancyAdapter extends LoadMoreAdapter<Marketing, FancyAdapter.Create
     }
 
     @Override
-    public CreateHolder getViewHolder(View itemView, int viewType) {
-        return new CreateHolder(itemView);
+    public FancyHolder getViewHolder(View itemView, int viewType) {
+        return new FancyHolder(itemView);
     }
 
     @Override
-    public void onBindItem(CreateHolder holder, Marketing marketing, int position) {
+    public void onBindItem(FancyHolder holder, Marketing marketing, int position) {
     }
 
-    static class CreateHolder extends BasicViewHolder {
+    static class FancyHolder extends BasicViewHolder {
 
-        public CreateHolder(View itemView) {
+        public FancyHolder(View itemView) {
             super(itemView);
         }
     }
