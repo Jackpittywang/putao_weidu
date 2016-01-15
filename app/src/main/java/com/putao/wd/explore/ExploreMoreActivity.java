@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.HomeExploreMore;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.select.DynamicTitleBar;
@@ -50,5 +51,11 @@ public class ExploreMoreActivity extends PTWDActivity {
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    private void getTest() {
+        for(int i = 0; i < 15; i++) {
+            new HomeExploreMore();
+        }
     }
 }
