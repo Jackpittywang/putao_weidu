@@ -43,10 +43,6 @@ public class BasicWebView extends WebView {
     private void initView() {
         setWebSettings();
         setScrollBarStyle(SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
-        setVerticalScrollBarEnabled(false);
-        setVerticalScrollbarOverlay(false);
-        setHorizontalScrollBarEnabled(false);
-        setHorizontalScrollbarOverlay(false);
 
         setWebViewClient(new WebViewClient() {
             @Override
@@ -86,10 +82,6 @@ public class BasicWebView extends WebView {
         WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(true);//开启对JavaScript的支持
         settings.setDefaultTextEncodingName("UTF-8");//设置字符编码
-        settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 
     /**

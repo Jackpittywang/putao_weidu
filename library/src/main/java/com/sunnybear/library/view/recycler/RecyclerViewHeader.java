@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -162,17 +163,24 @@ public class RecyclerViewHeader extends RelativeLayout {
     private int getRealHeight() {
         int height = 0;
         View view = getChildAt(0);
-        if (view instanceof ScrollView) {
+        if (view instanceof ScrollView)
             for (int i = 0; i < ((ScrollView) view).getChildCount(); i++) {
                 View child = ((ScrollView) view).getChildAt(i);
                 if (child instanceof LinearLayout || child instanceof RelativeLayout || child instanceof FrameLayout) {
-                    child.setBackgroundResource(R.color.white);
+                    child.setBackgroundResource(R.color.transparent);
                     height += child.getHeight();
                 }
             }
-        } else {
+        else if (view instanceof LinearLayout)
+            for (int i = 0; i < ((LinearLayout) view).getChildCount(); i++) {
+                View child = ((LinearLayout) view).getChildAt(i);
+                if (child instanceof WebView)
+                    height += ((WebView) child).getContentHeight();
+                else
+                    height += child.getHeight();
+            }
+        else
             height = this.getHeight();
-        }
         return height;
     }
 
