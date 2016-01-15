@@ -1,6 +1,8 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +17,7 @@ import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.Logger;
 
 import butterknife.Bind;
@@ -26,6 +29,8 @@ import butterknife.OnClick;
  */
 public class PutaoExploreFragment extends BasicFragment implements View.OnClickListener {
 
+    public static final String EVENT_CURRENT_ITEM =  "current_item";
+
     @Bind(R.id.tv_thinking)
     TextView tv_thinking;
     @Bind(R.id.iv_scan)
@@ -33,7 +38,15 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Bind(R.id.vp_content)
     ViewPager vp_content;
 
+
     private SparseArray<Fragment> mFragments;
+    private Handler mHandle = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            vp_content.setCurrentItem(0);
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -44,17 +57,15 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         addFragments();
-        vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return mFragments.get(position);
-            }
+        setViewPage();
+//        vp_content.setCurrentItem(7);
+//        mHandle.sendEmptyMessageDelayed(0x123, 5000);
+//        for (int i = 6; i > -1; i--) {
+//            Message msg = mHandle.obtainMessage();
+//            msg.arg1 = i;
+//            mHandle.sendMessageDelayed(msg, 3000);
+//        }
 
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
-        });
     }
 
     @Override
@@ -91,8 +102,44 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     }
 
     /**
-     * viewpager临时数据
+     * viewpager添加适配器、监听器
      */
+    private void setViewPage() {
+        vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                EventBusHelper.post(position, EVENT_CURRENT_ITEM);
+                return mFragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return mFragments.size();
+            }
+        });
+//        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                Logger.w("position = " + position);
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//            }
+//        });
+    }
+
+
+
+
+//    /**
+//     * viewpager临时数据
+//     */
 //    private List<View> getData() {
 //        lists = new ArrayList<>();
 //        inflater = LayoutInflater.from(mActivity);
