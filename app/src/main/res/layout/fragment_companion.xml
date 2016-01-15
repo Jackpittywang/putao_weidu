@@ -106,11 +106,12 @@
         auto:cardElevation="6dp"
         auto:cardUseCompatPadding="true">
 
-        <com.sunnybear.library.view.image.RatioImageView
+        <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/tv_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/img_p_tip_01" />
+            auto:aspect_ratio="2"
+            auto:default_drawable="@drawable/img_p_tip_01" />
     </android.support.v7.widget.CardView>
 
     <!--有绑定设备时卡片-->
