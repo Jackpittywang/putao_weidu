@@ -20,6 +20,8 @@ import butterknife.Bind;
  */
 public class ExploreMoreActivity extends PTWDActivity {
 
+    public static final String KEY_TAB = "key_title";
+
     @Bind(R.id.tb_bar)
     DynamicTitleBar tb_bar;
     @Bind(R.id.rv_more)
@@ -35,7 +37,8 @@ public class ExploreMoreActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        tb_bar.addTitles(Arrays.asList(titles), 0);
+        int tab = args.getInt(KEY_TAB);
+        tb_bar.addTitles(Arrays.asList(titles), tab);
         tb_bar.setOnTitleItemSelectedListener(new TitleBar.OnTitleItemSelectedListener() {
             @Override
             public void onTitleItemSelected(TitleItem item, int position) {

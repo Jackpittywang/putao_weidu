@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 更多内容
  * Created by yanghx on 2016/1/12.
  */
-public class PagerExploreMore implements Serializable {
+public class HomeExploreMore implements Serializable {
 
     private int imageUrl;
     private String title;
@@ -38,7 +38,7 @@ public class PagerExploreMore implements Serializable {
 
     @Override
     public String toString() {
-        return "PagerExploreMore{" +
+        return "HomeExploreMore{" +
                 "imageUrl=" + imageUrl +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

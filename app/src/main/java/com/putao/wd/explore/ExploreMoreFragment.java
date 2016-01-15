@@ -1,19 +1,18 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.putao.wd.R;
-import com.putao.wd.explore.adapter.ExploreMoreAdapter;
-import com.putao.wd.model.PagerExplore;
+import com.putao.wd.model.HomeExplore;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 探索--更多
@@ -21,10 +20,16 @@ import butterknife.Bind;
  */
 public class ExploreMoreFragment extends BasicFragment {
 
-    @Bind(R.id.rv_content)
-    BasicRecyclerView rv_content;
+//  @Bind(R.id.rv_content)
+//  BasicRecyclerView rv_content;
+    @Bind(R.id.iv_said)
+    ImageView iv_said;
+    @Bind(R.id.iv_play)
+    ImageView iv_play;
+    @Bind(R.id.iv_plus)
+    ImageView iv_plus;
 
-    private ExploreMoreAdapter adapter;
+//    private ExploreMoreAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -33,9 +38,8 @@ public class ExploreMoreFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        adapter = new ExploreMoreAdapter(mActivity, getTest());
-        rv_content.setAdapter(adapter);
-        addListener();
+//        adapter = new ExploreMoreAdapter(mActivity, getTest());
+//        rv_content.setAdapter(adapter);
     }
 
     @Override
@@ -43,24 +47,44 @@ public class ExploreMoreFragment extends BasicFragment {
         return new String[0];
     }
 
-    private void addListener() {
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Serializable serializable, int position) {
-                startActivity(ExploreMoreActivity.class);
-            }
-        });
-    }
+//    private void addListener() {
+//        rv_content.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(Serializable serializable, int position) {
+//                startActivity(ExploreMoreActivity.class);
+//            }
+//        });
+//    }
 
 
-    private List<PagerExplore> getTest() {
-        List<PagerExplore> list = new ArrayList<>();
-        PagerExplore pagerExplore = null;
-       for(int i = 0; i < 3; i ++) {
-           pagerExplore = new PagerExplore();
-           pagerExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
-           list.add(pagerExplore);
-       }
+    private List<HomeExplore> getTest() {
+        List<HomeExplore> list = new ArrayList<>();
+        HomeExplore homeExplore = null;
+        for (int i = 0; i < 3; i++) {
+            homeExplore = new HomeExplore();
+            homeExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
+            list.add(homeExplore);
+        }
         return list;
     }
+
+    @OnClick({R.id.iv_said, R.id.iv_play, R.id.iv_plus})
+    public void onClick(View v){
+        Bundle bundle = new Bundle();
+        switch (v.getId()) {
+            case R.id.iv_said :
+                bundle.putInt(ExploreMoreActivity.KEY_TAB, 0);
+                startActivity(ExploreMoreActivity.class, bundle);
+                break;
+            case R.id.iv_play :
+                bundle.putInt(ExploreMoreActivity.KEY_TAB, 1);
+                startActivity(ExploreMoreActivity.class, bundle);
+                break;
+            case R.id.iv_plus :
+                bundle.putInt(ExploreMoreActivity.KEY_TAB, 2);
+                startActivity(ExploreMoreActivity.class, bundle);
+                break;
+        }
+    }
+
 }
