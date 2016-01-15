@@ -1,10 +1,8 @@
 package com.putao.wd.start.putaozi;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -67,4 +65,8 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
         }
     }
 
+    @Override
+    public void onWebPageLoaderFinish(String url) {
+
+    }
 }
