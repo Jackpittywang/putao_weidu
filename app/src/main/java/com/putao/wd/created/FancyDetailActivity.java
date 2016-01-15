@@ -2,6 +2,7 @@ package com.putao.wd.created;
 
 import android.os.Bundle;
 
+import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 
 /**
@@ -12,7 +13,7 @@ public class FancyDetailActivity extends PTWDActivity {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_fancy_detail;
     }
 
     @Override

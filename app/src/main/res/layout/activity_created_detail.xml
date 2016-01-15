@@ -23,6 +23,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/ll_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
@@ -54,8 +55,8 @@
                 style="@style/image_circle"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
                 auto:placeholderImage="@drawable/img_head_default" />
 
 
@@ -76,6 +77,7 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/img_carve_up_article" />
 
+
             <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wv_content"
                 android:layout_width="match_parent"
@@ -92,10 +94,12 @@
                 android:textColor="#646464"
                 android:textSize="14sp" />
 
+
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:id="@+id/rv_created_correlation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                auto:is_inner="true"/>
         </LinearLayout>
     </ScrollView>
 

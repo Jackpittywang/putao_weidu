@@ -12,7 +12,7 @@
         android:background="@color/white"
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="创造详情" />
+        auto:nav_main_title="奇思妙想详情" />
 
     <!--内容-->
     <ScrollView

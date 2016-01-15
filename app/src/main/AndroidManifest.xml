@@ -298,6 +298,10 @@
         <activity
             android:name=".created.FancyActivity"
             android:screenOrientation="portrait" />
+        <!--奇思妙想详情-->
+        <activity
+            android:name=".created.FancyDetailActivity"
+            android:screenOrientation="portrait" />
         <!--陪伴日志-->
         <activity
             android:name=".companion.DiaryActivity"
