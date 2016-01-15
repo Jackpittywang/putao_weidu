@@ -122,7 +122,7 @@
         <LinearLayout
             android:id="@+id/ll_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -152,10 +152,8 @@
                 style="@style/image_circle"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
                 auto:placeholderImage="@drawable/img_head_default" />
-
 
             <TextView
                 android:id="@+id/tv_digest"
@@ -174,7 +172,6 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/img_carve_up_article" />
 
-
             <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wv_content"
                 android:layout_width="match_parent"
@@ -191,11 +188,16 @@
                 android:textColor="#646464"
                 android:textSize="14sp" />
 
-            <com.sunnybear.library.view.recycler.BasicRecyclerView
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
                 android:id="@+id/rv_created_correlation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 auto:is_inner="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/divider_color" />
         </LinearLayout>
     </ScrollView>
 
@@ -212,7 +214,8 @@
         android:layout_above="@+id/ll_bottom"
         android:layout_marginBottom="15dp"
         android:gravity="center_horizontal|top"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.sunnybear.library.view.CircleTextView
             android:id="@+id/btn_support"
