@@ -18,6 +18,10 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+
+import com.sunnybear.library.R;
+import com.sunnybear.library.util.Logger;
 
 /**
  * 为RecyclerView添加头部
@@ -131,7 +135,9 @@ public class RecyclerViewHeader extends RelativeLayout {
         this.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                int height = RecyclerViewHeader.this.getHeight();
+//                int height = RecyclerViewHeader.this.getHeight();
+                int height = getRealHeight();
+                Logger.i("头部真实高度=" + height);
                 if (height > 0) {
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                         RecyclerViewHeader.this.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -146,6 +152,29 @@ public class RecyclerViewHeader extends RelativeLayout {
                 }
             }
         });
+    }
+
+    /**
+     * 计算真实高度
+     *
+     * @return 真实高度
+     */
+    private int getRealHeight() {
+        int height = 0;
+        View view = getChildAt(0);
+        if (view instanceof ScrollView) {
+
+            for (int i = 0; i < ((ScrollView) view).getChildCount(); i++) {
+                View child = ((ScrollView) view).getChildAt(i);
+                if (child instanceof LinearLayout || child instanceof RelativeLayout || child instanceof FrameLayout) {
+                    child.setBackgroundResource(R.color.white);
+                    height += child.getHeight();
+                }
+            }
+        } else {
+            height = this.getHeight();
+        }
+        return height;
     }
 
     /**

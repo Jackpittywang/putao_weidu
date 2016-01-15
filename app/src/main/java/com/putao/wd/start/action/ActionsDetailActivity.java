@@ -173,6 +173,11 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                         break;
                 }
             }
+
+            @Override
+            public void onWebPageLoaderFinish(String url) {
+
+            }
         });
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
