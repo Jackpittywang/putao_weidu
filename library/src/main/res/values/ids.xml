@@ -15,4 +15,7 @@
     <item name="stickyHeaderLayout_scrollable" type="id" />
     <!--ConvenientBanner-->
     <item name="cb_item_tag" type="id"></item>
+    <!--LoadingLayout-->
+    <item name="btn_empty_retry" type="id" />
+    <item name="btn_error_retry" type="id" />
 </resources>
