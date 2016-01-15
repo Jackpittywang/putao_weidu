@@ -1,8 +1,10 @@
 package com.sunnybear.library.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +54,7 @@ public class NavigationBar extends RelativeLayout {
     private int mDividerColor = -1;
 
     private boolean mHasRightIcon = false;//top right icon for shopping car
-    private Drawable mRightIconDrawable;
+    private Drawable mRightIconIndicatorDrawable;
     private int mRightIconTextColor;
 
     public NavigationBar(Context context, AttributeSet attrs) {
@@ -64,6 +66,7 @@ public class NavigationBar extends RelativeLayout {
         this(context, null);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void initNavigationBar(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar);
         mMainTitle = array.getString(R.styleable.NavigationBar_nav_main_title);
@@ -83,7 +86,7 @@ public class NavigationBar extends RelativeLayout {
         mDividerColor = array.getColor(R.styleable.NavigationBar_nav_divider_color, -1);
         mHasDivider = array.getBoolean(R.styleable.NavigationBar_nav_has_divider, true);
         mHasRightIcon = array.getBoolean(R.styleable.NavigationBar_nav_has_right_title_icon, false);
-        mRightIconDrawable = array.getDrawable(R.styleable.NavigationBar_nav_right_title_icon_background);
+        mRightIconIndicatorDrawable = array.getDrawable(R.styleable.NavigationBar_nav_right_title_indicator_background);
         mRightIconTextColor = array.getColor(R.styleable.NavigationBar_nav_right_title_icon_text_color, -1);
 
         array.recycle();
@@ -115,7 +118,7 @@ public class NavigationBar extends RelativeLayout {
             setId(R.id.navigation_bar);
         //setRightTitleIcon
         if(mHasRightIcon){
-            mRightIconView.setBackground(mRightIconDrawable);
+            mRightIconView.setBackground(mRightIconIndicatorDrawable);
             mRightIconView.setTextColor(mRightIconTextColor);
         }
     }
@@ -236,7 +239,7 @@ public class NavigationBar extends RelativeLayout {
     /**
      * hide shopping car count
      */
-    public void hideRrightTitleIcon(boolean isHide) {
+    public void hideRightTitleIcon(boolean isHide) {
         mRightIconView.setVisibility(isHide ? View.GONE : View.VISIBLE);
     }
 

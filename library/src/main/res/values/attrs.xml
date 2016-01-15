@@ -50,8 +50,16 @@
         <attr name="nav_divider_color" format="color" />
         <attr name="nav_has_divider" format="boolean" />
         <attr name="nav_has_right_title_icon" format="boolean" />
-        <attr name="nav_right_title_icon_background" format="reference" />
+        <attr name="nav_right_title_indicator_background" format="reference" />
         <attr name="nav_right_title_icon_text_color" format="color" />
+    </declare-styleable>
+    <!--TitleBar-->
+    <declare-styleable name="TitleBar">
+        <attr name="title_main_text" format="string|reference" />
+        <attr name="title_left_text" format="string|reference" />
+        <attr name="title_right_text" format="string|reference" />
+        <attr name="title_left_icon" format="reference" />
+        <attr name="title_right_icon" format="reference" />
     </declare-styleable>
     <!--CleanableEditText-->
     <declare-styleable name="CleanableEditText">

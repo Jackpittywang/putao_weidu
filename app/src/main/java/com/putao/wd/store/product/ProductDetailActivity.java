@@ -165,10 +165,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 JSONObject object = JSON.parseObject(result);
                 int count = object.getInteger("qt");
                 if (count != 0) {
-                    navigation_bar.hideRrightTitleIcon(false);
+                    navigation_bar.hideRightTitleIcon(false);
                     navigation_bar.setRightTitleIcon(count + "");
                 } else {
-                    navigation_bar.hideRrightTitleIcon(true);
+                    navigation_bar.hideRightTitleIcon(true);
                 }
                 loading.dismiss();
             }
