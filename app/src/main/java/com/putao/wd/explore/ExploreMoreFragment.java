@@ -5,13 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
-import com.putao.wd.explore.adapter.ExploreMoreAdapter;
 import com.putao.wd.model.HomeExplore;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,12 +73,15 @@ public class ExploreMoreFragment extends BasicFragment {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_said :
+                bundle.putInt(ExploreMoreActivity.KEY_TAB, 0);
                 startActivity(ExploreMoreActivity.class, bundle);
                 break;
             case R.id.iv_play :
+                bundle.putInt(ExploreMoreActivity.KEY_TAB, 1);
                 startActivity(ExploreMoreActivity.class, bundle);
                 break;
             case R.id.iv_plus :
+                bundle.putInt(ExploreMoreActivity.KEY_TAB, 2);
                 startActivity(ExploreMoreActivity.class, bundle);
                 break;
         }
