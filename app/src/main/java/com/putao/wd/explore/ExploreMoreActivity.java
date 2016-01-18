@@ -4,13 +4,16 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.explore.adapter.MoreAdapter;
 import com.putao.wd.model.HomeExploreMore;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.OnItemClickListener;
 import com.sunnybear.library.view.select.DynamicTitleBar;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import butterknife.Bind;
@@ -29,6 +32,7 @@ public class ExploreMoreActivity extends PTWDActivity {
     LoadMoreRecyclerView rv_more;
 
     private String[] titles = new String[]{"牛人说", "玩物志", "葡萄+"};
+    private MoreAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -46,6 +50,10 @@ public class ExploreMoreActivity extends PTWDActivity {
                 ToastUtils.showToastLong(mContext, "点击了第" + position + "项");
             }
         });
+
+        adapter = new MoreAdapter(mContext, null);
+        rv_more.setAdapter(adapter);
+        addListener();
     }
 
     @Override
@@ -53,9 +61,17 @@ public class ExploreMoreActivity extends PTWDActivity {
         return new String[0];
     }
 
-    private void getTest() {
-        for(int i = 0; i < 15; i++) {
-            new HomeExploreMore();
-        }
+    /**
+     * 添加监听器
+     */
+    private void addListener() {
+        rv_more.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(Serializable serializable, int position) {
+                startActivity(ExploreMoreDetailActivity.class);
+            }
+        });
     }
+
 }

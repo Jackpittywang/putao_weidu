@@ -286,6 +286,10 @@
         <activity
             android:name=".explore.ExploreDetailActivity"
             android:screenOrientation="portrait" />
+        <!--更多内容详情-->
+        <activity
+            android:name=".explore.ExploreMoreDetailActivity"
+            android:screenOrientation="portrait" />
         <!--我-->
         <activity
             android:name=".me.MeActivity"
