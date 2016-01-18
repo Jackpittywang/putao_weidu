@@ -26,23 +26,6 @@
             android:layout_centerVertical="true"
             auto:placeholderImage="@drawable/img_head_default" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_title_bar_left"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:gravity="center"-->
-        <!--android:text="管理"-->
-        <!--android:textColor="@color/text_color_gray"-->
-        <!--android:textSize="@dimen/text_size_18sp" />-->
-
-        <!-- <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerInParent="true"
-             android:text="陪伴"
-             android:textColor="@color/white"
-             android:textSize="@dimen/text_size_22sp" />-->
 
         <ImageView
             android:id="@+id/iv_title_bar_right1"
@@ -119,7 +102,7 @@
         android:id="@+id/cv_no_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_explore_empty"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
