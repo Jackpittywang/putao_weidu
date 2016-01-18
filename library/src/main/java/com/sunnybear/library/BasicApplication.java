@@ -6,6 +6,7 @@ import android.content.Context;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.okhttp.OkHttpClient;
 import com.sunnybear.library.model.http.OkHttpManager;
+import com.sunnybear.library.model.http.interceptor.NetworkInterceptor;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.CrashHandler;
 import com.sunnybear.library.util.DiskFileCacheHelper;
@@ -58,7 +59,8 @@ public abstract class BasicApplication extends Application {
         //日志输出
         Logger.init(getLogTag()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
         //OkHttp初始化
-        mOkHttpClient = OkHttpManager.getInstance(getNetworkCacheDirectoryPath(), getNetworkCacheSize()).build();
+        mOkHttpClient = OkHttpManager.getInstance(getNetworkCacheDirectoryPath(), getNetworkCacheSize())
+                .add(new NetworkInterceptor()).build();
         //Fresco初始化
         Fresco.initialize(getApplicationContext(),
                 ImagePipelineConfigFactory.getOkhttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));

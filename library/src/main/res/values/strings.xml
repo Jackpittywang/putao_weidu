@@ -11,4 +11,6 @@
 
     <string name="loadMore_loadingText">加载更多</string>
     <string name="loadMore_noMoreText">没有更多内容了</string>
+
+    <string name="not_network">当前网络不可用</string>
 </resources>
