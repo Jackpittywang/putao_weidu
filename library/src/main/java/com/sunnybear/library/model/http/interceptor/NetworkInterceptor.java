@@ -20,7 +20,8 @@ public class NetworkInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();//拦截Request
         if (!AppUtils.isNetworkReachable(BasicApplication.getInstance())) {
-            ToastUtils.showToastLong(BasicApplication.getInstance(), BasicApplication.getInstance().getResources().getString(R.string.not_network));
+            ToastUtils.showToastLong(BasicApplication.getInstance(),
+                    BasicApplication.getInstance().getResources().getString(R.string.not_network));
             return null;
         }
         return chain.proceed(request);
