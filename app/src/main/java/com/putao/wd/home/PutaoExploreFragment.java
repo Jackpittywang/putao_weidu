@@ -1,8 +1,6 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,8 +27,6 @@ import butterknife.OnClick;
  */
 public class PutaoExploreFragment extends BasicFragment implements View.OnClickListener {
 
-    public static final String EVENT_CURRENT_ITEM =  "current_item";
-
     @Bind(R.id.tv_thinking)
     TextView tv_thinking;
     @Bind(R.id.iv_scan)
@@ -40,13 +36,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
 
     private SparseArray<Fragment> mFragments;
-    private Handler mHandle = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            vp_content.setCurrentItem(0);
-        }
-    };
+
 
     @Override
     protected int getLayoutId() {
@@ -57,14 +47,17 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         addFragments();
-        setViewPage();
-//        vp_content.setCurrentItem(7);
-//        mHandle.sendEmptyMessageDelayed(0x123, 5000);
-//        for (int i = 6; i > -1; i--) {
-//            Message msg = mHandle.obtainMessage();
-//            msg.arg1 = i;
-//            mHandle.sendMessageDelayed(msg, 3000);
-//        }
+        vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return mFragments.size();
+            }
+        });
 
     }
 
@@ -91,6 +84,13 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
      */
     private void addFragments() {
         mFragments = new SparseArray<>();
+        Bundle bundle0 = new Bundle();
+        Bundle bundle1 = new Bundle();
+        Bundle bundle2 = new Bundle();
+        Bundle bundle3 = new Bundle();
+        Bundle bundle4 = new Bundle();
+        Bundle bundle5 = new Bundle();
+        Bundle bundle6 = new Bundle();
         mFragments.put(0, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
         mFragments.put(1, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
         mFragments.put(2, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
@@ -98,41 +98,47 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         mFragments.put(4, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
         mFragments.put(5, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
         mFragments.put(6, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName()));
-        mFragments.put(7, Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
+//        mFragments.put(7, Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
+
+//        switch(position) {
+//            case 0:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_01);
+//                tv_title.setText("多点时间陪孩子");
+//                tv_content.setText("现代家长总是忙忙忙，还是多抽点时间陪孩子吧，给孩子留下一个美好的童年");
+//                break;
+//            case 1:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_02);
+//                tv_title.setText("和孩子一起玩耍");
+//                tv_content.setText("让葡萄探索号和孩子一起玩耍");
+//                break;
+//            case 2:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_03);
+//                tv_title.setText("探索号的陪伴");
+//                tv_content.setText("探索号是葡萄科技为孩子倾力打造的一款智能玩具，让您的孩子不再孤单");
+//                break;
+//            case 3:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_04);
+//                tv_title.setText("多玩只能游戏");
+//                tv_content.setText("多玩智能游戏，可以有效提高孩子的学习能力哦");
+//                break;
+//            case 4:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_05);
+//                tv_title.setText("淘淘向右走");
+//                tv_content.setText("淘淘向右走，让您的孩子体验闯关的乐趣");
+//                break;
+//            case 5:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_06);
+//                tv_title.setText("魔方");
+//                tv_content.setText("挖掘孩子的潜能从魔方开始吧");
+//                break;
+//            case 6:
+//                iv_video.setBackgroundResource(R.drawable.icon_40_07);
+//                tv_title.setText("魔方");
+//                tv_content.setText("魔方不只是大人才能玩转的，葡萄魔方陪伴您的孩子更好的成长");
+//                break;
+//        }
     }
 
-    /**
-     * viewpager添加适配器、监听器
-     */
-    private void setViewPage() {
-        vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                EventBusHelper.post(position, EVENT_CURRENT_ITEM);
-                return mFragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
-        });
-//        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                Logger.w("position = " + position);
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//            }
-//        });
-    }
 
 
 

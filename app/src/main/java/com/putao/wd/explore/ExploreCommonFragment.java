@@ -49,43 +49,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     }
 
     private void getTest() {
-        switch(position) {
-            case 0:
-                iv_video.setBackgroundResource(R.drawable.icon_40_01);
-                tv_title.setText("多点时间陪孩子");
-                tv_content.setText("现代家长总是忙忙忙，还是多抽点时间陪孩子吧，给孩子留下一个美好的童年");
-                break;
-            case 1:
-                iv_video.setBackgroundResource(R.drawable.icon_40_02);
-                tv_title.setText("和孩子一起玩耍");
-                tv_content.setText("让葡萄探索号和孩子一起玩耍");
-                break;
-            case 2:
-                iv_video.setBackgroundResource(R.drawable.icon_40_03);
-                tv_title.setText("探索号的陪伴");
-                tv_content.setText("探索号是葡萄科技为孩子倾力打造的一款智能玩具，让您的孩子不再孤单");
-                break;
-            case 3:
-                iv_video.setBackgroundResource(R.drawable.icon_40_04);
-                tv_title.setText("多玩只能游戏");
-                tv_content.setText("多玩智能游戏，可以有效提高孩子的学习能力哦");
-                break;
-            case 4:
-                iv_video.setBackgroundResource(R.drawable.icon_40_05);
-                tv_title.setText("淘淘向右走");
-                tv_content.setText("淘淘向右走，让您的孩子体验闯关的乐趣");
-                break;
-            case 5:
-                iv_video.setBackgroundResource(R.drawable.icon_40_06);
-                tv_title.setText("魔方");
-                tv_content.setText("挖掘孩子的潜能从魔方开始吧");
-                break;
-            case 6:
-                iv_video.setBackgroundResource(R.drawable.icon_40_07);
-                tv_title.setText("魔方");
-                tv_content.setText("魔方不只是大人才能玩转的，葡萄魔方陪伴您的孩子更好的成长");
-                break;
-        }
+
     }
 
     @OnClick({R.id.iv_video, R.id.ll_count_cool})
@@ -95,17 +59,13 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.iv_video :
                 startActivity(ExploreDetailActivity.class);
+               mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_down);
                 break;
             case R.id.ll_count_cool :
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");
                 startActivity(PraiseListActivity.class, bundle);
                 break;
         }
-    }
-
-    @Subcriber(tag = PutaoExploreFragment.EVENT_CURRENT_ITEM)
-    public void eventData(int positon) {
-        this.position = positon;
     }
 
 }
