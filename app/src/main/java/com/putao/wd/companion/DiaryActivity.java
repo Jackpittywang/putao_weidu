@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.model.Explore;
@@ -17,7 +16,6 @@ import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.view.JumpLoadingLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import butterknife.Bind;
@@ -29,8 +27,6 @@ import butterknife.Bind;
 public class DiaryActivity extends PTWDActivity {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.jump_loading)
-    JumpLoadingLayout jump_loading;
     @Bind(R.id.ll_date_empty)
     LinearLayout ll_date_empty;
 
@@ -83,7 +79,6 @@ public class DiaryActivity extends PTWDActivity {
                 new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
                     public void onSuccess(String url, Explore result) {
-                        jump_loading.setVisibility(View.GONE);
                         if (result.getData() != null && result.getData().size() > 0) {
                             adapter.addAll(result.getData());
                             ll_date_empty.setVisibility(View.GONE);

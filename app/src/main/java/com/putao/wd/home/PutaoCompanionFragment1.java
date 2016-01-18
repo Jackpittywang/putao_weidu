@@ -27,7 +27,6 @@ import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.JumpLoadingLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import butterknife.Bind;
@@ -45,8 +44,6 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.rl_explor_empty)
     RelativeLayout rl_explor_empty;
-    @Bind(R.id.jump_loading)
-    JumpLoadingLayout jump_loading;
     @Bind(R.id.ll_date_empty)
     LinearLayout ll_date_empty;
 
@@ -143,7 +140,6 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
                 new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
                     public void onSuccess(String url, Explore result) {
-                        jump_loading.setVisibility(View.GONE);
                         if (result.getData() != null && result.getData().size() > 0) {
                             adapter.addAll(result.getData());
                             ll_date_empty.setVisibility(View.GONE);
