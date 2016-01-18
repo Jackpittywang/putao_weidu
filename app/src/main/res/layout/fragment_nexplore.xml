@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#705e5a"
-              android:orientation="vertical"         >
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#705e5a"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:layout_height="?attr/actionBarSize">
+        android:paddingRight="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,7 +19,7 @@
             android:gravity="center"
             android:text="左边标题"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_24sp"/>
+            android:textSize="@dimen/text_size_24sp" />
 
         <TextView
             android:id="@+id/tv_thinking"
@@ -32,29 +33,29 @@
             android:gravity="center"
             android:padding="6dp"
             android:text="创想"
-            android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14sp"/>
+            android:textSize="@dimen/text_size_14sp"
+            android:visibility="gone" />
 
 
         <ImageView
             android:id="@+id/iv_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_thinking"
             android:scaleType="centerInside"
-            android:src="@drawable/btn_scan_selector"/>
+            android:src="@drawable/btn_scan_selector" />
 
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.sunnybear.library.view.viewpager.BounceBackViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
-        android:overScrollMode="never"/>
+        auto:overscroll_translation="500px" />
 
 </LinearLayout>

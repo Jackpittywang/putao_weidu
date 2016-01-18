@@ -3,7 +3,6 @@ package com.putao.wd.home;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,12 +10,11 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.explore.ExploreCommonFragment;
-import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.viewpager.BounceBackViewPager;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -32,11 +30,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Bind(R.id.iv_scan)
     ImageView iv_scan;
     @Bind(R.id.vp_content)
-    ViewPager vp_content;
-
+    BounceBackViewPager vp_content;
 
     private SparseArray<Fragment> mFragments;
-
 
     @Override
     protected int getLayoutId() {
@@ -138,9 +134,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 //                break;
 //        }
     }
-
-
-
 
 
 //    /**

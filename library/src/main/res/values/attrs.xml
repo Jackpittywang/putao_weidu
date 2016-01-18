@@ -255,4 +255,9 @@
         <attr name="minQuantity" format="integer" />
         <attr name="isEdit" format="boolean" />
     </declare-styleable>
+    <!--BounceBackViewPager-->
+    <declare-styleable name="BounceBackViewPager">
+        <attr name="overscroll_translation" format="dimension" />
+        <attr name="overscroll_animation_duration" format="integer" />
+    </declare-styleable>
 </resources>
