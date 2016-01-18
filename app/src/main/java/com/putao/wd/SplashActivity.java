@@ -62,7 +62,7 @@ public class SplashActivity extends BasicFragmentActivity {
                         }
                     }).execute();
         else
-            startActivity(IndexActivity.class);
+            startActivity(TestAnimationActivity.class);
 //        updateResource();
     }
 

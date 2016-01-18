@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
@@ -160,14 +161,27 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     /**
      * 网络请求
      *
-     * @param request  request主体
-     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     * @param request     request主体
+     * @param callback    请求回调(建议使用SimpleFastJsonCallback)
+     * @param interceptor 网络拦截器
      */
-    public void networkRequest(Request request, Callback callback) {
+    public void networkRequest(Request request, Callback callback, Interceptor interceptor) {
+        if (interceptor != null)
+            mOkHttpClient.networkInterceptors().add(interceptor);
         if (request == null)
             throw new NullPointerException("request为空");
         loading.show();
         mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    public void networkRequest(Request request, Callback callback) {
+        networkRequest(request, callback, null);
     }
 
     /**

@@ -8,6 +8,7 @@ import com.sunnybear.library.model.http.progress.ProgressResponseListener;
 import java.io.IOException;
 
 /**
+ * 进度拦截器
  * Created by guchenkai on 2015/10/26.
  */
 public class ProgressInterceptor implements Interceptor {

@@ -11,7 +11,7 @@ import com.sunnybear.library.util.ToastUtils;
 import java.io.IOException;
 
 /**
- * 判断是否有网络
+ * 判断是否有网络拦截器
  * Created by sunnybear on 16/1/18.
  */
 public class NetworkInterceptor implements Interceptor {
