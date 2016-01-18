@@ -89,6 +89,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                 break;
             case R.id.iv_close :
                 mActivity.finish();
+                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_top);
                 break;
             case R.id.ll_cool :
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");

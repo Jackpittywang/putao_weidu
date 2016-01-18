@@ -5,9 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 
@@ -27,6 +29,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     @Bind(R.id.tv_content)
     TextView tv_content;
 
+    private int position;
+
 
     @Override
     protected int getLayoutId() {
@@ -45,8 +49,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     }
 
     private void getTest() {
-        tv_title.setText("这里是title");
-        tv_content.setText("这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content这里是content");
+
     }
 
     @OnClick({R.id.iv_video, R.id.ll_count_cool})
@@ -56,6 +59,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.iv_video :
                 startActivity(ExploreDetailActivity.class);
+               mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_down);
                 break;
             case R.id.ll_count_cool :
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 数据V1.1版本陪伴首页
- * Created by zhanghao on 2016/1/4.
+ * Created by zhanghao on 2016/1/14.
  */
 public class DiaryApp implements Serializable {
     private String product_id;//应用id

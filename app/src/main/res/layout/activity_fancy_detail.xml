@@ -28,18 +28,16 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/rl_top"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginBottom="20dp">
 
-                <ImageView
-                    android:id="@+id/iv_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/icon_40_11" />
-            </RelativeLayout>
+            <!--标题图-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_sign"
+                style="@style/image_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                auto:aspect_ratio="2"
+                android:layout_marginBottom="20dp"
+                auto:default_drawable="@drawable/img_p_cover" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -99,7 +97,7 @@
                 auto:divider_color="@color/divider_color"
                 auto:divider_height="1dp"
                 auto:has_row_divider="true"
-                auto:is_inner="true"/>
+                auto:is_inner="true" />
         </LinearLayout>
     </ScrollView>
 

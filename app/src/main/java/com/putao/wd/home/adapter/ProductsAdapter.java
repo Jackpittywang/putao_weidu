@@ -50,9 +50,7 @@ public class ProductsAdapter extends BasicAdapter<DiaryApp, ProductsAdapter.Prod
 
     @Override
     public void onBindItem(ProductsAdapter.ProductsViewHolder holder, DiaryApp diaryApp, int position) {
-        if (TextUtils.isEmpty(diaryApp.getProduct_icon()))
-            holder.iv_product.setDefaultImage(R.color.background_F5F5F5);
-        else
+        if (!TextUtils.isEmpty(diaryApp.getProduct_icon()))
             holder.iv_product.setImageURL(diaryApp.getProduct_icon());
     }
 

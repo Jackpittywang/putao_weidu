@@ -69,6 +69,7 @@ public class SmartActivity extends PTWDActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(SMART_LIST);
         if (null != fragment && fragment.isVisible()) {
             finish();
+            overridePendingTransition(R.anim.companion_in_from_down, R.anim.out_from_down);
         } else {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_smart, mSmartListFragment, SMART_LIST).commit();

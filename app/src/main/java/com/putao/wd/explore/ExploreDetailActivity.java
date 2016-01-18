@@ -84,8 +84,6 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
     @Override
     public void onViewPositionChanged(float fractionAnchor, float fractionScreen) {
         ivShadow.setAlpha(1 - fractionScreen);
-        if (fractionScreen == 1)
-            finish();
     }
 //    @Override
 //    protected int getLayoutId() {

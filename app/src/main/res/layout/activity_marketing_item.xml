@@ -104,12 +104,13 @@
 
         </LinearLayout>
 
-        <ImageView
+        <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_icon"
+            style="@style/image_style"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/img_head_default" />
+            auto:default_drawable="@drawable/img_head_default" />
     </RelativeLayout>
 
 </LinearLayout>
