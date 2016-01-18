@@ -17,6 +17,7 @@ import java.net.URLDecoder;
  * Created by guchenkai on 2015/11/30.
  */
 public class BasicWebView extends WebView {
+    private boolean isLoaderFinish = false;
     private OnWebViewLoadUrlCallback mOnWebViewLoadUrlCallback;
 
     public void setOnWebViewLoadUrlCallback(OnWebViewLoadUrlCallback onWebViewLoadUrlCallback) {
@@ -42,6 +43,7 @@ public class BasicWebView extends WebView {
     private void initView() {
         setWebSettings();
         setScrollBarStyle(SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
+
         setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -62,6 +64,13 @@ public class BasicWebView extends WebView {
                         break;
                 }
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if (mOnWebViewLoadUrlCallback != null && isLoaderFinish)
+                    mOnWebViewLoadUrlCallback.onWebPageLoaderFinish(url);
+                isLoaderFinish = true;
             }
         });
     }
@@ -112,6 +121,8 @@ public class BasicWebView extends WebView {
     public interface OnWebViewLoadUrlCallback {
 
         void onParsePutaoUrl(String scheme, JSONObject result);
+
+        void onWebPageLoaderFinish(String url);
     }
 
     /**

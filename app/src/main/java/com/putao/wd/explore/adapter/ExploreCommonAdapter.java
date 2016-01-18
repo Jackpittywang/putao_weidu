@@ -1,12 +1,11 @@
 package com.putao.wd.explore.adapter;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.PagerExplore;
+import com.putao.wd.model.HomeExplore;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -20,11 +19,11 @@ import butterknife.Bind;
  * Created by yanghx on 2016/1/11.
  */
 @Deprecated
-public class ExploreCommonAdapter extends BasicAdapter<PagerExplore, ExploreCommonAdapter.CommonViewHolder>{
+public class ExploreCommonAdapter extends BasicAdapter<HomeExplore, ExploreCommonAdapter.CommonViewHolder>{
 
 
-    public ExploreCommonAdapter(Context context, List<PagerExplore> pagerExplores) {
-        super(context, pagerExplores);
+    public ExploreCommonAdapter(Context context, List<HomeExplore> homeExplores) {
+        super(context, homeExplores);
     }
 
     @Override
@@ -38,10 +37,10 @@ public class ExploreCommonAdapter extends BasicAdapter<PagerExplore, ExploreComm
     }
 
     @Override
-    public void onBindItem(CommonViewHolder holder, PagerExplore pagerExplore, int position) {
-        holder.iv_video.setImageResource(pagerExplore.getImageUrl());
-        holder.tv_title.setText(pagerExplore.getTitle());
-        holder.tv_content.setText(pagerExplore.getContent());
+    public void onBindItem(CommonViewHolder holder, HomeExplore homeExplore, int position) {
+        holder.iv_video.setImageResource(homeExplore.getImageUrl());
+        holder.tv_title.setText(homeExplore.getTitle());
+        holder.tv_content.setText(homeExplore.getContent());
     }
 
     static class CommonViewHolder extends BasicViewHolder {

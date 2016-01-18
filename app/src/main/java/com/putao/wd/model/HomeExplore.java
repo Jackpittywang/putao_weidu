@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 探索--ViewPager数据
  * Created by yanghx on 2016/1/11.
  */
-public class PagerExplore implements Serializable {
+public class HomeExplore implements Serializable {
 
     private int imageUrl;
     private String title;
@@ -38,11 +38,10 @@ public class PagerExplore implements Serializable {
 
     @Override
     public String toString() {
-        return "PagerExplore{" +
+        return "HomeExplore{" +
                 "imageUrl=" + imageUrl +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
-
 }

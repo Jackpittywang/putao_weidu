@@ -6,6 +6,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 
@@ -117,5 +119,18 @@ public final class AppUtils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * 判断网络是否可用
+     *
+     * @param context context
+     * @return
+     */
+    public static boolean isNetworkReachable(Context context) {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo == null) return false;
+        return mNetworkInfo.isAvailable();
     }
 }

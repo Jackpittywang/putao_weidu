@@ -262,8 +262,21 @@ public final class FileUtils {
      * @return 是否刪除成功
      */
     public static boolean delete(File file) {
-        if (file.exists())
-            return file.delete();
+        if (file == null || !file.exists()) return false;
+        if (file.isFile()) {
+            final File to = new File(file.getAbsolutePath() + System.currentTimeMillis());
+            file.renameTo(to);
+            to.delete();
+        } else {
+            File[] files = file.listFiles();
+            if (files != null && files.length > 0)
+                for (File innerFile : files) {
+                    delete(innerFile);
+                }
+            final File to = new File(file.getAbsolutePath() + System.currentTimeMillis());
+            file.renameTo(to);
+            return to.delete();
+        }
         return false;
     }
 
