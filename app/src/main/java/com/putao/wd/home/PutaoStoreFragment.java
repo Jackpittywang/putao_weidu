@@ -46,7 +46,12 @@ public class PutaoStoreFragment extends PTWDFragment {
         adapter = new StoreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        currentPage = 1;
         getStoreHome();
     }
 

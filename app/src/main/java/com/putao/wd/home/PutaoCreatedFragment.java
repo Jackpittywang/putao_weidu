@@ -8,6 +8,7 @@ import com.putao.wd.created.CreatedDetailActivity;
 import com.putao.wd.created.FancyActivity;
 import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Marketing;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.OnItemClickListener;
@@ -35,6 +36,7 @@ public class PutaoCreatedFragment extends PTWDFragment implements OnItemClickLis
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+        Logger.d("PutaoCreatedFragment启动");
         addNavigation();
         adapter = new CreateAdapter(mActivity, null);
         rv_created.setAdapter(adapter);

@@ -64,7 +64,7 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
                 return mFragments.size();
             }
         });
-        vp_content.setOffscreenPageLimit(4);
+//        vp_content.setOffscreenPageLimit(4);
     }
 
     /**

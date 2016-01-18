@@ -5,11 +5,8 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.alibaba.fastjson.JSON;
 import com.putao.wd.IndexActivity;
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
@@ -19,8 +16,6 @@ import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.me.MeActivity;
 import com.putao.wd.model.DiaryApp;
-import com.putao.wd.model.Management;
-import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
@@ -68,6 +63,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        Logger.d("PutaoCompanionFragment启动");
     }
 
     private void addClickListener() {
