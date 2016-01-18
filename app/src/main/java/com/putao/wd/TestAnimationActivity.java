@@ -9,6 +9,8 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.QuantityView;
 import com.sunnybear.library.view.SmallBang;
 import com.sunnybear.library.view.SwitchButton;
 
@@ -31,6 +33,8 @@ public class TestAnimationActivity extends BasicFragmentActivity implements View
     @Bind(R.id.btn_switch)
     SwitchButton btn_switch;
     private SmallBang smallBang;
+    @Bind(R.id.qv_quantity)
+    QuantityView qv_quantity;
 
     @Override
     protected int getLayoutId() {
@@ -54,6 +58,18 @@ public class TestAnimationActivity extends BasicFragmentActivity implements View
         animationSet.startNow();
 
         smallBang = SmallBang.attach2Window(this);
+
+        qv_quantity.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
+            @Override
+            public void onQuantityChanged(int newQuantity, boolean programmatically) {
+                ToastUtils.showToastLong(mContext, newQuantity + "");
+            }
+
+            @Override
+            public void onLimitReached() {
+
+            }
+        });
     }
 
     @OnClick(R.id.btn_switch)

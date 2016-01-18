@@ -19,4 +19,7 @@
     <string name="crop__pick_error" translatable="false">No image sources available</string>
     <string name="crop__saving" translatable="false">Saving picture…</string>
     <string name="crop__wait" translatable="false">Please wait…</string>
+
+    <string name="qv_add">+</string>
+    <string name="qv_remove">-</string>
 </resources>

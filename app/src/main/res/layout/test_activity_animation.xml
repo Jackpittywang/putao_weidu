@@ -21,4 +21,18 @@
         android:layout_margin="30dp"
         auto:norDrawable="@drawable/check_box_nor"
         auto:selDrawable="@drawable/check_box_sel" />
+
+    <com.sunnybear.library.view.QuantityView
+        android:id="@+id/qv_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        auto:addButtonBackground="@color/text_main_color_sel"
+        auto:isEdit="true"
+        auto:maxQuantity="99"
+        auto:minQuantity="1"
+        auto:quantityBackground="@color/text_main_color_nor"
+        auto:quantityPadding="60dp"
+        auto:removeButtonBackground="@color/text_main_color_sel" />
 </RelativeLayout>
