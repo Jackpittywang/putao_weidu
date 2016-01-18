@@ -2,6 +2,8 @@ package com.putao.wd.explore;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.putao.wd.start.praise.PraiseListActivity;
 import com.putao.wd.video.VideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import butterknife.Bind;
@@ -39,6 +42,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     ImageView iv_close;
     @Bind(R.id.ll_cool)
     LinearLayout ll_cool;
+    @Bind(R.id.sb_cool_icon)
+    SwitchButton sb_cool_icon;
     @Bind(R.id.ll_comment)
     LinearLayout ll_comment;
     @Bind(R.id.ll_share)
@@ -93,7 +98,9 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                 break;
             case R.id.ll_cool :
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");
-                startActivity(PraiseListActivity.class, bundle);
+                Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
+                sb_cool_icon.startAnimation(anim);
+//                startActivity(PraiseListActivity.class, bundle);
                 break;
             case R.id.ll_comment :
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");
