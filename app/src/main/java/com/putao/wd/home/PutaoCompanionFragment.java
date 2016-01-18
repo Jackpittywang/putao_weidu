@@ -142,6 +142,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                 break;
             case R.id.iv_smart:
                 startActivity(SmartActivity.class);
+                getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_out_from_down);
                 break;
         }
     }
