@@ -10,6 +10,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.R;
 import com.sunnybear.library.util.JsonUtils;
 import com.sunnybear.library.util.Logger;
 
@@ -79,10 +81,16 @@ public abstract class JSONObjectCallback implements Callback {
 
     @Override
     public final void onResponse(Response response) throws IOException {
+        if (response==null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(KEY_URL, "");
+            bundle.putInt(KEY_STATUS_CODE, 404);
+            bundle.putString(KEY_FAILURE_MSG, BasicApplication.getInstance().getResources().getString(R.string.not_network));
+            mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
+        }
         String url = response.request().urlString();
         String json = response.body().string();
         int statusCode = response.code();
-
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
         if (response.isSuccessful()) {
             Logger.d(TAG, "请求url:\n" + url + "\n" + "请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
@@ -97,7 +105,6 @@ public abstract class JSONObjectCallback implements Callback {
             bundle.putString(KEY_URL, url);
             bundle.putInt(KEY_STATUS_CODE, statusCode);
             bundle.putString(KEY_FAILURE_MSG, "");
-
             mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
         }
     }
@@ -117,7 +124,6 @@ public abstract class JSONObjectCallback implements Callback {
             bundle.putString(KEY_URL, url);
             bundle.putInt(KEY_STATUS_CODE, 500);
             bundle.putString(KEY_FAILURE_MSG, "请检查网络后重新尝试");
-
             mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
         }
     }

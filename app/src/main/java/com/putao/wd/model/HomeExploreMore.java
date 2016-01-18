@@ -11,6 +11,8 @@ public class HomeExploreMore implements Serializable {
     private int imageUrl;
     private String title;
     private String content;
+    private String comment;
+    private String cool;
 
     public int getImageUrl() {
         return imageUrl;
@@ -36,12 +38,30 @@ public class HomeExploreMore implements Serializable {
         this.content = content;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getCool() {
+        return cool;
+    }
+
+    public void setCool(String cool) {
+        this.cool = cool;
+    }
+
     @Override
     public String toString() {
         return "HomeExploreMore{" +
                 "imageUrl=" + imageUrl +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", comment='" + comment + '\'' +
+                ", cool='" + cool + '\'' +
                 '}';
     }
 
