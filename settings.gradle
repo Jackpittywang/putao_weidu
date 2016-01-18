@@ -1,1 +1,1 @@
-include ':app', ':library', ':dbgenerate', ':vitamio', ':sample', ':youku_player_open_sdk'
+include ':app', ':library', ':dbgenerate', ':vitamio', ':youku_player_open_sdk'

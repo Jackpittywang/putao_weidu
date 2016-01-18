@@ -3,7 +3,8 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -110,101 +111,96 @@
     </LinearLayout>
 
     <!--内容-->
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/ll_bottom"
-        android:layout_below="@id/navigation_bar">
+        android:layout_below="@id/navigation_bar"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
-        <com.sunnybear.library.view.recycler.BasicRecyclerView
-            android:id="@+id/rv_created_correlation"
+        <LinearLayout
+            android:id="@+id/ll_scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <com.sunnybear.library.view.recycler.RecyclerViewHeader
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/rl_top"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="20dp">
 
-            <com.sunnybear.library.view.InnerScrollView
-                android:id="@+id/scroll"
+                <ImageView
+                    android:id="@+id/iv_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/icon_40_11" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="和孩子一起打造创作空间"
+                android:textSize="16sp" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_user_icon"
+                style="@style/image_circle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                auto:placeholderImage="@drawable/img_head_default" />
+
+
+            <TextView
+                android:id="@+id/tv_digest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:text="这里显示作者的名字"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/img_carve_up_article" />
+
+
+            <com.sunnybear.library.view.BasicWebView
+                android:id="@+id/wv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/divider_color"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="20dp"
+                android:text="相关创造"
+                android:textColor="#646464"
+                android:textSize="14sp" />
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_created_correlation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/ll_scroll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:id="@+id/rl_top"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_marginBottom="20dp">
-
-                        <ImageView
-                            android:id="@+id/iv_top"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/icon_40_11" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:text="和孩子一起打造创作空间"
-                        android:textSize="16sp" />
-
-                    <com.sunnybear.library.view.image.ImageDraweeView
-                        android:id="@+id/iv_user_icon"
-                        style="@style/image_circle"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        auto:placeholderImage="@drawable/img_head_default" />
-
-                    <TextView
-                        android:id="@+id/tv_digest"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
-                        android:text="这里显示作者的名字"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:layout_width="200dp"
-                        android:layout_height="10dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/img_carve_up_article" />
-
-                    <com.sunnybear.library.view.BasicWebView
-                        android:id="@+id/wv_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/divider_color"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="20dp"
-                        android:text="相关创造"
-                        android:textColor="#646464"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </com.sunnybear.library.view.InnerScrollView>
-        </com.sunnybear.library.view.recycler.RecyclerViewHeader>
-    </FrameLayout>
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1dp"
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
+        </LinearLayout>
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -219,8 +215,7 @@
         android:layout_above="@+id/ll_bottom"
         android:layout_marginBottom="15dp"
         android:gravity="center_horizontal|top"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <com.sunnybear.library.view.CircleTextView
             android:id="@+id/btn_support"

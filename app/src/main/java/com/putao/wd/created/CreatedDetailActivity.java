@@ -10,7 +10,6 @@ import com.putao.wd.model.Marketing;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.RecyclerViewHeader;
 
 import butterknife.Bind;
 
@@ -19,8 +18,7 @@ import butterknife.Bind;
  * Created by guchenkai on 2016/1/11.
  */
 public class CreatedDetailActivity extends PTWDActivity {
-    @Bind(R.id.header)
-    RecyclerViewHeader header;
+
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
     @Bind(R.id.rv_created_correlation)
@@ -40,7 +38,6 @@ public class CreatedDetailActivity extends PTWDActivity {
         adapter = new CreateDetailAdapter(mContext, null);
         rv_created_correlation.setAdapter(adapter);
 
-
         addListener();
     }
 
@@ -54,7 +51,6 @@ public class CreatedDetailActivity extends PTWDActivity {
             @Override
             public void onWebPageLoaderFinish(String url) {
                 Logger.d("网页加载完成");
-                header.attachTo(rv_created_correlation, true);
 
                 adapter.add(new Marketing());
                 adapter.add(new Marketing());
