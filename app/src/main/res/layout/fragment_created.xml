@@ -10,7 +10,7 @@
         auto:nav_has_divider="true"
         auto:nav_has_right_title_icon="true"
         auto:nav_main_title="为孩子创造"
-        auto:nav_right_icon="@drawable/icon_explore_bulb" />
+        auto:nav_right_icon="@drawable/icon_20_31" />
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"

@@ -88,6 +88,8 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
         addNavigation();
         addListener();
         wv_content.loadUrl("http://wap.baidu.com");
+        tv_support.setClickable(false);
+        tv_no_support.setClickable(false);
         //文字左边margin px值
         mMargin = (int) (15 * mContext.getResources().getDisplayMetrics().density + 0.5f);
         mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
@@ -99,7 +101,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
                 mSpace = (tv_step2.getWidth() - mTextWidth) / 4;
                 startAnim(4);
             }
-        }, 500);
+        }, 200);
     }
 
     private void addListener() {
@@ -112,18 +114,17 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
             @Override
             public void onWebPageLoaderFinish(String url) {
                 Logger.d("网页加载完成");
+                sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
+                    @Override
+                    public void onScroll(int scrollY) {
+                        View contentView = sv_detail.getChildAt(0);
+                        showBtn(contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight());
+                    }
+                });
             }
         });
         tv_no_support.setOnClickListener(this);
         tv_support.setOnClickListener(this);
-        wv_content.getParent().requestDisallowInterceptTouchEvent(true);
-        sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
-            @Override
-            public void onScroll(int scrollY) {
-                View contentView = sv_detail.getChildAt(0);
-                showBtn(contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight());
-            }
-        });
     }
 
     /**
@@ -131,12 +132,16 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
      */
     private void showBtn(Boolean isShow) {
         if (!btnState && isShow) {
+            tv_support.setClickable(true);
+            tv_no_support.setClickable(true);
             rl_btn.setVisibility(View.VISIBLE);
-            rl_btn.setClickable(true);
+            rl_btn.setEnabled(true);
             showView(rl_btn);
             btnState = true;
         } else if (btnState && !isShow) {
-            rl_btn.setClickable(false);
+            tv_support.setClickable(false);
+            tv_no_support.setClickable(false);
+            rl_btn.setEnabled(false);
             hindView(rl_btn);
             btnState = false;
         }
@@ -220,7 +225,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
             public void run() {
                 tv.setTextColor(0xff48cfae);
             }
-        }, step * mTime - 700);
+        }, step * (mTime - 250));
     }
 
 
@@ -237,7 +242,6 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
             case R.id.tv_no_support:
                 supportOfFloat = ObjectAnimator.ofFloat(tv_no_support, "translationX", 0, -middle);
                 tv_support.setVisibility(View.GONE);
-                Drawable drawable = mContext.getResources().getDrawable(R.drawable.icon_16_13);
                 break;
         }
         supportOfFloat.setDuration(2000);
