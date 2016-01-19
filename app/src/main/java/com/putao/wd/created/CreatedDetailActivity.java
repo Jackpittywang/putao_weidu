@@ -28,6 +28,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.scroll.SupportScrollView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,7 +54,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
     @Bind(R.id.tv_no_support_result)
     CircleTextView tv_no_support_result;
     @Bind(R.id.sv_detail)
-    ScrollView sv_detail;
+    SupportScrollView sv_detail;
     @Bind(R.id.v_progress)
     View v_progress;
     @Bind(R.id.tv_step1)
@@ -74,7 +75,6 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
     private Handler mHandler;
     private int mTime = 1000;
     private boolean btnState = false;
-    private int[] position = new int[2];
     private ObjectAnimator showAnim;
     private ObjectAnimator hindAnim;
 
@@ -117,25 +117,26 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
         tv_no_support.setOnClickListener(this);
         tv_support.setOnClickListener(this);
         wv_content.getParent().requestDisallowInterceptTouchEvent(true);
-        wv_content.setOnTouchListener(new View.OnTouchListener() {
+        sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                showBtn();
-                return true;
+            public void onScroll(int scrollY) {
+                View contentView = sv_detail.getChildAt(0);
+                showBtn(contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight());
             }
         });
     }
 
     /**
-     * 显示按钮
+     * 显示隐藏按钮
      */
-    private void showBtn() {
-        wv_content.getLocationInWindow(position);
-        if (!btnState && position[1] <= 0) {
+    private void showBtn(Boolean isShow) {
+        if (!btnState && isShow) {
             rl_btn.setVisibility(View.VISIBLE);
+            rl_btn.setClickable(true);
             showView(rl_btn);
             btnState = true;
-        } else if (btnState && position[1] > 200) {
+        } else if (btnState && !isShow) {
+            rl_btn.setClickable(false);
             hindView(rl_btn);
             btnState = false;
         }

@@ -36,8 +36,9 @@
                     android:layout_height="88dp"
                     android:layout_gravity="center_horizontal"
                     auto:placeholderImage="@drawable/img_head_default"
+                    auto:roundingBorderColor="@color/white"
                     auto:roundingBorderWidth="1dp" />
-                <!--auto:roundingBorderColor="@color/white"-->
+
                 <TextView
                     android:id="@+id/tv_user_nickname"
                     android:layout_width="wrap_content"
@@ -176,6 +177,7 @@
             <com.sunnybear.library.view.SettingItem
                 android:id="@+id/si_concerns"
                 style="@style/style_setting"
+                android:layout_marginBottom="1px"
                 android:layout_marginTop="8dp"
                 auto:setting_divider="bottom"
                 auto:setting_icon="@drawable/icon_20_07"
