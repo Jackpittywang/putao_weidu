@@ -9,17 +9,16 @@ import com.sunnybear.library.view.LoadingHUD;
 import java.io.Serializable;
 
 /**
- * 简单封装FastJsonCallback
- * Created by guchenkai on 2015/11/17.
+ * 简单封装FastJsonSerializableCallback
+ * Created by guchenkai on 2016/1/19.
  */
-public abstract class SimpleFastJsonCallback<T extends Serializable> extends FastJsonCallback<T> {
+public abstract class SimpleFastJsonSerializableCallback<T extends Serializable> extends FastJsonSerializableCallback<T> {
     private LoadingHUD loading;
 
-    public SimpleFastJsonCallback(Class<? extends Serializable> clazz, LoadingHUD loading) {
-        super(clazz);
+    public SimpleFastJsonSerializableCallback(LoadingHUD loading) {
+        super();
         this.loading = loading;
     }
-
 
     @Override
     public void onFailure(String url, int statusCode, String msg) {
