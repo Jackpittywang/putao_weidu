@@ -22,24 +22,6 @@ abstract class FastJsonSerializableCallback<T extends Serializable> extends JSON
         this.clazz = getGenericClass();
     }
 
-    @Override
-    public void onSuccess(String url, JSONObject result) {
-        String data = result.getString("data");
-        JsonUtils.JsonType type = JsonUtils.getJSONType(data);
-        switch (type) {
-            case JSON_TYPE_OBJECT:
-                onSuccess(url, (T) JSON.parseObject(data, clazz));
-                break;
-            case JSON_TYPE_ARRAY:
-                onSuccess(url, (T) JSON.parseArray(data, clazz));
-                break;
-            case JSON_TYPE_ERROR:
-                onFailure(url, -200, "data数据返回错误");
-                Logger.e(JSONObjectCallback.TAG, "result=" + result.toJSONString());
-                break;
-        }
-    }
-
     /**
      * 获取泛型类型
      *
@@ -64,10 +46,29 @@ abstract class FastJsonSerializableCallback<T extends Serializable> extends JSON
                 return (Class<? extends Serializable>) mRawType.get(o1);
             } catch (Exception e) {
                 Logger.e("获取泛型类型错误.", e);
+                return null;
             }
         else//泛型为object类型
             return (Class<? extends Serializable>) generic;
-        return null;
+    }
+
+    @Override
+    public void onSuccess(String url, JSONObject result) {
+        String data = result.getString("data");
+        JsonUtils.JsonType type = JsonUtils.getJSONType(data);
+        if (clazz == null) return;//获取泛型类型错误
+        switch (type) {
+            case JSON_TYPE_OBJECT:
+                onSuccess(url, (T) JSON.parseObject(data, clazz));
+                break;
+            case JSON_TYPE_ARRAY:
+                onSuccess(url, (T) JSON.parseArray(data, clazz));
+                break;
+            case JSON_TYPE_ERROR:
+                onFailure(url, -200, "data数据返回错误");
+                Logger.e(JSONObjectCallback.TAG, "result=" + result.toJSONString());
+                break;
+        }
     }
 
     /**
