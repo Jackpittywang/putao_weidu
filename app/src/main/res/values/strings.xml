@@ -8,6 +8,7 @@
     <string name="address">收货地址</string>
     <string name="action">我参与的活动</string>
     <string name="question">我的提问</string>
+    <string name="concerns">我的关注</string>
     <string name="message">消息中心</string>
     <string name="no_address">还没有收货地址</string>
     <string name="address_manager">地址管理</string>
