@@ -59,20 +59,21 @@ public class PutaoStoreFragment extends PTWDFragment {
      * 加载商品列表
      */
     private void getStoreHome() {
-        networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)),
+        networkRequestCache(StoreApi.getStoreHome(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
                     @Override
                     public void onSuccess(String url, StoreProductHome result) {
                         List<StoreProduct> products = result.getData();
+                        cacheData(url, result);
                         if (products != null && products.size() > 0)
-                            adapter.addAll(products);
-                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
-                            currentPage++;
+                            adapter.replaceAll(products);
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0)
                             rv_content.loadMoreComplete();
-                        } else rv_content.noMoreLoading();
+                        else
+                            rv_content.noMoreLoading();
                         loading.dismiss();
                     }
-                });
+                }, 60 * 1000);
     }
 
     /**
@@ -112,7 +113,21 @@ public class PutaoStoreFragment extends PTWDFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getStoreHome();
+                currentPage++;
+                networkRequest(StoreApi.getStoreHome(String.valueOf(currentPage)),
+                        new SimpleFastJsonCallback<StoreProductHome>(StoreProductHome.class, loading) {
+                            @Override
+                            public void onSuccess(String url, StoreProductHome result) {
+                                List<StoreProduct> products = result.getData();
+                                if (products != null && products.size() > 0)
+                                    adapter.addAll(products);
+                                if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                                    currentPage++;
+                                    rv_content.loadMoreComplete();
+                                } else rv_content.noMoreLoading();
+                                loading.dismiss();
+                            }
+                        });
             }
         });
         rv_content.setOnItemClickListener(new OnItemClickListener<StoreProduct>() {

@@ -1,7 +1,6 @@
 package com.putao.wd;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -159,7 +158,7 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected int getNetworkCacheMaxAgeTime() {
-        return 0;
+        return 60;
     }
 
     /**
@@ -174,7 +173,7 @@ public class GlobalApplication extends BasicApplication {
 //        Intent intent=new Intent(this,MainActivity.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
-        stopService(new Intent(ACTION_PUSH_SERVICE));
+//        stopService(new Intent(ACTION_PUSH_SERVICE));
         ActivityManager.getInstance().killProcess(getApplicationContext());
     }
 

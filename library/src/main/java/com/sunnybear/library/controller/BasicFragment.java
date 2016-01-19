@@ -19,8 +19,12 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.LoadingHUD;
+
+import java.io.Serializable;
 
 import butterknife.ButterKnife;
 
@@ -147,6 +151,42 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
             throw new NullPointerException("request为空");
         loading.show();
         mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
+     *
+     * @param request   request主体
+     * @param callback  请求回调(建议使用SimpleFastJsonCallback)
+     * @param pastTimer 过期时间阀值
+     */
+    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
+        String url = request.urlString();
+        url = url.substring(0, url.indexOf("?"));
+        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
+        if (cacheData != null)
+            callback.onSuccess(url, cacheData);
+
+        long currentTime = System.currentTimeMillis();//当前时间
+        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
+        //获取过期时间
+        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
+        if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
+            if (cacheData == null) loading.show();
+            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
+            mOkHttpClient.newCall(request).enqueue(callback);
+        }
+    }
+
+    /**
+     * 缓存数据
+     *
+     * @param url    网络地址
+     * @param result 数据源
+     * @param <T>    数据类型
+     */
+    public <T extends Serializable> void cacheData(String url, T result) {
+        mDiskFileCacheHelper.put(url, result);
     }
 
     /**

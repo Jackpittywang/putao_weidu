@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * FastJson解析json
  * Created by guchenkai on 2015/10/27.
  */
-public abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallback {
+abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallback {
     private Class<? extends Serializable> clazz;
 
     public FastJsonCallback(Class<? extends Serializable> clazz) {

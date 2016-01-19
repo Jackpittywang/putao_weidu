@@ -86,11 +86,10 @@ public class PutaoStartCircleFragment extends PTWDFragment implements TitleBar.O
      * 获取广告列表
      */
     private void getBannerList() {
-        networkRequestCache(StartApi.getBannerList()
+        networkRequest(StartApi.getBannerList()
                 , new SimpleFastJsonCallback<ArrayList<Banner>>(Banner.class, loading) {
             @Override
             public void onSuccess(String url, final ArrayList<Banner> result) {
-                cacheEnterDisk(url, result);
 //                bl_banner.setAdapter(new StartBannerAdapter(mActivity, result, new BannerViewPager.OnPagerClickListenr() {
 //                    @Override
 //                    public void onPagerClick(int position) {

@@ -58,7 +58,7 @@ public class StoreApi {
     public static Request getStoreHome(String page) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.POST, URL_STORE_HOME);
+                .build(RequestMethod.GET, URL_STORE_HOME);
     }
 
     /**

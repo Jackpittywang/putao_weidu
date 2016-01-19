@@ -60,7 +60,8 @@ public abstract class BasicApplication extends Application {
         Logger.init(getLogTag()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
         //OkHttp初始化
         mOkHttpClient = OkHttpManager.getInstance(getNetworkCacheDirectoryPath(), getNetworkCacheSize())
-                .add(new NetworkInterceptor()).build();
+                .add(new NetworkInterceptor())
+                /*.add(new CacheControlInterceptor())*/.build();
         //Fresco初始化
         Fresco.initialize(getApplicationContext(),
                 ImagePipelineConfigFactory.getOkhttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));
