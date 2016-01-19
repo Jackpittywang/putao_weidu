@@ -5,12 +5,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        auto:nav_has_divider="true"
-        auto:nav_has_right_title_icon="true"
-        auto:nav_main_title="为孩子创造"
-        auto:nav_right_icon="@drawable/icon_20_31" />
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="为孩子创造"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:id="@+id/ll_fancy"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/icon_20_31" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="奇思妙想"
+                android:layout_marginTop="3dp"
+                android:textColor="#985ec9"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"

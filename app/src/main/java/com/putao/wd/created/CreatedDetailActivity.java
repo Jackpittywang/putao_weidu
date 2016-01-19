@@ -244,7 +244,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
                 tv_support.setVisibility(View.GONE);
                 break;
         }
-        supportOfFloat.setDuration(2000);
+        supportOfFloat.setDuration(800);
         supportOfFloat.start();
         supportOfFloat.addListener(new Animator.AnimatorListener() {
                                        @Override
@@ -257,10 +257,12 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
                                                case R.id.tv_support:
                                                    tv_support_result.setVisibility(View.VISIBLE);
                                                    showView(tv_support_result);
+                                                   hindView(tv_support);
                                                    break;
                                                case R.id.tv_no_support:
                                                    tv_no_support_result.setVisibility(View.VISIBLE);
                                                    showView(tv_no_support_result);
+                                                   hindView(tv_no_support);
                                                    break;
                                            }
                                        }
@@ -280,14 +282,14 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     private void showView(View view) {
-        showAnim = ObjectAnimator.ofFloat(view, "alpha", 0, 1.0f);
-        showAnim.setDuration(1000);
+        showAnim = ObjectAnimator.ofFloat(view, "alpha", 0, 0.9f);
+        showAnim.setDuration(600);
         showAnim.start();
     }
 
     private void hindView(View view) {
-        hindAnim = ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0);
-        hindAnim.setDuration(1000);
+        hindAnim = ObjectAnimator.ofFloat(view, "alpha", 0.9f, 0);
+        hindAnim.setDuration(600);
         hindAnim.start();
     }
 }

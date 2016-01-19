@@ -3,6 +3,7 @@ package com.putao.wd.home.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Marketing;
@@ -41,12 +42,14 @@ public class CreateAdapter extends LoadMoreAdapter<Marketing, CreateAdapter.Crea
         holder.ll_cool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.tv_count_cool.setTextColor(0xff48cfae);
                 holder.sb_cool_icon.setState(true);
             }
         });
         holder.ll_not_cool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.tv_count_not_cool.setTextColor(0xffed5564);
                 holder.sb_not_cool_icon.setState(true);
             }
         });
@@ -63,6 +66,10 @@ public class CreateAdapter extends LoadMoreAdapter<Marketing, CreateAdapter.Crea
         LinearLayout ll_cool;
         @Bind(R.id.ll_not_cool)
         LinearLayout ll_not_cool;
+        @Bind(R.id.tv_count_cool)
+        TextView tv_count_cool;
+        @Bind(R.id.tv_count_not_cool)
+        TextView tv_count_not_cool;
 
         public CreateHolder(View itemView) {
             super(itemView);
