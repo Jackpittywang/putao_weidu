@@ -19,7 +19,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import butterknife.Bind;
 

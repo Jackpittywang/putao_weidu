@@ -6,7 +6,7 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.model.HomeExplore;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.util.List;

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 /**
  * 上拉加载更多RecyclerView

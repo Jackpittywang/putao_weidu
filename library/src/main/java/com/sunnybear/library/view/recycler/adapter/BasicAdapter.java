@@ -1,14 +1,22 @@
-package com.sunnybear.library.view.recycler;
+package com.sunnybear.library.view.recycler.adapter;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.animators.IAnimation;
+import com.sunnybear.library.view.recycler.animators.ViewHelper;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +37,13 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
 
     private int mProcessDrawable;
 
+    private boolean isStartAnimation = false;//是否开启ItemView动画
+    private boolean isFirstOnly = false;
+    private int mDuration;
+    private Interpolator mInterpolator;
+    private int mLastPosition = -1;
+    private IAnimation mIAnimation;
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
@@ -44,6 +59,27 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     public BasicAdapter(Context context, List<Item> items) {
         this.context = (BasicFragmentActivity) context;
         this.mItems = items != null ? items : new ArrayList<Item>();
+        mInterpolator = new LinearInterpolator();
+    }
+
+    public void setStartAnimation(boolean startAnimation) {
+        isStartAnimation = startAnimation;
+    }
+
+    public void setDuration(int duration) {
+        mDuration = duration;
+    }
+
+    public void setInterpolator(Interpolator interpolator) {
+        mInterpolator = interpolator;
+    }
+
+    public void setStartPosition(int start) {
+        mLastPosition = start;
+    }
+
+    public void setFirstOnly(boolean firstOnly) {
+        isFirstOnly = firstOnly;
     }
 
     /**
@@ -132,19 +168,51 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
             }
         });
         onBindItem(holder, item, position);
+        if (isStartAnimation)
+            setAnimator(holder.itemView, position);
     }
 
+    /**
+     * 设置动画
+     *
+     * @param itemView itemView
+     * @param position position
+     */
+    private void setAnimator(View itemView, int position) {
+        if (!isFirstOnly || position > mLastPosition) {
+            for (Animator anim : mIAnimation.getAnimators(itemView)) {
+                anim.setDuration(mDuration).start();
+                anim.setInterpolator(mInterpolator);
+            }
+            mLastPosition = position;
+        } else {
+            ViewHelper.clear(itemView);
+        }
+    }
+
+    /**
+     * 设置itemView动画组
+     *
+     * @param animation 动画组接口
+     */
+    public void setAnimations(IAnimation animation) {
+        mIAnimation = animation;
+    }
 
     public void add(Item item) {
-        int index = mItems.size();
         mItems.add(item);
-        notifyItemInserted(index);
+        notifyItemInserted(mItems.size() - 1);
+    }
+
+    public void add(int position, Item item) {
+        mItems.add(position, item);
+        notifyItemInserted(position);
     }
 
     public void addAll(List<Item> items) {
         int indexStart = mItems.size();
         mItems.addAll(items);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(indexStart, items.size());
     }
 
     public void replace(Item oldItem, Item newItem) {

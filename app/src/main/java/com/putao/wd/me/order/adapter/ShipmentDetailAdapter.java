@@ -5,14 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.me.order.ShipmentState;
-import com.putao.wd.model.Express;
 import com.putao.wd.model.ExpressContent;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 

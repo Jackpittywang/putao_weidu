@@ -1,20 +1,15 @@
 package com.putao.wd.me.order.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.me.order.ShipmentState;
 import com.putao.wd.model.Express;
-import com.putao.wd.model.OrderProduct;
-import com.putao.wd.store.order.adapter.OrdersAdapter;
-import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;

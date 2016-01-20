@@ -1,18 +1,10 @@
 package com.putao.wd.explore;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.view.recycler.BasicAdapter;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.BasicViewHolder;
-
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.Bind;
 

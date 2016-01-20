@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.OrderConfirmProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 

@@ -20,8 +20,8 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.List;
 

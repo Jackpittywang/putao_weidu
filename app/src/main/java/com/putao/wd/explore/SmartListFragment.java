@@ -8,10 +8,10 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 
 import java.io.Serializable;

@@ -11,7 +11,7 @@ import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

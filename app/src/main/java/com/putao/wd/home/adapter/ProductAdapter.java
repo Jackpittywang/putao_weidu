@@ -8,7 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.model.StoreProduct;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
 

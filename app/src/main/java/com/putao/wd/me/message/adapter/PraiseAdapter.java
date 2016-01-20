@@ -7,12 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.dto.MessagePraiseItem;
 import com.putao.wd.model.PraiseDetail;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
 

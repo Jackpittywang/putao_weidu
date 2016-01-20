@@ -14,7 +14,7 @@ import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.util.List;

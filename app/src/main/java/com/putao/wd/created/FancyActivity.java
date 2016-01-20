@@ -8,7 +8,7 @@ import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.io.Serializable;
 

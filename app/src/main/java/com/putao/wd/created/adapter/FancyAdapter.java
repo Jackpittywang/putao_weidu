@@ -6,7 +6,7 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
 

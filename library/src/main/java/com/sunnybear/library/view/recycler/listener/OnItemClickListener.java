@@ -1,4 +1,4 @@
-package com.sunnybear.library.view.recycler;
+package com.sunnybear.library.view.recycler.listener;
 
 import java.io.Serializable;
 

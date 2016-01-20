@@ -13,7 +13,7 @@ import com.putao.wd.model.ServiceBackImage;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.picker.OptionPicker;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.util.ArrayList;

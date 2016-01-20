@@ -10,26 +10,15 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.explore.adapter.MoreAdapter;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.video.VideoPlayerActivity;
-import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
-import com.sunnybear.library.view.select.DynamicTitleBar;
-import com.sunnybear.library.view.select.TitleBar;
-import com.sunnybear.library.view.select.TitleItem;
-
-import java.io.Serializable;
-import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.OnClick;

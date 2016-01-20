@@ -28,7 +28,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;

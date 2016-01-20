@@ -6,24 +6,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.alibaba.fastjson.JSON;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
-import com.putao.wd.api.ExploreApi;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
-import com.putao.wd.model.Management;
-import com.putao.wd.model.ManagementProduct;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.io.Serializable;
-import java.util.List;
 
 import butterknife.Bind;
 

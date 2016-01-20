@@ -24,7 +24,11 @@
         <attr name="divider_marginBottom" format="dimension" />
         <attr name="divider_color" format="color" />
         <attr name="is_inner" format="boolean" />
+        <attr name="is_process" format="boolean" />
         <attr name="process_background" format="integer|reference" />
+        <attr name="is_start_animator" format="boolean" />
+        <attr name="is_first_only" format="boolean" />
+        <attr name="duration_animator" format="integer" />
     </declare-styleable>
     <!--LoadMoreRecyclerView-->
     <declare-styleable name="LoadMoreRecyclerView">

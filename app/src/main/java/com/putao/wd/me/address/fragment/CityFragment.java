@@ -9,7 +9,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.me.address.adapter.CitySelectAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import com.putao.wd.model.Norms;
 import com.putao.wd.store.shopping.util.SpecUtils;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.select.Tag;
 import com.sunnybear.library.view.select.TagBar;

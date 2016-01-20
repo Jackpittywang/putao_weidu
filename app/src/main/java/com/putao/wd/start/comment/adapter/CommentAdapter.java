@@ -12,7 +12,7 @@ import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
 

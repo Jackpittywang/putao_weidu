@@ -1,27 +1,14 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.companion.PlotPreviewDialog;
 import com.putao.wd.model.DiaryApp;
-import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductDetail;
-import com.putao.wd.model.ExploreProductPlot;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.LoadMoreAdapter;
 
 import java.util.List;
 

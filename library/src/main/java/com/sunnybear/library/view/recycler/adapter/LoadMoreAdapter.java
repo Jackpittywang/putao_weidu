@@ -1,8 +1,10 @@
-package com.sunnybear.library.view.recycler;
+package com.sunnybear.library.view.recycler.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
  * Created by guchenkai on 2015/12/3.
  */
 public abstract class LoadMoreAdapter<Item extends Serializable, VH extends BasicViewHolder> extends BasicAdapter<Item, VH> {
-    private static final int TYPE_FOOTOR = 0xBB;
+    private static final int TYPE_FOOTER = 0xBB;
 
     private int mFooterSize = 0;
     private View mFooterView;
@@ -47,7 +49,7 @@ public abstract class LoadMoreAdapter<Item extends Serializable, VH extends Basi
     @Override
     public final int getItemViewType(int position) {
         if (position == getItemCount() - 1)//最后一个位置
-            viewType = TYPE_FOOTOR;
+            viewType = TYPE_FOOTER;
         else
             viewType = getMultiItemViewType(position);
         return viewType;
@@ -61,7 +63,7 @@ public abstract class LoadMoreAdapter<Item extends Serializable, VH extends Basi
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_FOOTOR)
+        if (viewType == TYPE_FOOTER)
             holder = (VH) new FooterViewHolder(mFooterView);
         else
             holder = super.onCreateViewHolder(parent, viewType);

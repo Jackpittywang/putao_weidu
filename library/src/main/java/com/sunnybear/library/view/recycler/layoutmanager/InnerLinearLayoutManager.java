@@ -1,4 +1,4 @@
-package com.sunnybear.library.view.recycler;
+package com.sunnybear.library.view.recycler.layoutmanager;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;

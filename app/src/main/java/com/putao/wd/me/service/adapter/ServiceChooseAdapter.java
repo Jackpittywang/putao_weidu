@@ -6,10 +6,9 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.OrderProduct;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
 import java.util.List;

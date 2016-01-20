@@ -1,4 +1,4 @@
-package com.sunnybear.library.view.recycler;
+package com.sunnybear.library.view.recycler.animators;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
