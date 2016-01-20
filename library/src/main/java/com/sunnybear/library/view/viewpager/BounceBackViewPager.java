@@ -113,7 +113,7 @@ public class BounceBackViewPager extends ViewPager {
         setOverScrollMode(OVER_SCROLL_NEVER);
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
-        super.setOnPageChangeListener(new MyOnPageChangeListener());
+        super.addOnPageChangeListener(new MyOnPageChangeListener());
         init(attrs);
     }
 
@@ -144,8 +144,6 @@ public class BounceBackViewPager extends ViewPager {
     public void setOnPageChangeListener(OnPageChangeListener listener) {
         mScrollListener = listener;
     }
-
-    ;
 
     private void invalidateVisibleChilds(final int position) {
         for (int i = 0; i < getChildCount(); i++) {
