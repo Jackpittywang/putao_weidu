@@ -111,7 +111,7 @@
     </LinearLayout>
 
     <!--内容-->
-    <ScrollView
+    <com.sunnybear.library.view.scroll.SupportScrollView
         android:id="@+id/sv_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -248,28 +248,8 @@
                 android:id="@+id/wv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/divider_color"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="20dp"
-                android:text="相关创造"
-                android:textColor="#646464"
-                android:textSize="14sp" />
-
-            <com.sunnybear.library.view.recycler.BasicRecyclerView
-                android:id="@+id/rv_created_correlation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                auto:divider_color="@color/divider_color"
-                auto:divider_height="1dp"
-                auto:has_row_divider="true"
-                auto:is_inner="true" />
         </LinearLayout>
-    </ScrollView>
+    </com.sunnybear.library.view.scroll.SupportScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -298,7 +278,7 @@
             android:padding="10dp"
             android:text="支持"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16sp"
+            android:textSize="@dimen/text_size_12sp"
             auto:background_color="#48CFAE" />
 
 
@@ -313,7 +293,7 @@
             android:padding="10dp"
             android:text="无感"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16sp"
+            android:textSize="@dimen/text_size_12sp"
             auto:background_color="#ED5564" />
 
         <com.sunnybear.library.view.CircleTextView
@@ -324,9 +304,9 @@
             android:drawableTop="@drawable/icon_16_10"
             android:gravity="center"
             android:padding="10dp"
-            android:text="支持"
+            android:text="已支持"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16sp"
+            android:textSize="@dimen/text_size_12sp"
             android:visibility="gone"
             auto:background_color="@color/divider_color" />
 
@@ -338,9 +318,9 @@
             android:drawableTop="@drawable/icon_16_13"
             android:gravity="center"
             android:padding="10dp"
-            android:text="无感"
+            android:text="已无感"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16sp"
+            android:textSize="@dimen/text_size_12sp"
             android:visibility="gone"
             auto:background_color="@color/divider_color" />
     </RelativeLayout>

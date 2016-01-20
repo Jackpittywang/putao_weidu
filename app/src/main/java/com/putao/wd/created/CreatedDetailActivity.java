@@ -28,6 +28,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.scroll.SupportScrollView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,7 +54,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
     @Bind(R.id.tv_no_support_result)
     CircleTextView tv_no_support_result;
     @Bind(R.id.sv_detail)
-    ScrollView sv_detail;
+    SupportScrollView sv_detail;
     @Bind(R.id.v_progress)
     View v_progress;
     @Bind(R.id.tv_step1)
@@ -74,7 +75,6 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
     private Handler mHandler;
     private int mTime = 1000;
     private boolean btnState = false;
-    private int[] position = new int[2];
     private ObjectAnimator showAnim;
     private ObjectAnimator hindAnim;
 
@@ -88,6 +88,8 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
         addNavigation();
         addListener();
         wv_content.loadUrl("http://wap.baidu.com");
+        tv_support.setClickable(false);
+        tv_no_support.setClickable(false);
         //文字左边margin px值
         mMargin = (int) (15 * mContext.getResources().getDisplayMetrics().density + 0.5f);
         mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
@@ -99,7 +101,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
                 mSpace = (tv_step2.getWidth() - mTextWidth) / 4;
                 startAnim(4);
             }
-        }, 500);
+        }, 200);
     }
 
     private void addListener() {
@@ -112,30 +114,34 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
             @Override
             public void onWebPageLoaderFinish(String url) {
                 Logger.d("网页加载完成");
+                sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
+                    @Override
+                    public void onScroll(int scrollY) {
+                        View contentView = sv_detail.getChildAt(0);
+                        showBtn(contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight());
+                    }
+                });
             }
         });
         tv_no_support.setOnClickListener(this);
         tv_support.setOnClickListener(this);
-        wv_content.getParent().requestDisallowInterceptTouchEvent(true);
-        wv_content.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                showBtn();
-                return true;
-            }
-        });
     }
 
     /**
-     * 显示按钮
+     * 显示隐藏按钮
      */
-    private void showBtn() {
-        wv_content.getLocationInWindow(position);
-        if (!btnState && position[1] <= 0) {
+    private void showBtn(Boolean isShow) {
+        if (!btnState && isShow) {
+            tv_support.setClickable(true);
+            tv_no_support.setClickable(true);
             rl_btn.setVisibility(View.VISIBLE);
+            rl_btn.setEnabled(true);
             showView(rl_btn);
             btnState = true;
-        } else if (btnState && position[1] > 200) {
+        } else if (btnState && !isShow) {
+            tv_support.setClickable(false);
+            tv_no_support.setClickable(false);
+            rl_btn.setEnabled(false);
             hindView(rl_btn);
             btnState = false;
         }
@@ -219,7 +225,7 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
             public void run() {
                 tv.setTextColor(0xff48cfae);
             }
-        }, step * mTime - 700);
+        }, step * (mTime - 250));
     }
 
 
@@ -236,10 +242,9 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
             case R.id.tv_no_support:
                 supportOfFloat = ObjectAnimator.ofFloat(tv_no_support, "translationX", 0, -middle);
                 tv_support.setVisibility(View.GONE);
-                Drawable drawable = mContext.getResources().getDrawable(R.drawable.icon_16_13);
                 break;
         }
-        supportOfFloat.setDuration(2000);
+        supportOfFloat.setDuration(800);
         supportOfFloat.start();
         supportOfFloat.addListener(new Animator.AnimatorListener() {
                                        @Override
@@ -252,10 +257,12 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
                                                case R.id.tv_support:
                                                    tv_support_result.setVisibility(View.VISIBLE);
                                                    showView(tv_support_result);
+                                                   hindView(tv_support);
                                                    break;
                                                case R.id.tv_no_support:
                                                    tv_no_support_result.setVisibility(View.VISIBLE);
                                                    showView(tv_no_support_result);
+                                                   hindView(tv_no_support);
                                                    break;
                                            }
                                        }
@@ -275,14 +282,14 @@ public class CreatedDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     private void showView(View view) {
-        showAnim = ObjectAnimator.ofFloat(view, "alpha", 0, 1.0f);
-        showAnim.setDuration(1000);
+        showAnim = ObjectAnimator.ofFloat(view, "alpha", 0, 0.9f);
+        showAnim.setDuration(600);
         showAnim.start();
     }
 
     private void hindView(View view) {
-        hindAnim = ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0);
-        hindAnim.setDuration(1000);
+        hindAnim = ObjectAnimator.ofFloat(view, "alpha", 0.9f, 0);
+        hindAnim.setDuration(600);
         hindAnim.start();
     }
 }

@@ -96,7 +96,7 @@
         <LinearLayout
             android:id="@+id/ll_cool"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/tv_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/ll_comment"
@@ -131,7 +131,7 @@
         <LinearLayout
             android:id="@+id/ll_not_cool"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/tv_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/ll_comment"
@@ -166,7 +166,7 @@
         <LinearLayout
             android:id="@+id/ll_comment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/rl_tag"
             android:layout_weight="1"
             android:gravity="center">
