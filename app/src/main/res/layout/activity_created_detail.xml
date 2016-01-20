@@ -267,61 +267,70 @@
         android:gravity="top"
         android:visibility="gone">
 
-        <com.sunnybear.library.view.CircleTextView
-            android:id="@+id/tv_support"
+        <RelativeLayout
+            android:id="@+id/rl_support"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="80dp"
-            android:drawableTop="@drawable/icon_16_10"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="支持"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12sp"
-            auto:background_color="#48CFAE" />
+            android:layout_marginLeft="80dp">
 
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_support"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/icon_16_10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="支持"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                auto:background_color="#48CFAE" />
 
-        <com.sunnybear.library.view.CircleTextView
-            android:id="@+id/tv_no_support"
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_support_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/icon_16_10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="已支持"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="gone"
+                auto:background_color="@color/divider_color" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_no_support"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="80dp"
-            android:drawableTop="@drawable/icon_16_13"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="无感"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12sp"
-            auto:background_color="#ED5564" />
+            android:layout_marginRight="80dp">
 
-        <com.sunnybear.library.view.CircleTextView
-            android:id="@+id/tv_support_result"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:drawableTop="@drawable/icon_16_10"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="已支持"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12sp"
-            android:visibility="gone"
-            auto:background_color="@color/divider_color" />
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_no_support"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:drawableTop="@drawable/icon_16_13"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="无感"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                auto:background_color="#ED5564" />
 
-        <com.sunnybear.library.view.CircleTextView
-            android:id="@+id/tv_no_support_result"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:drawableTop="@drawable/icon_16_13"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="已无感"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12sp"
-            android:visibility="gone"
-            auto:background_color="@color/divider_color" />
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_no_support_result"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:drawableTop="@drawable/icon_16_13"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="已无感"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="gone"
+                auto:background_color="@color/divider_color" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
