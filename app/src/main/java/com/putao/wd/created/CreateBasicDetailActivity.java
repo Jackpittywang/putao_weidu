@@ -100,7 +100,7 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
     @Override
     public void onClick(final View v) {
         if (R.id.rl_support == v.getId() || R.id.rl_no_support == v.getId()) {
-            v.setClickable(false);
+            v.setEnabled(false);
             ObjectAnimator supportOfFloat = null;
             int middle = mWidthPixels - (rl_support.getRight() + rl_support.getLeft()) / 2;
             switch (v.getId()) {
