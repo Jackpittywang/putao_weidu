@@ -167,9 +167,9 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
                 return true;
             }
         });
-        onBindItem(holder, item, position);
         if (isStartAnimation)
             setAnimator(holder.itemView, position);
+        onBindItem(holder, item, position);
     }
 
     /**
