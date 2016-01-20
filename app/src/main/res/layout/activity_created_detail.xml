@@ -264,7 +264,6 @@
         android:layout_height="60dp"
         android:layout_above="@+id/ll_bottom"
         android:layout_marginBottom="15dp"
-        android:gravity="top"
         android:visibility="gone">
 
         <RelativeLayout
