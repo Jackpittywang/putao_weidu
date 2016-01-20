@@ -45,7 +45,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         addNavigation();
 
         adapter = new StoreAdapter(mActivity, null);
-        adapter.setAnimations(new ScaleInAnimation());
+        adapter.setAnimations(new ScaleInAnimation(2.0F));
         rv_content.setAdapter(adapter);
         addListener();
     }
