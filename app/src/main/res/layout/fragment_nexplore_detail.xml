@@ -112,7 +112,7 @@
             <TextView
                 android:id="@+id/tv_count_cool"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:text="赞"
@@ -142,7 +142,7 @@
             <TextView
                 android:id="@+id/tv_count_comment"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:text="评论"
@@ -167,12 +167,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/btn_20_share_w_sel"/>
+                android:src="@drawable/icon_16_18"/>
 
             <TextView
                 android:id="@+id/tv_share"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:text="分享"
