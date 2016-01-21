@@ -5,7 +5,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
-import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.NetworkUtils;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class NetworkInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();//拦截Request
-        if (!AppUtils.isNetworkReachable(BasicApplication.getInstance())) {
+        if (!NetworkUtils.isNetworkReachable(BasicApplication.getInstance())) {
             ToastUtils.showToastLong(BasicApplication.getInstance(),
                     BasicApplication.getInstance().getResources().getString(R.string.not_network));
             return null;
