@@ -17,6 +17,7 @@ import butterknife.Bind;
  * 售后物流详情里面显示物流详细状态的item
  * Created by wangou on 15/12/3.
  */
+@Deprecated
 public class ServiceShipmentInfoItem extends LinearLayout {
 
     @Bind(R.id.v_top_line)

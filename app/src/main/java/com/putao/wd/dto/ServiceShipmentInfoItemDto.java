@@ -1,8 +1,10 @@
 package com.putao.wd.dto;
 
-/**售后物流
+/**
+ * 售后物流
  * Created by yanguoqiang on 15/12/4.
  */
+@Deprecated
 public class ServiceShipmentInfoItemDto {
 
     public boolean isShowTopLine() {

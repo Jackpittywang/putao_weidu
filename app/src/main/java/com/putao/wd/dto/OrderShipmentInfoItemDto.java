@@ -3,6 +3,7 @@ package com.putao.wd.dto;
 /**
  * Created by yanguoqiang on 15/12/4.
  */
+@Deprecated
 public class OrderShipmentInfoItemDto {
 
     public boolean isShowTopLine() {

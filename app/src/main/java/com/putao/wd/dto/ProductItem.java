@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 商城产品列表
  * Created by guchenkai on 2015/11/30.
  */
+@Deprecated
 public class ProductItem implements Serializable {
     private String id;
     private String iconUrl;

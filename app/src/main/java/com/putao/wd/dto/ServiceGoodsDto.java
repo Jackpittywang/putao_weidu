@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 售后
  * Created by wango on 2015/12/10.
  */
+@Deprecated
 public class ServiceGoodsDto implements Serializable {
 
     // 商品数量
