@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 购物车
  * Created by guchenkai on 2015/12/4.
  */
+@Deprecated
 public class ShoppingCar implements Serializable {
     private String id;
     private String title;

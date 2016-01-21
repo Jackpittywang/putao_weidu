@@ -14,6 +14,7 @@ import com.sunnybear.library.util.Logger;
  * 订单详情页面所有包裹列表的按钮，点击进入包裹详情
  * Created by yanguoqiang on 15/12/7.
  */
+@Deprecated
 public class OrderShipmentListItem extends LinearLayout {
 
     private String TAG = OrderShipmentListItem.class.getName();

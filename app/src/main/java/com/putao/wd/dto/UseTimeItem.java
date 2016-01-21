@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 每日使用次数
  * Created by wango on 2015/12/9.
  */
+@Deprecated
 public class UseTimeItem implements Serializable {
     private String name;
 

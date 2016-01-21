@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Created by wagnou on 15/12/4.
  */
+@Deprecated
 public class ServiceShipmentDto {
     // 商品名字
     private String name;

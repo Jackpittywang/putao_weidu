@@ -1,7 +1,6 @@
 package com.putao.wd.me.order.view;
 
 import android.content.Context;
-import android.text.Html;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +11,7 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 /**
  * Created by yanguoqiang on 15/11/30.
  */
+@Deprecated
 public class OrderGoodsItem extends LinearLayout {
 
     private Context context;

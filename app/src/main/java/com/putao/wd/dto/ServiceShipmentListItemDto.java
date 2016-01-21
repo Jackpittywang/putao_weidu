@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 售后物流
  * Created by wango on 2015/12/10.
  */
+@Deprecated
 public class ServiceShipmentListItemDto implements Serializable {
     /**
      * 标题 “包裹x”

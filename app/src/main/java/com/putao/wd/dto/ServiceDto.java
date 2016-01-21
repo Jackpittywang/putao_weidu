@@ -7,6 +7,7 @@ import java.util.List;
  * 售后
  * Created by wango on 2015/12/10.
  */
+@Deprecated
 public class ServiceDto implements Serializable {
     // order号
     private String orderNo;

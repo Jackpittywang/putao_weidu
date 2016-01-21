@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 订单详情页面包裹列表数据对象
  * Created by yanguoqiang on 15/12/8.
  */
+@Deprecated
 public class OrderShipmentListItemDto implements Serializable {
     /**
      * 标题 “包裹x”

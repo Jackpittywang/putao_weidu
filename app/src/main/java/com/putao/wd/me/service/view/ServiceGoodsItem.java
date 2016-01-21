@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by yanguoqiang on 15/11/30.
  */
+@Deprecated
 public class ServiceGoodsItem extends LinearLayout {
 
     @Bind(R.id.img_goods)

@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 报名列表
  * Created by wango on 2015/12/6.
  */
+@Deprecated
 public class ApplyListItem  implements Serializable {
     private int id;
     private String userIconUrl;//用户头像

@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 点赞列表项
  * Created by wango on 2015/12/4.
  */
+@Deprecated
 public class PraiseListItem implements Serializable {
     private int id;
     private String userIconUrl;//用户头像

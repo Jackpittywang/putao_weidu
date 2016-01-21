@@ -1,11 +1,9 @@
 package com.putao.wd.me.service;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -14,7 +12,6 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.dto.ServiceDto;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ProductData;
@@ -54,7 +51,6 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> imple
     @Bind(R.id.v_status_waiting_pay)
     View v_status_waiting_pay;
 
-    private ServiceDto serviceDto;
     private double totalPrice;
     public static final String KEY_ORDER = "service";
     public static final String ORDER_ID = "orderId";
