@@ -1,6 +1,7 @@
 package com.sunnybear.library.view.viewpager;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -8,7 +9,7 @@ import android.view.MotionEvent;
  * 不可滑动的ViewPager
  * Created by guchenkai on 2015/11/6.
  */
-public class UnScrollableViewPager extends LazyViewPager {
+public class UnScrollableViewPager extends ViewPager {
 
     public UnScrollableViewPager(Context context) {
         super(context);

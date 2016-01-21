@@ -48,13 +48,15 @@ public class PutaoStoreFragment extends PTWDFragment {
         adapter.setAnimations(new ScaleInAnimation(2.0F));
         rv_content.setAdapter(adapter);
         addListener();
+
+        getStoreHome();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        currentPage = 1;
-        getStoreHome();
+//        currentPage = 1;
+//        getStoreHome();
     }
 
     /**

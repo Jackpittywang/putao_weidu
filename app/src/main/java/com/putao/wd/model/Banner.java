@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 广告banner列表
  * Created by guchenkai on 2015/12/3.
  */
+@Deprecated
 public class Banner implements Serializable {
     private String title;//标题
     private String img_url;//Banner 图片地址
