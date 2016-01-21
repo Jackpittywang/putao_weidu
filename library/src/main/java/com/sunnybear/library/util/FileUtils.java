@@ -346,4 +346,34 @@ public final class FileUtils {
                     tfi.delete();
             }
     }
+
+    /**
+     * 保存文件
+     *
+     * @param in       文件输入流
+     * @param filePath 文件保存路径
+     */
+    public static void saveFile(InputStream in, String filePath) {
+        File file = new File(filePath);
+        byte[] buffer = new byte[2048];
+        int len = 0;
+        FileOutputStream fos = null;
+        try {
+            FileUtils.createFile(file);
+            fos = new FileOutputStream(file);
+            while ((len = in.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+            }
+            fos.flush();
+        } catch (IOException e) {
+            Logger.e(e);
+        } finally {
+            try {
+                if (in != null) in.close();
+                if (fos != null) fos.close();
+            } catch (IOException e) {
+                Logger.e(e);
+            }
+        }
+    }
 }
