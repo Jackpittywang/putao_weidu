@@ -85,7 +85,7 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.btn_start:
                 PreferenceUtils.save(GlobalApplication.PREFERENCE_KEY_IS_FIRST, true);
-                startActivity(MainActivity.class);
+                startActivity(IndexActivity.class);
                 finish();
                 break;
         }
