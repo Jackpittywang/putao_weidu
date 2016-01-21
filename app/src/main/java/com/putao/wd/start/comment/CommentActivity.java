@@ -11,13 +11,13 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
-import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.Comment;
 import com.putao.wd.model.CommentList;
-import com.putao.wd.model.UserInfo;
+import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * 评论页
  * Created by yanghx on 2015/12/7.
  */
-public class CommentActivity extends PTWDActivity implements View.OnClickListener {
+public class CommentActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     public static final String EVENT_COUNT_COMMENT = "event_count_comment";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
@@ -81,11 +81,11 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         Bundle bundle = getIntent().getExtras();
-        action_id = bundle.getString("action_id");
+        action_id = bundle.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
         getCommentList();
         addListener();
 
-        emojiMap = GlobalApplication.getEmojis();
+        emojiMap = mApp.getEmojis();
         emojis = new ArrayList<>();
         for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
@@ -97,7 +97,7 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
             public void onFirstClick(View v) {
                 //删除评论
                 String comment_id = adapter.getItem(position).getComment_id();
-                networkRequest(StartApi.commentRemove(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+                networkRequest(ExploreApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
 
                     @Override
                     public void onSuccess(String url, String result) {
@@ -166,7 +166,7 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
                 if (isReply) {
                     Comment comment = adapter.getItem(position);
                     String msg = et_msg.getText().toString();
-                    networkRequest(StartApi.commentAdd(action_id, comment.getUser_name(), msg, "REPLY", comment.getComment_id(), comment.getUser_profile_photo()),
+                    networkRequest(ExploreApi.addComment(msg, action_id, comment.getComment_id()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
@@ -177,8 +177,7 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
                             });
                 } else {
                     String msg = et_msg.getText().toString();
-                    UserInfo userInfo = AccountHelper.getCurrentUserInfo();
-                    networkRequest(StartApi.commentAdd(action_id, userInfo.getNick_name(), msg, "COMMENT", AccountHelper.getCurrentUid(), userInfo.getHead_img()),
+                    networkRequest(ExploreApi.addComment(msg, action_id),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
@@ -201,7 +200,7 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
     private void refreshCommentList() {
         page = 1;
         rv_content.reset();
-        networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
+        networkRequest(ExploreApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
             @Override
             public void onSuccess(String url, CommentList result) {
                 if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
@@ -223,7 +222,7 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
      * 获取评论列表
      */
     private void getCommentList() {
-        networkRequest(StartApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
+        networkRequest(ExploreApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<CommentList>(CommentList.class, loading) {
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
@@ -257,7 +256,7 @@ public class CommentActivity extends PTWDActivity implements View.OnClickListene
     @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
     public void eventClickCool(int currPosition) {
         Comment comment = adapter.getItem(currPosition);
-        networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getUser_profile_photo()),
+        networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getHead_img()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {

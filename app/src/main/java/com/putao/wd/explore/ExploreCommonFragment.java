@@ -13,6 +13,8 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -35,6 +37,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     public static final String INDEX_DATA_PAGE = "index_data_page";
     public static final String INDEX_DATA = "index_data";
     private ExploreIndex mExploreIndex;
+    private int mPosition;
 
     @Override
     protected int getLayoutId() {
@@ -43,7 +46,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        mExploreIndex = (ExploreIndex) args.getSerializable(INDEX_DATA_PAGE);
+        mPosition = args.getInt(INDEX_DATA_PAGE);
+        mExploreIndex = ((List<ExploreIndex>) args.getSerializable(INDEX_DATA)).get(mPosition);
         initView();
     }
 
@@ -65,6 +69,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
             case R.id.iv_video:
                 Bundle bundleDetial = new Bundle();
                 bundleDetial.putSerializable(INDEX_DATA, args.getSerializable(INDEX_DATA));
+                bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_down);
                 break;

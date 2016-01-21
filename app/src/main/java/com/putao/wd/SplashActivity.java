@@ -37,7 +37,7 @@ public class SplashActivity extends BasicFragmentActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
+//        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
             SuperTask.with(this)
                     .assign(new SuperTask.TaskDescription<ConcurrentHashMap<String, String>>() {
                         @Override
@@ -57,12 +57,13 @@ public class SplashActivity extends BasicFragmentActivity {
                             Logger.d("表情包设置完成");
                             mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
                             GlobalApplication.setEmojis(result);
-                            startActivity(GuidanceActivity.class);
+//                            startActivity(GuidanceActivity.class);
+                            startActivity(IndexActivity.class);
                             finish();
                         }
                     }).execute();
-        else
-            startActivity(IndexActivity.class);
+//        else
+//            startActivity(IndexActivity.class);
 //        updateResource();
     }
 

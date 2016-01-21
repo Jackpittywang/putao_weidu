@@ -142,7 +142,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
     private Bundle addBundle(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ExploreCommonFragment.INDEX_DATA_PAGE, mExploreIndexs.get(position));
+        bundle.putInt(ExploreCommonFragment.INDEX_DATA_PAGE, position);
         bundle.putSerializable(ExploreCommonFragment.INDEX_DATA, (Serializable) mExploreIndexs);
         return bundle;
     }

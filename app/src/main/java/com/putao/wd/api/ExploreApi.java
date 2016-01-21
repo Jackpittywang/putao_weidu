@@ -22,6 +22,9 @@ public class ExploreApi {
     private static final String REQUEST_PAGE = "page";//页码
 
     private static final String LIMIT = "limit";//首页数据条目数量
+    private static final String ARTICLE_ID = "article_id";//首页文章ID
+    private static final String COMMENT_ID = "comment_id";//首页评论ID
+    private static final String COMMENT_MSG = "comment_msg";//首页评论内容
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
@@ -227,5 +230,69 @@ public class ExploreApi {
     public static Request getDetailList() {
         return PTWDRequestHelper.explore()
                 .build(RequestMethod.GET, URL_ARTICLE_DETAIL);
+    }
+
+    /**
+     * 评论列表
+     */
+    public static final String URL_COMMENT_LIST = BASE_URL + "article/comment/list";
+
+    /**
+     * 评论列表
+     *
+     * @param article_id 首页文章id
+     * @param page 首页评论页面
+     */
+    public static Request getCommentList(String page,String article_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, page)
+                .addParam(ARTICLE_ID, article_id)
+                .build(RequestMethod.GET, URL_COMMENT_LIST);
+    }
+    /**
+     * 添加评论
+     */
+    public static final String URL_COMMENT_ADD = BASE_URL + "article/comment/add";
+
+    /**
+     * 添加评论
+     *
+     * @param article_id 首页文章id
+     * @param msg 首页评论内容
+     */
+    public static Request addComment(String msg,String article_id) {
+        return PTWDRequestHelper.start()
+                .addParam(COMMENT_MSG, msg)
+                .addParam(ARTICLE_ID, article_id)
+                .build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+    /**
+     * 回复评论
+     *
+     * @param msg 首页评论内容
+     * @param article_id 首页文章id
+     * @param comment_id 首页评论id
+     */
+    public static Request addComment(String msg,String article_id,String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(COMMENT_MSG, msg)
+                .addParam(ARTICLE_ID, article_id)
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+    /**
+     * 删除评论
+     */
+    public static final String URL_COMMENT_DELETE = BASE_URL + "article_comment_delete";
+
+    /**
+     * 删除评论
+     *
+     * @param comment_id 评论id
+     */
+    public static Request deleteComment(String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(ARTICLE_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_DELETE);
     }
 }

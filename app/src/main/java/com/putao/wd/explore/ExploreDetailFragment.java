@@ -68,6 +68,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA_PAGE);
         mSharePopupWindow = new SharePopupWindow(getActivity());
+        wb_explore_detail.getParent().requestDisallowInterceptTouchEvent(false);
         initView();
         addListener();
 
@@ -120,7 +121,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 //                startActivity(PraiseListActivity.class, bundle);
                 break;
             case R.id.ll_comment :
-                bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");
+                bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 startActivity(CommentActivity.class, bundle);
                 break;
             case R.id.ll_share :

@@ -43,13 +43,13 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
 
     @Override
     public void onBindItem(final CommentViewHolder holder, final Comment comment, final int position) {
-        holder.iv_comment_icon.setImageURL(comment.getUser_profile_photo());
+        holder.iv_comment_icon.setImageURL(comment.getHead_img());
         holder.tv_username.setText(comment.getUser_name());
-        String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getCreate_time()), DATE_PATTERN);
+        String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getModified_time()), DATE_PATTERN);
         holder.tv_comment_time.setText(create_time);
         holder.tv_comment_content.setText(comment.getContent());
-        if (!"0".equals(comment.getCount_cool())) {
-            holder.tv_count_cool.setText(comment.getCount_cool());
+        if (!"0".equals(comment.getCount_likes())) {
+            holder.tv_count_cool.setText(comment.getCount_likes());
         } else {
             holder.tv_count_cool.setText("赞");
         }

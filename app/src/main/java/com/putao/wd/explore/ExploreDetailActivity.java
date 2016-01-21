@@ -31,6 +31,7 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
 
     private SparseArray<Fragment> mFragments;
     private List<ExploreIndex> mExploreIndexs;
+    private int mPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
         setContentView(getContainer());
         Intent intent = getIntent();
         mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
+        mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE,1);
         initView();
         addFragment();
     }
@@ -49,7 +51,6 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
         View view = LayoutInflater.from(this).inflate(R.layout.activity_nexplore_detail, null);
         mSwipeBackLayout.addView(view);
         vp_container = (ViewPager) findViewById(R.id.vp_container);
-        vp_container.setCurrentItem(0);
         mSwipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.TOP);
     }
 
@@ -89,6 +90,7 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
             }
         };
         vp_container.setAdapter(adapter);
+        vp_container.setCurrentItem(mPosition);
     }
 
     /**

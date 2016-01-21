@@ -9,11 +9,11 @@ import java.io.Serializable;
 public class Comment implements Serializable {
     private String comment_id;//评论ID
     private String content;//内容
-    private String count_cool;//赞
-    private String create_time;//创建时间
+    private String count_likes;//赞
+    private String modified_time;//创建时间
     private String user_id;//评论归属用户
     private String user_name;//归属用户昵称
-    private String user_profile_photo;//头像
+    private String head_img;//头像
     // 待定   //评论回复内容
 
     public String getComment_id() {
@@ -32,20 +32,20 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public String getCount_cool() {
-        return count_cool;
+    public String getCount_likes() {
+        return count_likes;
     }
 
-    public void setCount_cool(String count_cool) {
-        this.count_cool = count_cool;
+    public void setCount_likes(String count_likes) {
+        this.count_likes = count_likes;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getModified_time() {
+        return modified_time;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setModified_time(String modified_time) {
+        this.modified_time = modified_time;
     }
 
     public String getUser_id() {
@@ -64,12 +64,12 @@ public class Comment implements Serializable {
         this.user_name = user_name;
     }
 
-    public String getUser_profile_photo() {
-        return user_profile_photo;
+    public String getHead_img() {
+        return head_img;
     }
 
-    public void setUser_profile_photo(String user_profile_photo) {
-        this.user_profile_photo = user_profile_photo;
+    public void setHead_img(String head_img) {
+        this.head_img = head_img;
     }
 
     @Override
@@ -77,11 +77,11 @@ public class Comment implements Serializable {
         return "Comment{" +
                 "comment_id='" + comment_id + '\'' +
                 ", content='" + content + '\'' +
-                ", count_cool='" + count_cool + '\'' +
-                ", create_time='" + create_time + '\'' +
+                ", count_likes='" + count_likes + '\'' +
+                ", modified_time='" + modified_time + '\'' +
                 ", user_id='" + user_id + '\'' +
                 ", user_name='" + user_name + '\'' +
-                ", user_profile_photo='" + user_profile_photo + '\'' +
+                ", head_img='" + head_img + '\'' +
                 '}';
     }
 }
