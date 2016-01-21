@@ -32,7 +32,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
     private OnItemClickListener<Item> mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
-    private boolean isProcess = false;
+    //    private boolean isProcess = false;
     private View mItemView;
 
     private int mProcessDrawable;
@@ -147,7 +147,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
             @Override
             public void onClick(View v) {
                 if (!PhoneUtil.isFastDoubleClick()) {
-                    if (mOnItemClickListener != null && !isProcess)
+                    if (mOnItemClickListener != null)
                         mOnItemClickListener.onItemClick(item, position);
                 } else {
                     Logger.e("重复点击");
