@@ -21,6 +21,8 @@ public class ExploreApi {
     private static final String REQUEST_PLOT_ID = "plot_id";//剧情理念详情id
     private static final String REQUEST_PAGE = "page";//页码
 
+    private static final String LIMIT = "limit";//首页数据条目数量
+
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
     private static final String STATUS = "status";//控制设备名称
@@ -189,14 +191,41 @@ public class ExploreApi {
     /**
      * 查询对应游戏下的陪伴数据
      */
-    public static final String URL_DIARY_DATA = BASE_URL + "diary/data";
-
-    /**
-     * 查询对应游戏下的陪伴数据
-     */
     public static Request getDiaryData(String productId) {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_PRODUCT_ID, productId)
                 .build(RequestMethod.POST, URL_DIARY_DATA);
+    }
+
+    /**
+     * 查询对应游戏下的陪伴数据
+     */
+    public static final String URL_DIARY_DATA = BASE_URL + "diary/data";
+
+    /**
+     * 首页七条列表
+     */
+    public static final String URL_ARTICLE_LIST= BASE_URL + "article/list";
+
+    /**
+     * 首页七条列表
+     */
+    public static Request getArticleList() {
+        return PTWDRequestHelper.explore()
+                .addParam(LIMIT, "7")
+                .build(RequestMethod.GET, URL_ARTICLE_LIST);
+    }
+
+    /**
+     * 首页七条详情
+     */
+    public static final String URL_ARTICLE_DETAIL= BASE_URL + "article/detail";
+
+    /**
+     * 首页七条列表(和列表数据相同)
+     */
+    public static Request getDetailList() {
+        return PTWDRequestHelper.explore()
+                .build(RequestMethod.GET, URL_ARTICLE_DETAIL);
     }
 }

@@ -6,18 +6,31 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
 
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_video"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        auto:placeholderImage="@drawable/test_flaunt_taotao_bg_01"
-        auto:placeholderImageScaleType="centerCrop" />
+        android:id="@+id/rl_video"
+        android:layout_height="280dp">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            auto:placeholderImage="@drawable/test_flaunt_taotao_bg_01"
+            auto:placeholderImageScaleType="centerCrop" />
+        <ImageView
+            android:id="@+id/iv_player"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:src="@drawable/btn_60_play_selector"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/iv_video"
+        android:layout_below="@id/rl_video"
         android:background="@color/white"
         android:orientation="vertical">
 

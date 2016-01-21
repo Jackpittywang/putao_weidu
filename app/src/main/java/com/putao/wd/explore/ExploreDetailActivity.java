@@ -1,5 +1,6 @@
 package com.putao.wd.explore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,47 +14,49 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.model.ExploreIndex;
 import com.sunnybear.library.view.SwipeBackLayout;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 首页详情
  * Created by guchenkai on 2016/1/11.
  */
 public class ExploreDetailActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener {
-    //    @Bind(R.id.vp_container)
     ViewPager vp_container;
-
     private SwipeBackLayout mSwipeBackLayout;
     private ImageView ivShadow;
 
     private SparseArray<Fragment> mFragments;
+    private List<ExploreIndex> mExploreIndexs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContainer());
+        Intent intent = getIntent();
+        mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
+        initView();
+        addFragment();
+    }
+
+    /**
+     * 初始化视图
+     */
+    private void initView() {
         View view = LayoutInflater.from(this).inflate(R.layout.activity_nexplore_detail, null);
         mSwipeBackLayout.addView(view);
-
         vp_container = (ViewPager) findViewById(R.id.vp_container);
-        addFragment();
-        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                return mFragments.get(position);
-            }
-        };
-        vp_container.setAdapter(adapter);
         vp_container.setCurrentItem(0);
-
         mSwipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.TOP);
     }
 
+    /**
+     * 初始化容器视图
+     * @return
+     */
     private View getContainer() {
         RelativeLayout container = new RelativeLayout(this);
         mSwipeBackLayout = new SwipeBackLayout(this);
@@ -71,14 +74,32 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
      */
     private void addFragment() {
         mFragments = new SparseArray<>();
-        mFragments.put(0, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(1, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(2, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(3, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(4, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(5, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(6, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
-        mFragments.put(7, Fragment.instantiate(this, ExploreDetailFragment.class.getName()));
+        for (int i = 0; i < mExploreIndexs.size(); i++) {
+            mFragments.put(i, Fragment.instantiate(getApplicationContext(), ExploreDetailFragment.class.getName(), addBundle(i)));
+        }
+        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public int getCount() {
+                return mFragments.size();
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments.get(position);
+            }
+        };
+        vp_container.setAdapter(adapter);
+    }
+
+    /**
+     * viewpager每个页面的bundle
+     * @param position 页面序号
+     * @return
+     */
+    private Bundle addBundle(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ExploreCommonFragment.INDEX_DATA_PAGE, mExploreIndexs.get(position));
+        return bundle;
     }
 
     @Override

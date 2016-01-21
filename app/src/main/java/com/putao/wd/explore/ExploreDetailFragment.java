@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
+import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -17,9 +19,14 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.praise.PraiseListActivity;
 import com.putao.wd.video.VideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,6 +57,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     LinearLayout ll_share;
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
+    private ExploreIndex mExploreIndex;
 
     @Override
     protected int getLayoutId() {
@@ -58,10 +66,19 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        wb_explore_detail.loadUrl("http://static.putaocdn.com/weidu/view/active_info.html?id=2&device=m&nav=0");
+        mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA_PAGE);
         mSharePopupWindow = new SharePopupWindow(getActivity());
+        initView();
         addListener();
 
+    }
+
+    private void initView() {
+        iv_top.setImageURL(mExploreIndex.getBanner().get(0).getUrl());
+        tv_title.setText(mExploreIndex.getTitle());
+        if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
+            iv_player.setVisibility(View.VISIBLE);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", mExploreIndex.getExplanation(), "text/html", "utf-8", null);
     }
 
     @Override
