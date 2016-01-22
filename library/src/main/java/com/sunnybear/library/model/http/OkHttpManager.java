@@ -96,7 +96,7 @@ public final class OkHttpManager {
     /**
      * 获得缓存器
      *
-     * @return 缓存器
+     * @param okHttpClient OkHttpClient
      */
     private void setCache(OkHttpClient okHttpClient) {
         File cacheDirectory = new File(mCacheDirectoryPath);
