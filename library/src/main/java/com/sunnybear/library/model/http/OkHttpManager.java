@@ -65,7 +65,7 @@ public final class OkHttpManager {
      * @param interceptor 拦截器
      * @return OkHttpHelper
      */
-    public OkHttpManager add(Interceptor interceptor) {
+    public OkHttpManager addInterceptor(Interceptor interceptor) {
         mInterceptors.add(interceptor);
         return this;
     }
@@ -96,7 +96,7 @@ public final class OkHttpManager {
     /**
      * 获得缓存器
      *
-     * @return 缓存器
+     * @param okHttpClient OkHttpClient
      */
     private void setCache(OkHttpClient okHttpClient) {
         File cacheDirectory = new File(mCacheDirectoryPath);

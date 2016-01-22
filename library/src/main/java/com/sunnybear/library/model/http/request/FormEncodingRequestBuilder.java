@@ -84,7 +84,7 @@ public final class FormEncodingRequestBuilder {
                 }
                 url = jointUrl(url, params);
                 Logger.d(TAG, "get请求,url=" + url);
-                request = builder.url(url).get().tag(url).build();
+                request = builder.url(url).get().tag(url.substring(0, url.indexOf("?"))).build();
                 break;
             case RequestMethod.POST:
                 for (String name : headers.keySet()) {

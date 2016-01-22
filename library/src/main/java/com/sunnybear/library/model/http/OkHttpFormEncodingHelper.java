@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 public class OkHttpFormEncodingHelper {
     private static final String TAG = OkHttpFormEncodingHelper.class.getSimpleName();
 
-    private CacheType mCacheType = CacheType.NETWORK;
+    private CacheType mCacheType = CacheType.NETWORK_ELSE_CACHE;
     private OkHttpClient mOkHttpClient;
 
     public OkHttpFormEncodingHelper() {
@@ -33,9 +33,9 @@ public class OkHttpFormEncodingHelper {
     }
 
     /**
-     * 设置缓存查询类型
+     * 设置缓存策略
      *
-     * @param cacheType 缓存查询
+     * @param cacheType 缓存策略
      * @return OkHttpFormEncodingHelper实例
      */
     public OkHttpFormEncodingHelper cacheType(CacheType cacheType) {
