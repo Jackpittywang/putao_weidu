@@ -65,7 +65,7 @@ public abstract class BasicApplication extends Application {
                 .addInterceptor(new ResponseInfoInterceptor()).build();
         //Fresco初始化
         Fresco.initialize(getApplicationContext(),
-                ImagePipelineConfigFactory.getOkhttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));
+                ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(getApplicationContext(), mOkHttpClient));
         //开启bugly
         CrashReport.initCrashReport(getApplicationContext(), getBuglyKey(), isDebug());
         //网络缓存最大时间

@@ -20,7 +20,7 @@ import java.io.File;
  */
 public class ImagePipelineConfigFactory {
     private static ImagePipelineConfig sImagePipelineConfig;
-    private static ImagePipelineConfig sOkhttpImagePipelineConfig;
+    private static ImagePipelineConfig sOkHttpImagePipelineConfig;
 
     /**
      * 配置ImagePipelineConfig
@@ -41,10 +41,10 @@ public class ImagePipelineConfigFactory {
      * @param okHttpClient okHttp客户端
      * @return ImagePipelineConfig
      */
-    public static ImagePipelineConfig getOkhttpImagePipelineConfig(Context context, OkHttpClient okHttpClient) {
-        if (sOkhttpImagePipelineConfig == null)
-            sOkhttpImagePipelineConfig = configureCaches(context, okHttpClient);
-        return sOkhttpImagePipelineConfig;
+    public static ImagePipelineConfig getOkHttpImagePipelineConfig(Context context, OkHttpClient okHttpClient) {
+        if (sOkHttpImagePipelineConfig == null)
+            sOkHttpImagePipelineConfig = configureCaches(context, okHttpClient);
+        return sOkHttpImagePipelineConfig;
     }
 
     /**
