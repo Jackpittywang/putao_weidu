@@ -64,6 +64,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     }
 
     private void addListener() {
+        //切换页面刷新日期
         vp_content.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

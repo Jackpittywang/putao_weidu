@@ -2,14 +2,17 @@ package com.putao.wd.explore;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
-import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.start.praise.PraiseListActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 
@@ -34,10 +37,13 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     TextView tv_count_cool;
     @Bind(R.id.iv_player)
     ImageView iv_player;
+    @Bind(R.id.sb_cool_icon)
+    SwitchButton sb_cool_icon;
     public static final String INDEX_DATA_PAGE = "index_data_page";
     public static final String INDEX_DATA = "index_data";
     private ExploreIndex mExploreIndex;
     private int mPosition;
+    private boolean isCool;//是否赞过
 
     @Override
     protected int getLayoutId() {
@@ -48,6 +54,9 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mPosition = args.getInt(INDEX_DATA_PAGE);
         mExploreIndex = ((List<ExploreIndex>) args.getSerializable(INDEX_DATA)).get(mPosition);
+        sb_cool_icon.setClickable(false);
+        isCool = null!=mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL+mExploreIndex.getArticle_id());
+        sb_cool_icon.setState(isCool);
         initView();
     }
 
@@ -74,9 +83,20 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_down);
                 break;
             case R.id.ll_count_cool:
-                Bundle bundleCool = new Bundle();
-                bundleCool.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");
-                startActivity(PraiseListActivity.class, bundleCool);
+                Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
+                sb_cool_icon.startAnimation(anim);
+                if (isCool) break;
+                networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
+                                loading.dismiss();
+                                isCool = true;
+                                sb_cool_icon.setState(true);
+                                tv_count_cool.setText(mExploreIndex.getCount_likes()+1+"");
+                            }
+                        });
                 break;
         }
     }

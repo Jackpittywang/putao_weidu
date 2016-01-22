@@ -32,6 +32,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/rl_video"
         android:background="@color/white"
+        android:clipChildren="false"
         android:orientation="vertical">
 
         <TextView
@@ -68,8 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:padding="15dp">
+            android:layout_margin="15dp"
+            android:gravity="center_horizontal">
 
             <com.sunnybear.library.view.SwitchButton
                 android:id="@+id/sb_cool_icon"

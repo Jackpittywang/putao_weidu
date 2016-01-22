@@ -25,6 +25,7 @@ public class ExploreApi {
     private static final String ARTICLE_ID = "article_id";//首页文章ID
     private static final String COMMENT_ID = "comment_id";//首页评论ID
     private static final String COMMENT_MSG = "comment_msg";//首页评论内容
+    private static final String COOL_TYPE= "cool_type";//赞类型
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
@@ -292,7 +293,35 @@ public class ExploreApi {
      */
     public static Request deleteComment(String comment_id) {
         return PTWDRequestHelper.start()
-                .addParam(ARTICLE_ID, comment_id)
+                .addParam(COMMENT_ID, comment_id)
                 .build(RequestMethod.POST, URL_COMMENT_DELETE);
+    }
+    /**
+     * 添加赞
+     */
+    public static final String URL_LIKE_ADD= BASE_URL + "article/like/add";
+
+    /**
+     * 赞文章
+     *
+     * @param article_id 文章id
+     */
+    public static Request addLike(String article_id) {
+        return PTWDRequestHelper.start()
+                .addParam(ARTICLE_ID, article_id)
+                .addParam(COOL_TYPE, "ARTICLE")
+                .build(RequestMethod.POST, URL_LIKE_ADD);
+    }
+    /**
+     * 赞评论
+     *
+     * @param article_id 文章id
+     */
+    public static Request addLike(String article_id,String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(ARTICLE_ID, article_id)
+                .addParam(COMMENT_ID, comment_id)
+                .addParam(COOL_TYPE, "COMMENT")
+                .build(RequestMethod.POST, URL_LIKE_ADD);
     }
 }
