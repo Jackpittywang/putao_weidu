@@ -60,7 +60,6 @@ public class ExploreMoreDetailActivity extends PTWDActivity implements View.OnCl
         wb_explore_detail.loadUrl("http://static.putaocdn.com/weidu/view/active_info.html?id=2&device=m&nav=0");
         mSharePopupWindow = new SharePopupWindow(mContext);
         addListener();
-
     }
 
     @Override

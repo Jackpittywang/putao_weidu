@@ -25,7 +25,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"
-                    auto:placeholderImage="@drawable/icon_40_11"
                     auto:placeholderImageScaleType="centerCrop"/>
 
                 <ImageView
@@ -54,6 +53,7 @@
             <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wb_explore_detail"
                 android:layout_width="match_parent"
+                android:scrollbars="none"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
