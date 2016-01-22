@@ -21,7 +21,8 @@
             android:id="@+id/iv_said"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:src="@drawable/img_explore_more_title_01" />
 
         <View
             android:layout_width="match_parent"
@@ -34,7 +35,8 @@
             android:id="@+id/iv_play"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:src="@drawable/img_explore_more_title_02" />
 
         <View
             android:layout_width="match_parent"
@@ -47,8 +49,8 @@
             android:id="@+id/iv_plus"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:src="@drawable/img_explore_more_title_03" />
 
     </LinearLayout>
-
 </LinearLayout>

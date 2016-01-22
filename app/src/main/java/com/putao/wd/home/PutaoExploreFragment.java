@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.explore.ExploreCommonFragment;
+import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -39,6 +40,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
     @Bind(R.id.tv_thinking)
     TextView tv_thinking;
+    @Bind(R.id.tv_modified)
+    TextView tv_modified;
     @Bind(R.id.iv_scan)
     ImageView iv_scan;
     @Bind(R.id.vp_content)
@@ -72,7 +75,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageSelected(int position) {
-                addDate(position);
+                if (position < mExploreIndexs.size()) {
+                    showDate();
+                    addDate(position);
+                } else {
+                    hindDate("更多内容");
+                }
             }
 
             @Override
@@ -82,12 +90,31 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         });
     }
 
+    private void showDate() {
+        tv_modified_time_day.setVisibility(View.VISIBLE);
+        tv_modified_time_mon.setVisibility(View.VISIBLE);
+        tv_modified.setVisibility(View.GONE);
+    }
+
+    private void hindDate(String text) {
+        tv_modified_time_day.setVisibility(View.GONE);
+        tv_modified_time_mon.setVisibility(View.GONE);
+        tv_modified.setVisibility(View.VISIBLE);
+        tv_modified.setText(text);
+    }
+
     private void addDate(int position) {
         DateFormat formatMon = new SimpleDateFormat("MM");
         DateFormat formatDay = new SimpleDateFormat("dd");
         Date date = new Date(mExploreIndexs.get(position).getModified_time() * 1000);
+        Date dateNow = new Date(System.currentTimeMillis());
+        String day = formatDay.format(date);
+        String mon = formatMon.format(date);
+        String dayNow = formatDay.format(dateNow);
+        String monNow = formatMon.format(dateNow);
         tv_modified_time_day.setText(formatDay.format(date));
-        tv_modified_time_mon.setText(Html.fromHtml(getEngMon(formatMon.format(date))));
+        tv_modified_time_mon.setText(getEngMon(formatMon.format(date)));
+        if (dayNow.equals(day)&&monNow.equals(mon))hindDate("今天");
     }
 
     private void initData() {
@@ -128,6 +155,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         for (int i = 0; i < mExploreIndexs.size(); i++) {
             mFragments.put(i, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName(), addBundle(i)));
         }
+        mFragments.put(mExploreIndexs.size(), Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

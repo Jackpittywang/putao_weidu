@@ -13,24 +13,36 @@
         android:paddingRight="15dp">
 
         <TextView
+            android:id="@+id/tv_modified_time_day"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:id="@+id/tv_modified_time_day"
             android:gravity="center"
             android:text="01"
-            android:textSize="36sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="36sp" />
+
         <TextView
+            android:id="@+id/tv_modified"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="今天"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
             android:id="@+id/tv_modified_time_mon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/tv_modified_time_day"
             android:gravity="center"
-            android:textSize="@dimen/text_size_20sp"
             android:text="JAY"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp" />
 
         <TextView
             android:id="@+id/tv_thinking"

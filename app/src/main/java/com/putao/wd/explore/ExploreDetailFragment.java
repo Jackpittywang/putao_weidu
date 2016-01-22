@@ -1,6 +1,5 @@
 package com.putao.wd.explore;
 
-import android.app.backup.SharedPreferencesBackupHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,7 +22,6 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
 
 import butterknife.Bind;
 import butterknife.OnClick;
