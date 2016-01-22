@@ -78,10 +78,4 @@ abstract class FastJsonSerializableCallback<T extends Serializable> extends JSON
      * @param result 请求结果
      */
     public abstract void onSuccess(String url, T result);
-
-    /**
-     * @param url 网络地址
-     * @param msg 消息
-     */
-    public abstract void onFinish(String url, String msg);
 }

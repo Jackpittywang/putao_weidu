@@ -1,14 +1,11 @@
 package com.sunnybear.library.model.http.request;
 
-import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
-import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.Logger;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * form请求构建类
@@ -26,8 +23,8 @@ public final class FormEncodingRequestBuilder {
         params = new ConcurrentHashMap<>();
 
         builder = new Request.Builder();
-//        builder.header("Cache-Control", "max-age=0");//缓存数据验证是否有效
-        builder.cacheControl(new CacheControl.Builder().maxAge(BasicApplication.getMaxAge(), TimeUnit.SECONDS).build());
+//        builder.addHeader("Cache-Control", String.format("max-age=%d", BasicApplication.getMaxAge()));//缓存数据验证是否有效
+//        builder.cacheControl(new CacheControl.Builder().maxAge(BasicApplication.getMaxAge(), TimeUnit.SECONDS).build());
     }
 
     /**

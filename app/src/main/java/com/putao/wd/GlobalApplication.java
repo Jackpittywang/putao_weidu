@@ -158,7 +158,7 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected int getNetworkCacheMaxAgeTime() {
-        return 15 * 60;
+        return 0;
     }
 
     /**

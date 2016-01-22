@@ -28,7 +28,7 @@ public abstract class JSONObjectCallback implements Callback {
 
     private static final int RESULT_SUCCESS = 0x01;//成功
     private static final int RESULT_FAILURE = 0x02;//失败
-//    private static final int RESULT_FINISH = 0x03;//完成
+    private static final int RESULT_FINISH = 0x03;//完成
 //    private static final int RESULT_ERROR = 0x04;//错误
 
     private static final String KEY_URL = "url";
@@ -49,6 +49,8 @@ public abstract class JSONObjectCallback implements Callback {
                         String url_success = success.getString(KEY_URL);
                         String json = success.getString(KEY_JSON);
                         onSuccess(url_success, JSON.parseObject(json));
+                        //请求完成
+                        onFinish(url_success, true, "");
                         break;
                     case RESULT_FAILURE://失败
                         Bundle failure = (Bundle) msg.obj;
@@ -56,6 +58,8 @@ public abstract class JSONObjectCallback implements Callback {
                         int statusCode = failure.getInt(KEY_STATUS_CODE);
                         String failure_msg = failure.getString(KEY_FAILURE_MSG);
                         onFailure(url_failure, statusCode, failure_msg);
+                        //请求完成
+                        onFinish(url_failure, false, failure_msg);
                         break;
                 }
             }
@@ -79,9 +83,27 @@ public abstract class JSONObjectCallback implements Callback {
      */
     public abstract void onFailure(String url, int statusCode, String msg);
 
+    /**
+     * 开始请求
+     */
+    public void onStart() {
+
+    }
+
+    /**
+     * 完成请求
+     *
+     * @param url       url
+     * @param isSuccess 请求是否成功
+     * @param msg       请求完成的消息
+     */
+    public void onFinish(String url, boolean isSuccess, String msg) {
+
+    }
+
     @Override
     public final void onResponse(Response response) throws IOException {
-        if (response==null) {
+        if (response == null) {
             Bundle bundle = new Bundle();
             bundle.putString(KEY_URL, "");
             bundle.putInt(KEY_STATUS_CODE, 404);
@@ -119,12 +141,13 @@ public abstract class JSONObjectCallback implements Callback {
     public final void onFailure(Request request, IOException e) {
         String url = request.urlString();
         Logger.e(TAG, "url=" + url + "\n", e);
-        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
-            Bundle bundle = new Bundle();
-            bundle.putString(KEY_URL, url);
-            bundle.putInt(KEY_STATUS_CODE, 500);
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_URL, url);
+        bundle.putInt(KEY_STATUS_CODE, 500);
+        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException)
             bundle.putString(KEY_FAILURE_MSG, "请检查网络后重新尝试");
-            mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
-        }
+        else
+            bundle.putString(KEY_FAILURE_MSG, e.getMessage());
+        mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
     }
 }

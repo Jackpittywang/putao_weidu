@@ -13,10 +13,8 @@ import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.CleanableEditText;
 
 import butterknife.Bind;
-import butterknife.OnTextChanged;
 
 /**
  * 保存昵称
@@ -46,7 +44,7 @@ public class UserInfoActivity extends PTWDActivity {
 
     private void initView() {
         et_intro.setText(mUserInfo);
-        tv_info_limit.setText((40-mUserInfo.length())+"");
+        tv_info_limit.setText((40 - mUserInfo.length()) + "");
         et_intro.setSelection(mUserInfo.length());
     }
 
@@ -90,9 +88,9 @@ public class UserInfoActivity extends PTWDActivity {
                         setResult(0, intent);
                         finish();
                     }
+
                     @Override
-                    public void onFinish(String url, String msg) {
-                        super.onFinish(url, msg);
+                    public void onFinish(String url, boolean isSuccess, String msg) {
                         loading.dismiss();
                         ToastUtils.showToastShort(mContext, msg);
                     }
@@ -113,7 +111,7 @@ public class UserInfoActivity extends PTWDActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                tv_info_limit.setText((40-et_intro.getText().toString().length())+"");
+                tv_info_limit.setText((40 - et_intro.getText().toString().length()) + "");
             }
         });
     }

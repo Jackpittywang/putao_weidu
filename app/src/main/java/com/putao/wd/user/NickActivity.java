@@ -63,7 +63,7 @@ public class NickActivity extends PTWDActivity {
             ToastUtils.showToastShort(mContext, "没有更改无需保存");
             return;
         }
-        if(nickName.length()<2||nickName.length()>24){
+        if (nickName.length() < 2 || nickName.length() > 24) {
             ToastUtils.showToastShort(mContext, "设置2-24字内的昵称");
             return;
         }
@@ -87,8 +87,7 @@ public class NickActivity extends PTWDActivity {
                     }
 
                     @Override
-                    public void onFinish(String url, String msg) {
-                        super.onFinish(url, msg);
+                    public void onFinish(String url, boolean isSuccess, String msg) {
                         loading.dismiss();
                         ToastUtils.showToastShort(mContext, msg);
                     }

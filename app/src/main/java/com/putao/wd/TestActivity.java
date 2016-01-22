@@ -5,9 +5,13 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
+import com.putao.wd.api.ExploreApi;
+import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.util.HtmlUtils;
-import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.model.http.OkHttpFormEncodingHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonSerializableCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.select.DynamicTitleBar;
 import com.sunnybear.library.view.select.TitleBar;
@@ -94,13 +98,28 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
 //                                Logger.d(result);
 //                            }
 //                        }).execute();
-                Bundle bundle = new Bundle();
+//                Bundle bundle = new Bundle();
 //                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4");
 //                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL,
 //                        "http://movie.ks.js.cn/flv/other/2014/06/20-2.flv");
 //                startActivity(VideoPlayerActivity.class, bundle);
-                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
-                startActivity(YoukuVideoPlayerActivity.class, bundle);
+//                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
+//                startActivity(YoukuVideoPlayerActivity.class, bundle);
+                OkHttpFormEncodingHelper.newInstance()
+//                        .cacheType(CacheType.CACHE_ELSE_NETWORK)
+                        .request(ExploreApi.getArticleList(),
+                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
+
+                                    @Override
+                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
+                                        Logger.d(result.toString());
+                                    }
+
+                                    @Override
+                                    public void onFailure(String url, int statusCode, String msg) {
+                                        Logger.e(msg);
+                                    }
+                                });
                 break;
         }
     }

@@ -20,6 +20,10 @@ public abstract class SimpleFastJsonCallback<T extends Serializable> extends Fas
         this.loading = loading;
     }
 
+    @Override
+    public void onStart() {
+
+    }
 
     @Override
     public void onFailure(String url, int statusCode, String msg) {
@@ -30,8 +34,9 @@ public abstract class SimpleFastJsonCallback<T extends Serializable> extends Fas
     }
 
     @Override
-    public void onFinish(String url, String msg) {
-        Logger.w("服务器消息:" + msg);
+    public void onFinish(String url, boolean isSuccess, String msg) {
+        if (!isSuccess)
+            Logger.w("服务器消息:" + msg);
         if (loading != null) loading.dismiss();
     }
 }

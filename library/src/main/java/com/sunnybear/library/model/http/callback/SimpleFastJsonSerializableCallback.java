@@ -21,6 +21,11 @@ public abstract class SimpleFastJsonSerializableCallback<T extends Serializable>
     }
 
     @Override
+    public void onStart() {
+        loading.show();
+    }
+
+    @Override
     public void onFailure(String url, int statusCode, String msg) {
         Logger.e("请求错误:url=" + url + ",statusCode=" + statusCode + ",错误信息=" + msg);
         if (!StringUtils.isEmpty(msg) && statusCode != -200)
@@ -29,8 +34,9 @@ public abstract class SimpleFastJsonSerializableCallback<T extends Serializable>
     }
 
     @Override
-    public void onFinish(String url, String msg) {
-        Logger.w("服务器消息:" + msg);
+    public void onFinish(String url, boolean isSuccess, String msg) {
+        if (!isSuccess)
+            Logger.w("服务器消息:" + msg);
         if (loading != null) loading.dismiss();
     }
 }

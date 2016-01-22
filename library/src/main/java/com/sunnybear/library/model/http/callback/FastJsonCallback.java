@@ -34,7 +34,7 @@ abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallba
             onSuccess(url, (T) new String(""));
             return;
         } else if (StringUtils.isEmpty(data) && !StringUtils.equals(result.getString("http_code"), "200")) {
-            onFinish(url, result.getString("msg") != null ? result.getString("msg") : "");
+            onFinish(url, false, result.getString("msg") != null ? result.getString("msg") : "");
             return;
         }
         if (StringUtils.equals(data, "[]") && !StringUtils.equals(getGenericClassName(), ArrayList.class.getName()))
@@ -80,10 +80,4 @@ abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallba
      * @param result 请求结果
      */
     public abstract void onSuccess(String url, T result);
-
-    /**
-     * @param url 网络地址
-     * @param msg 消息
-     */
-    public abstract void onFinish(String url, String msg);
 }
