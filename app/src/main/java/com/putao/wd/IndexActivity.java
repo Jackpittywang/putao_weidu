@@ -6,8 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
+import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoCreatedFragment;
+import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
@@ -38,7 +40,7 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
     TabItem ti_companion;//陪伴
 
     private PutaoExploreFragment mPutaoExploreFragment;
-    private PutaoCreatedFragment mPutaoCreatedFragment;
+    private PutaoCreatedSecondFragment mPutaoCreatedFragment;
     private PutaoStoreFragment mPutaoStoreFragment;
     private PutaoCompanionFragment mPutaoCompanionFragment;
 
@@ -74,8 +76,8 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
         mFragments = new SparseArray<>();
         mFragments.put(0, Fragment.instantiate(mContext, PutaoExploreFragment.class.getName()));
         mFragments.put(1, Fragment.instantiate(mContext, PutaoCreatedFragment.class.getName()));
-        mFragments.put(2, Fragment.instantiate(mContext, PutaoStoreFragment.class.getName()));
-        mFragments.put(3, Fragment.instantiate(mContext, PutaoCompanionFragment.class.getName()));
+        mFragments.put(2, Fragment.instantiate(mContext, PutaoCompanionFragment.class.getName()));
+        mFragments.put(3, Fragment.instantiate(mContext, MeFragment.class.getName()));
     }
 
     private void addListener() {

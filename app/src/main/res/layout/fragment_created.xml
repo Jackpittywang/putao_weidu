@@ -1,68 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
     <!--标题栏-->
-    <RelativeLayout
+    <RadioGroup
+        android:id="@+id/rg_create"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/navigation_bar_height"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
-        <TextView
+        <RadioButton
+            android:id="@+id/rb_step1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="为孩子创造"
-            android:textSize="@dimen/text_size_18sp" />
+            android:background="@null"
+            android:button="@null"
+            android:drawableBottom="@drawable/label_create_01_selector"
+            android:text="妙想"
+            android:checked="true"
+            android:textColor="@color/label_create_text_selector" />
 
-        <LinearLayout
+        <RadioButton
+            android:id="@+id/rb_step2"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:id="@+id/ll_fancy"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:button="@null"
+            android:drawableBottom="@drawable/label_create_02_selector"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:text="创造"
+            android:textColor="@color/label_create_text_selector" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/icon_20_31" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="奇思妙想"
-                android:layout_marginTop="3dp"
-                android:textColor="#985ec9"
-                android:textSize="@dimen/text_size_12sp" />
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-    <com.sunnybear.library.view.PullToRefreshLayout
-        android:id="@+id/ptl_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        auto:refresh_layout="@layout/sky_wheel_refresh_header"
-        auto:refresh_layout_height="120">
-
-        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/rv_created"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/rb_step3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            auto:divider_color="@color/divider_color"
-            auto:divider_height="10dp"
-            auto:has_row_divider="true" />
-    </com.sunnybear.library.view.PullToRefreshLayout>
+            android:background="@null"
+            android:button="@null"
+            android:drawableBottom="@drawable/label_create_03_selector"
+            android:gravity="right"
+            android:text="精选"
+            android:textColor="@color/label_create_text_selector" />
+
+    </RadioGroup>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:background="@color/color_C2C2C2">
+
+    </View>
+
+    <!--主页面-->
+    <com.sunnybear.library.view.viewpager.UnScrollableViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

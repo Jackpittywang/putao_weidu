@@ -6,12 +6,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <!--标题栏-->
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        auto:nav_main_title="精选"
-        auto:nav_main_title_size="@dimen/text_size_8sp" />
-
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.putao.wd.me;
+package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +21,7 @@ import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
+import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
  * 我
  * Created by guchenkai on 2015/11/25.
  */
-public class MeActivity extends BasicFragmentActivity implements View.OnClickListener {
+public class MeFragment extends BasicFragment implements View.OnClickListener {
     public static final String EVENT_EDIT_USER_INFO = "edit_user_info";
 
     @Bind(R.id.si_message)
@@ -104,7 +105,7 @@ public class MeActivity extends BasicFragmentActivity implements View.OnClickLis
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        ToastUtils.showToastLong(mContext, "登录失败请重新登录");
+                        ToastUtils.showToastLong(mActivity, "登录失败请重新登录");
                     }
                 });
     }

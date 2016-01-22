@@ -3,6 +3,7 @@ package com.putao.wd.home;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -14,7 +15,6 @@ import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
-import com.putao.wd.me.MeActivity;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
@@ -55,6 +55,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     ProductsAdapter mProductsAdapter;
     private List<DiaryApp> mDiaryApps;
+    private ViewGroup.LayoutParams mRight2LayoutParams;
 
     @Override
     protected int getLayoutId() {
@@ -93,9 +94,6 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                             btn_explore_empty.setVisibility(View.GONE);
                             mProductsAdapter.replaceAll(result);
                             mDiaryApps = result;
-                            for (int i = result.size(); i < 6; i++) {
-                                mProductsAdapter.add(new DiaryApp());
-                            }
                         }
                         loading.dismiss();
                     }
@@ -109,7 +107,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         cv_empty.setVisibility(View.VISIBLE);
         btn_explore_empty.setVisibility(View.VISIBLE);
         cv_no_empty.setVisibility(View.GONE);
-        iv_user_icon.setDefaultImage(R.drawable.img_head_default);
+        iv_title_bar_right2.setLayoutParams(iv_user_icon.getLayoutParams());
+        iv_user_icon.setVisibility(View.GONE);
     }
 
 
@@ -125,7 +124,6 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         }
         switch (v.getId()) {
             case R.id.iv_user_icon:
-                startActivity(MeActivity.class);
                 break;
             case R.id.iv_title_bar_right1:
                 startActivity(ManageActivity.class);
@@ -145,9 +143,6 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
-            case R.id.iv_user_icon:
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MeActivity.class);
-                break;
             case R.id.iv_title_bar_right1:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, SmartActivity.class);
                 break;
@@ -161,6 +156,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     @Override
     public void onStart() {
         super.onStart();
+        mRight2LayoutParams = iv_title_bar_right2.getLayoutParams();
         empty();
         addClickListener();
         if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
@@ -168,6 +164,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
             rv_products.setAdapter(mProductsAdapter);
             checkDevices();
             rv_products.setOnItemClickListener(this);
+            iv_user_icon.setVisibility(View.VISIBLE);
+            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
             iv_user_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
         }
     }

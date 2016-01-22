@@ -1,22 +1,18 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.util.SparseArray;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.created.CreatedDetailActivity;
-import com.putao.wd.created.FancyActivity;
-import com.putao.wd.home.adapter.CreateAdapter;
-import com.putao.wd.model.Marketing;
+import com.putao.wd.created.FancyFragment;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
-import java.io.Serializable;
+import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 
 import butterknife.Bind;
 
@@ -24,15 +20,18 @@ import butterknife.Bind;
  * 创造(首页)
  * Created by guchenkai on 2016/1/13.
  */
-public class PutaoCreatedFragment extends BasicFragment implements OnItemClickListener, PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, View.OnClickListener {
-    @Bind(R.id.rv_created)
-    LoadMoreRecyclerView rv_created;
-    @Bind(R.id.ptl_refresh)
-    PullToRefreshLayout ptl_refresh;
-    @Bind(R.id.ll_fancy)
-    LinearLayout ll_fancy;
-
-    private CreateAdapter adapter;
+public class PutaoCreatedFragment extends BasicFragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+    @Bind(R.id.vp_content)
+    UnScrollableViewPager vp_content;
+    @Bind(R.id.rg_create)
+    RadioGroup rg_create;
+    @Bind(R.id.rb_step1)
+    RadioButton rb_step1;
+    @Bind(R.id.rb_step2)
+    RadioButton rb_step2;
+    @Bind(R.id.rb_step3)
+    RadioButton rb_step3;
+    private SparseArray<Fragment> mFragments;
 
     @Override
     protected int getLayoutId() {
@@ -42,20 +41,32 @@ public class PutaoCreatedFragment extends BasicFragment implements OnItemClickLi
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("PutaoCreatedFragment启动");
-        adapter = new CreateAdapter(mActivity, null);
-        rv_created.setAdapter(adapter);
-        adapter.add(new Marketing());
-        adapter.add(new Marketing());
-        adapter.add(new Marketing());
-        rv_created.noMoreLoading();
-        String s = new String();
-        addListenter();
+        addFragments();
+        rg_create.setOnCheckedChangeListener(this);
+        vp_content.setCurrentItem(0, false);
+        vp_content.setOffscreenPageLimit(3);
     }
 
-    private void addListenter() {
-        rv_created.setOnItemClickListener(this);
-        ptl_refresh.setOnRefreshListener(this);
-        rv_created.setOnLoadMoreListener(this);
+    /**
+     * 添加Fragment
+     */
+    private void addFragments() {
+        mFragments = new SparseArray<>();
+        mFragments.put(0, Fragment.instantiate(mActivity, FancyFragment.class.getName()));
+        mFragments.put(1, Fragment.instantiate(mActivity, PutaoCreatedSecondFragment.class.getName()));
+        mFragments.put(2, Fragment.instantiate(mActivity, PutaoStoreFragment.class.getName()));
+        vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return mFragments.size();
+            }
+        });
+
     }
 
     @Override
@@ -63,31 +74,24 @@ public class PutaoCreatedFragment extends BasicFragment implements OnItemClickLi
         return new String[0];
     }
 
-    @Override
-    public void onItemClick(Serializable serializable, int position) {
-        ll_fancy.setOnClickListener(this);
-        startActivity(CreatedDetailActivity.class);
-    }
-
-    @Override
-    public void onRefresh() {
-        adapter.clear();
-        adapter.add(new Marketing());
-        adapter.add(new Marketing());
-        adapter.add(new Marketing());
-        ptl_refresh.refreshComplete();
-    }
-
-    @Override
-    public void onLoadMore() {
-        rv_created.noMoreLoading();
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_fancy:
-                startActivity(FancyActivity.class);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rb_step1:
+                vp_content.setCurrentItem(0, false);
+                break;
+            case R.id.rb_step2:
+                vp_content.setCurrentItem(1, false);
+                break;
+            case R.id.rb_step3:
+                vp_content.setCurrentItem(2, false);
                 break;
         }
     }

@@ -5,12 +5,115 @@
     android:layout_height="match_parent"
     android:background="@color/color_EBEBEB">
 
-    <!--底图-->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_p_cover" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--底图-->
+            <ImageView
+                android:id="@+id/tv_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_p_cover" />
+            <!--多元智能图片-->
+            <ImageView
+                android:id="@+id/iv_smart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="140dp"
+                android:layout_marginBottom="45dp"
+                android:layout_above="@+id/btn_explore_empty"
+                android:src="@drawable/img_p_cover_title" />
+
+            <!--扫一扫-->
+            <Button
+                android:id="@+id/btn_explore_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/cv_empty"
+                android:background="@drawable/btn_radius_background_shape"
+                android:drawableLeft="@drawable/btn_20_scan_w_sel"
+                android:gravity="center"
+                android:paddingLeft="45dp"
+                android:paddingRight="45dp"
+                android:layout_marginBottom="45dp"
+                android:text="   扫一扫"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <!--没有绑定设备时卡片-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_background"
+                android:layout_marginTop="-20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                auto:cardCornerRadius="0dp"
+                auto:cardElevation="6dp"
+                auto:cardUseCompatPadding="true">
+
+                <com.sunnybear.library.view.image.ImageDraweeView
+                    android:id="@+id/tv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    auto:aspect_ratio="2"
+                    auto:default_drawable="@drawable/img_p_tip_01" />
+            </android.support.v7.widget.CardView>
+
+            <!--有绑定设备时卡片-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_no_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_background"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="-30dp"
+                android:visibility="gone"
+                auto:cardCornerRadius="0dp"
+                auto:cardElevation="6dp"
+                auto:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/img_carve_up_l"
+                        android:drawableRight="@drawable/img_carve_up_r"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp"
+                        android:text="  智能应用  "
+                        android:textColor="@color/text_color_646464"
+                        android:textSize="16sp" />
+
+                    <com.sunnybear.library.view.recycler.BasicRecyclerView
+                        android:id="@+id/rv_products"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:minHeight="80dp"
+                        auto:is_inner="true"
+                        auto:column_num="3"
+                        auto:layout_mode="grid" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,96 +149,4 @@
             android:scaleType="centerInside"
             android:src="@drawable/btn_20_scan_w_selector" />
     </RelativeLayout>
-
-    <!--多元智能图片-->
-    <ImageView
-        android:id="@+id/iv_smart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="140dp"
-        android:src="@drawable/img_p_cover_title" />
-
-    <!--扫一扫-->
-    <Button
-        android:id="@+id/btn_explore_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:layout_below="@+id/iv_smart"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/btn_radius_background_shape"
-        android:drawableLeft="@drawable/btn_20_scan_w_sel"
-        android:gravity="center"
-        android:paddingLeft="45dp"
-        android:paddingRight="45dp"
-        android:text="   扫一扫"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_18sp" />
-
-    <!--没有绑定设备时卡片-->
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_explore_empty"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="30dp"
-        auto:cardCornerRadius="0dp"
-        auto:cardElevation="6dp"
-        auto:cardUseCompatPadding="true">
-
-        <com.sunnybear.library.view.image.ImageDraweeView
-            android:id="@+id/tv_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            auto:aspect_ratio="2"
-            auto:default_drawable="@drawable/img_p_tip_01" />
-    </android.support.v7.widget.CardView>
-
-    <!--有绑定设备时卡片-->
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_no_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="30dp"
-        android:visibility="gone"
-        auto:cardCornerRadius="0dp"
-        auto:cardElevation="6dp"
-        auto:cardUseCompatPadding="true">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/img_carve_up_l"
-                android:drawableRight="@drawable/img_carve_up_r"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:text="  智能应用  "
-                android:textColor="@color/text_color_646464"
-                android:textSize="16sp" />
-
-            <com.sunnybear.library.view.recycler.BasicRecyclerView
-                android:id="@+id/rv_products"
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                auto:column_num="3"
-                auto:layout_mode="grid" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
 </RelativeLayout>
