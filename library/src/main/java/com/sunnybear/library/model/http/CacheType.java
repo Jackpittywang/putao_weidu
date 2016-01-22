@@ -1,7 +1,7 @@
 package com.sunnybear.library.model.http;
 
 /**
- * 缓存查询类型
+ * 缓存策略
  * Created by guchenkai on 2016/1/22.
  */
 public enum CacheType {
