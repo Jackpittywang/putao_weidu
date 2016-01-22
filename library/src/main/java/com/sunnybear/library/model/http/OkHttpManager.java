@@ -65,7 +65,7 @@ public final class OkHttpManager {
      * @param interceptor 拦截器
      * @return OkHttpHelper
      */
-    public OkHttpManager add(Interceptor interceptor) {
+    public OkHttpManager addInterceptor(Interceptor interceptor) {
         mInterceptors.add(interceptor);
         return this;
     }

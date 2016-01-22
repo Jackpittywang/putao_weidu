@@ -1,7 +1,6 @@
 package com.sunnybear.library.model.http.interceptor;
 
 import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
@@ -18,12 +17,11 @@ public class NetworkInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();//拦截Request
         if (!NetworkUtils.isNetworkReachable(BasicApplication.getInstance())) {
             ToastUtils.showToastLong(BasicApplication.getInstance(),
                     BasicApplication.getInstance().getResources().getString(R.string.not_network));
             return null;
         }
-        return chain.proceed(request);
+        return chain.proceed(chain.request());
     }
 }
