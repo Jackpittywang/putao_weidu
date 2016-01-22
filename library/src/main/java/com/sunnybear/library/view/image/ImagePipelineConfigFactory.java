@@ -78,7 +78,7 @@ public class ImagePipelineConfigFactory {
 //            .setDiskTrimmableRegistry(diskTrimmableRegistry)//类将包含一个注册表的缓存减少磁盘空间的环境。
                 .setMaxCacheSize(ConfigConstants.MAX_DISK_CACHE_SIZE)//默认缓存的最大大小。
                 .setMaxCacheSizeOnLowDiskSpace(ConfigConstants.MAX_SMALL_DISK_CACHE_LOW_SIZE)//缓存的最大大小,使用设备时低磁盘空间。
-                .setMaxCacheSizeOnVeryLowDiskSpace(ConfigConstants.MAX_SMALL_DISK_CACHE_VERYLOW_SIZE)//缓存的最大大小,当设备极低磁盘空间
+                .setMaxCacheSizeOnVeryLowDiskSpace(ConfigConstants.MAX_SMALL_DISK_CACHE_VERY_LOW_SIZE)//缓存的最大大小,当设备极低磁盘空间
 //            .setVersion(version)
                 .build();
         //默认图片的磁盘配置
@@ -90,7 +90,7 @@ public class ImagePipelineConfigFactory {
 //            .setDiskTrimmableRegistry(diskTrimmableRegistry)//类将包含一个注册表的缓存减少磁盘空间的环境。
                 .setMaxCacheSize(ConfigConstants.MAX_DISK_CACHE_SIZE)//默认缓存的最大大小。
                 .setMaxCacheSizeOnLowDiskSpace(ConfigConstants.MAX_DISK_CACHE_LOW_SIZE)//缓存的最大大小,使用设备时低磁盘空间。
-                .setMaxCacheSizeOnVeryLowDiskSpace(ConfigConstants.MAX_DISK_CACHE_VERYLOW_SIZE)//缓存的最大大小,当设备极低磁盘空间
+                .setMaxCacheSizeOnVeryLowDiskSpace(ConfigConstants.MAX_DISK_CACHE_VERY_LOW_SIZE)//缓存的最大大小,当设备极低磁盘空间
 //            .setVersion(version)
                 .build();
         //缓存图片配置
@@ -125,11 +125,11 @@ public class ImagePipelineConfigFactory {
         private static final int MAX_HEAP_SIZE = (int) Runtime.getRuntime().maxMemory();//分配内存
         public static final int MAX_MEMORY_CACHE_SIZE = MAX_HEAP_SIZE / 4;//使用的缓存数量
 
-        public static final int MAX_SMALL_DISK_CACHE_VERYLOW_SIZE = 5 * ByteConstants.MB;//小图极低磁盘空间缓存的最大值(特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图)
+        public static final int MAX_SMALL_DISK_CACHE_VERY_LOW_SIZE = 5 * ByteConstants.MB;//小图极低磁盘空间缓存的最大值(特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图)
         public static final int MAX_SMALL_DISK_CACHE_LOW_SIZE = 10 * ByteConstants.MB;//小图低磁盘空间缓存的最大值(特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图)
         public static final int MAX_SMALL_DISK_CACHE_SIZE = 20 * ByteConstants.MB;//小图磁盘缓存的最大值(特性：可将大量的小图放到额外放在另一个磁盘空间防止大图占用磁盘空间而删除了大量的小图)
 
-        public static final int MAX_DISK_CACHE_VERYLOW_SIZE = 10 * ByteConstants.MB;//默认图极低磁盘空间缓存的最大值
+        public static final int MAX_DISK_CACHE_VERY_LOW_SIZE = 10 * ByteConstants.MB;//默认图极低磁盘空间缓存的最大值
         public static final int MAX_DISK_CACHE_LOW_SIZE = 30 * ByteConstants.MB;//默认图低磁盘空间缓存的最大值
         public static final int MAX_DISK_CACHE_SIZE = 50 * ByteConstants.MB;//默认图磁盘缓存的最大值
 
