@@ -121,13 +121,15 @@ public abstract class DownloadCallback implements Callback {
     public abstract void onDownloadSuccess(String url, File file);
 
     /**
-     * 请求失败回调
+     * 下载失败回调
      *
      * @param url        网络地址
      * @param statusCode 状态码
      * @param msg        失败错误信息
      */
-    public abstract void onDownloadFailure(String url, int statusCode, String msg);
+    public void onDownloadFailure(String url, int statusCode, String msg) {
+
+    }
 
 
     /**
