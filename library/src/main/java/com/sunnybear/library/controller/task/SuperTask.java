@@ -35,7 +35,7 @@ public class SuperTask {
     }
 
     /**
-     * 主线程接口，
+     * 主线程接口,
      * 用于接收处理来自后台线程的消息,可用于更新UI.
      */
     public interface MessageListener {
@@ -332,7 +332,7 @@ public class SuperTask {
             public void run() {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
                 /**
-                 * 线程安全问题。
+                 * 线程安全问题.
                  */
                 if (taskMap.containsKey(id)) {
                     Message message = Message.obtain();
