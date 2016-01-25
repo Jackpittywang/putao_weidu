@@ -27,8 +27,6 @@ public final class OkHttpManager {
     private static OkHttpManager instance;
     private static List<Interceptor> mInterceptors;
 
-    private OkHttpClient mOkHttpClient;
-
     private int mCacheSize;
     private String mCacheDirectoryPath;
 
@@ -55,8 +53,7 @@ public final class OkHttpManager {
      * @return OkHttpClient
      */
     public OkHttpClient build() {
-        mOkHttpClient = generateOkHttpClient(mInterceptors);
-        return mOkHttpClient;
+        return generateOkHttpClient(mInterceptors);
     }
 
     /**
