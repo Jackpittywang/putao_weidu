@@ -143,6 +143,11 @@ public class SplashActivity extends BasicFragmentActivity {
                     }
 
                     @Override
+                    public void onCacheSuccess(String url, JSONObject result) {
+
+                    }
+
+                    @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         GlobalApplication.setEmojis((ConcurrentHashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GlobalApplication.MAP_EMOJI));
                         new Handler().postDelayed(new Runnable() {
