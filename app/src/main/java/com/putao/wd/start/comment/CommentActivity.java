@@ -227,7 +227,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
                 if (result.getComment() != null && result.getComment().size() > 0)
-                    adapter.addAll(result.getComment());
+                    adapter.replaceAll(result.getComment());
                 if (result.getCurrent_page() != result.getTotal_page()) {
                     hasComment = true;
                     rv_content.loadMoreComplete();
