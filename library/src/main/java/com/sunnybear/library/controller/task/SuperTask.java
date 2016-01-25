@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 超级任务执行(替代AsyncTask)
+ * 超级任务(替代AsyncTask)
  * Created by guchenkai on 2015/12/8.
  */
 public class SuperTask {
