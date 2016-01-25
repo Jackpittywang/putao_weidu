@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SuperTask {
     /**
-     * 后台线程接口，
+     * 后台线程接口,
      * 通过实现这个接口,添加你想要的功能.
      */
     public interface TaskDescription<T> {
@@ -44,7 +44,7 @@ public class SuperTask {
 
     /**
      * 主线程接口,
-     * 当后台线程正常结束运行，且当前上下文环境处于安全的生命周期中,
+     * 当后台线程正常结束运行,且当前上下文环境处于安全的生命周期中,
      * 这个接口中的方法将会被调用.
      */
     public interface FinishListener<T> {
@@ -152,8 +152,8 @@ public class SuperTask {
 
     /**
      * 那么怎么样才能实时获得当前上下文环境的状态呢?
-     * 很简单,只需要通过 Activity/FragmentActivity(v4)/Fragment/Fragment(v4)的FragmentManager 加入一个 hook fragment ,
-     * 这个 hook fragment 的生命周期会跟随它所依附的上下文环境,
+     * 很简单,只需要通过Activity/FragmentActivity(v4)/Fragment/Fragment(v4)的FragmentManager加入一个hook fragment,
+     * 这个hook fragment的生命周期会跟随它所依附的上下文环境,
      * 所以我们就可以通过它拿到当前上下文环境的生命周期啦.
      */
     public static class HookFragment extends Fragment {
@@ -187,7 +187,7 @@ public class SuperTask {
     }
 
     /**
-     * 链式调用从这里开始，形式看上去差不是这样的:
+     * 链式调用从这里开始,形式看上去差不是这样的:
      * SugarTask.with().assign().handle().finish().broken().execute();
      */
     @MainThread
@@ -215,7 +215,7 @@ public class SuperTask {
     }
 
     /**
-     * 使用这个方法，在后台线程中向主线程发送消息:
+     * 使用这个方法,在后台线程中向主线程发送消息:
      * SugarTask.post(YOUR MESSAGE);
      */
     @WorkerThread
