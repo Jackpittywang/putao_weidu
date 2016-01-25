@@ -67,9 +67,9 @@ public class UserApi {
     /**
      * 完善用户信息（更新）
      *
-     * @param ext       图片后缀
-     * @param filename  文件名
-     * @param filehash  文件hash
+     * @param ext      图片后缀
+     * @param filename 文件名
+     * @param filehash 文件hash
      */
     public static Request userEdit(String ext, String filename, String filehash) {
         return PTWDRequestHelper.explore()
@@ -89,8 +89,10 @@ public class UserApi {
                 .addParam(REQUEST_NICK_NAME, nick_name)
                 .build(RequestMethod.POST, URL_USER_EDIT);
     }
+
     /**
      * 保存昵称
+     *
      * @param user_info 用户简介
      */
     public static Request userInfo(String user_info) {
@@ -149,7 +151,8 @@ public class UserApi {
     /**
      * 提交葡萄籽问题
      */
-    public static final String URL_QUESTION_ADD = BASE_ACTION_URL + "question/add";
+//    public static final String URL_QUESTION_ADD = BASE_ACTION_URL + "question/add";
+    public static final String URL_QUESTION_ADD = BASE_URL + "qa/add";
 
     /**
      * 提交葡萄籽问题
@@ -159,20 +162,20 @@ public class UserApi {
      * @param msg              问题
      */
     public static Request questionAdd(String msg, String nickName, String userProfilePhoto) {
-        FormEncodingRequestBuilder builder = PTWDRequestHelper.user()
-                .addParam(REQUEST_MSG, msg);
-        String uid = AccountHelper.getCurrentUid();
-        if (StringUtils.isEmpty(uid))
-            throw new RuntimeException("当前用户没有登录");
-        builder.addParam(REQUEST_NICKNAME, nickName)
-                .addParam(REQUEST_HEAD_ICON, userProfilePhoto);
-        return builder.build(RequestMethod.POST, URL_QUESTION_ADD);
+        return PTWDRequestHelper.user()
+                .addParam(REQUEST_MSG, msg).addParam(REQUEST_NICKNAME, nickName)
+                .addParam(REQUEST_HEAD_ICON, userProfilePhoto).
+                        build(RequestMethod.POST, URL_QUESTION_ADD);
     }
 
     /**
      * 获取提问
      */
-    public static final String URL_QUESTION_LIST = BASE_ACTION_URL + "user/question/list";
+//    public static final String URL_QUESTION_LIST = BASE_ACTION_URL + "user/question/list";
+    /**
+     * 获取提问
+     */
+    public static final String URL_QUESTION_LIST = BASE_URL + "qa/list";
 
     /**
      * 获取问题列表

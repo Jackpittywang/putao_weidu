@@ -42,8 +42,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     TextView tv_thinking;
     @Bind(R.id.tv_modified)
     TextView tv_modified;
-    @Bind(R.id.iv_scan)
-    ImageView iv_scan;
+//    @Bind(R.id.iv_scan)
+//    ImageView iv_scan;
     @Bind(R.id.vp_content)
     BounceBackViewPager vp_content;
     @Bind(R.id.tv_modified_time_day)
@@ -134,16 +134,16 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         return new String[0];
     }
 
-    @OnClick({R.id.tv_thinking, R.id.iv_scan})
+    @OnClick({R.id.tv_thinking})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_thinking:
                 startActivity(MarketingActivity.class);
                 break;
-            case R.id.iv_scan:
+/*            case R.id.iv_scan:
                 startActivity(CaptureActivity.class);
-                break;
+                break;*/
         }
     }
 

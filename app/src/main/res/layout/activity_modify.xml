@@ -14,9 +14,9 @@
         auto:nav_main_title_color="@color/white" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/text_color_gray" />
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:background="@color/color_C2C2C2"/>
 
     <com.sunnybear.library.view.CleanableEditText
         android:id="@+id/et_pw_old"

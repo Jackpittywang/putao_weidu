@@ -6,32 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="left"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+    <!--时间-->
+    <TextView
+        android:id="@+id/question_item_ask_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/distance_8dp"
+        android:paddingTop="@dimen/distance_8dp"
+        android:text="───2015-12-23───" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_answer_icon"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            app:default_drawable="@drawable/img_head_cs"
+            app:roundAsCircle="true" />
+
+        <com.sunnybear.library.view.emoji.EmojiTextView
+            android:id="@+id/question_item_answer_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="70dp"
+            android:background="@drawable/dialogue_w"
+            android:gravity="left"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            app:placeholderImage="@drawable/tab_bar_me_sel"
-            app:roundAsCircle="true" />
-    </RelativeLayout>
+            android:text="我的提问我的提问我的提问我的提问我的提问我的提问我的提问" />
 
-    <com.sunnybear.library.view.emoji.EmojiTextView
-        android:id="@+id/question_item_answer_context"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="120dp"
-        android:background="@drawable/dialogue_w"
-        android:gravity="right"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
-
-
+    </LinearLayout>
 </LinearLayout>

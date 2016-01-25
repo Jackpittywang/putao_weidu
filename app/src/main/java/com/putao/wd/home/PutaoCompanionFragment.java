@@ -17,6 +17,7 @@ import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.qrcode.CaptureActivity;
+import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -128,16 +129,20 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.iv_smart){
+            startActivity(SmartActivity.class);
+            getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_out_from_down);
+            return;
+        }
         if (!AccountHelper.isLogin()) {
-            if (v.getId() == R.id.iv_smart) return;
             Bundle bundle = new Bundle();
             toLoginActivity(v, bundle);
-            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
             startActivity(LoginActivity.class, bundle);
             return;
         }
         switch (v.getId()) {
             case R.id.iv_user_icon:
+                startActivity(CompleteActivity.class);
                 break;
             case R.id.iv_title_bar_right1:
                 startActivity(ManageActivity.class);
@@ -148,19 +153,21 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
             case R.id.btn_explore_empty:
                 startActivity(CaptureActivity.class);
                 break;
-            case R.id.iv_smart:
-                startActivity(SmartActivity.class);
-                getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_out_from_down);
-                break;
         }
     }
 
     private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
+            case R.id.iv_user_icon:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
+                break;
             case R.id.iv_title_bar_right1:
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, SmartActivity.class);
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ManageActivity.class);
                 break;
             case R.id.iv_title_bar_right2:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
+                break;
+            case R.id.btn_explore_empty:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
                 break;
         }
