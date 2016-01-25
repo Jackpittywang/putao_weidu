@@ -5,19 +5,19 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
+import com.putao.wd.api.ExploreApi;
+import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.model.http.CacheType;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
-import com.sunnybear.library.model.http.callback.DownloadCallback;
-import com.sunnybear.library.model.http.interceptor.ProgressInterceptor;
-import com.sunnybear.library.model.http.progress.ProgressResponseListener;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonSerializableCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.select.DynamicTitleBar;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,57 +108,57 @@ public class TestActivity extends BasicFragmentActivity<GlobalApplication> imple
 //                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
 //                startActivity(YoukuVideoPlayerActivity.class, bundle);
 
-//                OkHttpFormEncodingHelper.newInstance()
-//                        .cacheType(CacheType.NETWORK)
-//                        .request(ExploreApi.getArticleList(),
-//                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
-//                                    @Override
-//                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-//                                        Logger.d("网络请求结果:" + result.toString());
-//                                    }
-//
-//                                    @Override
-//                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
-//                                        Logger.d("缓存请求结果:" + result.toString());
-//                                    }
-//
-//                                    @Override
-//                                    public void onFailure(String url, int statusCode, String msg) {
-//                                        Logger.e(msg);
-//                                    }
-//                                });
-
                 OkHttpRequestHelper.newInstance()
-                        .addInterceptor(new ProgressInterceptor(new ProgressResponseListener() {
-                            @Override
-                            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                                Logger.d("---" + bytesRead + "----" + contentLength + "-----" + done);
-                            }
-                        }))
-                        .download("https://codeload.github.com/Yalantis/uCrop/zip/master",
-                                mApp.getSdCardPath() + File.separator + "uCrop.zip",
-                                new DownloadCallback() {
+                        .cacheType(CacheType.NETWORK_ELSE_CACHE)
+                        .request(ExploreApi.getArticleList(),
+                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
                                     @Override
-                                    public void onStart() {
-                                        loading.show();
+                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
+                                        Logger.d("网络请求结果:" + result.toString());
                                     }
 
                                     @Override
-                                    public void onDownloadSuccess(String url, File file) {
-                                        Logger.i("下载成功===" + file.getAbsolutePath());
+                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
+                                        Logger.d("缓存请求结果:" + result.toString());
                                     }
 
                                     @Override
-                                    public void onDownloadFailure(String url, int statusCode, String msg) {
-                                        Logger.e("下载失败");
-                                    }
-
-                                    @Override
-                                    public void onFinish(String url, boolean isSuccess, String msg) {
-                                        Logger.d(msg);
-                                        if (isSuccess) loading.dismiss();
+                                    public void onFailure(String url, int statusCode, String msg) {
+                                        Logger.e(msg);
                                     }
                                 });
+
+//                OkHttpRequestHelper.newInstance()
+//                        .addInterceptor(new ProgressInterceptor(new ProgressResponseListener() {
+//                            @Override
+//                            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+//                                Logger.d("---" + bytesRead + "----" + contentLength + "-----" + done);
+//                            }
+//                        }))
+//                        .download("https://codeload.github.com/Yalantis/uCrop/zip/master",
+//                                mApp.getSdCardPath() + File.separator + "uCrop.zip",
+//                                new DownloadCallback() {
+//                                    @Override
+//                                    public void onStart() {
+//                                        loading.show();
+//                                    }
+//
+//                                    @Override
+//                                    public void onDownloadSuccess(String url, File file) {
+//                                        Logger.i("下载成功===" + file.getAbsolutePath());
+//                                    }
+//
+//                                    @Override
+//                                    public void onDownloadFailure(String url, int statusCode, String msg) {
+//                                        Logger.e("下载失败");
+//                                    }
+//
+//                                    @Override
+//                                    public void onFinish(String url, boolean isSuccess, String msg) {
+//                                        Logger.d(msg);
+//                                        if (isSuccess) loading.dismiss();
+//                                    }
+//                                });
                 break;
         }
     }
