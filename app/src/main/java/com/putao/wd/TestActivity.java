@@ -1,17 +1,17 @@
 package com.putao.wd;
 
 import android.os.Bundle;
+import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import com.putao.wd.api.ExploreApi;
-import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.model.http.CacheType;
-import com.sunnybear.library.model.http.OkHttpRequestHelper;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonSerializableCallback;
+import com.sunnybear.library.controller.task.SuperTask;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.select.DynamicTitleBar;
@@ -45,6 +45,8 @@ public class TestActivity extends BasicFragmentActivity<GlobalApplication> imple
 //    EmojiTextView tv_emoji;
     @Bind(R.id.tb_bar)
     DynamicTitleBar tb_bar;
+    @Bind(R.id.ed_msg)
+    EditText ed_msg;
 
     private String[] titles = new String[]{"牛人说", "玩物志", "葡萄+"};
 
@@ -86,19 +88,34 @@ public class TestActivity extends BasicFragmentActivity<GlobalApplication> imple
         switch (v.getId()) {
             case R.id.ll_show:
 //                loading.show();
-//                SuperTask.with(this)
-//                        .assign(new SuperTask.TaskDescription<String>() {
-//                            @Override
-//                            public String onBackground() {
-//                                return "你个傻叉";
-//                            }
-//                        })
-//                        .finish(new SuperTask.FinishListener<String>() {
-//                            @Override
-//                            public void onFinish(@Nullable String result) {
-//                                Logger.d(result);
-//                            }
-//                        }).execute();
+                SuperTask.with(this)
+                        .assign(new SuperTask.TaskDescription<String>() {
+                            @Override
+                            public String onBackground() {
+                                Logger.d("onBackground:" + Thread.currentThread().getName());
+                                SuperTask.post(Message.obtain(SuperTask.handler(), 123));
+                                return "你个傻叉";
+                            }
+                        })
+                        .handle(new SuperTask.MessageListener() {
+                            @Override
+                            public void handleMessage(@NonNull Message message) {
+                                Logger.d("handleMessage:" + Thread.currentThread().getName());
+                                switch (message.what) {
+                                    case 123:
+                                        Logger.d("接受到Handler消息");
+                                        break;
+                                }
+                            }
+                        })
+                        .finish(new SuperTask.FinishListener<String>() {
+                            @Override
+                            public void onFinish(@Nullable String result) {
+                                Logger.d("onFinish:" + Thread.currentThread().getName());
+                                Logger.d(result);
+                                ed_msg.setText(result);
+                            }
+                        }).execute();
 
 //                Bundle bundle = new Bundle();
 //                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4");
@@ -108,25 +125,25 @@ public class TestActivity extends BasicFragmentActivity<GlobalApplication> imple
 //                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
 //                startActivity(YoukuVideoPlayerActivity.class, bundle);
 
-                OkHttpRequestHelper.newInstance()
-                        .cacheType(CacheType.NETWORK_ELSE_CACHE)
-                        .request(ExploreApi.getArticleList(),
-                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
-                                    @Override
-                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-                                        Logger.d("网络请求结果:" + result.toString());
-                                    }
-
-                                    @Override
-                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
-                                        Logger.d("缓存请求结果:" + result.toString());
-                                    }
-
-                                    @Override
-                                    public void onFailure(String url, int statusCode, String msg) {
-                                        Logger.e(msg);
-                                    }
-                                });
+//                OkHttpRequestHelper.newInstance()
+//                        .cacheType(CacheType.NETWORK_ELSE_CACHE)
+//                        .request(ExploreApi.getArticleList(),
+//                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
+//                                    @Override
+//                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
+//                                        Logger.d("网络请求结果:" + result.toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
+//                                        Logger.d("缓存请求结果:" + result.toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(String url, int statusCode, String msg) {
+//                                        Logger.e(msg);
+//                                    }
+//                                });
 
 //                OkHttpRequestHelper.newInstance()
 //                        .addInterceptor(new ProgressInterceptor(new ProgressResponseListener() {
