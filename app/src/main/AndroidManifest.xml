@@ -302,6 +302,11 @@
         <activity
             android:name=".companion.DiaryActivity"
             android:screenOrientation="portrait" />
+        <!--陪伴日志-->
+        <activity
+            android:name=".me.attention.ConcernsActivity"
+            android:screenOrientation="portrait" />
+
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

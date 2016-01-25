@@ -2,12 +2,9 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.created.CreatedDetailActivity;
-import com.putao.wd.created.FancyActivity;
 import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.controller.BasicFragment;

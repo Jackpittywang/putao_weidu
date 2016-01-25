@@ -3,7 +3,6 @@ package com.putao.wd.created;
 import android.os.Bundle;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.controller.BasicFragment;
@@ -29,7 +28,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_fancy;
+        return R.layout.fragment_fancy;
     }
 
     @Override
