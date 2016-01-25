@@ -16,7 +16,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
 /**
- * OkHttp助手类
+ * OkHttp管理
  * Created by guchenkai on 2015/10/26.
  */
 public final class OkHttpManager {
