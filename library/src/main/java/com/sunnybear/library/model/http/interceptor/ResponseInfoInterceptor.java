@@ -21,8 +21,11 @@ public class ResponseInfoInterceptor implements Interceptor {
         String url = request.urlString();
         Response response = chain.proceed(request);
         Headers responseHeaders = response.headers();
-        Logger.i(TAG + "-" + url, "------request头信息------\n" + request.headers().toString());
-        Logger.i(TAG + "-" + url, "------response头信息------\n" + responseHeaders.toString()
+        Logger.i(TAG + "-" + url, "------request信息------\n"
+                + chain.connection().toString().replace("{", ":").replace("}", "") + "\n"
+                + request.headers().toString());
+        Logger.i(TAG + "-" + url, "------response头信息------\n"
+                + responseHeaders.toString()
                 + "请求用时:"
                 + (Long.parseLong(responseHeaders.get("OkHttp-Received-Millis"))
                 - Long.parseLong(responseHeaders.get("OkHttp-Sent-Millis"))) + "ms");

@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Matthew Lee
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.sunnybear.library.controller.task;
 
 import android.annotation.TargetApi;
@@ -37,36 +21,40 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 超级任务(替代AsyncTask)
+ * Created by guchenkai on 2015/12/8.
+ */
 public class SuperTask {
     /**
-     * 后台线程接口，
-     * 通过实现这个接口，添加你想要的功能。
+     * 后台线程接口,
+     * 通过实现这个接口,添加你想要的功能.
      */
     public interface TaskDescription<T> {
         T onBackground();
     }
 
     /**
-     * 主线程接口，
-     * 用于接收处理来自后台线程的消息，可用于更新 UI 。
+     * 主线程接口,
+     * 用于接收处理来自后台线程的消息,可用于更新UI.
      */
     public interface MessageListener {
         void handleMessage(@NonNull Message message);
     }
 
     /**
-     * 主线程接口，
-     * 当后台线程正常结束运行，且当前上下文环境处于安全的生命周期中，
-     * 这个接口中的方法将会被调用。
+     * 主线程接口,
+     * 当后台线程正常结束运行,且当前上下文环境处于安全的生命周期中,
+     * 这个接口中的方法将会被调用.
      */
     public interface FinishListener<T> {
         void onFinish(@Nullable T result);
     }
 
     /**
-     * 主线程接口，
-     * 当后台线程因为异常结束运行，且当前上下文环境处于安全的生命周期中，
-     * 这个接口中的方法将会被调用。
+     * 主线程接口,
+     * 当后台线程因为异常结束运行,且当前上下文环境处于安全的生命周期中,
+     * 这个接口中的方法将会被调用.
      */
     public interface BrokenListener {
         void onBroken(@NonNull Exception e);
@@ -80,12 +68,11 @@ public class SuperTask {
         }
 
         /**
-         * 必须。
+         * 必须
          */
         @MainThread
         public Builder assign(@NonNull TaskDescription description) {
             taskMap.put(id, description);
-
             return new Builder(id);
         }
     }
@@ -98,37 +85,34 @@ public class SuperTask {
         }
 
         /**
-         * 可选。
+         * 可选
          */
         @MainThread
         public Builder handle(@NonNull MessageListener listener) {
             messageMap.put(id, listener);
-
             return this;
         }
 
         /**
-         * 可选。
+         * 可选
          */
         @MainThread
         public Builder finish(@NonNull FinishListener listener) {
             finishMap.put(id, listener);
-
             return this;
         }
 
         /**
-         * 可选。
+         * 可选
          */
         @MainThread
         public Builder broken(@NonNull BrokenListener listener) {
             brokenMap.put(id, listener);
-
             return this;
         }
 
         /**
-         * 必须。
+         * 必须
          */
         @MainThread
         public void execute() {
@@ -138,7 +122,6 @@ public class SuperTask {
 
     private class Holder {
         private Integer id;
-
         private Object object;
 
         private Holder(@NonNull Integer id, @Nullable Object object) {
@@ -148,8 +131,8 @@ public class SuperTask {
     }
 
     /**
-     * 当你在后台线程中发送消息的时候，
-     * 你的 message.what 不应该和 MESSAGE_* 相等。
+     * 当你在后台线程中发送消息的时候,
+     * 你的message.what不应该和MESSAGE_*相等.
      */
     public static final int MESSAGE_FINISH = 0x65530;
 
@@ -168,10 +151,10 @@ public class SuperTask {
     private static final Integer ID_SUPPORT_FRAGMENT = 0x65536;
 
     /**
-     * 那么怎么样才能实时获得当前上下文环境的状态呢？
-     * 很简单，只需要通过 Activity/FragmentActivity(v4)/Fragment/Fragment(v4) 的 FragmentManager 加入一个 hook fragment ，
-     * 这个 hook fragment 的生命周期会跟随它所依附的上下文环境，
-     * 所以我们就可以通过它拿到当前上下文环境的生命周期啦。
+     * 那么怎么样才能实时获得当前上下文环境的状态呢?
+     * 很简单,只需要通过Activity/FragmentActivity(v4)/Fragment/Fragment(v4)的FragmentManager加入一个hook fragment,
+     * 这个hook fragment的生命周期会跟随它所依附的上下文环境,
+     * 所以我们就可以通过它拿到当前上下文环境的生命周期啦.
      */
     public static class HookFragment extends Fragment {
         protected boolean postEnable = true;
@@ -204,44 +187,49 @@ public class SuperTask {
     }
 
     /**
-     * 链式调用从这里开始，形式看上去差不是这样的：
+     * 链式调用从这里开始,形式看上去差不是这样的:
      * SugarTask.with().assign().handle().finish().broken().execute();
      */
     @MainThread
     public static Register with(@NonNull Activity activity) {
         getInstance().registerHookToContext(activity);
-
         return getInstance().buildRegister(activity);
     }
 
     @MainThread
     public static Register with(@NonNull FragmentActivity activity) {
         getInstance().registerHookToContext(activity);
-
         return getInstance().buildRegister(activity);
     }
 
     @MainThread
     public static Register with(@NonNull Fragment fragment) {
         getInstance().registerHookToContext(fragment);
-
         return getInstance().buildRegister(fragment);
     }
 
     @MainThread
     public static Register with(@NonNull android.support.v4.app.Fragment fragment) {
         getInstance().registerHookToContext(fragment);
-
         return getInstance().buildRegister(fragment);
     }
 
     /**
-     * 使用这个方法，在后台线程中向主线程发送消息：
+     * 使用这个方法,在后台线程中向主线程发送消息:
      * SugarTask.post(YOUR MESSAGE);
      */
     @WorkerThread
     public static void post(@NonNull Message message) {
         getInstance().handler.sendMessage(message);
+    }
+
+    /**
+     * 获得Handler实例
+     *
+     * @return Handler实例
+     */
+    public static Handler handler() {
+        return getInstance().handler;
     }
 
     private static class SugarTaskHolder {
@@ -253,13 +241,13 @@ public class SuperTask {
     }
 
     /**
-     * 每个执行的线程都有一个唯一的 id ，通过这个 id 我们可以很方便地管理线程。
+     * 每个执行的线程都有一个唯一的id,通过这个id我们可以很方便地管理线程.
      */
     private static AtomicInteger count = new AtomicInteger(0);
 
     /**
-     * 用于承载当前上下文环境 (Activity/FragmentActivity(v4)/Fragment/Fragment(v4) ，
-     * 当当前上下文环境的生命周期停止时，记住使用 resetHolder() 将 holder 重置。
+     * 用于承载当前上下文环境(Activity/FragmentActivity(v4)/Fragment/Fragment(v4),
+     * 当当前上下文环境的生命周期停止时,记住使用 resetHolder()将holder重置.
      */
     private Holder holder = null;
 
@@ -274,8 +262,8 @@ public class SuperTask {
     private Executor executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 8);
 
     /**
-     * 当 message.what = MESSAGE_STOP ，我们立即清除所有在主线程中的回调，
-     * 这样就做到了后台线程和主线程的解耦，有效避免 OOM 。
+     * 当message.what = MESSAGE_STOP,我们立即清除所有在主线程中的回调,
+     * 这样就做到了后台线程和主线程的解耦,有效避免OOM.
      */
     private Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
         @Override
@@ -343,9 +331,8 @@ public class SuperTask {
             @Override
             public void run() {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-
                 /**
-                 * 线程安全问题。
+                 * 线程安全问题.
                  */
                 if (taskMap.containsKey(id)) {
                     Message message = Message.obtain();
