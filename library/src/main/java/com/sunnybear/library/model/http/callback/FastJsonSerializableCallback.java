@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * 序列化解析回调
+ * FastJson解析json(反射方法获取泛型类型)
  * Created by guchenkai on 2016/1/19.
  */
 abstract class FastJsonSerializableCallback<T extends Serializable> extends JSONObjectCallback {
