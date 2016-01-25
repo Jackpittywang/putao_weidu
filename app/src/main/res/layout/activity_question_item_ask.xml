@@ -14,7 +14,7 @@
         android:gravity="center"
         android:paddingBottom="@dimen/distance_8dp"
         android:paddingTop="@dimen/distance_8dp"
-        android:text="———— 2015-12-23 —————" />
+        android:text="───2015-12-23───" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,6 +47,4 @@
             android:paddingRight="10dp"
             auto:placeholderImage="@drawable/img_head_signup" />
     </LinearLayout>
-
-    <include layout="@layout/activity_question_item_answer" />
 </LinearLayout>

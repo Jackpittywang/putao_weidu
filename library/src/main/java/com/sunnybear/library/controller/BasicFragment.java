@@ -162,7 +162,8 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      */
     protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
         String url = request.urlString();
-        url = url.substring(0, url.indexOf("?"));
+        if (url.contains("?"))
+            url = url.substring(0, url.indexOf("?"));
         T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
         if (cacheData != null)
             callback.onSuccess(url, cacheData);

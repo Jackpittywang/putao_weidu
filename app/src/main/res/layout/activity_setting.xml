@@ -13,9 +13,9 @@
         auto:nav_main_title="@string/setting" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/text_color_gray" />
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:background="@color/color_C2C2C2"/>
 
     <View
         android:layout_width="match_parent"
