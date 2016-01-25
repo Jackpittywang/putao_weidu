@@ -53,7 +53,7 @@ abstract class FastJsonSerializableCallback<T extends Serializable> extends JSON
     }
 
     @Override
-    public void onSuccess(String url, JSONObject result) {
+    public final void onSuccess(String url, JSONObject result) {
         String data = result.getString("data");
         JsonUtils.JsonType type = JsonUtils.getJSONType(data);
         if (clazz == null) return;//获取泛型类型错误
@@ -71,11 +71,38 @@ abstract class FastJsonSerializableCallback<T extends Serializable> extends JSON
         }
     }
 
+    @Override
+    public final void onCacheSuccess(String url, JSONObject result) {
+        String data = result.getString("data");
+        JsonUtils.JsonType type = JsonUtils.getJSONType(data);
+        if (clazz == null) return;//获取泛型类型错误
+        switch (type) {
+            case JSON_TYPE_OBJECT:
+                onCacheSuccess(url, (T) JSON.parseObject(data, clazz));
+                break;
+            case JSON_TYPE_ARRAY:
+                onCacheSuccess(url, (T) JSON.parseArray(data, clazz));
+                break;
+            case JSON_TYPE_ERROR:
+                onFailure(url, -200, "data数据返回错误");
+                Logger.e(JSONObjectCallback.TAG, "result=" + result.toJSONString());
+                break;
+        }
+    }
+
     /**
-     * 请求成功回调
+     * 网络请求成功回调
      *
      * @param url    网络地址
      * @param result 请求结果
      */
     public abstract void onSuccess(String url, T result);
+
+    /**
+     * 缓存请求成功回调
+     *
+     * @param url    网络地址
+     * @param result 请求结果
+     */
+    public abstract void onCacheSuccess(String url, T result);
 }

@@ -54,6 +54,36 @@ abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallba
         }
     }
 
+    @Override
+    public final void onCacheSuccess(String url, JSONObject result) {
+        String data = result.getString("data");
+        if (!StringUtils.isEmpty(data) && String.class.equals(clazz)) {
+            onCacheSuccess(url, (T) data);
+            return;
+        } else if (StringUtils.isEmpty(data) && StringUtils.equals(result.getString("http_code"), "200")) {
+            onCacheSuccess(url, (T) new String(""));
+            return;
+        } else if (StringUtils.isEmpty(data) && !StringUtils.equals(result.getString("http_code"), "200")) {
+            onFinish(url, false, result.getString("msg") != null ? result.getString("msg") : "");
+            return;
+        }
+        if (StringUtils.equals(data, "[]") && !StringUtils.equals(getGenericClassName(), ArrayList.class.getName()))
+            data = null;
+        JsonUtils.JsonType type = JsonUtils.getJSONType(data);
+        switch (type) {
+            case JSON_TYPE_OBJECT:
+                onCacheSuccess(url, (T) JSON.parseObject(data, clazz));
+                break;
+            case JSON_TYPE_ARRAY:
+                onCacheSuccess(url, (T) JSON.parseArray(data, clazz));
+                break;
+            case JSON_TYPE_ERROR:
+                onFailure(url, -200, "data数据返回错误");
+                Logger.e(JSONObjectCallback.TAG, "result=" + result.toJSONString());
+                break;
+        }
+    }
+
     /**
      * 获取本类的泛型类型
      *
@@ -74,10 +104,18 @@ abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallba
     }
 
     /**
-     * 请求成功回调
+     * 网络请求成功回调
      *
      * @param url    网络地址
      * @param result 请求结果
      */
     public abstract void onSuccess(String url, T result);
+
+    /**
+     * 缓存请求成功回调
+     *
+     * @param url    网络地址
+     * @param result 请求结果
+     */
+    public abstract void onCacheSuccess(String url, T result);
 }

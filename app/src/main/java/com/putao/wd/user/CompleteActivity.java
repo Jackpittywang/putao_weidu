@@ -196,6 +196,11 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
             }
 
             @Override
+            public void onCacheSuccess(String url, JSONObject result) {
+
+            }
+
+            @Override
             public void onFailure(String url, int statusCode, String msg) {
 
             }

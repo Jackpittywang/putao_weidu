@@ -23,6 +23,11 @@ public abstract class AccountCallback extends JSONObjectCallback {
      */
     public abstract void onSuccess(JSONObject result);
 
+    @Override
+    public void onCacheSuccess(String url, JSONObject result) {
+
+    }
+
     /**
      * 错误信息回调
      *

@@ -61,6 +61,11 @@ public class WebLoginActivity extends PTWDActivity implements View.OnClickListen
                     }
 
                     @Override
+                    public void onCacheSuccess(String url, JSONObject result) {
+
+                    }
+
+                    @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
                     }

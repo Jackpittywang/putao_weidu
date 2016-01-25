@@ -280,6 +280,11 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     }
 
                     @Override
+                    public void onCacheSuccess(String url, JSONObject result) {
+
+                    }
+
+                    @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
                     }
@@ -300,6 +305,11 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                             ToastUtils.showToastLong(mContext, "添加失败");
                         loading.dismiss();
                         finish();
+                    }
+
+                    @Override
+                    public void onCacheSuccess(String url, JSONObject result) {
+
                     }
 
                     @Override

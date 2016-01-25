@@ -9,6 +9,7 @@ import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.model.http.CacheType;
 import com.sunnybear.library.model.http.OkHttpFormEncodingHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonSerializableCallback;
 import com.sunnybear.library.util.Logger;
@@ -106,13 +107,17 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
 //                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
 //                startActivity(YoukuVideoPlayerActivity.class, bundle);
                 OkHttpFormEncodingHelper.newInstance()
-//                        .cacheType(CacheType.CACHE_ELSE_NETWORK)
+                        .cacheType(CacheType.NETWORK)
                         .request(ExploreApi.getArticleList(),
                                 new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
-
                                     @Override
                                     public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-                                        Logger.d(result.toString());
+                                        Logger.d("网络请求结果:" + result.toString());
+                                    }
+
+                                    @Override
+                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
+                                        Logger.d("缓存请求结果:" + result.toString());
                                     }
 
                                     @Override

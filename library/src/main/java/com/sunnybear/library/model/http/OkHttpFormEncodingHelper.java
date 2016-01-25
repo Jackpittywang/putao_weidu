@@ -7,6 +7,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.model.http.callback.CacheCallback;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.util.Logger;
 
@@ -20,12 +21,13 @@ import java.lang.reflect.Method;
 public class OkHttpFormEncodingHelper {
     private static final String TAG = OkHttpFormEncodingHelper.class.getSimpleName();
 
-    private CacheType mCacheType = CacheType.NETWORK_ELSE_CACHE;
+    private CacheType mCacheType;
     private OkHttpClient mOkHttpClient;
 
     public OkHttpFormEncodingHelper() {
         if (mOkHttpClient == null)
             mOkHttpClient = BasicApplication.getOkHttpClient();
+        mCacheType = CacheType.NETWORK_ELSE_CACHE;//默认是先请求网络,再请求缓存
     }
 
     public static OkHttpFormEncodingHelper newInstance() {
@@ -71,12 +73,12 @@ public class OkHttpFormEncodingHelper {
      * @param request  请求实例
      * @param callback 请求回调
      */
-    private void requestFromCache(Request request, Callback callback) {
+    private void requestFromCache(Request request, CacheCallback callback) {
         Response response = getResponse(mOkHttpClient.getCache(), request);
         if (response != null)
             try {
                 Logger.d(TAG, "读取缓存信息,Url=" + getUrl(request));
-                callback.onResponse(response);
+                callback.onCacheResponse(response);
             } catch (IOException e) {
                 callback.onFailure(request, e);
                 Logger.e(e);
@@ -114,7 +116,9 @@ public class OkHttpFormEncodingHelper {
     public void request(final Request request, final JSONObjectCallback callback) {
         if (callback == null)
             throw new NullPointerException("请设置请求回调");
-        callback.onStart();
+        //如果不是缓存请求,执行OnStart方法
+        if (mCacheType == CacheType.NETWORK || mCacheType == CacheType.NETWORK_ELSE_CACHE)
+            callback.onStart();
         switch (mCacheType) {
             case NETWORK:
                 requestFromNetwork(request, callback);
@@ -123,13 +127,18 @@ public class OkHttpFormEncodingHelper {
                 requestFromCache(request, callback);
                 break;
             case CACHE_ELSE_NETWORK:
-                requestFromCache(request, new Callback() {
+                requestFromCache(request, new CacheCallback() {
                     @Override
-                    public void onResponse(Response response) throws IOException {
+                    public void onCacheResponse(Response response) throws IOException {
                         if (response.isSuccessful())
-                            callback.onResponse(response);
+                            callback.onCacheResponse(response);
                         else
                             requestFromNetwork(request, callback);
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+
                     }
 
                     @Override
