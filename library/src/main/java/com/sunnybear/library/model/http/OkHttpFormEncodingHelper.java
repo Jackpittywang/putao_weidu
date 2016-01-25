@@ -8,7 +8,11 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.model.http.callback.CacheCallback;
+import com.sunnybear.library.model.http.callback.DownloadCallback;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
+import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
 
 import java.io.IOException;
@@ -186,5 +190,23 @@ public class OkHttpFormEncodingHelper {
      */
     private String getUrl(Request request) {
         return request.urlString();
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param url      下载地址
+     * @param filePath 保存文件的路径
+     * @param callback 下载文件回调
+     */
+    public void download(String url, String filePath, DownloadCallback callback) {
+        callback.onStart();
+        callback.setFilePath(filePath);
+        if (FileUtils.isExists(filePath)) {
+            callback.onFinish(url, true, "现在文件已存在,请不要重复下载");
+            return;
+        }
+        mOkHttpClient.newCall(FormEncodingRequestBuilder.newInstance()
+                .build(RequestMethod.GET, url)).enqueue(callback);
     }
 }

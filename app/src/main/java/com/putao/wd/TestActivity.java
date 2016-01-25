@@ -5,19 +5,19 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
-import com.putao.wd.api.ExploreApi;
-import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.util.HtmlUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.model.http.CacheType;
 import com.sunnybear.library.model.http.OkHttpFormEncodingHelper;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonSerializableCallback;
+import com.sunnybear.library.model.http.callback.DownloadCallback;
+import com.sunnybear.library.model.http.interceptor.ProgressInterceptor;
+import com.sunnybear.library.model.http.progress.ProgressResponseListener;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.select.DynamicTitleBar;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/12/8.
  */
 @Deprecated
-public class TestActivity extends BasicFragmentActivity implements View.OnClickListener {
+public class TestActivity extends BasicFragmentActivity<GlobalApplication> implements View.OnClickListener {
     String html = "<font color=646464 size=14>昨日30分钟拼完</font>" +
             "<br>" +
             "<font color=313131 size=30>100</font><font color=313131 size=14>个</font><font color=646464 size=14>\\n七巧板</font>" +
@@ -99,6 +99,7 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
 //                                Logger.d(result);
 //                            }
 //                        }).execute();
+
 //                Bundle bundle = new Bundle();
 //                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.mp4");
 //                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL,
@@ -106,23 +107,56 @@ public class TestActivity extends BasicFragmentActivity implements View.OnClickL
 //                startActivity(VideoPlayerActivity.class, bundle);
 //                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, "XMTMxNTI0Mzg5Mg==");
 //                startActivity(YoukuVideoPlayerActivity.class, bundle);
+
+//                OkHttpFormEncodingHelper.newInstance()
+//                        .cacheType(CacheType.NETWORK)
+//                        .request(ExploreApi.getArticleList(),
+//                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
+//                                    @Override
+//                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
+//                                        Logger.d("网络请求结果:" + result.toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
+//                                        Logger.d("缓存请求结果:" + result.toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(String url, int statusCode, String msg) {
+//                                        Logger.e(msg);
+//                                    }
+//                                });
+
                 OkHttpFormEncodingHelper.newInstance()
-                        .cacheType(CacheType.NETWORK)
-                        .request(ExploreApi.getArticleList(),
-                                new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
+                        .addInterceptor(new ProgressInterceptor(new ProgressResponseListener() {
+                            @Override
+                            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+                                Logger.d("---" + bytesRead + "----" + contentLength + "-----" + done);
+                            }
+                        }))
+                        .download("https://codeload.github.com/Yalantis/uCrop/zip/master",
+                                mApp.getSdCardPath() + File.separator + "uCrop.zip",
+                                new DownloadCallback() {
                                     @Override
-                                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-                                        Logger.d("网络请求结果:" + result.toString());
+                                    public void onStart() {
+                                        loading.show();
                                     }
 
                                     @Override
-                                    public void onCacheSuccess(String url, ArrayList<ExploreIndex> result) {
-                                        Logger.d("缓存请求结果:" + result.toString());
+                                    public void onDownloadSuccess(String url, File file) {
+                                        Logger.i("下载成功===" + file.getAbsolutePath());
                                     }
 
                                     @Override
-                                    public void onFailure(String url, int statusCode, String msg) {
-                                        Logger.e(msg);
+                                    public void onDownloadFailure(String url, int statusCode, String msg) {
+                                        Logger.e("下载失败");
+                                    }
+
+                                    @Override
+                                    public void onFinish(String url, boolean isSuccess, String msg) {
+                                        Logger.d(msg);
+                                        if (isSuccess) loading.dismiss();
                                     }
                                 });
                 break;

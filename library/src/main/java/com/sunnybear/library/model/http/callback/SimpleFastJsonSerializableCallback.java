@@ -9,7 +9,7 @@ import com.sunnybear.library.view.LoadingHUD;
 import java.io.Serializable;
 
 /**
- * 简单封装FastJsonSerializableCallback
+ * 简单封装FastJsonSerializableCallback(反射方法获取泛型类型)
  * Created by guchenkai on 2016/1/19.
  */
 public abstract class SimpleFastJsonSerializableCallback<T extends Serializable> extends FastJsonSerializableCallback<T> {

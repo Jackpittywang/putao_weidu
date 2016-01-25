@@ -13,6 +13,7 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.util.JsonUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -131,7 +132,7 @@ public abstract class JSONObjectCallback implements CacheCallback {
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
         if (response.isSuccessful()) {
             Logger.d(TAG, "请求url:\n" + url + "\n" + "请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
-            if (!TextUtils.isEmpty(json)) {
+            if (!StringUtils.isEmpty(json)) {
                 Bundle bundle = new Bundle();
                 bundle.putString(KEY_URL, url);
                 bundle.putString(KEY_JSON, json);

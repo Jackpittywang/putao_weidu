@@ -353,9 +353,9 @@ public final class FileUtils {
      * @param in       文件输入流
      * @param filePath 文件保存路径
      */
-    public static void saveFile(InputStream in, String filePath) {
+    public static File saveFile(InputStream in, String filePath) {
         File file = new File(filePath);
-        byte[] buffer = new byte[2048];
+        byte[] buffer = new byte[4096];
         int len = 0;
         FileOutputStream fos = null;
         try {
@@ -375,5 +375,17 @@ public final class FileUtils {
                 Logger.e(e);
             }
         }
+        return file;
+    }
+
+    /**
+     * 文件是否存在
+     *
+     * @param path 文件路径
+     * @return 文件是否存在
+     */
+    public static boolean isExists(String path) {
+        File file = new File(path);
+        return file.exists();
     }
 }
