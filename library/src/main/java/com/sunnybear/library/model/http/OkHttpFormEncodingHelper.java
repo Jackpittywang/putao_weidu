@@ -13,6 +13,7 @@ import com.sunnybear.library.util.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * 普通网络请求助手
@@ -53,6 +54,17 @@ public class OkHttpFormEncodingHelper {
      */
     public OkHttpFormEncodingHelper addInterceptor(Interceptor interceptor) {
         mOkHttpClient.networkInterceptors().add(interceptor);
+        return this;
+    }
+
+    /**
+     * 添加拦截器
+     *
+     * @param interceptors 拦截器组
+     * @return OkHttpFormEncodingHelper实例
+     */
+    public OkHttpFormEncodingHelper addInterceptors(List<Interceptor> interceptors) {
+        mOkHttpClient.networkInterceptors().addAll(interceptors);
         return this;
     }
 
