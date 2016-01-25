@@ -12,7 +12,6 @@ import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
-import com.sunnybear.library.model.http.DownloadFileTask;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
@@ -33,7 +32,6 @@ public class GlobalApplication extends BasicApplication {
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
 
-    private DownloadFileTask task;
     public static String shareImagePath;
     public static String resourcePath;
 
