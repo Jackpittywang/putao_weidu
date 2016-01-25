@@ -11,6 +11,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.animators.SlideInRightAnimation;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 
@@ -36,7 +37,8 @@ public class SmartListFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        rv_smart_list.setAdapter(new SmartListAdapter(mActivity, Arrays.asList(getResources().getStringArray(R.array.smart_list))));
+        SmartListAdapter smartListAdapter = new SmartListAdapter(mActivity, Arrays.asList(getResources().getStringArray(R.array.smart_list)));
+        rv_smart_list.setAdapter(smartListAdapter);
         rv_smart_list.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Serializable serializable, int position) {
