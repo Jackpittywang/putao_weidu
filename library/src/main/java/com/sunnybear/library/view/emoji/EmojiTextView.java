@@ -85,6 +85,8 @@ public class EmojiTextView extends TextView {
      * @return boolean
      */
     private boolean isEmoji(CharSequence text) {
+        if(StringUtils.isEmpty(text+""))
+            return false;
         return Pattern
                 .compile(".*?\\[(.*?)\\].*?",
                         Pattern.CASE_INSENSITIVE | Pattern.DOTALL)

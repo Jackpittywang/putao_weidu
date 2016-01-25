@@ -12,11 +12,10 @@ public class ExploreIndex implements Serializable {
     private String title;//文章标题
     private String description;//文章描述
     private String explanation;//网页
-    private long modified_time;//更新时间
+    private long send_time;//更新时间
     private int count_likes;//点赞数量
     private int count_comments;//评论数量
     private List<ExploreBanner> banner;//详情头
-
 
     public String getArticle_id() {
         return article_id;
@@ -50,12 +49,12 @@ public class ExploreIndex implements Serializable {
         this.explanation = explanation;
     }
 
-    public long getModified_time() {
-        return modified_time;
+    public long getSend_time() {
+        return send_time;
     }
 
-    public void setModified_time(long modified_time) {
-        this.modified_time = modified_time;
+    public void setSend_time(long send_time) {
+        this.send_time = send_time;
     }
 
     public int getCount_likes() {
@@ -89,7 +88,7 @@ public class ExploreIndex implements Serializable {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", explanation='" + explanation + '\'' +
-                ", modified_time=" + modified_time +
+                ", send_time=" + send_time +
                 ", count_likes=" + count_likes +
                 ", count_comments=" + count_comments +
                 ", banner=" + banner +

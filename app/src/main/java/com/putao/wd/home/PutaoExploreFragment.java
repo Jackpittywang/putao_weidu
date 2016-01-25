@@ -106,7 +106,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private void addDate(int position) {
         DateFormat formatMon = new SimpleDateFormat("MM");
         DateFormat formatDay = new SimpleDateFormat("dd");
-        Date date = new Date(mExploreIndexs.get(position).getModified_time() * 1000);
+        Date date = new Date(mExploreIndexs.get(position).getSend_time() * 1000);
         Date dateNow = new Date(System.currentTimeMillis());
         String day = formatDay.format(date);
         String mon = formatMon.format(date);
