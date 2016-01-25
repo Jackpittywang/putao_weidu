@@ -115,6 +115,12 @@ public class TestActivity extends BasicFragmentActivity<GlobalApplication> imple
                                 Logger.d(result);
                                 ed_msg.setText(result);
                             }
+                        })
+                        .broken(new SuperTask.BrokenListener() {
+                            @Override
+                            public void onBroken(@NonNull Exception e) {
+
+                            }
                         }).execute();
 
 //                Bundle bundle = new Bundle();
