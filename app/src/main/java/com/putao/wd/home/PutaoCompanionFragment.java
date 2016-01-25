@@ -3,9 +3,9 @@ package com.putao.wd.home;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -20,6 +20,7 @@ import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -55,7 +56,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     ProductsAdapter mProductsAdapter;
     private List<DiaryApp> mDiaryApps;
-    private ViewGroup.LayoutParams mRight2LayoutParams;
+    private RelativeLayout.LayoutParams mRight2LayoutParams;
+    private RelativeLayout.LayoutParams mSmartLayoutParams;
 
     @Override
     protected int getLayoutId() {
@@ -93,6 +95,14 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                             cv_no_empty.setVisibility(View.VISIBLE);
                             btn_explore_empty.setVisibility(View.GONE);
                             mProductsAdapter.replaceAll(result);
+                            mRight2LayoutParams.addRule(RelativeLayout.LEFT_OF, R.id.iv_title_bar_right1);
+                            mRight2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+                            mRight2LayoutParams.setMargins(0, 0, DensityUtil.dp2px(mActivity, 20), 0);
+                            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
+//                            RelativeLayout.LayoutParams smartLayoutParams = mSmartLayoutParams;
+                            mSmartLayoutParams.addRule(RelativeLayout.ABOVE, R.id.cv_no_empty);
+                            mSmartLayoutParams.setMargins(0, 0, 0, DensityUtil.dp2px(mActivity, 110));
+//                            iv_smart.setLayoutParams(smartLayoutParams);
                             mDiaryApps = result;
                         }
                         loading.dismiss();
@@ -107,7 +117,11 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         cv_empty.setVisibility(View.VISIBLE);
         btn_explore_empty.setVisibility(View.VISIBLE);
         cv_no_empty.setVisibility(View.GONE);
-        iv_title_bar_right2.setLayoutParams(iv_user_icon.getLayoutParams());
+        RelativeLayout.LayoutParams right2LayoutParams = new RelativeLayout.LayoutParams(iv_user_icon.getLayoutParams());
+        right2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        iv_title_bar_right2.setLayoutParams(right2LayoutParams);
+        mSmartLayoutParams.addRule(RelativeLayout.ABOVE, R.id.btn_explore_empty);
+        mSmartLayoutParams.setMargins(0, 0, 0, DensityUtil.dp2px(mActivity, 45));
         iv_user_icon.setVisibility(View.GONE);
     }
 
@@ -156,7 +170,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     @Override
     public void onStart() {
         super.onStart();
-        mRight2LayoutParams = iv_title_bar_right2.getLayoutParams();
+        mRight2LayoutParams = (RelativeLayout.LayoutParams) iv_title_bar_right2.getLayoutParams();
+        mSmartLayoutParams = (RelativeLayout.LayoutParams) iv_smart.getLayoutParams();
         empty();
         addClickListener();
         if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
