@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.task.SuperTask;
-import com.sunnybear.library.model.http.OkHttpFormEncodingHelper;
+import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.DownloadCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
@@ -67,7 +67,7 @@ public class SplashActivity extends BasicFragmentActivity {
      * @param filePath 保存文件的路径
      */
     private void updateResource(String url, String filePath) {
-        OkHttpFormEncodingHelper.newInstance()
+        OkHttpRequestHelper.newInstance()
                 /*.addInterceptor(new ProgressInterceptor(new ProgressResponseListener() {
                     @Override
                     public void onResponseProgress(long bytesRead, long contentLength, boolean done) {

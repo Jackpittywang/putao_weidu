@@ -23,20 +23,20 @@ import java.util.List;
  * 普通网络请求助手
  * Created by guchenkai on 2016/1/22.
  */
-public class OkHttpFormEncodingHelper {
-    private static final String TAG = OkHttpFormEncodingHelper.class.getSimpleName();
+public class OkHttpRequestHelper {
+    private static final String TAG = OkHttpRequestHelper.class.getSimpleName();
 
     private CacheType mCacheType;
     private OkHttpClient mOkHttpClient;
 
-    public OkHttpFormEncodingHelper() {
+    public OkHttpRequestHelper() {
         if (mOkHttpClient == null)
             mOkHttpClient = BasicApplication.getOkHttpClient();
         mCacheType = CacheType.NETWORK_ELSE_CACHE;//默认是先请求网络,再请求缓存
     }
 
-    public static OkHttpFormEncodingHelper newInstance() {
-        return new OkHttpFormEncodingHelper();
+    public static OkHttpRequestHelper newInstance() {
+        return new OkHttpRequestHelper();
     }
 
     /**
@@ -45,7 +45,7 @@ public class OkHttpFormEncodingHelper {
      * @param cacheType 缓存策略
      * @return OkHttpFormEncodingHelper实例
      */
-    public OkHttpFormEncodingHelper cacheType(CacheType cacheType) {
+    public OkHttpRequestHelper cacheType(CacheType cacheType) {
         mCacheType = cacheType;
         return this;
     }
@@ -56,7 +56,7 @@ public class OkHttpFormEncodingHelper {
      * @param interceptor 拦截器
      * @return OkHttpFormEncodingHelper实例
      */
-    public OkHttpFormEncodingHelper addInterceptor(Interceptor interceptor) {
+    public OkHttpRequestHelper addInterceptor(Interceptor interceptor) {
         mOkHttpClient.networkInterceptors().add(interceptor);
         return this;
     }
@@ -67,7 +67,7 @@ public class OkHttpFormEncodingHelper {
      * @param interceptors 拦截器组
      * @return OkHttpFormEncodingHelper实例
      */
-    public OkHttpFormEncodingHelper addInterceptors(List<Interceptor> interceptors) {
+    public OkHttpRequestHelper addInterceptors(List<Interceptor> interceptors) {
         mOkHttpClient.networkInterceptors().addAll(interceptors);
         return this;
     }
