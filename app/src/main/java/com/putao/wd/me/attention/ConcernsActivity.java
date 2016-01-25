@@ -1,10 +1,10 @@
-package com.putao.wd.created;
+package com.putao.wd.me.attention;
 
 import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.created.FancyDetailActivity;
 import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Marketing;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -17,9 +17,9 @@ import butterknife.Bind;
 
 /**
  * 奇思妙想
- * Created by zhanghao on 2016/1/14.
+ * Created by zhanghao on 2016/1/25.
  */
-public class FancyActivity extends PTWDFragment implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener {
+public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener {
     @Bind(R.id.rv_fancy)
     LoadMoreRecyclerView rv_fancy;
     @Bind(R.id.ptl_refresh)
@@ -29,13 +29,13 @@ public class FancyActivity extends PTWDFragment implements PullToRefreshLayout.O
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_fancy;
+        return R.layout.activity_concerns;
     }
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        mFancyAdapter = new FancyAdapter(mActivity, null);
+        mFancyAdapter = new FancyAdapter(mContext, null);
         mFancyAdapter.add(new Marketing());
         mFancyAdapter.add(new Marketing());
         mFancyAdapter.add(new Marketing());

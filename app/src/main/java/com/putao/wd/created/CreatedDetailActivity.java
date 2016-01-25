@@ -4,15 +4,10 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
-import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.BasicWebView;
-import com.sunnybear.library.view.CircleTextView;
-import com.sunnybear.library.view.scroll.SupportScrollView;
+import com.sunnybear.library.util.DensityUtil;
 
 import butterknife.Bind;
 
@@ -61,7 +56,7 @@ public class CreatedDetailActivity extends CreateBasicDetailActivity {
 
     private void initProgress() {
         //文字左边margin px值
-        mMargin = (int) (15 * mContext.getResources().getDisplayMetrics().density + 0.5f);
+        mMargin = DensityUtil.dp2px(mContext,15);
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override

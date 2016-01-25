@@ -11,6 +11,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.attention.ConcernsActivity;
 import com.putao.wd.me.child.ChildInfoActivity;
 import com.putao.wd.me.message.MessageCenterActivity;
 import com.putao.wd.me.order.OrderListActivity;
@@ -150,7 +151,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     }
 
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
-            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale})
+            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale,R.id.si_concerns})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -182,6 +183,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
             case R.id.iv_user_icon://完善用户信息
                 startActivity(CompleteActivity.class);
+                break;
+            case R.id.si_concerns://我的关注
+                startActivity(ConcernsActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
@@ -235,6 +239,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;*/
             case R.id.iv_user_icon://完善用户信息
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
+                break;
+            case R.id.si_concerns://完善用户信息
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ConcernsActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
