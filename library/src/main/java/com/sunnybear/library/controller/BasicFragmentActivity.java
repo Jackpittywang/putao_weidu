@@ -25,6 +25,8 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.handler.WeakHandler;
+import com.sunnybear.library.model.http.OkHttpRequestHelper;
+import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.KeyboardUtils;
@@ -34,6 +36,8 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.LoadingHUD;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -119,7 +123,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         //Activity停止时取消所有请求
         String[] urls = getRequestUrls();
         for (String url : urls) {
-            mOkHttpClient.cancel(url);
+            OkHttpRequestHelper.newInstance().cancelRequest(url);
         }
     }
 
@@ -161,63 +165,55 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     /**
      * 网络请求
      *
+     * @param request      request主体
+     * @param cacheType    缓存策略
+     * @param callback     请求回调(建议使用SimpleFastJsonCallback)
+     * @param interceptors 网络拦截器组
+     */
+    protected void networkRequest(Request request, int cacheType, RequestCallback callback, List<Interceptor> interceptors) {
+        if (request == null)
+            throw new NullPointerException("request为空");
+        OkHttpRequestHelper helper = OkHttpRequestHelper.newInstance();
+        if (interceptors != null && interceptors.size() > 0)
+            helper.addInterceptors(interceptors);
+        if (cacheType != -1)
+            helper.cacheType(cacheType);
+        helper.request(request, callback);
+    }
+
+    /**
+     * 网络请求
+     *
      * @param request     request主体
+     * @param cacheType   缓存策略
      * @param callback    请求回调(建议使用SimpleFastJsonCallback)
      * @param interceptor 网络拦截器
      */
-    public void networkRequest(Request request, Callback callback, Interceptor interceptor) {
-        if (interceptor != null)
-            mOkHttpClient.networkInterceptors().add(interceptor);
-        if (request == null)
-            throw new NullPointerException("request为空");
-        loading.show();
-        mOkHttpClient.newCall(request).enqueue(callback);
+    protected void networkRequest(Request request, int cacheType, RequestCallback callback, Interceptor interceptor) {
+        List<Interceptor> interceptors = new LinkedList<>();
+        interceptors.add(interceptor);
+        networkRequest(request, cacheType, callback, interceptors);
     }
 
     /**
      * 网络请求
-     *
-     * @param request  request主体
-     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
-     */
-    public void networkRequest(Request request, Callback callback) {
-        networkRequest(request, callback, null);
-    }
-
-    /**
-     * 网络请求
-     *
-     * @param request  request主体
-     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
-     */
-    public void networkRequestNoLoading(Request request, Callback callback) {
-        if (request == null)
-            throw new NullPointerException("request为空");
-//        loading.show();
-        mOkHttpClient.newCall(request).enqueue(callback);
-    }
-
-    /**
-     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
      *
      * @param request   request主体
+     * @param cacheType 缓存策略
      * @param callback  请求回调(建议使用SimpleFastJsonCallback)
-     * @param pastTimer 过期时间阀值
      */
-    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
-        String url = request.urlString();
-        long currentTime = System.currentTimeMillis();//当前时间
-        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
-        //获取过期时间
-        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
-        if (!StringUtils.isEmpty(past_time) || currentTime < pastTime) {
-            T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
-            if (cacheData != null)
-                callback.onSuccess(url, cacheData);
-        } else {
-            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(pastTime));//存入过期时间
-            mOkHttpClient.newCall(request).enqueue(callback);
-        }
+    protected void networkRequest(Request request, int cacheType, RequestCallback callback) {
+        networkRequest(request, cacheType, callback, new LinkedList<Interceptor>());
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    protected void networkRequest(Request request, RequestCallback callback) {
+        networkRequest(request, -1, callback);
     }
 
     /**
@@ -419,6 +415,58 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
                 else if (TextUtils.equals(reason, SYSTEM_HOME_KEY_LONG))//表示长按home键,显示最近使用的程序列表
                     Logger.d("长按Home键,显示最近使用的程序列表");
             }
+        }
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request     request主体
+     * @param callback    请求回调(建议使用SimpleFastJsonCallback)
+     * @param interceptor 网络拦截器
+     */
+    @Deprecated
+    public void networkRequest(Request request, Callback callback, Interceptor interceptor) {
+        if (interceptor != null)
+            mOkHttpClient.networkInterceptors().add(interceptor);
+        if (request == null)
+            throw new NullPointerException("request为空");
+        loading.show();
+        mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    @Deprecated
+    public void networkRequest(Request request, Callback callback) {
+        networkRequest(request, callback, null);
+    }
+
+    /**
+     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
+     *
+     * @param request   request主体
+     * @param callback  请求回调(建议使用SimpleFastJsonCallback)
+     * @param pastTimer 过期时间阀值
+     */
+    @Deprecated
+    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
+        String url = request.urlString();
+        long currentTime = System.currentTimeMillis();//当前时间
+        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
+        //获取过期时间
+        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
+        if (!StringUtils.isEmpty(past_time) || currentTime < pastTime) {
+            T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
+            if (cacheData != null)
+                callback.onSuccess(url, cacheData);
+        } else {
+            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(pastTime));//存入过期时间
+            mOkHttpClient.newCall(request).enqueue(callback);
         }
     }
 }
