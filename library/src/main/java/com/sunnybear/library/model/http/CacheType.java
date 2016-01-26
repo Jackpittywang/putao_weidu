@@ -4,21 +4,21 @@ package com.sunnybear.library.model.http;
  * 缓存策略
  * Created by guchenkai on 2016/1/22.
  */
-public enum CacheType {
+public interface CacheType {
     /**
      * 只查询网络数据
      */
-    NETWORK,
+    int NETWORK = 0;
     /**
      * 只查询本地缓存
      */
-    CACHE,
+    int CACHE = 1;
     /**
      * 先查询本地缓存，如果本地没有，再查询网络数据
      */
-    CACHE_ELSE_NETWORK,
+    int CACHE_ELSE_NETWORK = 2;
     /**
      * 先查询网络数据，如果网络没有，再查询本地缓存
      */
-    NETWORK_ELSE_CACHE
+    int NETWORK_ELSE_CACHE = 3;
 }

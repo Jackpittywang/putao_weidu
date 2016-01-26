@@ -116,13 +116,15 @@ public abstract class JSONObjectCallback extends RequestCallback {
         int statusCode = response.code();
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
         if (response.isSuccessful()) {
-            Logger.d(TAG, isNetwork ? "网络" : "缓存" + "请求url:\n" + url + "\n"
-                    + (isNetwork ? "网络" : "缓存") + "请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
+            if (isNetwork)
+                Logger.d(TAG, "网络请求url:" + url + "\n" + "网络请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
+            else
+                Logger.d(TAG, "缓存请求url:" + url + "\n" + "缓存请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
             if (!TextUtils.isEmpty(json)) {
                 Bundle bundle = new Bundle();
                 bundle.putString(KEY_URL, url);
                 bundle.putString(KEY_JSON, json);
-                mHandler.sendMessage(Message.obtain(mHandler, RESULT_CACHE_SUCCESS, bundle));
+                mHandler.sendMessage(Message.obtain(mHandler, isNetwork ? RESULT_NETWORK_SUCCESS : RESULT_CACHE_SUCCESS, bundle));
             }
         } else {
             Bundle bundle = new Bundle();

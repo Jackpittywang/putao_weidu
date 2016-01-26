@@ -27,7 +27,7 @@ import java.util.List;
 public class OkHttpRequestHelper {
     private static final String TAG = OkHttpRequestHelper.class.getSimpleName();
 
-    private CacheType mCacheType;
+    private int mCacheType;
     private OkHttpClient mOkHttpClient;
 
     public OkHttpRequestHelper() {
@@ -46,7 +46,7 @@ public class OkHttpRequestHelper {
      * @param cacheType 缓存策略
      * @return OkHttpFormEncodingHelper实例
      */
-    public OkHttpRequestHelper cacheType(CacheType cacheType) {
+    public OkHttpRequestHelper cacheType(int cacheType) {
         mCacheType = cacheType;
         return this;
     }
@@ -137,13 +137,13 @@ public class OkHttpRequestHelper {
         if (mCacheType == CacheType.NETWORK || mCacheType == CacheType.NETWORK_ELSE_CACHE)
             callback.onStart();
         switch (mCacheType) {
-            case NETWORK:
+            case CacheType.NETWORK:
                 requestFromNetwork(request, callback);
                 break;
-            case CACHE:
+            case CacheType.CACHE:
                 requestFromCache(request, callback);
                 break;
-            case CACHE_ELSE_NETWORK:
+            case CacheType.CACHE_ELSE_NETWORK:
                 requestFromCache(request, new RequestCallback() {
                     @Override
                     public void onCacheResponse(Response response) throws IOException {
@@ -164,7 +164,7 @@ public class OkHttpRequestHelper {
                     }
                 });
                 break;
-            case NETWORK_ELSE_CACHE:
+            case CacheType.NETWORK_ELSE_CACHE:
                 requestFromNetwork(request, new Callback() {
                     @Override
                     public void onResponse(Response response) throws IOException {

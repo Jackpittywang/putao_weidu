@@ -133,7 +133,7 @@ public class TestActivity extends BasicFragmentActivity<GlobalApplication> imple
 //                startActivity(YoukuVideoPlayerActivity.class, bundle);
 
                 OkHttpRequestHelper.newInstance()
-                        .cacheType(CacheType.NETWORK)
+                        .cacheType(CacheType.CACHE)
                         .request(ExploreApi.getArticleList(),
                                 new SimpleFastJsonSerializableCallback<ArrayList<ExploreIndex>>(loading) {
                                     @Override
