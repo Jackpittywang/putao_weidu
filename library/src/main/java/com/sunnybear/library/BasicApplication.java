@@ -29,7 +29,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 public abstract class BasicApplication extends Application {
     private static final String KEY_APP_ID = "app_id";
     private static Context mContext;
-    private static OkHttpClient mOkHttpClient;//OkHttp
+    private static OkHttpClient mOkHttpClient;//OkHttpClient
     private static int maxAge;//网络缓存最大时间
 
     private static DiskFileCacheHelper mDiskFileCacheHelper;//磁盘文件缓存器

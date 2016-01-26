@@ -1,11 +1,10 @@
 package com.sunnybear.library.controller;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.Service;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -13,18 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
-import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.intent.FragmentIntent;
+import com.sunnybear.library.model.http.OkHttpRequestHelper;
+import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.LoadingHUD;
 
 import java.io.Serializable;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -34,7 +37,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BasicFragment<App extends BasicApplication> extends Fragment {
     private View mFragmentView = null;
-    protected FragmentActivity mActivity;
+    protected BasicFragmentActivity mActivity;
 
     //fragment管理器
     protected FragmentManager mFragmentManager;
@@ -73,11 +76,10 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = (FragmentActivity) activity;
+        mActivity = (BasicFragmentActivity) activity;
         mApp = (App) mActivity.getApplication();
-        this.loading = LoadingHUD.getInstance(mActivity);
-        loading.setSpinnerType(LoadingHUD.FADED_ROUND_SPINNER);
-        mOkHttpClient = mApp.getOkHttpClient();
+        mOkHttpClient = BasicApplication.getOkHttpClient();
+        this.loading = mActivity.loading;
         mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();
 
         mFragmentManager = mActivity.getSupportFragmentManager();
@@ -119,10 +121,11 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     @Override
     public void onStop() {
         super.onStop();
+        loading.dismiss();
         //Fragment停止时取消所有请求
         String[] urls = getRequestUrls();
         for (String url : urls) {
-            mOkHttpClient.cancel(url);
+            OkHttpRequestHelper.newInstance().cancelRequest(url);
         }
     }
 
@@ -137,57 +140,6 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     public void onDestroy() {
         super.onDestroy();
         EventBusHelper.unregister(this);//反注册EventBus
-//        mApp.getRefWatcher().watch(this);
-    }
-
-    /**
-     * 网络请求
-     *
-     * @param request  request主体
-     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
-     */
-    protected void networkRequest(Request request, Callback callback) {
-        if (request == null)
-            throw new NullPointerException("request为空");
-        loading.show();
-        mOkHttpClient.newCall(request).enqueue(callback);
-    }
-
-    /**
-     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
-     *
-     * @param request   request主体
-     * @param callback  请求回调(建议使用SimpleFastJsonCallback)
-     * @param pastTimer 过期时间阀值
-     */
-    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
-        String url = request.urlString();
-        if (url.contains("?"))
-            url = url.substring(0, url.indexOf("?"));
-        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
-        if (cacheData != null)
-            callback.onSuccess(url, cacheData);
-
-        long currentTime = System.currentTimeMillis();//当前时间
-        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
-        //获取过期时间
-        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
-        if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
-            if (cacheData == null) loading.show();
-            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
-            mOkHttpClient.newCall(request).enqueue(callback);
-        }
-    }
-
-    /**
-     * 缓存数据
-     *
-     * @param url    网络地址
-     * @param result 数据源
-     * @param <T>    数据类型
-     */
-    public <T extends Serializable> void cacheData(String url, T result) {
-        mDiskFileCacheHelper.put(url, result);
     }
 
     /**
@@ -204,6 +156,63 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
 //        }
         mActivity.onBackPressed();
     }
+
+    /**
+     * 网络请求
+     *
+     * @param request      request主体
+     * @param cacheType    缓存策略
+     * @param callback     请求回调(建议使用SimpleFastJsonCallback)
+     * @param interceptors 网络拦截器组
+     */
+    protected void networkRequest(Request request, int cacheType, RequestCallback callback, List<Interceptor> interceptors) {
+        mActivity.networkRequest(request, cacheType, callback, interceptors);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request     request主体
+     * @param cacheType   缓存策略
+     * @param callback    请求回调(建议使用SimpleFastJsonCallback)
+     * @param interceptor 网络拦截器
+     */
+    protected void networkRequest(Request request, int cacheType, RequestCallback callback, Interceptor interceptor) {
+        mActivity.networkRequest(request, cacheType, callback, interceptor);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request   request主体
+     * @param cacheType 缓存策略
+     * @param callback  请求回调(建议使用SimpleFastJsonCallback)
+     */
+    protected void networkRequest(Request request, int cacheType, RequestCallback callback) {
+        mActivity.networkRequest(request, cacheType, callback);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    protected void networkRequest(Request request, RequestCallback callback) {
+        mActivity.networkRequest(request, -1, callback);
+    }
+
+    /**
+     * 缓存数据
+     *
+     * @param url    网络地址
+     * @param result 数据源
+     * @param <T>    数据类型
+     */
+    public <T extends Serializable> void cacheData(String url, T result) {
+        mDiskFileCacheHelper.put(url, result);
+    }
+
 
     /**
      * 启动Fragment
@@ -243,31 +252,77 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     }
 
     /**
-     * 跳转Activity
-     *
-     * @param targetClass 目标Activity类型
-     * @param args        传递参数
-     */
-    protected void startActivity(Class<? extends Activity> targetClass, Bundle args) {
-        if (mActivity instanceof BasicFragmentActivity) {
-            ((BasicFragmentActivity) mActivity).startActivity(targetClass, args);
-        } else {
-            Intent intent = new Intent(mActivity, targetClass);
-            intent.putExtras(args);
-            mActivity.startActivity(intent);
-        }
-    }
-
-    /**
-     * 跳转Activity
+     * 跳转目标Activity
      *
      * @param targetClass 目标Activity类型
      */
     protected void startActivity(Class<? extends Activity> targetClass) {
-        if (mActivity instanceof BasicFragmentActivity)
-            ((BasicFragmentActivity) mActivity).startActivity(targetClass);
-        else
-            mActivity.startActivity(new Intent(mActivity, targetClass));
+        mActivity.startActivity(targetClass);
+    }
+
+    /**
+     * 跳转目标Activity(传递参数)
+     *
+     * @param targetClass 目标Activity类型
+     * @param args        传递参数
+     */
+    public void startActivity(Class<? extends Activity> targetClass, Bundle args) {
+        mActivity.startActivity(targetClass, args);
+    }
+
+    /**
+     * 隐式跳转目标Activity
+     *
+     * @param action 隐式动作
+     */
+    public void startActivity(String action) {
+        mActivity.startActivity(action);
+    }
+
+    /**
+     * 隐式跳转目标Activity
+     *
+     * @param action 隐式动作
+     */
+    public void startActivity(String action, Bundle args) {
+        mActivity.startActivity(action, args);
+    }
+
+    /**
+     * 启动目标Service
+     *
+     * @param targetClass 目标Service类型
+     * @param args        传递参数
+     */
+    public void startService(Class<? extends Service> targetClass, Bundle args) {
+        mActivity.startActivity(targetClass, args);
+    }
+
+    /**
+     * 启动目标Service
+     *
+     * @param targetClass 目标Service类型
+     */
+    public void startService(Class<? extends Service> targetClass) {
+        mActivity.startService(targetClass);
+    }
+
+    /**
+     * 隐式跳转目标Service
+     *
+     * @param action 隐式动作
+     */
+    public void startService(String action) {
+        mActivity.startService(action);
+    }
+
+    /**
+     * 隐式跳转目标Service
+     *
+     * @param action 隐式动作
+     */
+    protected void startService(String action, Bundle args) {
+        mActivity.startService(action, args);
     }
 
     /**
@@ -284,5 +339,46 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
             transaction.replace(R.id.fragment_container, targetFragment, targetFragment.getClass().getName()).addToBackStack(tag).commit();
         else
             transaction.add(R.id.fragment_container, targetFragment, targetFragment.getClass().getName()).commit();
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    @Deprecated
+    protected void networkRequest(Request request, Callback callback) {
+        if (request == null)
+            throw new NullPointerException("request为空");
+        loading.show();
+        mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
+     *
+     * @param request   request主体
+     * @param callback  请求回调(建议使用SimpleFastJsonCallback)
+     * @param pastTimer 过期时间阀值
+     */
+    @Deprecated
+    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
+        String url = request.urlString();
+        if (url.contains("?"))
+            url = url.substring(0, url.indexOf("?"));
+        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
+        if (cacheData != null)
+            callback.onSuccess(url, cacheData);
+
+        long currentTime = System.currentTimeMillis();//当前时间
+        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
+        //获取过期时间
+        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
+        if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
+            if (cacheData == null) loading.show();
+            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
+            mOkHttpClient.newCall(request).enqueue(callback);
+        }
     }
 }

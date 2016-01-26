@@ -210,4 +210,13 @@ public class OkHttpRequestHelper {
         mOkHttpClient.newCall(FormEncodingRequestBuilder.newInstance()
                 .build(RequestMethod.GET, url)).enqueue(callback);
     }
+
+    /**
+     * 取消请求
+     *
+     * @param url url
+     */
+    public void cancelRequest(String url) {
+        mOkHttpClient.cancel(url);
+    }
 }
