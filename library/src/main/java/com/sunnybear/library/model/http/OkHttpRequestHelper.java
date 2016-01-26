@@ -7,13 +7,14 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.sunnybear.library.BasicApplication;
-import com.sunnybear.library.model.http.callback.CacheCallback;
+import com.sunnybear.library.R;
+import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.DownloadCallback;
-import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ResourcesUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -89,7 +90,7 @@ public class OkHttpRequestHelper {
      * @param request  请求实例
      * @param callback 请求回调
      */
-    private void requestFromCache(Request request, CacheCallback callback) {
+    private void requestFromCache(Request request, RequestCallback callback) {
         Response response = getResponse(mOkHttpClient.getCache(), request);
         if (response != null)
             try {
@@ -100,7 +101,7 @@ public class OkHttpRequestHelper {
                 Logger.e(e);
             }
         else
-            callback.onFailure(request, new IOException("response没有本地缓存"));
+            callback.onFailure(request, new IOException(ResourcesUtils.getString(BasicApplication.getInstance(), R.string.not_cache)));
     }
 
     /**
@@ -129,7 +130,7 @@ public class OkHttpRequestHelper {
      * @param request  请求实例
      * @param callback 请求回调
      */
-    public void request(final Request request, final JSONObjectCallback callback) {
+    public void request(final Request request, final RequestCallback callback) {
         if (callback == null)
             throw new NullPointerException("请设置请求回调");
         //如果不是缓存请求,执行OnStart方法
@@ -143,7 +144,7 @@ public class OkHttpRequestHelper {
                 requestFromCache(request, callback);
                 break;
             case CACHE_ELSE_NETWORK:
-                requestFromCache(request, new CacheCallback() {
+                requestFromCache(request, new RequestCallback() {
                     @Override
                     public void onCacheResponse(Response response) throws IOException {
                         if (response.isSuccessful())

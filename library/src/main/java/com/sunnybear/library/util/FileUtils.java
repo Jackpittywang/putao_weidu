@@ -123,25 +123,36 @@ public final class FileUtils {
     }
 
     /**
-     * 创建文件
+     * 创建文件夹
      *
-     * @param file
+     * @param mkdirs 文件夹
      */
-    public static void createFile(File file) {
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public static boolean createMkdirs(File mkdirs) {
+        return mkdirs.mkdirs();
     }
 
     /**
-     * 获得下载文件
+     * 创建文件
      *
-     * @param url
-     * @return
+     * @param file 文件
+     */
+    public static boolean createFile(File file) {
+        if (!file.exists()) {
+            try {
+                return file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获得下载文件名
+     *
+     * @param url 下载url
+     * @return 文件名
      */
     public static String getDownloadFileName(String url) {
         return url.substring(url.lastIndexOf("/") + 1);
