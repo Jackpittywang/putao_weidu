@@ -8,6 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.model.Comment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -43,8 +44,10 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
 
     @Override
     public void onBindItem(final CommentViewHolder holder, final Comment comment, final int position) {
-        holder.iv_comment_icon.setImageURL(comment.getHead_img());
-        holder.tv_username.setText(comment.getUser_name());
+        if (!StringUtils.isEmpty(comment.getHead_img()))
+            holder.iv_comment_icon.setImageURL(comment.getHead_img());
+        if (!StringUtils.isEmpty(comment.getUser_name()))
+            holder.tv_username.setText(comment.getUser_name());
         String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getModified_time()), DATE_PATTERN);
         holder.tv_comment_time.setText(create_time);
         holder.tv_comment_content.setText(comment.getContent());

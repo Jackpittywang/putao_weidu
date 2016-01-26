@@ -80,8 +80,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         addNavigation();
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
-        Bundle bundle = getIntent().getExtras();
-        action_id = bundle.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
+        action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
         getCommentList();
         addListener();
 
@@ -226,6 +225,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
+                Logger.i(url);
                 if (result.getComment() != null && result.getComment().size() > 0)
                     adapter.replaceAll(result.getComment());
                 if (result.getCurrent_page() != result.getTotal_page()) {

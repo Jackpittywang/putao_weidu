@@ -24,7 +24,7 @@ public class ExploreApi {
     private static final String LIMIT = "limit";//首页数据条目数量
     private static final String ARTICLE_ID = "article_id";//首页文章ID
     private static final String COMMENT_ID = "comment_id";//首页评论ID
-    private static final String COMMENT_MSG = "comment_msg";//首页评论内容
+    private static final String COMMENT_MSG = "message";//首页评论内容
     private static final String COOL_TYPE= "cool_type";//赞类型
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
@@ -209,14 +209,13 @@ public class ExploreApi {
     /**
      * 首页七条列表
      */
-    public static final String URL_ARTICLE_LIST= BASE_URL + "article/list";
+    public static final String URL_ARTICLE_LIST= BASE_URL + "article/index";
 
     /**
      * 首页七条列表
      */
     public static Request getArticleList() {
         return PTWDRequestHelper.explore()
-                .addParam(LIMIT, "7")
                 .build(RequestMethod.GET, URL_ARTICLE_LIST);
     }
 
@@ -248,7 +247,7 @@ public class ExploreApi {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
                 .addParam(ARTICLE_ID, article_id)
-                .build(RequestMethod.GET, URL_COMMENT_LIST);
+                .build(RequestMethod.POST, URL_COMMENT_LIST);
     }
     /**
      * 添加评论
