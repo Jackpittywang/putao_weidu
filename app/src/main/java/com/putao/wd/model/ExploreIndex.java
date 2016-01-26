@@ -15,6 +15,7 @@ public class ExploreIndex implements Serializable {
     private long send_time;//更新时间
     private int count_likes;//点赞数量
     private int count_comments;//评论数量
+    private boolean is_like;//评论数量
     private List<ExploreBanner> banner;//详情头
 
     public String getArticle_id() {
@@ -81,6 +82,14 @@ public class ExploreIndex implements Serializable {
         this.banner = banner;
     }
 
+    public boolean is_like() {
+        return is_like;
+    }
+
+    public void setIs_like(boolean is_like) {
+        this.is_like = is_like;
+    }
+
     @Override
     public String toString() {
         return "ExploreIndex{" +
@@ -91,6 +100,7 @@ public class ExploreIndex implements Serializable {
                 ", send_time=" + send_time +
                 ", count_likes=" + count_likes +
                 ", count_comments=" + count_comments +
+                ", is_like=" + is_like +
                 ", banner=" + banner +
                 '}';
     }

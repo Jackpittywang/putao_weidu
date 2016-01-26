@@ -1,14 +1,21 @@
 package com.putao.wd.start.comment.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Comment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -27,9 +34,11 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
     public static final String EVENT_COMMENT_EDIT = "event_comment_edit";
     public static final String EVENT_COMMIT_COOL = "event_commit_cool";
     private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
+    private Context mContext;
 
     public CommentAdapter(Context context, List<Comment> comments) {
         super(context, comments);
+        this.mContext = context;
     }
 
     @Override
@@ -48,6 +57,8 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
             holder.iv_comment_icon.setImageURL(comment.getHead_img());
         if (!StringUtils.isEmpty(comment.getUser_name()))
             holder.tv_username.setText(comment.getUser_name());
+        if (StringUtils.isEmpty(comment.getUser_id()))
+            holder.tv_username.setText(comment.getUser_name());
         String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getModified_time()), DATE_PATTERN);
         holder.tv_comment_time.setText(create_time);
         holder.tv_comment_content.setText(comment.getContent());
@@ -56,12 +67,26 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         } else {
             holder.tv_count_cool.setText("赞");
         }
-
+        holder.sb_cool_icon.setClickable(false);
+        holder.sb_cool_icon.setState(comment.is_like());
         holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //使用EventBus控制表情栏弹出
                 EventBusHelper.post(position, EVENT_COMMENT_EDIT);
+            }
+        });
+        holder.rl_cool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!comment.is_like()) {
+                    //使用EventBus提交点赞
+                    EventBusHelper.post(position, EVENT_COMMIT_COOL);
+                    holder.sb_cool_icon.setState(true);
+                    comment.setIs_like(true);
+                    String count_likes = comment.getCount_likes();
+                    comment.setCount_likes(TextUtils.equals("赞", count_likes) ? "1" : Integer.parseInt(count_likes) + 1 + "");
+                } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
             }
         });
         holder.sb_cool_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
@@ -90,6 +115,8 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         SwitchButton sb_cool_icon;
         @Bind(R.id.tv_count_comment)
         TextView tv_count_comment;
+        @Bind(R.id.rl_cool)
+        RelativeLayout rl_cool;
 
         public CommentViewHolder(View itemView) {
             super(itemView);

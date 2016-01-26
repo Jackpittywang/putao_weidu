@@ -10,11 +10,14 @@ public class Comment implements Serializable {
     private String comment_id;//评论ID
     private String content;//内容
     private String count_likes;//赞
+    private boolean is_like;//赞
     private String modified_time;//创建时间
     private String user_id;//评论归属用户
     private String user_name;//归属用户昵称
     private String head_img;//头像
+    private String reply;//Json被回复的用户信息
     // 待定   //评论回复内容
+
 
     public String getComment_id() {
         return comment_id;
@@ -38,6 +41,14 @@ public class Comment implements Serializable {
 
     public void setCount_likes(String count_likes) {
         this.count_likes = count_likes;
+    }
+
+    public boolean is_like() {
+        return is_like;
+    }
+
+    public void setIs_like(boolean is_like) {
+        this.is_like = is_like;
     }
 
     public String getModified_time() {
@@ -72,16 +83,26 @@ public class Comment implements Serializable {
         this.head_img = head_img;
     }
 
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "comment_id='" + comment_id + '\'' +
                 ", content='" + content + '\'' +
                 ", count_likes='" + count_likes + '\'' +
+                ", is_like=" + is_like +
                 ", modified_time='" + modified_time + '\'' +
                 ", user_id='" + user_id + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", head_img='" + head_img + '\'' +
+                ", reply='" + reply + '\'' +
                 '}';
     }
 }

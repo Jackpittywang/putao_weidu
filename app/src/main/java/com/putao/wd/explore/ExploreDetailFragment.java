@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,7 +68,13 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mSharePopupWindow = new SharePopupWindow(getActivity());
         isCool = null!=mDiskFileCacheHelper.getAsString(COOL+mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
-        wb_explore_detail.getParent().requestDisallowInterceptTouchEvent(false);
+       wb_explore_detail.setInitialScale(80);
+
+        WebSettings webSettings = wb_explore_detail.getSettings();
+        webSettings.setMinimumFontSize(64);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setUseWideViewPort(false);
+        webSettings.setLoadWithOverviewMode(true);
         initView();
         addListener();
     }
@@ -75,8 +82,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
     private void initView() {
         sb_cool_icon.setClickable(false);
-        iv_top.setImageURL(mExploreIndex.getBanner().get(0).getUrl());
         tv_title.setText(mExploreIndex.getTitle());
+        iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
         wb_explore_detail.loadDataWithBaseURL("about:blank", mExploreIndex.getExplanation(), "text/html", "utf-8", null);

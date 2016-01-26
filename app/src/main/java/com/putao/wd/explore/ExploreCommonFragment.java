@@ -55,7 +55,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         mPosition = args.getInt(INDEX_DATA_PAGE);
         mExploreIndex = ((List<ExploreIndex>) args.getSerializable(INDEX_DATA)).get(mPosition);
         sb_cool_icon.setClickable(false);
-        isCool = null!=mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL+mExploreIndex.getArticle_id());
+        isCool = null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
         initView();
     }
@@ -66,8 +66,12 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         tv_title.setText(mExploreIndex.getTitle());
         tv_content.setText(mExploreIndex.getDescription());
         tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
-        if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
+        if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType())) {
             iv_player.setVisibility(View.VISIBLE);
+            iv_video.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
+        }else{
+            iv_video.setImageURL(mExploreIndex.getBanner().get(0).getUrl());
+        }
     }
 
 
@@ -94,7 +98,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                                 loading.dismiss();
                                 isCool = true;
                                 sb_cool_icon.setState(true);
-                                tv_count_cool.setText(mExploreIndex.getCount_likes()+1+"");
+                                tv_count_cool.setText(mExploreIndex.getCount_likes() + 1 + "");
                             }
                         });
                 break;

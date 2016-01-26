@@ -1,11 +1,20 @@
 package com.putao.wd.explore.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.explore.ExploreMoreActivity;
 import com.putao.wd.model.HomeExploreMore;
+import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.start.comment.CommentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -21,9 +30,13 @@ import butterknife.Bind;
  */
 public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.MoreContentViewHolder> {
 
+    private Context mContext;
+    private Animation mAnim;
 
     public MoreAdapter(Context context, List<HomeExploreMore> homeExploreMores) {
         super(context, homeExploreMores);
+        mContext = context;
+        mAnim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
     }
 
     @Override
@@ -37,14 +50,33 @@ public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.Mo
     }
 
     @Override
-    public void onBindItem(MoreContentViewHolder holder, HomeExploreMore homeExploreMore, int position) {
-        holder.iv_news_icon.setBackgroundResource(homeExploreMore.getImageUrl());
+    public void onBindItem(final MoreContentViewHolder holder, final HomeExploreMore homeExploreMore, int position) {
+        holder.iv_icon.setImageURL(homeExploreMore.getCover_pic());
         holder.tv_title.setText(homeExploreMore.getTitle());
-        holder.tv_content.setText(homeExploreMore.getContent());
-        holder.tv_count_comment.setText(homeExploreMore.getComment());
-        holder.tv_count_cool.setText(homeExploreMore.getCool());
+        holder.tv_content.setText(homeExploreMore.getDescription());
+        holder.tv_count_comment.setText(homeExploreMore.getCount_comments());
+        holder.tv_count_cool.setText(homeExploreMore.getCount_likes());
+        holder.sb_cool_icon.setClickable(false);
+        holder.sb_cool_icon.setState(homeExploreMore.getIs_like());
+        holder.ll_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusHelper.post(homeExploreMore.getArticle_id(), ExploreMoreActivity.EVENT_COMMENT);
+            }
+        });
+        holder.ll_cool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.sb_cool_icon.startAnimation(mAnim);
+                if (homeExploreMore.getIs_like())
+                    return;
+                EventBusHelper.post(homeExploreMore.getArticle_id(), ExploreMoreActivity.EVENT_COOL);
+                holder.sb_cool_icon.setState(true);
+                holder.tv_count_cool.setText(Integer.parseInt(holder.tv_count_cool.getText().toString()) + 1 + "");
+                homeExploreMore.setIs_like(true);
+            }
+        });
     }
-
 
 
     /**
@@ -62,8 +94,12 @@ public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.Mo
         TextView tv_count_cool;
         @Bind(R.id.sb_cool_icon)
         SwitchButton sb_cool_icon;
-        @Bind(R.id.iv_news_icon)
-        ImageDraweeView iv_news_icon;
+        @Bind(R.id.iv_icon)
+        ImageDraweeView iv_icon;
+        @Bind(R.id.ll_comment)
+        LinearLayout ll_comment;
+        @Bind(R.id.ll_cool)
+        LinearLayout ll_cool;
 
         public MoreContentViewHolder(View itemView) {
             super(itemView);
