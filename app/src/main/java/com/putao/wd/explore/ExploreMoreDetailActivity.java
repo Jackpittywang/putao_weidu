@@ -11,23 +11,18 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ExploreIndex;
-import com.putao.wd.model.HomeExploreMore;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.video.VideoPlayerActivity;
-import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -80,7 +75,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         networkRequest(ExploreApi.getDetail(mArticleId),
                 new SimpleFastJsonCallback<ExploreIndex>(ExploreIndex.class, loading) {
                     @Override
-                    public void onSuccess(String url, ExploreIndex result) {
+                    public void onSuccess(String url,  ExploreIndex result) {
                         if (null != result) {
                             mExploreIndex = result;
                             initView();
@@ -88,14 +83,6 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                         loading.dismiss();
                     }
                 });
-      /*  networkRequest(ExploreApi.getArticleList(),
-                new SimpleFastJsonCallback<ArrayList<ExploreIndex>>(ExploreIndex.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-                        mExploreIndex = result.get(0);
-                        initView();
-                    }
-                });*/
     }
 
 

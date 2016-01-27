@@ -230,7 +230,7 @@ public class ExploreApi {
     public static Request getDetail(String article_id) {
         return PTWDRequestHelper.start()
                 .addParam(ARTICLE_ID, article_id)
-                .build(RequestMethod.GET, URL_ARTICLE_DETAIL);
+                .build(RequestMethod.POST, URL_ARTICLE_DETAIL);
     }
 
     /**
