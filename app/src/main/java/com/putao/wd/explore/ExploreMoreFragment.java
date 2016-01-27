@@ -72,7 +72,7 @@ public class ExploreMoreFragment extends BasicFragment {
     public void onClick(View v){
         Bundle bundle = new Bundle();
         switch (v.getId()) {
-            case R.id.iv_said :
+            /*case R.id.iv_said :
                 bundle.putInt(ExploreMoreActivity.KEY_TAB, 0);
                 startActivity(ExploreMoreActivity.class, bundle);
                 break;
@@ -83,8 +83,9 @@ public class ExploreMoreFragment extends BasicFragment {
             case R.id.iv_plus :
                 bundle.putInt(ExploreMoreActivity.KEY_TAB, 2);
                 startActivity(ExploreMoreActivity.class, bundle);
-                break;
+                break;*/
         }
+        startActivity(ExploreMoreActivity.class, bundle);
     }
 
 }

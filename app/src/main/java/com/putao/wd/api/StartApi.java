@@ -277,10 +277,6 @@ public class StartApi {
      */
     public static Request coolAdd(String action_id, String nickname, String type, String comment_id, String userProfilePhoto) {
         FormEncodingRequestBuilder builder = PTWDRequestHelper.start()
-                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id)
-                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_UID, ""))
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_TOKEN, ""))
                 .addParam(REQUEST_ACTION_ID, action_id)
                 .addParam(REQUEST_NICK_NAME, nickname)
                 .addParam(REQUEST_TYPE, type)

@@ -66,39 +66,49 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
+                android:clipChildren="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 >
 
-                <TextView
-                    android:id="@+id/tv_count_cool"
+                <RelativeLayout
+                    android:id="@+id/rl_cool"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:clipChildren="false"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginRight="20dp"
-                    android:minWidth="28dp"
-                    android:text="赞"
-                    android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_16sp"
-                    />
+                    android:layout_marginRight="20dp">
 
-                <com.sunnybear.library.view.SwitchButton
-                    android:id="@+id/sb_cool_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tv_count_cool"
-                    auto:isSelect="false"
-                    auto:norDrawable="@drawable/btn_support_nor"
-                    auto:selDrawable="@drawable/btn_support_sel"
-                    />
+                    <TextView
+                        android:id="@+id/tv_count_cool"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/sb_cool_icon"
+                        android:paddingLeft="4dp"
+                        android:text="赞"
+                        android:textColor="@color/text_color_gray"
+                        android:textSize="@dimen/text_size_16sp"
+                        />
+
+
+                    <com.sunnybear.library.view.SwitchButton
+                        android:id="@+id/sb_cool_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        auto:isSelect="false"
+                        auto:norDrawable="@drawable/btn_support_nor"
+                        auto:selDrawable="@drawable/btn_support_sel"
+                        />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_count_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:layout_toLeftOf="@id/sb_cool_icon"
+                    android:layout_toLeftOf="@id/rl_cool"
                     android:drawableLeft="@drawable/btn_comment"
                     android:drawablePadding="4dp"
                     android:text="评论"

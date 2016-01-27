@@ -6,20 +6,26 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
+import com.putao.wd.me.order.OrderListActivity;
+import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.model.Comment;
 import com.putao.wd.model.CommentList;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -69,6 +75,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private boolean isReply;
     private boolean hasComment;
     private int page = 1;
+    public final static String COOL = "CommentCool";//是否赞过
 
     @Override
     protected int getLayoutId() {
@@ -81,7 +88,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
-        getCommentList();
+        refreshCommentList();
         addListener();
 
         emojiMap = mApp.getEmojis();
@@ -162,6 +169,14 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send://点击发送
+                if (!AccountHelper.isLogin()){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CommentActivity.class);
+                    bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
+                    bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, action_id);
+                    startActivity(LoginActivity.class, bundle);
+                    return;
+                }
                 if (isReply) {
                     Comment comment = adapter.getItem(position);
                     String msg = et_msg.getText().toString();
@@ -203,7 +218,11 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             @Override
             public void onSuccess(String url, CommentList result) {
                 if (result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()) {
-                    adapter.replaceAll(result.getComment());
+                    List<Comment> comments = result.getComment();
+                    if (comments != null && comments.size() > 0) {
+                        checkLiked(comments);
+                        adapter.replaceAll(comments);
+                    }
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;
@@ -226,8 +245,11 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
             public void onSuccess(String url, CommentList result) {
                 Logger.i("活动评论列表请求成功");
                 Logger.i(url);
-                if (result.getComment() != null && result.getComment().size() > 0)
-                    adapter.replaceAll(result.getComment());
+                List<Comment> comments = result.getComment();
+                if (comments != null && comments.size() > 0) {
+                    checkLiked(comments);
+                    adapter.addAll(comments);
+                }
                 if (result.getCurrent_page() != result.getTotal_page()) {
                     hasComment = true;
                     rv_content.loadMoreComplete();
@@ -239,6 +261,15 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 loading.dismiss();
             }
         });
+    }
+
+    private void checkLiked(List<Comment> comments) {
+        int i = 0;
+        for (Comment comment : comments) {
+            if (Boolean.parseBoolean(mDiskFileCacheHelper.getAsString(COOL + comment.getComment_id())))
+                comments.get(i).setIs_like(true);
+            i++;
+        }
     }
 
     @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
@@ -254,13 +285,14 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
 
     //点赞提交
     @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
-    public void eventClickCool(int currPosition) {
-        Comment comment = adapter.getItem(currPosition);
-        networkRequest(StartApi.coolAdd(action_id, comment.getUser_name(), "COMMENT", comment.getComment_id(), comment.getHead_img()),
+    public void eventClickCool(final int currPosition) {
+        final Comment comment = adapter.getItem(currPosition);
+        networkRequest(ExploreApi.addLike(action_id, comment.getComment_id()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        getCommentList();
+                        adapter.notifyItemChanged(currPosition);
+                        mDiskFileCacheHelper.put(COOL + comment.getComment_id(), "true");
                         EventBusHelper.post(true, EVENT_COUNT_COOL);
                     }
                 });

@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -108,7 +109,9 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
     public void onViewPositionChanged(float fractionAnchor, float fractionScreen) {
         ivShadow.setAlpha(1 - fractionScreen);
     }
-//    @Override
+
+
+    //    @Override
 //    protected int getLayoutId() {
 //        return R.layout.activity_nexplore_detail;
 //    }

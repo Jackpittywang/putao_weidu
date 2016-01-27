@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="15dp">
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clipChildren="false"
+              android:orientation="vertical"
+              android:paddingBottom="10dp"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:paddingTop="15dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:clipChildren="false">
 
         <TextView
             android:id="@+id/tv_title"
@@ -21,9 +23,10 @@
             android:layout_marginBottom="10dp"
             android:layout_toLeftOf="@+id/iv_icon"
             android:paddingRight="10dp"
+            android:singleLine="true"
             android:text="陪孩子一起学数学"
             android:textColor="@color/color_313131"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_18sp"/>
 
         <TextView
             android:id="@+id/tv_content"
@@ -37,7 +40,7 @@
             android:paddingRight="10dp"
             android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
             android:textColor="@color/color_C2C2C2"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_14sp"/>
 
         <LinearLayout
             android:id="@+id/ll_comment"
@@ -50,17 +53,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/btn_comment" />
+                android:src="@drawable/btn_comment"/>
 
             <TextView
                 android:id="@+id/tv_count_comment"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:text="1234"
                 android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 
@@ -72,6 +75,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/ll_comment"
             android:layout_weight="1"
+            android:clipChildren="false"
             android:gravity="center">
 
             <com.sunnybear.library.view.SwitchButton
@@ -80,17 +84,17 @@
                 android:layout_height="16dp"
                 auto:isSelect="false"
                 auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel" />
+                auto:selDrawable="@drawable/btn_support_sel"/>
 
             <TextView
                 android:id="@+id/tv_count_cool"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:text="1234"
                 android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 
@@ -99,7 +103,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/img_head_default" />
+            android:background="@drawable/img_head_default"/>
     </RelativeLayout>
 
 </LinearLayout>

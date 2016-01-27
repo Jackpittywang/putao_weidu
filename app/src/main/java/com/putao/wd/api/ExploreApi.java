@@ -24,8 +24,8 @@ public class ExploreApi {
     private static final String LIMIT = "limit";//首页数据条目数量
     private static final String ARTICLE_ID = "article_id";//首页文章ID
     private static final String COMMENT_ID = "comment_id";//首页评论ID
-    private static final String COMMENT_MSG = "message";//首页评论内容
-    private static final String COOL_TYPE= "cool_type";//赞类型
+    private static final String MESSAGE = "message";//首页评论内容
+    private static final String COOL_TYPE = "cool_type";//赞类型
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
@@ -209,26 +209,27 @@ public class ExploreApi {
     /**
      * 首页七条列表
      */
-    public static final String URL_ARTICLE_LIST= BASE_URL + "article/index";
+    public static final String URL_ARTICLE_INDEX = BASE_URL + "article/index";
 
     /**
      * 首页七条列表
      */
     public static Request getArticleList() {
         return PTWDRequestHelper.explore()
-                .build(RequestMethod.GET, URL_ARTICLE_LIST);
+                .build(RequestMethod.GET, URL_ARTICLE_INDEX);
     }
 
     /**
      * 首页七条详情
      */
-    public static final String URL_ARTICLE_DETAIL= BASE_URL + "article/detail";
+    public static final String URL_ARTICLE_DETAIL = BASE_URL + "article/detail";
 
     /**
-     * 首页七条列表(和列表数据相同)
+     * 文章详情
      */
-    public static Request getDetailList() {
-        return PTWDRequestHelper.explore()
+    public static Request getDetail(String article_id) {
+        return PTWDRequestHelper.start()
+                .addParam(ARTICLE_ID, article_id)
                 .build(RequestMethod.GET, URL_ARTICLE_DETAIL);
     }
 
@@ -241,14 +242,15 @@ public class ExploreApi {
      * 评论列表
      *
      * @param article_id 首页文章id
-     * @param page 首页评论页面
+     * @param page       首页评论页面
      */
-    public static Request getCommentList(String page,String article_id) {
+    public static Request getCommentList(String page, String article_id) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
                 .addParam(ARTICLE_ID, article_id)
                 .build(RequestMethod.POST, URL_COMMENT_LIST);
     }
+
     /**
      * 添加评论
      */
@@ -258,28 +260,30 @@ public class ExploreApi {
      * 添加评论
      *
      * @param article_id 首页文章id
-     * @param msg 首页评论内容
+     * @param message    首页评论内容
      */
-    public static Request addComment(String msg,String article_id) {
+    public static Request addComment(String message, String article_id) {
         return PTWDRequestHelper.start()
-                .addParam(COMMENT_MSG, msg)
+                .addParam(MESSAGE, message)
                 .addParam(ARTICLE_ID, article_id)
                 .build(RequestMethod.POST, URL_COMMENT_ADD);
     }
+
     /**
      * 回复评论
      *
-     * @param msg 首页评论内容
+     * @param message    首页评论内容
      * @param article_id 首页文章id
      * @param comment_id 首页评论id
      */
-    public static Request addComment(String msg,String article_id,String comment_id) {
+    public static Request addComment(String message, String article_id, String comment_id) {
         return PTWDRequestHelper.start()
-                .addParam(COMMENT_MSG, msg)
+                .addParam(MESSAGE, message)
                 .addParam(ARTICLE_ID, article_id)
                 .addParam(COMMENT_ID, comment_id)
                 .build(RequestMethod.POST, URL_COMMENT_ADD);
     }
+
     /**
      * 删除评论
      */
@@ -295,10 +299,11 @@ public class ExploreApi {
                 .addParam(COMMENT_ID, comment_id)
                 .build(RequestMethod.POST, URL_COMMENT_DELETE);
     }
+
     /**
      * 添加赞
      */
-    public static final String URL_LIKE_ADD= BASE_URL + "article/like/add";
+    public static final String URL_LIKE_ADD = BASE_URL + "article/like/add";
 
     /**
      * 赞文章
@@ -311,16 +316,34 @@ public class ExploreApi {
                 .addParam(COOL_TYPE, "ARTICLE")
                 .build(RequestMethod.POST, URL_LIKE_ADD);
     }
+
     /**
      * 赞评论
      *
      * @param article_id 文章id
      */
-    public static Request addLike(String article_id,String comment_id) {
+    public static Request addLike(String article_id, String comment_id) {
         return PTWDRequestHelper.start()
                 .addParam(ARTICLE_ID, article_id)
                 .addParam(COMMENT_ID, comment_id)
                 .addParam(COOL_TYPE, "COMMENT")
                 .build(RequestMethod.POST, URL_LIKE_ADD);
+    }
+
+    /**
+     * 更多内容
+     */
+    public static final String URL_ARTICLE_LIST = BASE_URL + "article/list";
+
+    /**
+     * 赞评论
+     *
+     * @param page 页数
+     */
+    public static Request getMoreArticleList(int page) {
+        return PTWDRequestHelper.start()
+                .addParam("type", "0")
+                .addParam(REQUEST_PAGE, page + "")
+                .build(RequestMethod.POST, URL_ARTICLE_LIST);
     }
 }
