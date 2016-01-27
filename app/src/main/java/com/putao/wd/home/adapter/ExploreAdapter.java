@@ -1,12 +1,19 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.companion.PlotPreviewDialog;
+import com.putao.wd.model.Diary;
+import com.putao.wd.model.DiaryQuestion;
+import com.putao.wd.model.DiaryTitle;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductDetail;
 import com.putao.wd.model.ExploreProductPlot;
@@ -18,6 +25,9 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -26,65 +36,160 @@ import butterknife.Bind;
  * 探索号适配器
  * Created by yanghx on 2015/12/9.
  */
-public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHolder> {
+public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     public static final String EVENT_DISPLAY = "display";
 
-    private static final int TYPE_DETAIL = 1;
-    private static final int TYPE_PLOT = 2;
+    private static final int TYPE_CHALLENGE = 1;//家长挑战
+    private static final int TYPE_TASKS = 2;//家长任务
+    private static final int TYPE_PLAY = 3;//游戏玩法
+    private static final int TYPE_EDUC = 4;//教育理念
+    private static final int TYPE_GROW = 5;//孩子成长
 
-    private final int TYPE_PICTURE_ONE = 1;
-    private final int TYPE_PICTURE_FOUR = 4;
-    private final int TYPE_PICTURE_NINE = 9;
-    private final String DATE_PATTERN = "yyyy-MM-dd";
+    //    private final int TYPE_PICTURE_ONE = 1;
+//    private final int TYPE_PICTURE_FOUR = 4;
+//    private final int TYPE_PICTURE_NINE = 9;
+    private final String DATE_PATTERN = "yyyy/MM/dd";
+    private List<String> mDate;
+    SimpleDateFormat mSdf;
 //    private List<SpannableStringBuilder> builders = new ArrayList<>();
 
     private ExploreDetailAdapter adapter;
 
     private PlotPreviewDialog dialog;
 
-    public ExploreAdapter(Context context, List<ExploreProduct> exploreProducts) {
-        super(context, exploreProducts);
+    public ExploreAdapter(Context context, List<Diary> diary) {
+        super(context, diary);
+        mDate = new ArrayList<>();
+        mSdf = new SimpleDateFormat(DATE_PATTERN);
     }
 
     @Override
     public int getMultiItemViewType(int position) {
-        ExploreProduct exploreProduct = getItem(position);
-        switch (exploreProduct.getType()) {
+        Diary diary = getItem(position);
+        switch (diary.getTag_type()) {
             case 1:
-                return TYPE_DETAIL;
-            default:
-                return TYPE_PLOT;
-        }
-    }
-
-    @Override
-    public int getLayoutId(int viewType) {
-        switch (viewType) {
-            case TYPE_DETAIL:
-                return R.layout.fragment_explore_item;
-            case TYPE_PLOT:
-                return R.layout.fragment_explore_mixed_item;
+                return TYPE_CHALLENGE;
+            case 2:
+                return TYPE_TASKS;
+            case 3:
+                return TYPE_PLAY;
+            case 4:
+                return TYPE_EDUC;
+            case 5:
+                return TYPE_GROW;
             default:
                 return 0;
         }
     }
 
     @Override
+    public int getLayoutId(int viewType) {
+        switch (viewType) {
+            case TYPE_CHALLENGE:
+                return R.layout.activity_diary_challenge_item;
+            case TYPE_TASKS:
+                return R.layout.activity_diary_tasks_item;
+        }
+        return R.layout.activity_diary_tasks_item;
+    }
+
+    @Override
     public BasicViewHolder getViewHolder(View itemView, int viewType) {
         switch (viewType) {
-            case TYPE_DETAIL:
-                return new ExploerViewHolder(itemView);
-            case TYPE_PLOT:
-                return new ExploerMixedViewHolder(itemView);
+            case TYPE_CHALLENGE:
+                return new DiaryChallengeViewHolder(itemView);
+            case TYPE_TASKS:
+                return new DiaryTasksViewHolder(itemView);
             default:
-                return null;
+                return new DiaryTasksViewHolder(itemView);
         }
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, final ExploreProduct exploreProduct, int position) {
-        Logger.i("ExploreProduct === " + exploreProduct.toString());
-        if (holder instanceof ExploerViewHolder) {
+    public void onBindItem(BasicViewHolder holder, final Diary diary, int position) {
+        Logger.i("ExploreProduct === " + diary.toString());
+        DiaryBasicViewHolder basicHolder = (DiaryBasicViewHolder) holder;
+        boolean isNewDate = true;
+        String format = DateUtils.secondToDate(diary.getCreate_time(), DATE_PATTERN);
+        for (String date : mDate) {
+            if (date.equals(format)) {
+                isNewDate = false;
+                break;
+            }
+        }
+        if (isNewDate) {
+            mDate.add(format);
+            basicHolder.ll_date.setVisibility(View.VISIBLE);
+            basicHolder.tv_date.setText(format);
+        }
+        basicHolder.tv_sign.setText(diary.getTag_name());
+        basicHolder.tv_device.setText(diary.getDevice_name());
+        DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
+        basicHolder.tv_title.setText(diaryTitle.getText());
+        /**
+         * 家长挑战
+         */
+        if (holder instanceof DiaryChallengeViewHolder) {
+            DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
+            DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
+            viewHolder.tv_title.setText(diary.getAsk());
+            if (null != diaryQuestion.getA()) {
+                viewHolder.rl_answer1.setVisibility(View.VISIBLE);
+                viewHolder.tv_answer1.setText(diaryQuestion.getA());
+                viewHolder.iv_answer1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+            if (null != diaryQuestion.getB()) {
+                viewHolder.v_answer2.setVisibility(View.VISIBLE);
+                viewHolder.rl_answer2.setVisibility(View.VISIBLE);
+                viewHolder.tv_answer2.setText(diaryQuestion.getA());
+                viewHolder.iv_answer2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+            if (null != diaryQuestion.getC()) {
+                viewHolder.v_answer3.setVisibility(View.VISIBLE);
+                viewHolder.rl_answer3.setVisibility(View.VISIBLE);
+                viewHolder.tv_answer3.setText(diaryQuestion.getA());
+                viewHolder.iv_answer3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+            if (null != diaryQuestion.getD()) {
+                viewHolder.v_answer4.setVisibility(View.VISIBLE);
+                viewHolder.rl_answer4.setVisibility(View.VISIBLE);
+                viewHolder.tv_answer4.setText(diaryQuestion.getA());
+                viewHolder.iv_answer4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        }
+        /**
+         * 家长挑战
+         */
+        if (holder instanceof DiaryTasksViewHolder) {
+            DiaryTasksViewHolder viewHolder = (DiaryTasksViewHolder) holder;
+            if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
+                viewHolder.rl_image.setVisibility(View.VISIBLE);
+                viewHolder.iv_image.setImageURL(diaryTitle.getImg());
+            }
+            if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0)
+                viewHolder.iv_player.setVisibility(View.VISIBLE);
+        }
+        /*if (holder instanceof ExploerViewHolder) {
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
             if (position != 0) {
                 doCompare(holder, exploreProduct, position);
@@ -143,6 +248,78 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
                     EventBusHelper.post(plot, EVENT_DISPLAY);
                 }
             });
+        }*/
+    }
+
+    /**
+     * 家长挑战
+     */
+    static class DiaryChallengeViewHolder extends DiaryBasicViewHolder {
+        @Bind(R.id.iv_answer1)
+        ImageView iv_answer1;
+        @Bind(R.id.iv_answer2)
+        ImageView iv_answer2;
+        @Bind(R.id.iv_answer3)
+        ImageView iv_answer3;
+        @Bind(R.id.iv_answer4)
+        ImageView iv_answer4;
+        @Bind(R.id.rl_answer1)
+        RelativeLayout rl_answer1;
+        @Bind(R.id.rl_answer2)
+        RelativeLayout rl_answer2;
+        @Bind(R.id.rl_answer3)
+        RelativeLayout rl_answer3;
+        @Bind(R.id.rl_answer4)
+        RelativeLayout rl_answer4;
+        @Bind(R.id.v_answer2)
+        View v_answer2;
+        @Bind(R.id.v_answer3)
+        View v_answer3;
+        @Bind(R.id.v_answer4)
+        View v_answer4;
+        @Bind(R.id.tv_answer1)
+        TextView tv_answer1;
+        @Bind(R.id.tv_answer2)
+        TextView tv_answer2;
+        @Bind(R.id.tv_answer3)
+        TextView tv_answer3;
+        @Bind(R.id.tv_answer4)
+        TextView tv_answer4;
+
+        public DiaryChallengeViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    static class DiaryTasksViewHolder extends DiaryBasicViewHolder {
+        @Bind(R.id.rl_image)
+        RelativeLayout rl_image;
+        @Bind(R.id.iv_image)
+        ImageDraweeView iv_image;
+        @Bind(R.id.iv_player)
+        ImageView iv_player;
+
+        public DiaryTasksViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    static class DiaryBasicViewHolder extends BasicViewHolder {
+        @Bind(R.id.tv_sign)
+        TextView tv_sign;
+        @Bind(R.id.tv_device)
+        TextView tv_device;
+        @Bind(R.id.tv_title)
+        TextView tv_title;
+        @Bind(R.id.ll_date)
+        LinearLayout ll_date;
+        @Bind(R.id.tv_date)
+        TextView tv_date;
+        @Bind(R.id.v_date)
+        View v_date;
+
+        public DiaryBasicViewHolder(View itemView) {
+            super(itemView);
         }
     }
 
@@ -211,9 +388,9 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
 //        }
     }
 
-    /**
+  /*  *//**
      * 日期比较,控制头部显示
-     */
+     *//*
     private void doCompare(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
         ExploreProduct preExplore = getItem(position - 1);
         int abs = DateUtils.getDaysUnAbs(preExplore.getTime(), exploreProduct.getTime());
@@ -238,24 +415,24 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
                 viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
             }
         }
-    }
+    }*/
 
     /**
      * 设置plot中教育理念下面的显示图片
      */
-    private void setPlotImage(ExploerMixedViewHolder viewHolder, final ExploreProductPlot plot) {
-        if (plot.getImg_list() == null)
-            viewHolder.iv_one_picture.setImageURL(plot.getImg_url());
-        else
-            viewHolder.iv_one_picture.setImageURL(plot.getImg_list());
-        dialog = new PlotPreviewDialog(context, plot);
-        viewHolder.iv_one_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
-    }
+//    private void setPlotImage(ExploerMixedViewHolder viewHolder, final ExploreProductPlot plot) {
+//        if (plot.getImg_list() == null)
+//            viewHolder.iv_one_picture.setImageURL(plot.getImg_url());
+//        else
+//            viewHolder.iv_one_picture.setImageURL(plot.getImg_list());
+//        dialog = new PlotPreviewDialog(context, plot);
+//        viewHolder.iv_one_picture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.show();
+//            }
+//        });
+//    }
 
     /**
      * 根据图片张数显示图片
@@ -263,33 +440,33 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
      * @param holder     ExploerMixedViewHolder类型ViewHolder
      * @param pictureNum 图片张数
      */
-    private void showPiture(ExploerMixedViewHolder holder, int pictureNum) {
-        switch (pictureNum) {
-            case TYPE_PICTURE_ONE:
-                holder.ll_picture78.setVisibility(View.GONE);
-                holder.ll_picture369.setVisibility(View.INVISIBLE);
-                holder.iv_picture9.setVisibility(View.GONE);
-                holder.iv_one_picture.setVisibility(View.VISIBLE);
-                holder.ll_picture1245.setVisibility(View.INVISIBLE);
-                break;
-            case TYPE_PICTURE_FOUR:
-                holder.iv_one_picture.setVisibility(View.GONE);
-                holder.ll_picture1245.setVisibility(View.VISIBLE);
-                holder.ll_picture78.setVisibility(View.GONE);
-                holder.ll_picture369.setVisibility(View.INVISIBLE);
-                holder.iv_picture9.setVisibility(View.GONE);
-                break;
-            case TYPE_PICTURE_NINE:
-                holder.iv_one_picture.setVisibility(View.GONE);
-                holder.ll_picture78.setVisibility(View.VISIBLE);
-                holder.ll_picture369.setVisibility(View.VISIBLE);
-                holder.ll_picture1245.setVisibility(View.VISIBLE);
-                holder.iv_picture9.setVisibility(View.VISIBLE);
-                break;
-            default:
-                break;
-        }
-    }
+//    private void showPiture(ExploerMixedViewHolder holder, int pictureNum) {
+//        switch (pictureNum) {
+//            case TYPE_PICTURE_ONE:
+//                holder.ll_picture78.setVisibility(View.GONE);
+//                holder.ll_picture369.setVisibility(View.INVISIBLE);
+//                holder.iv_picture9.setVisibility(View.GONE);
+//                holder.iv_one_picture.setVisibility(View.VISIBLE);
+//                holder.ll_picture1245.setVisibility(View.INVISIBLE);
+//                break;
+//            case TYPE_PICTURE_FOUR:
+//                holder.iv_one_picture.setVisibility(View.GONE);
+//                holder.ll_picture1245.setVisibility(View.VISIBLE);
+//                holder.ll_picture78.setVisibility(View.GONE);
+//                holder.ll_picture369.setVisibility(View.INVISIBLE);
+//                holder.iv_picture9.setVisibility(View.GONE);
+//                break;
+//            case TYPE_PICTURE_NINE:
+//                holder.iv_one_picture.setVisibility(View.GONE);
+//                holder.ll_picture78.setVisibility(View.VISIBLE);
+//                holder.ll_picture369.setVisibility(View.VISIBLE);
+//                holder.ll_picture1245.setVisibility(View.VISIBLE);
+//                holder.iv_picture9.setVisibility(View.VISIBLE);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     /**
      * detail
@@ -348,7 +525,7 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
     /**
      * plot
      */
-    static class ExploerMixedViewHolder extends BasicViewHolder {
+   /* static class ExploerMixedViewHolder extends BasicViewHolder {
         @Bind(R.id.ll_explore_top)
         LinearLayout ll_explore_top;
         @Bind(R.id.tv_date)
@@ -395,7 +572,9 @@ public class ExploreAdapter extends LoadMoreAdapter<ExploreProduct, BasicViewHol
         public ExploerMixedViewHolder(View itemView) {
             super(itemView);
         }
-    }
+    }*/
+
+
 }
 
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_FFE875"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/distance_8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/distance_8dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_date_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_date"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:drawablePadding="4dp"
+            android:lineSpacingExtra="4dp"
+            android:text="2015-11-14"
+            android:textColor="@color/text_color_red"
+            android:textSize="@dimen/text_size_18sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_date"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_EBEBEB"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:layout_marginRight="@dimen/distance_8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/marketing_sign_shape"
+        android:padding="5dp"
+        android:text="家长挑战"
+        android:textColor="@color/color_C2C2C2"
+        android:textSize="@dimen/text_size_12sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_sign"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:layout_marginRight="@dimen/distance_8dp"
+        android:text="您知道比萨斜塔为什么是斜的吗？"/>
+</LinearLayout>

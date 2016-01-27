@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/tv_device"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/cv_answer"
+          android:layout_marginTop="5dp"
+          android:paddingLeft="@dimen/distance_8dp"
+          android:paddingRight="@dimen/distance_8dp"
+          android:layout_marginBottom="10dp"
+          android:text="来自妈妈的Ipad Air 2"
+          android:textColor="@color/color_C2C2C2"
+          android:textSize="@dimen/text_size_12sp"
+    />
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/activity_diary_sign"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:layout_marginRight="@dimen/distance_8dp"
+        android:visibility="gone">
+
+        <!--标题图-->
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_image"
+            style="@style/image_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:aspect_ratio="2"
+            auto:default_drawable="@drawable/img_p_cover"/>
+
+        <ImageView
+            android:id="@+id/iv_player"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/btn_60_play_selector"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <include layout="@layout/activity_diary_device"/>
+</LinearLayout>

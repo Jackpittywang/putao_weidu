@@ -8,8 +8,9 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
+import com.putao.wd.model.Diary;
 import com.putao.wd.model.DiaryApp;
-import com.putao.wd.model.Explore;
+import com.putao.wd.model.Diarys;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.share.OnShareClickListener;
@@ -17,6 +18,8 @@ import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 
@@ -76,10 +79,10 @@ public class DiaryActivity extends PTWDActivity {
      */
     private void getDiaryIndex() {
         networkRequest(ExploreApi.getDiaryData(String.valueOf(mDiaryApp.getProduct_id())),
-                new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
+                new SimpleFastJsonCallback<Diarys>(Diarys.class, loading) {
                     @Override
-                    public void onSuccess(String url, Explore result) {
-                        if (result.getData() != null && result.getData().size() > 0) {
+                    public void onSuccess(String url, Diarys result) {
+                        if (result != null && result.getData().size()> 0) {
                             adapter.addAll(result.getData());
                             ll_date_empty.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);

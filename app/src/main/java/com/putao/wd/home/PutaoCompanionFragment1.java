@@ -109,7 +109,7 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
     /**
      * 添加监听器
      */
-    private void addListener() {
+   /* private void addListener() {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -130,12 +130,12 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
                         });
             }
         });
-    }
+    }*/
 
     /**
      * 获得陪伴成长日志
      */
-    private void getDiaryIndex() {
+/*    private void getDiaryIndex() {
         networkRequest(ExploreApi.getDiaryIndex(String.valueOf(page)),
                 new SimpleFastJsonCallback<Explore>(Explore.class, loading) {
                     @Override
@@ -155,7 +155,7 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
                         loading.dismiss();
                     }
                 });
-    }
+    }*/
 
     /**
      * 是否已经添加设备

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/i_top"
+        layout="@layout/activity_diary_sign"/>
+
+    <!--没有绑定设备时卡片-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/i_top"
+        android:paddingLeft="@dimen/distance_8dp"
+        android:paddingRight="@dimen/distance_8dp"
+        auto:cardCornerRadius="0dp"
+        auto:cardElevation="2dp"
+        auto:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_answer1"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_answer1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/icon_20_p_choose_01"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_answer1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_answer1"
+                    android:gravity="center"
+                    android:text="地基和结构建筑的原因"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v_answer2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40dp"
+                android:background="@color/divider_color"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_answer2"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_answer2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/icon_20_p_choose_02"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_answer2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_answer2"
+                    android:text="地基和结构建筑的原因"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v_answer3"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40dp"
+                android:background="@color/divider_color"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_answer3"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_answer3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/icon_20_p_choose_03"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_answer3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_answer3"
+                    android:text="地基和结构建筑的原因"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v_answer4"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40dp"
+                android:background="@color/divider_color"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_answer4"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_answer4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/icon_20_p_choose_04"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_answer4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_answer4"
+                    android:text="地基和结构建筑的原因"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <include layout="@layout/activity_diary_device"/>
+
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-10dp"
+        android:src="@drawable/img_p_choose_c"/>
+</RelativeLayout>
