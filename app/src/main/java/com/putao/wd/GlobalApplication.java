@@ -51,36 +51,41 @@ public class GlobalApplication extends BasicApplication {
         //Baidu地图初始化
         SDKInitializer.initialize(getApplicationContext());
         //初始化优酷播放器
-        mYoukuPlayerBaseConfiguration = new YoukuPlayerBaseConfiguration(getApplicationContext()) {
-            /**
-             * 通过覆写该方法，返回“正在缓存视频信息的界面”，
-             * 则在状态栏点击下载信息时可以自动跳转到所设定的界面.
-             * 用户需要定义自己的缓存界面
-             */
-            @Override
-            public Class<? extends Activity> getCachingActivityClass() {
-                return null;
-            }
+        try {
+            mYoukuPlayerBaseConfiguration = new YoukuPlayerBaseConfiguration(getApplicationContext()) {
+                /**
+                 * 通过覆写该方法，返回“正在缓存视频信息的界面”，
+                 * 则在状态栏点击下载信息时可以自动跳转到所设定的界面.
+                 * 用户需要定义自己的缓存界面
+                 */
+                @Override
+                public Class<? extends Activity> getCachingActivityClass() {
+                    return null;
+                }
 
-            /**
-             * 通过覆写该方法，返回“已经缓存视频信息的界面”，
-             * 则在状态栏点击下载信息时可以自动跳转到所设定的界面.
-             * 用户需要定义自己的已缓存界面
-             */
-            @Override
-            public Class<? extends Activity> getCachedActivityClass() {
-                return null;
-            }
+                /**
+                 * 通过覆写该方法，返回“已经缓存视频信息的界面”，
+                 * 则在状态栏点击下载信息时可以自动跳转到所设定的界面.
+                 * 用户需要定义自己的已缓存界面
+                 */
+                @Override
+                public Class<? extends Activity> getCachedActivityClass() {
+                    return null;
+                }
 
-            /**
-             * 配置视频的缓存路径，格式举例： /appname/videocache/
-             * 如果返回空，则视频默认缓存路径为： /应用程序包名/videocache/
-             */
-            @Override
-            public String configDownloadPath() {
-                return sdCardPath + File.separator + "videocache";
-            }
-        };
+                /**
+                 * 配置视频的缓存路径，格式举例： /appname/videocache/
+                 * 如果返回空，则视频默认缓存路径为： /应用程序包名/videocache/
+                 */
+                @Override
+                public String configDownloadPath() {
+                    return sdCardPath + File.separator + "videocache";
+                }
+            };
+        } catch (Exception e) {
+            Logger.e(e);
+            e.printStackTrace();
+        }
         //启动推送
 //        startService(new Intent(ACTION_PUSH_SERVICE));
     }
