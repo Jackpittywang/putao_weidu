@@ -18,6 +18,7 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.video.VideoPlayerActivity;
+import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
@@ -39,6 +40,8 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     ImageView iv_player;
     @Bind(R.id.tv_title)
     TextView tv_title;
+    @Bind(R.id.tv_count_cool)
+    TextView tv_count_cool;
     @Bind(R.id.wb_explore_detail)
     BasicWebView wb_explore_detail;
     @Bind(R.id.iv_close)
@@ -96,6 +99,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         mSharePopupWindow = new SharePopupWindow(this);
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
+        tv_count_cool.setText(mExploreIndex.getCount_likes()+"");
         wb_explore_detail.setInitialScale(80);
 
         WebSettings webSettings = wb_explore_detail.getSettings();
@@ -132,7 +136,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         switch (v.getId()) {
             case R.id.iv_player:
                 bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, mExploreIndex.getBanner().get(0).getUrl());
-                startActivity(VideoPlayerActivity.class, bundle);
+                startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
             case R.id.iv_close:
                 finish();
@@ -142,6 +146,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
                 if (isCool) break;
+                tv_count_cool.setText(mExploreIndex.getCount_likes()+1+"");
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override

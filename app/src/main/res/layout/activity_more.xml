@@ -14,17 +14,17 @@
         auto:nav_main_title="更多内容"/>
 
     <View style="@style/line_horizontal"/>
-
+<!--
     <com.sunnybear.library.view.select.TitleBar
         android:id="@id/stickyHeaderLayout_sticky"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_centerVertical="true"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:visibility="gone">
 
-        <!-- 活动说明 -->
+        &lt;!&ndash; 活动说明 &ndash;&gt;
         <com.sunnybear.library.view.select.TitleItem
             android:id="@+id/ll_action_instruct"
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
             auto:is_active="true"
             auto:title_text="牛人说"/>
 
-        <!-- 活动现场 -->
+        &lt;!&ndash; 活动现场 &ndash;&gt;
         <com.sunnybear.library.view.select.TitleItem
             android:id="@+id/ll_action_location"
             android:layout_width="0dp"
@@ -49,7 +49,7 @@
             auto:indicator_color="@color/text_main_color_nor"
             auto:title_text="玩物志"/>
 
-        <!-- 精彩回顾 -->
+        &lt;!&ndash; 精彩回顾 &ndash;&gt;
         <com.sunnybear.library.view.select.TitleItem
             android:id="@+id/ll_finish"
             android:layout_width="0dp"
@@ -61,24 +61,34 @@
             auto:indicator_color="@color/text_main_color_nor"
             auto:title_text="葡萄+"/>
 
-    </com.sunnybear.library.view.select.TitleBar>
-<!--
-    <com.sunnybear.library.view.select.DynamicTitleBar
-        android:id="@+id/tb_bar"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal" />
+    </com.sunnybear.library.view.select.TitleBar>-->
+    <!--
+        <com.sunnybear.library.view.select.DynamicTitleBar
+            android:id="@+id/tb_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" />
 
-    <View style="@style/line_horizontal"/>-->
-
-    <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-        android:id="@+id/rv_more"
+        <View style="@style/line_horizontal"/>-->
+    <!--下拉刷新-->
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e1ffffff"
-        android:visibility="visible"
-        auto:divider_color="#ebebeb"
-        auto:divider_height="5dp"
-        auto:has_row_divider="true"/>
+        android:layout_above="@+id/ll_comment_edit"
+        android:layout_below="@id/navigation_bar"
+        auto:refresh_layout="@layout/sky_wheel_refresh_header"
+        auto:refresh_layout_height="120">
+
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/rv_more"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e1ffffff"
+            android:visibility="visible"
+            auto:divider_color="#ebebeb"
+            auto:divider_height="5dp"
+            auto:has_row_divider="true"/>
+    </com.sunnybear.library.view.PullToRefreshLayout>
 
 </LinearLayout>

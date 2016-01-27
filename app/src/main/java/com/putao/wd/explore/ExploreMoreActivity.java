@@ -13,6 +13,7 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.comment.EmojiFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -31,6 +32,8 @@ public class ExploreMoreActivity extends PTWDActivity {
 
     //    @Bind(R.id.tb_bar)
 //    DynamicTitleBar tb_bar;
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_more)
     LoadMoreRecyclerView rv_more;
     private int mPage;
@@ -58,12 +61,24 @@ public class ExploreMoreActivity extends PTWDActivity {
         });*/
         adapter = new MoreAdapter(mContext, null);
         rv_more.setAdapter(adapter);
-        initData();
-        addListener();
+        refreshList();
+        refresh();
         addListener();
     }
 
-    private void initData() {
+    /**
+     * 刷新方法
+     */
+    private void refresh() {
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
+    }
+
+    private void refreshList() {
         mPage = 1;
         networkRequest(ExploreApi.getMoreArticleList(mPage),
                 new SimpleFastJsonCallback<HomeExploreMores>(HomeExploreMores.class, loading) {
@@ -76,6 +91,7 @@ public class ExploreMoreActivity extends PTWDActivity {
                         else if (result.getTotal_page() == 1)
                             rv_more.noMoreLoading();
                         loading.dismiss();
+                        ptl_refresh.refreshComplete();
                     }
                 });
     }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="15dp"
+              android:id="@+id/ll_more"
+              android:paddingRight="15dp">
 
     <!--<com.sunnybear.library.view.recycler.BasicRecyclerView
         android:id="@+id/rv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />-->
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -52,5 +53,20 @@
             android:layout_weight="1"
             android:src="@drawable/img_explore_more_title_03" />
 
-    </LinearLayout>
+    </LinearLayout>-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@drawable/img_explore_more_cover"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:background="@color/white"
+        android:src="@drawable/img_explore_more_title"
+        />
+
 </LinearLayout>

@@ -22,12 +22,12 @@ public class ExploreMoreFragment extends BasicFragment {
 
 //  @Bind(R.id.rv_content)
 //  BasicRecyclerView rv_content;
-    @Bind(R.id.iv_said)
-    ImageView iv_said;
-    @Bind(R.id.iv_play)
-    ImageView iv_play;
-    @Bind(R.id.iv_plus)
-    ImageView iv_plus;
+//    @Bind(R.id.iv_said)
+//    ImageView iv_said;
+//    @Bind(R.id.iv_play)
+//    ImageView iv_play;
+//    @Bind(R.id.iv_plus)
+//    ImageView iv_plus;
 
 //    private ExploreMoreAdapter adapter;
 
@@ -55,20 +55,20 @@ public class ExploreMoreFragment extends BasicFragment {
 //            }
 //        });
 //    }
+//
+//
+//    private List<HomeExplore> getTest() {
+//        List<HomeExplore> list = new ArrayList<>();
+//        HomeExplore homeExplore = null;
+//        for (int i = 0; i < 3; i++) {
+//            homeExplore = new HomeExplore();
+//            homeExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
+//            list.add(homeExplore);
+//        }
+//        return list;
+//    }
 
-
-    private List<HomeExplore> getTest() {
-        List<HomeExplore> list = new ArrayList<>();
-        HomeExplore homeExplore = null;
-        for (int i = 0; i < 3; i++) {
-            homeExplore = new HomeExplore();
-            homeExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
-            list.add(homeExplore);
-        }
-        return list;
-    }
-
-    @OnClick({R.id.iv_said, R.id.iv_play, R.id.iv_plus})
+    @OnClick({R.id.ll_more})
     public void onClick(View v){
         Bundle bundle = new Bundle();
         switch (v.getId()) {

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -59,6 +60,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     private List<DiaryApp> mDiaryApps;
     private RelativeLayout.LayoutParams mRight2LayoutParams;
     private RelativeLayout.LayoutParams mSmartLayoutParams;
+    private boolean isLoginChange = false;
 
     @Override
     protected int getLayoutId() {
@@ -129,7 +131,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.iv_smart){
+        if (v.getId() == R.id.iv_smart) {
             startActivity(SmartActivity.class);
             getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_out_from_down);
             return;
@@ -179,9 +181,11 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         super.onStart();
         mRight2LayoutParams = (RelativeLayout.LayoutParams) iv_title_bar_right2.getLayoutParams();
         mSmartLayoutParams = (RelativeLayout.LayoutParams) iv_smart.getLayoutParams();
-        empty();
         addClickListener();
-        if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+        if (isLoginChange && !AccountHelper.isLogin()) empty();
+
+        if (!IndexActivity.isNotRefreshUserInfo && !isLoginChange && AccountHelper.isLogin()) {
+            isLoginChange = AccountHelper.isLogin();
             mProductsAdapter = new ProductsAdapter(mActivity, null);
             rv_products.setAdapter(mProductsAdapter);
             checkDevices();
@@ -190,6 +194,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
             iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
             iv_user_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
         }
+        isLoginChange = AccountHelper.isLogin();
     }
 
     @Override

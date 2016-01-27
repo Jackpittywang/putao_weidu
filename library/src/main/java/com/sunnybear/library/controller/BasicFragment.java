@@ -5,6 +5,7 @@ import android.app.Service;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BasicFragment<App extends BasicApplication> extends Fragment {
     private View mFragmentView = null;
-    protected BasicFragmentActivity mActivity;
+    protected FragmentActivity mActivity;
 
     //fragment管理器
     protected FragmentManager mFragmentManager;
@@ -76,10 +77,11 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = (BasicFragmentActivity) activity;
+        mActivity = (FragmentActivity) activity;
         mApp = (App) mActivity.getApplication();
         mOkHttpClient = BasicApplication.getOkHttpClient();
-        this.loading = mActivity.loading;
+        this.loading = LoadingHUD.getInstance(activity);
+        loading.setSpinnerType(LoadingHUD.SIMPLE_ROUND_SPINNER);
         mDiskFileCacheHelper = mApp.getDiskFileCacheHelper();
 
         mFragmentManager = mActivity.getSupportFragmentManager();
@@ -165,9 +167,9 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param callback     请求回调(建议使用SimpleFastJsonCallback)
      * @param interceptors 网络拦截器组
      */
-    protected void networkRequest(Request request, int cacheType, RequestCallback callback, List<Interceptor> interceptors) {
+   /* protected void networkRequest(Request request, int cacheType, RequestCallback callback, List<Interceptor> interceptors) {
         mActivity.networkRequest(request, cacheType, callback, interceptors);
-    }
+    }*/
 
     /**
      * 网络请求
@@ -177,9 +179,9 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param callback    请求回调(建议使用SimpleFastJsonCallback)
      * @param interceptor 网络拦截器
      */
-    protected void networkRequest(Request request, int cacheType, RequestCallback callback, Interceptor interceptor) {
+/*    protected void networkRequest(Request request, int cacheType, RequestCallback callback, Interceptor interceptor) {
         mActivity.networkRequest(request, cacheType, callback, interceptor);
-    }
+    }*/
 
     /**
      * 网络请求
@@ -188,9 +190,9 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param cacheType 缓存策略
      * @param callback  请求回调(建议使用SimpleFastJsonCallback)
      */
-    protected void networkRequest(Request request, int cacheType, RequestCallback callback) {
+/*    protected void networkRequest(Request request, int cacheType, RequestCallback callback) {
         mActivity.networkRequest(request, cacheType, callback);
-    }
+    }*/
 
     /**
      * 网络请求
@@ -198,9 +200,9 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param request  request主体
      * @param callback 请求回调(建议使用SimpleFastJsonCallback)
      */
-    protected void networkRequest(Request request, RequestCallback callback) {
+/*    protected void networkRequest(Request request, RequestCallback callback) {
         mActivity.networkRequest(request, -1, callback);
-    }
+    }*/
 
     /**
      * 缓存数据
@@ -257,7 +259,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param targetClass 目标Activity类型
      */
     protected void startActivity(Class<? extends Activity> targetClass) {
-        mActivity.startActivity(targetClass);
+        ((BasicFragmentActivity)mActivity).startActivity(targetClass);
     }
 
     /**
@@ -267,7 +269,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param args        传递参数
      */
     public void startActivity(Class<? extends Activity> targetClass, Bundle args) {
-        mActivity.startActivity(targetClass, args);
+        ((BasicFragmentActivity)mActivity).startActivity(targetClass, args);
     }
 
     /**
@@ -276,7 +278,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param action 隐式动作
      */
     public void startActivity(String action) {
-        mActivity.startActivity(action);
+        ((BasicFragmentActivity)mActivity).startActivity(action);
     }
 
     /**
@@ -285,7 +287,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param action 隐式动作
      */
     public void startActivity(String action, Bundle args) {
-        mActivity.startActivity(action, args);
+        ((BasicFragmentActivity)mActivity).startActivity(action, args);
     }
 
     /**
@@ -294,9 +296,9 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param targetClass 目标Service类型
      * @param args        传递参数
      */
-    public void startService(Class<? extends Service> targetClass, Bundle args) {
+/*    public void startService(Class<? extends Service> targetClass, Bundle args) {
         mActivity.startActivity(targetClass, args);
-    }
+    }*/
 
     /**
      * 启动目标Service
@@ -304,7 +306,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param targetClass 目标Service类型
      */
     public void startService(Class<? extends Service> targetClass) {
-        mActivity.startService(targetClass);
+        ((BasicFragmentActivity)mActivity).startService(targetClass);
     }
 
     /**
@@ -312,18 +314,18 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      *
      * @param action 隐式动作
      */
-    public void startService(String action) {
+/*    public void startService(String action) {
         mActivity.startService(action);
-    }
+    }*/
 
     /**
      * 隐式跳转目标Service
      *
      * @param action 隐式动作
      */
-    protected void startService(String action, Bundle args) {
+/*    protected void startService(String action, Bundle args) {
         mActivity.startService(action, args);
-    }
+    }*/
 
     /**
      * 切换Fragment

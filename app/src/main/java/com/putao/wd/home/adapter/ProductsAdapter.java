@@ -3,12 +3,13 @@ package com.putao.wd.home.adapter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.DiaryApp;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 
 import java.util.List;
 
@@ -37,13 +38,17 @@ public class ProductsAdapter extends BasicAdapter<DiaryApp, ProductsAdapter.Prod
 
     @Override
     public void onBindItem(ProductsAdapter.ProductsViewHolder holder, DiaryApp diaryApp, int position) {
-        if (!TextUtils.isEmpty(diaryApp.getProduct_icon()))
+        if (!TextUtils.isEmpty(diaryApp.getProduct_icon())) {
             holder.iv_product.setImageURL(diaryApp.getProduct_icon());
+            holder.tv_product.setText(diaryApp.getProduct_name());
+        }
     }
 
     static class ProductsViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_product)
         ImageDraweeView iv_product;
+        @Bind(R.id.tv_product)
+        TextView tv_product;
 
         public ProductsViewHolder(View itemView) {
             super(itemView);

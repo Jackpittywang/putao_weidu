@@ -1,5 +1,6 @@
 package com.putao.wd.explore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,6 +19,7 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.video.VideoPlayerActivity;
+import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
@@ -31,7 +33,7 @@ import butterknife.OnClick;
  * 探索--详情
  * Created by yanghx on 2016/1/13.
  */
-public class ExploreDetailFragment extends BasicFragment implements View.OnClickListener{
+public class ExploreDetailFragment extends BasicFragment implements View.OnClickListener {
 
     @Bind(R.id.iv_top)
     ImageDraweeView iv_top;
@@ -43,6 +45,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     BasicWebView wb_explore_detail;
     @Bind(R.id.iv_close)
     ImageView iv_close;
+    @Bind(R.id.tv_count_cool)
+    TextView tv_count_cool;
     @Bind(R.id.ll_cool)
     LinearLayout ll_cool;
     @Bind(R.id.sb_cool_icon)
@@ -55,7 +59,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ExploreIndex mExploreIndex;
     private boolean isCool;//是否赞过
-    public final static  String COOL = "Cool";//是否赞过
+    public final static String COOL = "Cool";//是否赞过
 
     @Override
     protected int getLayoutId() {
@@ -66,9 +70,10 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA_PAGE);
         mSharePopupWindow = new SharePopupWindow(getActivity());
-        isCool = null!=mDiskFileCacheHelper.getAsString(COOL+mExploreIndex.getArticle_id());
+        isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
-       wb_explore_detail.setInitialScale(80);
+        wb_explore_detail.setInitialScale(80);
+        tv_count_cool.setText(mExploreIndex.getCount_likes()+"");
 
         WebSettings webSettings = wb_explore_detail.getSettings();
         webSettings.setMinimumFontSize(64);
@@ -113,24 +118,25 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
-            case R.id.iv_player :
+            case R.id.iv_player:
                 bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, "hafohfoafoa");
-                startActivity(VideoPlayerActivity.class, bundle);
+                startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
-            case R.id.iv_close :
+            case R.id.iv_close:
                 mActivity.finish();
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_top);
                 break;
-            case R.id.ll_cool :
+            case R.id.ll_cool:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");
                 Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
                 if (isCool) break;
+                tv_count_cool.setText(mExploreIndex.getCount_likes()+1+"");
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                mDiskFileCacheHelper.put(COOL+mExploreIndex.getArticle_id(),true);
+                                mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
                                 isCool = true;
                                 loading.dismiss();
                                 sb_cool_icon.setState(true);
@@ -138,13 +144,21 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                         });
 //                startActivity(PraiseListActivity.class, bundle);
                 break;
-            case R.id.ll_comment :
+            case R.id.ll_comment:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 startActivity(CommentActivity.class, bundle);
                 break;
-            case R.id.ll_share :
+            case R.id.ll_share:
                 mSharePopupWindow.show(ll_share);
                 break;
         }
+    }
+
+    @Override
+    public void startActivity(Class targetClass, Bundle args) {
+        Intent intent = new Intent(getActivity(), targetClass);
+        if (args != null)
+            intent.putExtras(args);
+        startActivity(intent);
     }
 }

@@ -20,6 +20,7 @@ import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.companion.AttentionSuccessActivity;
+import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
