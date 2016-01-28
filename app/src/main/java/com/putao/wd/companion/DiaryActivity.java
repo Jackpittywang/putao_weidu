@@ -17,6 +17,7 @@ import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class DiaryActivity extends PTWDActivity {
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ll_date_empty)
     LinearLayout ll_date_empty;
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
 
     public static String DIARY_APP = "diary_app";
 
@@ -39,6 +42,7 @@ public class DiaryActivity extends PTWDActivity {
     private DiaryApp mDiaryApp;
 
     private SharePopupWindow mSharePopupWindow;
+    private int mPage;
 
 
     @Override
@@ -49,6 +53,7 @@ public class DiaryActivity extends PTWDActivity {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        addListener();
         mDiaryApp = (DiaryApp) args.getSerializable(DIARY_APP);
         navigation_bar.setMainTitle(mDiaryApp.getProduct_name());
         adapter = new ExploreAdapter(mContext, null);
@@ -68,6 +73,37 @@ public class DiaryActivity extends PTWDActivity {
         getDiaryIndex();
     }
 
+    private void addListener() {
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                networkRequest(ExploreApi.getDiaryData(String.valueOf(mDiaryApp.getProduct_id()), mPage),
+                        new SimpleFastJsonCallback<Diarys>(Diarys.class, loading) {
+                            @Override
+                            public void onSuccess(String url, Diarys result) {
+                                if (result != null && result.getData().size() > 0)
+                                    adapter.addAll(result.getData());
+                                rv_content.loadMoreComplete();
+                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                                loading.dismiss();
+                            }
+                        });
+            }
+        });
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDiaryIndex();
+            }
+        });
+    }
+
+    private void checkLoadMoreComplete(int currentPage, int totalPage) {
+        if (currentPage == totalPage)
+            rv_content.noMoreLoading();
+        else mPage++;
+    }
+
 
     @Override
     protected String[] getRequestUrls() {
@@ -78,18 +114,21 @@ public class DiaryActivity extends PTWDActivity {
      * 获取陪伴成长日志
      */
     private void getDiaryIndex() {
-        networkRequest(ExploreApi.getDiaryData(String.valueOf(mDiaryApp.getProduct_id())),
+        mPage = 1;
+        networkRequest(ExploreApi.getDiaryData(String.valueOf(mDiaryApp.getProduct_id()), mPage),
                 new SimpleFastJsonCallback<Diarys>(Diarys.class, loading) {
                     @Override
                     public void onSuccess(String url, Diarys result) {
-                        if (result != null && result.getData().size()> 0) {
-                            adapter.addAll(result.getData());
+                        if (result != null && result.getData().size() > 0) {
+                            adapter.replaceAll(result.getData());
                             ll_date_empty.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                         } else {
                             ll_date_empty.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
                         }
+                        ptl_refresh.refreshComplete();
+                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
                         loading.dismiss();
                     }
                 });

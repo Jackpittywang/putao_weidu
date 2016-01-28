@@ -28,7 +28,9 @@ import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -50,6 +52,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
 //    private final int TYPE_PICTURE_NINE = 9;
     private final String DATE_PATTERN = "yyyy/MM/dd";
     private List<String> mDate;
+    private Map<Integer, Boolean> mIsShowDate;
     SimpleDateFormat mSdf;
 //    private List<SpannableStringBuilder> builders = new ArrayList<>();
 
@@ -59,6 +62,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
 
     public ExploreAdapter(Context context, List<Diary> diary) {
         super(context, diary);
+        mIsShowDate = new HashMap<>();
         mDate = new ArrayList<>();
         mSdf = new SimpleDateFormat(DATE_PATTERN);
     }
@@ -111,17 +115,18 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         DiaryBasicViewHolder basicHolder = (DiaryBasicViewHolder) holder;
         boolean isNewDate = true;
         String format = DateUtils.secondToDate(diary.getCreate_time(), DATE_PATTERN);
-        for (String date : mDate) {
-            if (date.equals(format)) {
+        if (!mIsShowDate.containsKey(position)) {
+            if (mDate.contains(format)) {
                 isNewDate = false;
-                break;
+                mIsShowDate.put(position, false);
+            }
+            if (isNewDate) {
+                mDate.add(format);
+                mIsShowDate.put(position, true);
             }
         }
-        if (isNewDate) {
-            mDate.add(format);
-            basicHolder.ll_date.setVisibility(View.VISIBLE);
-            basicHolder.tv_date.setText(format);
-        }
+        basicHolder.ll_date.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
+        basicHolder.tv_date.setText(format);
         basicHolder.tv_sign.setText(diary.getTag_name());
         basicHolder.tv_device.setText(diary.getDevice_name());
         DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);

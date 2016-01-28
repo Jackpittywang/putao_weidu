@@ -18,7 +18,7 @@ public class FancyDetailActivity extends CreateBasicDetailActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         super.onViewCreatedFinish(saveInstanceState);
-        wv_content.loadUrl("http://wap.baidu.com");
+
     }
 
     @Override

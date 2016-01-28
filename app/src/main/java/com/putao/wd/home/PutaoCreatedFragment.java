@@ -43,7 +43,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
         Logger.d("PutaoCreatedFragment启动");
         addFragments();
         rg_create.setOnCheckedChangeListener(this);
-        vp_content.setCurrentItem(0, false);
+        vp_content.setCurrentItem(1, false);
         vp_content.setOffscreenPageLimit(3);
     }
 

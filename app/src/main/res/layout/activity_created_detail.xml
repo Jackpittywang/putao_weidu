@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -12,7 +12,7 @@
         android:background="@color/white"
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="创造详情" />
+        auto:nav_main_title="创造详情"/>
 
     <!--底部操作栏-->
     <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_height="16dp"
                 auto:isSelect="false"
                 auto:norDrawable="@drawable/icon_16_16"
-                auto:selDrawable="@drawable/icon_16_17" />
+                auto:selDrawable="@drawable/icon_16_17"/>
 
             <TextView
                 android:id="@+id/tv_count_cool"
@@ -47,14 +47,14 @@
                 android:layout_marginLeft="8dp"
                 android:text="关注"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="22dp"
-            android:background="@color/divider_color" />
+            android:background="@color/divider_color"/>
 
         <LinearLayout
             android:id="@+id/ll_comment"
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/btn_comment" />
+                android:src="@drawable/btn_comment"/>
 
             <TextView
                 android:id="@+id/tv_count_comment"
@@ -76,14 +76,14 @@
                 android:layout_marginLeft="8dp"
                 android:text="评论"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="22dp"
-            android:background="@color/divider_color" />
+            android:background="@color/divider_color"/>
 
         <LinearLayout
             android:id="@+id/ll_share"
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/icon_16_18" />
+                android:src="@drawable/icon_16_18"/>
 
             <TextView
                 android:id="@+id/tv_share"
@@ -105,7 +105,7 @@
                 android:layout_marginLeft="8dp"
                 android:text="分享"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 auto:aspect_ratio="2"
-                auto:default_drawable="@drawable/img_p_cover" />
+                auto:default_drawable="@drawable/img_p_cover"/>
 
             <TextView
                 android:id="@+id/tv_title"
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="和孩子一起打造创作空间"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/iv_user_icon"
@@ -152,7 +152,7 @@
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
-                auto:placeholderImage="@drawable/img_head_default" />
+                auto:placeholderImage="@drawable/img_head_default"/>
 
 
             <TextView
@@ -164,37 +164,48 @@
                 android:layout_marginRight="40dp"
                 android:text="这里显示作者的名字"
                 android:textColor="@color/text_color_gray"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
+            <View
+                android:id="@+id/v_fancy"
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone"
+                android:background="@drawable/img_carve_up_article"/>
 
             <FrameLayout
+                android:id="@+id/fl_progress"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#48cfac" />
+                    android:background="#48cfac"/>
 
                 <View
                     android:id="@+id/v_progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#ebebeb" />
+                    android:background="#ebebeb"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/steps_mask_667h" />
+                    android:background="@drawable/steps_mask_667h"/>
             </FrameLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_step1"
@@ -202,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="创想"
-                    android:textColor="@color/color_C2C2C2" />
+                    android:textColor="@color/color_C2C2C2"/>
 
                 <TextView
                     android:id="@+id/tv_step2"
@@ -212,7 +223,7 @@
                     android:layout_toRightOf="@+id/tv_step1"
                     android:gravity="center_horizontal"
                     android:text="采用"
-                    android:textColor="@color/color_C2C2C2" />
+                    android:textColor="@color/color_C2C2C2"/>
 
                 <TextView
                     android:id="@+id/tv_step3"
@@ -221,7 +232,7 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal"
                     android:text="研发"
-                    android:textColor="@color/color_C2C2C2" />
+                    android:textColor="@color/color_C2C2C2"/>
 
                 <TextView
                     android:id="@+id/tv_step4"
@@ -231,7 +242,7 @@
                     android:layout_toRightOf="@+id/tv_step3"
                     android:gravity="center_horizontal"
                     android:text="体验"
-                    android:textColor="@color/color_C2C2C2" />
+                    android:textColor="@color/color_C2C2C2"/>
 
                 <TextView
                     android:id="@+id/tv_step5"
@@ -240,14 +251,14 @@
                     android:layout_alignParentRight="true"
                     android:gravity="right"
                     android:text="发行"
-                    android:textColor="@color/color_C2C2C2" />
+                    android:textColor="@color/color_C2C2C2"/>
             </RelativeLayout>
 
 
             <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wv_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </com.sunnybear.library.view.scroll.SupportScrollView>
 
@@ -255,7 +266,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/ll_bottom"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color"/>
 
     <!--悬浮按钮-->
     <RelativeLayout
@@ -283,7 +294,7 @@
                 android:text="支持"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12sp"
-                auto:background_color="#48CFAE" />
+                auto:background_color="#48CFAE"/>
 
             <com.sunnybear.library.view.CircleTextView
                 android:id="@+id/tv_support_result"
@@ -296,7 +307,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12sp"
                 android:visibility="gone"
-                auto:background_color="@color/divider_color" />
+                auto:background_color="@color/divider_color"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -316,7 +327,7 @@
                 android:text="无感"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12sp"
-                auto:background_color="#ED5564" />
+                auto:background_color="#ED5564"/>
 
             <com.sunnybear.library.view.CircleTextView
                 android:id="@+id/tv_no_support_result"
@@ -329,7 +340,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12sp"
                 android:visibility="gone"
-                auto:background_color="@color/divider_color" />
+                auto:background_color="@color/divider_color"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

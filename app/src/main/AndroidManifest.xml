@@ -306,6 +306,10 @@
         <activity
             android:name=".me.attention.ConcernsActivity"
             android:screenOrientation="portrait" />
+        <!--创造奇思妙想详情-->
+        <activity
+            android:name=".created.CreateBasicDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->

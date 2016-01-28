@@ -195,9 +195,10 @@ public class ExploreApi {
     /**
      * 查询对应游戏下的陪伴数据
      */
-    public static Request getDiaryData(String productId) {
+    public static Request getDiaryData(String productId,int page) {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_PRODUCT_ID, productId)
+                .addParam(REQUEST_PAGE, page+"")
                 .build(RequestMethod.POST, URL_DIARY_DATA);
     }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fl_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+<FrameLayout android:id="@+id/fl_main"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:auto="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,17 +19,28 @@
             auto:nav_has_divider="true"
             auto:nav_left_icon="@drawable/btn_20_back_p_nor"
             auto:nav_main_title="葡萄陪伴成长记"
-            auto:nav_main_title_color="@color/white" />
+            auto:nav_main_title_color="@color/white"/>
 
-        <!-- 有数据 -->
-        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/rv_content"
+
+        <!--下拉刷新-->
+        <com.sunnybear.library.view.PullToRefreshLayout
+            android:id="@+id/ptl_refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            auto:divider_color="@color/divider_color"
-            auto:divider_height="1px"
-            auto:has_row_divider="true" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_comment_edit"
+            android:layout_below="@id/navigation_bar"
+            auto:refresh_layout="@layout/sky_wheel_refresh_header"
+            auto:refresh_layout_height="120">
+            <!-- 有数据 -->
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"/>
+        </com.sunnybear.library.view.PullToRefreshLayout>
 
         <LinearLayout
             android:id="@+id/ll_date_empty"
@@ -42,13 +53,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_explore_nodata" />
+                android:src="@drawable/img_explore_nodata"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="孩子还没有成长记数据" />
+                android:text="孩子还没有成长记数据"/>
 
         </LinearLayout>
 

@@ -2,27 +2,56 @@ package com.putao.wd.created;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
+import com.putao.wd.api.CreateApi;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Create;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.CircleTextView;
+import com.sunnybear.library.view.SwitchButton;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 创造详情的父类
  * Created by zhanghao on 2016/1/15.
  */
-public abstract class CreateBasicDetailActivity extends PTWDActivity implements View.OnClickListener {
+public class CreateBasicDetailActivity extends PTWDActivity implements View.OnClickListener {
 
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
+    @Bind(R.id.iv_sign)
+    ImageDraweeView iv_sign;
+    @Bind(R.id.iv_user_icon)
+    ImageDraweeView iv_user_icon;
+    @Bind(R.id.fl_progress)
+    FrameLayout fl_progress;
+    @Bind(R.id.rl_progress)
+    RelativeLayout rl_progress;
+    @Bind(R.id.tv_title)
+    TextView tv_title;
+    @Bind(R.id.v_fancy)
+    View v_fancy;
+    @Bind(R.id.tv_digest)
+    TextView tv_digest;
     @Bind(R.id.rl_btn)
     RelativeLayout rl_btn;
     @Bind(R.id.rl_support)
@@ -39,11 +68,42 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
     CircleTextView tv_no_support_result;
     @Bind(R.id.sv_detail)
     SupportScrollView sv_detail;
+    @Bind(R.id.v_progress)
+    View v_progress;
+    @Bind(R.id.tv_step1)
+    TextView tv_step1;
+    @Bind(R.id.tv_step2)
+    TextView tv_step2;
+    @Bind(R.id.tv_step3)
+    TextView tv_step3;
+    @Bind(R.id.tv_step4)
+    TextView tv_step4;
+    @Bind(R.id.tv_step5)
+    TextView tv_step5;
+    @Bind(R.id.ll_cool)
+    LinearLayout ll_cool;
+    @Bind(R.id.sb_cool_icon)
+    SwitchButton sb_cool_icon;
+
+    private int mSpace;
+    private int mMargin;
+    private int mTextWidth;
+    private Handler mHandler;
+    private int mTime = 1000;
+    public static final String CREATE = "CREATE";
+    public static final String SHOW_PROGRESS = "show_progress";
+    private Create mCreate;
+    private boolean isShowProgress;
 
     private int mWidthPixels;
     private boolean btnState = false;
     private ObjectAnimator showAnim;
     private ObjectAnimator hindAnim;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_created_detail;
+    }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
@@ -52,6 +112,31 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
         mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
         rl_support.setClickable(false);
         rl_no_support.setClickable(false);
+        mCreate = (Create) args.getSerializable(CREATE);
+        isShowProgress = args.getBoolean(SHOW_PROGRESS);
+        initView();
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+
+    private void initView() {
+        sb_cool_icon.setState(mCreate.getFollow_status() == 1 ? true : false);
+        sb_cool_icon.setClickable(false);
+        iv_sign.setImageURL(mCreate.getCover());
+        tv_title.setText(mCreate.getTitle());
+        iv_user_icon.setImageURL(mCreate.getAvatar());
+        tv_digest.setText(mCreate.getNickname());
+        wv_content.loadDataWithBaseURL("about:blank", mCreate.getContent(), "text/html", "utf-8", null);
+        if (isShowProgress) {
+            initProgress();
+            fl_progress.setVisibility(View.VISIBLE);
+            rl_progress.setVisibility(View.VISIBLE);
+        } else {
+            v_fancy.setVisibility(View.VISIBLE);
+        }
     }
 
     private void addListener() {
@@ -75,6 +160,7 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
         });
         rl_support.setOnClickListener(this);
         rl_no_support.setOnClickListener(this);
+        ll_cool.setOnClickListener(this);
     }
 
     /**
@@ -98,6 +184,7 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
     }
 
     @Override
+    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool})
     public void onClick(final View v) {
         if (R.id.rl_support == v.getId() || R.id.rl_no_support == v.getId()) {
             v.setEnabled(false);
@@ -122,6 +209,23 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
             supportOfFloat.setDuration(1000);
             supportOfFloat.start();
         }
+        switch (v.getId()) {
+            case R.id.ll_cool:
+                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
+                sb_cool_icon.startAnimation(anim);
+                if (mCreate.getFollow_status() == 1)
+                    break;
+                sb_cool_icon.setState(true);
+                networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                mCreate.setFollow_status(1);
+                                ToastUtils.showToastShort(mContext, "关注成功！");
+                            }
+                        });
+
+        }
     }
 
     private void showView(View view) {
@@ -134,5 +238,95 @@ public abstract class CreateBasicDetailActivity extends PTWDActivity implements 
         hindAnim = ObjectAnimator.ofFloat(view, "alpha", 0.9f, 0);
         hindAnim.setDuration(1000);
         hindAnim.start();
+    }
+
+
+    private void initProgress() {
+        //文字左边margin px值
+        mMargin = DensityUtil.dp2px(mContext, 15);
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mTextWidth = tv_step1.getWidth();
+                mSpace = (tv_step2.getWidth() - mTextWidth) / 4;
+                startAnim(mCreate.getSchedule_curr());
+            }
+        }, 200);
+    }
+
+    private int addMargin(int pointX) {
+        return pointX + mMargin;
+    }
+
+    /**
+     * 设置进度条动画
+     *
+     * @param step
+     */
+    private void startAnim(int step) {
+        ObjectAnimator ofFloat = null;
+        switch (step) {
+            case 1:
+                setStepText(tv_step1, 1);
+                ofFloat = ObjectAnimator.ofFloat(v_progress,
+                        "translationX",
+                        addMargin(tv_step1.getLeft()), addMargin(tv_step1.getRight()), addMargin(tv_step1.getRight() + mSpace));
+                break;
+            case 2:
+                setStepText(tv_step1, 1);
+                setStepText(tv_step2, 2);
+                ofFloat = ObjectAnimator.ofFloat(v_progress,
+                        "translationX",
+                        addMargin(tv_step1.getLeft()), addMargin(tv_step1.getRight()), addMargin(tv_step2.getLeft() + 2 * mSpace), addMargin(tv_step2.getRight() - 2 * mSpace), addMargin(tv_step2.getRight() - mSpace));
+                break;
+            case 3:
+                setStepText(tv_step1, 1);
+                setStepText(tv_step2, 2);
+                setStepText(tv_step3, 3);
+                ofFloat = ObjectAnimator.ofFloat(v_progress,
+                        "translationX",
+                        addMargin(tv_step1.getLeft()), addMargin(tv_step1.getRight()), addMargin(tv_step2.getLeft() + 2 * mSpace), addMargin(tv_step2.getRight() - 2 * mSpace), addMargin(tv_step2.getRight()),
+                        addMargin(tv_step3.getRight()), addMargin(tv_step4.getLeft() + mSpace));
+                break;
+            case 4:
+                setStepText(tv_step1, 1);
+                setStepText(tv_step2, 2);
+                setStepText(tv_step3, 3);
+                setStepText(tv_step4, 4);
+                ofFloat = ObjectAnimator.ofFloat(v_progress,
+                        "translationX",
+                        addMargin(tv_step1.getLeft()), addMargin(tv_step1.getRight()), addMargin(tv_step2.getLeft() + 2 * mSpace), addMargin(tv_step2.getRight() - 2 * mSpace), addMargin(tv_step2.getRight()),
+                        addMargin(tv_step3.getRight()), addMargin(tv_step4.getLeft() + 2 * mSpace), addMargin(tv_step4.getRight() - 2 * mSpace), addMargin(tv_step4.getRight() - mSpace));
+                break;
+            case 5:
+                setStepText(tv_step1, 1);
+                setStepText(tv_step2, 2);
+                setStepText(tv_step3, 3);
+                setStepText(tv_step4, 4);
+                setStepText(tv_step5, 5);
+                ofFloat = ObjectAnimator.ofFloat(v_progress,
+                        "translationX",
+                        addMargin(tv_step1.getLeft()), addMargin(tv_step1.getRight()), addMargin(tv_step2.getLeft() + 2 * mSpace), addMargin(tv_step2.getRight() - 2 * mSpace), addMargin(tv_step2.getRight()),
+                        addMargin(tv_step3.getRight()), addMargin(tv_step4.getLeft() + 2 * mSpace), addMargin(tv_step4.getRight() - 2 * mSpace), addMargin(tv_step4.getRight()), addMargin(tv_step5.getRight()));
+                break;
+        }
+        ofFloat.setDuration(mTime * step);
+        ofFloat.start();
+    }
+
+    /**
+     * 设置文字进度变化
+     *
+     * @param tv
+     * @param step
+     */
+    private void setStepText(final TextView tv, int step) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tv.setTextColor(0xff48cfae);
+            }
+        }, step * (mTime - 250));
     }
 }

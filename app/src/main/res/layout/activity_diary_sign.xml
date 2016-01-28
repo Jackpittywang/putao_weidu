@@ -49,7 +49,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/distance_8dp"
         android:layout_marginRight="@dimen/distance_8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/marketing_sign_shape"
         android:padding="5dp"
         android:text="家长挑战"

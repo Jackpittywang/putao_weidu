@@ -19,6 +19,7 @@ import butterknife.Bind;
  * 奇思妙想
  * Created by zhanghao on 2016/1/25.
  */
+@Deprecated
 public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener {
     @Bind(R.id.rv_fancy)
     LoadMoreRecyclerView rv_fancy;
@@ -36,9 +37,6 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         mFancyAdapter = new FancyAdapter(mContext, null);
-        mFancyAdapter.add(new Marketing());
-        mFancyAdapter.add(new Marketing());
-        mFancyAdapter.add(new Marketing());
         rv_fancy.noMoreLoading();
         rv_fancy.setAdapter(mFancyAdapter);
         addListener();
@@ -58,9 +56,6 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     @Override
     public void onRefresh() {
         mFancyAdapter.clear();
-        mFancyAdapter.add(new Marketing());
-        mFancyAdapter.add(new Marketing());
-        mFancyAdapter.add(new Marketing());
         ptl_refresh.refreshComplete();
     }
 
