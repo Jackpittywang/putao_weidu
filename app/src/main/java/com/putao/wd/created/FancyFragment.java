@@ -87,7 +87,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
 
     @Override
     public void onLoadMore() {
-        networkRequest(CreateApi.getCreateList(mPage, mPage),
+        networkRequest(CreateApi.getCreateList(2, mPage),
                 new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
                     @Override
                     public void onSuccess(String url, Creates result) {

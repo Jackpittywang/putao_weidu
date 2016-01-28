@@ -64,9 +64,8 @@ public class CreateApi {
      * 我的关注
      * @param page 页数
      */
-    public static Request getCreateMyfollows(int type, int page) {
+    public static Request getCreateMyfollows(int page) {
         return PTWDRequestHelper.start()
-                .addParam(TYPE, type + "")
                 .addParam(REQUEST_PAGE, page + "")
                 .build(RequestMethod.POST, URL_CREATE_MYFOLLOWS);
     }
@@ -83,6 +82,6 @@ public class CreateApi {
         return PTWDRequestHelper.start()
                 .addParam(ID, id)
                 .addParam(ACTION, action+"")
-                .build(RequestMethod.POST, URL_CREATE_MYFOLLOWS);
+                .build(RequestMethod.POST, URL_CREATE_ACTION);
     }
 }

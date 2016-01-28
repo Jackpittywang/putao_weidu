@@ -18,6 +18,7 @@ import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
+import com.sunnybear.library.view.SmallBang;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class DiaryActivity extends PTWDActivity {
 
     private ExploreAdapter adapter;
     private DiaryApp mDiaryApp;
-
+    private SmallBang smallBang;
     private SharePopupWindow mSharePopupWindow;
     private int mPage;
 
@@ -56,7 +57,7 @@ public class DiaryActivity extends PTWDActivity {
         addListener();
         mDiaryApp = (DiaryApp) args.getSerializable(DIARY_APP);
         navigation_bar.setMainTitle(mDiaryApp.getProduct_name());
-        adapter = new ExploreAdapter(mContext, null);
+        adapter = new ExploreAdapter(this, null);
         rv_content.setAdapter(adapter);
         mSharePopupWindow = new SharePopupWindow(mContext);
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {

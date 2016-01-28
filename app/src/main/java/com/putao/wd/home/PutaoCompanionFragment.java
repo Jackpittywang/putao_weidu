@@ -38,7 +38,7 @@ import butterknife.Bind;
  * 陪伴
  * Created by guchenkai on 2016/1/13.
  */
-public class PutaoCompanionFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener {
+public class PutaoCompanionFragment extends BasicFragment implements View.OnClickListener, OnItemClickListener<DiaryApp> {
     @Bind(R.id.iv_title_bar_right1)
     ImageView iv_title_bar_right1;
     @Bind(R.id.iv_title_bar_right2)
@@ -198,11 +198,9 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     }
 
     @Override
-    public void onItemClick(Serializable serializable, int position) {
-        if (mDiaryApps.size() > position) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(DiaryActivity.DIARY_APP, mDiaryApps.get(position));
-            startActivity(DiaryActivity.class, bundle);
-        }
+    public void onItemClick(DiaryApp diaryApp, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DiaryActivity.DIARY_APP, diaryApp);
+        startActivity(DiaryActivity.class, bundle);
     }
 }

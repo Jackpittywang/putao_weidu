@@ -3,10 +3,16 @@ package com.putao.wd.me.attention;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.api.CreateApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.FancyDetailActivity;
 import com.putao.wd.created.adapter.FancyAdapter;
+import com.putao.wd.model.Create;
+import com.putao.wd.model.Creates;
 import com.putao.wd.model.Marketing;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -19,33 +25,53 @@ import butterknife.Bind;
  * 奇思妙想
  * Created by zhanghao on 2016/1/25.
  */
-@Deprecated
-public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener {
-    @Bind(R.id.rv_fancy)
-    LoadMoreRecyclerView rv_fancy;
+public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create> {
+    @Bind(R.id.rv_created)
+    LoadMoreRecyclerView rv_created;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
 
-    private FancyAdapter mFancyAdapter;
+    private FancyAdapter adapter;
+    private int mPage;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_concerns;
+        return R.layout.fragment_fancy;
     }
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
-        mFancyAdapter = new FancyAdapter(mContext, null);
-        rv_fancy.noMoreLoading();
-        rv_fancy.setAdapter(mFancyAdapter);
-        addListener();
+        Logger.d("PutaoCreatedFragment启动");
+        adapter = new FancyAdapter(mContext, null);
+        rv_created.setAdapter(adapter);
+        initData();
+        addListenter();
     }
 
-    private void addListener() {
+    private void initData() {
+        mPage = 1;
+        networkRequest(CreateApi.getCreateList(2, mPage),
+                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+                    @Override
+                    public void onSuccess(String url, Creates result) {
+                        adapter.replaceAll(result.getData());
+                        ptl_refresh.refreshComplete();
+                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    private void checkLoadMoreComplete(int currentPage, int totalPage) {
+        if (currentPage == totalPage)
+            rv_created.noMoreLoading();
+        else mPage++;
+    }
+
+    private void addListenter() {
+        rv_created.setOnItemClickListener(this);
         ptl_refresh.setOnRefreshListener(this);
-        rv_fancy.setOnLoadMoreListener(this);
-        rv_fancy.setOnItemClickListener(this);
+        rv_created.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -53,19 +79,31 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
         return new String[0];
     }
 
+
     @Override
     public void onRefresh() {
-        mFancyAdapter.clear();
-        ptl_refresh.refreshComplete();
+        initData();
     }
 
     @Override
     public void onLoadMore() {
-        rv_fancy.noMoreLoading();
+        networkRequest(CreateApi.getCreateMyfollows(mPage),
+                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+                    @Override
+                    public void onSuccess(String url, Creates result) {
+                        adapter.addAll(result.getData());
+                        rv_created.loadMoreComplete();
+                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        loading.dismiss();
+                    }
+                });
     }
 
     @Override
-    public void onItemClick(Serializable serializable, int position) {
-        startActivity(FancyDetailActivity.class);
+    public void onItemClick(Create create, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
+        bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, create.getType() == 1 ? true : false);
+        startActivity(CreateBasicDetailActivity.class, bundle);
     }
 }

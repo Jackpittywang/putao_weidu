@@ -17,6 +17,7 @@ import com.putao.wd.api.CreateApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Create;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
@@ -84,6 +85,8 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     LinearLayout ll_cool;
     @Bind(R.id.sb_cool_icon)
     SwitchButton sb_cool_icon;
+    @Bind(R.id.tv_count_cool)
+    TextView tv_count_cool;
 
     private int mSpace;
     private int mMargin;
@@ -197,6 +200,12 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_support_result.setVisibility(View.VISIBLE);
                     showView(tv_support_result);
                     hindView(tv_support);
+                    networkRequest(CreateApi.setCreateAction(mCreate.getId(), 1),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                }
+                            });
                     break;
                 case R.id.rl_no_support:
                     supportOfFloat = ObjectAnimator.ofFloat(rl_no_support, "translationX", 0, -middle);
@@ -204,6 +213,12 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_no_support_result.setVisibility(View.VISIBLE);
                     showView(tv_no_support_result);
                     hindView(tv_no_support);
+                    networkRequest(CreateApi.setCreateAction(mCreate.getId(), 2),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                }
+                            });
                     break;
             }
             supportOfFloat.setDuration(1000);
@@ -221,7 +236,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                             @Override
                             public void onSuccess(String url, String result) {
                                 mCreate.setFollow_status(1);
-                                ToastUtils.showToastShort(mContext, "关注成功！");
+                                tv_count_cool.setText("已关注");
                             }
                         });
 

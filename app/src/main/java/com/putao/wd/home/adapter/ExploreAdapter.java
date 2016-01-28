@@ -1,8 +1,13 @@
 package com.putao.wd.home.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,6 +25,7 @@ import com.putao.wd.model.ExploreProductPlot;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.SmallBang;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -47,6 +53,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     private static final int TYPE_EDUC = 4;//教育理念
     private static final int TYPE_GROW = 5;//孩子成长
 
+    private Animation alphaAnimation;
+    private Animation scaleAnimation;
+    private AnimationSet animationSet;
     //    private final int TYPE_PICTURE_ONE = 1;
 //    private final int TYPE_PICTURE_FOUR = 4;
 //    private final int TYPE_PICTURE_NINE = 9;
@@ -54,6 +63,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     private List<String> mDate;
     private Map<Integer, Boolean> mIsShowDate;
     SimpleDateFormat mSdf;
+    private SmallBang smallBang;
 //    private List<SpannableStringBuilder> builders = new ArrayList<>();
 
     private ExploreDetailAdapter adapter;
@@ -62,9 +72,19 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
 
     public ExploreAdapter(Context context, List<Diary> diary) {
         super(context, diary);
+        smallBang = SmallBang.attach2Window((Activity) context);
         mIsShowDate = new HashMap<>();
         mDate = new ArrayList<>();
         mSdf = new SimpleDateFormat(DATE_PATTERN);
+        scaleAnimation = new ScaleAnimation(3.0f, 1.0f, 3.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(1000);
+        alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setDuration(1000);
+        animationSet = new AnimationSet(true);
+        animationSet.addAnimation(scaleAnimation);
+        animationSet.addAnimation(alphaAnimation);
+        animationSet.setFillAfter(true);
+        animationSet.setFillEnabled(true);
     }
 
     @Override
@@ -110,7 +130,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, final Diary diary, int position) {
+    public void onBindItem(final BasicViewHolder holder, final Diary diary, int position) {
         Logger.i("ExploreProduct === " + diary.toString());
         DiaryBasicViewHolder basicHolder = (DiaryBasicViewHolder) holder;
         boolean isNewDate = true;
@@ -135,7 +155,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
          * 家长挑战
          */
         if (holder instanceof DiaryChallengeViewHolder) {
-            DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
+            final DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
             DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
             viewHolder.tv_title.setText(diary.getAsk());
             if (null != diaryQuestion.getA()) {
@@ -144,7 +164,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.iv_answer1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        smallBang.bang(v);
+                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
                     }
                 });
             }
@@ -155,7 +179,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.iv_answer2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        smallBang.bang(v);
+                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
                     }
                 });
             }
@@ -166,7 +194,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.iv_answer3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        smallBang.bang(v);
+                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
                     }
                 });
             }
@@ -177,7 +209,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.iv_answer4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        smallBang.bang(v);
+                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
                     }
                 });
             }
@@ -290,6 +326,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         TextView tv_answer3;
         @Bind(R.id.tv_answer4)
         TextView tv_answer4;
+        @Bind(R.id.iv_check)
+        ImageView iv_check;
+
 
         public DiaryChallengeViewHolder(View itemView) {
             super(itemView);

@@ -14,6 +14,7 @@ import com.putao.wd.model.Create;
 import com.putao.wd.model.CreateComment;
 import com.putao.wd.model.CreateVote;
 import com.putao.wd.model.Marketing;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -30,7 +31,8 @@ import butterknife.Bind;
  */
 public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateHolder> {
     private Context mContext;
-
+    public final static String COOL = "cool";
+    public final static String NOT_COOL = "not_cool";
     public CreateAdapter(Context context, List<Create> creates) {
         super(context, creates);
         mContext = context;
@@ -51,7 +53,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         holder.iv_sign.setImageURL(create.getCover());
         holder.tv_title.setText(create.getTitle());
         holder.iv_user_icon.setImageURL(create.getAvatar());
-        Map map = JSONObject.parseObject(create.getTag());
+       /* Map map = JSONObject.parseObject(create.getTag());
         if (map != null && map.size() > 0) {
             holder.rl_tag.setVisibility(View.VISIBLE);
             holder.tv_tag1.setText(null == map.get("1") ? "" : map.get("1").toString());
@@ -62,7 +64,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
             holder.tv_tag3.setVisibility(null == map.get("3") ? View.GONE : View.VISIBLE);
             holder.tv_tag4.setVisibility(null == map.get("4") ? View.GONE : View.VISIBLE);
         } else
-            holder.rl_tag.setVisibility(View.GONE);
+            holder.rl_tag.setVisibility(View.GONE);*/
         holder.tv_content.setText(create.getDescrip());
         holder.tv_count_comment.setText(create.getComment().getCount() + "");
         holder.tv_count_cool.setText(create.getVote().getUp() + "");
@@ -70,7 +72,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         holder.sb_cool_icon.setClickable(false);
         holder.sb_not_cool_icon.setClickable(false);
 
-        switch (create.getVote_status()){
+        switch (create.getVote_status()) {
             case 0:
                 holder.tv_count_cool.setTextColor(0xff959595);
                 holder.sb_cool_icon.setState(false);
@@ -94,10 +96,11 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                     return;
                 }
                 create.getVote().setUp(create.getVote().getUp() + 1);
-                holder.tv_count_cool.setText(create.getVote().getUp()+"");
+                holder.tv_count_cool.setText(create.getVote().getUp() + "");
                 holder.tv_count_cool.setTextColor(0xff48cfae);
                 holder.sb_cool_icon.setState(true);
                 create.setVote_status(1);
+                EventBusHelper.post(create.getId(),COOL);
             }
         });
         holder.ll_not_cool.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +115,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                 holder.tv_count_not_cool.setTextColor(0xffed5564);
                 holder.sb_not_cool_icon.setState(true);
                 create.setVote_status(2);
+                EventBusHelper.post(create.getId(), NOT_COOL);
             }
         });
     }

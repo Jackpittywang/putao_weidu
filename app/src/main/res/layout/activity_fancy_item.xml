@@ -21,25 +21,26 @@
             android:layout_height="wrap_content"
             android:background="@drawable/marketing_sign_shape"
             android:padding="5dp"
-            android:textSize="@dimen/text_size_12sp"
             android:text="项目标签1"
-            android:textColor="@color/text_color_gray"/>
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_tag2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textSize="@dimen/text_size_12sp"
             android:layout_toRightOf="@+id/tv_tag1"
             android:background="@drawable/marketing_sign_shape"
             android:padding="5dp"
             android:text="项目标签2"
-            android:textColor="@color/text_color_gray"/>
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_tag3"
-            android:textSize="@dimen/text_size_12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -47,11 +48,12 @@
             android:background="@drawable/marketing_sign_shape"
             android:padding="5dp"
             android:text="项目标签3"
-            android:textColor="@color/text_color_gray"/>
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_tag4"
-            android:textSize="@dimen/text_size_12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -59,7 +61,9 @@
             android:background="@drawable/marketing_sign_shape"
             android:padding="5dp"
             android:text="项目标签4"
-            android:textColor="@color/text_color_gray"/>
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -132,8 +136,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 auto:isSelect="false"
-                auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel"/>
+                auto:norDrawable="@drawable/icon_16_12"
+                auto:selDrawable="@drawable/icon_16_11"/>
 
             <TextView
                 android:id="@+id/tv_count_cool"

@@ -43,7 +43,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
 
     @Override
     public void onBindItem(FancyHolder holder, Create create, int position) {
-        Map map = JSONObject.parseObject(create.getTag());
+        /*Map map = JSONObject.parseObject(create.getTag());
         if (map != null && map.size() > 0) {
             holder.rl_tag.setVisibility(View.VISIBLE);
             holder.tv_tag1.setText(null == map.get("1") ? "" : map.get("1").toString());
@@ -54,7 +54,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
             holder.tv_tag3.setVisibility(null == map.get("3") ? View.GONE : View.VISIBLE);
             holder.tv_tag4.setVisibility(null == map.get("4") ? View.GONE : View.VISIBLE);
         } else
-            holder.rl_tag.setVisibility(View.GONE);
+            holder.rl_tag.setVisibility(View.GONE);*/
         holder.tv_title.setText(create.getTitle());
         holder.tv_content.setText(create.getDescrip());
         holder.iv_icon.setImageURL(create.getAvatar());

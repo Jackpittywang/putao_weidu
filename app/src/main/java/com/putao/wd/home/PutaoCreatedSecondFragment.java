@@ -10,6 +10,7 @@ import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -81,7 +82,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         Bundle bundle = new Bundle();
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, true);
-        startActivity(CreateBasicDetailActivity.class,bundle);
+        startActivity(CreateBasicDetailActivity.class, bundle);
     }
 
     @Override
@@ -108,4 +109,27 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         switch (v.getId()) {
         }
     }
+
+    @Subcriber(tag = CreateAdapter.COOL)
+    public void cool(String id) {
+        networkRequest(CreateApi.setCreateAction(id, 1),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+
+                    }
+                });
+    }
+
+    @Subcriber(tag = CreateAdapter.NOT_COOL)
+    public void notCool(String id) {
+        networkRequest(CreateApi.setCreateAction(id, 2),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+
+                    }
+                });
+    }
+
 }
