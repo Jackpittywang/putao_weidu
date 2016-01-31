@@ -36,12 +36,13 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_fancy;
+        return R.layout.activity_concerns;
     }
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("PutaoCreatedFragment启动");
+        addNavigation();
         adapter = new FancyAdapter(mContext, null);
         rv_created.setAdapter(adapter);
         initData();
@@ -50,7 +51,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
 
     private void initData() {
         mPage = 1;
-        networkRequest(CreateApi.getCreateList(2, mPage),
+        networkRequest(CreateApi.getCreateMyfollows(mPage),
                 new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
                     @Override
                     public void onSuccess(String url, Creates result) {

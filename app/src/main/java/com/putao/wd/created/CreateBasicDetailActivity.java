@@ -135,9 +135,11 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         wv_content.loadDataWithBaseURL("about:blank", mCreate.getContent(), "text/html", "utf-8", null);
         if (isShowProgress) {
             initProgress();
+            navigation_bar.setMainTitle("创造详情");
             fl_progress.setVisibility(View.VISIBLE);
             rl_progress.setVisibility(View.VISIBLE);
         } else {
+            navigation_bar.setMainTitle("奇思妙想详情");
             v_fancy.setVisibility(View.VISIBLE);
         }
     }
@@ -221,8 +223,10 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                             });
                     break;
             }
-            supportOfFloat.setDuration(1000);
-            supportOfFloat.start();
+            if (null != supportOfFloat) {
+                supportOfFloat.setDuration(1000);
+                supportOfFloat.start();
+            }
         }
         switch (v.getId()) {
             case R.id.ll_cool:
@@ -281,6 +285,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
      */
     private void startAnim(int step) {
         ObjectAnimator ofFloat = null;
+        if (step == 0) return;
         switch (step) {
             case 1:
                 setStepText(tv_step1, 1);

@@ -20,6 +20,11 @@ public class Diary implements Serializable {
     private String device_name;
     private int create_time;
 
+    //-----------本地字段
+    private boolean isFinish;//是否答过
+    private boolean isTrue;//
+
+
     public int getTag_type() {
         return tag_type;
     }
@@ -90,6 +95,22 @@ public class Diary implements Serializable {
 
     public void setCreate_time(int create_time) {
         this.create_time = create_time;
+    }
+
+    public boolean isFinish() {
+        return isFinish;
+    }
+
+    public void setIsFinish(boolean isFinish) {
+        this.isFinish = isFinish;
+    }
+
+    public boolean isTrue() {
+        return isTrue;
+    }
+
+    public void setIsTrue(boolean isTrue) {
+        this.isTrue = isTrue;
     }
 
     @Override

@@ -15,61 +15,85 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ExploreIndex;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.view.SwipeBackLayout;
 
 import java.io.Serializable;
 import java.util.List;
 
+import butterknife.Bind;
+
 /**
  * 首页详情
  * Created by guchenkai on 2016/1/11.
  */
-public class ExploreDetailActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener {
-    ViewPager vp_container;
-    private SwipeBackLayout mSwipeBackLayout;
+public class ExploreDetailActivity extends BasicFragmentActivity /*implements SwipeBackLayout.SwipeBackListener*/ {
+
+//    private SwipeBackLayout mSwipeBackLayout;
     private ImageView ivShadow;
 
     private SparseArray<Fragment> mFragments;
     private List<ExploreIndex> mExploreIndexs;
     private int mPosition;
 
+    @Bind(R.id.vp_container)
+    ViewPager vp_container;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getContainer());
+    protected int getLayoutId() {
+        return R.layout.activity_nexplore_detail;
+    }
+
+    @Override
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         Intent intent = getIntent();
         mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
         mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE,1);
-        initView();
         addFragment();
     }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+
+/*    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setContentView(getContainer());
+        Intent intent = getIntent();
+        mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
+        mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE,1);
+//        initView();
+        addFragment();
+    }*/
 
     /**
      * 初始化视图
      */
-    private void initView() {
+/*    private void initView() {
         View view = LayoutInflater.from(this).inflate(R.layout.activity_nexplore_detail, null);
-        mSwipeBackLayout.addView(view);
+//        mSwipeBackLayout.addView(view);
         vp_container = (ViewPager) findViewById(R.id.vp_container);
-        mSwipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.TOP);
-    }
+//        mSwipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.TOP);
+    }*/
 
     /**
      * 初始化容器视图
      * @return
      */
-    private View getContainer() {
+/*    private View getContainer() {
         RelativeLayout container = new RelativeLayout(this);
-        mSwipeBackLayout = new SwipeBackLayout(this);
-        mSwipeBackLayout.setOnSwipeBackListener(this);
+//        mSwipeBackLayout = new SwipeBackLayout(this);
+//        mSwipeBackLayout.setOnSwipeBackListener(this);
         ivShadow = new ImageView(this);
         ivShadow.setBackgroundColor(getResources().getColor(R.color.popup_background));
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         container.addView(ivShadow, params);
         container.addView(mSwipeBackLayout);
         return container;
-    }
+    }*/
 
     /**
      * 初始化Fragment
@@ -105,10 +129,12 @@ public class ExploreDetailActivity extends AppCompatActivity implements SwipeBac
         return bundle;
     }
 
+/*
     @Override
     public void onViewPositionChanged(float fractionAnchor, float fractionScreen) {
         ivShadow.setAlpha(1 - fractionScreen);
     }
+*/
 
 
     //    @Override

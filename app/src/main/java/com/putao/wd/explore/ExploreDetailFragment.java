@@ -22,9 +22,13 @@ import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -60,6 +64,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     private ExploreIndex mExploreIndex;
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
+    private String mWidth;
 
     @Override
     protected int getLayoutId() {
@@ -68,18 +73,21 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        mWidth = DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200) + "";
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA_PAGE);
         mSharePopupWindow = new SharePopupWindow(getActivity());
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
-        wb_explore_detail.setInitialScale(80);
-        tv_count_cool.setText(mExploreIndex.getCount_likes()+"");
+//        wb_explore_detail.setInitialScale(80);
+        tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
 
-        WebSettings webSettings = wb_explore_detail.getSettings();
-        webSettings.setMinimumFontSize(64);
+//        WebSettings webSettings = wb_explore_detail.getSettings();
+//        webSettings.setUseWideViewPort(true);//关键点
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setMinimumFontSize(64);
 //        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setUseWideViewPort(false);
-        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setUseWideViewPort(false);
+//        webSettings.setLoadWithOverviewMode(true);
         initView();
         addListener();
     }
@@ -91,7 +99,53 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", mExploreIndex.getExplanation(), "text/html", "utf-8", null);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth(mExploreIndex.getExplanation()), "text/html", "utf-8", null);
+    }
+
+    private String setImageWidth(String explanation) {
+        Pattern p = Pattern.compile("<img([^>]*)");
+        String replaceAll = explanation;
+        Matcher m = p.matcher(explanation);// 开始编译
+        while (m.find()) {
+            String group = m.group(1);
+            System.out.println(group);
+            group = addWidHei(group);
+            group = addStyle(group);
+            replaceAll = replaceAll.replace(m.group(1), group);
+            System.out.println(replaceAll);
+        }
+        return replaceAll;
+    }
+
+    private String addWidHei(String group) {
+        group = replaceHTML("width=([^\"]*)", group, "\"" + mWidth + "\"", " width=" + mWidth);
+//        group = replaceHTML("height=([^\"]*)", group, "\"" + mWidth + "\"", " height=" + mWidth);
+        return group;
+    }
+
+    private String replaceHTML(String reg, String group, String add, String replace) {
+        Pattern p = Pattern.compile(reg);
+        Matcher m = p.matcher(group);
+        if (m.find()) {
+            String group2 = m.group(1);
+            group2 = replace;
+            group = group.replace(m.group(1), group2);
+        } else {
+            group = add + group;
+        }
+        return group;
+    }
+
+    private String addStyle(String group) {
+        Pattern p1 = Pattern.compile("style=\"([^>]*)");
+        Matcher m1 = p1.matcher(group);
+        if (m1.find()) {
+            group = replaceHTML("width:([^;]*)", group, mWidth + "", " width:" + mWidth);
+//            group = replaceHTML("height:([^;]*)", group, mWidth + "", " height:" + mWidth);
+        } else {
+            group = " style=\"width:" + mWidth + ";\"" + group;
+        }
+        return group;
     }
 
     @Override
@@ -119,7 +173,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_player:
-                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, "hafohfoafoa");
+                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, mExploreIndex.getBanner().get(0).getUrl());
                 startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
             case R.id.iv_close:
@@ -131,7 +185,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                 Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
                 if (isCool) break;
-                tv_count_cool.setText(mExploreIndex.getCount_likes()+1+"");
+                tv_count_cool.setText(mExploreIndex.getCount_likes() + 1 + "");
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override

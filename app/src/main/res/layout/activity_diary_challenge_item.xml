@@ -2,11 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:auto="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:clipChildren="false">
 
     <include
         android:id="@+id/i_top"
-        layout="@layout/activity_diary_sign"/>
+        layout="@layout/activity_diary_sign"
+        />
 
     <!--没有绑定设备时卡片-->
     <android.support.v7.widget.CardView
@@ -14,10 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/i_top"
-        android:paddingLeft="@dimen/distance_8dp"
-        android:paddingRight="@dimen/distance_8dp"
         android:layout_marginLeft="@dimen/distance_8dp"
         android:layout_marginRight="@dimen/distance_8dp"
+        android:paddingLeft="@dimen/distance_8dp"
+        android:paddingRight="@dimen/distance_8dp"
         auto:cardCornerRadius="0dp"
         auto:cardElevation="2dp"
         auto:cardUseCompatPadding="true">
@@ -155,12 +157,4 @@
     </android.support.v7.widget.CardView>
 
     <include layout="@layout/activity_diary_device"/>
-    <ImageView
-        android:layout_below="@+id/v_date"
-        android:id="@+id/iv_check"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="-10dp"
-        android:src="@drawable/img_p_choose_c"/>
 </RelativeLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_date"
@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:background="@color/background_FFE875"
         android:gravity="center_vertical"
-        android:paddingTop="@dimen/distance_8dp"
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/distance_8dp"
+        android:paddingTop="@dimen/distance_8dp"
         android:visibility="gone">
 
         <ImageView
@@ -39,6 +39,7 @@
         android:id="@+id/v_date"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:layout_below="@+id/ll_date"
         android:background="@color/color_EBEBEB"
         android:visibility="visible"/>
 
@@ -46,6 +47,7 @@
         android:id="@+id/tv_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/v_date"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/distance_8dp"
         android:layout_marginRight="@dimen/distance_8dp"
@@ -66,4 +68,16 @@
         android:layout_marginLeft="@dimen/distance_8dp"
         android:layout_marginRight="@dimen/distance_8dp"
         android:text="您知道比萨斜塔为什么是斜的吗？"/>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/v_date"
+        android:layout_marginBottom="-10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:src="@drawable/img_p_choose_c"/>
+</RelativeLayout>

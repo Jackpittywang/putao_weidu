@@ -2,7 +2,7 @@ package com.putao.wd.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
+import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -19,9 +19,7 @@ import com.putao.wd.companion.PlotPreviewDialog;
 import com.putao.wd.model.Diary;
 import com.putao.wd.model.DiaryQuestion;
 import com.putao.wd.model.DiaryTitle;
-import com.putao.wd.model.ExploreProduct;
-import com.putao.wd.model.ExploreProductDetail;
-import com.putao.wd.model.ExploreProductPlot;
+import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
@@ -33,7 +31,6 @@ import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +43,15 @@ import butterknife.Bind;
  */
 public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     public static final String EVENT_DISPLAY = "display";
+    public static final String EVENT_PLAYER = "display";
 
     private static final int TYPE_CHALLENGE = 1;//家长挑战
-    private static final int TYPE_TASKS = 2;//家长任务
-    private static final int TYPE_PLAY = 3;//游戏玩法
-    private static final int TYPE_EDUC = 4;//教育理念
-    private static final int TYPE_GROW = 5;//孩子成长
+    private static final int TYPE_CHALLENGE_PIC = 2;//家长挑战(图片)
+    private static final int TYPE_TASKS = 3;//普通条目
+//    private static final int TYPE_PLAY = 3;//游戏玩法
+//    private static final int TYPE_TASKS = 2;//家长任务
+//    private static final int TYPE_EDUC = 4;//教育理念
+//    private static final int TYPE_GROW = 5;//孩子成长
 
     private Animation alphaAnimation;
     private Animation scaleAnimation;
@@ -90,20 +90,15 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     @Override
     public int getMultiItemViewType(int position) {
         Diary diary = getItem(position);
-        switch (diary.getTag_type()) {
-            case 1:
+        if (diary.getTag_type() == 2)
+            return TYPE_TASKS;
+        if (diary.getTag_type() == 1) {
+            if (diary.getOption_type() == 1)
                 return TYPE_CHALLENGE;
-            case 2:
-                return TYPE_TASKS;
-            case 3:
-                return TYPE_PLAY;
-            case 4:
-                return TYPE_EDUC;
-            case 5:
-                return TYPE_GROW;
-            default:
-                return 0;
+            if (diary.getOption_type() == 2)
+                return TYPE_CHALLENGE_PIC;
         }
+        return TYPE_TASKS;
     }
 
     @Override
@@ -111,6 +106,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         switch (viewType) {
             case TYPE_CHALLENGE:
                 return R.layout.activity_diary_challenge_item;
+            case TYPE_CHALLENGE_PIC:
+                return R.layout.activity_diary_challenge_pic_item;
             case TYPE_TASKS:
                 return R.layout.activity_diary_tasks_item;
         }
@@ -124,6 +121,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 return new DiaryChallengeViewHolder(itemView);
             case TYPE_TASKS:
                 return new DiaryTasksViewHolder(itemView);
+            case TYPE_CHALLENGE_PIC:
+                return new DiaryChallengePicViewHolder(itemView);
             default:
                 return new DiaryTasksViewHolder(itemView);
         }
@@ -149,7 +148,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         basicHolder.tv_date.setText(format);
         basicHolder.tv_sign.setText(diary.getTag_name());
         basicHolder.tv_device.setText(diary.getDevice_name());
-        DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
+        final DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
         basicHolder.tv_title.setText(diaryTitle.getText());
         /**
          * 家长挑战
@@ -158,6 +157,21 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             final DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
             DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
             viewHolder.tv_title.setText(diary.getAsk());
+            if (diary.isFinish()) {
+                viewHolder.iv_check.setVisibility(View.VISIBLE);
+                if (diary.isTrue())
+                    viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_c);
+                else viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_r);
+                setClickable(viewHolder, false);
+                initAnswer(viewHolder, diary.getAnswer());
+            } else {
+                viewHolder.iv_answer1.setImageResource(R.drawable.icon_20_p_choose_01);
+                viewHolder.iv_answer2.setImageResource(R.drawable.icon_20_p_choose_02);
+                viewHolder.iv_answer3.setImageResource(R.drawable.icon_20_p_choose_03);
+                viewHolder.iv_answer4.setImageResource(R.drawable.icon_20_p_choose_04);
+                viewHolder.iv_check.setVisibility(View.GONE);
+                setClickable(viewHolder, true);
+            }
             if (null != diaryQuestion.getA()) {
                 viewHolder.rl_answer1.setVisibility(View.VISIBLE);
                 viewHolder.tv_answer1.setText(diaryQuestion.getA());
@@ -165,70 +179,147 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                     @Override
                     public void onClick(View v) {
                         smallBang.bang(v);
-                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkAnswer(viewHolder, diary.getAnswer(), "A"));
                     }
                 });
             }
             if (null != diaryQuestion.getB()) {
                 viewHolder.v_answer2.setVisibility(View.VISIBLE);
                 viewHolder.rl_answer2.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer2.setText(diaryQuestion.getA());
+                viewHolder.tv_answer2.setText(diaryQuestion.getB());
                 viewHolder.iv_answer2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         smallBang.bang(v);
-                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkAnswer(viewHolder, diary.getAnswer(), "B"));
                     }
                 });
             }
             if (null != diaryQuestion.getC()) {
                 viewHolder.v_answer3.setVisibility(View.VISIBLE);
                 viewHolder.rl_answer3.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer3.setText(diaryQuestion.getA());
+                viewHolder.tv_answer3.setText(diaryQuestion.getC());
                 viewHolder.iv_answer3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         smallBang.bang(v);
-                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkAnswer(viewHolder, diary.getAnswer(), "C"));
                     }
                 });
             }
             if (null != diaryQuestion.getD()) {
                 viewHolder.v_answer4.setVisibility(View.VISIBLE);
                 viewHolder.rl_answer4.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer4.setText(diaryQuestion.getA());
+                viewHolder.tv_answer4.setText(diaryQuestion.getD());
                 viewHolder.iv_answer4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         smallBang.bang(v);
-                        viewHolder.iv_answer1.setImageResource(diary.getAnswer().equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer2.setImageResource(diary.getAnswer().equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer3.setImageResource(diary.getAnswer().equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-                        viewHolder.iv_answer4.setImageResource(diary.getAnswer().equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkAnswer(viewHolder, diary.getAnswer(), "D"));
                     }
                 });
             }
         }
+
         /**
-         * 家长挑战
+         * 家长挑战(图片)
+         */
+        if (holder instanceof DiaryChallengePicViewHolder) {
+            final DiaryChallengePicViewHolder viewHolder = (DiaryChallengePicViewHolder) holder;
+            DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
+            viewHolder.tv_title.setText(diary.getAsk());
+            if (diary.isFinish()) {
+                viewHolder.iv_check.setVisibility(View.VISIBLE);
+                if (diary.isTrue())
+                    viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_c);
+                else viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_r);
+                setPicClickable(viewHolder, false);
+                initPicAnswer(viewHolder, diary.getAnswer());
+            } else {
+                viewHolder.iv_answer1.setImageResource(R.drawable.icon_20_p_choose_01);
+                viewHolder.iv_answer2.setImageResource(R.drawable.icon_20_p_choose_02);
+                viewHolder.iv_answer3.setImageResource(R.drawable.icon_20_p_choose_03);
+                viewHolder.iv_answer4.setImageResource(R.drawable.icon_20_p_choose_04);
+                viewHolder.iv_check.setVisibility(View.GONE);
+                setPicClickable(viewHolder, true);
+            }
+            if (null != diaryQuestion.getA()) {
+                viewHolder.rl_answer1.setVisibility(View.VISIBLE);
+                viewHolder.idv_answer1.setImageURL(diaryQuestion.getA());
+                viewHolder.iv_answer1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        smallBang.bang(v);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkPicAnswer(viewHolder, diary.getAnswer(), "A"));
+                    }
+                });
+            }
+            if (null != diaryQuestion.getB()) {
+                viewHolder.rl_answer2.setVisibility(View.VISIBLE);
+                viewHolder.idv_answer2.setImageURL(diaryQuestion.getB());
+                viewHolder.iv_answer2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        smallBang.bang(v);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkPicAnswer(viewHolder, diary.getAnswer(), "B"));
+                    }
+                });
+            }
+            if (null != diaryQuestion.getC()) {
+                viewHolder.rl_answer3.setVisibility(View.VISIBLE);
+                viewHolder.idv_answer3.setImageURL(diaryQuestion.getC());
+                viewHolder.iv_answer3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        smallBang.bang(v);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkPicAnswer(viewHolder, diary.getAnswer(), "C"));
+                    }
+                });
+            }
+            if (null != diaryQuestion.getD()) {
+                viewHolder.rl_answer4.setVisibility(View.VISIBLE);
+                viewHolder.idv_answer4.setImageURL(diaryQuestion.getD());
+                viewHolder.iv_answer4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        smallBang.bang(v);
+                        diary.setIsFinish(true);
+                        diary.setIsTrue(checkPicAnswer(viewHolder, diary.getAnswer(), "D"));
+                    }
+                });
+            }
+        }
+
+
+
+        /**
+         * 普通条目
          */
         if (holder instanceof DiaryTasksViewHolder) {
             DiaryTasksViewHolder viewHolder = (DiaryTasksViewHolder) holder;
+            viewHolder.iv_check.setVisibility(View.GONE);
             if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
                 viewHolder.rl_image.setVisibility(View.VISIBLE);
                 viewHolder.iv_image.setImageURL(diaryTitle.getImg());
             }
-            if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0)
+            if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0) {
                 viewHolder.iv_player.setVisibility(View.VISIBLE);
+                viewHolder.iv_player.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, diaryTitle.getVideo());
+                        EventBusHelper.post(bundle, EVENT_PLAYER);
+                    }
+                });
+            }
         }
         /*if (holder instanceof ExploerViewHolder) {
             ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
@@ -292,6 +383,71 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         }*/
     }
 
+    private void setClickable(DiaryChallengeViewHolder viewHolder, boolean b) {
+        viewHolder.iv_answer1.setEnabled(b);
+        viewHolder.iv_answer2.setEnabled(b);
+        viewHolder.iv_answer3.setEnabled(b);
+        viewHolder.iv_answer4.setEnabled(b);
+    }
+
+    private void initAnswer(DiaryChallengeViewHolder holder, String answer) {
+        holder.iv_answer1.setImageResource(answer.equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer2.setImageResource(answer.equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer3.setImageResource(answer.equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer4.setImageResource(answer.equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+    }
+
+
+    private boolean checkAnswer(DiaryChallengeViewHolder holder, String answer, String
+            myAnswer) {
+        boolean isTrue;
+        initAnswer(holder, answer);
+        if (answer.equals(myAnswer)) {
+            isTrue = true;
+            holder.iv_check.setImageResource(R.drawable.img_p_choose_c);
+        } else {
+            isTrue = false;
+            holder.iv_check.setImageResource(R.drawable.img_p_choose_r);
+        }
+        holder.iv_check.setAnimation(animationSet);
+        holder.iv_check.setVisibility(View.VISIBLE);
+        animationSet.startNow();
+        setClickable(holder, false);
+        return isTrue;
+    }
+    private void setPicClickable(DiaryChallengePicViewHolder viewHolder, boolean b) {
+        viewHolder.iv_answer1.setEnabled(b);
+        viewHolder.iv_answer2.setEnabled(b);
+        viewHolder.iv_answer3.setEnabled(b);
+        viewHolder.iv_answer4.setEnabled(b);
+    }
+
+    private void initPicAnswer(DiaryChallengePicViewHolder holder, String answer) {
+        holder.iv_answer1.setImageResource(answer.equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer2.setImageResource(answer.equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer3.setImageResource(answer.equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer4.setImageResource(answer.equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+    }
+
+
+    private boolean checkPicAnswer(DiaryChallengePicViewHolder holder, String answer, String
+            myAnswer) {
+        boolean isTrue;
+        initPicAnswer(holder, answer);
+        if (answer.equals(myAnswer)) {
+            isTrue = true;
+            holder.iv_check.setImageResource(R.drawable.img_p_choose_c);
+        } else {
+            isTrue = false;
+            holder.iv_check.setImageResource(R.drawable.img_p_choose_r);
+        }
+        holder.iv_check.setAnimation(animationSet);
+        holder.iv_check.setVisibility(View.VISIBLE);
+        animationSet.startNow();
+        setPicClickable(holder, false);
+        return isTrue;
+    }
+
     /**
      * 家长挑战
      */
@@ -326,11 +482,40 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         TextView tv_answer3;
         @Bind(R.id.tv_answer4)
         TextView tv_answer4;
-        @Bind(R.id.iv_check)
-        ImageView iv_check;
-
-
         public DiaryChallengeViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    /**
+     * 家长挑战
+     */
+    static class DiaryChallengePicViewHolder extends DiaryBasicViewHolder {
+        @Bind(R.id.iv_answer1)
+        ImageView iv_answer1;
+        @Bind(R.id.iv_answer2)
+        ImageView iv_answer2;
+        @Bind(R.id.iv_answer3)
+        ImageView iv_answer3;
+        @Bind(R.id.iv_answer4)
+        ImageView iv_answer4;
+        @Bind(R.id.rl_answer1)
+        RelativeLayout rl_answer1;
+        @Bind(R.id.rl_answer2)
+        RelativeLayout rl_answer2;
+        @Bind(R.id.rl_answer3)
+        RelativeLayout rl_answer3;
+        @Bind(R.id.rl_answer4)
+        RelativeLayout rl_answer4;
+        @Bind(R.id.idv_answer1)
+        ImageDraweeView idv_answer1;
+        @Bind(R.id.idv_answer2)
+        ImageDraweeView idv_answer2;
+        @Bind(R.id.idv_answer3)
+        ImageDraweeView idv_answer3;
+        @Bind(R.id.idv_answer4)
+        ImageDraweeView idv_answer4;
+        public DiaryChallengePicViewHolder(View itemView) {
             super(itemView);
         }
     }
@@ -359,8 +544,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         LinearLayout ll_date;
         @Bind(R.id.tv_date)
         TextView tv_date;
-        @Bind(R.id.v_date)
-        View v_date;
+        @Bind(R.id.iv_check)
+        ImageView iv_check;
 
         public DiaryBasicViewHolder(View itemView) {
             super(itemView);
@@ -434,6 +619,13 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
 
   /*  *//**
      * 日期比较,控制头部显示
+     * <p/>
+     * 设置plot中教育理念下面的显示图片
+     * <p/>
+     * 根据图片张数显示图片
+     *
+     * @param holder     ExploerMixedViewHolder类型ViewHolder
+     * @param pictureNum 图片张数
      *//*
     private void doCompare(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
         ExploreProduct preExplore = getItem(position - 1);
@@ -461,9 +653,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         }
     }*/
 
-    /**
-     * 设置plot中教育理念下面的显示图片
-     */
+/**
+ * 设置plot中教育理念下面的显示图片
+ */
 //    private void setPlotImage(ExploerMixedViewHolder viewHolder, final ExploreProductPlot plot) {
 //        if (plot.getImg_list() == null)
 //            viewHolder.iv_one_picture.setImageURL(plot.getImg_url());
@@ -478,12 +670,12 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
 //        });
 //    }
 
-    /**
-     * 根据图片张数显示图片
-     *
-     * @param holder     ExploerMixedViewHolder类型ViewHolder
-     * @param pictureNum 图片张数
-     */
+/**
+ * 根据图片张数显示图片
+ *
+ * @param holder     ExploerMixedViewHolder类型ViewHolder
+ * @param pictureNum 图片张数
+ */
 //    private void showPiture(ExploerMixedViewHolder holder, int pictureNum) {
 //        switch (pictureNum) {
 //            case TYPE_PICTURE_ONE:
@@ -530,6 +722,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         TextView tv_skill_name;
         @Bind(R.id.rv_display_data)
         BasicRecyclerView rv_display_data;
+        @Bind(R.id.v_date)
+        View v_date;
         //        @Bind(R.id.ll_content1)
 //        LinearLayout ll_content1;
 //        @Bind(R.id.ll_content2)
@@ -566,9 +760,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         }
     }
 
-    /**
-     * plot
-     */
+/**
+ * plot
+ */
    /* static class ExploerMixedViewHolder extends BasicViewHolder {
         @Bind(R.id.ll_explore_top)
         LinearLayout ll_explore_top;

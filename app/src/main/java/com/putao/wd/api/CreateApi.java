@@ -72,7 +72,7 @@ public class CreateApi {
     /**
      * 操作
      */
-    public static final String URL_CREATE_ACTION = BASE_URL + "/create/create/action";
+    public static final String URL_CREATE_ACTION = BASE_URL + "create/create/action";
 
     /**
      * 操作

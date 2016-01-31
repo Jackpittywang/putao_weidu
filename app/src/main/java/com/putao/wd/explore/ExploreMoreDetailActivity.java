@@ -21,9 +21,14 @@ import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -61,7 +66,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
     public final static String ARTICLE_ID = "article_id";//是否赞过
-
+    private String mWidth;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_nexplore_detail;
@@ -70,6 +75,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mArticleId = args.getString(ARTICLE_ID);
+        mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200) + "";
         initData();
 
     }
@@ -95,19 +101,65 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", mExploreIndex.getExplanation(), "text/html", "utf-8", null);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)",setImageWidth("<img([^>]*)", mExploreIndex.getExplanation())), "text/html", "utf-8", null);
         mSharePopupWindow = new SharePopupWindow(this);
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
         tv_count_cool.setText(mExploreIndex.getCount_likes()+"");
-        wb_explore_detail.setInitialScale(80);
+//        wb_explore_detail.setInitialScale(80);
 
         WebSettings webSettings = wb_explore_detail.getSettings();
-        webSettings.setMinimumFontSize(64);
-//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setUseWideViewPort(false);
-        webSettings.setLoadWithOverviewMode(true);
-        addListener();
+//        webSettings.setMinimumFontSize(64);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setUseWideViewPort(false);
+//        webSettings.setLoadWithOverviewMode(true);
+//        addListener();
+    }
+
+
+    private String setImageWidth(String reg,String explanation) {
+        Pattern p = Pattern.compile(reg);
+        String replaceAll = explanation;
+        Matcher m = p.matcher(explanation);// 开始编译
+        while (m.find()) {
+            String group = m.group(1);
+            System.out.println(group);
+            group = addWidHei(group);
+            group = addStyle(group);
+            replaceAll = replaceAll.replace(m.group(1), group);
+            System.out.println(replaceAll);
+        }
+        Logger.d(replaceAll);
+        return replaceAll;
+    }
+
+    private String addWidHei(String group) {
+        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + mWidth+"\"");
+//        group = replaceHTML("height=([^\"]*)", group, "\"" + mWidth + "\"", " height=" + mWidth);
+        return group;
+    }
+
+    private String replaceHTML(String reg, String group, String replace) {
+        Pattern p = Pattern.compile(reg);
+        Matcher m = p.matcher(group);
+        if (m.find()) {
+            group = group.replace(m.group(), replace);
+        } else {
+            group = replace + group;
+        }
+        return group;
+    }
+
+    private String addStyle(String group) {
+        Pattern p1 = Pattern.compile("style=\"([^>]*)");
+        Matcher m1 = p1.matcher(group);
+        if (m1.find()) {
+            group = replaceHTML("width:([^;]*)", group," width=\"" + mWidth+"\"");
+//            group = replaceHTML("height:([^;]*)", group, mWidth + "", " height:" + mWidth);
+        } else {
+            group = " style=\"width:" + mWidth + ";\"" + group;
+        }
+        return group;
     }
 
     @Override

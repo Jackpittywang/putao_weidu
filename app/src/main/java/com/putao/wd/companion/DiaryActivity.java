@@ -15,6 +15,7 @@ import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -147,6 +148,10 @@ public class DiaryActivity extends PTWDActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, plot);
         startActivity(PlotActivity.class, bundle);
+    }
+    @Subcriber(tag = ExploreAdapter.EVENT_PLAYER)
+    public void eventPlayer(Bundle bundle) {
+        startActivity(YoukuVideoPlayerActivity.class, bundle);
     }
 
 }
