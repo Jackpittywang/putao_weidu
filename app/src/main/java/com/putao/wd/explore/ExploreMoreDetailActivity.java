@@ -66,7 +66,9 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
     public final static String ARTICLE_ID = "article_id";//是否赞过
-    private String mWidth;
+    private float mWidth;
+    private float mHeight;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_nexplore_detail;
@@ -75,7 +77,8 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mArticleId = args.getString(ARTICLE_ID);
-        mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200) + "";
+        mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200);
+        mHeight = (mWidth * 9) / 16 + 2;
         initData();
 
     }
@@ -84,7 +87,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         networkRequest(ExploreApi.getDetail(mArticleId),
                 new SimpleFastJsonCallback<ExploreIndex>(ExploreIndex.class, loading) {
                     @Override
-                    public void onSuccess(String url,  ExploreIndex result) {
+                    public void onSuccess(String url, ExploreIndex result) {
                         if (null != result) {
                             mExploreIndex = result;
                             initView();
@@ -101,11 +104,11 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)",setImageWidth("<img([^>]*)", mExploreIndex.getExplanation())), "text/html", "utf-8", null);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)", setImageWidth("<img([^>]*)", mExploreIndex.getExplanation(), false), true), "text/html", "utf-8", null);
         mSharePopupWindow = new SharePopupWindow(this);
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
-        tv_count_cool.setText(mExploreIndex.getCount_likes()+"");
+        tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
 //        wb_explore_detail.setInitialScale(80);
 
         WebSettings webSettings = wb_explore_detail.getSettings();
@@ -116,26 +119,34 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
 //        addListener();
     }
 
-
-    private String setImageWidth(String reg,String explanation) {
+    private String setImageWidth(String reg, String explanation, boolean isVideo) {
         Pattern p = Pattern.compile(reg);
         String replaceAll = explanation;
         Matcher m = p.matcher(explanation);// 开始编译
         while (m.find()) {
             String group = m.group(1);
-            System.out.println(group);
-            group = addWidHei(group);
+            group = addWidHei(group,isVideo);
             group = addStyle(group);
             replaceAll = replaceAll.replace(m.group(1), group);
             System.out.println(replaceAll);
+            if (isVideo) {
+                Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
+                Matcher mVideo = pVideo.matcher(group);// 开始编译
+                while (mVideo.find()) {
+                    String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + mWidth + "&");
+                    video = replaceHTML("height=([^&]*)", video, "height=" + mHeight + "&");
+                    replaceAll = replaceAll.replace(mVideo.group(1), video);
+                }
+            }
         }
         Logger.d(replaceAll);
         return replaceAll;
     }
 
-    private String addWidHei(String group) {
-        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + mWidth+"\"");
-//        group = replaceHTML("height=([^\"]*)", group, "\"" + mWidth + "\"", " height=" + mWidth);
+    private String addWidHei(String group, boolean isVideo) {
+        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + mWidth + "\"");
+        if (isVideo)
+            group = replaceHTML("height=\"([^\"]*)", group, " height=\"" + mHeight + "\"");
         return group;
     }
 
@@ -154,7 +165,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         Pattern p1 = Pattern.compile("style=\"([^>]*)");
         Matcher m1 = p1.matcher(group);
         if (m1.find()) {
-            group = replaceHTML("width:([^;]*)", group," width=\"" + mWidth+"\"");
+            group = replaceHTML("width:([^;]*)", group, " width=\"" + mWidth + "\"");
 //            group = replaceHTML("height:([^;]*)", group, mWidth + "", " height:" + mWidth);
         } else {
             group = " style=\"width:" + mWidth + ";\"" + group;
@@ -198,7 +209,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
                 if (isCool) break;
-                tv_count_cool.setText(mExploreIndex.getCount_likes()+1+"");
+                tv_count_cool.setText(mExploreIndex.getCount_likes() + 1 + "");
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override

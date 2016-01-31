@@ -51,14 +51,12 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     Button btn_explore_empty;
     @Bind(R.id.rv_products)
     BasicRecyclerView rv_products;
-    @Bind(R.id.iv_user_icon)
-    ImageDraweeView iv_user_icon;
     @Bind(R.id.iv_smart)
     ImageView iv_smart;
 
     ProductsAdapter mProductsAdapter;
     private List<DiaryApp> mDiaryApps;
-    private RelativeLayout.LayoutParams mRight2LayoutParams;
+//    private RelativeLayout.LayoutParams mRight2LayoutParams;
     private RelativeLayout.LayoutParams mSmartLayoutParams;
     private boolean isLoginChange = false;
 
@@ -73,7 +71,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     }
 
     private void addClickListener() {
-        iv_user_icon.setOnClickListener(this);
+//        iv_user_icon.setOnClickListener(this);
         iv_title_bar_right1.setOnClickListener(this);
         iv_title_bar_right2.setOnClickListener(this);
         btn_explore_empty.setOnClickListener(this);
@@ -98,14 +96,14 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                             cv_no_empty.setVisibility(View.VISIBLE);
                             btn_explore_empty.setVisibility(View.GONE);
                             mProductsAdapter.replaceAll(result);
-                            mRight2LayoutParams.addRule(RelativeLayout.LEFT_OF, R.id.iv_title_bar_right1);
-                            mRight2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-                            mRight2LayoutParams.setMargins(0, 0, DensityUtil.dp2px(mActivity, 20), 0);
-                            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
-//                            RelativeLayout.LayoutParams smartLayoutParams = mSmartLayoutParams;
+//                            mRight2LayoutParams.addRule(RelativeLayout.LEFT_OF, R.id.iv_title_bar_right1);
+//                            mRight2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+//                            mRight2LayoutParams.setMargins(0, 0, DensityUtil.dp2px(mActivity, 20), 0);
+//                            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
+                            RelativeLayout.LayoutParams smartLayoutParams = mSmartLayoutParams;
                             mSmartLayoutParams.addRule(RelativeLayout.ABOVE, R.id.cv_no_empty);
                             mSmartLayoutParams.setMargins(0, 0, 0, DensityUtil.dp2px(mActivity, 110));
-//                            iv_smart.setLayoutParams(smartLayoutParams);
+                            iv_smart.setLayoutParams(smartLayoutParams);
                             mDiaryApps = result;
                         }
                         loading.dismiss();
@@ -120,12 +118,12 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         cv_empty.setVisibility(View.VISIBLE);
         btn_explore_empty.setVisibility(View.VISIBLE);
         cv_no_empty.setVisibility(View.GONE);
-        RelativeLayout.LayoutParams right2LayoutParams = new RelativeLayout.LayoutParams(iv_user_icon.getLayoutParams());
-        right2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        iv_title_bar_right2.setLayoutParams(right2LayoutParams);
+//        RelativeLayout.LayoutParams right2LayoutParams = new RelativeLayout.LayoutParams(iv_user_icon.getLayoutParams());
+//        right2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+//        iv_title_bar_right2.setLayoutParams(right2LayoutParams);
         mSmartLayoutParams.addRule(RelativeLayout.ABOVE, R.id.btn_explore_empty);
         mSmartLayoutParams.setMargins(0, 0, 0, DensityUtil.dp2px(mActivity, 45));
-        iv_user_icon.setVisibility(View.GONE);
+//        iv_user_icon.setVisibility(View.GONE);
     }
 
 
@@ -142,10 +140,10 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
             startActivity(LoginActivity.class, bundle);
             return;
         }
-        switch (v.getId()) {
+        switch (v.getId()) {/*
             case R.id.iv_user_icon:
                 startActivity(CompleteActivity.class);
-                break;
+                break;*/
             case R.id.iv_title_bar_right1:
                 startActivity(ManageActivity.class);
                 break;
@@ -160,9 +158,9 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
-            case R.id.iv_user_icon:
+       /*     case R.id.iv_user_icon:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
-                break;
+                break;*/
             case R.id.iv_title_bar_right1:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ManageActivity.class);
                 break;
@@ -179,7 +177,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     @Override
     public void onStart() {
         super.onStart();
-        mRight2LayoutParams = (RelativeLayout.LayoutParams) iv_title_bar_right2.getLayoutParams();
+//        mRight2LayoutParams = (RelativeLayout.LayoutParams) iv_title_bar_right2.getLayoutParams();
         mSmartLayoutParams = (RelativeLayout.LayoutParams) iv_smart.getLayoutParams();
         addClickListener();
         if (isLoginChange && !AccountHelper.isLogin()) empty();
@@ -190,9 +188,9 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
             rv_products.setAdapter(mProductsAdapter);
             checkDevices();
             rv_products.setOnItemClickListener(this);
-            iv_user_icon.setVisibility(View.VISIBLE);
-            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
-            iv_user_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
+//            iv_user_icon.setVisibility(View.VISIBLE);
+//            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
+//            iv_user_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
         }
         isLoginChange = AccountHelper.isLogin();
     }

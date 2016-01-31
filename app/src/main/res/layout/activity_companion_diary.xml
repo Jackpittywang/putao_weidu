@@ -36,7 +36,6 @@
                 android:id="@+id/rv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 auto:divider_color="@color/divider_color"
                 auto:divider_height="1px"
                 auto:has_row_divider="true"/>

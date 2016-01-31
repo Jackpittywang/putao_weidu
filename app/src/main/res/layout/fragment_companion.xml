@@ -120,13 +120,23 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
+
+        <ImageView
+            android:id="@+id/iv_title_bar_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/btn_20_scan_w_selector" />
+<!--
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_user_icon"
             style="@style/image_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            auto:placeholderImage="@drawable/img_head_default" />
+            auto:placeholderImage="@drawable/img_head_default" />-->
 
 
         <ImageView
@@ -138,14 +148,6 @@
             android:scaleType="centerInside"
             android:src="@drawable/btn_20_control_w_selector" />
 
-        <ImageView
-            android:id="@+id/iv_title_bar_right2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/iv_title_bar_right1"
-            android:scaleType="centerInside"
-            android:src="@drawable/btn_20_scan_w_selector" />
+
     </RelativeLayout>
 </RelativeLayout>

@@ -66,7 +66,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         } else
             holder.rl_tag.setVisibility(View.GONE);*/
         holder.tv_content.setText(create.getDescrip());
-        holder.tv_count_comment.setText(create.getComment().getCount() + "");
+        holder.tv_count_comment.setText(create.getComment().getComment_reply_count() + "");
         holder.tv_count_cool.setText(create.getVote().getUp() + "");
         holder.tv_count_not_cool.setText(create.getVote().getDown() + "");
         holder.sb_cool_icon.setClickable(false);

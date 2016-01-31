@@ -23,6 +23,7 @@ import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -64,7 +65,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     private ExploreIndex mExploreIndex;
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
-    private String mWidth;
+    private float mWidth;
+    private float mHeight;
 
     @Override
     protected int getLayoutId() {
@@ -73,7 +75,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        mWidth = DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200) + "";
+        mWidth = DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200);
+        mHeight = (mWidth * 9) / 16 + 2;
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA_PAGE);
         mSharePopupWindow = new SharePopupWindow(getActivity());
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
@@ -99,39 +102,47 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth(mExploreIndex.getExplanation()), "text/html", "utf-8", null);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)", setImageWidth("<img([^>]*)", mExploreIndex.getExplanation(), false), true), "text/html", "utf-8", null);
     }
 
-    private String setImageWidth(String explanation) {
-        Pattern p = Pattern.compile("<img([^>]*)");
+    private String setImageWidth(String reg, String explanation, boolean isVideo) {
+        Pattern p = Pattern.compile(reg);
         String replaceAll = explanation;
         Matcher m = p.matcher(explanation);// 开始编译
         while (m.find()) {
             String group = m.group(1);
-            System.out.println(group);
-            group = addWidHei(group);
+            group = addWidHei(group, isVideo);
             group = addStyle(group);
             replaceAll = replaceAll.replace(m.group(1), group);
             System.out.println(replaceAll);
+            if (isVideo) {
+                Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
+                Matcher mVideo = pVideo.matcher(group);// 开始编译
+                while (mVideo.find()) {
+                    String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + mWidth + "&");
+                    video = replaceHTML("height=([^&]*)", video, "height=" + mHeight + "&");
+                    replaceAll = replaceAll.replace(mVideo.group(1), video);
+                }
+            }
         }
+        Logger.d(replaceAll);
         return replaceAll;
     }
 
-    private String addWidHei(String group) {
-        group = replaceHTML("width=([^\"]*)", group, "\"" + mWidth + "\"", " width=" + mWidth);
-//        group = replaceHTML("height=([^\"]*)", group, "\"" + mWidth + "\"", " height=" + mWidth);
+    private String addWidHei(String group, boolean isVideo) {
+        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + mWidth + "\"");
+        if (isVideo)
+            group = replaceHTML("height=\"([^\"]*)", group, " height=\"" + mHeight + "\"");
         return group;
     }
 
-    private String replaceHTML(String reg, String group, String add, String replace) {
+    private String replaceHTML(String reg, String group, String replace) {
         Pattern p = Pattern.compile(reg);
         Matcher m = p.matcher(group);
         if (m.find()) {
-            String group2 = m.group(1);
-            group2 = replace;
-            group = group.replace(m.group(1), group2);
+            group = group.replace(m.group(), replace);
         } else {
-            group = add + group;
+            group = replace + group;
         }
         return group;
     }
@@ -140,7 +151,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         Pattern p1 = Pattern.compile("style=\"([^>]*)");
         Matcher m1 = p1.matcher(group);
         if (m1.find()) {
-            group = replaceHTML("width:([^;]*)", group, mWidth + "", " width:" + mWidth);
+            group = replaceHTML("width:([^;]*)", group, " width=\"" + mWidth + "\"");
 //            group = replaceHTML("height:([^;]*)", group, mWidth + "", " height:" + mWidth);
         } else {
             group = " style=\"width:" + mWidth + ";\"" + group;

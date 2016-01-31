@@ -1,12 +1,9 @@
 package com.putao.wd.api;
 
 import com.putao.wd.GlobalApplication;
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
-import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
-import com.sunnybear.library.util.AppUtils;
 
 /**
  * 创造接口
@@ -23,15 +20,19 @@ public class CreateApi {
     private static final String TYPE = "type";//创造类型
     private static final String ID = "id";//创造id
     private static final String ACTION = "action";//操作类型
+    private static final String CREATE_ID = "create_id";//创造id
+    private static final String COMMENT_SOURCE = "comment_source";//创造评论id
+    private static final String COMMENT_ID = "comment_id";//创造评论id
+    private static final String CONTENT = "content";//评论内容
 
-    private static final String LIMIT = "limit";//首页数据条目数量
-    private static final String ARTICLE_ID = "article_id";//首页文章ID
-    private static final String COMMENT_ID = "comment_id";//首页评论ID
-    private static final String MESSAGE = "message";//首页评论内容
-    private static final String COOL_TYPE = "cool_type";//赞类型
+//    private static final String LIMIT = "limit";//首页数据条目数量
+//    private static final String ARTICLE_ID = "article_id";//首页文章ID
+//    private static final String COMMENT_ID = "comment_id";//首页评论ID
+//    private static final String MESSAGE = "message";//首页评论内容
+//    private static final String COOL_TYPE = "cool_type";//赞类型
 
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-bbs-ng-test.start.wang/" : "http://api-bbs-ng-test.start.wang/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-bbs-ng-test.start.wang" : "http://api-bbs-ng-test.start.wang";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -41,7 +42,7 @@ public class CreateApi {
     /**
      * 创造列表
      */
-    public static final String URL_CREATE_LISTS = BASE_URL + "create/create/lists";
+    public static final String URL_CREATE_LISTS = BASE_URL + "/create/create/lists";
 
     /**
      * 创造列表
@@ -58,7 +59,7 @@ public class CreateApi {
     /**
      * 我的关注
      */
-    public static final String URL_CREATE_MYFOLLOWS = BASE_URL + "create/create/myFollows";
+    public static final String URL_CREATE_MYFOLLOWS = BASE_URL + "/create/create/myFollows";
 
     /**
      * 我的关注
@@ -72,7 +73,7 @@ public class CreateApi {
     /**
      * 操作
      */
-    public static final String URL_CREATE_ACTION = BASE_URL + "create/create/action";
+    public static final String URL_CREATE_ACTION = BASE_URL + "/create/create/action";
 
     /**
      * 操作
@@ -83,5 +84,87 @@ public class CreateApi {
                 .addParam(ID, id)
                 .addParam(ACTION, action+"")
                 .build(RequestMethod.POST, URL_CREATE_ACTION);
+    }
+
+    /**
+     * 评论列表
+     */
+    public static final String URL_COMMENT_LIST= BASE_URL + "/create/comment/lists";
+
+    /**
+     * 评论列表
+     */
+    public static Request getCommentList(int page, String id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, page+"")
+                .addParam(ID, id)
+                .build(RequestMethod.POST, URL_COMMENT_LIST);
+    }
+
+    /**
+     * 添加评论
+     */
+    public static final String URL_COMMENT_ADD= BASE_URL + "/create/comment/add";
+
+    /**
+     * 回复文章
+     */
+    public static Request addComment(String create_id, String comment_source,String content) {
+        return PTWDRequestHelper.start()
+                .addParam(CREATE_ID, create_id)
+                .addParam(COMMENT_SOURCE, comment_source)
+                .addParam(CONTENT, content)
+                .build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+    /**
+     * 回复评论
+     */
+    public static Request addComment(String create_id,String content) {
+        return PTWDRequestHelper.start()
+                .addParam(CREATE_ID, create_id)
+                .addParam(COMMENT_SOURCE, "0")
+                .addParam(CONTENT, content)
+                .build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+
+    /**
+     * 删除评论
+     */
+    public static final String URL_COMMENT_DELETE= BASE_URL + "/create/comment/delete";
+
+    /**
+     * 删除评论
+     */
+    public static Request deleteComment(String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_DELETE);
+    }
+    /**
+     * 赞评论
+     */
+    public static final String URL_COMMENT_LIKE= BASE_URL + "/create/comment/like";
+
+    /**
+     * 删除评论
+     */
+    public static Request addCommentLike(String create_id,String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(CREATE_ID, create_id)
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_LIKE);
+    }
+    /**
+     * 删除赞
+     */
+    public static final String URL_COMMENT_CANCEL_LIKE= BASE_URL + "/create/comment/cancelLike";
+
+    /**
+     * 删除评论
+     */
+    public static Request cancelLike(String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_CANCEL_LIKE);
     }
 }

@@ -3,10 +3,13 @@ package com.putao.wd.home.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.Interpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -253,6 +256,16 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.iv_answer1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                       /* MyRotateAnimation rotateAnim = null;
+                        float cX =  viewHolder.rl_answer1.getWidth() / 2.0f;
+                        float cY =  viewHolder.rl_answer1.getHeight() / 2.0f;
+                            rotateAnim = new MyRotateAnimation(cX, cY);
+                        if (rotateAnim != null) {
+                            rotateAnim.setInterpolatedtime
+                            rotateAnim.setInterpolatedTimeListener(this);
+                            rotateAnim.setFillAfter(true);
+                            txtNumber.startAnimation(rotateAnim);
+                        }*/
                         smallBang.bang(v);
                         diary.setIsFinish(true);
                         diary.setIsTrue(checkPicAnswer(viewHolder, diary.getAnswer(), "A"));
@@ -381,6 +394,25 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 }
             });
         }*/
+    }
+
+    static class MyRotateAnimation extends RotateAnimation{
+
+        public MyRotateAnimation(float fromDegrees, float toDegrees, float pivotX, float pivotY) {
+            super(fromDegrees, toDegrees, pivotX, pivotY);
+        }
+
+        public MyRotateAnimation(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public MyRotateAnimation(float fromDegrees, float toDegrees) {
+            super(fromDegrees, toDegrees);
+        }
+
+        public MyRotateAnimation(float fromDegrees, float toDegrees, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue) {
+            super(fromDegrees, toDegrees, pivotXType, pivotXValue, pivotYType, pivotYValue);
+        }
     }
 
     private void setClickable(DiaryChallengeViewHolder viewHolder, boolean b) {

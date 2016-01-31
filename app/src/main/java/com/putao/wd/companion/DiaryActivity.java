@@ -42,7 +42,6 @@ public class DiaryActivity extends PTWDActivity {
 
     private ExploreAdapter adapter;
     private DiaryApp mDiaryApp;
-    private SmallBang smallBang;
     private SharePopupWindow mSharePopupWindow;
     private int mPage;
 
@@ -124,10 +123,10 @@ public class DiaryActivity extends PTWDActivity {
                         if (result != null && result.getData().size() > 0) {
                             adapter.replaceAll(result.getData());
                             ll_date_empty.setVisibility(View.GONE);
-                            rv_content.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.VISIBLE);
                         } else {
                             ll_date_empty.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
                         ptl_refresh.refreshComplete();
                         checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());

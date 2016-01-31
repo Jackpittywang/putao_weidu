@@ -162,6 +162,9 @@
         <activity
             android:name=".start.comment.CommentActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".created.CreateCommentActivity"
+            android:screenOrientation="portrait" />
         <!-- 葡萄籽 -->
         <activity
             android:name=".start.putaozi.GrapestoneActivity"

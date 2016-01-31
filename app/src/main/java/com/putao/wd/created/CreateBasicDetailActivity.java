@@ -17,6 +17,8 @@ import com.putao.wd.api.CreateApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Create;
+import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
@@ -87,6 +89,8 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     SwitchButton sb_cool_icon;
     @Bind(R.id.tv_count_cool)
     TextView tv_count_cool;
+    @Bind(R.id.ll_comment)
+    LinearLayout ll_comment;
 
     private int mSpace;
     private int mMargin;
@@ -164,6 +168,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
             }
         });
         rl_support.setOnClickListener(this);
+        ll_comment.setOnClickListener(this);
         rl_no_support.setOnClickListener(this);
         ll_cool.setOnClickListener(this);
     }
@@ -243,6 +248,12 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                                 tv_count_cool.setText("已关注");
                             }
                         });
+                break;
+            case R.id.ll_comment:
+                Bundle bundle = new Bundle();
+                bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
+                startActivity(CreateCommentActivity.class, bundle);
+                break;
 
         }
     }
