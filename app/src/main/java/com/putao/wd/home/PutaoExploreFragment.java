@@ -25,7 +25,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,7 +49,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     TextView tv_modified_time_mon;
 
     private static final String INDEX_CACHE = "index_cache";
-    private static int SAVE_TIME = 60;
+    private static int SAVE_TIME = 900;
 
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;

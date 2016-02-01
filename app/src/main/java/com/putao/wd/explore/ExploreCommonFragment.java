@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SwitchButton;
@@ -69,13 +70,13 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType())) {
             iv_player.setVisibility(View.VISIBLE);
             iv_video.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
-        }else{
+        } else {
             iv_video.setImageURL(mExploreIndex.getBanner().get(0).getUrl());
         }
     }
 
 
-    @OnClick({R.id.iv_video, R.id.ll_count_cool})
+    @OnClick({R.id.iv_video, R.id.ll_count_cool, R.id.iv_player})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -86,6 +87,12 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 startActivity(ExploreDetailActivity.class, bundleDetial);
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_down);
                 break;
+            case R.id.iv_player:
+                Bundle bundle = new Bundle();
+                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, mExploreIndex.getBanner().get(0).getUrl());
+                startActivity(YoukuVideoPlayerActivity.class, bundle);
+                break;
+
             case R.id.ll_count_cool:
                 Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);

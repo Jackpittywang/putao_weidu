@@ -18,6 +18,7 @@ import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.SmallBang;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -151,6 +152,10 @@ public class DiaryActivity extends PTWDActivity {
     @Subcriber(tag = ExploreAdapter.EVENT_PLAYER)
     public void eventPlayer(Bundle bundle) {
         startActivity(YoukuVideoPlayerActivity.class, bundle);
+    }
+
+    public DiskFileCacheHelper getDiskCacheHelper(){
+        return mDiskFileCacheHelper;
     }
 
 }

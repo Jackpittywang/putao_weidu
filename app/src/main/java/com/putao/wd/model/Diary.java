@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Diary implements Serializable {
     private int tag_type;
+    private String config_id;
     private String tag_name;
     private String title;
     private String ask;
@@ -22,7 +23,9 @@ public class Diary implements Serializable {
 
     //-----------本地字段
     private boolean isFinish;//是否答过
-    private boolean isTrue;//
+    private boolean isTrue;//是否正确
+    private String falseAnswer;//错误答案
+
 
 
     public int getTag_type() {
@@ -111,6 +114,22 @@ public class Diary implements Serializable {
 
     public void setIsTrue(boolean isTrue) {
         this.isTrue = isTrue;
+    }
+
+    public String getFalseAnswer() {
+        return falseAnswer;
+    }
+
+    public void setFalseAnswer(String falseAnswer) {
+        this.falseAnswer = falseAnswer;
+    }
+
+    public String getConfig_id() {
+        return config_id;
+    }
+
+    public void setConfig_id(String config_id) {
+        this.config_id = config_id;
     }
 
     @Override

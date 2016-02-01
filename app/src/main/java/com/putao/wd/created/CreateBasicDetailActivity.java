@@ -19,6 +19,9 @@ import com.putao.wd.api.CreateApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Create;
+import com.putao.wd.share.OnShareClickListener;
+import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -93,6 +96,8 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     TextView tv_count_cool;
     @Bind(R.id.ll_comment)
     LinearLayout ll_comment;
+    @Bind(R.id.ll_share)
+    LinearLayout ll_share;
 
     private int mSpace;
     private int mMargin;
@@ -104,6 +109,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     private Create mCreate;
     private boolean isShowProgress;
     private boolean isDid;
+    private SharePopupWindow mSharePopupWindow;//分享弹框
 
     private int mWidthPixels;
     private boolean btnState = false;
@@ -118,7 +124,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        addListener();
+        mSharePopupWindow = new SharePopupWindow(mContext);
         isDid = false;
         mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
         rl_support.setClickable(false);
@@ -126,6 +132,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         mCreate = (Create) args.getSerializable(CREATE);
         isShowProgress = args.getBoolean(SHOW_PROGRESS);
         initView();
+        addListener();
     }
 
     @Override
@@ -134,7 +141,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     }
 
     private void initView() {
-        if (mCreate.getFollow_status() == 1){
+        if (mCreate.getFollow_status() == 1) {
             sb_cool_icon.setState(true);
             tv_count_cool.setText("已关注");
         }
@@ -201,6 +208,17 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     showBtn(isEnd);
             }
         });
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+            @Override
+            public void onWechat() {
+                ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+            }
+
+            @Override
+            public void onWechatFriend() {
+                ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+            }
+        });
         rl_support.setOnClickListener(this);
         ll_comment.setOnClickListener(this);
         rl_no_support.setOnClickListener(this);
@@ -239,7 +257,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     }
 
     @Override
-    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool})
+    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool, R.id.ll_share})
     public void onClick(final View v) {
         if (R.id.rl_support == v.getId() || R.id.rl_no_support == v.getId()) {
             v.setEnabled(false);
@@ -298,6 +316,9 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                 Bundle bundle = new Bundle();
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
                 startActivity(CreateCommentActivity.class, bundle);
+                break;
+            case R.id.ll_share:
+                mSharePopupWindow.show(ll_share);
                 break;
 
         }

@@ -168,12 +168,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(getActivity(), true, "创造详情", "和孩子一起打造创造空间", "http://mall.file.putaocdn.com/file/a007d1dad9979d9caa70c3988e2bb2cab70679f3.jpg", "http://www.putao.com/product/11");
+                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(getActivity(), false, "创造详情", "和孩子一起打造创造空间", "http://mall.file.putaocdn.com/file/a007d1dad9979d9caa70c3988e2bb2cab70679f3.jpg", "http://www.putao.com/product/11");
+                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
             }
         });
     }
