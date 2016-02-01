@@ -10,7 +10,9 @@ import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.putao.wd.model.Marketing;
+import com.putao.wd.start.action.ActionsDetailActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -56,7 +58,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
                     public void onSuccess(String url, Creates result) {
                         adapter.replaceAll(result.getData());
                         ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
@@ -93,7 +95,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
                     public void onSuccess(String url, Creates result) {
                         adapter.addAll(result.getData());
                         rv_created.loadMoreComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
@@ -105,5 +107,23 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, false);
         startActivity(CreateBasicDetailActivity.class,bundle);
+    }
+
+    @Subcriber(tag = CreateAdapter.COOL)
+    public void cool(String id) {
+        networkRequest(CreateApi.setCreateAction(id, 1),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+
+                    }
+                });
+    }
+
+    @Subcriber(tag = FancyAdapter.COMMENT)
+    public void eventComment(String id) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, id);
+        startActivity(CreateCommentActivity.class, bundle);
     }
 }

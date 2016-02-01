@@ -33,6 +33,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
     private Context mContext;
     public final static String COOL = "cool";
     public final static String NOT_COOL = "not_cool";
+    public final static String COMMENT = "comment";
     public CreateAdapter(Context context, List<Create> creates) {
         super(context, creates);
         mContext = context;
@@ -66,7 +67,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         } else
             holder.rl_tag.setVisibility(View.GONE);*/
         holder.tv_content.setText(create.getDescrip());
-        holder.tv_count_comment.setText(create.getComment().getComment_reply_count() + "");
+        holder.tv_count_comment.setText(create.getComment().getCount() + "");
         holder.tv_count_cool.setText(create.getVote().getUp() + "");
         holder.tv_count_not_cool.setText(create.getVote().getDown() + "");
         holder.sb_cool_icon.setClickable(false);
@@ -81,11 +82,15 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                 break;
             case 1:
                 holder.tv_count_cool.setTextColor(0xff48cfae);
+                holder.tv_count_not_cool.setTextColor(0xff959595);
                 holder.sb_cool_icon.setState(true);
+                holder.sb_not_cool_icon.setState(false);
                 break;
             case 2:
                 holder.tv_count_not_cool.setTextColor(0xffed5564);
+                holder.tv_count_cool.setTextColor(0xff959595);
                 holder.sb_not_cool_icon.setState(true);
+                holder.sb_cool_icon.setState(false);
                 break;
         }
         holder.ll_cool.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +121,12 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                 holder.sb_not_cool_icon.setState(true);
                 create.setVote_status(2);
                 EventBusHelper.post(create.getId(), NOT_COOL);
+            }
+        });
+        holder.ll_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusHelper.post(create.getId(), COMMENT);
             }
         });
     }
@@ -153,6 +164,8 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         TextView tv_count_cool;
         @Bind(R.id.tv_count_not_cool)
         TextView tv_count_not_cool;
+        @Bind(R.id.ll_comment)
+        LinearLayout ll_comment;
 
         public CreateHolder(View itemView) {
             super(itemView);

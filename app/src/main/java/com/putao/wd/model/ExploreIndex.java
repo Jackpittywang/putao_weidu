@@ -7,7 +7,7 @@ import java.util.List;
  * 首页7条
  * Created by zhanghao on 2015/1/21
  */
-public class ExploreIndex implements Serializable {
+public class ExploreIndex extends CacheTime implements Serializable {
     private String article_id;//文章id
     private String title;//文章标题
     private String description;//文章描述

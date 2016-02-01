@@ -226,9 +226,9 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;
-                    if (result.getCurrentPage() == result.getTotalPage()){
-                        rv_content.noMoreLoading();
-                    }
+                }
+                if (result.getCurrentPage() == result.getTotalPage()){
+                    rv_content.noMoreLoading();
                 }
                 loading.dismiss();
                 ptl_refresh.refreshComplete();

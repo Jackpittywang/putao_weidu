@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -16,7 +14,7 @@ import com.putao.wd.explore.ExploreCommonFragment;
 import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.model.ExploreIndex;
-import com.putao.wd.qrcode.CaptureActivity;
+import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -42,7 +40,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     TextView tv_thinking;
     @Bind(R.id.tv_modified)
     TextView tv_modified;
-//    @Bind(R.id.iv_scan)
+    //    @Bind(R.id.iv_scan)
 //    ImageView iv_scan;
     @Bind(R.id.vp_content)
     BounceBackViewPager vp_content;
@@ -51,7 +49,11 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Bind(R.id.tv_modified_time_mon)
     TextView tv_modified_time_mon;
 
-    private List<ExploreIndex> mExploreIndexs;
+    private static final String INDEX_CACHE = "index_cache";
+    private static int SAVE_TIME = 60;
+
+    private ArrayList<ExploreIndex> mExploreIndexs;
+    private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
 
     @Override
@@ -114,15 +116,48 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         String monNow = formatMon.format(dateNow);
         tv_modified_time_day.setText(formatDay.format(date));
         tv_modified_time_mon.setText(getEngMon(formatMon.format(date)));
-        if (dayNow.equals(day)&&monNow.equals(mon))hindDate("今天");
+        if (dayNow.equals(day) && monNow.equals(mon)) hindDate("今天");
     }
 
     private void initData() {
+        mExploreIndex = (ExploreIndexs) mDiskFileCacheHelper.getAsSerializable(INDEX_CACHE);
+        if (null != mExploreIndex) {
+            mExploreIndexs = mExploreIndex.getExploreIndexes();
+            if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
+                if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) > System.currentTimeMillis()) {
+                    addFragments();
+                    addDate(vp_content.getCurrentItem());
+                } else {
+                    getIndexList();
+                }
+            } else {
+                getIndexList();
+            }
+        } else {
+            getIndexList();
+        }
+    }
+
+    private void getIndexList() {
         networkRequest(ExploreApi.getArticleList(),
                 new SimpleFastJsonCallback<ArrayList<ExploreIndex>>(ExploreIndex.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-                        mExploreIndexs = result;
+                        if (null != result && result.size() > 0) {
+                            mExploreIndexs = result;
+                            mExploreIndex = mExploreIndex == null ? new ExploreIndexs() : mExploreIndex;
+                            mExploreIndex.setSaveTime(System.currentTimeMillis());
+                            mExploreIndex.setExploreIndexes(result);
+                            mDiskFileCacheHelper.remove(INDEX_CACHE);
+                            mDiskFileCacheHelper.put(INDEX_CACHE, mExploreIndex);
+                            addFragments();
+                            addDate(vp_content.getCurrentItem());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
                         addFragments();
                         addDate(vp_content.getCurrentItem());
                     }

@@ -11,6 +11,8 @@ import com.putao.wd.R;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.putao.wd.model.Marketing;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -27,8 +29,12 @@ import butterknife.Bind;
  */
 public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHolder> {
 
+    private Context mContext;
+    public final static String COOL = "cool";
+    public final static String COMMENT = "comment";
     public FancyAdapter(Context context, List<Create> creates) {
         super(context, creates);
+        mContext = context;
     }
 
     @Override
@@ -42,7 +48,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
     }
 
     @Override
-    public void onBindItem(FancyHolder holder, Create create, int position) {
+    public void onBindItem(final FancyHolder holder, final Create create, int position) {
         /*Map map = JSONObject.parseObject(create.getTag());
         if (map != null && map.size() > 0) {
             holder.rl_tag.setVisibility(View.VISIBLE);
@@ -58,8 +64,44 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
         holder.tv_title.setText(create.getTitle());
         holder.tv_content.setText(create.getDescrip());
         holder.iv_icon.setImageURL(create.getAvatar());
-        holder.tv_count_comment.setText(create.getComment().getComment_reply_count() + "");
+        holder.tv_count_comment.setText(create.getComment().getCount() + "");
         holder.tv_count_cool.setText(create.getVote().getUp() + "");
+        holder.sb_cool_icon.setClickable(false);
+        switch (create.getVote_status()) {
+            case 0:
+                holder.tv_count_cool.setTextColor(0xff959595);
+                holder.sb_cool_icon.setState(false);
+                break;
+            case 1:
+                holder.tv_count_cool.setTextColor(0xff48cfae);
+                holder.sb_cool_icon.setState(true);
+                break;
+            case 2:
+                holder.tv_count_cool.setTextColor(0xff959595);
+                holder.sb_cool_icon.setState(false);
+                break;
+        }
+        holder.ll_cool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (create.getVote_status() != 0) {
+                    ToastUtils.showToastShort(mContext, "您已经表过态度了哦");
+                    return;
+                }
+                create.getVote().setUp(create.getVote().getUp() + 1);
+                holder.tv_count_cool.setText(create.getVote().getUp() + "");
+                holder.tv_count_cool.setTextColor(0xff48cfae);
+                holder.sb_cool_icon.setState(true);
+                create.setVote_status(1);
+                EventBusHelper.post(create.getId(), COOL);
+            }
+        });
+        holder.ll_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusHelper.post(create.getId(), COMMENT);
+            }
+        });
     }
 
     static class FancyHolder extends BasicViewHolder {
@@ -87,6 +129,8 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
         LinearLayout ll_comment;
         @Bind(R.id.ll_cool)
         LinearLayout ll_cool;
+        @Bind(R.id.sb_cool_icon)
+        SwitchButton sb_cool_icon;
 
         public FancyHolder(View itemView) {
             super(itemView);

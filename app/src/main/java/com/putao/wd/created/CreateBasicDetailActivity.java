@@ -3,7 +3,9 @@ package com.putao.wd.created;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -101,6 +103,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     public static final String SHOW_PROGRESS = "show_progress";
     private Create mCreate;
     private boolean isShowProgress;
+    private boolean isDid;
 
     private int mWidthPixels;
     private boolean btnState = false;
@@ -116,6 +119,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         addListener();
+        isDid = false;
         mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
         rl_support.setClickable(false);
         rl_no_support.setClickable(false);
@@ -130,6 +134,10 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     }
 
     private void initView() {
+        if (mCreate.getFollow_status() == 1){
+            sb_cool_icon.setState(true);
+            tv_count_cool.setText("已关注");
+        }
         sb_cool_icon.setState(mCreate.getFollow_status() == 1 ? true : false);
         sb_cool_icon.setClickable(false);
         iv_sign.setImageURL(mCreate.getCover());
@@ -146,6 +154,27 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
             navigation_bar.setMainTitle("奇思妙想详情");
             v_fancy.setVisibility(View.VISIBLE);
         }
+
+        if (mCreate.getVote_status() != 0) {
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_support.getLayoutParams();
+            layoutParams = new RelativeLayout.LayoutParams(layoutParams.width, layoutParams.height);
+            layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            isDid = true;
+            switch (mCreate.getVote_status()) {
+                case 1:
+                    rl_no_support.setVisibility(View.GONE);
+                    tv_support.setVisibility(View.GONE);
+                    rl_support.setLayoutParams(layoutParams);
+                    tv_support_result.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    rl_support.setVisibility(View.GONE);
+                    tv_no_support.setVisibility(View.GONE);
+                    rl_no_support.setLayoutParams(layoutParams);
+                    tv_no_support_result.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
     }
 
     private void addListener() {
@@ -158,19 +187,35 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
             @Override
             public void onWebPageLoaderFinish(String url) {
                 Logger.d("网页加载完成");
-                sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
-                    @Override
-                    public void onScroll(int scrollY) {
-                        View contentView = sv_detail.getChildAt(0);
-                        showBtn(contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight());
-                    }
-                });
+
+            }
+        });
+        sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
+            @Override
+            public void onScroll(int scrollY) {
+                View contentView = sv_detail.getChildAt(0);
+                boolean isEnd = contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight();
+                if (isDid) {
+                    showDidBtn(isEnd);
+                } else
+                    showBtn(isEnd);
             }
         });
         rl_support.setOnClickListener(this);
         ll_comment.setOnClickListener(this);
         rl_no_support.setOnClickListener(this);
         ll_cool.setOnClickListener(this);
+    }
+
+    private void showDidBtn(boolean isEnd) {
+        if (isEnd && !btnState) {
+            rl_btn.setVisibility(View.VISIBLE);
+            showView(rl_btn);
+            btnState = true;
+        } else if (!isEnd && btnState) {
+            hindView(rl_btn);
+            btnState = false;
+        }
     }
 
     /**

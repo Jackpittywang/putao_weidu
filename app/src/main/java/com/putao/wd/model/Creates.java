@@ -6,7 +6,7 @@ import java.util.List;
  * 成长日记首页
  * Created by zhanghao on 2015/12/8.
  */
-public class Creates extends Page {
+public class Creates extends CreatePage {
    List<Create> data;
 
     public List<Create> getData() {

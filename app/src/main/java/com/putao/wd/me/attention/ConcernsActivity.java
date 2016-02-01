@@ -22,7 +22,7 @@ import java.io.Serializable;
 import butterknife.Bind;
 
 /**
- * 奇思妙想
+ * 我的关注
  * Created by zhanghao on 2016/1/25.
  */
 public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create> {
@@ -57,7 +57,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                     public void onSuccess(String url, Creates result) {
                         adapter.replaceAll(result.getData());
                         ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
@@ -94,7 +94,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                     public void onSuccess(String url, Creates result) {
                         adapter.addAll(result.getData());
                         rv_created.loadMoreComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });

@@ -23,7 +23,7 @@ public class Create implements Serializable {
     private String tag;
     private CreateVote vote;
     private int vote_status;
-    private CreateComment comment;
+    private CreateListComment comment;
     private String avatar;
     private String nickname;
     private int follow_status;
@@ -148,11 +148,11 @@ public class Create implements Serializable {
         this.vote_status = vote_status;
     }
 
-    public CreateComment getComment() {
+    public CreateListComment getComment() {
         return comment;
     }
 
-    public void setComment(CreateComment comment) {
+    public void setComment(CreateListComment comment) {
         this.comment = comment;
     }
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 成长日记首页
+ * 创造评论
  * Created by zhanghao on 2015/12/8.
  */
 public class CreateComment implements Serializable {

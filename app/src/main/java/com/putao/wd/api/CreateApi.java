@@ -63,6 +63,7 @@ public class CreateApi {
 
     /**
      * 我的关注
+     *
      * @param page 页数
      */
     public static Request getCreateMyfollows(int page) {
@@ -70,6 +71,7 @@ public class CreateApi {
                 .addParam(REQUEST_PAGE, page + "")
                 .build(RequestMethod.POST, URL_CREATE_MYFOLLOWS);
     }
+
     /**
      * 操作
      */
@@ -77,26 +79,27 @@ public class CreateApi {
 
     /**
      * 操作
+     *
      * @param action 操作类型
      */
     public static Request setCreateAction(String id, int action) {
         return PTWDRequestHelper.start()
                 .addParam(ID, id)
-                .addParam(ACTION, action+"")
+                .addParam(ACTION, action + "")
                 .build(RequestMethod.POST, URL_CREATE_ACTION);
     }
 
     /**
      * 评论列表
      */
-    public static final String URL_COMMENT_LIST= BASE_URL + "/create/comment/lists";
+    public static final String URL_COMMENT_LIST = BASE_URL + "/create/comment/lists";
 
     /**
      * 评论列表
      */
     public static Request getCommentList(int page, String id) {
         return PTWDRequestHelper.start()
-                .addParam(REQUEST_PAGE, page+"")
+                .addParam(REQUEST_PAGE, page + "")
                 .addParam(ID, id)
                 .build(RequestMethod.POST, URL_COMMENT_LIST);
     }
@@ -104,22 +107,23 @@ public class CreateApi {
     /**
      * 添加评论
      */
-    public static final String URL_COMMENT_ADD= BASE_URL + "/create/comment/add";
+    public static final String URL_COMMENT_ADD = BASE_URL + "/create/comment/add";
 
     /**
-     * 回复文章
+     * 回复评论
      */
-    public static Request addComment(String create_id, String comment_source,String content) {
+    public static Request addComment(String content, String create_id, String comment_source) {
         return PTWDRequestHelper.start()
                 .addParam(CREATE_ID, create_id)
                 .addParam(COMMENT_SOURCE, comment_source)
                 .addParam(CONTENT, content)
                 .build(RequestMethod.POST, URL_COMMENT_ADD);
     }
+
     /**
-     * 回复评论
+     * 回复文章
      */
-    public static Request addComment(String create_id,String content) {
+    public static Request addComment(String content,String create_id) {
         return PTWDRequestHelper.start()
                 .addParam(CREATE_ID, create_id)
                 .addParam(COMMENT_SOURCE, "0")
@@ -130,7 +134,7 @@ public class CreateApi {
     /**
      * 删除评论
      */
-    public static final String URL_COMMENT_DELETE= BASE_URL + "/create/comment/delete";
+    public static final String URL_COMMENT_DELETE = BASE_URL + "/create/comment/delete";
 
     /**
      * 删除评论
@@ -140,24 +144,26 @@ public class CreateApi {
                 .addParam(COMMENT_ID, comment_id)
                 .build(RequestMethod.POST, URL_COMMENT_DELETE);
     }
+
     /**
      * 赞评论
      */
-    public static final String URL_COMMENT_LIKE= BASE_URL + "/create/comment/like";
+    public static final String URL_COMMENT_LIKE = BASE_URL + "/create/comment/like";
 
     /**
      * 删除评论
      */
-    public static Request addCommentLike(String create_id,String comment_id) {
+    public static Request addCommentLike(String create_id, String comment_id) {
         return PTWDRequestHelper.start()
                 .addParam(CREATE_ID, create_id)
                 .addParam(COMMENT_ID, comment_id)
                 .build(RequestMethod.POST, URL_COMMENT_LIKE);
     }
+
     /**
      * 删除赞
      */
-    public static final String URL_COMMENT_CANCEL_LIKE= BASE_URL + "/create/comment/cancelLike";
+    public static final String URL_COMMENT_CANCEL_LIKE = BASE_URL + "/create/comment/cancelLike";
 
     /**
      * 删除评论

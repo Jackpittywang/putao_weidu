@@ -6,9 +6,11 @@ import android.view.View;
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
+import com.putao.wd.created.CreateCommentActivity;
 import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
+import com.putao.wd.start.action.ActionsDetailActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -54,7 +56,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                     public void onSuccess(String url, Creates result) {
                         adapter.replaceAll(result.getData());
                         ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
@@ -98,7 +100,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                     public void onSuccess(String url, Creates result) {
                         adapter.addAll(result.getData());
                         rv_created.loadMoreComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
@@ -130,6 +132,13 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
 
                     }
                 });
+    }
+
+    @Subcriber(tag = CreateAdapter.COMMENT)
+    public void eventComment(String id) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, id);
+        startActivity(CreateCommentActivity.class, bundle);
     }
 
 }
