@@ -116,7 +116,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 //        webSettings.setUseWideViewPort(false);
 //        webSettings.setLoadWithOverviewMode(true);
-//        addListener();
+        addListener();
     }
 
     private String setImageWidth(String reg, String explanation, boolean isVideo) {
@@ -125,7 +125,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         Matcher m = p.matcher(explanation);// 开始编译
         while (m.find()) {
             String group = m.group(1);
-            group = addWidHei(group,isVideo);
+            group = addWidHei(group, isVideo);
             group = addStyle(group);
             replaceAll = replaceAll.replace(m.group(1), group);
             System.out.println(replaceAll);
@@ -182,12 +182,12 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(ExploreMoreDetailActivity.this, true, "创造详情", "和孩子一起打造创造空间", "http://mall.file.putaocdn.com/file/a007d1dad9979d9caa70c3988e2bb2cab70679f3.jpg", "http://www.putao.com/product/11");
+                ShareTools.wechatWebShare(mContext, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(ExploreMoreDetailActivity.this, false, "创造详情", "和孩子一起打造创造空间", "http://mall.file.putaocdn.com/file/a007d1dad9979d9caa70c3988e2bb2cab70679f3.jpg", "http://www.putao.com/product/11");
+                ShareTools.wechatWebShare(mContext, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
             }
         });
     }
