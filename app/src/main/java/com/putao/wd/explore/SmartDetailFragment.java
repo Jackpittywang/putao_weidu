@@ -33,9 +33,10 @@ public class SmartDetailFragment extends BasicFragment{
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         int content_num = getArguments().getInt(CONTENT_NUM);
-        String s = getResources().getStringArray(R.array.smart_list)[content_num];
-        tv_smart_list_title.setText(s);
-        tv_smart_list_detail.setText(s);
+        String list = getResources().getStringArray(R.array.smart_list)[content_num];
+        String detail = getResources().getStringArray(R.array.smart_detail)[content_num];
+        tv_smart_list_title.setText(list);
+        tv_smart_list_detail.setText(detail);
     }
 
     @Override

@@ -181,10 +181,8 @@ public class YoukuVideoPlayerActivity extends BasicFragmentActivity {
         isFromLocal = args.getBoolean(BUNDLE_IS_FROM_LOCAL, false);
         if (isFromLocal) {  // 播放本地视频
             local_vid = args.getString(BUNDLE_LOCAL_VID);
-            local_vid = "XMTQ1NjI5ODc2OA";
         } else { // 在线播放
             vid = args.getString(BUNDLE_VID);
-            vid = "XMTQ1NjI5ODc2OA";
         }
     }
 

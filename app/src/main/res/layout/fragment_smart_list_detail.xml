@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_detail"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@null"
-    android:gravity="center_horizontal|bottom"
-    android:orientation="vertical">
+<LinearLayout android:id="@+id/ll_detail"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@null"
+              android:gravity="center_horizontal|bottom"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_smart_list_title"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:background="@null"
-        android:text="小Q大冒险" />
+        android:text="小Q大冒险"/>
 
     <TextView
         android:id="@+id/tv_smart_list_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:text="小Q大冒险" />
+        android:lineSpacingMultiplier="1.5"
+        android:text="小Q大冒险"/>
 
 
 </LinearLayout>

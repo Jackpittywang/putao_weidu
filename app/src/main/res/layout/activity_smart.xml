@@ -46,6 +46,7 @@
         android:layout_gravity="bottom"
         android:background="@drawable/img_tmi_mask"
         android:paddingLeft="23dp"
+        android:paddingRight="23dp"
         android:paddingBottom="30dp" />
 
 </FrameLayout>

@@ -192,7 +192,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryQuestion.getA()) {
                 viewHolder.rl_answer1.setVisibility(View.VISIBLE);
                 viewHolder.tv_answer1.setText(diaryQuestion.getA());
-                viewHolder.iv_answer1.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "A");
@@ -208,7 +208,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.v_answer2.setVisibility(View.VISIBLE);
                 viewHolder.rl_answer2.setVisibility(View.VISIBLE);
                 viewHolder.tv_answer2.setText(diaryQuestion.getB());
-                viewHolder.iv_answer2.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "B");
@@ -224,7 +224,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.v_answer3.setVisibility(View.VISIBLE);
                 viewHolder.rl_answer3.setVisibility(View.VISIBLE);
                 viewHolder.tv_answer3.setText(diaryQuestion.getC());
-                viewHolder.iv_answer3.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "C");
@@ -240,7 +240,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.v_answer4.setVisibility(View.VISIBLE);
                 viewHolder.rl_answer4.setVisibility(View.VISIBLE);
                 viewHolder.tv_answer4.setText(diaryQuestion.getD());
-                viewHolder.iv_answer4.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "D");
@@ -284,7 +284,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryQuestion.getA()) {
                 viewHolder.rl_answer1.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer1.setImageURL(diaryQuestion.getA());
-                viewHolder.iv_answer1.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkPicAnswer(viewHolder, diary.getAnswer(), "A");
@@ -299,7 +299,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryQuestion.getB()) {
                 viewHolder.rl_answer2.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer2.setImageURL(diaryQuestion.getB());
-                viewHolder.iv_answer2.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkPicAnswer(viewHolder, diary.getAnswer(), "B");
@@ -314,7 +314,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryQuestion.getC()) {
                 viewHolder.rl_answer3.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer3.setImageURL(diaryQuestion.getC());
-                viewHolder.iv_answer3.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkPicAnswer(viewHolder, diary.getAnswer(), "C");
@@ -329,7 +329,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryQuestion.getD()) {
                 viewHolder.rl_answer4.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer4.setImageURL(diaryQuestion.getD());
-                viewHolder.iv_answer4.setOnClickListener(new View.OnClickListener() {
+                viewHolder.rl_answer4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isTrue = checkPicAnswer(viewHolder, diary.getAnswer(), "D");
@@ -441,17 +441,17 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     }
 
     private void setClickable(DiaryChallengeViewHolder viewHolder, boolean b) {
-        viewHolder.iv_answer1.setEnabled(b);
-        viewHolder.iv_answer2.setEnabled(b);
-        viewHolder.iv_answer3.setEnabled(b);
-        viewHolder.iv_answer4.setEnabled(b);
+        viewHolder.rl_answer1.setEnabled(b);
+        viewHolder.rl_answer2.setEnabled(b);
+        viewHolder.rl_answer3.setEnabled(b);
+        viewHolder.rl_answer4.setEnabled(b);
     }
 
     private void setPicClickable(DiaryChallengePicViewHolder viewHolder, boolean b) {
-        viewHolder.iv_answer1.setEnabled(b);
-        viewHolder.iv_answer2.setEnabled(b);
-        viewHolder.iv_answer3.setEnabled(b);
-        viewHolder.iv_answer4.setEnabled(b);
+        viewHolder.rl_answer1.setEnabled(b);
+        viewHolder.rl_answer2.setEnabled(b);
+        viewHolder.rl_answer3.setEnabled(b);
+        viewHolder.rl_answer4.setEnabled(b);
     }
 
     private void initAnswer(DiaryChallengeViewHolder holder, String answer) {

@@ -58,7 +58,7 @@ public class CreateCommentAdapter extends LoadMoreAdapter<CreateComment, CreateC
         holder.tv_comment_time.setText(create_time);
         holder.tv_comment_content.setText(comment.getContent());
         if (!"0".equals(comment.getLike_count())) {
-            holder.tv_count_cool.setText(comment.getLike_count()+"");
+            holder.tv_count_cool.setText(comment.getLike_count() + "");
         } else {
             holder.tv_count_cool.setText("赞");
         }
@@ -80,6 +80,7 @@ public class CreateCommentAdapter extends LoadMoreAdapter<CreateComment, CreateC
                     holder.sb_cool_icon.setState(true);
                     comment.setLike_status(true);
                     comment.setLike_count(comment.getComment_reply_count() + 1);
+                    holder.tv_count_cool.setText(comment.getComment_reply_count() + 1 + "");
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
             }
         });

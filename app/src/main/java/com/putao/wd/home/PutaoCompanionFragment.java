@@ -53,6 +53,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     BasicRecyclerView rv_products;
     @Bind(R.id.iv_smart)
     ImageView iv_smart;
+    @Bind(R.id.rl_background)
+    RelativeLayout rl_background;
 
     ProductsAdapter mProductsAdapter;
     private List<DiaryApp> mDiaryApps;
@@ -75,7 +77,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         iv_title_bar_right1.setOnClickListener(this);
         iv_title_bar_right2.setOnClickListener(this);
         btn_explore_empty.setOnClickListener(this);
-        iv_smart.setOnClickListener(this);
+        rl_background.setOnClickListener(this);
     }
 
     @Override
@@ -129,7 +131,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.iv_smart) {
+        if (v.getId() == R.id.rl_background) {
             startActivity(SmartActivity.class);
             getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_out_from_down);
             return;

@@ -173,12 +173,14 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_support.setVisibility(View.GONE);
                     rl_support.setLayoutParams(layoutParams);
                     tv_support_result.setVisibility(View.VISIBLE);
+                    rl_support.setEnabled(false);
                     break;
                 case 2:
-                    rl_support.setVisibility(View.GONE);
+                    rl_support.setVisibility(View.GONE); 
                     tv_no_support.setVisibility(View.GONE);
                     rl_no_support.setLayoutParams(layoutParams);
                     tv_no_support_result.setVisibility(View.VISIBLE);
+                    rl_no_support.setEnabled(false);
                     break;
             }
         }

@@ -288,7 +288,7 @@ public class ExploreApi {
     /**
      * 删除评论
      */
-    public static final String URL_COMMENT_DELETE = BASE_URL + "article_comment_delete";
+    public static final String URL_COMMENT_DELETE = BASE_URL + "article/comment/delete";
 
     /**
      * 删除评论

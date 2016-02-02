@@ -6,8 +6,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -15,11 +13,9 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.me.order.OrderListActivity;
-import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.model.Comment;
 import com.putao.wd.model.CommentList;
 import com.putao.wd.start.action.ActionsDetailActivity;
@@ -30,6 +26,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
@@ -71,7 +68,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private List<Emoji> emojis;
     private String action_id;
     private boolean isShowEmoji = false;
-    private int position;
+    private int mPosition;
     private boolean isReply;
     private boolean hasComment;
     private int page = 1;
@@ -101,24 +98,28 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {
-                //删除评论
-                String comment_id = adapter.getItem(position).getComment_id();
-                networkRequest(ExploreApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+                final Comment item = adapter.getItem(mPosition);
+                if (AccountHelper.getCurrentUid().equals(item.getUser_id())) {
+                    //删除评论
+                    String comment_id = item.getComment_id();
+                    networkRequest(ExploreApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
 
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        getCommentList();
-                        EventBusHelper.post(false, EVENT_COUNT_COMMENT);
-                    }
-                });
+                        @Override
+                        public void onSuccess(String url, String result) {
+                            adapter.delete(item);
+                            EventBusHelper.post(false, EVENT_COUNT_COMMENT);
+                        }
+                    });
+                } else {
+                    ToastUtils.showToastShort(mContext, "感谢您的举报，我们会尽快处理");
+                }
             }
 
             @Override
             public void onSecondClick(View v) {
-                et_msg.setText("");
+                reply();
             }
         };
-        mSelectPopupWindow.tv_first.setText("删除");
         mSelectPopupWindow.tv_second.setText("回复");
     }
 
@@ -151,11 +152,18 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 getCommentList();
             }
         });
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
+        rv_content.setOnItemClickListener(new OnItemClickListener<Comment>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
+            public void onItemClick(Comment comment, int position) {
+                mPosition = position;
+                if (AccountHelper.getCurrentUid().equals(comment.getUser_id())) {
+                    mSelectPopupWindow.tv_first.setText("删除");
+                    mSelectPopupWindow.tv_first.setTextColor(0xff6666CC);
+                } else {
+                    mSelectPopupWindow.tv_first.setText("举报");
+                    mSelectPopupWindow.tv_first.setTextColor(0xffcc0000);
+                }
                 mSelectPopupWindow.show(rl_main);
-
             }
         });
     }
@@ -169,7 +177,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send://点击发送
-                if (!AccountHelper.isLogin()){
+                if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CommentActivity.class);
                     bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
@@ -178,7 +186,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     return;
                 }
                 if (isReply) {
-                    Comment comment = adapter.getItem(position);
+                    Comment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
                     networkRequest(ExploreApi.addComment(msg, action_id, comment.getComment_id()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -274,8 +282,12 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
 
     @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
     public void eventClickComment(int currPosition) {
-        position = currPosition;
-        Comment comment = adapter.getItem(position);
+        mPosition = currPosition;
+        reply();
+    }
+
+    private void reply() {
+        Comment comment = adapter.getItem(mPosition);
         String username = comment.getUser_name() + ": ";
         SpannableString ss = new SpannableString("回复 " + username);
         ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -291,7 +303,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        adapter.notifyItemChanged(currPosition);
+//                        adapter.notifyItemChanged(currPosition);
                         mDiskFileCacheHelper.put(COOL + comment.getComment_id(), "true");
                         EventBusHelper.post(true, EVENT_COUNT_COOL);
                     }

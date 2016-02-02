@@ -13,6 +13,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.created.adapter.CreateCommentAdapter;
@@ -30,6 +31,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
@@ -71,7 +73,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     private List<Emoji> emojis;
     private String action_id;
     private boolean isShowEmoji = false;
-    private int position;
+    private int mPosition;
     private boolean isReply;
     private boolean hasComment;
     private int page = 1;
@@ -93,32 +95,36 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
 
         emojiMap = mApp.getEmojis();
         emojis = new ArrayList<>();
-        for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
+        /*for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
             emojis.add(new Emoji(entry.getKey(), entry.getValue()));
         }
-        vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
+        vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));*/
 
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {
-                //删除评论
-                String comment_id = adapter.getItem(position).getComment_source();
-                networkRequest(CreateApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+                final CreateComment item = adapter.getItem(mPosition);
+                if (AccountHelper.getCurrentUid().equals(item.getUid())) {
+                    //删除评论
+                    String comment_id = item.getComment_source();
+                    networkRequest(ExploreApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
 
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        getCommentList();
-                        EventBusHelper.post(false, EVENT_COUNT_COMMENT);
-                    }
-                });
+                        @Override
+                        public void onSuccess(String url, String result) {
+                            adapter.delete(item);
+                            EventBusHelper.post(false, EVENT_COUNT_COMMENT);
+                        }
+                    });
+                } else {
+                    ToastUtils.showToastShort(mContext, "感谢您的举报，我们会尽快处理");
+                }
             }
 
             @Override
             public void onSecondClick(View v) {
-                et_msg.setText("");
+                reply();
             }
         };
-        mSelectPopupWindow.tv_first.setText("删除");
         mSelectPopupWindow.tv_second.setText("回复");
     }
 
@@ -151,14 +157,31 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 getCommentList();
             }
         });
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
+        rv_content.setOnItemClickListener(new OnItemClickListener<CreateComment>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
+            public void onItemClick(CreateComment comment, int position) {
+                mPosition = position;
+                if (AccountHelper.getCurrentUid().equals(comment.getUid())) {
+                    mSelectPopupWindow.tv_first.setText("删除");
+                    mSelectPopupWindow.tv_first.setTextColor(0xff6666CC);
+                } else {
+                    mSelectPopupWindow.tv_first.setText("举报");
+                    mSelectPopupWindow.tv_first.setTextColor(0xffcc0000);
+                }
                 mSelectPopupWindow.show(rl_main);
-
             }
         });
     }
+
+    private void reply() {
+        CreateComment comment = adapter.getItem(mPosition);
+        String username = comment.getUsername() + ": ";
+        SpannableString ss = new SpannableString("回复 " + username);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        et_msg.setText(ss);
+        isReply = true;
+    }
+
 
     @OnClick({R.id.tv_emojis, R.id.tv_send})
     @Override
@@ -178,7 +201,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     return;
                 }
                 if (isReply) {
-                    CreateComment comment = adapter.getItem(position);
+                    CreateComment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
                     networkRequest(CreateApi.addComment(msg, action_id, comment.getComment_source()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -217,7 +240,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
         networkRequest(CreateApi.getCommentList(page, action_id), new SimpleFastJsonCallback<CreateComments>(CreateComments.class, loading) {
             @Override
             public void onSuccess(String url, CreateComments result) {
-                if (result.getData().size()>0){
+                if (result.getData().size() > 0) {
                     List<CreateComment> comments = result.getData();
                     if (comments != null && comments.size() > 0) {
                         checkLiked(comments);
@@ -227,7 +250,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     rv_content.loadMoreComplete();
                     page++;
                 }
-                if (result.getCurrentPage() == result.getTotalPage()){
+                if (result.getCurrentPage() == result.getTotalPage()) {
                     rv_content.noMoreLoading();
                 }
                 loading.dismiss();
@@ -274,13 +297,8 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
 
     @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
     public void eventClickComment(int currPosition) {
-        position = currPosition;
-        CreateComment comment = adapter.getItem(position);
-        String username = comment.getUsername() + ": ";
-        SpannableString ss = new SpannableString("回复 " + username);
-        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        et_msg.setText(ss);
-        isReply = true;
+        mPosition = currPosition;
+        reply();
     }
 
     //点赞提交
