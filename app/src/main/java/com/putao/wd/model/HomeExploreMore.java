@@ -13,8 +13,8 @@ public class HomeExploreMore implements Serializable {
     private String description;
     private String send_time;
     private boolean is_like;
-    private String count_likes;
-    private String count_comments;
+    private int count_likes;
+    private int count_comments;
     private String type;
     private String url;
     private String cover_pic;
@@ -59,19 +59,19 @@ public class HomeExploreMore implements Serializable {
         this.is_like = is_like;
     }
 
-    public String getCount_likes() {
+    public int getCount_likes() {
         return count_likes;
     }
 
-    public void setCount_likes(String count_likes) {
+    public void setCount_likes(int count_likes) {
         this.count_likes = count_likes;
     }
 
-    public String getCount_comments() {
+    public int getCount_comments() {
         return count_comments;
     }
 
-    public void setCount_comments(String count_comments) {
+    public void setCount_comments(int count_comments) {
         this.count_comments = count_comments;
     }
 

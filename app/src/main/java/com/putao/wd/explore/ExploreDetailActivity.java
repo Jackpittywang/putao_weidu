@@ -125,7 +125,8 @@ public class ExploreDetailActivity extends BasicFragmentActivity /*implements Sw
      */
     private Bundle addBundle(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ExploreCommonFragment.INDEX_DATA_PAGE, mExploreIndexs.get(position));
+        bundle.putInt(ExploreCommonFragment.INDEX_DATA_PAGE, position);
+        bundle.putSerializable(ExploreCommonFragment.INDEX_DATA, mExploreIndexs.get(position));
         return bundle;
     }
 

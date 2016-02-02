@@ -33,7 +33,6 @@ import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +47,8 @@ import butterknife.OnClick;
 public class CommentActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     public static final String EVENT_COUNT_COMMENT = "event_count_comment";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
+    public static final String EVENT_ADD_CREAT_COMMENT = "event_add_creat_comment";
+    public static final String EVENT_DELETE_CREAT_COMMENT = "event_delete_creat_comment";
 
     @Bind(R.id.rl_main)
     RelativeLayout rl_main;
@@ -69,10 +70,12 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private String action_id;
     private boolean isShowEmoji = false;
     private int mPosition;
+    private int mSuperPosition;
     private boolean isReply;
     private boolean hasComment;
     private int page = 1;
     public final static String COOL = "CommentCool";//是否赞过
+    public final static String POSITION = "position";
 
     @Override
     protected int getLayoutId() {
@@ -85,9 +88,9 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
+        mSuperPosition = args.getInt(POSITION);
         refreshCommentList();
         addListener();
-
         emojiMap = mApp.getEmojis();
         emojis = new ArrayList<>();
         for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
@@ -107,7 +110,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                         @Override
                         public void onSuccess(String url, String result) {
                             adapter.delete(item);
-                            EventBusHelper.post(false, EVENT_COUNT_COMMENT);
+                            EventBusHelper.post(mSuperPosition, EVENT_DELETE_CREAT_COMMENT);
                         }
                     });
                 } else {
@@ -194,7 +197,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
                                     refreshCommentList();
-                                    EventBusHelper.post(true, EVENT_COUNT_COMMENT);
+                                    EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
                                 }
                             });
                 } else {
@@ -205,7 +208,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
                                     refreshCommentList();
-                                    EventBusHelper.post(true, EVENT_COUNT_COMMENT);
+                                    EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
                                 }
                             });
                 }

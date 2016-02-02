@@ -32,7 +32,7 @@ public class CreateApi {
 //    private static final String COOL_TYPE = "cool_type";//赞类型
 
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-bbs-ng-test.start.wang" : "http://api-bbs-ng-test.start.wang";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-bbs-ng-test.start.wang" : "http://api-bbs.putao.com";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;

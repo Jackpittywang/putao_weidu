@@ -1,19 +1,14 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.model.Create;
-import com.putao.wd.model.CreateComment;
-import com.putao.wd.model.CreateVote;
-import com.putao.wd.model.Marketing;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
@@ -33,7 +28,8 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
     private Context mContext;
     public final static String COOL = "cool";
     public final static String NOT_COOL = "not_cool";
-    public final static String COMMENT = "comment";
+    public final static String CREAT_COMMENT = "creat_comment";
+
     public CreateAdapter(Context context, List<Create> creates) {
         super(context, creates);
         mContext = context;
@@ -54,18 +50,20 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         holder.iv_sign.setImageURL(create.getCover());
         holder.tv_title.setText(create.getTitle());
         holder.iv_user_icon.setImageURL(create.getAvatar());
-       /* Map map = JSONObject.parseObject(create.getTag());
-        if (map != null && map.size() > 0) {
-            holder.rl_tag.setVisibility(View.VISIBLE);
-            holder.tv_tag1.setText(null == map.get("1") ? "" : map.get("1").toString());
-            holder.tv_tag2.setText(null == map.get("2") ? "" : map.get("2").toString());
-            holder.tv_tag3.setText(null == map.get("3") ? "" : map.get("3").toString());
-            holder.tv_tag4.setText(null == map.get("4") ? "" : map.get("4").toString());
-            holder.tv_tag2.setVisibility(null == map.get("2") ? View.GONE : View.VISIBLE);
-            holder.tv_tag3.setVisibility(null == map.get("3") ? View.GONE : View.VISIBLE);
-            holder.tv_tag4.setVisibility(null == map.get("4") ? View.GONE : View.VISIBLE);
-        } else
-            holder.rl_tag.setVisibility(View.GONE);*/
+        if (null != create.getTag()) {
+            Map map = JSONObject.parseObject(create.getTag());
+            if (map != null && map.size() > 0) {
+                holder.rl_tag.setVisibility(View.VISIBLE);
+                holder.tv_tag1.setText(null == map.get("1") ? "" : map.get("1").toString());
+                holder.tv_tag2.setText(null == map.get("2") ? "" : map.get("2").toString());
+                holder.tv_tag3.setText(null == map.get("3") ? "" : map.get("3").toString());
+                holder.tv_tag4.setText(null == map.get("4") ? "" : map.get("4").toString());
+                holder.tv_tag2.setVisibility(null == map.get("2") ? View.GONE : View.VISIBLE);
+                holder.tv_tag3.setVisibility(null == map.get("3") ? View.GONE : View.VISIBLE);
+                holder.tv_tag4.setVisibility(null == map.get("4") ? View.GONE : View.VISIBLE);
+            } else
+                holder.rl_tag.setVisibility(View.GONE);
+        }
         holder.tv_content.setText(create.getDescrip());
         holder.tv_count_comment.setText(create.getComment().getCount() + "");
         holder.tv_count_cool.setText(create.getVote().getUp() + "");
@@ -105,7 +103,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                 holder.tv_count_cool.setTextColor(0xff48cfae);
                 holder.sb_cool_icon.setState(true);
                 create.setVote_status(1);
-                EventBusHelper.post(create.getId(),COOL);
+                EventBusHelper.post(create.getId(), COOL);
             }
         });
         holder.ll_not_cool.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +124,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
         holder.ll_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBusHelper.post(create.getId(), COMMENT);
+                EventBusHelper.post(create.getId(), CREAT_COMMENT);
             }
         });
     }

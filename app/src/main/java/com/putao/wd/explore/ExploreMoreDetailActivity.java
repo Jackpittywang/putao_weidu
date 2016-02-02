@@ -20,6 +20,7 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
@@ -66,6 +67,9 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
     public final static String ARTICLE_ID = "article_id";//是否赞过
+    public static final String EVENT_ADD_CREAT_COOL = "event_add_creat_cool";
+    public final static String POSITION = "position";
+    private int mPosition;
     private float mWidth;
     private float mHeight;
 
@@ -77,6 +81,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mArticleId = args.getString(ARTICLE_ID);
+        mPosition = args.getInt(POSITION);
         mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200);
         mHeight = (mWidth * 9) / 16 + 2;
         initData();
@@ -107,7 +112,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)", setImageWidth("<img([^>]*)", mExploreIndex.getExplanation(), false), true), "text/html", "utf-8", null);
         mSharePopupWindow = new SharePopupWindow(this);
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
-        sb_cool_icon.setState(isCool);
+        sb_cool_icon.setState(isCool || mExploreIndex.is_like());
         tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
 //        wb_explore_detail.setInitialScale(80);
 
@@ -210,14 +215,15 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 sb_cool_icon.startAnimation(anim);
                 if (isCool) break;
                 tv_count_cool.setText(mExploreIndex.getCount_likes() + 1 + "");
+                isCool = true;
+                EventBusHelper.post(mPosition, EVENT_ADD_CREAT_COOL);
+                sb_cool_icon.setState(true);
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
                                 mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
-                                isCool = true;
                                 loading.dismiss();
-                                sb_cool_icon.setState(true);
                             }
                         });
 //                startActivity(PraiseListActivity.class, bundle);

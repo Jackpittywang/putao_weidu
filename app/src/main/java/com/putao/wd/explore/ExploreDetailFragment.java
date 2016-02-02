@@ -21,6 +21,7 @@ import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
@@ -39,6 +40,7 @@ import butterknife.OnClick;
  * Created by yanghx on 2016/1/13.
  */
 public class ExploreDetailFragment extends BasicFragment implements View.OnClickListener {
+    public static final String EVENT_ADD_COOL = "event_add_cool";
 
     @Bind(R.id.iv_top)
     ImageDraweeView iv_top;
@@ -67,6 +69,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public final static String COOL = "Cool";//是否赞过
     private float mWidth;
     private float mHeight;
+    private int mPosition;
 
     @Override
     protected int getLayoutId() {
@@ -77,7 +80,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mWidth = DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200);
         mHeight = (mWidth * 9) / 16 + 2;
-        mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA_PAGE);
+        mPosition = args.getInt(ExploreCommonFragment.INDEX_DATA_PAGE);
+        mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA);
         mSharePopupWindow = new SharePopupWindow(getActivity());
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
@@ -205,8 +209,10 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                                 isCool = true;
                                 loading.dismiss();
                                 sb_cool_icon.setState(true);
+                                EventBusHelper.post(mPosition, EVENT_ADD_COOL);
                             }
                         });
+
 //                startActivity(PraiseListActivity.class, bundle);
                 break;
             case R.id.ll_comment:

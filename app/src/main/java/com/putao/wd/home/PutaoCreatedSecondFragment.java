@@ -1,7 +1,7 @@
 package com.putao.wd.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
@@ -25,7 +25,7 @@ import butterknife.Bind;
  * 创造(首页)
  * Created by guchenkai on 2016/1/13.
  */
-public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemClickListener<Create>, PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, View.OnClickListener {
+public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemClickListener<Create>, PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener {
     @Bind(R.id.rv_created)
     LoadMoreRecyclerView rv_created;
     @Bind(R.id.ptl_refresh)
@@ -33,6 +33,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
 
     private CreateAdapter adapter;
     private int mPage;
+
 
     @Override
     protected int getLayoutId() {
@@ -81,10 +82,13 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
 
     @Override
     public void onItemClick(Create create, int position) {
+        Intent intent = new Intent(getActivity(), CreateBasicDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
+        bundle.putInt(CreateBasicDetailActivity.POSITION, position);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, true);
-        startActivity(CreateBasicDetailActivity.class, bundle);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 2);
     }
 
     @Override
@@ -104,12 +108,6 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                         loading.dismiss();
                     }
                 });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        }
     }
 
     @Subcriber(tag = CreateAdapter.COOL)
@@ -134,11 +132,53 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                 });
     }
 
-    @Subcriber(tag = CreateAdapter.COMMENT)
+    @Subcriber(tag = CreateAdapter.CREAT_COMMENT)
     public void eventComment(String id) {
         Bundle bundle = new Bundle();
         bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, id);
         startActivity(CreateCommentActivity.class, bundle);
     }
+
+    @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
+    public void eventAddCommentCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getComment().setCount(item.getComment().getCount() + 1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
+    public void evenDeleteCommentCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getComment().setCount(item.getComment().getCount() - 1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = CreateBasicDetailActivity.EVENT_ADD_CREAT_COOL)
+    public void eventAddCoolCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getVote().setUp(item.getVote().getUp() + 1);
+        item.setVote_status(1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = CreateBasicDetailActivity.EVENT_ADD_CREAT_NOT_COOL)
+    public void eventAddNotCoolCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getVote().setDown(item.getVote().getDown() + 1);
+        item.setVote_status(2);
+        adapter.notifyItemChanged(position);
+    }
+
+/*    @Subcriber(tag = CreateBasicDetailActivity.COOL)
+    public void eventAddCool(int position) {
+
+    }
+
+    @Subcriber(tag = CreateBasicDetailActivity.NOT_COOL)
+    public void eventAddNotCool(int position) {
+        Create item = adapter.getItem(position);
+        item.getVote().setDown(item.getVote().getDown() + 1);
+        adapter.notifyItemChanged(position);
+    }*/
 
 }

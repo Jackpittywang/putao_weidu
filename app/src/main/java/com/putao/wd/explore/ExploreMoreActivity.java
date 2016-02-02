@@ -5,7 +5,10 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.created.CreateBasicDetailActivity;
+import com.putao.wd.created.CreateCommentActivity;
 import com.putao.wd.explore.adapter.MoreAdapter;
+import com.putao.wd.model.Create;
 import com.putao.wd.model.HomeExploreMore;
 import com.putao.wd.model.HomeExploreMores;
 import com.putao.wd.start.action.ActionsDetailActivity;
@@ -112,6 +115,7 @@ public class ExploreMoreActivity extends PTWDActivity {
             public void onItemClick(HomeExploreMore homeExploreMore, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID, homeExploreMore.getArticle_id());
+                bundle.putInt(ExploreMoreDetailActivity.POSITION, position);
                 startActivity(ExploreMoreDetailActivity.class, bundle);
             }
         });
@@ -152,6 +156,28 @@ public class ExploreMoreActivity extends PTWDActivity {
                         loading.dismiss();
                     }
                 });
+    }
+
+    @Subcriber(tag = CommentActivity.EVENT_ADD_CREAT_COMMENT)
+    public void eventAddCommentCount(int position) {
+        HomeExploreMore item = adapter.getItem(position);
+        item.setCount_comments(item.getCount_comments() + 1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = CommentActivity.EVENT_DELETE_CREAT_COMMENT)
+    public void evenDeleteCommentCount(int position) {
+        HomeExploreMore item = adapter.getItem(position);
+        item.setCount_comments(item.getCount_comments() - 1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = CreateBasicDetailActivity.EVENT_ADD_CREAT_COOL)
+    public void eventAddCoolCount(int position) {
+        HomeExploreMore item = adapter.getItem(position);
+        item.setCount_likes(item.getCount_likes() + 1);
+        item.setIs_like(true);
+        adapter.notifyItemChanged(position);
     }
 
 }

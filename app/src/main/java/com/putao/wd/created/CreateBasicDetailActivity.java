@@ -1,6 +1,7 @@
 package com.putao.wd.created;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -18,6 +19,8 @@ import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.home.PutaoCreatedFragment;
+import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.model.Create;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -105,6 +108,9 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     private Handler mHandler;
     private int mTime = 1000;
     public static final String CREATE = "CREATE";
+    public static final String EVENT_ADD_CREAT_COOL = "event_add_creat_cool";
+    public static final String EVENT_ADD_CREAT_NOT_COOL = "event_add_creat_not_cool";
+    public static final String POSITION = "position";
     public static final String SHOW_PROGRESS = "show_progress";
     private Create mCreate;
     private boolean isShowProgress;
@@ -112,6 +118,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     private SharePopupWindow mSharePopupWindow;//分享弹框
 
     private int mWidthPixels;
+    private int mPosition;
     private boolean btnState = false;
     private ObjectAnimator showAnim;
     private ObjectAnimator hindAnim;
@@ -130,6 +137,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         rl_support.setClickable(false);
         rl_no_support.setClickable(false);
         mCreate = (Create) args.getSerializable(CREATE);
+        mPosition = args.getInt(POSITION);
         isShowProgress = args.getBoolean(SHOW_PROGRESS);
         initView();
         addListener();
@@ -176,7 +184,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     rl_support.setEnabled(false);
                     break;
                 case 2:
-                    rl_support.setVisibility(View.GONE); 
+                    rl_support.setVisibility(View.GONE);
                     tv_no_support.setVisibility(View.GONE);
                     rl_no_support.setLayoutParams(layoutParams);
                     tv_no_support_result.setVisibility(View.VISIBLE);
@@ -272,10 +280,12 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_support_result.setVisibility(View.VISIBLE);
                     showView(tv_support_result);
                     hindView(tv_support);
+                    EventBusHelper.post(mPosition, EVENT_ADD_CREAT_COOL);
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 1),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
+
                                 }
                             });
                     break;
@@ -285,10 +295,12 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_no_support_result.setVisibility(View.VISIBLE);
                     showView(tv_no_support_result);
                     hindView(tv_no_support);
+                    EventBusHelper.post(mPosition, EVENT_ADD_CREAT_NOT_COOL);
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 2),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
+
                                 }
                             });
                     break;
@@ -305,12 +317,12 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                 if (mCreate.getFollow_status() == 1)
                     break;
                 sb_cool_icon.setState(true);
+                tv_count_cool.setText("已关注");
                 networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
                                 mCreate.setFollow_status(1);
-                                tv_count_cool.setText("已关注");
                             }
                         });
                 break;

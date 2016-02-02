@@ -15,6 +15,7 @@ import butterknife.Bind;
  * 创造详情
  * Created by guchenkai on 2016/1/11.
  */
+@Deprecated
 public class CreatedDetailActivity extends CreateBasicDetailActivity {
 
     @Bind(R.id.v_progress)

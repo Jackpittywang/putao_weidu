@@ -142,6 +142,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:singleLine="true"
                 android:text="和孩子一起打造创作空间"
                 android:textSize="16sp"/>
 
@@ -171,8 +174,8 @@
                 android:layout_width="200dp"
                 android:layout_height="10dp"
                 android:layout_marginBottom="15dp"
-                android:visibility="gone"
-                android:background="@drawable/img_carve_up_article"/>
+                android:background="@drawable/img_carve_up_article"
+                android:visibility="gone"/>
 
             <FrameLayout
                 android:id="@+id/fl_progress"

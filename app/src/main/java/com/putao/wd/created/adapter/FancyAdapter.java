@@ -32,6 +32,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
     private Context mContext;
     public final static String COOL = "cool";
     public final static String COMMENT = "comment";
+
     public FancyAdapter(Context context, List<Create> creates) {
         super(context, creates);
         mContext = context;
@@ -49,18 +50,20 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
 
     @Override
     public void onBindItem(final FancyHolder holder, final Create create, int position) {
-        /*Map map = JSONObject.parseObject(create.getTag());
-        if (map != null && map.size() > 0) {
-            holder.rl_tag.setVisibility(View.VISIBLE);
-            holder.tv_tag1.setText(null == map.get("1") ? "" : map.get("1").toString());
-            holder.tv_tag2.setText(null == map.get("2") ? "" : map.get("2").toString());
-            holder.tv_tag3.setText(null == map.get("3") ? "" : map.get("3").toString());
-            holder.tv_tag4.setText(null == map.get("4") ? "" : map.get("4").toString());
-            holder.tv_tag2.setVisibility(null == map.get("2") ? View.GONE : View.VISIBLE);
-            holder.tv_tag3.setVisibility(null == map.get("3") ? View.GONE : View.VISIBLE);
-            holder.tv_tag4.setVisibility(null == map.get("4") ? View.GONE : View.VISIBLE);
-        } else
-            holder.rl_tag.setVisibility(View.GONE);*/
+        if (null != create.getTag()) {
+            Map map = JSONObject.parseObject(create.getTag());
+            if (map != null && map.size() > 0) {
+                holder.rl_tag.setVisibility(View.VISIBLE);
+                holder.tv_tag1.setText(null == map.get("1") ? "" : map.get("1").toString());
+                holder.tv_tag2.setText(null == map.get("2") ? "" : map.get("2").toString());
+                holder.tv_tag3.setText(null == map.get("3") ? "" : map.get("3").toString());
+                holder.tv_tag4.setText(null == map.get("4") ? "" : map.get("4").toString());
+                holder.tv_tag2.setVisibility(null == map.get("2") ? View.GONE : View.VISIBLE);
+                holder.tv_tag3.setVisibility(null == map.get("3") ? View.GONE : View.VISIBLE);
+                holder.tv_tag4.setVisibility(null == map.get("4") ? View.GONE : View.VISIBLE);
+            } else
+                holder.rl_tag.setVisibility(View.GONE);
+        }
         holder.tv_title.setText(create.getTitle());
         holder.tv_content.setText(create.getDescrip());
         holder.iv_icon.setImageURL(create.getAvatar());

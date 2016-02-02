@@ -54,8 +54,8 @@ public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.Mo
         holder.iv_icon.setImageURL(homeExploreMore.getCover_pic());
         holder.tv_title.setText(homeExploreMore.getTitle());
         holder.tv_content.setText(homeExploreMore.getDescription());
-        holder.tv_count_comment.setText(homeExploreMore.getCount_comments());
-        holder.tv_count_cool.setText(homeExploreMore.getCount_likes());
+        holder.tv_count_comment.setText(homeExploreMore.getCount_comments() + "");
+        holder.tv_count_cool.setText(homeExploreMore.getCount_likes() + "");
         holder.sb_cool_icon.setClickable(false);
         holder.sb_cool_icon.setState(homeExploreMore.getIs_like());
         holder.ll_comment.setOnClickListener(new View.OnClickListener() {
