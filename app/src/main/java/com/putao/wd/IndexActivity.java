@@ -1,10 +1,13 @@
 package com.putao.wd;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
@@ -13,6 +16,8 @@ import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.Subcriber;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
@@ -38,6 +43,20 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
     TabItem ti_store;//精选
     @Bind(R.id.ti_companion)
     TabItem ti_companion;//陪伴
+    @Bind(R.id.iv_blur)
+    ImageDraweeView iv_blur;
+    @Bind(R.id.v_line_horizontal)
+    View v_line_horizontal;
+    @Bind(R.id.tb_index_tab)
+    TabBar tb_index_tab;
+    @Bind(R.id.ti_index_create)
+    TabItem ti_index_create;
+    @Bind(R.id.ti_index_store)
+    TabItem ti_index_store;
+    @Bind(R.id.ti_index_companion)
+    TabItem ti_index_companion;
+    @Bind(R.id.ti_index_explore)
+    TabItem ti_index_explore;
 
     private PutaoExploreFragment mPutaoExploreFragment;
     private PutaoCreatedSecondFragment mPutaoCreatedFragment;
@@ -81,7 +100,41 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
     }
 
     private void addListener() {
-        tb_tab.setOnTabItemSelectedListener(this);
+        tb_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
+            @Override
+            public void onTabItemSelected(TabItem item, int position) {
+                if (position == 0) {
+                    tb_tab.setVisibility(View.GONE);
+                    tb_index_tab.setVisibility(View.VISIBLE);
+                    v_line_horizontal.setVisibility(View.GONE);
+                    tb_index_tab.setTabItemSelected(R.id.ti_index_explore);
+                    return;
+                }
+                vp_content.setCurrentItem(position, false);
+            }
+        });
+        tb_index_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
+            @Override
+            public void onTabItemSelected(TabItem item, int position) {
+                if (position != 0) {
+                    tb_tab.setVisibility(View.VISIBLE);
+                    tb_index_tab.setVisibility(View.GONE);
+                    v_line_horizontal.setVisibility(View.VISIBLE);
+                    switch (position) {
+                        case 1:
+                            tb_tab.setTabItemSelected(R.id.ti_create);
+                            return;
+                        case 2:
+                            tb_tab.setTabItemSelected(R.id.ti_store);
+                            return;
+                        case 3:
+                            tb_tab.setTabItemSelected(R.id.ti_companion);
+                            return;
+                    }
+                }
+                vp_content.setCurrentItem(position, false);
+            }
+        });
     }
 
     @Override
@@ -91,21 +144,22 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
 
     @Override
     public void onTabItemSelected(TabItem item, int position) {
-        switch (item.getId()) {
-            case R.id.ti_explore:
+        if (position == 0) {
 
-                break;
-            case R.id.ti_create:
-
-                break;
-            case R.id.ti_store:
-
-                break;
-            case R.id.ti_companion:
-
-                break;
+        } else {
+            tb_tab.setVisibility(View.VISIBLE);
+            tb_index_tab.setVisibility(View.GONE);
+            v_line_horizontal.setVisibility(View.VISIBLE);
         }
+
         vp_content.setCurrentItem(position, false);
+    }
+
+    private void setNom() {
+        ti_explore.setActive(false);
+        ti_create.setActive(false);
+        ti_store.setActive(false);
+        ti_companion.setActive(false);
     }
 
     /**
@@ -122,5 +176,10 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
             return exit();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Subcriber(tag = PutaoExploreFragment.BLUR)
+    private void setBlur(Bitmap bitmap) {
+        iv_blur.setDefaultImage(bitmap);
     }
 }

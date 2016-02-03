@@ -3,18 +3,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
-                android:background="#705e5a"
                 android:orientation="vertical">
 
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_blur"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#55705e5a"/>
 
     <RelativeLayout
         android:id="@+id/rl_top"

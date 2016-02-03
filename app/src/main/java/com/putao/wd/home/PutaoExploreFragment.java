@@ -2,8 +2,11 @@ package com.putao.wd.home;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,11 +23,9 @@ import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.FastBlur;
-import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,17 +58,17 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     TextView tv_modified_time_day;
     @Bind(R.id.tv_modified_time_mon)
     TextView tv_modified_time_mon;
-    @Bind(R.id.iv_blur)
-    ImageDraweeView iv_blur;
 
     private static final String INDEX_CACHE = "index_cache";
-    private static final String BLUR = "blur";
+    public static final String BLUR = "blur";
+    public static final String POSITION = "position";
     private static int SAVE_TIME = 900;
 
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
     private Thread mThread;
+    private Handler mHandler;
 
     @Override
     protected int getLayoutId() {
@@ -78,6 +79,39 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         vp_content.setOffscreenPageLimit(1);
+        HandlerThread handlerThread = new HandlerThread("blurThread");
+
+        handlerThread.start();
+        Looper looper = handlerThread.getLooper();
+        mHandler = new Handler(looper) {
+            @Override
+            public void handleMessage(Message msg) {
+                Bundle obj = (Bundle) msg.obj;
+                int position = obj.getInt(POSITION);
+                switch (msg.what) {
+                    case 1:
+                        try {
+                            Bitmap map;
+                            URL url = new URL(mExploreIndexs.get(position - 1).getBanner().get(0).getCover_pic());
+                            URLConnection conn = url.openConnection();
+                            conn.connect();
+                            InputStream in;
+                            in = conn.getInputStream();
+                            map = BitmapFactory.decodeStream(in);
+                            Bitmap apply = FastBlur.doBlur(map, 40, false);
+                            EventBusHelper.post(apply, BLUR);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 2:
+                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.img_explore_more_cover);
+                        Bitmap apply = FastBlur.doBlur(bmp, 40, false);
+                        EventBusHelper.post(apply, BLUR);
+                        break;
+                }
+            }
+        };
         addListener();
         initData();
     }
@@ -91,47 +125,27 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageSelected(final int position) {
+                if (position == 0) {
+                    vp_content.setCurrentItem(1);
+                    return;
+                } else if (position == mFragments.size() - 1) {
+                    vp_content.setCurrentItem(mFragments.size() - 2);
+                    return;
+                }
+                Message message = new Message();
                 if (position < mExploreIndexs.size() && position > 0) {
                     showDate();
                     addDate(position);
-                    mThread = new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                Bitmap map;
-                                URL url = new URL(mExploreIndexs.get(position - 1).getBanner().get(0).getCover_pic());
-                                URLConnection conn = url.openConnection();
-                                conn.connect();
-                                InputStream in;
-                                in = conn.getInputStream();
-                                map = BitmapFactory.decodeStream(in);
-                                Bitmap apply = FastBlur.doBlur(map, 40, false);
-                                EventBusHelper.post(apply, BLUR);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    mThread.start();
+                    message.what = 1;
+
                 } else if (position == mExploreIndexs.size()) {
-                    mThread = new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.img_explore_more_cover);
-                            Bitmap apply = FastBlur.doBlur(bmp, 40, false);
-                            EventBusHelper.post(apply, BLUR);
-                        }
-                    };
-                    mThread.start();
-                } else {
                     hindDate("MORE");
+                    message.what = 2;
                 }
-                if (position == 0)
-                    vp_content.setCurrentItem(1);
-                else if (position == mFragments.size() - 1)
-                    vp_content.setCurrentItem(mFragments.size() - 2);
+                Bundle bundle = new Bundle();
+                bundle.putInt(POSITION, position);
+                message.obj = bundle;
+                mHandler.sendMessage(message);
             }
 
             @Override
@@ -291,11 +305,5 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 return "DEC";
         }
         return "";
-    }
-
-    @Subcriber(tag = BLUR)
-    private void setBlur(Bitmap bitmap) {
-        iv_blur.setDefaultImage(bitmap);
-        mThread = null;
     }
 }

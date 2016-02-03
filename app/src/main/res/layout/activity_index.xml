@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <!--分割线-->
     <View
-        android:id="@+id/line_horizontal"
+        android:id="@+id/v_line_horizontal"
         style="@style/line_horizontal"
-        android:layout_above="@+id/tb_tab" />
+        android:layout_above="@+id/tb_tab"/>
+
+
+    <!--首页显示标题栏-->
+    <com.sunnybear.library.view.select.TabBar
+        android:id="@+id/tb_index_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_bar_height"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <!--探索-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_index_explore"
+            style="@style/style_tab_bar"
+            auto:active="true"
+            auto:activeDrawable="@drawable/tab_bar_c_w_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_c_w_sel"/>
+
+        <!--创造-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_index_create"
+            style="@style/style_tab_bar"
+            auto:active="false"
+            auto:activeDrawable="@drawable/tab_bar_create_w_nor"
+            auto:inactiveDrawable="@drawable/tab_bar_create_w_nor"/>
+
+        <!--精选-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_index_store"
+            style="@style/style_tab_bar"
+            auto:active="false"
+            auto:activeDrawable="@drawable/tab_bar_p_w_nor"
+            auto:inactiveDrawable="@drawable/tab_bar_p_w_nor"/>
+
+        <!--我-->
+        <com.sunnybear.library.view.select.TabItem
+            android:id="@+id/ti_index_companion"
+            style="@style/style_tab_bar"
+            auto:active="false"
+            auto:activeDrawable="@drawable/tab_bar_me_w_nor"
+            auto:inactiveDrawable="@drawable/tab_bar_me_w_nor"/>
+    </com.sunnybear.library.view.select.TabBar>
+
     <!--标题栏-->
     <com.sunnybear.library.view.select.TabBar
         android:id="@+id/tb_tab"
@@ -16,7 +65,8 @@
         android:layout_height="@dimen/tab_bar_height"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <!--探索-->
         <com.sunnybear.library.view.select.TabItem
@@ -24,7 +74,7 @@
             style="@style/style_tab_bar"
             auto:active="true"
             auto:activeDrawable="@drawable/tab_bar_c_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_c_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_c_nor"/>
 
         <!--创造-->
         <com.sunnybear.library.view.select.TabItem
@@ -32,7 +82,7 @@
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_create_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_create_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_create_nor"/>
 
         <!--精选-->
         <com.sunnybear.library.view.select.TabItem
@@ -40,7 +90,7 @@
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_p_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_p_nor"/>
 
         <!--我-->
         <com.sunnybear.library.view.select.TabItem
@@ -48,7 +98,7 @@
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_me_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_me_nor" />
+            auto:inactiveDrawable="@drawable/tab_bar_me_nor"/>
     </com.sunnybear.library.view.select.TabBar>
 
     <!--主页面-->
@@ -56,5 +106,5 @@
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/line_horizontal" />
+        android:layout_marginBottom="51dp"/>
 </RelativeLayout>
