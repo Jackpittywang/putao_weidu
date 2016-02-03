@@ -175,7 +175,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         et_msg.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght >= et_msg.length()) {
+                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght > et_msg.length()) {
                     et_msg.setText("");
                     isReply = false;
                     mMinLenght = 0;

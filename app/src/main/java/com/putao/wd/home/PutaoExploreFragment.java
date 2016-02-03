@@ -1,5 +1,8 @@
 package com.putao.wd.home;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,20 +13,24 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreCommonFragment;
 import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
-import com.putao.wd.model.Create;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.viewpager.BounceBackViewPager;
+import com.sunnybear.library.view.image.FastBlur;
+import com.sunnybear.library.view.image.ImageDraweeView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,18 +52,22 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     //    @Bind(R.id.iv_scan)
 //    ImageView iv_scan;
     @Bind(R.id.vp_content)
-    BounceBackViewPager vp_content;
+    ViewPager vp_content;
     @Bind(R.id.tv_modified_time_day)
     TextView tv_modified_time_day;
     @Bind(R.id.tv_modified_time_mon)
     TextView tv_modified_time_mon;
+    @Bind(R.id.iv_blur)
+    ImageDraweeView iv_blur;
 
     private static final String INDEX_CACHE = "index_cache";
+    private static final String BLUR = "blur";
     private static int SAVE_TIME = 900;
 
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
+    private Thread mThread;
 
     @Override
     protected int getLayoutId() {
@@ -66,6 +77,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
+        vp_content.setOffscreenPageLimit(1);
         addListener();
         initData();
     }
@@ -78,13 +90,48 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
             }
 
             @Override
-            public void onPageSelected(int position) {
-                if (position < mExploreIndexs.size()) {
+            public void onPageSelected(final int position) {
+                if (position < mExploreIndexs.size() && position > 0) {
                     showDate();
                     addDate(position);
+                    mThread = new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                Bitmap map;
+                                URL url = new URL(mExploreIndexs.get(position - 1).getBanner().get(0).getCover_pic());
+                                URLConnection conn = url.openConnection();
+                                conn.connect();
+                                InputStream in;
+                                in = conn.getInputStream();
+                                map = BitmapFactory.decodeStream(in);
+                                Bitmap apply = FastBlur.doBlur(map, 40, false);
+                                EventBusHelper.post(apply, BLUR);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    mThread.start();
+                } else if (position == mExploreIndexs.size()) {
+                    mThread = new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.img_explore_more_cover);
+                            Bitmap apply = FastBlur.doBlur(bmp, 40, false);
+                            EventBusHelper.post(apply, BLUR);
+                        }
+                    };
+                    mThread.start();
                 } else {
-                    hindDate("更多内容");
+                    hindDate("MORE");
                 }
+                if (position == 0)
+                    vp_content.setCurrentItem(1);
+                else if (position == mFragments.size() - 1)
+                    vp_content.setCurrentItem(mFragments.size() - 2);
             }
 
             @Override
@@ -110,7 +157,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private void addDate(int position) {
         DateFormat formatMon = new SimpleDateFormat("MM");
         DateFormat formatDay = new SimpleDateFormat("dd");
-        Date date = new Date(mExploreIndexs.get(position).getSend_time() * 1000);
+        Date date = new Date(mExploreIndexs.get(position - 1).getSend_time() * 1000);
         Date dateNow = new Date(System.currentTimeMillis());
         String day = formatDay.format(date);
         String mon = formatMon.format(date);
@@ -189,10 +236,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
      */
     private void addFragments() {
         mFragments = new SparseArray<>();
-        for (int i = 0; i < mExploreIndexs.size(); i++) {
-            mFragments.put(i, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName(), addBundle(i)));
+        mFragments.put(0, new Fragment());
+        for (int i = 1; i < mExploreIndexs.size(); i++) {
+            mFragments.put(i, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName(), addBundle(i - 1)));
         }
         mFragments.put(mExploreIndexs.size(), Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
+        mFragments.put(mExploreIndexs.size() + 1, new Fragment());
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -204,6 +253,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 return mFragments.size();
             }
         });
+        vp_content.setCurrentItem(1);
     }
 
     private Bundle addBundle(int position) {
@@ -241,5 +291,11 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 return "DEC";
         }
         return "";
+    }
+
+    @Subcriber(tag = BLUR)
+    private void setBlur(Bitmap bitmap) {
+        iv_blur.setDefaultImage(bitmap);
+        mThread = null;
     }
 }
