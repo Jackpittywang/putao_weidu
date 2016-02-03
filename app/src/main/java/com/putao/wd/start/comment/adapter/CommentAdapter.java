@@ -61,7 +61,11 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
             holder.tv_username.setText(comment.getUser_name());
         String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getModified_time()), DATE_PATTERN);
         holder.tv_comment_time.setText(create_time);
-        holder.tv_comment_content.setText(comment.getContent());
+        if (null != comment.getReply()) {
+            holder.tv_comment_content.setText("回复 " + comment.getReply().getUser_name() + ": " + comment.getContent());
+        } else {
+            holder.tv_comment_content.setText(comment.getContent());
+        }
         if (!"0".equals(comment.getCount_likes())) {
             holder.tv_count_cool.setText(comment.getCount_likes());
         } else {

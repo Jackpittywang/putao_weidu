@@ -23,7 +23,7 @@ public class CreateComment implements Serializable {
     private int like_count;
     private boolean like_status;
     private int comment_reply_count;
-    private List<String> reply;
+    private CreateReply reply;
 
     public String getId() {
         return id;
@@ -145,11 +145,11 @@ public class CreateComment implements Serializable {
         this.comment_reply_count = comment_reply_count;
     }
 
-    public List<String> getReply() {
+    public CreateReply getReply() {
         return reply;
     }
 
-    public void setReply(List<String> reply) {
+    public void setReply(CreateReply reply) {
         this.reply = reply;
     }
 
@@ -163,8 +163,8 @@ public class CreateComment implements Serializable {
                 ", comment_source='" + comment_source + '\'' +
                 ", type=" + type +
                 ", status=" + status +
-                ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
                 ", username='" + username + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", real_avatar='" + real_avatar + '\'' +

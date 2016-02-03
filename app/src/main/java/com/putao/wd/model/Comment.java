@@ -15,7 +15,7 @@ public class Comment implements Serializable {
     private String user_id;//评论归属用户
     private String user_name;//归属用户昵称
     private String head_img;//头像
-    private String reply;//Json被回复的用户信息
+    private IndexReply reply;//Json被回复的用户信息
     // 待定   //评论回复内容
 
 
@@ -83,11 +83,11 @@ public class Comment implements Serializable {
         this.head_img = head_img;
     }
 
-    public String getReply() {
+    public IndexReply getReply() {
         return reply;
     }
 
-    public void setReply(String reply) {
+    public void setReply(IndexReply reply) {
         this.reply = reply;
     }
 

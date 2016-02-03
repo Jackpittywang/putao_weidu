@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,8 +19,6 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.created.adapter.CreateCommentAdapter;
 import com.putao.wd.me.order.OrderListActivity;
-import com.putao.wd.model.Comment;
-import com.putao.wd.model.CommentList;
 import com.putao.wd.model.CreateComment;
 import com.putao.wd.model.CreateComments;
 import com.putao.wd.start.action.ActionsDetailActivity;
@@ -38,7 +37,6 @@ import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +75,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     private boolean isShowEmoji = false;
     private int mPosition;
     private int mSuperPosition;
+    private int mMinLenght;
     private boolean isReply;
     private boolean hasComment;
     private int page = 1;
@@ -91,6 +90,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        mMinLenght = 0;
         adapter = new CreateCommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
@@ -111,7 +111,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 final CreateComment item = adapter.getItem(mPosition);
                 if (AccountHelper.getCurrentUid().equals(item.getUid())) {
                     //删除评论
-                    String comment_id = item.getComment_source();
+                    String comment_id = item.getId();
                     networkRequest(ExploreApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
 
                         @Override
@@ -176,6 +176,18 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 mSelectPopupWindow.show(rl_main);
             }
         });
+        et_msg.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght >= et_msg.length()) {
+                    et_msg.setText("");
+                    isReply = false;
+                    mMinLenght = 0;
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void reply() {
@@ -183,6 +195,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
         String username = comment.getUsername() + ": ";
         SpannableString ss = new SpannableString("回复 " + username);
         ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mMinLenght = ss.length();
         et_msg.setText(ss);
         isReply = true;
     }
@@ -208,7 +221,8 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 if (isReply) {
                     CreateComment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
-                    networkRequest(CreateApi.addComment(msg, action_id, comment.getComment_source()),
+                    msg = msg.substring(msg.lastIndexOf(":") + 2);
+                    networkRequest(CreateApi.addComment(msg, action_id, comment.getId()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
@@ -231,6 +245,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 }
                 isReply = false;
                 et_msg.setText("");
+                mMinLenght = 0;
                 vp_emojis.setVisibility(View.GONE);
                 break;
         }
@@ -294,7 +309,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     private void checkLiked(List<CreateComment> comments) {
         int i = 0;
         for (CreateComment comment : comments) {
-            if (Boolean.parseBoolean(mDiskFileCacheHelper.getAsString(COOL + comment.getComment_source())))
+            if (Boolean.parseBoolean(mDiskFileCacheHelper.getAsString(COOL + comment.getId())))
                 comments.get(i).setLike_status(true);
             i++;
         }
@@ -310,12 +325,12 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
     public void eventClickCool(final int currPosition) {
         final CreateComment comment = adapter.getItem(currPosition);
-        networkRequest(CreateApi.addCommentLike(action_id, comment.getComment_source()),
+        networkRequest(CreateApi.addCommentLike(action_id, comment.getId()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
                         adapter.notifyItemChanged(currPosition);
-                        mDiskFileCacheHelper.put(COOL + comment.getComment_source(), "true");
+                        mDiskFileCacheHelper.put(COOL + comment.getId(), "true");
                         EventBusHelper.post(true, EVENT_COUNT_COOL);
                     }
                 });

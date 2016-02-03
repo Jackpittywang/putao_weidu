@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -74,6 +75,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     private boolean isReply;
     private boolean hasComment;
     private int page = 1;
+    private int mMinLenght;
     public final static String COOL = "CommentCool";//是否赞过
     public final static String POSITION = "position";
 
@@ -85,6 +87,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        mMinLenght = 0;
         adapter = new CommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
@@ -169,6 +172,18 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 mSelectPopupWindow.show(rl_main);
             }
         });
+        et_msg.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght >= et_msg.length()) {
+                    et_msg.setText("");
+                    isReply = false;
+                    mMinLenght = 0;
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @OnClick({R.id.tv_emojis, R.id.tv_send})
@@ -191,6 +206,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 if (isReply) {
                     Comment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
+                    msg = msg.substring(msg.lastIndexOf(":") + 2);
                     networkRequest(ExploreApi.addComment(msg, action_id, comment.getComment_id()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -214,6 +230,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 }
                 isReply = false;
                 et_msg.setText("");
+                mMinLenght = 0;
                 vp_emojis.setVisibility(View.GONE);
                 break;
         }
@@ -294,6 +311,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         String username = comment.getUser_name() + ": ";
         SpannableString ss = new SpannableString("回复 " + username);
         ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mMinLenght = ss.length();
         et_msg.setText(ss);
         isReply = true;
     }
