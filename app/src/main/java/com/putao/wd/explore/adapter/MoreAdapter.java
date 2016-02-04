@@ -1,7 +1,6 @@
 package com.putao.wd.explore.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -11,10 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.explore.ExploreMoreActivity;
 import com.putao.wd.model.HomeExploreMore;
-import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.start.comment.CommentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;

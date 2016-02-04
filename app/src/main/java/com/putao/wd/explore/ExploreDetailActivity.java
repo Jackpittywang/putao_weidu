@@ -165,4 +165,15 @@ public class ExploreDetailActivity extends BasicFragmentActivity /*implements Sw
 //    protected String[] getRequestUrls() {
 //        return new String[0];
 //    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.companion_in_from_down, R.anim.out_from_down);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

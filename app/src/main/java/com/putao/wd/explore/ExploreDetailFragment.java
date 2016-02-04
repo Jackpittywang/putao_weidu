@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
@@ -67,8 +68,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     private ExploreIndex mExploreIndex;
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
-    private float mWidth;
-    private float mHeight;
     private int mPosition;
 
     @Override
@@ -78,8 +77,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        mWidth = DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200);
-        mHeight = (mWidth * 9) / 16 + 2;
         mPosition = args.getInt(ExploreCommonFragment.INDEX_DATA_PAGE);
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA);
         mSharePopupWindow = new SharePopupWindow(getActivity());
@@ -106,62 +103,9 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)", setImageWidth("<img([^>]*)", mExploreIndex.getExplanation(), false), true), "text/html", "utf-8", null);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation()), "text/html", "utf-8", null);
     }
 
-    private String setImageWidth(String reg, String explanation, boolean isVideo) {
-        Pattern p = Pattern.compile(reg);
-        String replaceAll = explanation;
-        Matcher m = p.matcher(explanation);// 开始编译
-        while (m.find()) {
-            String group = m.group(1);
-            group = addWidHei(group, isVideo);
-            group = addStyle(group);
-            replaceAll = replaceAll.replace(m.group(1), group);
-            System.out.println(replaceAll);
-            if (isVideo) {
-                Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
-                Matcher mVideo = pVideo.matcher(group);// 开始编译
-                while (mVideo.find()) {
-                    String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + mWidth + "&");
-                    video = replaceHTML("height=([^&]*)", video, "height=" + mHeight + "&");
-                    replaceAll = replaceAll.replace(mVideo.group(1), video);
-                }
-            }
-        }
-        Logger.d(replaceAll);
-        return replaceAll;
-    }
-
-    private String addWidHei(String group, boolean isVideo) {
-        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + mWidth + "\"");
-        if (isVideo)
-            group = replaceHTML("height=\"([^\"]*)", group, " height=\"" + mHeight + "\"");
-        return group;
-    }
-
-    private String replaceHTML(String reg, String group, String replace) {
-        Pattern p = Pattern.compile(reg);
-        Matcher m = p.matcher(group);
-        if (m.find()) {
-            group = group.replace(m.group(), replace);
-        } else {
-            group = replace + group;
-        }
-        return group;
-    }
-
-    private String addStyle(String group) {
-        Pattern p1 = Pattern.compile("style=\"([^>]*)");
-        Matcher m1 = p1.matcher(group);
-        if (m1.find()) {
-            group = replaceHTML("width:([^;]*)", group, " width=\"" + mWidth + "\"");
-//            group = replaceHTML("height:([^;]*)", group, mWidth + "", " height:" + mWidth);
-        } else {
-            group = " style=\"width:" + mWidth + ";\"" + group;
-        }
-        return group;
-    }
 
     @Override
     protected String[] getRequestUrls() {
@@ -193,7 +137,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                 break;
             case R.id.iv_close:
                 mActivity.finish();
-                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_top);
                 break;
             case R.id.ll_cool:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");

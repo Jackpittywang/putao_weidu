@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="15dp">
+<RelativeLayout android:id="@+id/rl_nexplore"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="15dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/rl_video"
+        android:layout_width="match_parent"
         android:layout_height="280dp">
 
         <com.sunnybear.library.view.image.ImageDraweeView
@@ -16,14 +17,15 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             auto:placeholderImage="@drawable/test_flaunt_taotao_bg_01"
-            auto:placeholderImageScaleType="centerCrop" />
+            auto:placeholderImageScaleType="centerCrop"/>
+
         <ImageView
             android:id="@+id/iv_player"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:src="@drawable/btn_60_play_selector"/>
+            android:src="@drawable/btn_60_play_selector"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -45,7 +47,7 @@
             android:singleLine="true"
             android:text="title"
             android:textColor="@color/color_313131"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_18sp"/>
 
         <TextView
             android:id="@+id/tv_content"
@@ -60,7 +62,7 @@
             android:lines="2"
             android:text="content"
             android:textColor="@color/text_color_gray"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_14sp"/>
 
         <LinearLayout
             android:id="@+id/ll_count_cool"
@@ -77,7 +79,7 @@
                 android:layout_height="wrap_content"
                 auto:isSelect="false"
                 auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel" />
+                auto:selDrawable="@drawable/btn_support_sel"/>
 
             <TextView
                 android:id="@+id/tv_count_cool"
@@ -87,7 +89,7 @@
                 android:gravity="center"
                 android:text="1234"
                 android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_20sp"/>
 
         </LinearLayout>
 

@@ -3,12 +3,10 @@ package com.putao.wd.home.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -144,7 +142,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         Logger.i("ExploreProduct === " + diary.toString());
         DiaryBasicViewHolder basicHolder = (DiaryBasicViewHolder) holder;
         boolean isNewDate = true;
-        basicHolder.tv_count_comment.setVisibility(View.GONE);
+        basicHolder.tv_share.setVisibility(View.GONE);
         String format = DateUtils.secondToDate(diary.getCreate_time(), DATE_PATTERN);
         if (!mIsShowDate.containsKey(position)) {
             if (mDate.contains(format)) {
@@ -353,8 +351,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
                 viewHolder.rl_image.setVisibility(View.VISIBLE);
                 viewHolder.iv_image.setImageURL(diaryTitle.getImg());
-                viewHolder.tv_count_comment.setVisibility(View.VISIBLE);
-                viewHolder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
+                viewHolder.tv_share.setVisibility(View.VISIBLE);
+                viewHolder.tv_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ExploreProductPlot exploreProductPlot = new ExploreProductPlot();
@@ -669,7 +667,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         @Bind(R.id.iv_check)
         ImageView iv_check;
         @Bind(R.id.tv_count_comment)
-        TextView tv_count_comment;
+        TextView tv_share;
 
         public DiaryBasicViewHolder(View itemView) {
             super(itemView);

@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.api.ExploreApi;
@@ -159,7 +160,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         tv_title.setText(mCreate.getTitle());
         iv_user_icon.setImageURL(mCreate.getAvatar());
         tv_digest.setText(mCreate.getNickname());
-        wv_content.loadDataWithBaseURL("about:blank", mCreate.getContent(), "text/html", "utf-8", null);
+        wv_content.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mContext, getWindowManager().getDefaultDisplay().getWidth() - 200), mCreate.getContent()), "text/html", "utf-8", null);
         if (isShowProgress) {
             initProgress();
             navigation_bar.setMainTitle("创造详情");

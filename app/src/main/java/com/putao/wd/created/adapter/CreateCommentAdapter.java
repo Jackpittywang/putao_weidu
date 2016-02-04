@@ -1,13 +1,11 @@
 package com.putao.wd.created.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.Comment;
 import com.putao.wd.model.CreateComment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;

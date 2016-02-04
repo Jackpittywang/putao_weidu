@@ -3,9 +3,6 @@ package com.putao.wd.start.comment.adapter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,7 +10,6 @@ import com.putao.wd.R;
 import com.putao.wd.model.Comment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;

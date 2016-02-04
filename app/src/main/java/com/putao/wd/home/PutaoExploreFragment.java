@@ -62,13 +62,17 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private static final String INDEX_CACHE = "index_cache";
     public static final String BLUR = "blur";
     public static final String POSITION = "position";
-    private static int SAVE_TIME = 900;
+    private static int SAVE_TIME = 5;
+    private static int BACKGROUND_CAN_CHANGGE = 1;
+    private static int BACKGROUND_CAN_NOT_CHANGGE = 2;
 
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
     private Thread mThread;
     private Handler mHandler;
+    private HandlerThread mHandlerThread;
+    private int mI;
 
     @Override
     protected int getLayoutId() {
@@ -79,13 +83,14 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         vp_content.setOffscreenPageLimit(1);
-        HandlerThread handlerThread = new HandlerThread("blurThread");
-
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
+        mHandlerThread = new HandlerThread("blurThread");
+        mHandlerThread.start();
+        Looper looper = mHandlerThread.getLooper();
         mHandler = new Handler(looper) {
             @Override
             public void handleMessage(Message msg) {
+//                mHandlerThread.interrupt();
+                mI = BACKGROUND_CAN_NOT_CHANGGE;
                 Bundle obj = (Bundle) msg.obj;
                 int position = obj.getInt(POSITION);
                 switch (msg.what) {
@@ -98,7 +103,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                             InputStream in;
                             in = conn.getInputStream();
                             map = BitmapFactory.decodeStream(in);
-                            Bitmap apply = FastBlur.doBlur(map, 40, false);
+                            if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
+                            Bitmap apply = FastBlur.doBlur(map, 50, false);
+                            if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
                             EventBusHelper.post(apply, BLUR);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -106,7 +113,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                         break;
                     case 2:
                         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.img_explore_more_cover);
-                        Bitmap apply = FastBlur.doBlur(bmp, 40, false);
+                        if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
+                        Bitmap apply = FastBlur.doBlur(bmp, 50, false);
+                        if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
                         EventBusHelper.post(apply, BLUR);
                         break;
                 }
@@ -118,13 +127,14 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
     private void addListener() {
         //切换页面刷新日期
-        vp_content.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(final int position) {
+                mI = BACKGROUND_CAN_CHANGGE;
                 if (position == 0) {
                     vp_content.setCurrentItem(1);
                     return;
@@ -145,6 +155,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 Bundle bundle = new Bundle();
                 bundle.putInt(POSITION, position);
                 message.obj = bundle;
+                mHandler.removeCallbacksAndMessages(null);
+                mHandler.removeMessages(1);
+                mHandler.removeMessages(2);
                 mHandler.sendMessage(message);
             }
 

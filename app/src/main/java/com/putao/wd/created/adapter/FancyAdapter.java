@@ -9,10 +9,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.model.Create;
-import com.putao.wd.model.Creates;
-import com.putao.wd.model.Marketing;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -84,7 +81,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
                 holder.sb_cool_icon.setState(false);
                 break;
         }
-        holder.ll_cool.setOnClickListener(new View.OnClickListener() {
+/*        holder.ll_cool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (create.getVote_status() != 0) {
@@ -98,7 +95,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
                 create.setVote_status(1);
                 EventBusHelper.post(create.getId(), COOL);
             }
-        });
+        });*/
         holder.ll_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

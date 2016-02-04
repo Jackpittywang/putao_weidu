@@ -18,8 +18,13 @@
         <RelativeLayout
             android:id="@+id/rl_user_head_icon"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/text_main_color_nor">
+            android:layout_height="200dp">
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_user_icon_background"
+                style="@style/image_style"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

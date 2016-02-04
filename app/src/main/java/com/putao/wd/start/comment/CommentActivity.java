@@ -196,11 +196,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 break;
             case R.id.tv_send://点击发送
                 if (!AccountHelper.isLogin()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CommentActivity.class);
-                    bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
-                    bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, action_id);
-                    startActivity(LoginActivity.class, bundle);
+                    login();
                     return;
                 }
                 if (isReply) {
@@ -234,6 +230,14 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 vp_emojis.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    private void login() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CommentActivity.class);
+        bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
+        bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, action_id);
+        startActivity(LoginActivity.class, bundle);
     }
 
     /**
@@ -319,6 +323,10 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     //点赞提交
     @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
     public void eventClickCool(final int currPosition) {
+        if (!AccountHelper.isLogin()) {
+            login();
+            return;
+        }
         final Comment comment = adapter.getItem(currPosition);
         networkRequest(ExploreApi.addLike(action_id, comment.getComment_id()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
@@ -109,7 +110,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", setImageWidth("<iframe class=\"video_iframe\"([^>]*)", setImageWidth("<img([^>]*)", mExploreIndex.getExplanation(), false), true), "text/html", "utf-8", null);
+        wb_explore_detail.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mContext, getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation()), "text/html", "utf-8", null);
         mSharePopupWindow = new SharePopupWindow(this);
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool || mExploreIndex.is_like());

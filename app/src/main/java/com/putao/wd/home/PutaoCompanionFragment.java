@@ -58,7 +58,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     ProductsAdapter mProductsAdapter;
     private List<DiaryApp> mDiaryApps;
-//    private RelativeLayout.LayoutParams mRight2LayoutParams;
+    //    private RelativeLayout.LayoutParams mRight2LayoutParams;
     private RelativeLayout.LayoutParams mSmartLayoutParams;
     private boolean isLoginChange = false;
 
@@ -133,7 +133,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     public void onClick(View v) {
         if (v.getId() == R.id.rl_background) {
             startActivity(SmartActivity.class);
-            getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_out_from_down);
+            getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
             return;
         }
         if (!AccountHelper.isLogin()) {

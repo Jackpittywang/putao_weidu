@@ -1,7 +1,14 @@
 package com.putao.wd.home;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,13 +31,21 @@ import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
+import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.IndicatorButton;
+
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -40,7 +55,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/25.
  */
 public class MeFragment extends BasicFragment implements View.OnClickListener {
-    public static final String EVENT_EDIT_USER_INFO = "edit_user_info";
+    public static final String ME_BLUR = "me_blur";
+    private static final String EVENT_EDIT_USER_INFO = "edit_user_info";
 
     @Bind(R.id.si_message)
     SettingItem si_message;
@@ -54,10 +70,15 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     IndicatorButton btn_after_sale;//售后
     @Bind(R.id.iv_user_icon)
     ImageDraweeView iv_user_icon;
+    @Bind(R.id.iv_user_icon_background)
+    ImageDraweeView iv_user_icon_background;
     @Bind(R.id.tv_user_nickname)
     TextView tv_user_nickname;
     @Bind(R.id.rl_user_head_icon)
     RelativeLayout rl_user_head_icon;
+
+    private HandlerThread mHandlerThread;
+    private Handler mHandler;
 
     @Override
     protected int getLayoutId() {
@@ -66,7 +87,34 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        mHandlerThread = new HandlerThread("blurThread");
+        mHandlerThread.start();
+        Looper looper = mHandlerThread.getLooper();
+        mHandler = new Handler(looper) {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == 1) {
+                    try {
+                        Bitmap map;
+                        URL url = new URL(msg.obj.toString());
+                        URLConnection conn = url.openConnection();
+                        conn.connect();
+                        InputStream in;
+                        in = conn.getInputStream();
+                        map = BitmapFactory.decodeStream(in);
+                        Bitmap apply = FastBlur.doBlur(map, 50, false);
+                        EventBusHelper.post(apply, ME_BLUR);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Bitmap apply = FastBlur.doBlur(BitmapFactory.decodeResource(getResources(), R.drawable.img_head_default), 50, false);
+                    EventBusHelper.post(apply, ME_BLUR);
+                }
+            }
+        };
     }
+
 
     @Override
     public void onStart() {
@@ -83,7 +131,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     /**
      * 订单上数字没有登录则不显示
      */
+
     private void hideNum() {
+        Message message = new Message();
+        message.what = 2;
+        mHandler.sendMessage(message);
         btn_pay.hide();
         btn_deliver.hide();
         btn_take_deliver.hide();
@@ -97,7 +149,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
         networkRequest(UserApi.getUserInfo(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
-                    public void onSuccess(String url, UserInfo result) {
+                    public void onSuccess(String url, final UserInfo result) {
+                        Message message = new Message();
+                        message.obj = result.getHead_img();
+                        message.what = 1;
+                        mHandler.sendMessage(message);
                         iv_user_icon.setImageURL(result.getHead_img());
                         tv_user_nickname.setText(result.getNick_name());
                         loading.dismiss();
@@ -151,7 +207,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     }
 
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
-            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale,R.id.si_concerns})
+            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale, R.id.si_concerns})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -264,5 +320,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 break;
         }
         startActivity(LoginActivity.class, bundle);
+    }
+
+    @Subcriber(tag = ME_BLUR)
+    private void setBlur(Bitmap bitmap) {
+        iv_user_icon_background.setDefaultImage(bitmap);
+        ;
     }
 }

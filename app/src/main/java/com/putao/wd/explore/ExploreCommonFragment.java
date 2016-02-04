@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -45,6 +46,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     ImageView iv_player;
     @Bind(R.id.sb_cool_icon)
     SwitchButton sb_cool_icon;
+    @Bind(R.id.rl_nexplore)
+    RelativeLayout rl_nexplore;
     public static final String INDEX_DATA_PAGE = "index_data_page";
     public static final String INDEX_DATA = "index_data";
     private ExploreIndex mExploreIndex;
@@ -83,16 +86,16 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     }
 
 
-    @OnClick({R.id.iv_video, R.id.ll_count_cool, R.id.iv_player})
+    @OnClick({R.id.rl_nexplore, R.id.ll_count_cool, R.id.iv_player})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_video:
+            case R.id.rl_nexplore:
                 Bundle bundleDetial = new Bundle();
                 bundleDetial.putSerializable(INDEX_DATA, args.getSerializable(INDEX_DATA));
                 bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
-                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.out_from_down);
+                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
                 break;
             case R.id.iv_player:
                 Bundle bundle = new Bundle();

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
@@ -28,7 +27,7 @@ import butterknife.Bind;
  * 新首页
  * Created by guchenkai on 2016/1/13.
  */
-public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTabItemSelectedListener {
+public class IndexActivity extends BasicFragmentActivity {
     public static boolean isNotRefreshUserInfo = false;
 
     @Bind(R.id.vp_content)
@@ -106,7 +105,7 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
                 if (position == 0) {
                     tb_tab.setVisibility(View.GONE);
                     tb_index_tab.setVisibility(View.VISIBLE);
-                    v_line_horizontal.setVisibility(View.GONE);
+                    v_line_horizontal.setVisibility(View.INVISIBLE);
                     tb_index_tab.setTabItemSelected(R.id.ti_index_explore);
                     return;
                 }
@@ -140,26 +139,6 @@ public class IndexActivity extends BasicFragmentActivity implements TabBar.OnTab
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
-    }
-
-    @Override
-    public void onTabItemSelected(TabItem item, int position) {
-        if (position == 0) {
-
-        } else {
-            tb_tab.setVisibility(View.VISIBLE);
-            tb_index_tab.setVisibility(View.GONE);
-            v_line_horizontal.setVisibility(View.VISIBLE);
-        }
-
-        vp_content.setCurrentItem(position, false);
-    }
-
-    private void setNom() {
-        ti_explore.setActive(false);
-        ti_create.setActive(false);
-        ti_store.setActive(false);
-        ti_companion.setActive(false);
     }
 
     /**
