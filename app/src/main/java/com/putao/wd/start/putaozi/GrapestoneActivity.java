@@ -21,7 +21,7 @@ import butterknife.Bind;
  * Created by yanghx on 2015/12/22.
  */
 public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, BasicWebView.OnWebViewLoadUrlCallback {
-    public static final String URL_GRAPESTONE = "http://static.uzu.wang/weidu_event/view/QA.html";
+    public static final String URL_GRAPESTONE = GlobalApplication.isDebug ? "http://api.weidu.start.wang/faq/list" : "http://http://api-weidu.putao.com/faq/list";
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
 

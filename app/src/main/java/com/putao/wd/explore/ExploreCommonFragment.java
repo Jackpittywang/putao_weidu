@@ -86,7 +86,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     }
 
 
-    @OnClick({R.id.rl_nexplore, R.id.ll_count_cool, R.id.iv_player})
+    @OnClick({R.id.rl_nexplore, R.id.ll_count_cool})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -96,11 +96,6 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
-                break;
-            case R.id.iv_player:
-                Bundle bundle = new Bundle();
-                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, mExploreIndex.getBanner().get(0).getUrl());
-                startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
 
             case R.id.ll_count_cool:
