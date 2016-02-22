@@ -31,8 +31,12 @@ public final class ResourcesUtils {
             BufferedReader br = new BufferedReader(reader);
             String line = "";
             String Result = "";
-            while ((line = br.readLine()) != null)
-                Result += line;
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+                if(i==0) Result = line;
+                else Result = Result+"\n"+line;
+                i++;
+            }
             return Result;
         } catch (IOException e) {
             e.printStackTrace();

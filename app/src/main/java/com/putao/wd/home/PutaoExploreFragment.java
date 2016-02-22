@@ -89,7 +89,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         mHandler = new Handler(looper) {
             @Override
             public void handleMessage(Message msg) {
-//                mHandlerThread.interrupt();
                 mI = BACKGROUND_CAN_NOT_CHANGGE;
                 Bundle obj = (Bundle) msg.obj;
                 int position = obj.getInt(POSITION);
@@ -121,11 +120,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 }
             }
         };
-        addListener();
         initData();
+        addListener();
     }
 
     private void addListener() {
+        if (null == mExploreIndexs) return;
         //切换页面刷新日期
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -199,7 +199,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         mExploreIndex = (ExploreIndexs) mDiskFileCacheHelper.getAsSerializable(INDEX_CACHE);
         if (null != mExploreIndex) {
             mExploreIndexs = mExploreIndex.getExploreIndexes();
-            if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
+            if (null != mExploreIndexs && mExploreIndexs.size()> 0) {
                 if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) > System.currentTimeMillis()) {
                     addFragments();
                     addDate(vp_content.getCurrentItem());
@@ -234,6 +234,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+                        if (null == mExploreIndexs) return;
                         addFragments();
                         addDate(vp_content.getCurrentItem());
                     }

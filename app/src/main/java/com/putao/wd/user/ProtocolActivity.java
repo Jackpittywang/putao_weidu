@@ -28,7 +28,7 @@ public class ProtocolActivity extends PTWDActivity implements View.OnClickListen
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         String protocol = ResourcesUtils.getAssetsTextFile(mContext, "protocol.txt");
-        tv_protocol.setText(Html.fromHtml(protocol));
+        tv_protocol.setText(protocol);
     }
 
     @Override
