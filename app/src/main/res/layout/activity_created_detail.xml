@@ -134,8 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                auto:aspect_ratio="2"
-                auto:default_drawable="@drawable/img_p_cover"/>
+                auto:aspect_ratio="2"/>
 
             <TextView
                 android:id="@+id/tv_title"

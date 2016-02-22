@@ -113,8 +113,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加收货地址
      */
     private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        if (isAddressEmpty = true)
-            status = "1";
+        if (isAddressEmpty = false)
+            status = "0";
         networkRequest(OrderApi.addressAdd(realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override

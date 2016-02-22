@@ -114,7 +114,7 @@
 
         <TextView
             style="@style/style_address_title_text"
-            android:text="@string/consignee_address" />
+            android:text="@string/consignee_mobile" />
 
         <TextView
             style="@style/style_address_title_text_must"
@@ -158,6 +158,7 @@
         android:id="@+id/ll_delete_address"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:gravity="center"
         android:background="@color/white">
 
         <TextView

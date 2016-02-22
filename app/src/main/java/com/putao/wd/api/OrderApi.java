@@ -109,7 +109,7 @@ public class OrderApi {
      */
     public static Request getAddressLists() {
         return PTWDRequestHelper.store()
-                .build(RequestMethod.GET, URL_ADDRESS_LIST);
+                .build(RequestMethod.POST, URL_ADDRESS_LIST);
     }
 
     /**

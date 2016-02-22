@@ -63,7 +63,7 @@ public class FancyAdapter extends LoadMoreAdapter<Create, FancyAdapter.FancyHold
         }
         holder.tv_title.setText(create.getTitle());
         holder.tv_content.setText(create.getDescrip());
-        holder.iv_icon.setImageURL(create.getAvatar());
+        holder.iv_icon.setImageURL(create.getSmall_cover());
         holder.tv_count_comment.setText(create.getComment().getCount() + "");
         holder.tv_count_cool.setText(create.getVote().getUp() + "");
         holder.sb_cool_icon.setClickable(false);

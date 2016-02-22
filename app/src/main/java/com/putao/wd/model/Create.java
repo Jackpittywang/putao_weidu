@@ -25,6 +25,8 @@ public class Create implements Serializable {
     private int vote_status;
     private CreateListComment comment;
     private String avatar;
+    private String real_avatar;
+    private String small_cover;
     private String nickname;
     private int follow_status;
 
@@ -178,6 +180,22 @@ public class Create implements Serializable {
 
     public void setFollow_status(int follow_status) {
         this.follow_status = follow_status;
+    }
+
+    public String getReal_avatar() {
+        return real_avatar;
+    }
+
+    public void setReal_avatar(String real_avatar) {
+        this.real_avatar = real_avatar;
+    }
+
+    public String getSmall_cover() {
+        return small_cover;
+    }
+
+    public void setSmall_cover(String small_cover) {
+        this.small_cover = small_cover;
     }
 
     @Override

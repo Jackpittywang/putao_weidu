@@ -114,6 +114,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                                 et_nickname.setText(info.getBaby_name());
                                 et_nickname.setSelection(info.getBaby_name().length());
                                 tv_identity.setText(info.getRelation());
+                                if("FATHER".equals(info.getRelation())) tv_identity.setText("我是爸爸");
                                 tv_sex.setText(!StringUtils.equals(info.getSex(), "F") ? "男" : "女");
                                 tv_birthday.setText(info.getBirthday());
                                 AccountHelper.setChildInfo(info);
