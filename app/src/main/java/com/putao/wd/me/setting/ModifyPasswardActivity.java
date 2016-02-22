@@ -42,7 +42,7 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        btn_change.setEnabled(false);
+        btn_change.setClickable(false);
         addListener();
     }
 
@@ -60,11 +60,11 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
         String etPwNew = et_pw_new.getText().toString();
         String etPwRepeat = et_pw_repeat.getText().toString();
         if (etPwOld.length() < 6 || etPwNew.length() < 6 || etPwRepeat.length() < 6) {
-            btn_change.setEnabled(false);
+            btn_change.setClickable(false);
             btn_change.setBackgroundResource(R.drawable.text_userinfo_limit_shape);
             return;
         }
-        btn_change.setEnabled(true);
+        btn_change.setClickable(true);
         btn_change.setBackgroundResource(R.drawable.btn_order_express_selector);
     }
 
