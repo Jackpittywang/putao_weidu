@@ -86,7 +86,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                         AccountHelper.login(result);
                         ActivityManager.getInstance().removeCurrentActivity();
                         ActivityManager.getInstance().finishCurrentActivity();
-                        startActivity(CompleteActivity.class);
+                        startActivity(PerfectActivity.class);
                         finish();
                         loading.dismiss();
                         finish();
@@ -152,18 +152,18 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        if (s.length() > 0) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (et_mobile.length() > 0 && et_password.length() > 5 && et_sms_verify.length() > 0) {
             btn_next.setClickable(true);
             btn_next.setBackgroundResource(R.drawable.btn_get_focus);
         } else {
             btn_next.setClickable(false);
             btn_next.setBackgroundResource(R.drawable.btn_los_focus);
         }
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
     }
 
     @Override

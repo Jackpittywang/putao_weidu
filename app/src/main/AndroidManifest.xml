@@ -74,9 +74,13 @@
         <activity
             android:name=".user.ProtocolActivity"
             android:screenOrientation="portrait" />
-        <!--完善用户信息-->
+        <!--用户信息-->
         <activity
             android:name=".user.CompleteActivity"
+            android:screenOrientation="portrait" />
+        <!--完善用户信息-->
+        <activity
+            android:name=".user.PerfectActivity"
             android:screenOrientation="portrait" />
         <!--忘记密码-->
         <activity

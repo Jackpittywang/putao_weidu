@@ -91,12 +91,27 @@ public class UserApi {
     }
 
     /**
-     * 保存昵称
+     * 保存简介
      *
      * @param user_info 用户简介
      */
     public static Request userInfo(String user_info) {
         return PTWDRequestHelper.explore()
+                .addParam(REQUEST_PROFILE, user_info)
+                .build(RequestMethod.POST, URL_USER_EDIT);
+    }
+
+    /**
+     * 保存昵称
+     *
+     * @param user_info 用户简介
+     */
+    public static Request perfectUserInfo(String ext, String filename, String filehash, String nick_name, String user_info) {
+        return PTWDRequestHelper.explore()
+                .addParam(REQUEST_EXT, ext)
+                .addParam(REQUEST_FILENAME, filename)
+                .addParam(REQUEST_FILEHASH, filehash)
+                .addParam(REQUEST_NICK_NAME, nick_name)
                 .addParam(REQUEST_PROFILE, user_info)
                 .build(RequestMethod.POST, URL_USER_EDIT);
     }

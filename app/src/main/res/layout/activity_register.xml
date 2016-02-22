@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/img_bg_signup"
-    android:orientation="vertical">
+              xmlns:auto="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/img_bg_signup"
+              android:orientation="vertical">
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -12,7 +12,7 @@
         android:background="@color/transparent"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="@string/register_title"
-        auto:nav_main_title_color="@color/text_color" />
+        auto:nav_main_title_color="@color/text_color"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,14 +33,14 @@
                 android:drawableRight="@drawable/close_selector"
                 android:hint="@string/mobile"
                 android:inputType="phone"
-                auto:maxLength="11" />
+                auto:maxLength="11"/>
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
+                android:background="@color/divider_color"/>
         </LinearLayout>
 
         <!--图形验证码-->
@@ -58,7 +58,7 @@
                 android:layout_height="48dp"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
-                android:hint="@string/graph_verify" />
+                android:hint="@string/graph_verify"/>
 
             <!--图形验证码-->
             <com.sunnybear.library.view.image.ImageDraweeView
@@ -67,7 +67,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@id/et_graph_verify" />
+                android:layout_toLeftOf="@id/et_graph_verify"/>
 
             <!--间隔线-->
             <View
@@ -76,7 +76,7 @@
                 android:layout_below="@id/et_graph_verify"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
+                android:background="@color/divider_color"/>
         </RelativeLayout>
 
         <!--短信验证码-->
@@ -96,7 +96,7 @@
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
                 android:hint="@string/sms_verify"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"/>
 
             <com.sunnybear.library.view.TimeButton
                 android:id="@+id/tb_get_verify"
@@ -111,7 +111,7 @@
                 auto:countdown_time="60"
                 auto:text_after="获取验证码($s后重发)"
                 auto:text_before="获取验证码"
-                auto:unclick_background="@color/text_color_gray" />
+                auto:unclick_background="@color/text_color_gray"/>
 
             <!--竖向间隔线-->
             <View
@@ -119,7 +119,7 @@
                 android:layout_height="32dp"
                 android:layout_margin="8dp"
                 android:layout_toLeftOf="@id/tb_get_verify"
-                android:background="@color/divider_color" />
+                android:background="@color/divider_color"/>
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                 android:layout_below="@id/tb_get_verify"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
+                android:background="@color/divider_color"/>
         </RelativeLayout>
 
         <!--注册密码-->
@@ -151,8 +151,9 @@
                     android:layout_weight="0.8"
                     android:background="@null"
                     android:drawableRight="@drawable/close_selector"
-                    android:hint="@string/login_password"
-                    android:inputType="textPassword" />
+                    android:hint="@string/regist_password"
+                    android:inputType="textPassword"
+                    android:maxLength="18"/>
 
                 <com.sunnybear.library.view.SwitchButton
                     android:id="@+id/btn_is_look"
@@ -162,7 +163,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     auto:norDrawable="@drawable/icon_20_11"
-                    auto:selDrawable="@drawable/icon_20_10" />
+                    auto:selDrawable="@drawable/icon_20_10"/>
             </LinearLayout>
 
             <!--间隔线-->
@@ -171,10 +172,10 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/divider_color" />
+                android:background="@color/divider_color"/>
         </LinearLayout>
 
-        <!--登录按钮-->
+        <!--下一步-->
         <Button
             android:id="@+id/btn_next"
             android:layout_width="match_parent"
@@ -185,7 +186,7 @@
             android:clickable="false"
             android:text="@string/next"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/text_size_16sp" />
+            android:textSize="@dimen/text_size_16sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -199,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:text="点击下一步表示您已同意"
                 android:textColor="@color/text_main_color_sel"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"/>
 
             <TextView
                 android:id="@+id/tv_user_protocol"
@@ -207,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:text="《用户服务协议》"
                 android:textColor="@color/text_main_color_sel"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_16sp"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
