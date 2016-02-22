@@ -29,7 +29,7 @@ import butterknife.Bind;
 public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.CommentViewHolder> {
     public static final String EVENT_COMMENT_EDIT = "event_comment_edit";
     public static final String EVENT_COMMIT_COOL = "event_commit_cool";
-    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
+//    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
     private Context mContext;
 
     public CommentAdapter(Context context, List<Comment> comments) {
@@ -55,7 +55,7 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
             holder.tv_username.setText(comment.getUser_name());
         if (StringUtils.isEmpty(comment.getUser_id()))
             holder.tv_username.setText(comment.getUser_name());
-        String create_time = DateUtils.secondToDate(Integer.parseInt(comment.getModified_time()), DATE_PATTERN);
+        String create_time = DateUtils.timeCalculate(comment.getModified_time());
         holder.tv_comment_time.setText(create_time);
         if (null != comment.getReply()) {
             holder.tv_comment_content.setText("回复 " + comment.getReply().getUser_name() + ": " + comment.getContent());
@@ -67,6 +67,7 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         } else {
             holder.tv_count_cool.setText("赞");
         }
+
         holder.sb_cool_icon.setClickable(false);
         holder.sb_cool_icon.setState(comment.is_like());
         holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {

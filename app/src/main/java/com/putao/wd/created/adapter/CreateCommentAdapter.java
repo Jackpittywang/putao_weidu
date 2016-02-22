@@ -28,7 +28,7 @@ import butterknife.Bind;
 public class CreateCommentAdapter extends LoadMoreAdapter<CreateComment, CreateCommentAdapter.CommentViewHolder> {
     public static final String EVENT_COMMENT_EDIT = "event_comment_edit";
     public static final String EVENT_COMMIT_COOL = "event_commit_cool";
-    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
+//    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
     private Context mContext;
 
     public CreateCommentAdapter(Context context, List<CreateComment> comments) {
@@ -52,7 +52,7 @@ public class CreateCommentAdapter extends LoadMoreAdapter<CreateComment, CreateC
             holder.iv_comment_icon.setImageURL(comment.getReal_avatar());
         if (!StringUtils.isEmpty(comment.getUsername()))
             holder.tv_username.setText(comment.getUsername());
-        String create_time = DateUtils.secondToDate(comment.getCreated_at(), DATE_PATTERN);
+        String create_time = DateUtils.timeCalculate(comment.getCreated_at());
         holder.tv_comment_time.setText(create_time);
         if (null != comment.getReply().getUsername()) {
             holder.tv_comment_content.setText("回复 " + comment.getReply().getUsername() + ": " + comment.getContent());

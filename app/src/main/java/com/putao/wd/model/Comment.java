@@ -11,7 +11,7 @@ public class Comment implements Serializable {
     private String content;//内容
     private String count_likes;//赞
     private boolean is_like;//赞
-    private String modified_time;//创建时间
+    private int modified_time;//创建时间
     private String user_id;//评论归属用户
     private String user_name;//归属用户昵称
     private String head_img;//头像
@@ -51,11 +51,11 @@ public class Comment implements Serializable {
         this.is_like = is_like;
     }
 
-    public String getModified_time() {
+    public int getModified_time() {
         return modified_time;
     }
 
-    public void setModified_time(String modified_time) {
+    public void setModified_time(int modified_time) {
         this.modified_time = modified_time;
     }
 
