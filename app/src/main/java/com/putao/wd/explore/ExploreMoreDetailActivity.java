@@ -68,7 +68,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
     public final static String ARTICLE_ID = "article_id";//是否赞过
-    public static final String EVENT_ADD_CREAT_COOL = "event_add_creat_cool";
+    public static final String EVENT_ADD_MORE_DETAIL_COOL = "event_add_more_detail_cool";
     public final static String POSITION = "position";
     private int mPosition;
     private float mWidth;
@@ -217,7 +217,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 if (isCool) break;
                 tv_count_cool.setText(mExploreIndex.getCount_likes() + 1 + "");
                 isCool = true;
-                EventBusHelper.post(mPosition, EVENT_ADD_CREAT_COOL);
+                EventBusHelper.post(mPosition, EVENT_ADD_MORE_DETAIL_COOL);
                 sb_cool_icon.setState(true);
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {

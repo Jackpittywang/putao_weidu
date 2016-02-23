@@ -12,7 +12,9 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductDetail;
+import com.putao.wd.model.StoreProduct;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
@@ -22,6 +24,8 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 
+import java.io.Serializable;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -30,8 +34,9 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/30.
  */
 public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener {
-    public static final String BUNDLE_PRODUCT_ID = "product_id";
-    public static final String BUNDLE_PRODUCT_ICON = "product_icon";
+    /*public static final String BUNDLE_PRODUCT_ID = "product_id";
+    public static final String BUNDLE_PRODUCT_ICON = "product_icon";*/
+    public static final String BUNDLE_PRODUCT = "bundle_product";
 
     @Bind(R.id.rl_main)
     RelativeLayout rl_main;
@@ -61,6 +66,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     private ProductDetail detail = null;
     private String imageUrl;//商品图片
+    private StoreProduct mStoreProduct;
 
     @Override
     protected int getLayoutId() {
@@ -70,9 +76,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-
-        wv_content.loadUrl(args.getString(BUNDLE_PRODUCT_ICON));
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, (String) args.get(BUNDLE_PRODUCT_ID));
+        mStoreProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
+        wv_content.loadUrl(mStoreProduct.getMobile_url());
+        tv_product_price.setText(mStoreProduct.getPrice());
+        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, mStoreProduct.getId());
    /*   imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
         product_id = args.getString(BUNDLE_PRODUCT_ID);
         mSharePopupWindow = new SharePopupWindow(mContext);

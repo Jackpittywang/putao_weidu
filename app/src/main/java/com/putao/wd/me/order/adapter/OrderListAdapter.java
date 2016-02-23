@@ -83,7 +83,8 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
             @Override
             public void onItemClick(OrderProduct product, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getProduct_id());
+//                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getProduct_id());
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 context.startActivity(ProductDetailActivity.class, bundle);
             }
         });

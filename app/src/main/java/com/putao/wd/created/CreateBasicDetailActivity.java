@@ -109,8 +109,6 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     private Handler mHandler;
     private int mTime = 1000;
     public static final String CREATE = "CREATE";
-    public static final String EVENT_ADD_CREAT_COOL = "event_add_creat_cool";
-    public static final String EVENT_ADD_CREAT_NOT_COOL = "event_add_creat_not_cool";
     public static final String POSITION = "position";
     public static final String SHOW_PROGRESS = "show_progress";
     private Create mCreate;
@@ -281,7 +279,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_support_result.setVisibility(View.VISIBLE);
                     showView(tv_support_result);
                     hindView(tv_support);
-                    EventBusHelper.post(mPosition, EVENT_ADD_CREAT_COOL);
+                    EventBusHelper.post(mPosition, isShowProgress ? PutaoCreatedSecondFragment.EVENT_ADD_CREAT_COOL : FancyFragment.EVENT_ADD_FANCY_COOL);
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 1),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -296,7 +294,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                     tv_no_support_result.setVisibility(View.VISIBLE);
                     showView(tv_no_support_result);
                     hindView(tv_no_support);
-                    EventBusHelper.post(mPosition, EVENT_ADD_CREAT_NOT_COOL);
+                    EventBusHelper.post(mPosition, isShowProgress ? PutaoCreatedSecondFragment.EVENT_ADD_CREAT_NOT_COOL : FancyFragment.EVENT_ADD_FANCY_NOT_COOL);
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 2),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -313,19 +311,33 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         }
         switch (v.getId()) {
             case R.id.ll_cool:
+                ll_cool.setClickable(false);
                 Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
-                if (mCreate.getFollow_status() == 1)
-                    break;
-                sb_cool_icon.setState(true);
-                tv_count_cool.setText("已关注");
-                networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
-                        new SimpleFastJsonCallback<String>(String.class, loading) {
-                            @Override
-                            public void onSuccess(String url, String result) {
-                                mCreate.setFollow_status(1);
-                            }
-                        });
+                if (mCreate.getFollow_status() == 1) {
+                    sb_cool_icon.setState(false);
+                    tv_count_cool.setText("关注");
+                    networkRequest(CreateApi.setCreateAction(mCreate.getId(), 4),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                    mCreate.setFollow_status(0);
+                                    ll_cool.setClickable(true);
+                                }
+                            });
+                } else {
+                    sb_cool_icon.setState(true);
+                    tv_count_cool.setText("已关注");
+                    networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                    mCreate.setFollow_status(1);
+                                    ll_cool.setClickable(true);
+                                }
+                            });
+                }
+                EventBusHelper.post(mPosition, isShowProgress ? PutaoCreatedSecondFragment.EVENT_CREAT_CONCERNS_CHANGE : FancyFragment.EVENT_FANCY_CONCERNS_CHANGE);
                 break;
             case R.id.ll_comment:
                 Bundle bundle = new Bundle();

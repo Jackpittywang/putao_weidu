@@ -31,6 +31,9 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
 
+    public static final String EVENT_ADD_CREAT_COOL = "event_add_creat_cool";
+    public static final String EVENT_ADD_CREAT_NOT_COOL = "event_add_creat_not_cool";
+    public static final String EVENT_CREAT_CONCERNS_CHANGE = "event_creat_concerns_change";
     private CreateAdapter adapter;
     private int mPage;
 
@@ -153,7 +156,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         adapter.notifyItemChanged(position);
     }
 
-    @Subcriber(tag = CreateBasicDetailActivity.EVENT_ADD_CREAT_COOL)
+    @Subcriber(tag = EVENT_ADD_CREAT_COOL)
     public void eventAddCoolCount(int position) {
         Create item = adapter.getItem(position);
         item.getVote().setUp(item.getVote().getUp() + 1);
@@ -161,12 +164,17 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         adapter.notifyItemChanged(position);
     }
 
-    @Subcriber(tag = CreateBasicDetailActivity.EVENT_ADD_CREAT_NOT_COOL)
+    @Subcriber(tag = EVENT_ADD_CREAT_NOT_COOL)
     public void eventAddNotCoolCount(int position) {
         Create item = adapter.getItem(position);
         item.getVote().setDown(item.getVote().getDown() + 1);
         item.setVote_status(2);
         adapter.notifyItemChanged(position);
+    }
+    @Subcriber(tag = EVENT_CREAT_CONCERNS_CHANGE)
+    public void ChangeConcerns(int position) {
+        Create item = adapter.getItem(position);
+        item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
     }
 
 /*    @Subcriber(tag = CreateBasicDetailActivity.COOL)

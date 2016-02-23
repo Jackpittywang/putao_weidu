@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/popup_background"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/popup_background"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
     <FrameLayout
         android:id="@+id/popup_layout"
@@ -33,7 +33,7 @@
                     android:id="@+id/iv_product_icon"
                     style="@style/image_round_4dp"
                     android:layout_width="88dp"
-                    android:layout_height="88dp" />
+                    android:layout_height="88dp"/>
 
                 <!--产品介绍-->
                 <RelativeLayout
@@ -48,7 +48,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/close_selector" />
+                        android:src="@drawable/close_selector"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:text="葡萄探索号"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_size_20sp" />
+                            android:textSize="@dimen/text_size_20sp"/>
 
                         <!--产品介绍-->
                         <TextView
@@ -75,7 +75,7 @@
                             android:maxLines="2"
                             android:singleLine="false"
                             android:text="快乐不至于屏幕虚拟+现实儿童科技益智玩具(本产品需搭配iPad使用)"
-                            android:textColor="@color/text_color_gray" />
+                            android:textColor="@color/text_color_gray"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -87,19 +87,19 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/divider_color" />
+                android:background="@color/divider_color"/>
 
             <!--选择规格-->
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:id="@+id/rv_norms"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="240dp"
                 auto:divider_color="@color/divider_color"
                 auto:divider_height="1px"
                 auto:divider_marginLeft="8dp"
                 auto:divider_marginRight="8dp"
                 auto:has_row_divider="true"
-                auto:process_background="-1" />
+                auto:process_background="-1"/>
 
         </LinearLayout>
 
@@ -112,64 +112,68 @@
             <LinearLayout
                 android:id="@+id/ll_add_shopcart"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="48.5dp"
                 android:layout_gravity="bottom"
-                android:visibility="visible"
                 android:background="@color/background_F5F5F5"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:background="@color/white"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="合计"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_size_20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="￥"
-                    android:textColor="@color/text_color_red"
-                    android:textSize="@dimen/text_size_20sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0.00"
-                    android:textColor="@color/text_color_red"
-                    android:textSize="@dimen/text_size_20sp" />
-            </LinearLayout>
+                android:visibility="visible">
 
                 <LinearLayout
-                android:id="@+id/ll_join_car"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:background="@color/color_C2C2C2"
-                android:clickable="false"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="加入购物车"
-                    android:textColor="@color/text_color_white"
-                    android:textSize="@dimen/text_size_20sp" />
-            </LinearLayout>
-            </LinearLayout>
+                    android:layout_weight="0.6"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="8dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="合计"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_20sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="￥"
+                        android:textColor="@color/text_color_red"
+                        android:textSize="@dimen/text_size_20sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textColor="@color/text_color_red"
+                        android:textSize="@dimen/text_size_20sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_join_car"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:background="@color/color_C2C2C2"
+                    android:clickable="false"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="加入购物车"
+                        android:textColor="@color/text_color_white"
+                        android:textSize="@dimen/text_size_20sp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <!--分割线-->
+            <View
+                android:id="@+id/v_line_horizontal"
+                style="@style/line_horizontal"
+                android:layout_above="@+id/fl_add_shopcart"/>
         </FrameLayout>
     </FrameLayout>
 </RelativeLayout>

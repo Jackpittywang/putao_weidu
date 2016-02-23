@@ -80,7 +80,8 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             @Override
             public void onItemClick(ServiceProduct product, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getSale_product_id());
+//                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getSale_product_id());
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 context.startActivity(ProductDetailActivity.class, bundle);
             }
         });

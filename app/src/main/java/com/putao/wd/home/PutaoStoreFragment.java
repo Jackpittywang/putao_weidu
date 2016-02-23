@@ -138,8 +138,9 @@ public class PutaoStoreFragment extends BasicFragment {
             @Override
             public void onItemClick(StoreProduct product, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
-                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());
+                /*bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());*/
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });

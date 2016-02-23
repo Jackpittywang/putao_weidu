@@ -172,7 +172,7 @@ public class ExploreMoreActivity extends PTWDActivity {
         adapter.notifyItemChanged(position);
     }
 
-    @Subcriber(tag = CreateBasicDetailActivity.EVENT_ADD_CREAT_COOL)
+    @Subcriber(tag = ExploreMoreDetailActivity.EVENT_ADD_MORE_DETAIL_COOL)
     public void eventAddCoolCount(int position) {
         HomeExploreMore item = adapter.getItem(position);
         item.setCount_likes(item.getCount_likes() + 1);

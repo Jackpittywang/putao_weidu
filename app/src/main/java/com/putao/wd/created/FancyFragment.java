@@ -33,6 +33,10 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
 
+    public static final String EVENT_ADD_FANCY_COOL = "event_add_fancy_cool";
+    public static final String EVENT_ADD_FANCY_NOT_COOL = "event_add_fancy_not_cool";
+    public static final String EVENT_FANCY_CONCERNS_CHANGE = "event_fancy_concerns_change";
+
     private FancyAdapter adapter;
     private int mPage;
 
@@ -106,7 +110,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
         Bundle bundle = new Bundle();
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, false);
-        startActivity(CreateBasicDetailActivity.class,bundle);
+        startActivity(CreateBasicDetailActivity.class, bundle);
     }
 
     @Subcriber(tag = CreateAdapter.COOL)
@@ -125,5 +129,28 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
         Bundle bundle = new Bundle();
         bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, id);
         startActivity(CreateCommentActivity.class, bundle);
+    }
+
+
+    @Subcriber(tag = EVENT_ADD_FANCY_COOL)
+    public void eventAddCoolCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getVote().setUp(item.getVote().getUp() + 1);
+        item.setVote_status(1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = EVENT_ADD_FANCY_NOT_COOL)
+    public void eventAddNotCoolCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getVote().setDown(item.getVote().getDown() + 1);
+        item.setVote_status(2);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = EVENT_FANCY_CONCERNS_CHANGE)
+    public void ChangeConcerns(int position) {
+        Create item = adapter.getItem(position);
+        item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
     }
 }
