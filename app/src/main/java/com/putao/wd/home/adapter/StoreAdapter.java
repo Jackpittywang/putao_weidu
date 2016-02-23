@@ -2,6 +2,7 @@ package com.putao.wd.home.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.StoreProduct;
@@ -36,6 +37,7 @@ public class StoreAdapter extends LoadMoreAdapter<StoreProduct, StoreAdapter.Sto
     @Override
     public void onBindItem(StoreViewHolder holder, StoreProduct product, int position) {
         holder.iv_product/*.addProcessor(new BlurProcessor(8))*/.setImageURL(product.getImage());
+        holder.tv_title.setText(product.getTitle());
     }
 
     /**
@@ -45,6 +47,8 @@ public class StoreAdapter extends LoadMoreAdapter<StoreProduct, StoreAdapter.Sto
 
         @Bind(R.id.iv_product)
         ImageDraweeView iv_product;
+        @Bind(R.id.tv_title)
+        TextView tv_title;
 
         public StoreViewHolder(View itemView) {
             super(itemView);

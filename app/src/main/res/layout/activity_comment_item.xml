@@ -19,8 +19,8 @@
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_comment_icon"
             style="@style/image_circle"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="8dp"
             auto:placeholderImage="@drawable/img_head_q"/>
 
@@ -37,7 +37,7 @@
                 android:layout_marginTop="4dp"
                 android:text="这个用户很懒"
                 android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp"
+                android:textSize="@dimen/text_size_14sp"
                 />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_marginTop="4dp"
                 android:text="评论时间"
                 android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_16sp"
+                android:textSize="@dimen/text_size_12sp"
                 />
 
             <com.sunnybear.library.view.emoji.EmojiTextView
@@ -60,7 +60,7 @@
                 android:maxLength="200"
                 android:text="评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容"
                 android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_20sp"
+                android:textSize="@dimen/text_size_16sp"
                 />
 
             <RelativeLayout
@@ -89,7 +89,7 @@
                         android:paddingLeft="4dp"
                         android:text="赞"
                         android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_16sp"
+                        android:textSize="@dimen/text_size_14sp"
                         />
 
 
@@ -113,7 +113,7 @@
                     android:drawablePadding="4dp"
                     android:text="评论"
                     android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_16sp"
+                    android:textSize="@dimen/text_size_14sp"
                     />
 
             </RelativeLayout>

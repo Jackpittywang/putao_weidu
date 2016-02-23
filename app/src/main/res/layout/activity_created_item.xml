@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_EBEBEB"
-        auto:aspect_ratio="2"
-        auto:default_drawable="@drawable/img_p_cover"/>
+        auto:aspect_ratio="2"/>
 
     <!--头像-->
     <com.sunnybear.library.view.image.ImageDraweeView

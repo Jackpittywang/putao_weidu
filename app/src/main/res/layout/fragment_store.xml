@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/img_bg_store"
-            auto:divider_height="10dp"
             auto:has_row_divider="true"
             auto:is_start_animator="true"
             auto:duration_animator="500" />

@@ -92,6 +92,12 @@ public final class FormEncodingRequestBuilder {
                 for (String name : headers.keySet()) {
                     builder.addHeader(name, headers.get(name));
                 }
+               /* builder.addHeader("Content-Type", "application/x-www-form-urlencoded");
+                builder.addHeader("Connection", "Keep-Alive");
+                builder.addHeader("User-Agent", "okhttp/2.7.2");
+                builder.addHeader("Accept-Encoding", "gzip");
+                builder.addHeader("Host", "10.1.11.31:9084");
+                builder.addHeader("Content-Length", "143");*/
                 FormEncodingBuilder param = new FormEncodingBuilder();
                 for (String name : params.keySet()) {
                     param.add(name, params.get(name));

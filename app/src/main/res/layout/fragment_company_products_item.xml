@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_height="110dp"
               android:orientation="vertical">
 
     <com.sunnybear.library.view.image.ImageDraweeView
@@ -10,17 +10,16 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:background="@null"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:id="@+id/tv_product"
-        android:maxLength="6"
+        android:maxLines="3"
         android:textColor="@color/color_313131"
-        android:singleLine="true"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginBottom="20dp"
-        android:textSize="12sp"/>
+        android:textSize="14sp"/>
 </LinearLayout>

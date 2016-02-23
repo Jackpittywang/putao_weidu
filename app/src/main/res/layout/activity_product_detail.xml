@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/rl_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,244 +10,260 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
+        auto:nav_has_divider="true"
         auto:nav_has_right_title_icon="true"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="商品详情"
         auto:nav_right_icon="@drawable/shipping_car_selector"
         auto:nav_right_title_icon_text_color="@color/text_main_color_nor"
-        auto:nav_right_title_indicator_background="@drawable/indicator_background" />
+        auto:nav_right_title_indicator_background="@drawable/indicator_background"/>
 
-    <FrameLayout
+    <com.sunnybear.library.view.BasicWebView
+        android:id="@+id/wv_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/v_line_horizontal"
+        android:layout_below="@+id/navigation_bar"/>
 
-        <!--内容区-->
-        <com.sunnybear.library.view.sticky.StickyHeaderLayout
-            android:id="@+id/sticky_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!-- <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
-            <!--头部-->
-            <LinearLayout
-                android:id="@id/stickyHeaderLayout_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+         &lt;!&ndash;内容区&ndash;&gt;
+         <com.sunnybear.library.view.sticky.StickyHeaderLayout
+             android:id="@+id/sticky_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-                <!--广告位-->
-                <com.sunnybear.library.view.viewpager.banner.ConvenientBanner
-                    android:id="@+id/cb_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    auto:align="CENTER_HORIZONTAL"
-                    auto:autoTurningTime="2"
-                    auto:fillDrawable="@drawable/icon_logistics_flow_old"
-                    auto:pageDrawable="@drawable/icon_logistics_flow_latest" />
+             &lt;!&ndash;头部&ndash;&gt;
+             <LinearLayout
+                 android:id="@id/stickyHeaderLayout_header"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divider_color" />
+                 &lt;!&ndash;广告位&ndash;&gt;
+                 <com.sunnybear.library.view.viewpager.banner.ConvenientBanner
+                     android:id="@+id/cb_banner"
+                     android:layout_width="match_parent"
+                     android:layout_height="300dp"
+                     auto:align="CENTER_HORIZONTAL"
+                     auto:autoTurningTime="2"
+                     auto:fillDrawable="@drawable/icon_logistics_flow_old"
+                     auto:pageDrawable="@drawable/icon_logistics_flow_latest"/>
 
-                <!--产品介绍-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                 <View
+                     android:layout_width="match_parent"
+                     android:layout_height="1px"
+                     android:background="@color/divider_color"/>
 
-                    <LinearLayout
-                        android:id="@+id/ll_intro"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:orientation="vertical"
-                        android:visibility="visible">
+                 &lt;!&ndash;产品介绍&ndash;&gt;
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:background="@color/white"
+                     android:orientation="horizontal"
+                     android:padding="8dp">
 
-                        <!--产品标题-->
-                        <TextView
-                            android:id="@+id/tv_product_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_size_20sp" />
+                     <LinearLayout
+                         android:id="@+id/ll_intro"
+                         android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:layout_weight="0.7"
+                         android:orientation="vertical"
+                         android:visibility="visible">
 
-                        <!--产品介绍-->
-                        <TextView
-                            android:id="@+id/tv_product_intro"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:maxLines="2"
-                            android:singleLine="false"
-                            android:textColor="@color/text_color_gray" />
-                    </LinearLayout>
+                         &lt;!&ndash;产品标题&ndash;&gt;
+                         <TextView
+                             android:id="@+id/tv_product_title"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:textColor="@color/text_color"
+                             android:textSize="@dimen/text_size_20sp"/>
 
-                    <!--间隔线-->
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="1px"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="8dp"
-                        android:background="@color/divider_color" />
+                         &lt;!&ndash;产品介绍&ndash;&gt;
+                         <TextView
+                             android:id="@+id/tv_product_intro"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginTop="2dp"
+                             android:maxLines="2"
+                             android:singleLine="false"
+                             android:textColor="@color/text_color_gray"/>
+                     </LinearLayout>
 
-                    <!--分享-->
-                    <LinearLayout
-                        android:id="@+id/ll_share"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="vertical">
+                     &lt;!&ndash;间隔线&ndash;&gt;
+                     <View
+                         android:id="@+id/divider"
+                         android:layout_width="1px"
+                         android:layout_height="60dp"
+                         android:layout_gravity="center_vertical"
+                         android:layout_margin="8dp"
+                         android:background="@color/divider_color"/>
 
-                        <ImageView
-                            android:id="@+id/iv_share"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/share_selector" />
+                     &lt;!&ndash;分享&ndash;&gt;
+                     <LinearLayout
+                         android:id="@+id/ll_share"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="center_vertical"
+                         android:layout_marginLeft="8dp"
+                         android:layout_marginRight="8dp"
+                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="分享"
-                            android:textColor="@color/text_main_color_nor"
-                            android:textSize="@dimen/text_size_16sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+                         <ImageView
+                             android:id="@+id/iv_share"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:src="@drawable/share_selector"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color" />
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginTop="5dp"
+                             android:text="分享"
+                             android:textColor="@color/text_main_color_nor"
+                             android:textSize="@dimen/text_size_16sp"/>
+                     </LinearLayout>
+                 </LinearLayout>
+             </LinearLayout>
 
-            <!--标题栏-->
-            <com.sunnybear.library.view.select.TitleBar
-                android:id="@id/stickyHeaderLayout_sticky"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_centerVertical="true"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="1px"
+                 android:background="@color/divider_color"/>
 
-                <!--概述-->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ti_summary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:is_active="true"
-                    auto:title_text="概述" />
+             &lt;!&ndash;标题栏&ndash;&gt;
+             <com.sunnybear.library.view.select.TitleBar
+                 android:id="@id/stickyHeaderLayout_sticky"
+                 android:layout_width="match_parent"
+                 android:layout_height="48dp"
+                 android:layout_centerVertical="true"
+                 android:background="@color/white"
+                 android:orientation="horizontal"
+                 android:padding="8dp">
 
-                <!--规格参数-->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ti_parameter"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:title_text="规格参数" />
+                 &lt;!&ndash;概述&ndash;&gt;
+                 <com.sunnybear.library.view.select.TitleItem
+                     android:id="@+id/ti_summary"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     auto:active_color="@color/text_main_color_nor"
+                     auto:inactive_color="@color/text_color_gray"
+                     auto:indicator_color="@color/text_main_color_nor"
+                     auto:is_active="true"
+                     auto:title_text="概述"/>
 
-                <!--包装清单-->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ti_pack"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:title_text="包装清单" />
+                 &lt;!&ndash;规格参数&ndash;&gt;
+                 <com.sunnybear.library.view.select.TitleItem
+                     android:id="@+id/ti_parameter"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     auto:active_color="@color/text_main_color_nor"
+                     auto:inactive_color="@color/text_color_gray"
+                     auto:indicator_color="@color/text_main_color_nor"
+                     auto:title_text="规格参数"/>
 
-                <!--售后-->
-                <com.sunnybear.library.view.select.TitleItem
-                    android:id="@+id/ti_service"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    auto:active_color="@color/text_main_color_nor"
-                    auto:inactive_color="@color/text_color_gray"
-                    auto:indicator_color="@color/text_main_color_nor"
-                    auto:title_text="售后" />
-            </com.sunnybear.library.view.select.TitleBar>
+                 &lt;!&ndash;包装清单&ndash;&gt;
+                 <com.sunnybear.library.view.select.TitleItem
+                     android:id="@+id/ti_pack"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     auto:active_color="@color/text_main_color_nor"
+                     auto:inactive_color="@color/text_color_gray"
+                     auto:indicator_color="@color/text_main_color_nor"
+                     auto:title_text="包装清单"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/divider_color" />
+                 &lt;!&ndash;售后&ndash;&gt;
+                 <com.sunnybear.library.view.select.TitleItem
+                     android:id="@+id/ti_service"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     auto:active_color="@color/text_main_color_nor"
+                     auto:inactive_color="@color/text_color_gray"
+                     auto:indicator_color="@color/text_main_color_nor"
+                     auto:title_text="售后"/>
+             </com.sunnybear.library.view.select.TitleBar>
 
-            <!--概述：H5页面：概述、规格参数、包装清单、售后、-->
-            <com.sunnybear.library.view.BasicWebView
-                android:id="@id/stickyHeaderLayout_scrollable"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="48dp" />
-        </com.sunnybear.library.view.sticky.StickyHeaderLayout>
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="1px"
+                 android:background="@color/divider_color"/>
 
-        <!--价格栏-->
+             &lt;!&ndash;概述：H5页面：概述、规格参数、包装清单、售后、&ndash;&gt;
+             <com.sunnybear.library.view.BasicWebView
+                 android:id="@id/stickyHeaderLayout_scrollable"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_marginTop="48dp"/>
+         </com.sunnybear.library.view.sticky.StickyHeaderLayout>-->
+
+
+    <!--分割线-->
+    <View
+        android:id="@+id/v_line_horizontal"
+        style="@style/line_horizontal"
+        android:layout_above="@+id/ll_price"/>
+    <!--价格栏-->
+    <LinearLayout
+        android:id="@+id/ll_price"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/text_color_red"
+                android:textSize="@dimen/text_size_12sp"/>
+
+            <TextView
+                android:id="@+id/tv_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="399.00"
+                android:textColor="@color/text_color_red"
+                android:textSize="@dimen/text_size_20sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_join_car"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:background="@color/text_main_color_sel"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="@color/text_color_red"
-                    android:textSize="@dimen/text_size_12sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="399.00"
-                    android:textColor="@color/text_color_red"
-                    android:textSize="@dimen/text_size_20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_join_car"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:background="@color/text_main_color_sel"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="加入购物车"
-                    android:textColor="@color/text_color_white"
-                    android:textSize="@dimen/text_size_20sp" />
-            </LinearLayout>
+                android:gravity="center"
+                android:text="加入购物车"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/text_size_20sp"/>
         </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+    </LinearLayout>
+    <!--</FrameLayout>-->
+</RelativeLayout>

@@ -139,7 +139,7 @@ public class PutaoStoreFragment extends BasicFragment {
             public void onItemClick(StoreProduct product, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
-                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getIcon());
+                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });

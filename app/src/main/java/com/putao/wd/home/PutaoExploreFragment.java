@@ -133,7 +133,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageSelected(final int position) {
-                mI = BACKGROUND_CAN_CHANGGE;
                 if (position == 0) {
                     vp_content.setCurrentItem(1);
                     return;
@@ -141,22 +140,20 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     vp_content.setCurrentItem(mFragments.size() - 2);
                     return;
                 }
+                mI = BACKGROUND_CAN_CHANGGE;
                 Message message = new Message();
-                if (position < mExploreIndexs.size() && position > 0) {
+                if (position == mExploreIndexs.size()) {
+                    hindDate("MORE");
+                    message.what = 2;
+                }else{
                     showDate();
                     addDate(position);
                     message.what = 1;
-
-                } else if (position == mExploreIndexs.size()) {
-                    hindDate("MORE");
-                    message.what = 2;
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt(POSITION, position);
                 message.obj = bundle;
                 mHandler.removeCallbacksAndMessages(null);
-                mHandler.removeMessages(1);
-                mHandler.removeMessages(2);
                 mHandler.sendMessage(message);
             }
 

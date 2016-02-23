@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/rl_nexplore"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:auto="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="15dp">
+<RelativeLayout
+    android:id="@+id/rl_nexplore"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp">
 
     <RelativeLayout
         android:id="@+id/rl_video"
@@ -13,10 +14,10 @@
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_video"
+            style="@style/image_style"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            auto:placeholderImage="@drawable/test_flaunt_taotao_bg_01"
             auto:placeholderImageScaleType="centerCrop"/>
 
         <ImageView
@@ -60,6 +61,8 @@
             android:gravity="center"
             android:lineSpacingExtra="7dp"
             android:lines="2"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:text="content"
             android:textColor="@color/text_color_gray"
             android:textSize="@dimen/text_size_14sp"/>

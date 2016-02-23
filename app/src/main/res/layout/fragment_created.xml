@@ -24,7 +24,8 @@
             android:button="@null"
             android:drawableBottom="@drawable/label_create_01_selector"
             android:text="妙想"
-            android:textColor="@color/label_create_text_selector"/>
+            android:textColor="@color/label_create_text_selector"
+            android:textSize="@dimen/text_size_16sp"/>
 
         <RadioButton
             android:id="@+id/rb_step2"
@@ -36,7 +37,8 @@
             android:drawableBottom="@drawable/label_create_02_selector"
             android:gravity="center"
             android:text="创造"
-            android:textColor="@color/label_create_text_selector"/>
+            android:textColor="@color/label_create_text_selector"
+            android:textSize="@dimen/text_size_16sp"/>
 
         <RadioButton
             android:id="@+id/rb_step3"
@@ -47,7 +49,8 @@
             android:drawableBottom="@drawable/label_create_03_selector"
             android:gravity="right"
             android:text="精选"
-            android:textColor="@color/label_create_text_selector"/>
+            android:textColor="@color/label_create_text_selector"
+            android:textSize="@dimen/text_size_16sp"/>
 
     </RadioGroup>
 

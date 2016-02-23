@@ -10,6 +10,7 @@ public class StoreProduct implements Serializable {
     private String id;
     private String title;
     private String image;
+    private String mobile_url;
     private String subtitle;
     private String price;
     private String icon;
@@ -80,12 +81,21 @@ public class StoreProduct implements Serializable {
         this.lock = lock;
     }
 
+    public String getMobile_url() {
+        return mobile_url;
+    }
+
+    public void setMobile_url(String mobile_url) {
+        this.mobile_url = mobile_url;
+    }
+
     @Override
     public String toString() {
         return "StoreProduct{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", image='" + image + '\'' +
+                ", mobile_url='" + mobile_url + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", price='" + price + '\'' +
                 ", icon='" + icon + '\'' +
