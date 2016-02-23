@@ -12,13 +12,16 @@ import android.widget.TextView;
 
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
+import com.putao.wd.user.LoginActivity;
 import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
@@ -159,6 +162,10 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 //                startActivity(PraiseListActivity.class, bundle);
                 break;
             case R.id.ll_comment:
+                if (!AccountHelper.isLogin()) {
+                    login();
+                    return;
+                }
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 startActivity(CommentActivity.class, bundle);
                 break;
@@ -168,6 +175,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         }
     }
 
+    private void login() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CommentActivity.class);
+        bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
+        startActivity(LoginActivity.class, bundle);
+    }
     @Override
     public void startActivity(Class targetClass, Bundle args) {
         Intent intent = new Intent(getActivity(), targetClass);

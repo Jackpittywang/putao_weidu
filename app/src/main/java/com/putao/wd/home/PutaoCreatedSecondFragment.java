@@ -135,12 +135,12 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                 });
     }
 
-    @Subcriber(tag = CreateAdapter.CREAT_COMMENT)
+   /* @Subcriber(tag = CreateAdapter.CREAT_COMMENT)
     public void eventComment(String id) {
         Bundle bundle = new Bundle();
         bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, id);
         startActivity(CreateCommentActivity.class, bundle);
-    }
+    }*/
 
     @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {

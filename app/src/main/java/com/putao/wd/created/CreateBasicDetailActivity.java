@@ -17,17 +17,20 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
+import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
@@ -311,6 +314,13 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         }
         switch (v.getId()) {
             case R.id.ll_cool:
+                if (!AccountHelper.isLogin()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateBasicDetailActivity.class);
+                    bundle.putSerializable(CREATE, mCreate);
+                    startActivity(LoginActivity.class, bundle);
+                    return;
+                }
                 ll_cool.setClickable(false);
                 Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
@@ -340,6 +350,14 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                 EventBusHelper.post(mPosition, isShowProgress ? PutaoCreatedSecondFragment.EVENT_CREAT_CONCERNS_CHANGE : FancyFragment.EVENT_FANCY_CONCERNS_CHANGE);
                 break;
             case R.id.ll_comment:
+                if (!AccountHelper.isLogin()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateCommentActivity.class);
+                    bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
+                    bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
+                    startActivity(LoginActivity.class, bundle);
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
                 startActivity(CreateCommentActivity.class, bundle);

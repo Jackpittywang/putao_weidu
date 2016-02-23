@@ -210,14 +210,6 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send://点击发送
-                if (!AccountHelper.isLogin()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateCommentActivity.class);
-                    bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
-                    bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, action_id);
-                    startActivity(LoginActivity.class, bundle);
-                    return;
-                }
                 if (isReply) {
                     CreateComment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();

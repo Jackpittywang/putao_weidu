@@ -120,12 +120,12 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                 EventBusHelper.post(create.getId(), NOT_COOL);
             }
         });*/
-        holder.ll_comment.setOnClickListener(new View.OnClickListener() {
+        /*holder.ll_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBusHelper.post(create.getId(), CREAT_COMMENT);
             }
-        });
+        });*/
     }
 
     static class CreateHolder extends BasicViewHolder {

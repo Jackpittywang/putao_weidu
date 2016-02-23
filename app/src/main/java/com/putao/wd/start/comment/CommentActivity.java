@@ -195,10 +195,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send://点击发送
-                if (!AccountHelper.isLogin()) {
-                    login();
-                    return;
-                }
                 if (isReply) {
                     Comment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
@@ -232,13 +228,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         }
     }
 
-    private void login() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CommentActivity.class);
-        bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
-        bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, action_id);
-        startActivity(LoginActivity.class, bundle);
-    }
 
     /**
      * 刷新评论列表
@@ -323,10 +312,6 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     //点赞提交
     @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
     public void eventClickCool(final int currPosition) {
-        if (!AccountHelper.isLogin()) {
-            login();
-            return;
-        }
         final Comment comment = adapter.getItem(currPosition);
         networkRequest(ExploreApi.addLike(action_id, comment.getComment_id()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
