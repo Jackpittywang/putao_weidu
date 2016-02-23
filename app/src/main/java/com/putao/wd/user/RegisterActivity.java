@@ -58,6 +58,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        btn_next.setClickable(false);
         et_mobile.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
         et_sms_verify.addTextChangedListener(this);
@@ -127,19 +128,11 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             ToastUtils.showToastShort(mContext, "请输入正确的手机号码");
             return;
         }
-        if (StringUtils.isEmpty(mobile)) {
-
-            ToastUtils.showToastLong(mContext, "请输入手机号码");
-            return;
-        }
         networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
                 Logger.d(result.toJSONString());
-                if (GlobalApplication.isDebug)
-                    ToastUtils.showToastLong(mContext, "1234");
-                else
-                    ToastUtils.showToastLong(mContext, "验证码已发送");
+                ToastUtils.showToastLong(mContext, GlobalApplication.isDebug ? "1234" : "验证码已发送");
             }
 
             @Override

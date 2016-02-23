@@ -2,14 +2,13 @@ package com.sunnybear.library.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
-import com.sunnybear.library.util.Logger;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,14 +30,15 @@ public class TimeButton extends TextView implements View.OnClickListener {
     private int mClickBackgroundResId;
     private int mUnClickBackgroundResId;
 
-    private Handler mHandler = new Handler() {
+    private CountDownTimer mTimer;
+/*    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             TimeButton.this.setText(replace(mTextAfter, (int) (mTime / 1000)));
             mTime -= 1000;
             if (mTime < 0) reset();
         }
-    };
+    };*/
 
     private String replace(String str, int time) {
         return str.replace("$", String.valueOf(time));
@@ -64,7 +64,7 @@ public class TimeButton extends TextView implements View.OnClickListener {
         mTextBefore = array.getString(R.styleable.TimeButton_text_before);
         mTextAfter = array.getString(R.styleable.TimeButton_text_after);
         mClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_click_background, -1);
-        mUnClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_unclick_background, -1);
+//        mUnClickBackgroundResId = array.getResourceId(R.styleable.TimeButton_unclick_background, -1);
         array.recycle();
     }
 
@@ -73,9 +73,24 @@ public class TimeButton extends TextView implements View.OnClickListener {
         if (mClickBackgroundResId != -1)
             setTextColor(mClickBackgroundResId);
         setOnClickListener(this);
+        mTimer = new CountDownTimer(mCountdownTime * 1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                setTextColor(0xff959595);
+                setText(replace(mTextAfter, (int) (millisUntilFinished / 1000)));
+            }
+
+            @Override
+            public void onFinish() {
+                setClickable(true);
+                setText(mTextBefore);
+                setTextColor(mClickBackgroundResId);
+            }
+        };
     }
 
-    private void initTimer() {
+    /*private void initTimer() {
         mTime = mCountdownTime * 1000;
         mT = new Timer();
         mTt = new TimerTask() {
@@ -85,25 +100,28 @@ public class TimeButton extends TextView implements View.OnClickListener {
                 mHandler.sendEmptyMessage(0x01);
             }
         };
-    }
+    }*/
 
     public void reset() {
-        new Handler().postDelayed(new Runnable() {
+        mTimer.onFinish();
+        mTimer.cancel();
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                clearTimer();
+
                 setClickable(true);
-                initView();
+                *//*clearTimer();
+                initView();*//*
             }
-        }, 200);
+        }, 200);*/
     }
 
-    private void clearTimer() {
+ /*   private void clearTimer() {
         if (mTt != null) mTt.cancel();
         mTt = null;
         if (mT != null) mT.cancel();
         mT = null;
-    }
+    }*/
 
     @Override
     public void setOnClickListener(OnClickListener l) {
@@ -115,37 +133,40 @@ public class TimeButton extends TextView implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        initTimer();
+        setClickable(false);
+        mTimer.start();
+        if (mL != null) mL.onClick(v);
+        /*initTimer();
         setText(replace(mTextAfter, (int) (mTime / 1000)));
         if (mUnClickBackgroundResId != -1)
             setTextColor(mUnClickBackgroundResId);
         setClickable(false);
         mT.schedule(mTt, 0, 1000);
-        if (mL != null) mL.onClick(v);
+        if (mL != null) mL.onClick(v);*/
     }
 
-    @Override
+  /*  @Override
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
         if (visibility == GONE) clearTimer();
-    }
+    }*/
 
     /**
      * 设置计时时候显示的文本
      */
-    public TimeButton setTextAfter(String text_after) {
+    /*public TimeButton setTextAfter(String text_after) {
         mTextAfter = text_after;
         return this;
-    }
+    }*/
 
     /**
      * 设置点击之前的文本
      */
-    public TimeButton setTextBefore(String text_after) {
+  /*  public TimeButton setTextBefore(String text_after) {
         mTextBefore = text_after;
         this.setText(text_after);
         return this;
-    }
+    }*/
 
     /**
      * 设置到计时长度
@@ -153,8 +174,8 @@ public class TimeButton extends TextView implements View.OnClickListener {
      * @param countdownTime 时间 默认秒
      * @return
      */
-    public TimeButton setCountdownTime(int countdownTime) {
+    /*public TimeButton setCountdownTime(int countdownTime) {
         mCountdownTime = countdownTime;
         return this;
-    }
+    }*/
 }
