@@ -53,7 +53,7 @@ public class CreateApi {
         return PTWDRequestHelper.start()
                 .addParam(TYPE, type + "")
                 .addParam(REQUEST_PAGE, page + "")
-                .build(RequestMethod.POST, URL_CREATE_LISTS);
+                .build(RequestMethod.GET, URL_CREATE_LISTS);
     }
 
     /**

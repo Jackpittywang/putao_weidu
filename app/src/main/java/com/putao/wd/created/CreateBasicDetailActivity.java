@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.user.LoginActivity;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
@@ -49,7 +51,7 @@ import butterknife.OnClick;
  * 创造详情的父类
  * Created by zhanghao on 2016/1/15.
  */
-public class CreateBasicDetailActivity extends PTWDActivity implements View.OnClickListener {
+public class CreateBasicDetailActivity extends BasicFragmentActivity implements View.OnClickListener {
 
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
@@ -105,6 +107,8 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     LinearLayout ll_comment;
     @Bind(R.id.ll_share)
     LinearLayout ll_share;
+    @Bind(R.id.iv_close)
+    ImageView iv_close;
 
     private int mSpace;
     private int mMargin;
@@ -132,7 +136,6 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
         isDid = false;
         mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
@@ -164,13 +167,11 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
         wv_content.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mContext, getWindowManager().getDefaultDisplay().getWidth() - 200), mCreate.getContent()), "text/html", "utf-8", null);
         if (isShowProgress) {
             initProgress();
-            navigation_bar.setMainTitle("创造详情");
             fl_progress.setVisibility(View.VISIBLE);
             rl_progress.setVisibility(View.VISIBLE);
-        } else {
-            navigation_bar.setMainTitle("奇思妙想详情");
+        } else
             v_fancy.setVisibility(View.VISIBLE);
-        }
+
 
         if (mCreate.getVote_status() != 0) {
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_support.getLayoutParams();
@@ -231,10 +232,6 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                 ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
             }
         });
-        rl_support.setOnClickListener(this);
-        ll_comment.setOnClickListener(this);
-        rl_no_support.setOnClickListener(this);
-        ll_cool.setOnClickListener(this);
     }
 
     private void showDidBtn(boolean isEnd) {
@@ -269,7 +266,7 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
     }
 
     @Override
-    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool, R.id.ll_share})
+    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool, R.id.ll_share, R.id.ll_comment, R.id.iv_close})
     public void onClick(final View v) {
         if (R.id.rl_support == v.getId() || R.id.rl_no_support == v.getId()) {
             v.setEnabled(false);
@@ -364,6 +361,9 @@ public class CreateBasicDetailActivity extends PTWDActivity implements View.OnCl
                 break;
             case R.id.ll_share:
                 mSharePopupWindow.show(ll_share);
+                break;
+            case R.id.iv_close:
+                finish();
                 break;
 
         }

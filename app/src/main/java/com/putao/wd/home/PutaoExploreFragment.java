@@ -69,7 +69,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
-    private Thread mThread;
+    private PageChangeThread mThread;
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private int mI;
@@ -122,6 +122,22 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         };
         initData();
         addListener();
+        mThread = new PageChangeThread() {
+            @Override
+            public void run() {
+                super.run();
+            }
+        };
+    }
+
+    private void pageSelected(int position) {
+        Message message = new Message();
+        message.what = position == mExploreIndexs.size() ? 2 : 1;
+        Bundle bundle = new Bundle();
+        bundle.putInt(POSITION, position);
+        message.obj = bundle;
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler.sendMessage(message);
     }
 
     private void addListener() {
@@ -141,20 +157,13 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     return;
                 }
                 mI = BACKGROUND_CAN_CHANGGE;
-                Message message = new Message();
                 if (position == mExploreIndexs.size()) {
                     hindDate("MORE");
-                    message.what = 2;
-                }else{
+                } else {
                     showDate();
                     addDate(position);
-                    message.what = 1;
                 }
-                Bundle bundle = new Bundle();
-                bundle.putInt(POSITION, position);
-                message.obj = bundle;
-                mHandler.removeCallbacksAndMessages(null);
-                mHandler.sendMessage(message);
+                mThread.start(position);
             }
 
             @Override
@@ -195,7 +204,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         mExploreIndex = (ExploreIndexs) mDiskFileCacheHelper.getAsSerializable(INDEX_CACHE);
         if (null != mExploreIndex) {
             mExploreIndexs = mExploreIndex.getExploreIndexes();
-            if (null != mExploreIndexs && mExploreIndexs.size()> 0) {
+            if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
                 if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) > System.currentTimeMillis()) {
                     addFragments();
                     addDate(vp_content.getCurrentItem());
@@ -315,5 +324,26 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 return "DEC";
         }
         return "";
+    }
+
+    class PageChangeThread extends Thread {
+        private int position;
+        private boolean isStart = false;
+
+        @Override
+        public void run() {
+            super.run();
+            Logger.d(Thread.currentThread().getName() + "---------------------------");
+            pageSelected(position);
+        }
+
+        public void start(int position) {
+            if (!isStart) {
+                isStart = true;
+                start();
+            }
+            this.position = position;
+            run();
+        }
     }
 }

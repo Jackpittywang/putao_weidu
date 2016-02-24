@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"
-                    auto:placeholderImageScaleType="centerCrop" />
+                    auto:placeholderImageScaleType="centerCrop"/>
 
                 <ImageView
                     android:id="@+id/iv_player"
@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@drawable/btn_60_play_selector"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
             </RelativeLayout>
 
@@ -43,18 +43,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="和孩子一起打造创作空间"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="200dp"
                 android:layout_height="10dp"
-                android:background="@drawable/img_carve_up_article" />
+                android:background="@drawable/img_carve_up_article"/>
 
             <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wb_explore_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none" />
+                android:scrollbars="none"/>
 
         </LinearLayout>
 
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/ll_bottom"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color"/>
 
     <LinearLayout
         android:id="@+id/ll_bottom"
@@ -76,24 +76,6 @@
         android:gravity="center"
         android:weightSum="12">
 
-        <LinearLayout
-            android:id="@+id/ll_close"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_close"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_20_close_p_nor" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="22dp"
-                android:background="@color/divider_color" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_cool"
@@ -108,7 +90,7 @@
                 android:layout_height="16dp"
                 auto:isSelect="false"
                 auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel" />
+                auto:selDrawable="@drawable/btn_support_sel"/>
 
             <TextView
                 android:id="@+id/tv_count_cool"
@@ -118,14 +100,14 @@
                 android:gravity="center"
                 android:text="赞"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="22dp"
-            android:background="@color/divider_color" />
+            android:background="@color/divider_color"/>
 
         <LinearLayout
             android:id="@+id/ll_comment"
@@ -138,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/btn_comment" />
+                android:src="@drawable/btn_comment"/>
 
             <TextView
                 android:id="@+id/tv_count_comment"
@@ -148,14 +130,14 @@
                 android:gravity="center"
                 android:text="评论"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="22dp"
-            android:background="@color/divider_color" />
+            android:background="@color/divider_color"/>
 
         <LinearLayout
             android:id="@+id/ll_share"
@@ -168,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/icon_16_18" />
+                android:src="@drawable/icon_16_18"/>
 
             <TextView
                 android:id="@+id/tv_share"
@@ -178,7 +160,7 @@
                 android:gravity="center"
                 android:text="分享"
                 android:textColor="@color/text_color_646464"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_14sp"/>
 
         </LinearLayout>
 

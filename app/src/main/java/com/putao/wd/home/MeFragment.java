@@ -107,12 +107,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
+                } else if (msg.what == 2) {
                     Bitmap apply = FastBlur.doBlur(BitmapFactory.decodeResource(getResources(), R.drawable.img_head_default), 50, false);
                     EventBusHelper.post(apply, ME_BLUR);
                 }
             }
         };
+        getUserInfo();
     }
 
 
@@ -120,10 +121,12 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         if (!AccountHelper.isLogin()) {
+            Message message = new Message();
+            message.what = 2;
+            mHandler.sendMessage(message);
             hideNum();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             hideNum();
-            getUserInfo();
             getOrderCount();
         }
     }
@@ -133,9 +136,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
      */
 
     private void hideNum() {
-        Message message = new Message();
-        message.what = 2;
-        mHandler.sendMessage(message);
         btn_pay.hide();
         btn_deliver.hide();
         btn_take_deliver.hide();
@@ -325,6 +325,5 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Subcriber(tag = ME_BLUR)
     private void setBlur(Bitmap bitmap) {
         iv_user_icon_background.setDefaultImage(bitmap);
-        ;
     }
 }

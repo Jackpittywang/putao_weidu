@@ -46,7 +46,7 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/29.
  */
 public class CompleteActivity extends PTWDActivity implements View.OnClickListener {
-    public static final String EVENT_USER_INFO_SAVE_SUCCESS = "user_info_save_success";
+    //    public static final String EVENT_USER_INFO_SAVE_SUCCESS = "user_info_save_success";
     public static final String NICK_NAME = "nick_name";
     public static final String USER_INFO = "user_info";
     @Bind(R.id.ll_main)
@@ -239,16 +239,17 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(String url, String result) {
                         Logger.i("保存用户信息");
-                        EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
+//                        EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
                         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-                        startActivity(IndexActivity.class);
-                        finish();
+//                        startActivity(IndexActivity.class);
+//                        finish();
                     }
                 });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        EventBusHelper.post(EVEVT_USER_INFO, EVEVT_USER_INFO);
         if (resultCode == RESULT_OK) {
             Bitmap bitmap = null;
             switch (requestCode) {
@@ -281,10 +282,14 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         }
         switch (requestCode) {
             case CHANGE_NICK:
-                initInfo();
+                if (resultCode == 1) {
+                    EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+                    initInfo();
+                }
                 break;
             case CHANGE_INFO:
-                initInfo();
+                if (resultCode == 1)
+                    initInfo();
                 break;
         }
     }

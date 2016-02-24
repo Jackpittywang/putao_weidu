@@ -24,14 +24,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 首页详情
  * Created by guchenkai on 2016/1/11.
  */
-public class ExploreDetailActivity extends BasicFragmentActivity /*implements SwipeBackLayout.SwipeBackListener*/ {
+public class ExploreDetailActivity extends BasicFragmentActivity implements View.OnClickListener /*implements SwipeBackLayout.SwipeBackListener*/ {
 
-//    private SwipeBackLayout mSwipeBackLayout;
+    //    private SwipeBackLayout mSwipeBackLayout;
     private ImageView ivShadow;
 
     private SparseArray<Fragment> mFragments;
@@ -40,6 +41,7 @@ public class ExploreDetailActivity extends BasicFragmentActivity /*implements Sw
 
     @Bind(R.id.vp_container)
     ViewPager vp_container;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_nexplore_detail;
@@ -49,7 +51,7 @@ public class ExploreDetailActivity extends BasicFragmentActivity /*implements Sw
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         Intent intent = getIntent();
         mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
-        mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE,1);
+        mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE, 1);
         addFragment();
     }
 
@@ -120,6 +122,7 @@ public class ExploreDetailActivity extends BasicFragmentActivity /*implements Sw
 
     /**
      * viewpager每个页面的bundle
+     *
      * @param position 页面序号
      * @return
      */
@@ -170,6 +173,12 @@ public class ExploreDetailActivity extends BasicFragmentActivity /*implements Sw
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.companion_in_from_down, R.anim.out_from_down);
+    }
+
+    @OnClick(R.id.iv_close)
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.iv_close) finish();
     }
 
     @Override

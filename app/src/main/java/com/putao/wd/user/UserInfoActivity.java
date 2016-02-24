@@ -85,7 +85,7 @@ public class UserInfoActivity extends PTWDActivity {
                         Logger.i("保存用户信息");
                         Intent intent = new Intent();
                         intent.putExtra(CompleteActivity.USER_INFO, etIntro);
-                        setResult(0, intent);
+                        setResult(1, intent);
                         finish();
                     }
 

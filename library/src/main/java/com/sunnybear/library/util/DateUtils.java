@@ -144,7 +144,7 @@ public final class DateUtils {
     public static String timeCalculate(long millisecond) {
         String result = "";
         long diff = System.currentTimeMillis() - millisecond;//时间差
-        if (diff < 1000 * 60 && diff > 0)
+        if (diff < 1000 * 60/* && diff > 0*/)
             return "刚刚而已";
         else if (diff >= 1000 * 60 && diff < 1000 * 60 * 60)
             return diff / (1000 * 60) + "分钟以前";
@@ -152,8 +152,8 @@ public final class DateUtils {
             return diff / (1000 * 60 * 60) + "小时以前";
         else if (diff >= 1000 * 60 * 60 * 24)
             return diff / (1000 * 60 * 60 * 24) + "天以前";
-        else if (diff < 0)
-            return "输入时间在当前时间之后,不可以计算";
+//        else if (diff < 0)
+//            return "输入时间在当前时间之后,不可以计算";
         return result;
     }
 

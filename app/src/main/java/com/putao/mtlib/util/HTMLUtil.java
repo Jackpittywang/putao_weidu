@@ -1,6 +1,5 @@
 package com.putao.mtlib.util;
 
-import com.sunnybear.library.util.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,50 +22,49 @@ public class HTMLUtil {
         while (m.find()) {
             String group = m.group(1);
             group = addWidHei(group, width, height, isVideo);
-            group = addStyle(group, width, height);
+            group = addStyle(group, width, height, isVideo);
             replaceAll = replaceAll.replace(m.group(1), group);
             System.out.println(replaceAll);
             if (isVideo) {
                 Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
                 Matcher mVideo = pVideo.matcher(group);// 开始编译
                 while (mVideo.find()) {
-                    String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + width + "&");
-                    video = replaceHTML("height=([^&]*)", video, "height=" + height + "&");
+                    String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + width, isVideo);
+                    video = replaceHTML("height=([^&]*)", video, "height=" + height, isVideo);
                     replaceAll = replaceAll.replace(mVideo.group(1), video);
                 }
             }
         }
-        Logger.d(replaceAll);
         return replaceAll;
     }
 
     private static String addWidHei(String group, float width, float height, boolean isVideo) {
-        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + width + "\"");
+        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + width + "\"", isVideo);
         if (isVideo)
-            group = replaceHTML("height=\"([^\"]*)", group, " height=\"" + height + "\"");
+            group = replaceHTML("height=\"([^\"]*)", group, " height=\"" + height + "\"", isVideo);
         else
-            group = replaceHTML("height=\"([^\"]*)", group, "");
+            group = replaceHTML("height=\"([^\"]*)", group, "", isVideo);
 
         return group;
     }
 
-    private static String replaceHTML(String reg, String group, String replace) {
+    private static String replaceHTML(String reg, String group, String replace, boolean isVideo) {
         Pattern p = Pattern.compile(reg);
         Matcher m = p.matcher(group);
         if (m.find()) {
             group = group.replace(m.group(), replace);
-        } else {
+        } else if (!isVideo) {
             group = replace + group;
         }
         return group;
     }
 
-    private static String addStyle(String group, float width, float height) {
+    private static String addStyle(String group, float width, float height, boolean isVideo) {
         Pattern p1 = Pattern.compile("style=\"([^>]*)");
         Matcher m1 = p1.matcher(group);
         if (m1.find()) {
-            group = replaceHTML("width:([^;]*)", group, " width=\"" + width + "\"");
-            group = replaceHTML("height:([^;]*)", group, "");
+            group = replaceHTML("width:([^;]*)", group, " width=\"" + width + "\"", isVideo);
+            group = replaceHTML("height:([^;]*)", group, "", isVideo);
         } else {
             group = " style=\"width:" + width + ";\"" + group;
         }

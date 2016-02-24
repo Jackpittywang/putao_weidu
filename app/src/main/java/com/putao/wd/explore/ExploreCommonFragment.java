@@ -1,7 +1,5 @@
 package com.putao.wd.explore;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,16 +10,12 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.model.Create;
 import com.putao.wd.model.ExploreIndex;
-import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
 
 import java.util.List;
 

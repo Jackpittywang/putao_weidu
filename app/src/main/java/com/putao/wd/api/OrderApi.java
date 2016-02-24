@@ -64,7 +64,7 @@ public class OrderApi {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.GET, URL_ORDER_LIST);
+                .build(RequestMethod.POST, URL_ORDER_LIST);
     }
 
     /**
@@ -228,7 +228,7 @@ public class OrderApi {
      */
     public static Request getOrderCount() {
         return PTWDRequestHelper.user()
-                .build(RequestMethod.GET, URL_ORDER_COUNT);
+                .build(RequestMethod.POST, URL_ORDER_COUNT);
     }
 
     /**
@@ -248,12 +248,12 @@ public class OrderApi {
     }
 
     /**
-     *  取消售后
+     * 取消售后
      */
     public static final String URL_CANCEL_SALE = BASE_URL + "service/cancel";
 
     /**
-     *  取消售后
+     * 取消售后
      */
     public static Request cancelService(String serviceId) {
 //        FormEncodingRequestBuilder builder = FormEncodingRequestBuilder.newInstance();
@@ -324,7 +324,7 @@ public class OrderApi {
 //        return builder.build(RequestMethod.GET, URL_SERVICE_DETAIL);
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_ID, id)
-                .build(RequestMethod.GET, URL_SERVICE_DETAIL);
+                .build(RequestMethod.POST, URL_SERVICE_DETAIL);
     }
 
     /**
@@ -335,9 +335,9 @@ public class OrderApi {
     /**
      * 填写快递单号
      *
-     * @param service_id     售后ID
-     * @param express_type   快递公司type
-     * @param express_code   快递单号
+     * @param service_id   售后ID
+     * @param express_type 快递公司type
+     * @param express_code 快递单号
      */
     public static Request fillExpress(String service_id, String express_type, String express_code) {
         return PTWDRequestHelper.store()

@@ -5,14 +5,14 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical">
-
-    <!--标题栏-->
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        android:background="@color/white"
-        auto:nav_has_divider="true"
-        auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="创造详情"/>
+    <!--
+        &lt;!&ndash;标题栏&ndash;&gt;
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            android:background="@color/white"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_main_title="创造详情"/>-->
 
     <!--底部操作栏-->
     <LinearLayout
@@ -345,4 +345,12 @@
                 auto:background_color="@color/divider_color"/>
         </RelativeLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:src="@drawable/btn_30_close_sel"/>
 </RelativeLayout>

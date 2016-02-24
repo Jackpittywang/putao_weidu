@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -22,19 +20,14 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.user.LoginActivity;
-import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -54,8 +47,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     TextView tv_title;
     @Bind(R.id.wb_explore_detail)
     BasicWebView wb_explore_detail;
-    @Bind(R.id.iv_close)
-    ImageView iv_close;
     @Bind(R.id.tv_count_cool)
     TextView tv_count_cool;
     @Bind(R.id.ll_cool)
@@ -129,7 +120,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         });
     }
 
-    @OnClick({R.id.iv_player, R.id.iv_close, R.id.ll_cool, R.id.ll_comment, R.id.ll_share})
+    @OnClick({R.id.iv_player, R.id.ll_cool, R.id.ll_comment, R.id.ll_share})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -137,9 +128,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             case R.id.iv_player:
                 bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, mExploreIndex.getBanner().get(0).getUrl());
                 startActivity(YoukuVideoPlayerActivity.class, bundle);
-                break;
-            case R.id.iv_close:
-                mActivity.finish();
                 break;
             case R.id.ll_cool:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, "1");

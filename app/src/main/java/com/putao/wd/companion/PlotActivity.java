@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,6 +53,7 @@ public class PlotActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        ll_main.scrollTo(0, -2500);
         mSharePopupWindow = new SharePopupWindow(mContext);
         plot = (ExploreProductPlot) args.getSerializable(BUNDLE_DISPLAY_PLOT);
 
@@ -109,6 +113,7 @@ public class PlotActivity extends BasicFragmentActivity {
                 finish();
             }
         });
+
     }
 
     @Override
