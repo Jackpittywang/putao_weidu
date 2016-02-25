@@ -2,6 +2,7 @@ package com.putao.wd.created;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -126,7 +127,12 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
 
             @Override
             public void onSecondClick(View v) {
-                reply();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        reply();
+                    }
+                }, 200);
             }
         };
         mSelectPopupWindow.tv_second.setText("回复");

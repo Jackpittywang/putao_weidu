@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
@@ -164,7 +165,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
                 EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-                startActivity(MainActivity.class);
+                startActivity(IndexActivity.class);
                 finish();
                 loading.dismiss();
             }

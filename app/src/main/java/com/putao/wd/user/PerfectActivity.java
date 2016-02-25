@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -110,7 +111,6 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         };
     }
 
-
     @Override
     public void onRightAction() {
         if (et_nickname.length() < 2) {
@@ -125,31 +125,26 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
             filename = mObject.getString("filename");
             hash = mObject.getString("hash");
         }
-        networkRequest(UserApi.userEdit(ext, filename, hash),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                    }
-                });
-        networkRequest(UserApi.userNick(et_nickname.getText().toString()),
+        networkRequest(UserApi.userEdit(ext, filename, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
                         perfect();
                     }
-                });
-        networkRequest(UserApi.userInfo(et_intro.getText().toString()),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
+
                     @Override
-                    public void onSuccess(String url, String result) {
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+                        if (!TextUtils.isEmpty(msg))
+                            ToastUtils.showToastShort(mContext, msg);
                     }
                 });
     }
 
-    private void perfect(){
+    private void perfect() {
+        startActivity(IndexActivity.class);
         EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-        startActivity(IndexActivity.class);
         finish();
     }
 

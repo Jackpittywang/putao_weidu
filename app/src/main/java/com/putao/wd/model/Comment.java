@@ -16,6 +16,7 @@ public class Comment implements Serializable {
     private String user_name;//归属用户昵称
     private String head_img;//头像
     private IndexReply reply;//Json被回复的用户信息
+    private int count_comments;//回复数量
     // 待定   //评论回复内容
 
 
@@ -89,6 +90,14 @@ public class Comment implements Serializable {
 
     public void setReply(IndexReply reply) {
         this.reply = reply;
+    }
+
+    public int getCount_comments() {
+        return count_comments;
+    }
+
+    public void setCount_comments(int count_comments) {
+        this.count_comments = count_comments;
     }
 
     @Override

@@ -184,7 +184,7 @@ public class StoreApi {
      */
     public static Request getCartCount() {
         return PTWDRequestHelper.store()
-                .build(RequestMethod.GET, URL_CART_COUNT);
+                .build(RequestMethod.POST, URL_CART_COUNT);
     }
 
     /**
@@ -197,7 +197,7 @@ public class StoreApi {
      */
     public static Request InvoiceList() {
         return PTWDRequestHelper.shopCar()
-                .build(RequestMethod.GET, URL_INVOICE_LIST);
+                .build(RequestMethod.POST, URL_INVOICE_LIST);
     }
 
     /**
@@ -309,7 +309,7 @@ public class StoreApi {
     public static Request pay(String order_id) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_ORDER_ID, order_id)
-                .build(RequestMethod.GET, URL_PAY);
+                .build(RequestMethod.POST, URL_PAY);
     }
 
     /**
@@ -322,6 +322,6 @@ public class StoreApi {
      */
     public static Request getDefaultAddress() {
         return PTWDRequestHelper.store()
-                .build(RequestMethod.GET, URL_DEFAULT_ADDRESS);
+                .build(RequestMethod.POST, URL_DEFAULT_ADDRESS);
     }
 }

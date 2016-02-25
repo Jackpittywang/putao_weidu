@@ -171,7 +171,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        startActivity(MainActivity.class);
+        startActivity(IndexActivity.class);
         finish();
     }
 }

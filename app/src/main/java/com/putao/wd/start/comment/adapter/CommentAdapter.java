@@ -29,7 +29,7 @@ import butterknife.Bind;
 public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.CommentViewHolder> {
     public static final String EVENT_COMMENT_EDIT = "event_comment_edit";
     public static final String EVENT_COMMIT_COOL = "event_commit_cool";
-//    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
+    //    private final String DATE_PATTERN = "yyyy-MM-dd";//格式化时间戳规则
     private Context mContext;
 
     public CommentAdapter(Context context, List<Comment> comments) {
@@ -70,6 +70,7 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
 
         holder.sb_cool_icon.setClickable(false);
         holder.sb_cool_icon.setState(comment.is_like());
+        holder.tv_count_comment.setText(comment.getCount_comments() == 0 ? "评论" : comment.getCount_comments() + "");
         holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
