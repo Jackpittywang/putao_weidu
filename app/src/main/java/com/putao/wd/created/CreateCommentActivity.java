@@ -14,18 +14,15 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
-import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.created.adapter.CreateCommentAdapter;
-import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.CreateComment;
 import com.putao.wd.model.CreateComments;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
-import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -112,7 +109,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 if (AccountHelper.getCurrentUid().equals(item.getUid())) {
                     //删除评论
                     String comment_id = item.getId();
-                    networkRequest(ExploreApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+                    networkRequest(CreateApi.deleteComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
 
                         @Override
                         public void onSuccess(String url, String result) {
@@ -165,7 +162,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
         rv_content.setOnItemClickListener(new OnItemClickListener<CreateComment>() {
             @Override
             public void onItemClick(CreateComment comment, int position) {
-                mPosition = position;
+                mPosition = adapter.getItems().indexOf(comment);
                 if (AccountHelper.getCurrentUid().equals(comment.getUid())) {
                     mSelectPopupWindow.tv_first.setText("删除");
                     mSelectPopupWindow.tv_first.setTextColor(0xff6666CC);

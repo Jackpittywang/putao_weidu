@@ -17,7 +17,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.companion.DiaryActivity;
-import com.putao.wd.companion.PlotActivity;
 import com.putao.wd.companion.PlotPreviewDialog;
 import com.putao.wd.model.Diary;
 import com.putao.wd.model.DiaryQuestion;
@@ -143,7 +142,6 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         Logger.i("ExploreProduct === " + diary.toString());
         DiaryBasicViewHolder basicHolder = (DiaryBasicViewHolder) holder;
         boolean isNewDate = true;
-        basicHolder.tv_share.setVisibility(View.GONE);
         String format = DateUtils.secondToDate(diary.getCreate_time(), DATE_PATTERN);
         if (!mIsShowDate.containsKey(position)) {
             if (mDate.contains(format)) {
@@ -350,8 +348,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             DiaryTasksViewHolder viewHolder = (DiaryTasksViewHolder) holder;
             viewHolder.iv_check.setVisibility(View.GONE);
             if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
-                viewHolder.rl_image.setVisibility(View.VISIBLE);
                 viewHolder.iv_image.setImageURL(diaryTitle.getImg());
+                viewHolder.rl_image.setVisibility(View.VISIBLE);
                 viewHolder.tv_share.setVisibility(View.VISIBLE);
                 viewHolder.tv_share.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -359,12 +357,12 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                         ExploreProductPlot exploreProductPlot = new ExploreProductPlot();
                         exploreProductPlot.setContent(diaryTitle.getText());
                         exploreProductPlot.setImg_url(diaryTitle.getImg());
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, exploreProductPlot);
-                        EventBusHelper.post(exploreProductPlot,EVENT_DIARY_SHARE);
-//                        mActivity.startActivity(PlotActivity.class, bundle);
+                        EventBusHelper.post(exploreProductPlot, EVENT_DIARY_SHARE);
                     }
                 });
+            } else {
+                viewHolder.rl_image.setVisibility(View.GONE);
+                basicHolder.tv_share.setVisibility(View.GONE);
             }
             if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0) {
                 viewHolder.iv_player.setVisibility(View.VISIBLE);

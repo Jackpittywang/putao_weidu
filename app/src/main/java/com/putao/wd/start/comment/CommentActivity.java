@@ -159,7 +159,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         rv_content.setOnItemClickListener(new OnItemClickListener<Comment>() {
             @Override
             public void onItemClick(Comment comment, int position) {
-                mPosition = position;
+                mPosition = adapter.getItems().indexOf(comment);
                 if (AccountHelper.getCurrentUid().equals(comment.getUser_id())) {
                     mSelectPopupWindow.tv_first.setText("删除");
                     mSelectPopupWindow.tv_first.setTextColor(0xff6666CC);
