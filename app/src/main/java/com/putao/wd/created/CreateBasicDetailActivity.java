@@ -116,6 +116,9 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     private Handler mHandler;
     private int mTime = 1000;
     public static final String CREATE = "CREATE";
+    public static final String EVENT_CONCERNS_REFRESH = "event_concerns_refresh";
+    private boolean isConcernsInit;
+    private boolean isConcernsRefresh = false;
     public static final String POSITION = "position";
     public static final String SHOW_PROGRESS = "show_progress";
     private Create mCreate;
@@ -158,7 +161,8 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             sb_cool_icon.setState(true);
             tv_count_cool.setText("已关注");
         }
-        sb_cool_icon.setState(mCreate.getFollow_status() == 1 ? true : false);
+        isConcernsInit = mCreate.getFollow_status() == 1 ? true : false;
+        sb_cool_icon.setState(isConcernsInit);
         sb_cool_icon.setClickable(false);
         iv_sign.setImageURL(mCreate.getCover());
         tv_title.setText(mCreate.getTitle());
@@ -229,7 +233,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+                ShareTools.wechatWebShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
             }
         });
     }
@@ -324,6 +328,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 if (mCreate.getFollow_status() == 1) {
                     sb_cool_icon.setState(false);
                     tv_count_cool.setText("关注");
+                    isConcernsRefresh = true;
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 4),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -335,6 +340,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 } else {
                     sb_cool_icon.setState(true);
                     tv_count_cool.setText("已关注");
+                    isConcernsRefresh = false;
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -470,5 +476,13 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 tv.setTextColor(0xff48cfae);
             }
         }, step * (mTime - 250));
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if (isConcernsInit && isConcernsRefresh) {
+            EventBusHelper.post(EVENT_CONCERNS_REFRESH, EVENT_CONCERNS_REFRESH);
+        }
     }
 }

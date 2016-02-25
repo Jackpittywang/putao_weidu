@@ -166,7 +166,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="每日使用时间"
+                        android:text="每次使用时间"
                         android:textSize="@dimen/text_size_14sp"/>
 
                     <TextView

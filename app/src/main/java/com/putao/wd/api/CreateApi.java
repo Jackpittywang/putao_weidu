@@ -22,6 +22,7 @@ public class CreateApi {
     private static final String ACTION = "action";//操作类型
     private static final String CREATE_ID = "create_id";//创造id
     private static final String COMMENT_SOURCE = "comment_source";//创造评论id
+    private static final String COMMENT_SOURCE_UID = "comment_source_uid";//创造评论uid
     private static final String COMMENT_ID = "comment_id";//创造评论id
     private static final String CONTENT = "content";//评论内容
 
@@ -112,10 +113,11 @@ public class CreateApi {
     /**
      * 回复评论
      */
-    public static Request addComment(String content, String create_id, String comment_source) {
+    public static Request addComment(String content, String create_id, String comment_source, String comment_source_uid) {
         return PTWDRequestHelper.start()
                 .addParam(CREATE_ID, create_id)
                 .addParam(COMMENT_SOURCE, comment_source)
+                .addParam(COMMENT_SOURCE_UID, comment_source_uid)
                 .addParam(CONTENT, content)
                 .build(RequestMethod.POST, URL_COMMENT_ADD);
     }
@@ -123,10 +125,11 @@ public class CreateApi {
     /**
      * 回复文章
      */
-    public static Request addComment(String content,String create_id) {
+    public static Request addComment(String content, String create_id) {
         return PTWDRequestHelper.start()
                 .addParam(CREATE_ID, create_id)
                 .addParam(COMMENT_SOURCE, "0")
+                .addParam(COMMENT_SOURCE_UID, "0")
                 .addParam(CONTENT, content)
                 .build(RequestMethod.POST, URL_COMMENT_ADD);
     }

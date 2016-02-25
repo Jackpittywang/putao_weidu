@@ -54,12 +54,12 @@
         <TextView
             android:id="@+id/tv_send"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:gravity="bottom"
-            android:paddingBottom="10dp"
+            android:gravity="center"
             android:text="发送"
-            android:textSize="@dimen/text_size_16sp"/>
+            android:textSize="@dimen/text_size_18sp"/>
 
         <!--表情栏-->
         <android.support.v4.view.ViewPager

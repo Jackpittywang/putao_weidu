@@ -105,7 +105,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         AccountHelper.setUserInfo(result);
-//                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         loading.dismiss();
                         finish();

@@ -193,7 +193,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
+                ShareTools.wechatWebShare(mContext, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
             }
         });
     }

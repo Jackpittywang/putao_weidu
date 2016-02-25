@@ -79,7 +79,9 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         adapter = new OrdersAdapter(context, order.getProduct());
         holder.rv_orders.setVisibility(View.VISIBLE);
         holder.rv_orders.setAdapter(adapter);
-        holder.rv_orders.setOnItemClickListener(new OnItemClickListener<OrderProduct>() {
+        holder.rv_orders.setFocusable(false);
+        holder.rv_orders.setClickable(false);
+        /*holder.rv_orders.setOnItemClickListener(new OnItemClickListener<OrderProduct>() {
             @Override
             public void onItemClick(OrderProduct product, int position) {
                 Bundle bundle = new Bundle();
@@ -87,7 +89,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 context.startActivity(ProductDetailActivity.class, bundle);
             }
-        });
+        });*/
     }
 
     private void rightClick(Order order) {

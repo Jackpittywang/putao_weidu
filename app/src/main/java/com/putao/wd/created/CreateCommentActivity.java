@@ -1,5 +1,6 @@
 package com.putao.wd.created;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
@@ -7,6 +8,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -194,6 +196,12 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
         ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mMinLenght = ss.length();
         et_msg.setText(ss);
+        et_msg.setSelection(mMinLenght);
+        et_msg.setFocusableInTouchMode(true);
+        et_msg.requestFocus();
+        InputMethodManager inputManager =
+                (InputMethodManager) et_msg.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(et_msg, 0);
         isReply = true;
     }
 
@@ -211,7 +219,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     CreateComment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
                     msg = msg.substring(msg.lastIndexOf(":") + 2);
-                    networkRequest(CreateApi.addComment(msg, action_id, comment.getId()),
+                    networkRequest(CreateApi.addComment(msg, action_id, comment.getId(), comment.getUid()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {

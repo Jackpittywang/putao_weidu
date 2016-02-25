@@ -13,6 +13,7 @@ public class CreateComment implements Serializable {
     private String uid;
     private String content;
     private String comment_source;
+    private String comment_source_uid;
     private int type;
     private int status;
     private int created_at;
@@ -151,6 +152,14 @@ public class CreateComment implements Serializable {
 
     public void setReply(CreateReply reply) {
         this.reply = reply;
+    }
+
+    public String getComment_source_uid() {
+        return comment_source_uid;
+    }
+
+    public void setComment_source_uid(String comment_source_uid) {
+        this.comment_source_uid = comment_source_uid;
     }
 
     @Override

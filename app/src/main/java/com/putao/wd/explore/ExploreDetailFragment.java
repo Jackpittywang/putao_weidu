@@ -115,7 +115,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
+                ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
             }
         });
     }

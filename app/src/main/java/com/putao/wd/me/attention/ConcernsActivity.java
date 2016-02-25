@@ -11,6 +11,7 @@ import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.putao.wd.model.Marketing;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -31,6 +32,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
 
+    private boolean isRefresh = false;
     private FancyAdapter adapter;
     private int mPage;
 
@@ -100,11 +102,19 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                 });
     }
 
+    private Create mCreate;
+
     @Override
     public void onItemClick(Create create, int position) {
+        mCreate = create;
         Bundle bundle = new Bundle();
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, create.getType() == 1 ? true : false);
         startActivity(CreateBasicDetailActivity.class, bundle);
+    }
+
+    @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
+    private void eventRefresh(String str) {
+        adapter.delete(mCreate);
     }
 }
