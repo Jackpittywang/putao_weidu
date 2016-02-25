@@ -1,31 +1,41 @@
 package com.putao.wd.companion;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
-import com.putao.wd.model.Diary;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.model.Diarys;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.share.ShareTools;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.util.ImageUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.SmallBang;
+import com.sunnybear.library.view.image.BitmapLoader;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
-import java.util.ArrayList;
-
 import butterknife.Bind;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * 陪伴日志
@@ -38,6 +48,12 @@ public class DiaryActivity extends PTWDActivity {
     LinearLayout ll_date_empty;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
+    @Bind(R.id.rl_main)
+    RelativeLayout rl_main;
+    @Bind(R.id.tv_content)
+    TextView tv_content;
+    @Bind(R.id.iv_plot_icon)
+    ImageDraweeView iv_plot_icon;
 
     public static String DIARY_APP = "diary_app";
 
@@ -149,12 +165,72 @@ public class DiaryActivity extends PTWDActivity {
         bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, plot);
         startActivity(PlotActivity.class, bundle);
     }
+
     @Subcriber(tag = ExploreAdapter.EVENT_PLAYER)
     public void eventPlayer(Bundle bundle) {
         startActivity(YoukuVideoPlayerActivity.class, bundle);
     }
 
-    public DiskFileCacheHelper getDiskCacheHelper(){
+
+    private Handler mHandler;
+
+    @Subcriber(tag = ExploreAdapter.EVENT_DIARY_SHARE)
+    public void eventShare(ExploreProductPlot exploreProductPlot) {
+        BitmapLoader.newInstance((Activity) mContext).load(exploreProductPlot.getImg_url(), new BitmapLoader.BitmapCallback() {
+            @Override
+            public void onResult(Bitmap bitmap) {
+                if (bitmap == null) {
+                    ToastUtils.showToastLong(mContext, "分享失败");
+                    return;
+                }
+                iv_plot_icon.setImageBitmap(bitmap);
+                mHandler.sendEmptyMessageDelayed(0x01, 200);
+            }
+        });
+        tv_content.setText(exploreProductPlot.getContent());
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                mSharePopupWindow.show(rl_main);
+            }
+        };
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+            @Override
+            public void onWechat() {
+                ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
+                        new ImageUtils.OnImageSaveCallback() {
+                            @Override
+                            public void onImageSave(boolean isSuccess) {
+                                ShareTools.newInstance(Wechat.NAME)
+                                        .setImagePath(GlobalApplication.shareImagePath)
+                                        .execute(mContext);
+                                mSharePopupWindow.dismiss();
+                            }
+                        });
+            }
+
+            @Override
+            public void onWechatFriend() {
+                ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
+                        new ImageUtils.OnImageSaveCallback() {
+                            @Override
+                            public void onImageSave(boolean isSuccess) {
+                                ShareTools.newInstance(WechatMoments.NAME)
+                                        .setImagePath(GlobalApplication.shareImagePath)
+                                        .execute(mContext);
+                                mSharePopupWindow.dismiss();
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
+    }
+
+    public DiskFileCacheHelper getDiskCacheHelper() {
         return mDiskFileCacheHelper;
     }
 

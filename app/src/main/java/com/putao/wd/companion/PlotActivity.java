@@ -31,6 +31,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  * 教育理念炫耀页面
  * Created by guchenkai on 2016/1/4.
  */
+@Deprecated
 public class PlotActivity extends BasicFragmentActivity {
     public static final String BUNDLE_DISPLAY_PLOT = "plot";
 

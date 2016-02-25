@@ -95,6 +95,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
                     try {
+                        if ("".equals(msg.obj.toString()) || null == msg.obj.toString()) {
+                            setDefaultBlur();
+                            return;
+                        }
                         Bitmap map;
                         URL url = new URL(msg.obj.toString());
                         URLConnection conn = url.openConnection();
@@ -108,14 +112,17 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                         e.printStackTrace();
                     }
                 } else if (msg.what == 2) {
-                    Bitmap apply = FastBlur.doBlur(BitmapFactory.decodeResource(getResources(), R.drawable.img_head_default), 50, false);
-                    EventBusHelper.post(apply, ME_BLUR);
+                    setDefaultBlur();
                 }
             }
         };
         getUserInfo();
     }
 
+    private void setDefaultBlur() {
+        Bitmap apply = FastBlur.doBlur(BitmapFactory.decodeResource(getResources(), R.drawable.img_head_default), 50, false);
+        EventBusHelper.post(apply, ME_BLUR);
+    }
 
     @Override
     public void onStart() {

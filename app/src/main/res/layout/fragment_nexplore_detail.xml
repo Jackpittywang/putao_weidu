@@ -166,4 +166,11 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:src="@drawable/btn_30_close_sel"/>
 </RelativeLayout>

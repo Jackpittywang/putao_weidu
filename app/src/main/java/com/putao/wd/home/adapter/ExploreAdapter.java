@@ -53,6 +53,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     private static final int TYPE_CHALLENGE = 1;//家长挑战
     private static final int TYPE_CHALLENGE_PIC = 2;//家长挑战(图片)
     private static final int TYPE_TASKS = 3;//普通条目
+    public static final String EVENT_DIARY_SHARE = "event_diary_share";
 //    private static final int TYPE_PLAY = 3;//游戏玩法
 //    private static final int TYPE_TASKS = 2;//家长任务
 //    private static final int TYPE_EDUC = 4;//教育理念
@@ -171,7 +172,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
             if (finalCacheDiary.isFinish()) {
                 viewHolder.iv_check.setVisibility(View.VISIBLE);
-                initAnswer(viewHolder, finalCacheDiary.getAnswer());
+                initAnswer(viewHolder, finalCacheDiary.getAnswer(), finalCacheDiary.isTrue());
                 if (finalCacheDiary.isTrue())
                     viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_c);
                 else {
@@ -263,7 +264,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             viewHolder.tv_title.setText(diary.getAsk());
             if (diary.isFinish()) {
                 viewHolder.iv_check.setVisibility(View.VISIBLE);
-                initPicAnswer(viewHolder, finalCacheDiary.getAnswer());
+                initPicAnswer(viewHolder, finalCacheDiary.getAnswer(), finalCacheDiary.isTrue());
                 if (finalCacheDiary.isTrue())
                     viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_c);
                 else {
@@ -358,9 +359,10 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                         ExploreProductPlot exploreProductPlot = new ExploreProductPlot();
                         exploreProductPlot.setContent(diaryTitle.getText());
                         exploreProductPlot.setImg_url(diaryTitle.getImg());
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, exploreProductPlot);
-                        mActivity.startActivity(PlotActivity.class, bundle);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable(PlotActivity.BUNDLE_DISPLAY_PLOT, exploreProductPlot);
+                        EventBusHelper.post(exploreProductPlot,EVENT_DIARY_SHARE);
+//                        mActivity.startActivity(PlotActivity.class, bundle);
                     }
                 });
             }
@@ -452,18 +454,18 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         viewHolder.rl_answer4.setEnabled(b);
     }
 
-    private void initAnswer(DiaryChallengeViewHolder holder, String answer) {
-        holder.iv_answer1.setImageResource(answer.equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-        holder.iv_answer2.setImageResource(answer.equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-        holder.iv_answer3.setImageResource(answer.equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-        holder.iv_answer4.setImageResource(answer.equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+    private void initAnswer(DiaryChallengeViewHolder holder, String answer, boolean isTrue) {
+        holder.iv_answer1.setImageResource(answer.equals("A") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer2.setImageResource(answer.equals("B") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer3.setImageResource(answer.equals("C") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer4.setImageResource(answer.equals("D") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
     }
 
-    private void initPicAnswer(DiaryChallengePicViewHolder holder, String answer) {
-        holder.iv_answer1.setImageResource(answer.equals("A") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-        holder.iv_answer2.setImageResource(answer.equals("B") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-        holder.iv_answer3.setImageResource(answer.equals("C") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
-        holder.iv_answer4.setImageResource(answer.equals("D") ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_07);
+    private void initPicAnswer(DiaryChallengePicViewHolder holder, String answer, boolean isTrue) {
+        holder.iv_answer1.setImageResource(answer.equals("A") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer2.setImageResource(answer.equals("B") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer3.setImageResource(answer.equals("C") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
+        holder.iv_answer4.setImageResource(answer.equals("D") ? isTrue ? R.drawable.icon_20_p_choose_06 : R.drawable.icon_20_p_choose_05 : R.drawable.icon_20_p_choose_07);
     }
 
     private void addFalse(DiaryChallengeViewHolder holder, String falseAnswer) {
@@ -504,15 +506,10 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     private boolean checkAnswer(DiaryChallengeViewHolder holder, String answer, String
             myAnswer) {
         boolean isTrue;
-        initAnswer(holder, answer);
-        if (answer.equals(myAnswer)) {
-            isTrue = true;
-            holder.iv_check.setImageResource(R.drawable.img_p_choose_c);
-        } else {
-            isTrue = false;
-            holder.iv_check.setImageResource(R.drawable.img_p_choose_r);
-            addFalse(holder, myAnswer);
-        }
+        isTrue = answer.equals(myAnswer);
+        initAnswer(holder, answer, isTrue);
+        if (!isTrue) addFalse(holder, myAnswer);
+        holder.iv_check.setImageResource(isTrue ? R.drawable.img_p_choose_c : R.drawable.img_p_choose_r);
         holder.iv_check.setAnimation(animationSet);
         holder.iv_check.setVisibility(View.VISIBLE);
         animationSet.startNow();
@@ -537,14 +534,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     private boolean checkPicAnswer(DiaryChallengePicViewHolder holder, String answer, String
             myAnswer) {
         boolean isTrue;
-        initPicAnswer(holder, answer);
-        if (answer.equals(myAnswer)) {
-            isTrue = true;
-            holder.iv_check.setImageResource(R.drawable.img_p_choose_c);
-        } else {
-            isTrue = false;
-            holder.iv_check.setImageResource(R.drawable.img_p_choose_r);
-        }
+        isTrue = answer.equals(myAnswer);
+        initPicAnswer(holder, answer, isTrue);
+        holder.iv_check.setImageResource(isTrue ? R.drawable.img_p_choose_c : R.drawable.img_p_choose_r);
+        initPicAnswer(holder, answer, isTrue);
+        if (!isTrue) addPicFalse(holder, myAnswer);
         holder.iv_check.setAnimation(animationSet);
         holder.iv_check.setVisibility(View.VISIBLE);
         animationSet.startNow();
