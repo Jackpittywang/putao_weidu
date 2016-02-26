@@ -159,95 +159,112 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         basicHolder.tv_device.setText(diary.getDevice_name());
         final DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
         basicHolder.tv_title.setText(diaryTitle.getText());
+
+        if (diary.getTag_type() == 1 || diary.getTag_type() == 2)
+            basicHolder.tv_share.setVisibility(View.GONE);
+        else {
+            basicHolder.tv_share.setVisibility(View.VISIBLE);
+            basicHolder.tv_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExploreProductPlot exploreProductPlot = new ExploreProductPlot();
+                    exploreProductPlot.setContent(diaryTitle.getText());
+                    exploreProductPlot.setImg_url(diaryTitle.getImg());
+                    EventBusHelper.post(exploreProductPlot, EVENT_DIARY_SHARE);
+                }
+            });
+        }
+
         /**
          * 家长挑战
-         */
-        if (holder instanceof DiaryChallengeViewHolder) {
-            final DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
-            DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
-            viewHolder.tv_title.setText(diary.getAsk());
-            Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
-            Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
-            if (finalCacheDiary.isFinish()) {
-                viewHolder.iv_check.setVisibility(View.VISIBLE);
-                initAnswer(viewHolder, finalCacheDiary.getAnswer(), finalCacheDiary.isTrue());
-                if (finalCacheDiary.isTrue())
-                    viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_c);
-                else {
-                    viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_r);
-                    addFalse(viewHolder, finalCacheDiary.getFalseAnswer());
+         */{
+            if (holder instanceof DiaryChallengeViewHolder) {
+                final DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
+                DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
+                viewHolder.tv_title.setText(diary.getAsk());
+                Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
+                Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
+                if (finalCacheDiary.isFinish()) {
+                    viewHolder.iv_check.setVisibility(View.VISIBLE);
+                    initAnswer(viewHolder, finalCacheDiary.getAnswer(), finalCacheDiary.isTrue());
+                    if (finalCacheDiary.isTrue())
+                        viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_c);
+                    else {
+                        viewHolder.iv_check.setImageResource(R.drawable.img_p_choose_r);
+                        addFalse(viewHolder, finalCacheDiary.getFalseAnswer());
+                    }
+                    setClickable(viewHolder, false);
+                } else {
+                    viewHolder.iv_answer1.setImageResource(R.drawable.icon_20_p_choose_01);
+                    viewHolder.iv_answer2.setImageResource(R.drawable.icon_20_p_choose_02);
+                    viewHolder.iv_answer3.setImageResource(R.drawable.icon_20_p_choose_03);
+                    viewHolder.iv_answer4.setImageResource(R.drawable.icon_20_p_choose_04);
+                    viewHolder.iv_check.setVisibility(View.GONE);
+                    setClickable(viewHolder, true);
                 }
-                setClickable(viewHolder, false);
-            } else {
-                viewHolder.iv_answer1.setImageResource(R.drawable.icon_20_p_choose_01);
-                viewHolder.iv_answer2.setImageResource(R.drawable.icon_20_p_choose_02);
-                viewHolder.iv_answer3.setImageResource(R.drawable.icon_20_p_choose_03);
-                viewHolder.iv_answer4.setImageResource(R.drawable.icon_20_p_choose_04);
-                viewHolder.iv_check.setVisibility(View.GONE);
-                setClickable(viewHolder, true);
-            }
-            if (null != diaryQuestion.getA()) {
-                viewHolder.rl_answer1.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer1.setText(diaryQuestion.getA());
-                viewHolder.rl_answer1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "A");
-                        if (!isTrue)
-                            diary.setFalseAnswer("A");
-                        diary.setIsFinish(true);
-                        diary.setIsTrue(isTrue);
-                        mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
-                    }
-                });
-            }
-            if (null != diaryQuestion.getB()) {
-                viewHolder.v_answer2.setVisibility(View.VISIBLE);
-                viewHolder.rl_answer2.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer2.setText(diaryQuestion.getB());
-                viewHolder.rl_answer2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "B");
-                        if (!isTrue)
-                            diary.setFalseAnswer("B");
-                        diary.setIsFinish(true);
-                        diary.setIsTrue(isTrue);
-                        mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
-                    }
-                });
-            }
-            if (null != diaryQuestion.getC()) {
-                viewHolder.v_answer3.setVisibility(View.VISIBLE);
-                viewHolder.rl_answer3.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer3.setText(diaryQuestion.getC());
-                viewHolder.rl_answer3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "C");
-                        if (!isTrue)
-                            diary.setFalseAnswer("C");
-                        diary.setIsFinish(true);
-                        diary.setIsTrue(isTrue);
-                        mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
-                    }
-                });
-            }
-            if (null != diaryQuestion.getD()) {
-                viewHolder.v_answer4.setVisibility(View.VISIBLE);
-                viewHolder.rl_answer4.setVisibility(View.VISIBLE);
-                viewHolder.tv_answer4.setText(diaryQuestion.getD());
-                viewHolder.rl_answer4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "D");
-                        if (!isTrue)
-                            diary.setFalseAnswer("D");
-                        diary.setIsFinish(true);
-                        diary.setIsTrue(isTrue);
-                        mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
-                    }
-                });
+                if (null != diaryQuestion.getA()) {
+                    viewHolder.rl_answer1.setVisibility(View.VISIBLE);
+                    viewHolder.tv_answer1.setText(diaryQuestion.getA());
+                    viewHolder.rl_answer1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "A");
+                            if (!isTrue)
+                                diary.setFalseAnswer("A");
+                            diary.setIsFinish(true);
+                            diary.setIsTrue(isTrue);
+                            mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
+                        }
+                    });
+                }
+                if (null != diaryQuestion.getB()) {
+                    viewHolder.v_answer2.setVisibility(View.VISIBLE);
+                    viewHolder.rl_answer2.setVisibility(View.VISIBLE);
+                    viewHolder.tv_answer2.setText(diaryQuestion.getB());
+                    viewHolder.rl_answer2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "B");
+                            if (!isTrue)
+                                diary.setFalseAnswer("B");
+                            diary.setIsFinish(true);
+                            diary.setIsTrue(isTrue);
+                            mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
+                        }
+                    });
+                }
+                if (null != diaryQuestion.getC()) {
+                    viewHolder.v_answer3.setVisibility(View.VISIBLE);
+                    viewHolder.rl_answer3.setVisibility(View.VISIBLE);
+                    viewHolder.tv_answer3.setText(diaryQuestion.getC());
+                    viewHolder.rl_answer3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "C");
+                            if (!isTrue)
+                                diary.setFalseAnswer("C");
+                            diary.setIsFinish(true);
+                            diary.setIsTrue(isTrue);
+                            mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
+                        }
+                    });
+                }
+                if (null != diaryQuestion.getD()) {
+                    viewHolder.v_answer4.setVisibility(View.VISIBLE);
+                    viewHolder.rl_answer4.setVisibility(View.VISIBLE);
+                    viewHolder.tv_answer4.setText(diaryQuestion.getD());
+                    viewHolder.rl_answer4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isTrue = checkAnswer(viewHolder, diary.getAnswer(), "D");
+                            if (!isTrue)
+                                diary.setFalseAnswer("D");
+                            diary.setIsFinish(true);
+                            diary.setIsTrue(isTrue);
+                            mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
+                        }
+                    });
+                }
             }
         }
 
@@ -350,19 +367,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
                 viewHolder.iv_image.setImageURL(diaryTitle.getImg());
                 viewHolder.rl_image.setVisibility(View.VISIBLE);
-                viewHolder.tv_share.setVisibility(View.VISIBLE);
-                viewHolder.tv_share.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ExploreProductPlot exploreProductPlot = new ExploreProductPlot();
-                        exploreProductPlot.setContent(diaryTitle.getText());
-                        exploreProductPlot.setImg_url(diaryTitle.getImg());
-                        EventBusHelper.post(exploreProductPlot, EVENT_DIARY_SHARE);
-                    }
-                });
             } else {
                 viewHolder.rl_image.setVisibility(View.GONE);
-                basicHolder.tv_share.setVisibility(View.GONE);
             }
             if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0) {
                 viewHolder.iv_player.setVisibility(View.VISIBLE);

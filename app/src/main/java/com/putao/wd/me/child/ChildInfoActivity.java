@@ -78,8 +78,35 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
      */
     private boolean checkInfo() {
         mEtNickname = et_nickname.getText().toString();
-        mTvIdentity = tv_identity.getText().toString();
-        mTvSex = tv_sex.getText().toString();
+        switch (tv_identity.getText().toString()) {
+            case "我是爸爸":
+                mTvIdentity = "FATHER";
+                break;
+            case "我是妈妈":
+                mTvIdentity = "MATHER";
+                break;
+            case "我是爷爷":
+                mTvIdentity = "YEYE";
+                break;
+            case "我是奶奶":
+                mTvIdentity = "NAINAI";
+                break;
+            case "我是外公":
+                mTvIdentity = "WAIGONG";
+                break;
+            case "我是外婆":
+                mTvIdentity = "WAIPO";
+                break;
+            default:
+                mTvIdentity = "";
+        }
+        switch (tv_sex.getText().toString()) {
+            case "女":
+                mTvSex = "F";
+                break;
+            default:
+                mTvSex = "M";
+        }
         mTvBirthday = tv_birthday.getText().toString();
         if (StringUtils.isEmpty(mEtNickname)) {
             ToastUtils.showToastShort(mContext, "昵称不能为空");
@@ -114,12 +141,33 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                                 et_nickname.setText(info.getBaby_name());
                                 et_nickname.setSelection(info.getBaby_name().length());
                                 tv_identity.setText(info.getRelation());
-                                if("FATHER".equals(info.getRelation())) tv_identity.setText("我是爸爸");
                                 tv_sex.setText(!StringUtils.equals(info.getSex(), "F") ? "男" : "女");
                                 tv_birthday.setText(info.getBirthday());
                                 AccountHelper.setChildInfo(info);
                                 isEditable = false;
                                 cancelChoose();
+                                switch (info.getRelation()) {
+                                    case "FATHER":
+                                        tv_identity.setText("我是爸爸");
+                                        break;
+                                    case "MATHER":
+                                        tv_identity.setText("我是妈妈");
+                                        break;
+                                    case "YEYE":
+                                        tv_identity.setText("我是爷爷");
+                                        break;
+                                    case "NAINAI":
+                                        tv_identity.setText("我是奶奶");
+                                        break;
+                                    case "WAIGONG":
+                                        tv_identity.setText("我是外公");
+                                        break;
+                                    case "WAIPO":
+                                        tv_identity.setText("我是外婆");
+                                        break;
+                                    default:
+                                        tv_identity.setText("其他亲友");
+                                }
                             }
                         }
                         loading.dismiss();

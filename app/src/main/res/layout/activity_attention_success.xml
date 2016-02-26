@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="以后宝宝使用葡萄探索号系列"
+                android:text="以后孩子使用葡萄探索号系列"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_16sp" />
 

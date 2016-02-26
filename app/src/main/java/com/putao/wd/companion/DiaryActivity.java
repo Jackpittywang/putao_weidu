@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -176,17 +177,24 @@ public class DiaryActivity extends PTWDActivity {
 
     @Subcriber(tag = ExploreAdapter.EVENT_DIARY_SHARE)
     public void eventShare(ExploreProductPlot exploreProductPlot) {
-        BitmapLoader.newInstance((Activity) mContext).load(exploreProductPlot.getImg_url(), new BitmapLoader.BitmapCallback() {
-            @Override
-            public void onResult(Bitmap bitmap) {
-                if (bitmap == null) {
-                    ToastUtils.showToastLong(mContext, "分享失败");
-                    return;
+        String img_url = exploreProductPlot.getImg_url();
+        if (TextUtils.isEmpty(img_url)) {
+            iv_plot_icon.setVisibility(View.GONE);
+            mSharePopupWindow.show(rl_main);
+        } else {
+            iv_plot_icon.setVisibility(View.VISIBLE);
+            BitmapLoader.newInstance((Activity) mContext).load(exploreProductPlot.getImg_url(), new BitmapLoader.BitmapCallback() {
+                @Override
+                public void onResult(Bitmap bitmap) {
+                    if (bitmap == null) {
+                        ToastUtils.showToastLong(mContext, "分享失败");
+                        return;
+                    }
+                    iv_plot_icon.setImageBitmap(bitmap);
+                    mHandler.sendEmptyMessageDelayed(0x01, 200);
                 }
-                iv_plot_icon.setImageBitmap(bitmap);
-                mHandler.sendEmptyMessageDelayed(0x01, 200);
-            }
-        });
+            });
+        }
         tv_content.setText(exploreProductPlot.getContent());
 
         mHandler = new Handler() {

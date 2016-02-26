@@ -62,16 +62,17 @@ public class UserApi {
     /**
      * 完善用户信息（更新）
      */
+    public static final String URL_USER_ADD = BASE_URL + "user/add";
     public static final String URL_USER_EDIT = BASE_URL + "user/edit";
 
-    public static Request userEdit(String ext, String filename, String filehash, String nick_name, String user_info) {
+    public static Request userAdd(String ext, String filename, String filehash, String nick_name, String user_info) {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_EXT, ext)
                 .addParam(REQUEST_FILENAME, filename)
                 .addParam(REQUEST_FILEHASH, filehash)
                 .addParam(REQUEST_NICK_NAME, nick_name)
                 .addParam(REQUEST_PROFILE, user_info)
-                .build(RequestMethod.POST, URL_USER_EDIT);
+                .build(RequestMethod.POST, URL_USER_ADD);
     }
 
     /**

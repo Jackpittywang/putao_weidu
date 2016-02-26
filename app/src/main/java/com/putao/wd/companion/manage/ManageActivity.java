@@ -3,6 +3,7 @@ package com.putao.wd.companion.manage;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.putao.wd.model.ManagementDevice;
 import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 
@@ -65,6 +67,11 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     private Management management;
     private int deviceNum;
     private int productNum;
+    private CountDownTimer mTimer;
+
+    private final static String STOP_PLAY = "stop_play";
+    private final static long STOP_TIME = 5 * 60 * 1000;
+    private long mTime;
 
     @Override
     protected int getLayoutId() {
@@ -75,7 +82,18 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         bundle = new Bundle();
+        mTimer = new CountDownTimer(mTime, 1000) {
 
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                btn_stopuse.setEnabled(true);
+            }
+        };
 //        Management
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
@@ -89,6 +107,14 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                     setProductText(result.getProduct_list(), false);
                     tv_usecount_byday.setText(result.getUse_num() + "次");
                     tv_usetime_byday.setText(result.getUse_time() + "分钟");
+                    Object stop_time = mDiskFileCacheHelper.getAsSerializable(STOP_PLAY);
+                    if (null != stop_time) {
+                        mTime = (System.currentTimeMillis()) - (long) stop_time;
+                        if (mTime < STOP_TIME) {
+                            btn_stopuse.setEnabled(false);
+                            mTimer.start();
+                        }
+                    }
                 }
                 loading.dismiss();
             }
@@ -120,7 +146,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_stopuse://停止使用
-                new AlertDialog.Builder(mContext).setTitle("").setMessage("让宝宝停止使用葡萄产品?")
+                new AlertDialog.Builder(mContext).setTitle("").setMessage("让孩子停止使用葡萄产品?")
                         .setCancelable(false)
                         .setPositiveButton("停止", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -160,6 +186,9 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             public void onSuccess(String url, Management result) {
                 ToastUtils.showToastShort(mContext, "指令发送成功");
                 btn_stopuse.setEnabled(false);
+                mTime = STOP_TIME;
+                mTimer.start();
+                mDiskFileCacheHelper.put(STOP_PLAY, System.currentTimeMillis());
                 loading.dismiss();
             }
         });

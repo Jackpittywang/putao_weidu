@@ -29,7 +29,7 @@ import android.util.Log;
  * 作者: 陈涛
  *
  * 日期: 2014年8月20日
- * 
+ *
  * 描述: 该类主要负责对相机的操作
  *
  */
@@ -48,7 +48,7 @@ public final class CameraManager {
 
 	/**
 	 * Opens the camera driver and initializes the hardware parameters.
-	 * 
+	 *
 	 * @param holder
 	 *            The surface object which the camera will draw preview frames
 	 *            into.
@@ -103,7 +103,7 @@ public final class CameraManager {
 	public Camera getCamera(){
 		return camera;
 	}
-	
+
 	/**
 	 * Closes the camera driver if still in use.
 	 */
@@ -116,7 +116,7 @@ public final class CameraManager {
 
 	/**
 	 * 获取相机分辨率
-	 * 
+	 *
 	 * @return
 	 */
 	public Point getCameraResolution() {

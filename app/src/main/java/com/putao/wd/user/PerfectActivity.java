@@ -125,7 +125,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
             filename = mObject.getString("filename");
             hash = mObject.getString("hash");
         }
-        networkRequest(UserApi.userEdit(ext, filename, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
+        networkRequest(UserApi.userAdd(ext, filename, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
