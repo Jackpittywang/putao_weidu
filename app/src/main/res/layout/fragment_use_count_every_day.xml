@@ -26,7 +26,6 @@
             android:id="@+id/ri_unlimit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            auto:is_select="true"
             auto:select_drawable="@drawable/icon_20_13"
             auto:select_text="不限"
             auto:select_text_color="@color/text_color"

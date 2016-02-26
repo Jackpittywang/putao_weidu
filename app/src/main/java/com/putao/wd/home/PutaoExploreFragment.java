@@ -102,7 +102,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                             InputStream in;
                             in = conn.getInputStream();
                             map = BitmapFactory.decodeStream(in);
-                            if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
+                            if (mI != BACKGROUND_CAN_NOT_CHANGGE || null == map) return;
                             Bitmap apply = FastBlur.doBlur(map, 50, false);
                             if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
                             EventBusHelper.post(apply, BLUR);

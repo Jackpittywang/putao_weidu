@@ -87,8 +87,8 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
 
                     setDeviceText(result.getSlave_device_list(), false);
                     setProductText(result.getProduct_list(), false);
-                    tv_usecount_byday.setText(result.getUse_num());
-                    tv_usetime_byday.setText(result.getUse_time());
+                    tv_usecount_byday.setText(result.getUse_num() + "次");
+                    tv_usetime_byday.setText(result.getUse_time() + "分钟");
                 }
                 loading.dismiss();
             }
@@ -213,15 +213,11 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
 
     @Subcriber(tag = UseCountEveryDayFragment.EVENT_USECOUNT_EVERYDAY)
     public void eventUseCount(String useCount) {
-        if (StringUtils.isEmpty(useCount))
-            tv_usecount_byday.setText("不限");
         tv_usecount_byday.setText(useCount);
     }
 
     @Subcriber(tag = UseTimeEveryTimeFragment.EVENT_USETIME_EVERYTIME)
     public void eventUseTime(String useTime) {
-        if (StringUtils.isEmpty(useTime))
-            tv_usetime_byday.setText("不限");
         tv_usetime_byday.setText(useTime);
     }
 }

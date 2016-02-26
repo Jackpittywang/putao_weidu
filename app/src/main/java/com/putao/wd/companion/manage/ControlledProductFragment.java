@@ -2,14 +2,17 @@ package com.putao.wd.companion.manage;
 
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.companion.manage.adapter.ControlledProductAdapter;
 import com.putao.wd.model.Management;
+import com.putao.wd.model.ManagementEdit;
 import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -27,6 +30,7 @@ public class ControlledProductFragment extends PTWDFragment {
 
     @Bind(R.id.brv_product)
     BasicRecyclerView brv_product;
+    private Management mManagement;
 
     private ControlledProductAdapter adapter;
     private List<ManagementProduct> selectItem = new ArrayList<>();
@@ -44,6 +48,7 @@ public class ControlledProductFragment extends PTWDFragment {
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
             public void onSuccess(String url, Management result) {
+                mManagement = result;
                 if (null != result) {
                     adapter.replaceAll(result.getProduct_list());
                     for (ManagementProduct product : result.getProduct_list()) {
@@ -98,7 +103,15 @@ public class ControlledProductFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_PRODUT);
-       mActivity.finish();
+        Management management = new Management();
+        management.setProduct_list(mManagement.getProduct_list());
+        mActivity.finish();
+        networkRequest(ExploreApi.managementEdit(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
+            @Override
+            public void onSuccess(String url, ManagementEdit result) {
+                Logger.i("探索号管理信息保存成功");
+            }
+        });
     }
 
     @Override

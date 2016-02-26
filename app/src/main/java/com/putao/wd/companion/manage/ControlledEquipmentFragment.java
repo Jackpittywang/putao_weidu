@@ -2,14 +2,17 @@ package com.putao.wd.companion.manage;
 
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.companion.manage.adapter.ControlledEquipmentAdapter;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementDevice;
+import com.putao.wd.model.ManagementEdit;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -30,6 +33,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
 
     private ControlledEquipmentAdapter adapter;
     private List<ManagementDevice> selectItem = new ArrayList<>();
+    private Management mManagement;
 
     @Override
     protected int getLayoutId() {
@@ -44,6 +48,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
             public void onSuccess(String url, Management result) {
+                mManagement = result;
                 if (null != result) {
                     adapter.replaceAll(result.getSlave_device_list());
                     for (ManagementDevice device : result.getSlave_device_list()) {
@@ -63,6 +68,7 @@ public class ControlledEquipmentFragment extends PTWDFragment {
         brv_equipment.setOnItemClickListener(new OnItemClickListener<ManagementDevice>() {
             @Override
             public void onItemClick(ManagementDevice item, int position) {
+//                mManagement.getSlave_device_list().get(position).setStatus("1".equals(item.getStatus()) ? "0" : "1");
                 if (!"1".equals(item.getStatus())) {
                     item.setStatus("1");
                     selectItem.add(item);
@@ -88,13 +94,15 @@ public class ControlledEquipmentFragment extends PTWDFragment {
     @Override
     public void onRightAction() {
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_EQUIPMENT);
+        Management management = new Management();
+        management.setSlave_device_list(mManagement.getSlave_device_list());
         mActivity.finish();
-//        networkRequest(ExploreApi.managementEdit(""), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ManagementEdit result) {
-//                Logger.i("探索号管理信息保存成功");
-//            }
-//        });
+        networkRequest(ExploreApi.managementEdit(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
+            @Override
+            public void onSuccess(String url, ManagementEdit result) {
+                Logger.i("探索号管理信息保存成功");
+            }
+        });
     }
 
     @Override
