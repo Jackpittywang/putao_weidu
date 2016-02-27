@@ -211,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="使用此功能需孩子使用的iPad联网喔！"
+                android:text="使用此功能需宝宝使用的iPad联网喔！"
                 android:textSize="14sp"/>
         </LinearLayout>
 

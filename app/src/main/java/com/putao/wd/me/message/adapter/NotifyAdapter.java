@@ -108,8 +108,8 @@ public class NotifyAdapter extends LoadMoreAdapter<NotifyDetail, NotifyAdapter.N
         TextView tv_notify_content;//通知内容
         @Bind(R.id.iv_action_icon)
         ImageDraweeView iv_action_icon;//活动封面
-        @Bind(R.id.tv_check_detail)
-        TextView tv_check_detail;//查看详情
+     /*   @Bind(R.id.tv_check_detail)
+        TextView tv_check_detail;//查看详情*/
 
         public NotifyViewHolder(View itemView) {
             super(itemView);

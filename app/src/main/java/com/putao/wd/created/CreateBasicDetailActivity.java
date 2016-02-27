@@ -1,12 +1,9 @@
 package com.putao.wd.created;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -20,9 +17,6 @@ import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
-import com.putao.wd.api.ExploreApi;
-import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
@@ -30,14 +24,13 @@ import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.SwitchButton;
@@ -105,6 +98,8 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     TextView tv_count_cool;
     @Bind(R.id.ll_comment)
     LinearLayout ll_comment;
+    @Bind(R.id.tv_count_comment)
+    TextView tv_count_comment;
     @Bind(R.id.ll_share)
     LinearLayout ll_share;
     @Bind(R.id.iv_close)
@@ -131,6 +126,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     private boolean btnState = false;
     private ObjectAnimator showAnim;
     private ObjectAnimator hindAnim;
+    private int mCommentCount;
 
     @Override
     protected int getLayoutId() {
@@ -161,12 +157,14 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             sb_cool_icon.setState(true);
             tv_count_cool.setText("已关注");
         }
+        mCommentCount = mCreate.getComment().getCount();
         isConcernsInit = mCreate.getFollow_status() == 1 ? true : false;
         sb_cool_icon.setState(isConcernsInit);
         sb_cool_icon.setClickable(false);
         iv_sign.setImageURL(mCreate.getCover());
         tv_title.setText(mCreate.getTitle());
         iv_user_icon.setImageURL(mCreate.getAvatar());
+        tv_count_comment.setText(mCommentCount == 0 ? "评论" : mCommentCount + "");
         tv_digest.setText(mCreate.getNickname());
         wv_content.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mContext, getWindowManager().getDefaultDisplay().getWidth() - 200), mCreate.getContent()), "text/html", "utf-8", null);
         if (isShowProgress) {
@@ -363,6 +361,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 }
                 Bundle bundle = new Bundle();
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
+                bundle.putInt(CreateBasicDetailActivity.POSITION, mPosition);
                 startActivity(CreateCommentActivity.class, bundle);
                 break;
             case R.id.ll_share:
@@ -411,6 +410,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
      *
      * @param step
      */
+
     private void startAnim(int step) {
         ObjectAnimator ofFloat = null;
         if (step == 0) return;
@@ -484,5 +484,16 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
         if (isConcernsInit && isConcernsRefresh) {
             EventBusHelper.post(EVENT_CONCERNS_REFRESH, EVENT_CONCERNS_REFRESH);
         }
+    }
+
+    @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
+    public void eventAddCommentCount(int position) {
+        tv_count_comment.setText(++mCommentCount + "");
+    }
+
+
+    @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
+    public void evenDeleteCommentCount(int position) {
+        tv_count_comment.setText(--mCommentCount + "");
     }
 }

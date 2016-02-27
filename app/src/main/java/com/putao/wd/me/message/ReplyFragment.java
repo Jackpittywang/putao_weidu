@@ -3,6 +3,7 @@ package com.putao.wd.me.message;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
@@ -25,6 +26,9 @@ import butterknife.Bind;
 public class ReplyFragment extends BasicFragment {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;//回复列表
+    @Bind(R.id.tv_message_empty)
+    TextView tv_message_empty;
+
     @Bind(R.id.rl_no_message)
     RelativeLayout rl_no_message;
 
@@ -40,6 +44,7 @@ public class ReplyFragment extends BasicFragment {
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("MessageCenterActivity","ReplyFragment启动");
+        tv_message_empty.setText("还没有回复");
         adapter = new ReplyAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();

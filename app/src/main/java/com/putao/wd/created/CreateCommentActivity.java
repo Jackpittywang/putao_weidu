@@ -94,7 +94,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
         adapter = new CreateCommentAdapter(this, null);
         rv_content.setAdapter(adapter);
         action_id = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
-        mSuperPosition = args.getInt(POSITION);
+        mSuperPosition = args.getInt(CreateBasicDetailActivity.POSITION);
         refreshCommentList();
         addListener();
 

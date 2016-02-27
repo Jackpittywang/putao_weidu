@@ -3,6 +3,7 @@ package com.putao.wd.me.message;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
@@ -27,6 +28,8 @@ public class PraiseFragment extends BasicFragment {
     LoadMoreRecyclerView rv_content;//赞列表
     @Bind(R.id.rl_no_message)
     RelativeLayout rl_no_message;
+    @Bind(R.id.tv_message_empty)
+    TextView tv_message_empty;
 
     private PraiseAdapter adapter;
 
@@ -40,6 +43,7 @@ public class PraiseFragment extends BasicFragment {
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("MessageCenterActivity", "PraiseFragment启动");
+        tv_message_empty.setText("还没有赞");
         adapter = new PraiseAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();

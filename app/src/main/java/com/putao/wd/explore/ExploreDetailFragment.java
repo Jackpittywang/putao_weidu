@@ -23,6 +23,7 @@ import com.putao.wd.user.LoginActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.BasicWebView;
@@ -49,20 +50,21 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     BasicWebView wb_explore_detail;
     @Bind(R.id.tv_count_cool)
     TextView tv_count_cool;
-    @Bind(R.id.ll_cool)
-    LinearLayout ll_cool;
     @Bind(R.id.sb_cool_icon)
     SwitchButton sb_cool_icon;
-    @Bind(R.id.ll_comment)
-    LinearLayout ll_comment;
+    @Bind(R.id.tv_count_comment)
+    TextView tv_count_comment;
     @Bind(R.id.ll_share)
     LinearLayout ll_share;
+    @Bind(R.id.iv_close)
+    ImageView iv_close;
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ExploreIndex mExploreIndex;
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
     private int mPosition;
+    private int mCount_comments;
 
     @Override
     protected int getLayoutId() {
@@ -73,11 +75,13 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mPosition = args.getInt(ExploreCommonFragment.INDEX_DATA_PAGE);
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA);
+        mCount_comments = mExploreIndex.getCount_comments();
         mSharePopupWindow = new SharePopupWindow(getActivity());
         isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
+        iv_close.setVisibility(View.GONE);
 //        wb_explore_detail.setInitialScale(80);
-        tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
+        tv_count_cool.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
 
 //        WebSettings webSettings = wb_explore_detail.getSettings();
 //        webSettings.setUseWideViewPort(true);//关键点
@@ -95,6 +99,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
+        tv_count_comment.setText(mExploreIndex.getCount_comments() + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
         wb_explore_detail.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation()), "text/html", "utf-8", null);
@@ -169,11 +174,22 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
         startActivity(LoginActivity.class, bundle);
     }
+
     @Override
     public void startActivity(Class targetClass, Bundle args) {
         Intent intent = new Intent(getActivity(), targetClass);
         if (args != null)
             intent.putExtras(args);
         startActivity(intent);
+    }
+
+    @Subcriber(tag = CommentActivity.EVENT_ADD_CREAT_COMMENT)
+    public void eventAddCommentCount(int position) {
+        tv_count_comment.setText(++mCount_comments + "");
+    }
+
+    @Subcriber(tag = CommentActivity.EVENT_DELETE_CREAT_COMMENT)
+    public void evenDeleteCommentCount(int position) {
+        tv_count_comment.setText(--mCount_comments + "");
     }
 }

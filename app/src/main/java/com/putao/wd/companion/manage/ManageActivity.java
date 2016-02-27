@@ -19,6 +19,7 @@ import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 
@@ -70,7 +71,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     private CountDownTimer mTimer;
 
     private final static String STOP_PLAY = "stop_play";
-    private final static long STOP_TIME = 5 * 60 * 1000;
+    private final static long STOP_TIME = 1 * 60 * 1000;
     private long mTime;
 
     @Override
@@ -82,18 +83,6 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         bundle = new Bundle();
-        mTimer = new CountDownTimer(mTime, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                btn_stopuse.setEnabled(true);
-            }
-        };
 //        Management
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
@@ -110,10 +99,8 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                     Object stop_time = mDiskFileCacheHelper.getAsSerializable(STOP_PLAY);
                     if (null != stop_time) {
                         mTime = (System.currentTimeMillis()) - (long) stop_time;
-                        if (mTime < STOP_TIME) {
-                            btn_stopuse.setEnabled(false);
-                            mTimer.start();
-                        }
+                        if (mTime < STOP_TIME)
+                            countDown(STOP_TIME - mTime);
                     }
                 }
                 loading.dismiss();
@@ -185,9 +172,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             @Override
             public void onSuccess(String url, Management result) {
                 ToastUtils.showToastShort(mContext, "指令发送成功");
-                btn_stopuse.setEnabled(false);
-                mTime = STOP_TIME;
-                mTimer.start();
+                countDown(STOP_TIME);
                 mDiskFileCacheHelper.put(STOP_PLAY, System.currentTimeMillis());
                 loading.dismiss();
             }
@@ -228,6 +213,22 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             }
         }
         tv_product_name.setText(count + "个，共" + productNum + "个");
+    }
+
+    private void countDown(long millisecond) {
+        btn_stopuse.setEnabled(false);
+        mTimer = new CountDownTimer(millisecond, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                btn_stopuse.setEnabled(true);
+            }
+        };
+        mTimer.start();
     }
 
     @Subcriber(tag = ControlledEquipmentFragment.EVENT_CONTROLLED_EQUIPMENT)

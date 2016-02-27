@@ -316,6 +316,8 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
+                        ToastUtils.showToastLong(mContext, "添加失败");
+                        finish();
                     }
                 });
                 break;

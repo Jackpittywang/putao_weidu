@@ -24,6 +24,7 @@
             android:id="@+id/rl_no_message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:background="@color/layout_background">
 
             <ImageView
@@ -31,16 +32,15 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/img_page_empty" />
+                android:src="@drawable/img_page_empty"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
+                android:id="@+id/tv_message_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iv_message_empty"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:text="还没有通知消息"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_18sp" />
         </RelativeLayout>

@@ -7,9 +7,13 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.putao.wd.IndexActivity;
@@ -34,6 +38,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
@@ -54,12 +59,16 @@ import butterknife.OnClick;
  * 我
  * Created by guchenkai on 2015/11/25.
  */
-public class MeFragment extends BasicFragment implements View.OnClickListener {
+public class MeFragment extends BasicFragment implements View.OnClickListener, View.OnTouchListener {
     public static final String ME_BLUR = "me_blur";
     private static final String EVENT_EDIT_USER_INFO = "edit_user_info";
 
     @Bind(R.id.si_message)
     SettingItem si_message;
+    @Bind(R.id.ll_me)
+    LinearLayout ll_me;
+    @Bind(R.id.sv_me)
+    ScrollView sv_me;
     @Bind(R.id.btn_pay)
     IndicatorButton btn_pay;//待付款
     @Bind(R.id.btn_deliver)
@@ -79,6 +88,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
 
     private HandlerThread mHandlerThread;
     private Handler mHandler;
+    private int y;
+    int oldY = 0;
+    private int mHeadHeight;
+    private ViewGroup.LayoutParams mHeadLayoutParams;
+    private int mStatusBarHeight;
 
     @Override
     protected int getLayoutId() {
@@ -116,6 +130,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
                 }
             }
         };
+        mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
+        mHeadHeight = mHeadLayoutParams.height;
+        mStatusBarHeight = DensityUtil.dp2px(mActivity, 25f);
+        sv_me.setOnTouchListener(this);
+        ll_me.getParent().requestDisallowInterceptTouchEvent(false);
+//        ll_me.requestDisallowInterceptTouchEvent(true);
+//        ll_me.setOnTouchListener(this);
         getUserInfo();
     }
 
@@ -332,5 +353,47 @@ public class MeFragment extends BasicFragment implements View.OnClickListener {
     @Subcriber(tag = ME_BLUR)
     private void setBlur(Bitmap bitmap) {
         iv_user_icon_background.setDefaultImage(bitmap);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                y = (int) event.getY();
+                oldY = y;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int newY = (int) event.getY();
+                int height = mHeadLayoutParams.height + (newY - y) / 3;
+                int[] position = new int[2];
+                rl_user_head_icon.getLocationOnScreen(position);
+                if (position[1] < mStatusBarHeight) return false;
+                if (height < mHeadHeight) {
+                    mHeadLayoutParams.height = mHeadHeight;
+                    rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                    return false;
+                }
+                mHeadLayoutParams.height = height;
+                rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                y = newY;
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                mHeadLayoutParams.height = mHeadHeight;
+                rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                if (y - oldY < 300 || oldY == 0) break;
+                oldY = 0;
+                getUserInfo();
+                getOrderCount();
+                break;
+            case MotionEvent.ACTION_UP:
+                mHeadLayoutParams.height = mHeadHeight;
+                rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                if (y - oldY < 300 || oldY == 0) break;
+                oldY = 0;
+                getUserInfo();
+                getOrderCount();
+                break;
+        }
+        return true;
     }
 }

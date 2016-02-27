@@ -13,6 +13,7 @@ import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.model.HomeExploreMore;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -22,6 +23,7 @@ import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
@@ -59,6 +61,8 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     SwitchButton sb_cool_icon;
     @Bind(R.id.ll_comment)
     LinearLayout ll_comment;
+    @Bind(R.id.tv_count_comment)
+    TextView tv_count_comment;
     @Bind(R.id.ll_share)
     LinearLayout ll_share;
 
@@ -73,6 +77,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     private int mPosition;
     private float mWidth;
     private float mHeight;
+    private int mCount_comments;
 
     @Override
     protected int getLayoutId() {
@@ -96,6 +101,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                     public void onSuccess(String url, ExploreIndex result) {
                         if (null != result) {
                             mExploreIndex = result;
+                            mCount_comments = mExploreIndex.getCount_comments();
                             initView();
                         }
                         loading.dismiss();
@@ -107,6 +113,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     private void initView() {
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
+        tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
@@ -231,12 +238,23 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 break;
             case R.id.ll_comment:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
+                bundle.putInt(POSITION, mPosition);
                 startActivity(CommentActivity.class, bundle);
                 break;
             case R.id.ll_share:
                 mSharePopupWindow.show(ll_share);
                 break;
         }
+    }
+
+    @Subcriber(tag = CommentActivity.EVENT_ADD_CREAT_COMMENT)
+    public void eventAddCommentCount(int position) {
+        tv_count_comment.setText(++mCount_comments + "");
+    }
+
+    @Subcriber(tag = CommentActivity.EVENT_DELETE_CREAT_COMMENT)
+    public void evenDeleteCommentCount(int position) {
+        tv_count_comment.setText(--mCount_comments + "");
     }
 }
 

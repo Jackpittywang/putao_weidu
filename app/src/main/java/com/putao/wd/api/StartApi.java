@@ -338,7 +338,7 @@ public class StartApi {
     public static Request getNotifyList(String page) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.GET, URL_NOTIFY_LIST);
+                .build(RequestMethod.POST, URL_NOTIFY_LIST);
     }
 
     /**
@@ -354,7 +354,7 @@ public class StartApi {
     public static Request getReplyList(String page) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.GET, URL_REPLY_LIST);
+                .build(RequestMethod.POST, URL_REPLY_LIST);
     }
 
     /**
@@ -370,6 +370,6 @@ public class StartApi {
     public static Request getPraiseList(String page) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.GET, URL_PRAISE_LIST);
+                .build(RequestMethod.POST, URL_PRAISE_LIST);
     }
 }
