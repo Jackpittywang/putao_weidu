@@ -14,7 +14,6 @@ import com.sunnybear.library.util.Logger;
 import org.xml.sax.XMLReader;
 
 import butterknife.Bind;
-import io.vov.vitamio.utils.Log;
 
 /**
  * Created by Administrator on 2016/1/29.

@@ -9,13 +9,14 @@
     android:overScrollMode="never"
     android:scrollbars="none">
 
-    <LinearLayout android:id="@+id/ll_me"
-                  xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:auto="http://schemas.android.com/apk/res-auto"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@color/layout_background"
-                  android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_me"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:auto="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/layout_background"
+        android:orientation="vertical">
 
         <!--用户头像昵称栏-->
         <RelativeLayout
@@ -27,7 +28,8 @@
                 android:id="@+id/iv_user_icon_background"
                 style="@style/image_style"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

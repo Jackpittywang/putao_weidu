@@ -324,9 +324,6 @@
             android:name=".qrcode.CaptureActivity"
             android:screenOrientation="portrait" />
         <!--视频播放-->
-        <activity
-            android:name=".video.VideoPlayerActivity"
-            android:screenOrientation="landscape" />
         <!--优酷视频播放-->
         <activity
             android:name=".video.YoukuVideoPlayerActivity"

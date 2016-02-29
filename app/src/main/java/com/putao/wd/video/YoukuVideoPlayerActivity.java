@@ -26,6 +26,7 @@ import butterknife.Bind;
  */
 public class YoukuVideoPlayerActivity extends BasicFragmentActivity {
     public static final String BUNDLE_VID = "vid";
+    public static final String BUNDLE_VIDEO_URL = "bundle_video_url";
     public static final String BUNDLE_LOCAL_VID = "local_vid";
     public static final String BUNDLE_IS_FROM_LOCAL = "is_from_local";
 
