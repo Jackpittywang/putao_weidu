@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.me.address.AddressEditActivity;
+import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.model.Address;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
@@ -51,6 +52,8 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
             public void onClick(View v) {
                 index = position;
                 Bundle bundle = new Bundle();
+                if (1 == getItemCount())
+                    bundle.putBoolean(AddressListActivity.IS_ADDRESS_EMPTY, true);
                 bundle.putSerializable(AddressEditActivity.BUNDLE_KEY_ADDRESS, address);
                 context.startActivity(AddressEditActivity.class, bundle);
             }
