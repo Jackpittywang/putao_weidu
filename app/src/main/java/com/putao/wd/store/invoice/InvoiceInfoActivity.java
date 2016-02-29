@@ -2,6 +2,7 @@ package com.putao.wd.store.invoice;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -38,6 +39,10 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     public static final String INVOICE_DETAIL = "商品明细";
     public static final String INVOICE_ELECTRONIC = "电子产品";
     public static final String INVOICE_PLAY = "玩具";
+
+    public static final String IS_INVOICE_NEED = "is_invoice_need";
+    public static final String BUNDLE_INVOICE1 = "bundle_invoice1";
+    public static final String BUNDLE_INVOICE2 = "bundle_invoice2";
 
     @Bind(R.id.ll_need_invoice_detail)
     LinearLayout ll_need_invoice_detail;//需要发票信息区域（默认不可见）
@@ -88,7 +93,41 @@ public class InvoiceInfoActivity extends PTWDActivity implements View.OnClickLis
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        checkIsNew();
         cancelBtn();
+    }
+
+    private void checkIsNew() {
+        if (args.getBoolean(IS_INVOICE_NEED)) {
+            btn_noneed_invoice.setState(false);
+            btn_need_invoice.setState(true);
+            ll_need_invoice_detail.setVisibility(View.VISIBLE);
+            invoice_type = args.getString(BUNDLE_INVOICE1);
+            invoice_content = args.getString(BUNDLE_INVOICE2);
+            need_invoice = INVOICE_NEED;
+            if (TextUtils.equals(INVOICE_PERSONAL, args.getString(BUNDLE_INVOICE1))) {
+                btn_person.setState(true);
+                btn_company.setState(false);
+            } else {
+                btn_person.setState(false);
+                btn_company.setState(true);
+                et_company.setVisibility(View.VISIBLE);
+                et_company.setText(invoice_type);
+            }
+            if (TextUtils.equals(INVOICE_DETAIL, args.getString(BUNDLE_INVOICE2))) {
+                btn_invoice_info.setState(true);
+                btn_electronic_product.setState(false);
+                btn_toy.setState(false);
+            } else if (TextUtils.equals(INVOICE_ELECTRONIC, args.getString(BUNDLE_INVOICE2))) {
+                btn_invoice_info.setState(false);
+                btn_electronic_product.setState(true);
+                btn_toy.setState(false);
+            } else {
+                btn_invoice_info.setState(false);
+                btn_electronic_product.setState(false);
+                btn_toy.setState(true);
+            }
+        }
     }
 
     private void cancelBtn() {

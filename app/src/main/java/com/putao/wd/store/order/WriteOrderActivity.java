@@ -162,14 +162,20 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     @OnClick({R.id.fl_address, R.id.ll_need_invoice, R.id.ll_submit})
     @Override
     public void onClick(View v) {
+        Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.fl_address://选择地址
-                Bundle bundle = new Bundle();
                 bundle.putBoolean(AddressListActivity.BUNDLE_IS_CLOSE, true);
                 startActivity(AddressListActivity.class, bundle);
                 break;
             case R.id.ll_need_invoice://发票信息
-                startActivity(InvoiceInfoActivity.class);
+                bundle.putBoolean(InvoiceInfoActivity.IS_INVOICE_NEED, false);
+                if (tv_Invoice_content.isShown()) {
+                    bundle.putString(InvoiceInfoActivity.BUNDLE_INVOICE1, tv_Invoice_type.getText().toString());
+                    bundle.putString(InvoiceInfoActivity.BUNDLE_INVOICE2, tv_Invoice_content.getText().toString());
+                    bundle.putBoolean(InvoiceInfoActivity.IS_INVOICE_NEED, true);
+                }
+                startActivity(InvoiceInfoActivity.class, bundle);
                 break;
             case R.id.ll_submit://去结算
                 if (StringUtils.isEmpty(addressId)) {

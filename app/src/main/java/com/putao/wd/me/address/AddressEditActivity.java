@@ -113,8 +113,8 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 添加收货地址
      */
     private void addressAdd(String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        if (isAddressEmpty = false)
-            status = "0";
+        if (isAddressEmpty)
+            status = "1";
         networkRequest(OrderApi.addressAdd(realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
@@ -130,7 +130,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 更新收货地址
      */
     private void addressUpdate(String address_id, String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        if (isAddressEmpty = true)
+        if (isAddressEmpty)
             status = "1";
         networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
