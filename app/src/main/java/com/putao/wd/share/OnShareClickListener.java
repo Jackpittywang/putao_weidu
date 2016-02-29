@@ -10,13 +10,13 @@ public abstract class OnShareClickListener {
 
     public abstract void onWechatFriend();
 
-//        void onQQFriend();
-//
-//        void onQQZone();
-//
-//        void onSinaWeibo();
-//
-//        void onCopyUrl();
+    public abstract void onQQFriend();
+
+    public abstract void onQQZone();
+
+    public abstract void onSinaWeibo();
+
+//    public abstract void onCopyUrl();
 
     public void onCancel() {
 

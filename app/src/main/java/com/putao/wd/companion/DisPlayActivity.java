@@ -128,8 +128,18 @@ public class DisPlayActivity extends BasicFragmentActivity {
             }
 
             @Override
-            public void onCancel() {
-                finish();
+            public void onQQFriend() {
+
+            }
+
+            @Override
+            public void onQQZone() {
+
+            }
+
+            @Override
+            public void onSinaWeibo() {
+
             }
         });
     }

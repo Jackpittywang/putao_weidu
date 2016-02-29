@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.putao.wd"
     android:versionCode="2"
-    android:versionName="1.1.0">
+    android:versionName="1.1.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -330,7 +330,7 @@
         <!--优酷视频播放-->
         <activity
             android:name=".video.YoukuVideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="orientation|boardHidden|screenSize"
             android:exported="true"
             android:launchMode="singleTask" />
         <!-- shareSDK -->

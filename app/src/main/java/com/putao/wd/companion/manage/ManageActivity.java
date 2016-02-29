@@ -71,7 +71,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     private CountDownTimer mTimer;
 
     private final static String STOP_PLAY = "stop_play";
-    private final static long STOP_TIME = 1 * 60 * 1000;
+    private final static long STOP_TIME = 5 * 60 * 1000;
     private long mTime;
 
     @Override

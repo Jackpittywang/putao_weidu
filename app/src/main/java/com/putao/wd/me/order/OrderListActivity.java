@@ -77,9 +77,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         currentType = args.getString(TYPE_INDEX, TYPE_ALL);
         adapter = new OrderListAdapter(mContext, null);
         rv_order.setAdapter(adapter);
-
         addListener();
-
         setCurrentItem();
         getOrderLists(currentType, String.valueOf(currentPage));
 

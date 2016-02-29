@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;

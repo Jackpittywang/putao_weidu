@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/color_EBEBEB"
-    android:orientation="vertical">
+<com.sunnybear.library.view.InterceptLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  xmlns:auto="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="wrap_content"
+                                                  android:background="@color/color_EBEBEB"
+                                                  android:orientation="vertical"
+                                                  auto:isIntercept="true">
 
     <!--订单信息栏-->
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="订单号"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_14sp"/>
 
         <TextView
             android:id="@+id/tv_order_no"
@@ -31,7 +32,7 @@
             android:layout_marginTop="5dp"
             android:text="2015112614082887661001"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_16sp" />
+            android:textSize="@dimen/text_size_16sp"/>
 
         <TextView
             android:id="@+id/tv_order_purchase_time"
@@ -41,7 +42,7 @@
             android:layout_marginTop="5dp"
             android:text="2015-08-02 13:48:37"
             android:textColor="@color/text_color_gray"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_14sp"/>
 
         <TextView
             android:id="@+id/tv_order_status"
@@ -52,14 +53,14 @@
             android:text="待支付"
             android:textColor="@color/text_color_red"
             android:textSize="@dimen/text_size_16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </RelativeLayout>
 
     <!--间隔线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color"/>
 
     <!--订单列表-->
     <com.sunnybear.library.view.recycler.BasicRecyclerView
@@ -70,7 +71,7 @@
         auto:divider_color="@color/white"
         auto:divider_height="1px"
         auto:has_row_divider="true"
-        auto:is_inner="true" />
+        auto:is_inner="true"/>
 
     <!--合计-->
     <LinearLayout
@@ -99,13 +100,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="3"
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="件商品 合计："
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"/>
             </LinearLayout>
 
             <!--金额-->
@@ -119,14 +120,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥"
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:id="@+id/tv_sum_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1197.00"
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -143,7 +144,7 @@
                 android:layout_height="match_parent"
                 android:text="含运费："
                 android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_12sp" />
+                android:textSize="@dimen/text_size_12sp"/>
 
             <!--金额-->
             <LinearLayout
@@ -156,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:text="￥"
                     android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_12sp" />
+                    android:textSize="@dimen/text_size_12sp"/>
 
                 <TextView
                     android:id="@+id/tv_sum_carriage"
@@ -164,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:text="0.00"
                     android:textColor="@color/text_color_gray"
-                    android:textSize="@dimen/text_size_12sp" />
+                    android:textSize="@dimen/text_size_12sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -185,7 +186,7 @@
             android:gravity="center_vertical"
             android:text="签收后15日内可申请售后"
             android:textSize="@dimen/text_size_12sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_order_left"
@@ -197,7 +198,7 @@
             android:text="取消订单"
             android:textColor="@color/service_btn_nor"
             android:textSize="@dimen/text_size_14sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_order_right"
@@ -212,6 +213,6 @@
             android:text="订单操作"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </LinearLayout>
-</LinearLayout>
+</com.sunnybear.library.view.InterceptLinearLayout>

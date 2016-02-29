@@ -56,19 +56,19 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
     }
 
     @Override
-    public void onBindItem(OrderListViewHolder holder, Order order, final int position) {
+    public void onBindItem(OrderListViewHolder holder, final Order order, final int position) {
         mOrderStatus = order.getOrderStatusID();
         checkOrder(holder, mOrderStatus);
         holder.btn_order_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                leftClick(getItems().get(position));
+                leftClick(order);
             }
         });
         holder.btn_order_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rightClick(getItems().get(position));
+                rightClick(order);
             }
         });
         holder.tv_order_no.setText(order.getOrder_sn());
