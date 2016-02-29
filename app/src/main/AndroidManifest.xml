@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.putao.wd"
     android:versionCode="2"
-    android:versionName="1.1.1">
+    android:versionName="1.1.0">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -323,11 +323,10 @@
         <activity
             android:name=".qrcode.CaptureActivity"
             android:screenOrientation="portrait" />
-        <!--视频播放-->
         <!--优酷视频播放-->
         <activity
             android:name=".video.YoukuVideoPlayerActivity"
-            android:configChanges="orientation|boardHidden|screenSize"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:launchMode="singleTask" />
         <!-- shareSDK -->
@@ -371,13 +370,6 @@
                 <action android:name="com.putao.wd.PUSH" />
             </intent-filter>
         </service>
-        <!--声明vitamio-->
-        <activity
-            android:name="io.vov.vitamio.activity.InitActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
         <!--优酷视频播放配置-->
         <meta-data
             android:name="client_id"
