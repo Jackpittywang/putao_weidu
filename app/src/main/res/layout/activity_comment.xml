@@ -60,8 +60,7 @@
                 android:id="@+id/tv_send"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:padding="@dimen/distance_8dp"
                 android:gravity="center"
                 android:text="发送"
                 android:textSize="@dimen/text_size_18sp"/>
