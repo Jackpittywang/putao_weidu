@@ -66,17 +66,7 @@ public class PutaoCompanionFragment1 extends PTWDFragment implements View.OnClic
         adapter = new ExploreAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         mSharePopupWindow = new SharePopupWindow(mActivity);
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
-            @Override
-            public void onWechat() {
 
-            }
-
-            @Override
-            public void onWechatFriend() {
-
-            }
-        });
     }
 
     @Override

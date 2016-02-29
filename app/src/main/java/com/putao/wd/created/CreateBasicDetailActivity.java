@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
@@ -39,6 +40,7 @@ import com.sunnybear.library.view.scroll.SupportScrollView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.sharesdk.tencent.qq.QQ;
 
 /**
  * 创造详情的父类
@@ -232,6 +234,21 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+            }
+
+            @Override
+            public void onQQFriend() {
+//                ShareTools.newInstance(QQ.NAME).setTitle(mCreate.getTitle()).setText(mCreate.getDescrip()).setImageUrl(mCreate.getCover()).setUrl("http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId()).execute(mContext);
+            }
+
+            @Override
+            public void onQQZone() {
+
+            }
+
+            @Override
+            public void onSinaWeibo() {
+
             }
         });
     }

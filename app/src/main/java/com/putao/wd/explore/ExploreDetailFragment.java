@@ -1,10 +1,17 @@
 package com.putao.wd.explore;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,9 +33,13 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -82,7 +93,23 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         iv_close.setVisibility(View.GONE);
 //        wb_explore_detail.setInitialScale(80);
         tv_count_cool.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
+        wb_explore_detail.setWebViewClient(new WebViewClient() {
 
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                Logger.d("shouldInterceptRequest url=" + url + ";threadInfo" + Thread.currentThread());
+                WebResourceResponse response = null;
+                if (url.contains("http://k.youku.com/player")) {
+//                    response = new WebResourceResponse("image/png", "UTF-8", null);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(YoukuVideoPlayerActivity.BUNDLE_LOCAL_VID, url);
+//                    bundle.putBoolean(YoukuVideoPlayerActivity.BUNDLE_IS_FROM_LOCAL, true);
+//                    startActivity(YoukuVideoPlayerActivity.class, bundle);
+                }
+                return response;
+            }
+        });
 //        WebSettings webSettings = wb_explore_detail.getSettings();
 //        webSettings.setUseWideViewPort(true);//关键点
 //        webSettings.setJavaScriptEnabled(true);
@@ -121,6 +148,21 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
+            }
+
+            @Override
+            public void onQQFriend() {
+
+            }
+
+            @Override
+            public void onQQZone() {
+
+            }
+
+            @Override
+            public void onSinaWeibo() {
+
             }
         });
     }

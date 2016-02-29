@@ -179,7 +179,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
 
             }
         });
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+       /* mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
 
@@ -189,7 +189,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
             public void onWechatFriend() {
 
             }
-        });
+        });*/
     }
 
     @Override
