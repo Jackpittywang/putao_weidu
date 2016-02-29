@@ -79,7 +79,6 @@ bugly {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
-    compile project(':vitamio')
     compile project(':youku_player_open_sdk')
 }
 
