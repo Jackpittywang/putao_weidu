@@ -129,11 +129,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             case TYPE_CHALLENGE:
                 return new DiaryChallengeViewHolder(itemView);
             case TYPE_TASKS:
-                return new DiaryTasksViewHolder(itemView);
+                return new DiaryBasicViewHolder(itemView);
             case TYPE_CHALLENGE_PIC:
                 return new DiaryChallengePicViewHolder(itemView);
             default:
-                return new DiaryTasksViewHolder(itemView);
+                return new DiaryBasicViewHolder(itemView);
         }
     }
 
@@ -153,11 +153,29 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 mIsShowDate.put(position, true);
             }
         }
+        final DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
+        basicHolder.iv_check.setVisibility(View.GONE);
+        if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
+            basicHolder.iv_image.setImageURL(diaryTitle.getImg());
+            basicHolder.rl_image.setVisibility(View.VISIBLE);
+        } else {
+            basicHolder.rl_image.setVisibility(View.GONE);
+        }
+        if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0) {
+            basicHolder.iv_player.setVisibility(View.VISIBLE);
+            basicHolder.iv_player.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, diaryTitle.getVideo());
+                    EventBusHelper.post(bundle, EVENT_PLAYER);
+                }
+            });
+        }
         basicHolder.ll_date.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
         basicHolder.tv_date.setText(format);
         basicHolder.tv_sign.setText(diary.getTag_name());
         basicHolder.tv_device.setText(diary.getDevice_name());
-        final DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
         basicHolder.tv_title.setText(diaryTitle.getText());
 
         if (diary.getTag_type() == 1 || diary.getTag_type() == 2)
@@ -357,91 +375,6 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             }
         }
 
-
-        /**
-         * 普通条目
-         */
-        if (holder instanceof DiaryTasksViewHolder) {
-            DiaryTasksViewHolder viewHolder = (DiaryTasksViewHolder) holder;
-            viewHolder.iv_check.setVisibility(View.GONE);
-            if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
-                viewHolder.iv_image.setImageURL(diaryTitle.getImg());
-                viewHolder.rl_image.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.rl_image.setVisibility(View.GONE);
-            }
-            if (null != diaryTitle.getVideo() && diaryTitle.getVideo().length() > 0) {
-                viewHolder.iv_player.setVisibility(View.VISIBLE);
-                viewHolder.iv_player.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, diaryTitle.getVideo());
-                        EventBusHelper.post(bundle, EVENT_PLAYER);
-                    }
-                });
-            }
-        }
-        /*if (holder instanceof ExploerViewHolder) {
-            ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-            if (position != 0) {
-                doCompare(holder, exploreProduct, position);
-            } else {
-                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                viewHolder.tv_date.setText(exploreProduct.getTime());
-                viewHolder.tv_introduct.setText(exploreProduct.getSummary());
-                viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
-            }
-            viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
-            viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
-
-//            List<ArrayList<ExploreProductDetail>> lists = ListUtils.group(exploreProduct.getDetails(), 2);
-            List<ExploreProductDetail> details = exploreProduct.getDetails();
-            if (details.size() % 2 != 0)
-                details.add(new ExploreProductDetail());
-            adapter = new ExploreDetailAdapter(context, details);
-            viewHolder.rv_display_data.setAdapter(adapter);
-//            adapter = new ExploreDetailAdapter(context, exploreProduct.getDetails());
-//            viewHolder.gv_display_data.setAdapter(adapter);
-//            List<ExploreProductDetail> details = exploreProduct.getDetails();
-//            if (details.size() == 2)
-//                viewHolder.ll_content2.setVisibility(View.GONE);
-//            if (null != details && details.size() > 0)
-//                for (int i = 0; i < details.size(); i++) {
-//                    ExploreProductDetail productDetail = details.get(i);
-//                    builders = HtmlUtils.getTexts(replaceHtml(productDetail.getData(), productDetail.getHtml()));
-//                    setContent(viewHolder, i, builders.size());
-//                }
-
-            viewHolder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBusHelper.post(exploreProduct, EVENT_DISPLAY);
-                }
-            });
-        } else if (holder instanceof ExploerMixedViewHolder) {
-            ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
-            if (position != 0) {
-                doCompare(holder, exploreProduct, position);
-            } else {
-                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                viewHolder.tv_date.setText(exploreProduct.getTime());
-            }
-            viewHolder.tv_skill_name.setText(exploreProduct.getProduct_name());
-            viewHolder.iv_skill_icon.setImageURL(exploreProduct.getProduct_icon());
-            final ExploreProductPlot plot = exploreProduct.getPlot();
-            if (plot != null) {
-                viewHolder.tv_content.setText(plot.getContent());
-                setPlotImage(viewHolder, plot);
-                showPiture(viewHolder, 1);
-            }
-            viewHolder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBusHelper.post(plot, EVENT_DISPLAY);
-                }
-            });
-        }*/
     }
 
     private void setClickable(DiaryChallengeViewHolder viewHolder, boolean b) {
@@ -638,19 +571,6 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         }
     }
 
-    static class DiaryTasksViewHolder extends DiaryBasicViewHolder {
-        @Bind(R.id.rl_image)
-        RelativeLayout rl_image;
-        @Bind(R.id.iv_image)
-        ImageDraweeView iv_image;
-        @Bind(R.id.iv_player)
-        ImageView iv_player;
-
-        public DiaryTasksViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-
     static class DiaryBasicViewHolder extends BasicViewHolder {
         @Bind(R.id.tv_sign)
         TextView tv_sign;
@@ -666,6 +586,12 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         ImageView iv_check;
         @Bind(R.id.tv_count_comment)
         TextView tv_share;
+        @Bind(R.id.rl_image)
+        RelativeLayout rl_image;
+        @Bind(R.id.iv_image)
+        ImageDraweeView iv_image;
+        @Bind(R.id.iv_player)
+        ImageView iv_player;
 
         public DiaryBasicViewHolder(View itemView) {
             super(itemView);
@@ -696,255 +622,6 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             }
         return html;
     }
-
-    /**
-     * 设置显示内容
-     */
-    private void setContent(ExploerViewHolder viewHolder, int index, int builderSize) {
-//        switch (index) {
-//            case 0:
-//                viewHolder.tv_content_head1.setText(builders.get(0));
-//                viewHolder.tv_content_center1.setText(builders.get(1));
-//                if (builderSize == 2)
-//                    viewHolder.tv_content_footer1.setVisibility(View.GONE);
-//                else
-//                    viewHolder.tv_content_footer1.setText(builders.get(2));
-//                break;
-//            case 1:
-//                viewHolder.tv_content_head2.setText(builders.get(0));
-//                viewHolder.tv_content_center2.setText(builders.get(1));
-//                if (builderSize == 2)
-//                    viewHolder.tv_content_footer2.setVisibility(View.GONE);
-//                else
-//                    viewHolder.tv_content_footer2.setText(builders.get(2));
-//                break;
-//            case 2:
-//                viewHolder.tv_content_head3.setText(builders.get(0));
-//                viewHolder.tv_content_center3.setText(builders.get(1));
-//                if (builderSize == 2)
-//                    viewHolder.tv_content_footer3.setVisibility(View.GONE);
-//                else
-//                    viewHolder.tv_content_footer3.setText(builders.get(2));
-//                break;
-//            case 3:
-//                viewHolder.tv_content_head4.setText(builders.get(0));
-//                viewHolder.tv_content_center4.setText(builders.get(1));
-//                if (builderSize == 2)
-//                    viewHolder.tv_content_footer4.setVisibility(View.GONE);
-//                else
-//                    viewHolder.tv_content_footer4.setText(builders.get(2));
-//                break;
-//        }
-    }
-
-  /*  *//**
-     * 日期比较,控制头部显示
-     * <p/>
-     * 设置plot中教育理念下面的显示图片
-     * <p/>
-     * 根据图片张数显示图片
-     *
-     * @param holder     ExploerMixedViewHolder类型ViewHolder
-     * @param pictureNum 图片张数
-     * <p/>
-     * 设置plot中教育理念下面的显示图片
-     * <p/>
-     * 根据图片张数显示图片
-     * @param holder     ExploerMixedViewHolder类型ViewHolder
-     * @param pictureNum 图片张数
-     * <p/>
-     * 设置plot中教育理念下面的显示图片
-     * <p/>
-     * 根据图片张数显示图片
-     * @param holder     ExploerMixedViewHolder类型ViewHolder
-     * @param pictureNum 图片张数
-     *//*
-    private void doCompare(BasicViewHolder holder, ExploreProduct exploreProduct, int position) {
-        ExploreProduct preExplore = getItem(position - 1);
-        int abs = DateUtils.getDaysUnAbs(preExplore.getTime(), exploreProduct.getTime());
-        if (abs == 0) {
-            if (holder instanceof ExploerViewHolder) {
-                ((ExploerViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
-            } else if (holder instanceof ExploerMixedViewHolder) {
-                ((ExploerMixedViewHolder) holder).ll_explore_top.setVisibility(View.GONE);
-            }
-        } else {
-            if (holder instanceof ExploerViewHolder) {
-                ExploerViewHolder viewHolder = (ExploerViewHolder) holder;
-                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                viewHolder.tv_date.setText(exploreProduct.getTime());
-                viewHolder.tv_introduct.setText(exploreProduct.getSummary());
-                viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
-            } else if (holder instanceof ExploerMixedViewHolder) {
-                ExploerMixedViewHolder viewHolder = (ExploerMixedViewHolder) holder;
-                viewHolder.ll_explore_top.setVisibility(View.VISIBLE);
-                viewHolder.tv_date.setText(exploreProduct.getTime());
-                viewHolder.tv_introduct.setText(exploreProduct.getSummary());
-                viewHolder.iv_user_icon.setImageURL(exploreProduct.getProduct_icon());
-            }
-        }
-    }*/
-
-/**
- * 设置plot中教育理念下面的显示图片
- */
-//    private void setPlotImage(ExploerMixedViewHolder viewHolder, final ExploreProductPlot plot) {
-//        if (plot.getImg_list() == null)
-//            viewHolder.iv_one_picture.setImageURL(plot.getImg_url());
-//        else
-//            viewHolder.iv_one_picture.setImageURL(plot.getImg_list());
-//        dialog = new PlotPreviewDialog(context, plot);
-//        viewHolder.iv_one_picture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.show();
-//            }
-//        });
-//    }
-
-/**
- * 根据图片张数显示图片
- *
- * @param holder     ExploerMixedViewHolder类型ViewHolder
- * @param pictureNum 图片张数
- */
-//    private void showPiture(ExploerMixedViewHolder holder, int pictureNum) {
-//        switch (pictureNum) {
-//            case TYPE_PICTURE_ONE:
-//                holder.ll_picture78.setVisibility(View.GONE);
-//                holder.ll_picture369.setVisibility(View.INVISIBLE);
-//                holder.iv_picture9.setVisibility(View.GONE);
-//                holder.iv_one_picture.setVisibility(View.VISIBLE);
-//                holder.ll_picture1245.setVisibility(View.INVISIBLE);
-//                break;
-//            case TYPE_PICTURE_FOUR:
-//                holder.iv_one_picture.setVisibility(View.GONE);
-//                holder.ll_picture1245.setVisibility(View.VISIBLE);
-//                holder.ll_picture78.setVisibility(View.GONE);
-//                holder.ll_picture369.setVisibility(View.INVISIBLE);
-//                holder.iv_picture9.setVisibility(View.GONE);
-//                break;
-//            case TYPE_PICTURE_NINE:
-//                holder.iv_one_picture.setVisibility(View.GONE);
-//                holder.ll_picture78.setVisibility(View.VISIBLE);
-//                holder.ll_picture369.setVisibility(View.VISIBLE);
-//                holder.ll_picture1245.setVisibility(View.VISIBLE);
-//                holder.iv_picture9.setVisibility(View.VISIBLE);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-
-    /**
-     * detail
-     */
-    static class ExploerViewHolder extends BasicViewHolder {
-        @Bind(R.id.ll_explore_top)
-        LinearLayout ll_explore_top;
-        @Bind(R.id.tv_date)
-        TextView tv_date;
-        @Bind(R.id.iv_user_icon)
-        ImageDraweeView iv_user_icon;
-        @Bind(R.id.tv_introduct)
-        TextView tv_introduct;
-        @Bind(R.id.iv_skill_icon)
-        ImageDraweeView iv_skill_icon;
-        @Bind(R.id.tv_skill_name)
-        TextView tv_skill_name;
-        @Bind(R.id.rv_display_data)
-        BasicRecyclerView rv_display_data;
-        @Bind(R.id.v_date)
-        View v_date;
-        //        @Bind(R.id.ll_content1)
-//        LinearLayout ll_content1;
-//        @Bind(R.id.ll_content2)
-//        LinearLayout ll_content2;
-//        @Bind(R.id.tv_content_head1)
-//        TextView tv_content_head1;
-//        @Bind(R.id.tv_content_center1)
-//        TextView tv_content_center1;
-//        @Bind(R.id.tv_content_footer1)
-//        TextView tv_content_footer1;
-//        @Bind(R.id.tv_content_head2)
-//        TextView tv_content_head2;
-//        @Bind(R.id.tv_content_center2)
-//        TextView tv_content_center2;
-//        @Bind(R.id.tv_content_footer2)
-//        TextView tv_content_footer2;
-//        @Bind(R.id.tv_content_head3)
-//        TextView tv_content_head3;
-//        @Bind(R.id.tv_content_center3)
-//        TextView tv_content_center3;
-//        @Bind(R.id.tv_content_footer3)
-//        TextView tv_content_footer3;
-//        @Bind(R.id.tv_content_head4)
-//        TextView tv_content_head4;
-//        @Bind(R.id.tv_content_center4)
-//        TextView tv_content_center4;
-//        @Bind(R.id.tv_content_footer4)
-//        TextView tv_content_footer4;
-        @Bind(R.id.tv_count_comment)
-        TextView tv_count_comment;
-
-        public ExploerViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-
-/**
- * plot
- */
-   /* static class ExploerMixedViewHolder extends BasicViewHolder {
-        @Bind(R.id.ll_explore_top)
-        LinearLayout ll_explore_top;
-        @Bind(R.id.tv_date)
-        TextView tv_date;
-        @Bind(R.id.iv_user_icon)
-        ImageDraweeView iv_user_icon;
-        @Bind(R.id.tv_introduct)
-        TextView tv_introduct;
-        @Bind(R.id.iv_skill_icon)
-        ImageDraweeView iv_skill_icon;
-        @Bind(R.id.iv_picture1)
-        ImageDraweeView iv_picture1;
-        @Bind(R.id.iv_picture2)
-        ImageDraweeView iv_picture2;
-        @Bind(R.id.iv_picture3)
-        ImageDraweeView iv_picture3;
-        @Bind(R.id.iv_picture4)
-        ImageDraweeView iv_picture4;
-        @Bind(R.id.iv_picture5)
-        ImageDraweeView iv_picture5;
-        @Bind(R.id.iv_picture6)
-        ImageDraweeView iv_picture6;
-        @Bind(R.id.iv_picture7)
-        ImageDraweeView iv_picture7;
-        @Bind(R.id.iv_picture8)
-        ImageDraweeView iv_picture8;
-        @Bind(R.id.iv_picture9)
-        ImageDraweeView iv_picture9;
-        @Bind(R.id.iv_one_picture)
-        ImageDraweeView iv_one_picture;//第10张图特殊处理
-        @Bind(R.id.tv_skill_name)
-        TextView tv_skill_name;
-        @Bind(R.id.tv_content)
-        TextView tv_content;
-        @Bind(R.id.ll_picture1245)
-        LinearLayout ll_picture1245;
-        @Bind(R.id.ll_picture78)
-        LinearLayout ll_picture78;
-        @Bind(R.id.ll_picture369)
-        LinearLayout ll_picture369;
-        @Bind(R.id.tv_count_comment)
-        TextView tv_count_comment;
-
-        public ExploerMixedViewHolder(View itemView) {
-            super(itemView);
-        }
-    }*/
-
-
 }
 
 

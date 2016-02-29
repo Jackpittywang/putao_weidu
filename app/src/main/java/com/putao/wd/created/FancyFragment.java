@@ -110,6 +110,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
         Bundle bundle = new Bundle();
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, false);
+        bundle.putInt(CreateBasicDetailActivity.POSITION, position);
         startActivity(CreateBasicDetailActivity.class, bundle);
     }
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_date"
@@ -20,7 +21,7 @@
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_date"/>
+            android:src="@drawable/icon_date" />
 
         <TextView
             android:id="@+id/tv_date"
@@ -31,7 +32,7 @@
             android:lineSpacingExtra="4dp"
             android:text="2015/11/14"
             android:textColor="@color/text_color_red"
-            android:textSize="@dimen/text_size_12sp"/>
+            android:textSize="@dimen/text_size_12sp" />
 
     </LinearLayout>
 
@@ -41,7 +42,7 @@
         android:layout_height="10dp"
         android:layout_below="@+id/ll_date"
         android:background="@color/color_EBEBEB"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_sign"
@@ -56,8 +57,7 @@
         android:padding="5dp"
         android:text="家长挑战"
         android:textColor="@color/color_C2C2C2"
-        android:textSize="@dimen/text_size_12sp"
-        />
+        android:textSize="@dimen/text_size_12sp" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -68,17 +68,43 @@
         android:layout_marginLeft="@dimen/distance_8dp"
         android:layout_marginRight="@dimen/distance_8dp"
         android:text="您知道比萨斜塔为什么是斜的吗？"
-        android:textSize="@dimen/text_size_16sp"/>
+        android:textSize="@dimen/text_size_16sp" />
 
     <ImageView
         android:id="@+id/iv_check"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/v_date"
+        android:layout_below="@+id/tv_title"
         android:layout_marginBottom="-10dp"
         android:layout_marginRight="-10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/img_p_choose_c"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:layout_marginRight="@dimen/distance_8dp"
+        android:visibility="gone">
+
+        <!--标题图-->
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_image"
+            style="@style/image_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:aspect_ratio="2" />
+
+        <ImageView
+            android:id="@+id/iv_player"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/btn_60_play_selector"
+            android:visibility="gone" />
+    </RelativeLayout>
 </RelativeLayout>
