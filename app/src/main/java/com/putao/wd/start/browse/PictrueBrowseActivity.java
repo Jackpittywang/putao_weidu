@@ -113,7 +113,7 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
 
     private void addListener() {
         vp_pics.addOnPageChangeListener(this);
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+        /*mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
 
@@ -123,7 +123,7 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
             public void onWechatFriend() {
 
             }
-        });
+        });*/
     }
 
     @Override

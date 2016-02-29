@@ -130,60 +130,6 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         addListener();
     }
 
-    private String setImageWidth(String reg, String explanation, boolean isVideo) {
-        Pattern p = Pattern.compile(reg);
-        String replaceAll = explanation;
-        Matcher m = p.matcher(explanation);// 开始编译
-        while (m.find()) {
-            String group = m.group(1);
-            group = addWidHei(group, isVideo);
-            group = addStyle(group);
-            replaceAll = replaceAll.replace(m.group(1), group);
-            System.out.println(replaceAll);
-            if (isVideo) {
-                Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
-                Matcher mVideo = pVideo.matcher(group);// 开始编译
-                while (mVideo.find()) {
-                    String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + mWidth + "&");
-                    video = replaceHTML("height=([^&]*)", video, "height=" + mHeight + "&");
-                    replaceAll = replaceAll.replace(mVideo.group(1), video);
-                }
-            }
-        }
-        Logger.d(replaceAll);
-        return replaceAll;
-    }
-
-    private String addWidHei(String group, boolean isVideo) {
-        group = replaceHTML("width=\"([^\"]*)", group, " width=\"" + mWidth + "\"");
-        if (isVideo)
-            group = replaceHTML("height=\"([^\"]*)", group, " height=\"" + mHeight + "\"");
-        return group;
-    }
-
-    private String replaceHTML(String reg, String group, String replace) {
-        Pattern p = Pattern.compile(reg);
-        Matcher m = p.matcher(group);
-        if (m.find()) {
-            group = group.replace(m.group(), replace);
-        } else {
-            group = replace + group;
-        }
-        return group;
-    }
-
-    private String addStyle(String group) {
-        Pattern p1 = Pattern.compile("style=\"([^>]*)");
-        Matcher m1 = p1.matcher(group);
-        if (m1.find()) {
-            group = replaceHTML("width:([^;]*)", group, " width=\"" + mWidth + "\"");
-//            group = replaceHTML("height:([^;]*)", group, mWidth + "", " height:" + mWidth);
-        } else {
-            group = " style=\"width:" + mWidth + ";\"" + group;
-        }
-        return group;
-    }
-
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
@@ -199,6 +145,21 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mContext, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
+            }
+
+            @Override
+            public void onQQFriend() {
+
+            }
+
+            @Override
+            public void onQQZone() {
+
+            }
+
+            @Override
+            public void onSinaWeibo() {
+
             }
         });
     }

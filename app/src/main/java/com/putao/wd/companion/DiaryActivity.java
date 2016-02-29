@@ -1,10 +1,12 @@
 package com.putao.wd.companion;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,6 +37,8 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import butterknife.Bind;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qq.QQWebShareAdapter;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
@@ -78,17 +82,6 @@ public class DiaryActivity extends PTWDActivity {
         adapter = new ExploreAdapter(this, null);
         rv_content.setAdapter(adapter);
         mSharePopupWindow = new SharePopupWindow(mContext);
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
-            @Override
-            public void onWechat() {
-
-            }
-
-            @Override
-            public void onWechatFriend() {
-
-            }
-        });
         getDiaryIndex();
     }
 
@@ -233,7 +226,18 @@ public class DiaryActivity extends PTWDActivity {
             }
 
             @Override
-            public void onCancel() {
+            public void onQQFriend() {
+
+            }
+
+            @Override
+            public void onQQZone() {
+
+            }
+
+            @Override
+            public void onSinaWeibo() {
+
             }
         });
     }
