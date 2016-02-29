@@ -13,13 +13,11 @@ import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
-import com.putao.wd.model.HomeExploreMore;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.CommentActivity;
-import com.putao.wd.video.VideoPlayerActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -211,7 +209,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_player:
-                bundle.putString(VideoPlayerActivity.BUNDLE_VIDEO_URL, mExploreIndex.getBanner().get(0).getUrl());
+                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VIDEO_URL, mExploreIndex.getBanner().get(0).getUrl());
                 startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
             case R.id.iv_close:

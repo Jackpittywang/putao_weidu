@@ -276,4 +276,9 @@
         <attr name="menuSelectedIcon" format="reference" />
         <attr name="menuUnselectedIcon" format="reference" />
     </declare-styleable>
+
+    <!--InterceptLinearLayout-->
+    <declare-styleable name="InterceptLinearLayout">
+        <attr name="isIntercept" format="boolean" />
+    </declare-styleable>
 </resources>

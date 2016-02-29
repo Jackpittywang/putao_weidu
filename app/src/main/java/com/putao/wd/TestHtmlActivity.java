@@ -4,17 +4,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
-import android.text.Layout;
 import android.widget.TextView;
 
-import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.util.Logger;
 
 import org.xml.sax.XMLReader;
 
 import butterknife.Bind;
-import io.vov.vitamio.utils.Log;
 
 /**
  * Created by Administrator on 2016/1/29.

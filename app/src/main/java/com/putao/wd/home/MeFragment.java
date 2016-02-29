@@ -1,5 +1,6 @@
 package com.putao.wd.home;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.select.FlowLayout;
 import com.sunnybear.library.view.select.IndicatorButton;
 
 
@@ -203,6 +205,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             @Override
             public void onSuccess(String url, OrderCount result) {
                 Logger.d(result.toString());
+                hideNum();
                 btn_pay.show(result.getUnpaid().getNum());
                 btn_deliver.show(result.getUndelivery().getNum());
                 btn_take_deliver.show(result.getUnCheck().getNum());
@@ -355,15 +358,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         iv_user_icon_background.setDefaultImage(bitmap);
     }
 
+    private boolean isClick = true;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                y = (int) event.getY();
-                oldY = y;
+                isClick = false;
+                oldY = y = (int) event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 int newY = (int) event.getY();
+                if (isClick) {
+                    oldY = y = newY;
+                    isClick = false;
+                }
                 int height = mHeadLayoutParams.height + (newY - y) / 3;
                 int[] position = new int[2];
                 rl_user_head_icon.getLocationOnScreen(position);
@@ -378,6 +387,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 y = newY;
                 break;
             case MotionEvent.ACTION_CANCEL:
+                isClick = true;
                 mHeadLayoutParams.height = mHeadHeight;
                 rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
                 if (y - oldY < 300 || oldY == 0) break;
@@ -386,6 +396,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 getOrderCount();
                 break;
             case MotionEvent.ACTION_UP:
+//                float flo = (float)mHeadHeight / mHeadLayoutParams.height;
+//                iv_user_icon_background.getLayoutParams().height = mHeadLayoutParams.height;
+//                ObjectAnimator animator1 = ObjectAnimator.ofFloat(iv_user_icon_background, "scaleY", 1.0f, flo);
+//                animator1.setDuration(500).start();
+                isClick = true;
                 mHeadLayoutParams.height = mHeadHeight;
                 rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
                 if (y - oldY < 300 || oldY == 0) break;
