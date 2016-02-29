@@ -107,7 +107,7 @@ public abstract class JSONObjectCallback extends RequestCallback {
             bundle.putInt(KEY_STATUS_CODE, 404);
             bundle.putString(KEY_FAILURE_MSG,
                     isNetwork ? ResourcesUtils.getString(BasicApplication.getInstance(), R.string.not_network)
-                            : ResourcesUtils.getString(BasicApplication.getInstance(), R.string.not_cache));
+                            : ResourcesUtils.getString(BasicApplication.getInstance(), R.string.fail_request));
             mHandler.sendMessage(Message.obtain(mHandler, RESULT_FAILURE, bundle));
             return;
         }

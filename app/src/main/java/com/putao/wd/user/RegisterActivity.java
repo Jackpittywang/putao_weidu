@@ -88,7 +88,6 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                         ActivityManager.getInstance().removeCurrentActivity();
                         ActivityManager.getInstance().finishCurrentActivity();
                         startActivity(PerfectActivity.class);
-                        finish();
                         loading.dismiss();
                         finish();
                     }

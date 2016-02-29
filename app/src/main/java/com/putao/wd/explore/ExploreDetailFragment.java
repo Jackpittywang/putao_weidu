@@ -92,7 +92,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setState(isCool);
         iv_close.setVisibility(View.GONE);
 //        wb_explore_detail.setInitialScale(80);
-        tv_count_cool.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         wb_explore_detail.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -126,7 +125,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
-        tv_count_comment.setText(mExploreIndex.getCount_comments() + "");
+        tv_count_cool.setText(mExploreIndex.getCount_likes() == 0 ? "赞" : mExploreIndex.getCount_likes() + "");
+        tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
         wb_explore_detail.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation()), "text/html", "utf-8", null);

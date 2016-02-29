@@ -47,6 +47,9 @@ import butterknife.OnClick;
  */
 public class PerfectActivity extends PTWDActivity implements View.OnClickListener {
     public static final String EVENT_USER_INFO_SAVE_SUCCESS = "user_info_save_success";
+    public static final String ET_MOBILE = "et_mobile";
+    public static final String ET_PASSWORD = "et_password";
+    public static final String ET_SMS_VERIFY = "et_sms_verify";
     public static final String NICK_NAME = "nick_name";
     public static final String USER_INFO = "user_info";
     @Bind(R.id.ll_main)
@@ -95,7 +98,8 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         addNavigation();
         filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
         IndexActivity.isNotRefreshUserInfo = false;
-        initInfo();
+        et_nickname.setText(AccountHelper.getUserNickName());
+//        initInfo();
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {
@@ -148,7 +152,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         finish();
     }
 
-    private void initInfo() {
+/*    private void initInfo() {
         networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
             @Override
             public void onSuccess(String url, UserInfo result) {
@@ -162,7 +166,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
                 ToastUtils.showToastLong(mContext, "登录失败请重新登录");
             }
         });
-    }
+    }*/
 
     @Override
     protected String[] getRequestUrls() {
@@ -297,14 +301,6 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
                     checkSha1(filePath);
                     break;
             }
-        }
-        switch (requestCode) {
-            case CHANGE_NICK:
-                initInfo();
-                break;
-            case CHANGE_INFO:
-                initInfo();
-                break;
         }
     }
 }

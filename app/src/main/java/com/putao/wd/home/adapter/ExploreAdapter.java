@@ -234,7 +234,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                             mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                         }
                     });
-                }
+                } else viewHolder.rl_answer1.setVisibility(View.GONE);
                 if (null != diaryQuestion.getB()) {
                     viewHolder.v_answer2.setVisibility(View.VISIBLE);
                     viewHolder.rl_answer2.setVisibility(View.VISIBLE);
@@ -250,7 +250,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                             mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                         }
                     });
-                }
+                } else viewHolder.rl_answer2.setVisibility(View.GONE);
                 if (null != diaryQuestion.getC()) {
                     viewHolder.v_answer3.setVisibility(View.VISIBLE);
                     viewHolder.rl_answer3.setVisibility(View.VISIBLE);
@@ -266,7 +266,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                             mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                         }
                     });
-                }
+                } else viewHolder.rl_answer3.setVisibility(View.GONE);
                 if (null != diaryQuestion.getD()) {
                     viewHolder.v_answer4.setVisibility(View.VISIBLE);
                     viewHolder.rl_answer4.setVisibility(View.VISIBLE);
@@ -282,7 +282,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                             mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                         }
                     });
-                }
+                } else viewHolder.rl_answer4.setVisibility(View.GONE);
             }
         }
 
@@ -327,7 +327,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                         mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                     }
                 });
-            }
+            } else viewHolder.rl_answer1.setVisibility(View.GONE);
             if (null != diaryQuestion.getB()) {
                 viewHolder.rl_answer2.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer2.setImageURL(diaryQuestion.getB());
@@ -342,7 +342,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                         mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                     }
                 });
-            }
+            } else viewHolder.rl_answer2.setVisibility(View.GONE);
+
             if (null != diaryQuestion.getC()) {
                 viewHolder.rl_answer3.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer3.setImageURL(diaryQuestion.getC());
@@ -357,7 +358,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                         mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                     }
                 });
-            }
+            } else viewHolder.rl_answer3.setVisibility(View.GONE);
+
             if (null != diaryQuestion.getD()) {
                 viewHolder.rl_answer4.setVisibility(View.VISIBLE);
                 viewHolder.idv_answer4.setImageURL(diaryQuestion.getD());
@@ -372,7 +374,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                         mDiskCacheHelper.put(diary.getConfig_id() + AccountHelper.getCurrentUid(), diary);
                     }
                 });
-            }
+            } else viewHolder.rl_answer4.setVisibility(View.GONE);
         }
 
     }

@@ -115,6 +115,15 @@ public final class AccountHelper {
     }
 
     /**
+     * 获取当前昵称
+     *
+     * @return
+     */
+    public static String getUserNickName() {
+        return PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_NICKNAME, "");
+    }
+
+    /**
      * 获取当前userInfo
      *
      * @return
