@@ -2,6 +2,7 @@ package com.putao.wd.me.attention;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -26,13 +27,13 @@ import butterknife.Bind;
  * 我的关注
  * Created by zhanghao on 2016/1/25.
  */
-public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create> {
+public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create>, View.OnClickListener {
     @Bind(R.id.rv_created)
     LoadMoreRecyclerView rv_created;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
-    @Bind(R.id.tv_message_empty)
-    TextView tv_message_empty;
+    @Bind(R.id.ll_empty)
+    LinearLayout ll_empty;
 
     private boolean isRefresh = false;
     private FancyAdapter adapter;
@@ -47,7 +48,6 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("PutaoCreatedFragment启动");
         addNavigation();
-        tv_message_empty.setText("还没有关注");
         adapter = new FancyAdapter(mContext, null);
         rv_created.setAdapter(adapter);
         initData();
@@ -61,18 +61,18 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                     @Override
                     public void onSuccess(String url, Creates result) {
                         List<Create> details = result.getData();
-                        if (details != null && details.size() > 0 ) {
-                            tv_message_empty.setVisibility(View.GONE);
+                        if (details != null && details.size() > 0) {
+                            ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
                             adapter.addAll(details);
-                        }else{
+                        } else {
                             ptl_refresh.setVisibility(View.GONE);
-                            tv_message_empty.setVisibility(View.VISIBLE);
+                            ll_empty.setVisibility(View.VISIBLE);
                         }
+                        ptl_refresh.refreshComplete();
                         loading.dismiss();
 
                         /*adapter.replaceAll(result.getData());
-                        ptl_refresh.refreshComplete();
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();*/
                     }
@@ -87,6 +87,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
 
     private void addListenter() {
         rv_created.setOnItemClickListener(this);
+        ll_empty.setOnClickListener(this);
         ptl_refresh.setOnRefreshListener(this);
         rv_created.setOnLoadMoreListener(this);
     }
@@ -108,7 +109,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                 new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
                     @Override
                     public void onSuccess(String url, Creates result) {
-                        adapter.addAll(result.getData());
+                        adapter.replaceAll(result.getData());
                         rv_created.loadMoreComplete();
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
@@ -130,5 +131,14 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
     private void eventRefresh(String str) {
         adapter.delete(mCreate);
+        if (adapter.getItemCount() == 1) {
+            ptl_refresh.setVisibility(View.GONE);
+            ll_empty.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        initData();
     }
 }

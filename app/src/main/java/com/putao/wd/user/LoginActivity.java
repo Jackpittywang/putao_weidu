@@ -69,6 +69,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login://登录
+                loading.show();
+                btn_login.setClickable(false);
                 networkRequest(AccountApi.login(et_mobile.getText().toString(), et_password.getText().toString()),
                         new AccountCallback(loading) {
                             @Override
@@ -76,6 +78,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                 AccountHelper.setCurrentUid(result.getString("uid"));
                                 AccountHelper.setCurrentToken(result.getString("token"));
                                 checkLogin();
+                                loading.dismiss();
                             }
 
                             @Override
@@ -84,6 +87,12 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 //                                mErrorCount++;
 //                                if (mErrorCount == 3)
 //                                    rl_graph_verify.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onFinish(String url, boolean isSuccess, String msg) {
+                                super.onFinish(url, isSuccess, msg);
+                                btn_login.setClickable(true);
                             }
                         });
                 break;

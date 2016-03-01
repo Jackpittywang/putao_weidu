@@ -36,9 +36,24 @@
 
     </com.sunnybear.library.view.PullToRefreshLayout>
 
-    <TextView
-        android:id="@+id/tv_message_empty"
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_me_activity_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="还没有关注" />
+    </LinearLayout>
 </RelativeLayout>
