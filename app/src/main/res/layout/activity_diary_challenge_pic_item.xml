@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:auto="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipChildren="false">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false">
 
 
     <!--没有绑定设备时卡片-->
@@ -173,16 +173,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2.5dp"
                 auto:aspect_ratio="1"
-                auto:default_drawable="@drawable/img_p_cover"/>
+                auto:default_drawable="@drawable/img_p_cover" />
 
             <ImageView
                 android:id="@+id/iv_answer1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:padding="10dp"
-                android:src="@drawable/icon_20_p_choose_01"/>
+                android:src="@drawable/icon_20_p_choose_01" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -200,7 +200,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="2.5dp"
                 auto:aspect_ratio="1"
-                auto:default_drawable="@drawable/img_p_cover"/>
+                auto:default_drawable="@drawable/img_p_cover" />
 
             <ImageView
                 android:id="@+id/iv_answer2"
@@ -208,8 +208,8 @@
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/icon_20_p_choose_02"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:src="@drawable/icon_20_p_choose_02" />
 
         </RelativeLayout>
 
@@ -236,16 +236,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2.5dp"
                 auto:aspect_ratio="1"
-                auto:default_drawable="@drawable/img_p_cover"/>
+                auto:default_drawable="@drawable/img_p_cover" />
 
             <ImageView
                 android:id="@+id/iv_answer3"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="10dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/icon_20_p_choose_03"/>
+                android:padding="10dp"
+                android:src="@drawable/icon_20_p_choose_03" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -262,24 +262,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2.5dp"
                 auto:aspect_ratio="1"
-                auto:default_drawable="@drawable/img_p_cover"/>
+                auto:default_drawable="@drawable/img_p_cover" />
 
             <ImageView
                 android:id="@+id/iv_answer4"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:padding="10dp"
-                android:src="@drawable/icon_20_p_choose_04"/>
+                android:src="@drawable/icon_20_p_choose_04" />
         </RelativeLayout>
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/cv_answer"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/img_p_choose_c"
+        android:visibility="visible" />
+
     <include
         android:id="@+id/i_top"
-        layout="@layout/activity_diary_sign"
-        />
+        layout="@layout/activity_diary_sign" />
 
-    <include layout="@layout/activity_diary_device"/>
+    <include layout="@layout/activity_diary_device" />
 </RelativeLayout>

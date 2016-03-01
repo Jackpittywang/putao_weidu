@@ -1,8 +1,10 @@
 package com.putao.wd.explore;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -161,8 +164,11 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             }
 
             @Override
-            public void onSinaWeibo() {
-
+            public void onCopyUrl() {
+                ClipboardManager copy = (ClipboardManager) mActivity
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText("http://h5.putao.com/weidu/share/creation.html?id=%" + mExploreIndex.getArticle_id());
+                ToastUtils.showToastShort(mActivity, "复制成功");
             }
         });
     }

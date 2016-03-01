@@ -70,17 +70,6 @@
         android:text="您知道比萨斜塔为什么是斜的吗？"
         android:textSize="@dimen/text_size_16sp" />
 
-    <ImageView
-        android:id="@+id/iv_check"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_title"
-        android:layout_marginBottom="-10dp"
-        android:layout_marginRight="-10dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/img_p_choose_c"
-        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rl_image"

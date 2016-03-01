@@ -69,7 +69,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
-    private PageChangeThread mThread;
+//    private PageChangeThread mThread;
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private int mI;
@@ -122,12 +122,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         };
         initData();
         addListener();
-        mThread = new PageChangeThread() {
+       /* mThread = new PageChangeThread() {
             @Override
             public void run() {
                 super.run();
             }
-        };
+        };*/
     }
 
     private void pageSelected(int position) {
@@ -163,7 +163,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     showDate();
                     addDate(position);
                 }
-                mThread.start(position);
+                pageSelected(position);
+//                mThread.start(position);
             }
 
             @Override
@@ -205,10 +206,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         if (null != mExploreIndex) {
             mExploreIndexs = mExploreIndex.getExploreIndexes();
             if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
-                if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) > System.currentTimeMillis()) {
-                    addFragments();
-                    addDate(vp_content.getCurrentItem());
-                } else {
+                addFragments();
+                addDate(vp_content.getCurrentItem());
+                if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) < System.currentTimeMillis()) {
                     getIndexList();
                 }
             } else {
@@ -231,6 +231,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                             mExploreIndex.setExploreIndexes(result);
                             mDiskFileCacheHelper.remove(INDEX_CACHE);
                             mDiskFileCacheHelper.put(INDEX_CACHE, mExploreIndex);
+                            mFragments = null;
                             addFragments();
                             addDate(vp_content.getCurrentItem());
                         }
@@ -326,7 +327,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         return "";
     }
 
-    class PageChangeThread extends Thread {
+    /*class PageChangeThread extends Thread {
         private int position;
         private boolean isStart = false;
 
@@ -345,5 +346,5 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
             this.position = position;
             run();
         }
-    }
+    }*/
 }

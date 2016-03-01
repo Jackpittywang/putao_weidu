@@ -1,9 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:auto="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#fff"
-              android:orientation="vertical">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
@@ -21,18 +21,6 @@
             android:paddingRight="32dp">
 
             <com.sunnybear.library.view.select.TitleItem
-                android:id="@+id/ll_notice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                auto:active_color="@color/text_main_color_nor"
-                auto:inactive_color="@color/text_color_gray"
-                auto:indicator_color="@color/text_main_color_nor"
-                auto:is_active="true"
-                auto:title_text="通知"/>
-
-            <com.sunnybear.library.view.select.TitleItem
                 android:id="@+id/ll_reply"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -41,7 +29,8 @@
                 auto:active_color="@color/text_main_color_nor"
                 auto:inactive_color="@color/text_color_gray"
                 auto:indicator_color="@color/text_main_color_nor"
-                auto:title_text="回复"/>
+                auto:is_active="true"
+                auto:title_text="回复" />
 
             <com.sunnybear.library.view.select.TitleItem
                 android:id="@+id/ll_cool"
@@ -52,7 +41,29 @@
                 auto:active_color="@color/text_main_color_nor"
                 auto:inactive_color="@color/text_color_gray"
                 auto:indicator_color="@color/text_main_color_nor"
-                auto:title_text="赞"/>
+                auto:title_text="赞" />
+
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_remind"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:title_text="提醒" />
+
+            <com.sunnybear.library.view.select.TitleItem
+                android:id="@+id/ll_notice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                auto:active_color="@color/text_main_color_nor"
+                auto:inactive_color="@color/text_color_gray"
+                auto:indicator_color="@color/text_main_color_nor"
+                auto:title_text="通知" />
         </com.sunnybear.library.view.select.TitleBar>
     </com.sunnybear.library.view.NavigationBar>
 
@@ -60,5 +71,5 @@
     <com.sunnybear.library.view.viewpager.UnScrollableViewPager
         android:id="@+id/vp_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

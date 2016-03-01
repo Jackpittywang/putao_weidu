@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BasicPopupWindow extends PopupWindow implements View.OnTouchListener, View.OnKeyListener {
     protected Context mContext;
-    private View mRootView;
+    protected View mRootView;
     private ViewGroup mMainLayout;
 
     protected FragmentActivity mActivity;

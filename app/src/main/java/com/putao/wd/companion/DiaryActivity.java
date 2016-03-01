@@ -196,7 +196,7 @@ public class DiaryActivity extends PTWDActivity {
                 mSharePopupWindow.show(rl_main);
             }
         };
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
                 ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
@@ -235,10 +235,6 @@ public class DiaryActivity extends PTWDActivity {
 
             }
 
-            @Override
-            public void onSinaWeibo() {
-
-            }
         });
     }
 

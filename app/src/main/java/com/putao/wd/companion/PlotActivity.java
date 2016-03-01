@@ -118,12 +118,6 @@ public class PlotActivity extends BasicFragmentActivity {
             public void onQQZone() {
 
             }
-
-            @Override
-            public void onSinaWeibo() {
-
-            }
-
         });
 
     }

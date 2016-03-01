@@ -21,6 +21,7 @@ public class CreateComment implements Serializable {
     private String username;
     private String nickname;
     private String real_avatar;
+    private String avatar;
     private int like_count;
     private boolean like_status;
     private int comment_reply_count;
@@ -160,6 +161,14 @@ public class CreateComment implements Serializable {
 
     public void setComment_source_uid(String comment_source_uid) {
         this.comment_source_uid = comment_source_uid;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override

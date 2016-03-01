@@ -56,9 +56,10 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
      */
     private void addFragment() {
         mFragments = new SparseArray<>();
-        mFragments.put(0, Fragment.instantiate(mContext, NotifyFragment.class.getName()));
-        mFragments.put(1, Fragment.instantiate(mContext, ReplyFragment.class.getName()));
-        mFragments.put(2, Fragment.instantiate(mContext, PraiseFragment.class.getName()));
+        mFragments.put(0, Fragment.instantiate(mContext, ReplyFragment.class.getName()));
+        mFragments.put(1, Fragment.instantiate(mContext, PraiseFragment.class.getName()));
+        mFragments.put(2, Fragment.instantiate(mContext, RemindFragment.class.getName()));
+        mFragments.put(3, Fragment.instantiate(mContext, NotifyFragment.class.getName()));
     }
 
     /**
@@ -76,11 +77,13 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
-            case R.id.ll_notice://通知
-                break;
             case R.id.ll_reply://回复
                 break;
             case R.id.ll_cool://赞
+                break;
+            case R.id.ll_remind://提醒
+                break;
+            case R.id.ll_notice://通知
                 break;
         }
         vp_message.setCurrentItem(position);

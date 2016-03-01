@@ -35,6 +35,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  * 炫耀页面
  * Created by guchenkai on 2015/12/30.
  */
+@Deprecated
 public class DisPlayActivity extends BasicFragmentActivity {
     public static final String BUNDLE_DISPLAY_DETAILS = "exploreProduct";
 
@@ -137,10 +138,6 @@ public class DisPlayActivity extends BasicFragmentActivity {
 
             }
 
-            @Override
-            public void onSinaWeibo() {
-
-            }
         });
     }
 

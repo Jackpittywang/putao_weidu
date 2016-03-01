@@ -302,8 +302,12 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                         if (http_code == 200) {
                             ToastUtils.showToastLong(mContext, "添加成功");
                             startActivity(AttentionSuccessActivity.class);
-                        } else
-                            ToastUtils.showToastLong(mContext, "添加失败");
+                        } else if (http_code == 4201)
+                            ToastUtils.showToastLong(mContext, "重复绑定");
+                        else if (http_code == 4200)
+                            ToastUtils.showToastLong(mContext, "二维码已过期");
+                        else
+                            ToastUtils.showToastLong(mContext, "绑定失败");
                         loading.dismiss();
                         finish();
                     }
@@ -316,7 +320,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
-                        ToastUtils.showToastLong(mContext, "添加失败");
+                        ToastUtils.showToastShort(mContext, msg);
                         finish();
                     }
                 });

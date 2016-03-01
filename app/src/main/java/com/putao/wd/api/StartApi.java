@@ -372,4 +372,19 @@ public class StartApi {
                 .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.POST, URL_PRAISE_LIST);
     }
+    /**
+     * 提醒列表
+     */
+    public static final String URL_REMIND_LIST = BASE_WEIDU_URL + "message/remind";
+
+    /**
+     * 提醒列表
+     *
+     * @param page 分页
+     */
+    public static Request getRemindList(String page) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_PAGE, page)
+                .build(RequestMethod.POST, URL_REMIND_LIST);
+    }
 }

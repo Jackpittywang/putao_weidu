@@ -154,7 +154,6 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             }
         }
         final DiaryTitle diaryTitle = JSONObject.parseObject(diary.getTitle(), DiaryTitle.class);
-        basicHolder.iv_check.setVisibility(View.GONE);
         if (null != diaryTitle.getImg() && diaryTitle.getImg().length() > 0) {
             basicHolder.iv_image.setImageURL(diaryTitle.getImg());
             basicHolder.rl_image.setVisibility(View.VISIBLE);
@@ -533,7 +532,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         TextView tv_answer3;
         @Bind(R.id.tv_answer4)
         TextView tv_answer4;
-
+        @Bind(R.id.iv_check)
+        ImageView iv_check;
         public DiaryChallengeViewHolder(View itemView) {
             super(itemView);
         }
@@ -567,7 +567,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         ImageDraweeView idv_answer3;
         @Bind(R.id.idv_answer4)
         ImageDraweeView idv_answer4;
-
+        @Bind(R.id.iv_check)
+        ImageView iv_check;
         public DiaryChallengePicViewHolder(View itemView) {
             super(itemView);
         }
@@ -584,8 +585,6 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         LinearLayout ll_date;
         @Bind(R.id.tv_date)
         TextView tv_date;
-        @Bind(R.id.iv_check)
-        ImageView iv_check;
         @Bind(R.id.tv_count_comment)
         TextView tv_share;
         @Bind(R.id.rl_image)

@@ -54,6 +54,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     TextView tv_product_price;//产品价格
     @Bind(R.id.ll_join_car)
     LinearLayout ll_join_car;//加入购物车
+    @Bind(R.id.tv_join_car)
+    TextView tv_join_car;//加入购物车
 
     private NormsSelectAdapter adapter;
 
@@ -86,14 +88,25 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     public void getProductSpec() {
         networkRequest(StoreApi.getProductSpce(product_id),
                 new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
+                    private List<Norms> normses;
                     @Override
                     public void onSuccess(String url, ProductNorms result) {
-                        mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
                         skus = result.getSku();
-                        List<Norms> normses = SpecUtils.getNormses(result.getSpec());
-                        normses.add(new Norms());
-                        adapter.replaceAll(normses);
-                        EventBusHelper.post(EVENT_GET_PRODUCT_SPEC, EVENT_GET_PRODUCT_SPEC);
+                        try {
+                            mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
+                            normses = SpecUtils.getNormses(result.getSpec());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            normses = new ArrayList<>();
+                            ll_join_car.setClickable(false);
+                            tv_join_car.setText("已售罄");
+                            iv_product_icon.setImageURL(skus.get(0).getIcon());
+                            tv_product_price.setText(skus.get(0).getPrice());
+                        } finally {
+                            normses.add(new Norms());
+                            adapter.replaceAll(normses);
+                            EventBusHelper.post(EVENT_GET_PRODUCT_SPEC, EVENT_GET_PRODUCT_SPEC);
+                        }
                         loading.dismiss();
                     }
                 });

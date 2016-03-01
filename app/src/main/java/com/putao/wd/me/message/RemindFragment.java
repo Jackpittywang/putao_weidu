@@ -7,9 +7,12 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
-import com.putao.wd.me.message.adapter.NotifyAdapter;
-import com.putao.wd.model.Notify;
-import com.putao.wd.model.NotifyDetail;
+import com.putao.wd.me.message.adapter.PraiseAdapter;
+import com.putao.wd.me.message.adapter.RemindAdapter;
+import com.putao.wd.model.Praise;
+import com.putao.wd.model.PraiseDetail;
+import com.putao.wd.model.Remind;
+import com.putao.wd.model.RemindDetail;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -20,18 +23,18 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 通知--消息中心
+ * 赞--消息中心
  * Created by yanghx on 2015/12/24.
  */
-public class NotifyFragment extends BasicFragment {
+public class RemindFragment extends BasicFragment {
     @Bind(R.id.rv_content)
-    LoadMoreRecyclerView rv_content;//通知列表
+    LoadMoreRecyclerView rv_content;//赞列表
     @Bind(R.id.rl_no_message)
     RelativeLayout rl_no_message;
     @Bind(R.id.tv_message_empty)
     TextView tv_message_empty;
 
-    private NotifyAdapter adapter;
+    private RemindAdapter adapter;
 
     private int currentPage = 1;
 
@@ -42,13 +45,12 @@ public class NotifyFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
-        Logger.d("MessageCenterActivity", "NotifyFragment启动");
-        tv_message_empty.setText("还没有消息通知");
-        adapter = new NotifyAdapter(mActivity, null);
+        Logger.d("MessageCenterActivity", "PraiseFragment启动");
+        tv_message_empty.setText("还没有提醒");
+        adapter = new RemindAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();
-
-        getNotifyList();
+        getRemindList();
     }
 
     /**
@@ -58,27 +60,28 @@ public class NotifyFragment extends BasicFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getNotifyMore();
+                getRemindMore();
             }
         });
     }
 
     /**
-     * 获取用户列表
+     * 获取通知
      */
-    private void getNotifyList() {
-        networkRequest(StartApi.getNotifyList(String.valueOf(currentPage)),
-                new SimpleFastJsonCallback<Notify>(Notify.class, loading) {
+    private void getRemindList() {
+        currentPage = 1;
+        networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
+                new SimpleFastJsonCallback<Remind>(Remind.class, loading) {
                     @Override
-                    public void onSuccess(String url, Notify result) {
-                        List<NotifyDetail> details = result.getData();
-                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
-                            rl_no_message.setVisibility(View.GONE);
+                    public void onSuccess(String url, Remind result) {
+                        List<RemindDetail> details = result.getList();
+                        if (details != null && details.size() > 0) {
                             rv_content.setVisibility(View.VISIBLE);
+                            rl_no_message.setVisibility(View.GONE);
                             adapter.replaceAll(details);
-                        }else {
-                            rl_no_message.setVisibility(View.VISIBLE);
+                        } else {
                             rv_content.setVisibility(View.GONE);
+                            rl_no_message.setVisibility(View.VISIBLE);
                         }
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
@@ -88,18 +91,20 @@ public class NotifyFragment extends BasicFragment {
                     }
                 });
     }
+
     /**
-     * 获取用户列表
+     * 获取通知
      */
-    private void getNotifyMore() {
-        networkRequest(StartApi.getNotifyList(String.valueOf(currentPage)),
-                new SimpleFastJsonCallback<Notify>(Notify.class, loading) {
+    private void getRemindMore() {
+        networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
+                new SimpleFastJsonCallback<Remind>(Remind.class, loading) {
                     @Override
-                    public void onSuccess(String url, Notify result) {
-                        List<NotifyDetail> details = result.getData();
+                    public void onSuccess(String url, Remind result) {
+                        List<RemindDetail> details = result.getList();
                         if (details != null && details.size() > 0) {
                             adapter.addAll(details);
                         }
+                        rv_content.loadMoreComplete();
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
                             rv_content.loadMoreComplete();
@@ -113,4 +118,5 @@ public class NotifyFragment extends BasicFragment {
     protected String[] getRequestUrls() {
         return new String[0];
     }
+
 }

@@ -14,9 +14,11 @@ public abstract class OnShareClickListener {
 
     public abstract void onQQZone();
 
-    public abstract void onSinaWeibo();
+//    public abstract void onSinaWeibo();
 
-//    public abstract void onCopyUrl();
+    public void onCopyUrl() {
+
+    }
 
     public void onCancel() {
 
