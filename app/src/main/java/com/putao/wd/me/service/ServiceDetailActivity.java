@@ -16,15 +16,18 @@ import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceAdapter;
 import com.putao.wd.model.Express;
+import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 
 import java.io.Serializable;
@@ -130,7 +133,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 setContent(result.get(0));
                 List<ServiceProduct> products = result.get(0).getProduct();
                 if (products.size() != 0) {
-                    adapter.addAll(products);
+                    adapter.replaceAll(products);
                 }
                 loading.dismiss();
             }
@@ -169,10 +172,19 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         } else {
             ll_invoice.setVisibility(View.GONE);
         }
-        tv_goods_total_number.setText(serviceList.getSaleTotalQuantity() + "");
-        tv_cost.setText(order_info.getProduct_money());
-        tv_shipment_fee.setText("0.00");
-        tv_total_cost.setText(serviceList.getSaleTotalPrice() + "");
+        rv_service_detail.setOnItemClickListener(new OnItemClickListener<ServiceProduct>() {
+            @Override
+            public void onItemClick(ServiceProduct product, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_DETAIL, true);
+                startActivity(ProductDetailActivity.class, bundle);
+            }
+        });
+        tv_goods_total_number.setText("" + serviceList.getSaleTotalQuantity());
+        tv_cost.setText("￥" + order_info.getProduct_money());
+        tv_shipment_fee.setText("￥0.00");
+        tv_total_cost.setText("￥" + serviceList.getSaleTotalPrice());
     }
 
     /**

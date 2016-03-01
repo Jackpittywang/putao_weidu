@@ -21,8 +21,10 @@ import com.putao.wd.me.order.adapter.ShipmentAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
+import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.putao.wd.store.pay.PayActivity;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
@@ -231,6 +233,15 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
             });
         }
         rv_goods.setAdapter(mAdapter);
+        rv_goods.setOnItemClickListener(new OnItemClickListener<OrderProduct>() {
+            @Override
+            public void onItemClick(OrderProduct product, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_DETAIL, true);
+                startActivity(ProductDetailActivity.class, bundle);
+            }
+        });
         mAdapter.addAll(mOrderDetail.getProduct());
         setOrderStatus(mOrderDetail.getOrderStatusID());
     }

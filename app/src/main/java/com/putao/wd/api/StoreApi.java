@@ -324,4 +324,17 @@ public class StoreApi {
         return PTWDRequestHelper.store()
                 .build(RequestMethod.POST, URL_DEFAULT_ADDRESS);
     }
+    /**
+     * 获取详情页面
+     */
+    public static final String URL_PRODUCT_VIEW_V2 = BASE_URL + "product/view_v2";
+
+    /**
+     * 获取详情页面
+     */
+    public static Request getHTML(String pid) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_PRODUCT_PID, pid)
+                .build(RequestMethod.POST, URL_PRODUCT_VIEW_V2);
+    }
 }

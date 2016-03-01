@@ -12,8 +12,11 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductDetail;
+import com.putao.wd.model.Service;
+import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
@@ -37,6 +40,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     /*public static final String BUNDLE_PRODUCT_ID = "product_id";
     public static final String BUNDLE_PRODUCT_ICON = "product_icon";*/
     public static final String BUNDLE_PRODUCT = "bundle_product";
+    public static final String BUNDLE_IS_DETAIL = "bundle_is_detail";
+    public static final String BUNDLE_IS_SERVICE = "bundle_is_service";
+    public boolean is_detail = false;
+    public boolean is_service = false;
 
     @Bind(R.id.rl_main)
     RelativeLayout rl_main;
@@ -66,7 +73,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     private ProductDetail detail = null;
     private String imageUrl;//商品图片
-    private StoreProduct mStoreProduct;
 
     @Override
     protected int getLayoutId() {
@@ -76,10 +82,25 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        mStoreProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
-        wv_content.loadUrl(mStoreProduct.getMobile_url());
-        tv_product_price.setText(mStoreProduct.getPrice());
-        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, mStoreProduct.getId());
+        is_detail = args.getBoolean(BUNDLE_IS_DETAIL);
+        is_service = args.getBoolean(BUNDLE_IS_SERVICE);
+        if (is_detail) {
+            if (is_service){
+                ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
+                wv_content.loadUrl(StoreApi.URL_PRODUCT_VIEW_V2 + "/pid=" + storeProduct/*, "application/octet-stream", "utf-8"*/);
+                tv_product_price.setText(storeProduct.getPrice());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+            }
+            ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
+            wv_content.loadUrl(StoreApi.URL_PRODUCT_VIEW_V2 + "/pid=" + storeProduct/*, "application/octet-stream", "utf-8"*/);
+            tv_product_price.setText(storeProduct.getPrice());
+            mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+        } else {
+            StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
+            wv_content.loadUrl(storeProduct.getMobile_url());
+            tv_product_price.setText(storeProduct.getPrice());
+            mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+        }
    /*   imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
         product_id = args.getString(BUNDLE_PRODUCT_ID);
         mSharePopupWindow = new SharePopupWindow(mContext);

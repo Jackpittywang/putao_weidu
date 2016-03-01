@@ -395,11 +395,11 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         if (!saveable) {//这里编辑操作的入口
             setTopButtonStyle(SAVE, DELETE, true);
             if (mSelected.size() == 0) {
-                isSelectAll=true;
-                btn_sel_all.setState(isSelectAll);
-                adapter.selAll(isSelectAll);
                 setBottomButtonStyle(true);
             }
+            /*isSelectAll=true;
+            btn_sel_all.setState(isSelectAll);
+            adapter.selAll(isSelectAll);*/
             adapter.startEdit();
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
