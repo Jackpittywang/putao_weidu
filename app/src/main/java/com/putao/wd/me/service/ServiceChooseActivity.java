@@ -3,6 +3,7 @@ package com.putao.wd.me.service;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -46,6 +47,12 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     Button btn_service_back;//退货按钮
     @Bind(R.id.btn_service_change)
     Button btn_service_change;//换货按钮
+    @Bind(R.id.v_margin)
+    View v_margin;//间距
+    @Bind(R.id.rl_service_able_icon)
+    RelativeLayout rl_service_able_icon;
+    @Bind(R.id.rl_service_unable_icon)
+    RelativeLayout rl_service_unable_icon;
 
     public static final String SERVICE_PRODUCT = "service_product";
 
@@ -78,6 +85,9 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
     }
 
     private void initView() {
+        btn_service_refund.setClickable(false);
+        btn_service_back.setClickable(false);
+        btn_service_change.setClickable(false);
         adapterUnable = new OrdersAdapter(mContext, null);
         adapterAble = new ServiceChooseAdapter(mContext, null);
         rv_service_unable.setAdapter(adapterUnable);
@@ -117,6 +127,13 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
             mAbleProduct.add(product);
             adapterAble.add(product);
         }
+        if (0 != adapterAble.getItemCount()) {
+            rl_service_able_icon.setVisibility(View.VISIBLE);
+            v_margin.setVisibility(View.VISIBLE);
+        }
+        if (0 != adapterUnable.getItemCount()) {
+            rl_service_unable_icon.setVisibility(View.VISIBLE);
+        }
         rv_service_able.setOnItemClickListener(this);
     }
 
@@ -137,9 +154,12 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
             mFocusProducts.remove(mAbleProduct.get(position));
         }
         if (mFocusProducts.size() == 0) {
-            btn_service_refund.setEnabled(false);
-            btn_service_back.setEnabled(false);
-            btn_service_change.setEnabled(false);
+            btn_service_refund.setClickable(false);
+            btn_service_refund.setBackgroundResource(R.drawable.text_userinfo_limit_shape);
+            btn_service_back.setClickable(false);
+            btn_service_back.setBackgroundResource(R.drawable.text_userinfo_limit_shape);
+            btn_service_change.setClickable(false);
+            btn_service_change.setBackgroundResource(R.drawable.text_userinfo_limit_shape);
             return;
         }
         for (OrderProduct product : mFocusProducts) {
@@ -182,9 +202,12 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
                     break;
             }
         }
-        btn_service_refund.setEnabled(refund);
+        btn_service_refund.setClickable(refund);
+        btn_service_refund.setBackgroundResource(refund ? R.drawable.btn_order_express_selector : R.drawable.text_userinfo_limit_shape);
         btn_service_back.setEnabled(back);
+        btn_service_back.setBackgroundResource(back ? R.drawable.btn_order_express_selector : R.drawable.text_userinfo_limit_shape);
         btn_service_change.setEnabled(change);
+        btn_service_back.setBackgroundResource(change ? R.drawable.btn_order_express_selector : R.drawable.text_userinfo_limit_shape);
     }
 
     @Override

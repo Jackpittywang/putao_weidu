@@ -77,6 +77,8 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
     TextView tv_address;
     @Bind(R.id.tv_phone)
     TextView tv_phone;
+    @Bind(R.id.rl_service_money)
+    RelativeLayout rl_service_money;
 
     private String addressId = "";
     private String consignee = "";
@@ -131,6 +133,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
         rv_service_back_list.setAdapter(adapter);
         if ("1".equals(mServiceWay)) {
             navigation_bar.setMainTitle("请填写换货信息");
+            rl_service_money.setVisibility(View.GONE);
         } else if ("2".equals(mServiceWay)) {
             navigation_bar.setMainTitle("请填写退货信息");
             fl_address.setVisibility(View.GONE);
