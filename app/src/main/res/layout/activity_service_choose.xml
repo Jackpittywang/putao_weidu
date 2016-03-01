@@ -9,6 +9,7 @@
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
         android:background="@color/white"
+        auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="申请售后" />
 
@@ -32,9 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginBottom="1dp"
-                android:layout_marginTop="1dp"
                 android:background="#ffffff"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_service_able_icon"
@@ -60,18 +61,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:visibility="gone"
                 auto:divider_height="1px"
                 auto:has_row_divider="true"
                 auto:is_inner="true" />
+
+            <View
+                android:id="@+id/v_margin"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <RelativeLayout
                 android:id="@+id/rl_service_unable_icon"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="9dp"
                 android:layout_marginBottom="1dp"
                 android:background="#ffffff"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_service_unable_icon"
@@ -120,8 +127,8 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/btn_order_express_selector"
-            android:enabled="false"
+            android:background="@drawable/text_userinfo_limit_shape"
+            android:clickable="false"
             android:text="退款"
             android:textColor="@color/text_color_white"
             android:textSize="@dimen/text_size_16sp"
@@ -135,8 +142,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_order_express_selector"
-            android:enabled="false"
+            android:background="@drawable/text_userinfo_limit_shape"
+            android:clickable="false"
             android:text="退货"
             android:textColor="@color/text_color_white"
             android:textSize="@dimen/text_size_16sp"
@@ -150,11 +157,11 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_order_express_selector"
-            android:enabled="false"
+            android:background="@drawable/text_userinfo_limit_shape"
+            android:clickable="false"
             android:text="换货"
-            android:textSize="@dimen/text_size_16sp"
             android:textColor="@color/text_color_white"
+            android:textSize="@dimen/text_size_16sp"
             android:visibility="visible" />
 
     </LinearLayout>
