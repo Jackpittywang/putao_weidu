@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:clipChildren="false">
 
-
+    <include
+        android:id="@+id/i_top"
+        layout="@layout/activity_diary_sign" />
     <!--没有绑定设备时卡片-->
     <!--  <android.support.v7.widget.CardView
           android:id="@+id/cv_answer"
@@ -276,21 +278,27 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_check"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_above="@+id/cv_answer"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="-10dp"
-        android:layout_marginRight="-10dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/img_p_choose_c"
-        android:visibility="visible" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include
-        android:id="@+id/i_top"
-        layout="@layout/activity_diary_sign" />
+        <View
+            android:id="@+id/v_check"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/v_check"
+            android:layout_marginBottom="-10dp"
+            android:layout_marginRight="-10dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_p_choose_c"
+            android:visibility="visible" />
+    </RelativeLayout>
 
     <include layout="@layout/activity_diary_device" />
 </RelativeLayout>

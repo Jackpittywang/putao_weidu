@@ -197,6 +197,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
          */{
             if (holder instanceof DiaryChallengeViewHolder) {
                 final DiaryChallengeViewHolder viewHolder = (DiaryChallengeViewHolder) holder;
+                viewHolder.v_check.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
                 DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
                 viewHolder.tv_title.setText(diary.getAsk());
                 Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
@@ -290,6 +291,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
          */
         if (holder instanceof DiaryChallengePicViewHolder) {
             final DiaryChallengePicViewHolder viewHolder = (DiaryChallengePicViewHolder) holder;
+            viewHolder.v_check.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
             DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
             Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
             Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
@@ -534,6 +536,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         TextView tv_answer4;
         @Bind(R.id.iv_check)
         ImageView iv_check;
+        @Bind(R.id.v_check)
+        View v_check;
+
         public DiaryChallengeViewHolder(View itemView) {
             super(itemView);
         }
@@ -569,6 +574,9 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         ImageDraweeView idv_answer4;
         @Bind(R.id.iv_check)
         ImageView iv_check;
+        @Bind(R.id.v_check)
+        View v_check;
+
         public DiaryChallengePicViewHolder(View itemView) {
             super(itemView);
         }
