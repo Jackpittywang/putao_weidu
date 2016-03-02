@@ -212,7 +212,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     }
 
 
-    @OnClick({R.id.tv_emojis, R.id.tv_send})
+    @OnClick({R.id.tv_emojis, R.id.tv_send,R.id.et_msg})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -249,6 +249,10 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 isReply = false;
                 et_msg.setText("");
                 mMinLenght = 0;
+                vp_emojis.setVisibility(View.GONE);
+                break;
+            case R.id.et_msg://点击文本输入框
+                isShowEmoji=false;
                 vp_emojis.setVisibility(View.GONE);
                 break;
         }

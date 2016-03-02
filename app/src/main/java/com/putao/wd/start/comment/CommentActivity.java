@@ -65,6 +65,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
 
+
     private SelectPopupWindow mSelectPopupWindow;
     private CommentAdapter adapter;
     private Map<String, String> emojiMap;
@@ -192,7 +193,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         });
     }
 
-    @OnClick({R.id.tv_emojis, R.id.tv_send})
+    @OnClick({R.id.tv_emojis, R.id.tv_send,R.id.et_msg})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -229,6 +230,10 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 isReply = false;
                 et_msg.setText("");
                 mMinLenght = 0;
+                vp_emojis.setVisibility(View.GONE);
+                break;
+            case R.id.et_msg://点击文本输入框
+                isShowEmoji=false;
                 vp_emojis.setVisibility(View.GONE);
                 break;
         }
