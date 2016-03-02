@@ -134,7 +134,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         };
         mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
         mHeadHeight = mHeadLayoutParams.height;
-        mStatusBarHeight = DensityUtil.dp2px(mActivity, 25f);
+        mStatusBarHeight = DensityUtil.dp2px(mActivity, 24f);
         sv_me.setOnTouchListener(this);
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
 //        ll_me.requestDisallowInterceptTouchEvent(true);
