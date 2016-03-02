@@ -12,10 +12,12 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ProductData;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ResourcesUtils;
@@ -34,7 +36,7 @@ import butterknife.OnClick;
  * 订单详情
  * Created by wangou on 15/11/29.
  */
-public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener{
+public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.img_status1)
     ImageView img_status1;
@@ -124,6 +126,11 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> imple
                         Logger.d(result.toString());
                         ToastUtils.showToastShort(mContext, "申请提交成功,请等待审核");
                         loading.dismiss();
+                        finish();
+                        ActivityManager.getInstance().finishActivity(ServiceChooseActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
+                        startActivity(OrderListActivity.class, bundle);
                     }
 
                     @Override
@@ -134,6 +141,7 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> imple
     }
 
     private String[] stringArray;
+
     /**
      * 初始化理由选择器
      */
@@ -162,11 +170,12 @@ public class ServiceRefundActivity extends PTWDActivity<GlobalApplication> imple
     protected String[] getRequestUrls() {
         return new String[0];
     }
+
     @OnClick({R.id.tv_reason})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case  R.id.tv_reason:
+        switch (v.getId()) {
+            case R.id.tv_reason:
                 initFamilyPicker();
                 break;
         }

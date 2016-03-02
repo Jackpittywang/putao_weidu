@@ -57,6 +57,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     protected int getLayoutId() {
         return R.layout.activity_address_list;
     }
+
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
@@ -121,6 +122,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                                     public void onSuccess(String url, String result) {
                                         Logger.d(result.toString());
                                         adapter.delete(address);
+                                        if (adapter.getItemCount() == 0) isAddressEmpty = true;
                                         getAddressLists();
 //                                        EventBusHelper.post(address, AddressEditActivity.EVENT_ADDRESS_DELETE);
 //                                        loading.dismiss();

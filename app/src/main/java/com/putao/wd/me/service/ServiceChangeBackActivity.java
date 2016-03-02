@@ -26,12 +26,14 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.me.address.AddressListActivity;
+import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.me.service.adapter.ChangeBackListAdapter;
 import com.putao.wd.model.Address;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ProductData;
 import com.putao.wd.model.ServiceBackImage;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -328,6 +330,10 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
                         ToastUtils.showToastShort(mContext, "申请提交成功,请等待审核");
                         loading.dismiss();
                         finish();
+                        ActivityManager.getInstance().finishActivity(ServiceChooseActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
+                        startActivity(OrderListActivity.class, bundle);
                     }
 
                     @Override
