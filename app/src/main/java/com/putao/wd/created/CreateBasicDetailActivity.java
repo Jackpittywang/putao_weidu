@@ -215,7 +215,12 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             @Override
             public void onWebPageLoaderFinish(String url) {
                 Logger.d("网页加载完成");
-
+                View contentView = sv_detail.getChildAt(0);
+                boolean isEnd = contentView.getMeasuredHeight() <= sv_detail.getHeight();
+                if (isDid) {
+                    showDidBtn(isEnd);
+                } else
+                    showBtn(isEnd);
             }
         });
         sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {

@@ -203,16 +203,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         AccountHelper.setUserInfo(result);
                         tv_user_nickname.setText(result.getNick_name());
                         if (mImg.equals(result.getHead_img())) {
+                            if (TextUtils.isEmpty(result.getHead_img())) {
+                                Message message = new Message();
+                                message.what = 2;
+                                mHandler.sendMessage(message);
+                            }
                             loading.dismiss();
                             return;
                         }
                         mImg = result.getHead_img();
+                        iv_user_icon.setImageURL(result.getHead_img());
                         Message message = new Message();
                         message.obj = mImg;
                         message.what = 1;
                         mHandler.sendMessage(message);
                         //message.obj = result.getHead_img();
-                        iv_user_icon.setImageURL(result.getHead_img());
                         loading.dismiss();
                     }
 
@@ -409,7 +414,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                     isClick = false;
                 }
                 height = mHeadLayoutParams.height + (newY - y) / 3;
-                //int[] position = new int[2];
                 rl_user_head_icon.getLocationOnScreen(position);
                 if (position[1] < mStatusBarHeight) return false;
                 if (height < mHeadHeight) {

@@ -54,7 +54,7 @@
     <!--活动封面-->
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_action_icon"
-        style="@style/image_circle"
+        style="@style/image_style"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_marginTop="10dp"

@@ -79,6 +79,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
     public final static String COOL_COUNT = "cool_count";//赞数量
+    public final static String COMMENT_COUNT = "comment_count";//数量
     private int mPosition;
     private int mCount_comments;
 
@@ -130,9 +131,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
-//        String cache_count = mDiskFileCacheHelper.getAsString(COOL_COUNT + mExploreIndex.getArticle_id());
-//        mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
+        String cache_count = mDiskFileCacheHelper.getAsString(COOL_COUNT + mExploreIndex.getArticle_id());
+        mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
         tv_count_cool.setText(mExploreIndex.getCount_likes() == 0 ? "赞" : mExploreIndex.getCount_likes() + "");
+//        String cache_comment = mDiskFileCacheHelper.getAsString(COMMENT_COUNT + mExploreIndex.getArticle_id());
+//        mCount_comments = TextUtils.isEmpty(cache_comment) ? mCount_comments : Integer.parseInt(cache_comment);
+        mExploreIndex.setCount_comments(mCount_comments);
         tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
@@ -197,7 +201,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                             @Override
                             public void onSuccess(String url, String result) {
                                 mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
-                                mDiskFileCacheHelper.put(COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + 1 + "");
+                                mDiskFileCacheHelper.put(COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                                 isCool = true;
                                 loading.dismiss();
                                 sb_cool_icon.setState(true);
@@ -239,10 +243,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     @Subcriber(tag = CommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
         tv_count_comment.setText(++mCount_comments + "");
+        mDiskFileCacheHelper.put(COMMENT_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_comments() + "");
     }
 
     @Subcriber(tag = CommentActivity.EVENT_DELETE_CREAT_COMMENT)
     public void evenDeleteCommentCount(int position) {
         tv_count_comment.setText(--mCount_comments + "");
+        mDiskFileCacheHelper.put(COMMENT_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_comments() + "");
     }
 }

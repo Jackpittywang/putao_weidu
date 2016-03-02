@@ -60,8 +60,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         mPosition = args.getInt(INDEX_DATA_PAGE);
         mExploreIndexs = ((List<ExploreIndex>) args.getSerializable(INDEX_DATA));
         mExploreIndex = mExploreIndexs.get(mPosition);
-//        int cache_count = (int) mDiskFileCacheHelper.getAsSerializable(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(),0);
-//        mExploreIndex.setCount_likes(cache_count == null ? mExploreIndex.getCount_likes() : cache_count);
+        String cache_count = mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id());
+        mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
         sb_cool_icon.setClickable(false);
         isCool = null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
@@ -108,7 +108,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                             @Override
                             public void onSuccess(String url, String result) {
                                 mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
-                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + 1 + "");
+                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes()+"");
                                 loading.dismiss();
                             }
                         });
@@ -127,6 +127,15 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
             sb_cool_icon.setState(true);
             mExploreIndex.setCount_likes(mExploreIndex.getCount_likes() + 1);
             tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
+            networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
+                    new SimpleFastJsonCallback<String>(String.class, loading) {
+                        @Override
+                        public void onSuccess(String url, String result) {
+                            mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
+                            mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
+                            loading.dismiss();
+                        }
+                    });
         }
     }
 }
