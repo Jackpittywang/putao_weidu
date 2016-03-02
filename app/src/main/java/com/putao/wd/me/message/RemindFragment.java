@@ -7,10 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
-import com.putao.wd.me.message.adapter.PraiseAdapter;
 import com.putao.wd.me.message.adapter.RemindAdapter;
-import com.putao.wd.model.Praise;
-import com.putao.wd.model.PraiseDetail;
 import com.putao.wd.model.Remind;
 import com.putao.wd.model.RemindDetail;
 import com.sunnybear.library.controller.BasicFragment;
@@ -69,6 +66,7 @@ public class RemindFragment extends BasicFragment {
      * 获取通知
      */
     private void getRemindList() {
+        loading.show();
         currentPage = 1;
         networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<Remind>(Remind.class, loading) {

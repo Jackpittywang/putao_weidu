@@ -67,6 +67,7 @@ public class NotifyFragment extends BasicFragment {
      * 获取用户列表
      */
     private void getNotifyList() {
+        loading.show();
         networkRequest(StartApi.getNotifyList(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<Notify>(Notify.class, loading) {
                     @Override

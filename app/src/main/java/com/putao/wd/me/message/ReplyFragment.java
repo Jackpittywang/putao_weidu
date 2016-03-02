@@ -68,6 +68,7 @@ public class ReplyFragment extends BasicFragment {
      * 获取赞
      */
     private void getNotifyList() {
+        loading.show();
         networkRequest(StartApi.getReplyList(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<Reply>(Reply.class, loading) {
                     @Override

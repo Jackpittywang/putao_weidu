@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
@@ -43,7 +42,6 @@ import com.sunnybear.library.view.scroll.SupportScrollView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.sharesdk.tencent.qq.QQ;
 
 /**
  * 创造详情的父类
@@ -132,6 +130,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     private ObjectAnimator showAnim;
     private ObjectAnimator hindAnim;
     private int mCommentCount;
+    private boolean isEnd;
 
     @Override
     protected int getLayoutId() {
@@ -150,6 +149,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
         isShowProgress = args.getBoolean(SHOW_PROGRESS);
         initView();
         addListener();
+
     }
 
     @Override
@@ -202,6 +202,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                     break;
             }
         }
+
     }
 
     private void addListener() {
@@ -221,7 +222,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             @Override
             public void onScroll(int scrollY) {
                 View contentView = sv_detail.getChildAt(0);
-                boolean isEnd = contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight();
+                isEnd = contentView.getMeasuredHeight() <= scrollY + sv_detail.getHeight();
                 if (isDid) {
                     showDidBtn(isEnd);
                 } else

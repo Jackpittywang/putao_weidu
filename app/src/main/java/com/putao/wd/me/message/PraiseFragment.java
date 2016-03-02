@@ -67,6 +67,7 @@ public class PraiseFragment extends BasicFragment {
      * 获取赞
      */
     private void getNotifyList() {
+        loading.show();
         networkRequest(StartApi.getPraiseList(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<Praise>(Praise.class, loading) {
                     @Override
@@ -74,7 +75,11 @@ public class PraiseFragment extends BasicFragment {
                         List<PraiseDetail> details = result.getLikedList();
                         if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
                             rl_no_message.setVisibility(View.GONE);
+                            rv_content.setVisibility(View.VISIBLE);
                             adapter.addAll(details);
+                        }else{
+                            rl_no_message.setVisibility(View.VISIBLE);
+                            rv_content.setVisibility(View.GONE);
                         }
                         if (result.getTotal_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
