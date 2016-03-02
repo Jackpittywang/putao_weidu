@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     RelativeLayout rl_user_head_icon;
 
     private HandlerThread mHandlerThread;
-    private String mImg="";
+    private String mImg = "";
     private Handler mHandler;
     private int y;
     int oldY = 0;
@@ -199,7 +200,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                     public void onSuccess(String url, final UserInfo result) {
                         ONREFRESH = true;
                         //Message message = new Message();
-                        if (mImg.equals(result.getHead_img())){
+                        AccountHelper.setUserInfo(result);
+                        tv_user_nickname.setText(result.getNick_name());
+                        if (mImg.equals(result.getHead_img())) {
                             loading.dismiss();
                             return;
                         }
@@ -210,8 +213,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         mHandler.sendMessage(message);
                         //message.obj = result.getHead_img();
                         iv_user_icon.setImageURL(result.getHead_img());
-                        tv_user_nickname.setText(result.getNick_name());
-                        AccountHelper.setUserInfo(result);
                         loading.dismiss();
                     }
 

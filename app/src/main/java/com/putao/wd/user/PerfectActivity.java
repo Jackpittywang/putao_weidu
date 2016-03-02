@@ -129,6 +129,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
             filename = mObject.getString("filename");
             hash = mObject.getString("hash");
         }
+        loading.show();
         networkRequest(UserApi.userAdd(ext, filename, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
@@ -139,6 +140,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
                     @Override
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         super.onFinish(url, isSuccess, msg);
+                        loading.dismiss();
                         if (!TextUtils.isEmpty(msg))
                             ToastUtils.showToastShort(mContext, msg);
                     }

@@ -1,6 +1,7 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -59,6 +60,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         mPosition = args.getInt(INDEX_DATA_PAGE);
         mExploreIndexs = ((List<ExploreIndex>) args.getSerializable(INDEX_DATA));
         mExploreIndex = mExploreIndexs.get(mPosition);
+//        int cache_count = (int) mDiskFileCacheHelper.getAsSerializable(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(),0);
+//        mExploreIndex.setCount_likes(cache_count == null ? mExploreIndex.getCount_likes() : cache_count);
         sb_cool_icon.setClickable(false);
         isCool = null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
@@ -70,7 +73,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         iv_video.setImageURL(mExploreIndex.getBanner().get(0).getUrl());
         tv_title.setText(mExploreIndex.getTitle());
         tv_content.setText(mExploreIndex.getDescription());
-        tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
+        tv_count_cool.setText(mExploreIndex.getCount_likes() == 0 ? "赞" : mExploreIndex.getCount_likes() + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType())) {
             iv_player.setVisibility(View.VISIBLE);
             iv_video.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
@@ -105,6 +108,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                             @Override
                             public void onSuccess(String url, String result) {
                                 mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
+                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + 1 + "");
                                 loading.dismiss();
                             }
                         });
@@ -121,7 +125,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     public void eventAddCoolCount(int position) {
         if (mPosition == position) {
             sb_cool_icon.setState(true);
-            tv_count_cool.setText(mExploreIndex.getCount_likes() + 1 + "");
+            mExploreIndex.setCount_likes(mExploreIndex.getCount_likes() + 1);
+            tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
         }
     }
 }

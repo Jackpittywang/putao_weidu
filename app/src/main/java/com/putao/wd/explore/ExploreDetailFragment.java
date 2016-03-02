@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.ClipboardManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -77,6 +78,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     private ExploreIndex mExploreIndex;
     private boolean isCool;//是否赞过
     public final static String COOL = "Cool";//是否赞过
+    public final static String COOL_COUNT = "cool_count";//赞数量
     private int mPosition;
     private int mCount_comments;
 
@@ -128,6 +130,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
         iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
+//        String cache_count = mDiskFileCacheHelper.getAsString(COOL_COUNT + mExploreIndex.getArticle_id());
+//        mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
         tv_count_cool.setText(mExploreIndex.getCount_likes() == 0 ? "赞" : mExploreIndex.getCount_likes() + "");
         tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
@@ -193,6 +197,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                             @Override
                             public void onSuccess(String url, String result) {
                                 mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
+                                mDiskFileCacheHelper.put(COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + 1 + "");
                                 isCool = true;
                                 loading.dismiss();
                                 sb_cool_icon.setState(true);
