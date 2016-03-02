@@ -259,7 +259,15 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
      */
     private void processor(String result) {
         Logger.d(result);
-        String scheme = ScanUrlParseUtils.getScheme(result);
+        String scheme = null;
+        try {
+            scheme = ScanUrlParseUtils.getScheme(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.showToastShort(mContext, "请扫描葡萄产品的二维码");
+            finish();
+            return;
+        }
         Logger.d("scheme:" + scheme);
         switch (scheme) {
             case ScanUrlParseUtils.Scheme.PUTAO_LOGIN://扫描登录
@@ -325,6 +333,10 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     }
                 });
                 break;
+            default:
+                ToastUtils.showToastShort(mContext, "请扫描葡萄产品的二维码");
+                finish();
+                return;
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.putao.wd.home;
 
-import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,10 +7,10 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -35,7 +34,6 @@ import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -45,9 +43,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.select.FlowLayout;
 import com.sunnybear.library.view.select.IndicatorButton;
-
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +60,7 @@ import butterknife.OnClick;
 public class MeFragment extends BasicFragment implements View.OnClickListener, View.OnTouchListener {
     public static final String ME_BLUR = "me_blur";
     private static final String EVENT_EDIT_USER_INFO = "edit_user_info";
+    public static boolean ONREFRESH = true;
 
     @Bind(R.id.si_message)
     SettingItem si_message;
@@ -89,9 +86,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     RelativeLayout rl_user_head_icon;
 
     private HandlerThread mHandlerThread;
+    private String mImg = "";
     private Handler mHandler;
     private int y;
     int oldY = 0;
+    int newY;
+
+
     private int mHeadHeight;
     private ViewGroup.LayoutParams mHeadLayoutParams;
     private int mStatusBarHeight;
@@ -134,12 +135,15 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         };
         mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
         mHeadHeight = mHeadLayoutParams.height;
-        mStatusBarHeight = DensityUtil.dp2px(mActivity, 24f);
+//        mStatusBarHeight = DensityUtil.dp2px(mActivity, 24f);
+        mStatusBarHeight = getStatusBarHeight();
         sv_me.setOnTouchListener(this);
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
 //        ll_me.requestDisallowInterceptTouchEvent(true);
 //        ll_me.setOnTouchListener(this);
-        getUserInfo();
+        if (ONREFRESH == true) {
+            getUserInfo();
+        }
     }
 
     private void setDefaultBlur() {
@@ -157,8 +161,20 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             hideNum();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             hideNum();
-            getOrderCount();
+            if (ONREFRESH == true) {
+                getOrderCount();
+            }
         }
+    }
+
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     /**
@@ -176,23 +192,34 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获取用户信息
      */
     private void getUserInfo() {
+
+        ONREFRESH = false;
         networkRequest(UserApi.getUserInfo(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, final UserInfo result) {
+                        ONREFRESH = true;
+                        //Message message = new Message();
+                        AccountHelper.setUserInfo(result);
+                        tv_user_nickname.setText(result.getNick_name());
+                        if (mImg.equals(result.getHead_img())) {
+                            loading.dismiss();
+                            return;
+                        }
+                        mImg = result.getHead_img();
                         Message message = new Message();
-                        message.obj = result.getHead_img();
+                        message.obj = mImg;
                         message.what = 1;
                         mHandler.sendMessage(message);
+                        //message.obj = result.getHead_img();
                         iv_user_icon.setImageURL(result.getHead_img());
-                        tv_user_nickname.setText(result.getNick_name());
-                        AccountHelper.setUserInfo(result);
                         loading.dismiss();
                     }
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+                        ONREFRESH = true;
                         ToastUtils.showToastLong(mActivity, "登录失败请重新登录");
                     }
                 });
@@ -223,13 +250,18 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Subcriber(tag = EVENT_EDIT_USER_INFO)
     public void eventEditUserInfo(String tag) {
-        getUserInfo();
+        if (ONREFRESH == true) {
+            getUserInfo();
+        }
     }
 
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
-        getUserInfo();
-        getOrderCount();
+
+        if (ONREFRESH == true) {
+            getUserInfo();
+            getOrderCount();
+        }
     }
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
@@ -360,6 +392,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     }
 
     private boolean isClick = true;
+    int height;
+    int[] position = new int[2];
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -369,13 +403,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 oldY = y = (int) event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                int newY = (int) event.getY();
+                newY = (int) event.getY();
                 if (isClick) {
                     oldY = y = newY;
                     isClick = false;
                 }
-                int height = mHeadLayoutParams.height + (newY - y) / 3;
-                int[] position = new int[2];
+                height = mHeadLayoutParams.height + (newY - y) / 3;
+                //int[] position = new int[2];
                 rl_user_head_icon.getLocationOnScreen(position);
                 if (position[1] < mStatusBarHeight) return false;
                 if (height < mHeadHeight) {
@@ -393,8 +427,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
                 if (y - oldY < 300 || oldY == 0) break;
                 oldY = 0;
-                getUserInfo();
-                getOrderCount();
+                if (ONREFRESH == true) {
+                    getUserInfo();
+                    getOrderCount();
+                }
+
                 break;
             case MotionEvent.ACTION_UP:
 //                float flo = (float)mHeadHeight / mHeadLayoutParams.height;
@@ -406,8 +443,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
                 if (y - oldY < 300 || oldY == 0) break;
                 oldY = 0;
-                getUserInfo();
-                getOrderCount();
+                if (ONREFRESH == true) {
+                    getUserInfo();
+                    getOrderCount();
+                }
+
                 break;
         }
         return true;
