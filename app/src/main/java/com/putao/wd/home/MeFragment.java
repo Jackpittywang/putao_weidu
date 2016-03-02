@@ -134,7 +134,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         };
         mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
         mHeadHeight = mHeadLayoutParams.height;
-        mStatusBarHeight = DensityUtil.dp2px(mActivity, 24f);
+//        mStatusBarHeight = DensityUtil.dp2px(mActivity, 24f);
+        mStatusBarHeight = getStatusBarHeight();
         sv_me.setOnTouchListener(this);
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
 //        ll_me.requestDisallowInterceptTouchEvent(true);
@@ -163,6 +164,16 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 getOrderCount();
             }
         }
+    }
+
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     /**
