@@ -68,7 +68,7 @@
         android:visibility="gone"
         auto:anchoredView="@+id/tv_question_1"
         auto:arrowAlignment="start"
-        auto:tooltipColor="#99FFFFFF" />
+        auto:tooltipColor="#ddFFFFFF" />
 
     <TextView
         android:id="@+id/tv_question_1"
@@ -97,7 +97,7 @@
         android:visibility="gone"
         auto:anchoredView="@+id/tv_question_1"
         auto:arrowAlignment="start"
-        auto:tooltipColor="#99FFFFFF" />
+        auto:tooltipColor="#ddFFFFFF" />
 
     <TextView
         android:id="@+id/tv_question_2"

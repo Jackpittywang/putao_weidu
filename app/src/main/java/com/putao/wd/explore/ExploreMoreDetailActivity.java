@@ -120,7 +120,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             iv_player.setVisibility(View.VISIBLE);
         wb_explore_detail.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mContext, getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation()), "text/html", "utf-8", null);
         mSharePopupWindow = new SharePopupWindow(this);
-        isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
+        isCool = mExploreIndex.is_like();
         sb_cool_icon.setState(isCool || mExploreIndex.is_like());
         tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
 //        wb_explore_detail.setInitialScale(80);

@@ -186,6 +186,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         mHandler.sendMessage(message);
                         iv_user_icon.setImageURL(result.getHead_img());
                         tv_user_nickname.setText(result.getNick_name());
+                        AccountHelper.setUserInfo(result);
                         loading.dismiss();
                     }
 
