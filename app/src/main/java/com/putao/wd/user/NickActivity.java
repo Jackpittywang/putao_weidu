@@ -2,6 +2,7 @@ package com.putao.wd.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.putao.wd.R;
 import com.putao.wd.api.UserApi;
@@ -89,7 +90,8 @@ public class NickActivity extends PTWDActivity {
                     @Override
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         loading.dismiss();
-                        ToastUtils.showToastShort(mContext, msg);
+                        if (!TextUtils.isEmpty(msg))
+                            ToastUtils.showToastShort(mContext, msg);
                     }
                 });
     }

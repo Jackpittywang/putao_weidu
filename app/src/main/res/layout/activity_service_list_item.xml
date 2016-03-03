@@ -62,16 +62,20 @@
         android:layout_height="1px"
         android:background="@color/divider_color" />
 
-    <!--订单列表-->
-    <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@+id/rv_service_inner"
+    <com.sunnybear.library.view.InterceptLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_EBEBEB"
-        auto:divider_color="@color/white"
-        auto:divider_height="1px"
-        auto:has_row_divider="true"
-        auto:is_inner="true" />
+        android:layout_height="wrap_content">
+        <!--订单列表-->
+        <com.sunnybear.library.view.recycler.BasicRecyclerView
+            android:id="@+id/rv_service_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_EBEBEB"
+            auto:divider_color="@color/white"
+            auto:divider_height="1px"
+            auto:has_row_divider="true"
+            auto:is_inner="true" />
+    </com.sunnybear.library.view.InterceptLinearLayout>
 
     <!--合计-->
     <LinearLayout
