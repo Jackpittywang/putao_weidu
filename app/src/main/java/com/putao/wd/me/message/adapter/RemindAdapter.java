@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.NotifyDetail;
 import com.putao.wd.model.RemindDetail;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -23,6 +24,7 @@ import butterknife.Bind;
  */
 public class RemindAdapter extends LoadMoreAdapter<RemindDetail, RemindAdapter.RemindViewHolder> {
 
+    public final  static  String EVENT_REMIND = "event_remind";
     public RemindAdapter(Context context, List<RemindDetail> remindnotifyitems) {
         super(context, remindnotifyitems);
     }
@@ -38,7 +40,7 @@ public class RemindAdapter extends LoadMoreAdapter<RemindDetail, RemindAdapter.R
     }
 
     @Override
-    public void onBindItem(RemindViewHolder holder, RemindDetail remindDetail, int position) {
+    public void onBindItem(RemindViewHolder holder, final RemindDetail remindDetail, int position) {
         holder.tv_notify_content.setText(remindDetail.getContent());
         holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(remindDetail.getCreate_time())));
         if (StringUtils.isEmpty(remindDetail.getImg_url()))
@@ -54,7 +56,7 @@ public class RemindAdapter extends LoadMoreAdapter<RemindDetail, RemindAdapter.R
             holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    EventBusHelper.post(remindDetail,EVENT_REMIND);
                 }
             });
         } else if (2 == remindDetail.getLocation()) {

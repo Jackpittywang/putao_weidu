@@ -102,6 +102,9 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                         if (mTime < STOP_TIME)
                             countDown(STOP_TIME - mTime);
                     }
+                }else{
+                    ll_empty.setVisibility(View.VISIBLE);
+                    ll_content.setVisibility(View.GONE);
                 }
                 loading.dismiss();
             }

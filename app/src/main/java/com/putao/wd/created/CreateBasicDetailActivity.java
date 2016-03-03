@@ -22,6 +22,7 @@ import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
+import com.putao.wd.model.Creates;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -115,6 +116,9 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     private int mTime = 1000;
     public static final String CREATE = "CREATE";
     public static final String EVENT_CONCERNS_REFRESH = "event_concerns_refresh";
+    public static final String EVENT_EXPLORER_ID = "event_explorer_id";
+    public static final String EVENT_IS_REMIND = "event_is_remind";
+    private boolean isRemind=false;
     private boolean isConcernsInit;
     private boolean isConcernsRefresh = false;
     public static final String POSITION = "position";
@@ -139,17 +143,21 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        mSharePopupWindow = new SharePopupWindow(mContext);
-        isDid = false;
-        mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
+        isRemind = args.getBoolean(EVENT_IS_REMIND);
         rl_support.setClickable(false);
         rl_no_support.setClickable(false);
-        mCreate = (Create) args.getSerializable(CREATE);
-        mPosition = args.getInt(POSITION);
-        isShowProgress = args.getBoolean(SHOW_PROGRESS);
-        initView();
+        mWidthPixels = mContext.getResources().getDisplayMetrics().widthPixels / 2;
+        mSharePopupWindow = new SharePopupWindow(mContext);
+        isDid = false;
         addListener();
-
+        if (isRemind){
+            getRemindCreate(args.getString(EVENT_EXPLORER_ID));
+        }else {
+            mCreate = (Create) args.getSerializable(CREATE);
+            mPosition = args.getInt(POSITION);
+            isShowProgress = args.getBoolean(SHOW_PROGRESS);
+            initView();
+        }
     }
 
     @Override
@@ -216,6 +224,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             public void onWebPageLoaderFinish(String url) {
                 Logger.d("网页加载完成");
                 View contentView = sv_detail.getChildAt(0);
+
                 boolean isEnd = contentView.getMeasuredHeight() <= sv_detail.getHeight();
                 if (isDid) {
                     showDidBtn(isEnd);
@@ -524,5 +533,18 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
     public void evenDeleteCommentCount(int position) {
         tv_count_comment.setText(--mCommentCount + "");
+    }
+
+    public void getRemindCreate(String id) {
+        networkRequest(CreateApi.getCreateDetail(id),
+                new SimpleFastJsonCallback<Create>(Create.class, loading) {
+                    @Override
+                    public void onSuccess(String url, Create result) {
+                        mCreate = result;
+                        isShowProgress = "1".equals(mCreate.getType());
+                        initView();
+                        loading.dismiss();
+                    }
+                });
     }
 }

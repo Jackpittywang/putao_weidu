@@ -1,5 +1,6 @@
 package com.putao.wd.me.message;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -7,10 +8,15 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
+import com.putao.wd.created.CreateBasicDetailActivity;
+import com.putao.wd.explore.ExploreMoreDetailActivity;
+import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.me.message.adapter.RemindAdapter;
 import com.putao.wd.model.Remind;
 import com.putao.wd.model.RemindDetail;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -117,4 +123,26 @@ public class RemindFragment extends BasicFragment {
         return new String[0];
     }
 
+
+    @Subcriber(tag = RemindAdapter.EVENT_REMIND)
+    private void setBlur(RemindDetail remindDetail) {
+        String link_type = remindDetail.getLink_type();
+        Bundle bundle = new Bundle();
+        switch (link_type){
+            case "product"://精选商品
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, remindDetail.getUrl());
+                startActivity(ProductDetailActivity.class, bundle);
+                break;
+            case "explore"://探索文章
+                bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID,remindDetail.getUrl());
+                startActivity(ExploreMoreDetailActivity.class, bundle);
+                break;
+            case "idea"://创想
+                bundle.putString(CreateBasicDetailActivity.EVENT_EXPLORER_ID, remindDetail.getUrl());
+                bundle.putBoolean(CreateBasicDetailActivity.EVENT_IS_REMIND, true);
+                startActivity(CreateBasicDetailActivity.class, bundle);
+                break;
+        }
+
+    }
 }

@@ -236,6 +236,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
         rv_goods.setOnItemClickListener(new OnItemClickListener<OrderProduct>() {
             @Override
             public void onItemClick(OrderProduct product, int position) {
+
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_DETAIL, true);
