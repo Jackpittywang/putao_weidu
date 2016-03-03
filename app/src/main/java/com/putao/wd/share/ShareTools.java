@@ -122,4 +122,27 @@ public class ShareTools {
             plat = ShareSDK.getPlatform(WechatMoments.NAME);
         plat.share(params);
     }
+
+    public static void qqWebShare(Context context, boolean isQQ, String title, String text, String imageUrl, String url) {
+
+
+
+        WechatHelper.ShareParams params = null;
+        if (isQQ)
+            params = new Wechat.ShareParams();
+        else
+            params = new WechatFavorite.ShareParams();
+        params.title = title;
+        params.text = text;
+        params.imageUrl = imageUrl;
+        params.url = url;
+        params.setShareType(Platform.SHARE_WEBPAGE);
+
+        Platform plat = null;
+        if (isQQ)
+            plat = ShareSDK.getPlatform(Wechat.NAME);
+        else
+            plat = ShareSDK.getPlatform(WechatMoments.NAME);
+        plat.share(params);
+    }
 }

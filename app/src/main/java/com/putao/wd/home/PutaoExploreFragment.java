@@ -29,7 +29,6 @@ import com.sunnybear.library.view.image.FastBlur;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -69,7 +68,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
-//    private PageChangeThread mThread;
+    //    private PageChangeThread mThread;
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private int mI;
@@ -230,6 +229,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                             mExploreIndex.setSaveTime(System.currentTimeMillis());
                             mExploreIndex.setExploreIndexes(result);
                             mDiskFileCacheHelper.remove(INDEX_CACHE);
+                            for (ExploreIndex exploreIndex : mExploreIndexs) {
+                                mDiskFileCacheHelper.remove(exploreIndex.getArticle_id());
+                            }
                             mDiskFileCacheHelper.put(INDEX_CACHE, mExploreIndex);
                             mFragments = null;
                             addFragments();
