@@ -109,6 +109,15 @@ public final class FormEncodingRequestBuilder {
         return request;
     }
 
+
+    /**
+     * 构建url
+     *
+     * @return
+     */
+    public String joinURL(String url) {
+        return jointUrl(url, params).toString();
+    }
     /**
      * 拼接参数
      *

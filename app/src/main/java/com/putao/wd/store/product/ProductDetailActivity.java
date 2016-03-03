@@ -12,6 +12,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.PTWDRequestHelper;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductDetail;
@@ -22,12 +23,15 @@ import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.user.LoginActivity;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.BasicWebView;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -87,21 +91,18 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         if (is_detail) {
             if (is_service) {
                 ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
-                networkRequest(StoreApi.getHTML(storeProduct.getProduct_id()), new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        wv_content.loadData(result, "application/octet-stream", "utf-8");
-                        loading.dismiss();
-                    }
-                });
-
+                wv_content.loadUrl(PTWDRequestHelper.store()
+                        .addParam("pid", storeProduct.getProduct_id())
+                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
                 tv_product_price.setText(storeProduct.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getProduct_id());
             } else {
                 OrderProduct storeProduct = (OrderProduct) args.getSerializable(BUNDLE_PRODUCT);
-                wv_content.loadUrl(StoreApi.URL_PRODUCT_VIEW_V2 + "/pid=" + storeProduct/*, "application/octet-stream", "utf-8"*/);
+                wv_content.loadUrl(PTWDRequestHelper.store()
+                        .addParam("pid", storeProduct.getProduct_id())
+                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
                 tv_product_price.setText(storeProduct.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getProduct_id());
             }
         } else {
             StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
@@ -117,7 +118,6 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         getProductDetail(product_id);
         stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);*/
     }
-
     /**
      * 加载WebView
      *

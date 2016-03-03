@@ -37,7 +37,6 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
@@ -141,7 +140,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
 //        ll_me.requestDisallowInterceptTouchEvent(true);
 //        ll_me.setOnTouchListener(this);
-        if (ONREFRESH == true) {
+        if (ONREFRESH) {
             getUserInfo();
         }
     }
@@ -161,9 +160,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             hideNum();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
             hideNum();
-            if (ONREFRESH == true) {
-                getOrderCount();
-            }
+            getOrderCount();
         }
     }
 
@@ -255,14 +252,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Subcriber(tag = EVENT_EDIT_USER_INFO)
     public void eventEditUserInfo(String tag) {
-        if (ONREFRESH == true) {
+        if (ONREFRESH) {
             getUserInfo();
         }
     }
 
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
-        if (ONREFRESH == true) {
+        if (ONREFRESH) {
             getUserInfo();
             getOrderCount();
         }
@@ -270,7 +267,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
-        mImg ="";
+        mImg = "";
         iv_user_icon.setDefaultImage(R.drawable.img_head_default);
         tv_user_nickname.setText("葡星人");
     }
@@ -431,7 +428,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
                 if (y - oldY < 300 || oldY == 0) break;
                 oldY = 0;
-                if (ONREFRESH == true) {
+                if (ONREFRESH) {
                     getUserInfo();
                     getOrderCount();
                 }
@@ -447,7 +444,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
                 if (y - oldY < 300 || oldY == 0) break;
                 oldY = 0;
-                if (ONREFRESH == true) {
+                if (ONREFRESH) {
                     getUserInfo();
                     getOrderCount();
                 }
