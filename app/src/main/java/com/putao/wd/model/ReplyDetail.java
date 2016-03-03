@@ -7,42 +7,52 @@ import java.io.Serializable;
  * Created by Administrator on 2015/12/25.
  */
 public class ReplyDetail implements Serializable {
-    private String content;//评论内容
-    private String user_profile_photo;//用户头像
-    private String user_name;//用户名
+    private String replay_content;//评论内容
+    private String head_img;//用户头像
+    private String nick_name;//用户名
     private String modified_time;//评论时间
     private String user_id;//用户id
+    private String parent_content;//被评论内容
+    private String parent_comment_id;//被评论用户id
 
-    public String getContent() {
-        return content;
+    public String getHead_img() {
+        return head_img;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setHead_img(String head_img) {
+        this.head_img = head_img;
     }
 
-    public String getUser_profile_photo() {
-        return user_profile_photo;
+    public String getNick_name() {
+        return nick_name;
     }
 
-    public void setUser_profile_photo(String user_profile_photo) {
-        this.user_profile_photo = user_profile_photo;
+    public void setNick_name(String nick_name) {
+        this.nick_name = nick_name;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getReplay_content() {
+        return replay_content;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setReplay_content(String replay_content) {
+        this.replay_content = replay_content;
     }
 
-    public String getModified_time() {
-        return modified_time;
+    public String getParent_comment_id() {
+        return parent_comment_id;
     }
 
-    public void setModified_time(String modified_time) {
-        this.modified_time = modified_time;
+    public void setParent_comment_id(String parent_comment_id) {
+        this.parent_comment_id = parent_comment_id;
+    }
+
+    public String getParent_content() {
+        return parent_content;
+    }
+
+    public void setParent_content(String parent_content) {
+        this.parent_content = parent_content;
     }
 
     public String getUser_id() {
@@ -53,14 +63,24 @@ public class ReplyDetail implements Serializable {
         this.user_id = user_id;
     }
 
+    public String getModified_time() {
+        return modified_time;
+    }
+
+    public void setModified_time(String modified_time) {
+        this.modified_time = modified_time;
+    }
+
     @Override
     public String toString() {
-        return "PraiseDetail{" +
-                "content='" + content + '\'' +
-                ", user_profile_photo='" + user_profile_photo + '\'' +
-                ", user_name='" + user_name + '\'' +
+        return "ReplyDetail{" +
+                "replay_content='" + replay_content + '\'' +
+                ", head_img='" + head_img + '\'' +
+                ", nick_name='" + nick_name + '\'' +
                 ", modified_time='" + modified_time + '\'' +
                 ", user_id='" + user_id + '\'' +
+                ", parent_content='" + parent_content + '\'' +
+                ", parent_comment_id='" + parent_comment_id + '\'' +
                 '}';
     }
 }

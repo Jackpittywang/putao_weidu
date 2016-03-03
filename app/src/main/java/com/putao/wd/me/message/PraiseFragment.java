@@ -47,7 +47,6 @@ public class PraiseFragment extends BasicFragment {
         adapter = new PraiseAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
         addListener();
-
         getNotifyList();
     }
 
@@ -72,7 +71,7 @@ public class PraiseFragment extends BasicFragment {
                 new SimpleFastJsonCallback<Praise>(Praise.class, loading) {
                     @Override
                     public void onSuccess(String url, Praise result) {
-                        List<PraiseDetail> details = result.getLikedList();
+                        List<PraiseDetail> details = result.getLike();
                         if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);

@@ -21,7 +21,6 @@ import butterknife.Bind;
  * Created by wango on 2015/12/2.
  */
 public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail,ReplyAdapter.ReplyViewHolder> {
-
     public ReplyAdapter(Context context, List<ReplyDetail> messageReplyItems) {
         super(context, messageReplyItems);
     }
@@ -40,11 +39,11 @@ public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail,ReplyAdapter.Reply
     public void onBindItem(ReplyViewHolder holder, ReplyDetail replyDetail, int position) {
 
 
-        holder.iv_head_icon.setImageURL(replyDetail.getUser_profile_photo());
-        holder.tv_nickname.setText(replyDetail.getUser_name());
+        holder.iv_head_icon.setImageURL(replyDetail.getHead_img());
+        holder.tv_nickname.setText(replyDetail.getNick_name());
         holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getModified_time())));
-        holder.tv_reply_content.setText(replyDetail.getContent());
-//        holder.tv_replied_content.setText(messageReplyItem.getRepliedUserName() + "：" + messageReplyItem.getRepliedcontent());
+        holder.tv_reply_content.setText(replyDetail.getReplay_content());
+        holder.tv_replied_content.setText(replyDetail.getParent_content() );
     }
 
     /**

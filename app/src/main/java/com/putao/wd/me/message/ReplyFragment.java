@@ -74,7 +74,7 @@ public class ReplyFragment extends BasicFragment {
                     @Override
                     public void onSuccess(String url, Reply result) {
                         List<ReplyDetail> details = result.getReply();
-                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
+                        if (details != null && details.size() > 0) {
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                             adapter.addAll(details);

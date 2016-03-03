@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.PraiseDetail;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -39,9 +40,10 @@ public class PraiseAdapter extends LoadMoreAdapter<PraiseDetail, PraiseAdapter.P
 
     @Override
     public void onBindItem(PraiseViewHolder holder, PraiseDetail praiseDetail, int position) {
-//        holder.iv_praise_headericon.setImageURL(messagePraiseItem.getHeadIconUrl());
-//        holder.tv_praise_usernickname.setText(messagePraiseItem.getPraiseUserNickname());
-//        holder.tv_praise_date.setText(messagePraiseItem.getDate());
+        holder.iv_head_icon.setImageURL(praiseDetail.getHead_img());
+        holder.tv_nickname.setText(praiseDetail.getNick_name());
+        holder.tv_praise_date.setText(DateUtils.timeCalculate(Integer.parseInt(praiseDetail.getCreate_time())));
+        //holder.tv_praised_content.setText(praiseDetail.getContent());
         Spanned sstr= Html.fromHtml("<font color=#313131>" + praiseDetail.getContent() + "</font>");
         holder.tv_praised_content.setText(sstr);
     }
@@ -56,6 +58,7 @@ public class PraiseAdapter extends LoadMoreAdapter<PraiseDetail, PraiseAdapter.P
         TextView tv_nickname;//用户昵称
         @Bind(R.id.tv_praise_date)
         TextView tv_praise_date;//赞时间
+
         @Bind(R.id.tv_praised_content)
         EmojiTextView tv_praised_content;//被赞内容
 

@@ -7,16 +7,16 @@ import java.util.List;
  * Created by Administrator on 2015/12/25.
  */
 public class Praise extends Page {
-    private List<PraiseDetail> likedList;
+    private List<PraiseDetail> like;
     private int total_page;
     private int current_page;
 
-    public List<PraiseDetail> getLikedList() {
-        return likedList;
+    public List<PraiseDetail> getLike() {
+        return like;
     }
 
-    public void setLikedList(List<PraiseDetail> likedList) {
-        this.likedList = likedList;
+    public void setLike(List<PraiseDetail> like) {
+        this.like = like;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Praise extends Page {
     @Override
     public String toString() {
         return "Praise{" +
-                "likedList=" + likedList +
+                "like=" + like +
                 ", total_page=" + total_page +
                 ", current_page=" + current_page +
                 '}';
