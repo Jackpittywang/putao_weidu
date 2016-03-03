@@ -344,7 +344,8 @@ public class StartApi {
     /**
      * 回复列表
      */
-    public static final String URL_REPLY_LIST = BASE_URL + "user/comment/reply";
+//    public static final String URL_REPLY_LIST = BASE_URL + "user/comment/reply";
+    public static final String URL_REPLY_LIST = BASE_WEIDU_URL + "message/comments";
 
     /**
      * 回复列表
@@ -360,7 +361,8 @@ public class StartApi {
     /**
      * 赞列表
      */
-    public static final String URL_PRAISE_LIST = BASE_URL + "user/liked";
+//    public static final String URL_PRAISE_LIST = BASE_URL + "user/liked";
+    public static final String URL_PRAISE_LIST = BASE_WEIDU_URL + "message/likes";
 
     /**
      * 赞列表

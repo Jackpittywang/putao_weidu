@@ -262,7 +262,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
-
         if (ONREFRESH == true) {
             getUserInfo();
             getOrderCount();
@@ -271,6 +270,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
+        mImg ="";
         iv_user_icon.setDefaultImage(R.drawable.img_head_default);
         tv_user_nickname.setText("葡星人");
     }

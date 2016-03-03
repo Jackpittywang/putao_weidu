@@ -85,16 +85,24 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         is_detail = args.getBoolean(BUNDLE_IS_DETAIL);
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
         if (is_detail) {
-            if (is_service){
+            if (is_service) {
                 ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
+                networkRequest(StoreApi.getHTML(storeProduct.getProduct_id()), new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        wv_content.loadData(result, "application/octet-stream", "utf-8");
+                        loading.dismiss();
+                    }
+                });
+
+                tv_product_price.setText(storeProduct.getPrice());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+            } else {
+                OrderProduct storeProduct = (OrderProduct) args.getSerializable(BUNDLE_PRODUCT);
                 wv_content.loadUrl(StoreApi.URL_PRODUCT_VIEW_V2 + "/pid=" + storeProduct/*, "application/octet-stream", "utf-8"*/);
                 tv_product_price.setText(storeProduct.getPrice());
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
             }
-            ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
-            wv_content.loadUrl(StoreApi.URL_PRODUCT_VIEW_V2 + "/pid=" + storeProduct/*, "application/octet-stream", "utf-8"*/);
-            tv_product_price.setText(storeProduct.getPrice());
-            mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
         } else {
             StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
             wv_content.loadUrl(storeProduct.getMobile_url());
