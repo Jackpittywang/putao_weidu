@@ -18,9 +18,6 @@ import com.putao.wd.model.ManagementDevice;
 import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.util.List;
@@ -82,6 +79,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        loading.show();
         bundle = new Bundle();
 //        Management
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
