@@ -33,7 +33,6 @@ public class PraiseFragment extends BasicFragment {
 
     private PraiseAdapter adapter;
 
-    private int currentPage = 1;
 
     @Override
     protected int getLayoutId() {
@@ -46,8 +45,9 @@ public class PraiseFragment extends BasicFragment {
         tv_message_empty.setText("还没有赞");
         adapter = new PraiseAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        addListener();
         getNotifyList();
+
+        addListener();
     }
 
     /**
@@ -57,17 +57,29 @@ public class PraiseFragment extends BasicFragment {
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getNotifyList();
+                //getNotifyList();
+                networkRequest(StartApi.getPraiseList(String.valueOf(mPage)),
+                        new SimpleFastJsonCallback<Praise>(Praise.class, loading) {
+                            @Override
+                            public void onSuccess(String url, Praise result) {
+                                adapter.addAll(result.getLike());
+                                rv_content.loadMoreComplete();
+                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                                loading.dismiss();
+                            }
+                        });
             }
         });
     }
-
+    private int mPage;
     /**
      * 获取赞
      */
     private void getNotifyList() {
+        mPage = 1;
         loading.show();
-        networkRequest(StartApi.getPraiseList(String.valueOf(currentPage)),
+        //String.valueOf(currentPage)
+        networkRequest(StartApi.getPraiseList(String.valueOf(mPage)),
                 new SimpleFastJsonCallback<Praise>(Praise.class, loading) {
                     @Override
                     public void onSuccess(String url, Praise result) {
@@ -75,19 +87,28 @@ public class PraiseFragment extends BasicFragment {
                         if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
-                            adapter.addAll(details);
-                        }else{
+                            adapter.replaceAll(details);
+                        } else {
                             rl_no_message.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
                         }
-                        if (result.getTotal_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                        /*if (result.getTotal_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
                             rv_content.loadMoreComplete();
-                        } else rv_content.noMoreLoading();
+                        } else rv_content.noMoreLoading();*/
+                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
                         loading.dismiss();
                     }
                 });
     }
+
+
+    private void checkLoadMoreComplete(int currentPage, int totalPage) {
+        if (currentPage == totalPage)
+            rv_content.noMoreLoading();
+        else mPage++;
+    }
+
 
     @Override
     protected String[] getRequestUrls() {
