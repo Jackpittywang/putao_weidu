@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.explore.ExploreCommonFragment;
+import com.putao.wd.explore.ExploreDetailFragment;
 import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.model.ExploreIndex;
@@ -29,6 +30,7 @@ import com.sunnybear.library.view.image.FastBlur;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -230,7 +232,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                             mExploreIndex.setExploreIndexes(result);
                             mDiskFileCacheHelper.remove(INDEX_CACHE);
                             for (ExploreIndex exploreIndex : mExploreIndexs) {
-                                mDiskFileCacheHelper.remove(exploreIndex.getArticle_id());
+                                mDiskFileCacheHelper.remove(ExploreDetailFragment.COOL_COUNT + exploreIndex.getArticle_id());
+                                mDiskFileCacheHelper.remove(ExploreDetailFragment.COMMENT_COUNT + exploreIndex.getArticle_id());
                             }
                             mDiskFileCacheHelper.put(INDEX_CACHE, mExploreIndex);
                             mFragments = null;

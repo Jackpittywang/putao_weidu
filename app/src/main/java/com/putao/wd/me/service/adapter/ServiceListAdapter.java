@@ -112,13 +112,14 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
                 holder.btn_service_right.setBackgroundResource(R.drawable.btn_order_state_selector);
+                holder.btn_service_right.setTextColor(0xff985CC9);
                 cancelService(holder, id);
                 return "换货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
                 serviceFillExpress(holder, id);
-                return "同意请求";//同意售后
+                return "同意售后";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);
                 return "换货已结束";//售后已结束
@@ -182,13 +183,15 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
+                holder.btn_service_right.setBackgroundResource(R.drawable.btn_order_state_selector);
+                holder.btn_service_right.setTextColor(0xff985CC9);
                 cancelService(holder, id);
                 return "退货请求审核中";//申请售后
             case "2":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_FILL_EXPRESS);
                 serviceFillExpress(holder, id);
-                return "同意请求";//同意售后
+                return "同意售后";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);
                 return "退货已结束";//售后已结束
@@ -213,10 +216,13 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             case "1":
                 holder.ll_operate.setVisibility(View.VISIBLE);
                 holder.btn_service_right.setText(SERVICE_CANCEL);
+                holder.btn_service_right.setBackgroundResource(R.drawable.btn_order_state_selector);
+                holder.btn_service_right.setTextColor(0xff985CC9);
                 cancelService(holder, id);
                 return "退款请求审核中";//申请售后
             case "2":
-                holder.ll_operate.setVisibility(View.GONE);
+                holder.ll_operate.setVisibility(View.VISIBLE);
+                holder.btn_service_right.setText(SERVICE_CANCEL);
                 return "同意退款";//同意售后
             case "3":
                 holder.ll_operate.setVisibility(View.GONE);

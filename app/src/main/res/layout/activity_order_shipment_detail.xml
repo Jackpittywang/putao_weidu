@@ -48,7 +48,7 @@
                 auto:is_active="true"
                 auto:title_text="包裹1" />
 
-            <com.sunnybear.library.view.select.TitleItem
+            <!--<com.sunnybear.library.view.select.TitleItem
                 android:id="@+id/ll_package2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -58,7 +58,7 @@
                 auto:inactive_color="@color/text_color_gray"
                 auto:indicator_color="@color/text_main_color_nor"
                 auto:is_active="false"
-                auto:title_text="包裹2" />
+                auto:title_text="包裹2" />-->
         </com.sunnybear.library.view.select.TitleBar>
     </LinearLayout>
     <!--</HorizontalScrollView>-->

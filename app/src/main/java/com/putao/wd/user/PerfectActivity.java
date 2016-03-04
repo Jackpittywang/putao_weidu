@@ -217,6 +217,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
                     getUploadToken();
                 else
                     upload("jpg", hash, hash);
+                loading.dismiss();
             }
 
             @Override
@@ -276,6 +277,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bitmap bitmap = null;
+            loading.show();
             switch (requestCode) {
                 case CAMERA_REQCODE://相机选择
                     Bundle bundle = data.getExtras();

@@ -53,8 +53,8 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     TitleBar ll_title_bar;
     @Bind(R.id.ll_package1)
     TitleItem ll_package1;
-    @Bind(R.id.ll_package2)
-    TitleItem ll_package2;
+ /*   @Bind(R.id.ll_package2)
+    TitleItem ll_package2;*/
     @Bind(R.id.rv_shipment_detail)
     BasicRecyclerView rv_shipment_detail;//物流列表详细
 
@@ -75,6 +75,16 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
         if (expresses == null || expresses.size() == 0) {
             rl_product.setVisibility(View.GONE);
             return;
+        }
+        expresses = new ArrayList<Express>();
+        expresses.add(new Express());
+        expresses.add(new Express());
+        expresses.add(new Express());
+        expresses.add(new Express());
+        for (int i = 0; i < expresses.size(); i++) {
+            ll_package_list.addView(ll_package1);
+            ll_package1.setTitle("包裹" + i + 2);
+
         }
         ininDate();
         addListener();
@@ -107,12 +117,12 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
             case 0:
                 ll_title_bar.selectTitleItem(R.id.ll_package1);
                 break;
-            case 1:
+            /*case 1:
                 ll_title_bar.selectTitleItem(R.id.ll_package2);
                 break;
             default:
                 ll_title_bar.selectTitleItem(R.id.ll_package2);
-                break;
+                break;*/
         }
         ArrayList<ExpressContent> real_content = express.getReal_content();
         ShipmentDetailAdapter shipmentDetailAdapter = new ShipmentDetailAdapter(mContext, real_content);

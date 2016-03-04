@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.PraiseDetail;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
@@ -44,8 +45,8 @@ public class PraiseAdapter extends LoadMoreAdapter<PraiseDetail, PraiseAdapter.P
         holder.tv_nickname.setText(praiseDetail.getNick_name());
         holder.tv_praise_date.setText(DateUtils.timeCalculate(Integer.parseInt(praiseDetail.getCreate_time())));
         //holder.tv_praised_content.setText(praiseDetail.getContent());
-        Spanned sstr= Html.fromHtml("<font color=#313131>" + praiseDetail.getContent() + "</font>");
-        holder.tv_praised_content.setText(sstr);
+//        Spanned sstr= Html.fromHtml("<font color=#313131>" + praiseDetail.getContent() + "</font>");
+        holder.tv_praised_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + praiseDetail.getContent());
     }
 
     /**

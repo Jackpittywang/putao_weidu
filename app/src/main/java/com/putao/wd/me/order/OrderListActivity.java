@@ -301,6 +301,8 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                                         break;
                                     case TYPE_WAITING_PAY:
                                         adapter.delete(order);
+                                        if (adapter.getItemCount()==1)
+                                            rl_no_order.setVisibility(View.GONE);
                                         break;
                                 }
                                 currentPage = 1;

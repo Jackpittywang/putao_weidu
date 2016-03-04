@@ -13,6 +13,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDRequestHelper;
+import com.putao.wd.me.message.RemindFragment;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductDetail;
@@ -20,6 +21,7 @@ import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.user.LoginActivity;
@@ -46,8 +48,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     public static final String BUNDLE_PRODUCT = "bundle_product";
     public static final String BUNDLE_IS_DETAIL = "bundle_is_detail";
     public static final String BUNDLE_IS_SERVICE = "bundle_is_service";
+    public static final String BUNDLE_IS_REMIND = "bundle_is_remind";
     public boolean is_detail = false;
     public boolean is_service = false;
+    public boolean is_remind = false;
 
     @Bind(R.id.rl_main)
     RelativeLayout rl_main;
@@ -88,6 +92,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         addNavigation();
         is_detail = args.getBoolean(BUNDLE_IS_DETAIL);
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
+        is_remind = args.getBoolean(BUNDLE_IS_REMIND);
         if (is_detail) {
             if (is_service) {
                 ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
@@ -104,6 +109,12 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 tv_product_price.setText(storeProduct.getPrice());
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getProduct_id());
             }
+        } else if (is_remind) {
+            String storeProduct = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
+            ll_join_car.setClickable(false);
+            wv_content.loadUrl(PTWDRequestHelper.store()
+                    .addParam("pid", storeProduct)
+                    .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
         } else {
             StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
             wv_content.loadUrl(storeProduct.getMobile_url());

@@ -37,11 +37,11 @@ public class PaySuccessActivity extends PTWDActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back_store://返回葡商城
-                ActivityManager.getInstance().popOtherActivity(MainActivity.class);
+//                ActivityManager.getInstance().popOtherActivity(MainActivity.class);
                 finish();
                 break;
             case R.id.tv_look_order://查看订单
-                ActivityManager.getInstance().popOtherActivity(MainActivity.class);
+//                ActivityManager.getInstance().popOtherActivity(MainActivity.class);
                 startActivity(OrderDetailActivity.class, args);
                 finish();
                 break;

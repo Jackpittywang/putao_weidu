@@ -98,7 +98,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                 mTvIdentity = "WAIPO";
                 break;
             default:
-                mTvIdentity = "";
+                mTvIdentity = "QITA";
         }
         switch (tv_sex.getText().toString()) {
             case "女":

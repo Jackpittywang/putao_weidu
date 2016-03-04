@@ -59,6 +59,11 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
     public void onBindItem(OrderListViewHolder holder, final Order order, final int position) {
         mOrderStatus = order.getOrderStatusID();
         checkOrder(holder, mOrderStatus);
+        if (3 == order.getShipping_status()) {
+            holder.tv_order_status.setText("退签");
+            holder.tv_order_status.setTextColor(ColorConstant.TEXT_COLOR);
+            setBtn(holder, "退签7日可申请售后", "申请售后", "");
+        }
         holder.btn_order_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

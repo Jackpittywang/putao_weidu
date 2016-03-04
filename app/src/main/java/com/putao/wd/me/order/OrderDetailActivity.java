@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.putao.wd.ColorConstant;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -354,7 +355,10 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
             case OrderCommonState.ORDER_EXCEPTION:
                 rl_order_info.setVisibility(View.GONE);
                 break;
-
+        }
+        if (3 == mOrderDetail.getShipping_status()) {
+            tv_order_status.setText("退签");
+            btn_order_left.setText("申请售后");
         }
     }
 

@@ -330,7 +330,9 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
                         ToastUtils.showToastShort(mContext, "申请提交成功,请等待审核");
                         loading.dismiss();
                         finish();
-                        ActivityManager.getInstance().finishActivity(ServiceChooseActivity.class);
+                        ActivityManager.getInstance().removeCurrentActivity();
+                        ActivityManager.getInstance().finishCurrentActivity();
+                        ActivityManager.getInstance().finishCurrentActivity();
                         Bundle bundle = new Bundle();
                         bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
                         startActivity(OrderListActivity.class, bundle);

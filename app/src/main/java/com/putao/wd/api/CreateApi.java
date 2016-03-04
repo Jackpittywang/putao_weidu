@@ -56,6 +56,19 @@ public class CreateApi {
                 .addParam(REQUEST_PAGE, page + "")
                 .build(RequestMethod.POST, URL_CREATE_LISTS);
     }
+    /**
+     * 创造列表
+     */
+    public static final String URL_CREATE_DETAIL = BASE_URL + "/create/create/detail";
+
+    /**
+     * 创造列表
+     */
+    public static Request getCreateDetail(String id) {
+        return PTWDRequestHelper.start()
+                .addParam(ID, id + "")
+                .build(RequestMethod.POST, URL_CREATE_DETAIL);
+    }
 
     /**
      * 我的关注

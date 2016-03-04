@@ -38,6 +38,7 @@ public class RemindFragment extends BasicFragment {
     TextView tv_message_empty;
 
     private RemindAdapter adapter;
+    public static final String BUNDLE_REMIND_PRODUCTID = "bundle_remind_productid";
 
     private int currentPage = 1;
 
@@ -128,13 +129,14 @@ public class RemindFragment extends BasicFragment {
     private void setBlur(RemindDetail remindDetail) {
         String link_type = remindDetail.getLink_type();
         Bundle bundle = new Bundle();
-        switch (link_type){
+        switch (link_type) {
             case "product"://精选商品
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, remindDetail.getUrl());
+                bundle.putSerializable(BUNDLE_REMIND_PRODUCTID, remindDetail.getUrl());
+                bundle.putBoolean(ProductDetailActivity.BUNDLE_IS_REMIND, true);
                 startActivity(ProductDetailActivity.class, bundle);
                 break;
             case "explore"://探索文章
-                bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID,remindDetail.getUrl());
+                bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID, remindDetail.getUrl());
                 startActivity(ExploreMoreDetailActivity.class, bundle);
                 break;
             case "idea"://创想

@@ -140,9 +140,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
 //        ll_me.requestDisallowInterceptTouchEvent(true);
 //        ll_me.setOnTouchListener(this);
-        if (ONREFRESH) {
-            getUserInfo();
-        }
+        getUserInfo();
     }
 
     private void setDefaultBlur() {
@@ -259,10 +257,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
-        if (ONREFRESH) {
-            getUserInfo();
-            getOrderCount();
-        }
+        mImg = "";
+        getUserInfo();
+        getOrderCount();
     }
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.ReplyDetail;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
@@ -20,7 +21,7 @@ import butterknife.Bind;
  * 消息中心：“回复”适配器
  * Created by wango on 2015/12/2.
  */
-public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail,ReplyAdapter.ReplyViewHolder> {
+public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail, ReplyAdapter.ReplyViewHolder> {
     public ReplyAdapter(Context context, List<ReplyDetail> messageReplyItems) {
         super(context, messageReplyItems);
     }
@@ -37,13 +38,11 @@ public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail,ReplyAdapter.Reply
 
     @Override
     public void onBindItem(ReplyViewHolder holder, ReplyDetail replyDetail, int position) {
-
-
         holder.iv_head_icon.setImageURL(replyDetail.getHead_img());
         holder.tv_nickname.setText(replyDetail.getNick_name());
         holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getModified_time())));
         holder.tv_reply_content.setText(replyDetail.getReplay_content());
-        holder.tv_replied_content.setText(replyDetail.getParent_content() );
+        holder.tv_replied_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content());
     }
 
     /**

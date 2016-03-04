@@ -204,9 +204,9 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
         }
         btn_service_refund.setClickable(refund);
         btn_service_refund.setBackgroundResource(refund ? R.drawable.btn_order_express_selector : R.drawable.text_userinfo_limit_shape);
-        btn_service_back.setEnabled(back);
+        btn_service_back.setClickable(back);
         btn_service_back.setBackgroundResource(back ? R.drawable.btn_order_express_selector : R.drawable.text_userinfo_limit_shape);
-        btn_service_change.setEnabled(change);
+        btn_service_change.setClickable(change);
         btn_service_change.setBackgroundResource(change ? R.drawable.btn_order_express_selector : R.drawable.text_userinfo_limit_shape);
     }
 
