@@ -48,6 +48,24 @@
                 android:text="a"
                 android:textColor="@color/label_create_text_selector"
                 android:textSize="@dimen/text_size_16sp" />
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:text="a"
+                android:gravity="center"
+
+                />
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:text="a"
+                android:gravity="center"
+
+                />
 
             <!--<com.sunnybear.library.view.select.TitleItem
                 android:id="@+id/ll_package2"
@@ -95,6 +113,7 @@
                 android:text="还没有物流信息"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_20sp" />
+
         </RelativeLayout>
 
         <ScrollView

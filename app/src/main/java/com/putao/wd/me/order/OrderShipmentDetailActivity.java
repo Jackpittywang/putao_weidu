@@ -1,26 +1,17 @@
 package com.putao.wd.me.order;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.me.order.adapter.ShipmentDetailAdapter;
 import com.putao.wd.model.Express;
-import com.putao.wd.model.ExpressContent;
-import com.putao.wd.model.Product;
-import com.sunnybear.library.util.DensityUtil;
-import com.sunnybear.library.view.image.ImageDraweeView;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 
@@ -37,7 +28,7 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     public static final String PACKAGINDEX = "packageIndex";
     /*  @Bind(R.id.hsv_package_list)
       HorizontalScrollView hsv_package_list;// 包裹列表的horizontalscrollview*/
-    @Bind(R.id.tv_order_goods_text)
+   /* @Bind(R.id.tv_order_goods_text)
     TextView tv_order_goods_text;
     @Bind(R.id.img_goods)
     ImageDraweeView img_goods;//图片
@@ -60,7 +51,7 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     @Bind(R.id.rl_no_shipment)
     RelativeLayout rl_no_shipment;
     @Bind(R.id.rv_shipment_detail)
-    RecyclerView rv_shipment_detail;
+    RecyclerView rv_shipment_detail;*/
 
     private Express express;
     private ArrayList<Express> expresses;
@@ -70,27 +61,74 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_order_shipment_detail;
+        return R.layout.activity_order_shipment_detail2;
+       // return R.layout.activity_order_shipment_detail;
     }
 
+   /* @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+    }*/
+
+
+    @Bind(R.id.pager)
+    ViewPager pager;
+    @Bind(R.id.indicator)
+    TabPageIndicator indicator;
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
+        FragmentPagerAdapter adapter = new OrderShipmentDetail(getSupportFragmentManager());
+
+        //ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+       // TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
+        //indicator.set
+    }
+    private static final String[] CONTENT = new String[] { "包裹1", "包裹2", "包裹3", "包裹4", "包裹5", "包裹6","包裹7","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8" };
+
+    class OrderShipmentDetail extends FragmentPagerAdapter{
+
+        public OrderShipmentDetail(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            //设置fragment
+            return  OrderShipmentDetailFragment.newInstance(CONTENT[position % CONTENT.length]);
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return CONTENT[position % CONTENT.length].toUpperCase();
+        }
+
+        @Override
+        public int getCount() {
+            return CONTENT.length;
+        }
+    }
+
+
+       /* expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
         if (null == expresses || expresses.size() == 0) return;
         rg_title_bar.removeAllViews();
         int width = (int) DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             RadioButton radioButton = new RadioButton(mContext);
-            width = width / expresses.size();
-            radioButton.getLayoutParams().width = width;
-            rg_title_bar.addView(radioButton);
             radioButton.setText("包裹" + (i + 1));
+
+
+            rg_title_bar.addView(radioButton);
         }
+        rg_title_bar.check(0);
+
         rg_title_bar.setOnCheckedChangeListener(this);
 //        ininDate();
-//        refreshView(express);
-    }
+//        refreshView(express);*/
+
 
     private void ininDate() {
         packageIndex = args.getInt(PACKAGINDEX);
@@ -106,10 +144,12 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 //        RadioButton tempButton = (RadioButton) findViewById(checkedId);
-        refreshView(expresses.get(checkedId));
+        group.check(checkedId);
+//        refreshView(expresses.get(checkedId));
     }
 
-    private void refreshView(Express express) {
+
+   /* private void refreshView(Express express) {
         ArrayList<Product> products = express.getProduct();
         Product product = products.get(0);
         ArrayList<ExpressContent> real_content = express.getReal_content();
@@ -129,5 +169,5 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
             ShipmentDetailAdapter shipmentDetailAdapter = new ShipmentDetailAdapter(mContext, real_content);
             rv_shipment_detail.setAdapter(shipmentDetailAdapter);
         }
-    }
+    }*/
 }
