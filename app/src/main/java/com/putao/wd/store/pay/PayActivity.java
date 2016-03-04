@@ -161,7 +161,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(IndexActivity.class);
+//            startActivity(IndexActivity.class);
             finish();
             return true;
         }
@@ -171,7 +171,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        startActivity(IndexActivity.class);
+//        startActivity(IndexActivity.class);
         finish();
     }
 }

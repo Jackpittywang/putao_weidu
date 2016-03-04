@@ -174,5 +174,19 @@
         <item name="android:background">@color/white</item>
         <item name="android:paddingLeft">5dip</item>
     </style>
+    <!--物流标题-->
+    <style name="shipment_title">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableBottom">@drawable/shipment_bottom_shape_selector</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">包裹1</item>
+        <item name="android:textColor">@color/label_create_text_selector</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+    </style>
 
 </resources>
