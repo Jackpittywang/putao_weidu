@@ -83,7 +83,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
-        vp_content.setOffscreenPageLimit(1);
+        vp_content.setOffscreenPageLimit(3);
         mHandlerThread = new HandlerThread("blurThread");
         mHandlerThread.start();
         Looper looper = mHandlerThread.getLooper();
