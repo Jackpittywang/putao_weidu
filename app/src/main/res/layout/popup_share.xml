@@ -66,47 +66,6 @@
                         android:text="@string/wechat_friend_circle" />
                 </LinearLayout>
 
-                <!--QQ好友-->
-                <LinearLayout
-                    android:id="@+id/ll_qq_friend"
-                    style="@style/style_share_button"
-                    android:paddingRight="8dp"
-                    android:visibility="visible">
-
-                    <ImageView
-                        style="@style/style_share_icon"
-                        android:src="@drawable/icon_40_03" />
-
-                    <TextView
-                        style="@style/style_share_text"
-                        android:text="@string/qq" />
-                </LinearLayout>
-
-                <!--QQ空间-->
-                <LinearLayout
-                    android:id="@+id/ll_qq_zone"
-                    style="@style/style_share_button"
-                    android:paddingRight="8dp"
-                    android:visibility="visible">
-
-                    <ImageView
-                        style="@style/style_share_icon"
-                        android:src="@drawable/icon_40_04" />
-
-                    <TextView
-                        style="@style/style_share_text"
-                        android:text="@string/qq_zone" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!--第二排-->
-            <LinearLayout
-                android:id="@+id/ll_second"
-                style="@style/style_share_row"
-                android:visibility="visible">
-
-
                 <!--复制链接-->
                 <LinearLayout
                     android:id="@+id/ll_copy_url"
@@ -122,6 +81,62 @@
                         style="@style/style_share_text"
                         android:text="@string/copy_url" />
                 </LinearLayout>
+                <!-- &lt;!&ndash;QQ好友&ndash;&gt;
+                 <LinearLayout
+                     android:id="@+id/ll_qq_friend"
+                     style="@style/style_share_button"
+                     android:paddingRight="8dp"
+                     android:visibility="visible">
+
+                     <ImageView
+                         style="@style/style_share_icon"
+                         android:src="@drawable/icon_40_03" />
+
+                     <TextView
+                         style="@style/style_share_text"
+                         android:text="@string/qq" />
+                 </LinearLayout>
+
+                 &lt;!&ndash;QQ空间&ndash;&gt;
+                 <LinearLayout
+                     android:id="@+id/ll_qq_zone"
+                     style="@style/style_share_button"
+                     android:paddingRight="8dp"
+                     android:visibility="visible">
+
+                     <ImageView
+                         style="@style/style_share_icon"
+                         android:src="@drawable/icon_40_04" />
+
+                     <TextView
+                         style="@style/style_share_text"
+                         android:text="@string/qq_zone" />
+                 </LinearLayout>-->
+
+            </LinearLayout>
+
+            <!--第二排-->
+            <LinearLayout
+                android:id="@+id/ll_second"
+                style="@style/style_share_row"
+                android:visibility="gone">
+
+
+                <!--复制链接-->
+                <!--  <LinearLayout
+                      android:id="@+id/ll_copy_url"
+                      style="@style/style_share_button"
+                      android:paddingLeft="8dp"
+                      android:visibility="visible">
+
+                      <ImageView
+                          style="@style/style_share_icon"
+                          android:src="@drawable/icon_40_06" />
+
+                      <TextView
+                          style="@style/style_share_text"
+                          android:text="@string/copy_url" />
+                  </LinearLayout>-->
                 <!--新浪微博-->
                 <LinearLayout
                     android:id="@+id/ll_sina_weibo"

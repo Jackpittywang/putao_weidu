@@ -31,7 +31,7 @@ public class ExploreApi {
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
     private static final String STATUS = "status";//控制设备名称
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api.weidu.start.wang/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -195,10 +195,10 @@ public class ExploreApi {
     /**
      * 查询对应游戏下的陪伴数据
      */
-    public static Request getDiaryData(String productId,int page) {
+    public static Request getDiaryData(String productId, int page) {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_PRODUCT_ID, productId)
-                .addParam(REQUEST_PAGE, page+"")
+                .addParam(REQUEST_PAGE, page + "")
                 .build(RequestMethod.POST, URL_DIARY_DATA);
     }
 

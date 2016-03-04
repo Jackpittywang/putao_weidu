@@ -42,8 +42,8 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     @OnClick({
             R.id.ll_wechat,
             R.id.ll_wechat_friend_circle,
-            R.id.ll_qq_friend,
-            R.id.ll_qq_zone,
+           /* R.id.ll_qq_friend,
+            R.id.ll_qq_zone,*/
             /*R.id.ll_sina_weibo,*/
             R.id.ll_copy_url,
             R.id.tv_cancel
@@ -58,12 +58,12 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                 case R.id.ll_wechat_friend_circle://微信朋友圈
                     mOnShareClickListener.onWechatFriend();
                     break;
-                case R.id.ll_qq_friend://QQ好友
+                /*case R.id.ll_qq_friend://QQ好友
                     mOnShareClickListener.onQQFriend();
                     break;
                 case R.id.ll_qq_zone://QQ空间
                     mOnShareClickListener.onQQZone();
-                    break;
+                    break;*/
 //                case R.id.ll_sina_weibo://新浪微博
 //                    mOnShareClickListener.onSinaWeibo();
 //                    break;

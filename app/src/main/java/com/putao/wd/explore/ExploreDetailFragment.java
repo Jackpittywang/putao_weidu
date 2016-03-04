@@ -250,4 +250,10 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             mDiskFileCacheHelper.put(COMMENT_COUNT + mExploreIndex.getArticle_id(), mCount_comments + "", 60 * 1000);
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        wb_explore_detail.onPause();
+    }
 }

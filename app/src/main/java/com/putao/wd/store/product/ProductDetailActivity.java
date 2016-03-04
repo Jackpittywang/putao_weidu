@@ -110,11 +110,23 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getProduct_id());
             }
         } else if (is_remind) {
-            String storeProduct = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
-            ll_join_car.setClickable(false);
+            String product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
             wv_content.loadUrl(PTWDRequestHelper.store()
-                    .addParam("pid", storeProduct)
+                    .addParam("pid", product_id)
                     .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+            networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
+                @Override
+                public void onSuccess(String url, ProductDetail result) {
+                    if (null == result) {
+                        finish();
+                        return;
+                    }
+                    detail = result;
+                    tv_product_price.setText(result.getPrice());
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());
+                    loading.dismiss();
+                }
+            });
         } else {
             StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
             wv_content.loadUrl(storeProduct.getMobile_url());

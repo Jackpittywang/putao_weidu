@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.putao.wd.ColorConstant;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
@@ -200,6 +201,10 @@ public class ServiceChooseActivity extends PTWDActivity<GlobalApplication> imple
                     back = back && true;
                     change = change && true;
                     break;
+            }
+            if (3 == mOrder.getShipping_status()) {
+                back = false;
+                change = false;
             }
         }
         btn_service_refund.setClickable(refund);
