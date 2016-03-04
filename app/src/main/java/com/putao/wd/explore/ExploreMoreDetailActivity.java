@@ -92,7 +92,6 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200);
         mHeight = (mWidth * 9) / 16 + 2;
         initData();
-
     }
 
     private void initData() {

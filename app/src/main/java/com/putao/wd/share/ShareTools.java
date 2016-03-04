@@ -126,7 +126,6 @@ public class ShareTools {
     public static void qqWebShare(Context context, boolean isQQ, String title, String text, String imageUrl, String url) {
 
 
-
         WechatHelper.ShareParams params = null;
         if (isQQ)
             params = new Wechat.ShareParams();

@@ -8,9 +8,11 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.me.message.adapter.NotifyAdapter;
+import com.putao.wd.me.order.OrderDetailActivity;
 import com.putao.wd.model.Notify;
 import com.putao.wd.model.NotifyDetail;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -77,7 +79,7 @@ public class NotifyFragment extends BasicFragment {
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                             adapter.replaceAll(details);
-                        }else {
+                        } else {
                             rl_no_message.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
                         }
@@ -113,5 +115,17 @@ public class NotifyFragment extends BasicFragment {
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+
+    @Subcriber(tag=NotifyAdapter.NOTIF_REMIND)
+    private void setNotif(NotifyDetail notifyDetail){
+        String type=notifyDetail.getType();
+        Bundle bundle=new Bundle();
+        switch (type){
+            case "9"://订单详情
+                startActivity(OrderDetailActivity.class);
+                break;
+        }
     }
 }

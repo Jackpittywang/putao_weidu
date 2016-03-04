@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.NotifyDetail;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -21,7 +22,7 @@ import butterknife.Bind;
  * Created by wango on 2015/12/1.
  */
 public class NotifyAdapter extends LoadMoreAdapter<NotifyDetail, NotifyAdapter.NotifyViewHolder> {
-
+    public final  static  String NOTIF_REMIND = "notif_remind";
     public NotifyAdapter(Context context, List<NotifyDetail> messagenotifyitems) {
         super(context, messagenotifyitems);
     }
@@ -37,7 +38,8 @@ public class NotifyAdapter extends LoadMoreAdapter<NotifyDetail, NotifyAdapter.N
     }
 
     @Override
-    public void onBindItem(NotifyViewHolder holder, NotifyDetail notifyDetail, int position) {
+    public void onBindItem(NotifyViewHolder holder, final NotifyDetail notifyDetail, int position) {
+
         holder.tv_notify_content.setText(notifyDetail.getContent());
         holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(notifyDetail.getCreate_time())));
         if (StringUtils.isEmpty(notifyDetail.getImg_url()))
@@ -46,6 +48,13 @@ public class NotifyAdapter extends LoadMoreAdapter<NotifyDetail, NotifyAdapter.N
             holder.iv_action_icon.setVisibility(View.VISIBLE);
             holder.iv_action_icon.setImageURL(notifyDetail.getImg_url());
         }
+
+        holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusHelper.post(notifyDetail,NOTIF_REMIND);
+            }
+        });
     }
 
 

@@ -117,7 +117,7 @@ public class NavigationBar extends RelativeLayout {
         if (getId() == View.NO_ID)
             setId(R.id.navigation_bar);
         //setRightTitleIcon
-        if(mHasRightIcon){
+        if (mHasRightIcon) {
             mRightIconView.setBackground(mRightIconIndicatorDrawable);
             mRightIconView.setTextColor(mRightIconTextColor);
         }
