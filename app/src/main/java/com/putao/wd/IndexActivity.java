@@ -14,7 +14,10 @@ import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.store.pay.PaySuccessActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TabBar;
@@ -29,6 +32,7 @@ import butterknife.Bind;
  */
 public class IndexActivity extends BasicFragmentActivity {
     public static boolean isNotRefreshUserInfo = false;
+    public final static String PAY_ALL="pay_all";
 
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;
@@ -160,5 +164,11 @@ public class IndexActivity extends BasicFragmentActivity {
     @Subcriber(tag = PutaoExploreFragment.BLUR)
     private void setBlur(Bitmap bitmap) {
         iv_blur.setDefaultImage(bitmap);
+    }
+
+    @Subcriber(tag = PaySuccessActivity.PAY_FINISH)
+    private void setPay(String pay){
+        tb_tab.setTabItemSelected(R.id.ti_create);
+        ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }
 }

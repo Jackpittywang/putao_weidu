@@ -61,7 +61,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toEndOf="@+id/img_goods"
                     android:layout_toRightOf="@+id/img_goods"
-                    android:text="快递单号"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
             </LinearLayout>
@@ -92,7 +91,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toEndOf="@+id/img_goods"
                     android:layout_toRightOf="@+id/img_goods"
-                    android:text="0000000000000"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
             </LinearLayout>
@@ -130,4 +128,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

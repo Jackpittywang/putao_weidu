@@ -49,12 +49,12 @@ public class NotifyAdapter extends LoadMoreAdapter<NotifyDetail, NotifyAdapter.N
             holder.iv_action_icon.setImageURL(notifyDetail.getImg_url());
         }
 
-        holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBusHelper.post(notifyDetail,NOTIF_REMIND);
-            }
-        });
+//        holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EventBusHelper.post(notifyDetail,NOTIF_REMIND);
+//            }
+//        });
     }
 
 

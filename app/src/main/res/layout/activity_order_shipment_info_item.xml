@@ -42,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="-------------"
         android:textColor="#55313131"
         android:textSize="@dimen/text_size_14sp" />
 
@@ -54,7 +53,6 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="---------------------------------------------------------------------------------------"
         android:textColor="#55313131"
         android:textSize="@dimen/text_size_16sp" />
         <View

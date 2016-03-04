@@ -10,7 +10,9 @@ import android.widget.RadioGroup;
 
 import com.putao.wd.R;
 import com.putao.wd.created.FancyFragment;
+import com.putao.wd.store.pay.PaySuccessActivity;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 
@@ -94,5 +96,11 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
                 vp_content.setCurrentItem(2, false);
                 break;
         }
+    }
+
+    @Subcriber(tag = PaySuccessActivity.PAY_FINISH)
+    private void setPay(String pay){
+        rg_create.check(R.id.rb_step3);
+        vp_content.setCurrentItem(2, false);
     }
 }

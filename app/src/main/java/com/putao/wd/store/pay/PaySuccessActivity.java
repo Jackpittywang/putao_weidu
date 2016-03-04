@@ -3,11 +3,13 @@ package com.putao.wd.store.pay;
 import android.os.Bundle;
 import android.view.View;
 
+import com.putao.wd.IndexActivity;
 import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.OrderDetailActivity;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 
 import butterknife.OnClick;
 
@@ -17,6 +19,7 @@ import butterknife.OnClick;
  */
 public class PaySuccessActivity extends PTWDActivity implements View.OnClickListener {
 
+    public final static String PAY_FINISH="pay_finish";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_pay_success;
@@ -37,7 +40,7 @@ public class PaySuccessActivity extends PTWDActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back_store://返回葡商城
-//                ActivityManager.getInstance().popOtherActivity(MainActivity.class);
+                EventBusHelper.post(PAY_FINISH,PAY_FINISH);
                 finish();
                 break;
             case R.id.tv_look_order://查看订单

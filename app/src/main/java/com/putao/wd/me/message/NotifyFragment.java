@@ -118,14 +118,14 @@ public class NotifyFragment extends BasicFragment {
     }
 
 
-    @Subcriber(tag=NotifyAdapter.NOTIF_REMIND)
-    private void setNotif(NotifyDetail notifyDetail){
-        String type=notifyDetail.getType();
-        Bundle bundle=new Bundle();
-        switch (type){
-            case "9"://订单详情
-                startActivity(OrderDetailActivity.class);
-                break;
-        }
-    }
+//    @Subcriber(tag=NotifyAdapter.NOTIF_REMIND)
+//    private void setNotif(NotifyDetail notifyDetail){
+//        String type=notifyDetail.getType();
+//        Bundle bundle=new Bundle();
+//        switch (type){
+//            case "9"://订单详情
+//                startActivity(OrderDetailActivity.class);
+//                break;
+//        }
+//    }
 }
