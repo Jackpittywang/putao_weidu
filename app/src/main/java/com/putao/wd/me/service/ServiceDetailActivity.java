@@ -199,17 +199,17 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             case "12":
                 btn_execute.setText("填写快递单号");
                 break;
-            case "14":
+            /*case "14":
                 break;
             case "15":
                 break;
             case "16":
-                break;
+                break;*/
             case "17":
                 selectStepExpress();
                 break;
-            case "13":
-                break;
+            /*case "13":
+                break;*/
             case "18":
                 selectStepComplete();
                 break;
@@ -218,13 +218,13 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 break;
             case "22":
                 btn_execute.setText("填写快递单号");
-            case "24":
-                break;
+            /*case "24":
+                break;*/
             case "25":
                 selectStepExpress();
                 break;
-            case "23":
-                break;
+            /*case "23":
+                break;*/
             case "28":
                 selectStepComplete();
                 break;
@@ -233,10 +233,13 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 selectStepDeal();
                 btn_execute.setText("取消申请");
                 break;
-            case "33":
-                break;
+            /*case "33":
+                break;*/
             case "38":
                 setBackMoneyStepComplete();
+                break;
+            default:
+                btn_execute.setVisibility(View.GONE);
                 break;
         }
 //        btn_execute.setVisibility(View.VISIBLE);
