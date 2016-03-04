@@ -220,5 +220,11 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     public void evenDeleteCommentCount(int position) {
         tv_count_comment.setText(--mCount_comments + "");
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        wb_explore_detail.onPause();
+    }
 }
 

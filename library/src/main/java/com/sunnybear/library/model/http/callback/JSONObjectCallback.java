@@ -46,7 +46,11 @@ public abstract class JSONObjectCallback extends RequestCallback {
                         Bundle success = (Bundle) msg.obj;
                         String url_success = success.getString(KEY_URL);
                         String json = success.getString(KEY_JSON);
-                        onSuccess(url_success, JSON.parseObject(json));
+                        try {
+                            onSuccess(url_success, JSON.parseObject(json));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         //请求完成
                         onFinish(url_success, true, "");
                         break;
@@ -116,10 +120,10 @@ public abstract class JSONObjectCallback extends RequestCallback {
         int statusCode = response.code();
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
         if (response.isSuccessful()) {
-            if (isNetwork)
+           /* if (isNetwork)
                 Logger.d(TAG, "网络请求url:" + url + "\n" + "网络请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
             else
-                Logger.d(TAG, "缓存请求url:" + url + "\n" + "缓存请求成功,请求结果=" + JsonUtils.jsonFormatter(json));
+                Logger.d(TAG, "缓存请求url:" + url + "\n" + "缓存请求成功,请求结果=" + JsonUtils.jsonFormatter(json));*/
             if (!TextUtils.isEmpty(json)) {
                 Bundle bundle = new Bundle();
                 bundle.putString(KEY_URL, url);

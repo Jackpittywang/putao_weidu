@@ -118,7 +118,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     public static final String EVENT_CONCERNS_REFRESH = "event_concerns_refresh";
     public static final String EVENT_EXPLORER_ID = "event_explorer_id";
     public static final String EVENT_IS_REMIND = "event_is_remind";
-    private boolean isRemind=false;
+    private boolean isRemind = false;
     private boolean isConcernsInit;
     private boolean isConcernsRefresh = false;
     public static final String POSITION = "position";
@@ -150,9 +150,9 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
         mSharePopupWindow = new SharePopupWindow(mContext);
         isDid = false;
         addListener();
-        if (isRemind){
+        if (isRemind) {
             getRemindCreate(args.getString(EVENT_EXPLORER_ID));
-        }else {
+        } else {
             mCreate = (Create) args.getSerializable(CREATE);
             mPosition = args.getInt(POSITION);
             isShowProgress = args.getBoolean(SHOW_PROGRESS);
@@ -546,5 +546,11 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                         loading.dismiss();
                     }
                 });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        wv_content.onPause();
     }
 }
