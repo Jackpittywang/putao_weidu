@@ -249,7 +249,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                         addFragments();
                         addDate(vp_content.getCurrentItem());
                     }
-                });
+                }, false);
     }
 
     @Override

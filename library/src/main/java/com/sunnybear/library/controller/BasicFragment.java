@@ -259,7 +259,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param targetClass 目标Activity类型
      */
     protected void startActivity(Class<? extends Activity> targetClass) {
-        ((BasicFragmentActivity)mActivity).startActivity(targetClass);
+        ((BasicFragmentActivity) mActivity).startActivity(targetClass);
     }
 
     /**
@@ -269,7 +269,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param args        传递参数
      */
     public void startActivity(Class<? extends Activity> targetClass, Bundle args) {
-        ((BasicFragmentActivity)mActivity).startActivity(targetClass, args);
+        ((BasicFragmentActivity) mActivity).startActivity(targetClass, args);
     }
 
     /**
@@ -278,7 +278,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param action 隐式动作
      */
     public void startActivity(String action) {
-        ((BasicFragmentActivity)mActivity).startActivity(action);
+        ((BasicFragmentActivity) mActivity).startActivity(action);
     }
 
     /**
@@ -287,7 +287,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param action 隐式动作
      */
     public void startActivity(String action, Bundle args) {
-        ((BasicFragmentActivity)mActivity).startActivity(action, args);
+        ((BasicFragmentActivity) mActivity).startActivity(action, args);
     }
 
     /**
@@ -306,7 +306,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      * @param targetClass 目标Service类型
      */
     public void startService(Class<? extends Service> targetClass) {
-        ((BasicFragmentActivity)mActivity).startService(targetClass);
+        ((BasicFragmentActivity) mActivity).startService(targetClass);
     }
 
     /**
@@ -354,6 +354,21 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
         if (request == null)
             throw new NullPointerException("request为空");
         loading.show();
+        mOkHttpClient.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     */
+    @Deprecated
+    protected void networkRequest(Request request, Callback callback, boolean isLoadingShow) {
+        if (request == null)
+            throw new NullPointerException("request为空");
+        if (isLoadingShow)
+            loading.show();
         mOkHttpClient.newCall(request).enqueue(callback);
     }
 
