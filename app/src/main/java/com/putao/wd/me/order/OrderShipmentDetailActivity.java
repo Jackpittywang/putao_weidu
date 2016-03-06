@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.RadioGroup;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -21,75 +20,67 @@ import butterknife.Bind;
  * 物流信息
  * Created by yanguoqiang on 15/11/29.
  */
-public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication> implements RadioGroup.OnCheckedChangeListener {
+public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String EXPRESS = "express";
     public static final String PACKAGECOUNT = "packageCount";
     public static final String PACKAGINDEX = "packageIndex";
-    /*  @Bind(R.id.hsv_package_list)
-      HorizontalScrollView hsv_package_list;// 包裹列表的horizontalscrollview*/
-   /* @Bind(R.id.tv_order_goods_text)
-    TextView tv_order_goods_text;
-    @Bind(R.id.img_goods)
-    ImageDraweeView img_goods;//图片
-    @Bind(R.id.tv_name)
-    TextView tv_name;
-    @Bind(R.id.tv_number)
-    TextView tv_number;
-    @Bind(R.id.tv_shipment_text)
-    TextView tv_shipment_text;
-    @Bind(R.id.rl_product)
-    RelativeLayout rl_product;
-    @Bind(R.id.tv_package_status)
-    TextView tv_package_status;
-    @Bind(R.id.ll_package_list)
-    LinearLayout ll_package_list;
-    @Bind(R.id.rg_title_bar)
-    RadioGroup rg_title_bar;
-    @Bind(R.id.sc_shipment)
-    ScrollView sc_shipment;
-    @Bind(R.id.rl_no_shipment)
-    RelativeLayout rl_no_shipment;
-    @Bind(R.id.rv_shipment_detail)
-    RecyclerView rv_shipment_detail;*/
-
     private Express express;
     private ArrayList<Express> expresses;
-    private int packageCount;
-    private int packageIndex;
-    private int id = 2356890;
+    private ArrayList<String> titles;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_order_shipment_detail2;
-       // return R.layout.activity_order_shipment_detail;
+        // return R.layout.activity_order_shipment_detail;
     }
-
-   /* @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-    }*/
-
 
     @Bind(R.id.pager)
     ViewPager pager;
     @Bind(R.id.indicator)
     TabPageIndicator indicator;
+
+    //private static final String[] CONTENT = new String[]{"包裹1", "包裹2", "包裹3", "包裹4", "包裹5", "包裹6"};
+
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        titles = new ArrayList<>();
+        expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
+
+        if (null == expresses || expresses.size() == 0) {
+            titles.add("包裹1");
+            titles.add("包裹1");
+            titles.add("包裹1");
+            titles.add("包裹1");
+            titles.add("包裹1");
+            titles.add("包裹1");
+            titles.add("包裹1");
+            Express defail= new Express();
+            expresses = new ArrayList<>();
+            expresses.add(defail);
+            expresses.add(defail);
+            expresses.add(defail);
+            expresses.add(defail);
+            expresses.add(defail);
+            expresses.add(defail);
+            expresses.add(defail);
+            /*TextView text = new TextView(getApplicationContext());
+            text.setGravity(Gravity.CENTER);
+            text.setText("沒有包裹");*/
+            //pager.setVisibility(View.GONE);
+        } else {
+            for (int i = 0; i < expresses.size(); i++) {
+                titles.add("包裹" + i);
+            }
+        }
         FragmentPagerAdapter adapter = new OrderShipmentDetail(getSupportFragmentManager());
-
-        //ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
-
-       // TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(pager);
-        //indicator.set
-    }
-    private static final String[] CONTENT = new String[] { "包裹1", "包裹2", "包裹3", "包裹4", "包裹5", "包裹6","包裹7","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8","包裹8" };
 
-    class OrderShipmentDetail extends FragmentPagerAdapter{
+    }
+
+    class OrderShipmentDetail extends FragmentPagerAdapter {
 
         public OrderShipmentDetail(FragmentManager fm) {
             super(fm);
@@ -97,56 +88,33 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
 
         @Override
         public Fragment getItem(int position) {
-            //设置fragment
-            return  OrderShipmentDetailFragment.newInstance(CONTENT[position % CONTENT.length]);
+            //设置fragment   CONTENT[position % CONTENT.length]
+            return OrderShipmentDetailFragment.newInstance(expresses.get(position));
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
-            return CONTENT[position % CONTENT.length].toUpperCase();
+            // return CONTENT[position % CONTENT.length].toUpperCase();
+            return titles.get(position);
         }
 
         @Override
         public int getCount() {
-            return CONTENT.length;
+            return titles.size();
         }
     }
-
-
-       /* expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
-        if (null == expresses || expresses.size() == 0) return;
-        rg_title_bar.removeAllViews();
-        int width = (int) DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth());
-        for (int i = 0; i < 4; i++) {
-            RadioButton radioButton = new RadioButton(mContext);
-            radioButton.setText("包裹" + (i + 1));
-
-
-            rg_title_bar.addView(radioButton);
-        }
-        rg_title_bar.check(0);
-
-        rg_title_bar.setOnCheckedChangeListener(this);
-//        ininDate();
-//        refreshView(express);*/
-
-
-    private void ininDate() {
-        packageIndex = args.getInt(PACKAGINDEX);
-        express = expresses.get(packageIndex);
-    }
-
 
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
 
-    @Override
+   /* @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 //        RadioButton tempButton = (RadioButton) findViewById(checkedId);
         group.check(checkedId);
 //        refreshView(expresses.get(checkedId));
-    }
+    }*/
 
 
    /* private void refreshView(Express express) {

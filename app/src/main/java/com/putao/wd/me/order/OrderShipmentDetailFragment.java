@@ -1,11 +1,19 @@
 package com.putao.wd.me.order;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.me.order.adapter.ShipmentDetailAdapter;
 import com.putao.wd.model.Express;
+import com.putao.wd.model.ExpressContent;
+import com.putao.wd.model.Product;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.util.ArrayList;
 
@@ -19,9 +27,9 @@ public class OrderShipmentDetailFragment extends BasicFragment {
     public static final String EXPRESS = "express";
     public static final String PACKAGECOUNT = "packageCount";
     public static final String PACKAGINDEX = "packageIndex";
-    /*  @Bind(R.id.hsv_package_list)
+      /*@Bind(R.id.hsv_package_list)
       HorizontalScrollView hsv_package_list;// 包裹列表的horizontalscrollview*/
-  /*  @Bind(R.id.tv_order_goods_text)
+    @Bind(R.id.tv_order_goods_text)
     TextView tv_order_goods_text;
     @Bind(R.id.img_goods)
     ImageDraweeView img_goods;//图片
@@ -35,68 +43,39 @@ public class OrderShipmentDetailFragment extends BasicFragment {
     RelativeLayout rl_product;
     @Bind(R.id.tv_package_status)
     TextView tv_package_status;
-    @Bind(R.id.ll_package_list)
-    LinearLayout ll_package_list;
-    @Bind(R.id.rg_title_bar)
-    RadioGroup rg_title_bar;
+
+
     @Bind(R.id.sc_shipment)
     ScrollView sc_shipment;
-    @Bind(R.id.rl_no_shipment)
-    RelativeLayout rl_no_shipment;
+
     @Bind(R.id.rv_shipment_detail)
     RecyclerView rv_shipment_detail;
-*/
     private Express express;
     private ArrayList<Express> expresses;
-    private int packageCount;
-    private int packageIndex;
     private int id = 2356890;
 
-
-
-    public static OrderShipmentDetailFragment newInstance(String content) {
+    public static OrderShipmentDetailFragment newInstance(Express express) {
         OrderShipmentDetailFragment fragment = new OrderShipmentDetailFragment();
 
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 20; i++) {
-            builder.append(content).append(" ");
-        }
-        builder.deleteCharAt(builder.length() - 1);
-        fragment.mContent = builder.toString();
+        fragment.mContent = express;
 
         return fragment;
     }
 
-    private String mContent = "???";
+    private Express mContent ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
-            mContent = savedInstanceState.getString(KEY_CONTENT);
+          //  mContent = savedInstanceState.getString(KEY_CONTENT);
         }
     }
-
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView text = new TextView(getActivity());
-        text.setGravity(Gravity.CENTER);
-        text.setText(mContent);
-        text.setTextSize(20 * getResources().getDisplayMetrics().density);
-        text.setPadding(20, 20, 20, 20);
-
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        layout.setGravity(Gravity.CENTER);
-        layout.addView(text);
-
-        return layout;
-    }*/
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(KEY_CONTENT, mContent);
+        //outState.putString(KEY_CONTENT, mContent);
     }
 
     @Override
@@ -104,23 +83,36 @@ public class OrderShipmentDetailFragment extends BasicFragment {
         return R.layout.fragment_ordershipmentdetail;
     }
 
-    @Bind(R.id.tv_no_data)
-    TextView tv_no_data;
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
-        tv_no_data.setText(mContent);
-       /* Logger.d("MessageCenterActivity", "PraiseFragment启动");
-        tv_message_empty.setText("还没有赞");
-        adapter = new PraiseAdapter(mActivity, null);
-        rv_content.setAdapter(adapter);
-        getNotifyList();
-
-        addListener();*/
+        refreshView(mContent);
     }
 
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+     private void refreshView(Express express) {
+        ArrayList<Product> products = express.getProduct();
+         ArrayList<ExpressContent> real_content = express.getReal_content();
+         if(null==express.getProduct()){
+             rl_product.setVisibility(View.GONE);
+         }else{
+             Product product = products.get(0);
+            img_goods.setImageURL(product.getReal_icon());
+            tv_name.setText(product.getProduct_name());
+            tv_number.setText("共 " + product.getQuantity() + " 件");
+            tv_package_status.setText(ShipmentState.getExpressStatusShowString(express.getState()));
+        }
+        if (real_content == null || real_content.size() == 0) {
+           // rl_product.setVisibility(View.GONE);
+           // rl_no_shipment.setVisibility(View.VISIBLE);
+        } else {
+           // rl_no_shipment.setVisibility(View.GONE);
+            ShipmentDetailAdapter shipmentDetailAdapter = new ShipmentDetailAdapter(getActivity(), real_content);
+            rv_shipment_detail.setAdapter(shipmentDetailAdapter);
+        }
     }
 
 

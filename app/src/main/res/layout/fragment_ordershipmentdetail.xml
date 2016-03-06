@@ -6,137 +6,160 @@
     android:background="@color/color_EBEBEB"
     android:orientation="vertical">
     <!--内容区-->
-    <FrameLayout
+    <!--<FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white">-->
 
-        <!--没有物流时-->
-        <RelativeLayout
-            android:id="@+id/rl_no_shipment"
+    <!--没有物流时-->
+    <!-- <RelativeLayout
+         android:id="@+id/rl_no_shipment"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="@color/color_EBEBEB"
+         android:visibility="visible">
+
+         <ImageView
+             android:id="@+id/img_no_data"
+             android:layout_width="160dp"
+             android:layout_height="160dp"
+             android:layout_centerHorizontal="true"
+             android:layout_marginTop="100dp"
+             android:src="@drawable/img_me_order_empty" />
+
+         <TextView
+             android:id="@+id/tv_no_data"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_below="@+id/img_no_data"
+             android:layout_centerHorizontal="true"
+             android:layout_marginTop="40dp"
+             android:text="还没有物流信息"
+             android:textColor="@color/text_color_gray"
+             android:textSize="@dimen/text_size_20sp" />
+
+     </RelativeLayout>-->
+
+    <ScrollView
+        android:id="@+id/sc_shipment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_EBEBEB"
-            android:visibility="visible">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/img_no_data"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/img_me_order_empty" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#e2e2e2"></View>
 
             <TextView
-                android:id="@+id/tv_no_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/img_no_data"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:text="还没有物流信息"
-                android:textColor="@color/text_color_gray"
-                android:textSize="@dimen/text_size_20sp" />
-
-        </RelativeLayout>
-
-        <ScrollView
-            android:id="@+id/sc_shipment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <LinearLayout
+                android:id="@+id/tv_order_goods_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="订单商品"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="#e2e2e2 "></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:paddingTop="10dp">
+
+                <com.sunnybear.library.view.image.ImageDraweeView
+                    android:id="@+id/img_goods"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_centerVertical="true" />
 
                 <TextView
-                    android:id="@+id/tv_order_goods_text"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:text="订单商品"
-                    android:textColor="@color/text_color_646464"
-                    android:textSize="@dimen/text_size_16sp" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:padding="10dp">
-
-                    <com.sunnybear.library.view.image.ImageDraweeView
-                        android:id="@+id/img_goods"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_centerVertical="true" />
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_goods"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:text="葡萄探索号"
-                        android:textColor="#313131"
-                        android:textSize="@dimen/text_size_16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/img_goods"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toEndOf="@+id/img_goods"
-                        android:layout_toRightOf="@+id/img_goods"
-                        android:text="共 2 件"
-                        android:textColor="@color/text_color_gray"
-                        android:textSize="@dimen/text_size_14sp" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_shipment_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:text="物流状态"
-                    android:textColor="@color/text_color_646464"
+                    android:layout_toRightOf="@+id/img_goods"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="葡萄探索号"
+                    android:textColor="#313131"
                     android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
-                    android:id="@+id/tv_package_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#ffffff"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:text="暂无物流信息"
-                    android:textColor="#985ec9"
-                    android:textSize="@dimen/text_size_18sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/color_EBEBEB"></View>
-
-                <com.sunnybear.library.view.recycler.BasicRecyclerView
-                    android:id="@+id/rv_shipment_detail"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_number"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    auto:divider_height="1px"
-                    auto:has_row_divider="true"
-                    auto:is_inner="true" />
-            </LinearLayout>
-        </ScrollView>
-    </FrameLayout>
+                    android:layout_alignBottom="@+id/img_goods"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/img_goods"
+                    android:layout_toRightOf="@+id/img_goods"
+                    android:text="共 2 件"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_14sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#e2e2e2"></View>
+
+            <TextView
+                android:id="@+id/tv_shipment_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="物流状态"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="#e2e2e2"></View>
+
+            <TextView
+                android:id="@+id/tv_package_status"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:text="暂无物流信息"
+                android:textColor="#985ec9"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_EBEBEB"></View>
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_shipment_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                auto:divider_height="1px"
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>
