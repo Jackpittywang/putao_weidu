@@ -75,7 +75,14 @@ public class PutaoStoreFragment extends BasicFragment {
                             rv_content.loadMoreComplete();
                         else
                             rv_content.noMoreLoading();
+                        ptl_refresh.refreshComplete();
                         loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
                     }
                 }, 60 * 1000);
     }
@@ -98,6 +105,12 @@ public class PutaoStoreFragment extends BasicFragment {
                         } else rv_content.noMoreLoading();
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
                     }
                 });
     }

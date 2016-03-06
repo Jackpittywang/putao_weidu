@@ -80,7 +80,7 @@ public class OrderShipmentDetailFragment extends BasicFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_ordershipmentdetail;
+        return R.layout.fragment_order_shipment_detail;
     }
 
     @Override

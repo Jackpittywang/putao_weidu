@@ -29,8 +29,9 @@ public class Create implements Serializable {
     private String small_cover;
     private String nickname;
     private int follow_status;
+    private String share_links;
 
-    public String  getId() {
+    public String getId() {
         return id;
     }
 
@@ -198,6 +199,14 @@ public class Create implements Serializable {
         this.small_cover = small_cover;
     }
 
+    public String getShare_links() {
+        return share_links;
+    }
+
+    public void setShare_links(String share_links) {
+        this.share_links = share_links;
+    }
+
     @Override
     public String toString() {
         return "Create{" +
@@ -218,8 +227,11 @@ public class Create implements Serializable {
                 ", vote_status=" + vote_status +
                 ", comment=" + comment +
                 ", avatar='" + avatar + '\'' +
+                ", real_avatar='" + real_avatar + '\'' +
+                ", small_cover='" + small_cover + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", follow_status=" + follow_status +
+                ", share_links='" + share_links + '\'' +
                 '}';
     }
 }

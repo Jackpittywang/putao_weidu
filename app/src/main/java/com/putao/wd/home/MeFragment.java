@@ -105,6 +105,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mHandlerThread = new HandlerThread("blurThread");
         mHandlerThread.start();
+        setDefaultBlur();
         Looper looper = mHandlerThread.getLooper();
         mHandler = new Handler(looper) {
             @Override
@@ -140,7 +141,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
 //        ll_me.requestDisallowInterceptTouchEvent(true);
 //        ll_me.setOnTouchListener(this);
-        getUserInfo();
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        getUserInfo();
+                    }
+                }
+                , 3000);
     }
 
     private void setDefaultBlur() {

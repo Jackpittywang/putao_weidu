@@ -56,6 +56,7 @@ public class CreateApi {
                 .addParam(REQUEST_PAGE, page + "")
                 .build(RequestMethod.POST, URL_CREATE_LISTS);
     }
+
     /**
      * 创造列表
      */

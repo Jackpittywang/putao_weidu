@@ -17,6 +17,7 @@ public class ExploreIndex extends CacheTime implements Serializable {
     private int count_comments;//评论数量
     private boolean is_like;//评论数量
     private List<ExploreBanner> banner;//详情头
+    private String share_url;//分享链接
 
     public String getArticle_id() {
         return article_id;
@@ -90,6 +91,14 @@ public class ExploreIndex extends CacheTime implements Serializable {
         this.is_like = is_like;
     }
 
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
+
     @Override
     public String toString() {
         return "ExploreIndex{" +
@@ -102,6 +111,7 @@ public class ExploreIndex extends CacheTime implements Serializable {
                 ", count_comments=" + count_comments +
                 ", is_like=" + is_like +
                 ", banner=" + banner +
+                ", share_url='" + share_url + '\'' +
                 '}';
     }
 }

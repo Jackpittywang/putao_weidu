@@ -40,7 +40,7 @@ public class StoreApi {
 
     //    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
     //商城请求所使用的预发布域名
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu-store.start.wang/" : "http://api-store.putao.com";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu-store.start.wang/" : "http://api-store.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -58,7 +58,7 @@ public class StoreApi {
     public static Request getStoreHome(String page) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_PAGE, page)
-                .build(RequestMethod.GET, URL_STORE_HOME);
+                .build(RequestMethod.POST, URL_STORE_HOME);
     }
 
     /**
@@ -74,7 +74,7 @@ public class StoreApi {
     public static Request getProductDetail(String product_id) {
         return PTWDRequestHelper.store()
                 .addParam(REQUEST_PRODUCT_ID, product_id)
-                .build(RequestMethod.GET, URL_PRODUCT_DETAIL);
+                .build(RequestMethod.POST, URL_PRODUCT_DETAIL);
     }
 
     /**

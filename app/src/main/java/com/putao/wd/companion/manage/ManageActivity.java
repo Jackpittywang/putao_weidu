@@ -60,6 +60,8 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
     LinearLayout ll_empty;
     @Bind(R.id.ll_content)
     LinearLayout ll_content;
+    @Bind(R.id.tv_empty)
+    TextView tv_empty;
 
     private Bundle bundle;
     private Management management;
@@ -100,7 +102,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
                         if (mTime < STOP_TIME)
                             countDown(STOP_TIME - mTime);
                     }
-                }else{
+                } else {
                     ll_empty.setVisibility(View.VISIBLE);
                     ll_content.setVisibility(View.GONE);
                 }
@@ -119,6 +121,7 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             @Override
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
+                ll_empty.setVisibility(View.VISIBLE);
                 ToastUtils.showToastShort(mContext, msg);
             }
         });

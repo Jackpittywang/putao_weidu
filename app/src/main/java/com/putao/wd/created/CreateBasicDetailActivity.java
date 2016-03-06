@@ -246,12 +246,12 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+                ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), "http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+                ShareTools.wechatWebShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
             }
 
             @Override
@@ -268,7 +268,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mContext
                         .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText("http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId());
+                copy.setText(mCreate.getShare_links());
                 ToastUtils.showToastShort(mContext, "复制成功");
             }
         });

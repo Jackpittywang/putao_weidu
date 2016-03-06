@@ -32,6 +32,7 @@ public class ExploreApi {
     private static final String STATUS = "status";//控制设备名称
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
+    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api.weidu.start.wang/" : "http://api-weidu.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
@@ -40,7 +41,7 @@ public class ExploreApi {
     /**
      * 成长日记首页接口（查询）
      */
-    public static final String URL_DIARY_INDEX = BASE_URL + "diary/index";
+    public static final String URL_DIARY_INDEX = COMPANION_URL + "diary/index";
 
     /**
      * 成长日记首页接口（查询）
@@ -77,7 +78,7 @@ public class ExploreApi {
     /**
      * 扫码关注产品（添加）
      */
-    public static final String URL_SCAN_ADD = BASE_URL + "scan/add";
+    public static final String URL_SCAN_ADD = COMPANION_URL + "scan/add";
 
     /**
      * 扫码关注产品（添加）
@@ -92,7 +93,7 @@ public class ExploreApi {
                 .build(RequestMethod.POST, URL_SCAN_ADD);
     }
 
-    public static final String url_scan_add_deivce = BASE_URL + "get/captcha";
+    public static final String url_scan_add_deivce = COMPANION_URL + "get/captcha";
 
     /**
      * 扫码关注产品（维度客户端添加）
@@ -109,7 +110,7 @@ public class ExploreApi {
     /**
      * 管理产品（查询）
      */
-    public static final String URL_MANAGEMENT_LIST = BASE_URL + "management/index";
+    public static final String URL_MANAGEMENT_LIST = COMPANION_URL + "management/index";
 
     /**
      * 管理产品（查询）
@@ -128,7 +129,7 @@ public class ExploreApi {
     /**
      * 管理产品（保存）
      */
-    public static final String URL_MANAGEMENT_EDIT = BASE_URL + "management/edit";
+    public static final String URL_MANAGEMENT_EDIT = COMPANION_URL + "management/edit";
 
     /**
      * 管理产品（保存）
@@ -144,7 +145,7 @@ public class ExploreApi {
     /**
      * 立即停止使用所有产品
      */
-    public static final String URL_MANAGEMENT_SETALL = BASE_URL + "management/setall";
+    public static final String URL_MANAGEMENT_SETALL = COMPANION_URL + "management/setall";
 
     /**
      * 立即停止使用所有产品
@@ -159,7 +160,7 @@ public class ExploreApi {
     /**
      * 剧情理念详情（查询）
      */
-    public static final String URL_PLOT_DETAILS = BASE_URL + "plot/details";
+    public static final String URL_PLOT_DETAILS = COMPANION_URL + "plot/details";
 
     /**
      * 剧情理念详情id
@@ -182,7 +183,7 @@ public class ExploreApi {
     /**
      * 查询用户是否关联产品
      */
-    public static final String URL_DIARY_APP = BASE_URL + "diary/app";
+    public static final String URL_DIARY_APP = COMPANION_URL + "diary/app";
 
     /**
      * 查询用户是否关联产品
@@ -195,17 +196,17 @@ public class ExploreApi {
     /**
      * 查询对应游戏下的陪伴数据
      */
+    public static final String URL_DIARY_DATA = COMPANION_URL + "diary/data";
+
+    /**
+     * 查询对应游戏下的陪伴数据
+     */
     public static Request getDiaryData(String productId, int page) {
         return PTWDRequestHelper.explore()
                 .addParam(REQUEST_PRODUCT_ID, productId)
                 .addParam(REQUEST_PAGE, page + "")
                 .build(RequestMethod.POST, URL_DIARY_DATA);
     }
-
-    /**
-     * 查询对应游戏下的陪伴数据
-     */
-    public static final String URL_DIARY_DATA = BASE_URL + "diary/data";
 
     /**
      * 首页七条列表

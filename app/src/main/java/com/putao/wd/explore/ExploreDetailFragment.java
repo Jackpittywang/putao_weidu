@@ -147,12 +147,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
+                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(),  mExploreIndex.getShare_url());
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), "http://h5.putao.com/weidu/share/exploration.html?id=" + mExploreIndex.getArticle_id());
+                ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(),  mExploreIndex.getShare_url());
             }
 
             @Override
@@ -169,7 +169,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mActivity
                         .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText("http://h5.putao.com/weidu/share/creation.html?id=%" + mExploreIndex.getArticle_id());
+                copy.setText( mExploreIndex.getShare_url());
                 ToastUtils.showToastShort(mActivity, "复制成功");
             }
         });
