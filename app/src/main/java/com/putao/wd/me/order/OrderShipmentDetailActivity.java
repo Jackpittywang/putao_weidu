@@ -39,6 +39,7 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
     ViewPager pager;
     @Bind(R.id.indicator)
     TabPageIndicator indicator;
+    private int current;
 
     //private static final String[] CONTENT = new String[]{"包裹1", "包裹2", "包裹3", "包裹4", "包裹5", "包裹6"};
 
@@ -47,6 +48,8 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
         addNavigation();
         titles = new ArrayList<>();
         expresses = (ArrayList<Express>) args.getSerializable(EXPRESS);
+        current = args.getInt(PACKAGINDEX);
+
 
         if (null == expresses || expresses.size() == 0) {
             titles.add("包裹1");
@@ -56,7 +59,7 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
             titles.add("包裹1");
             titles.add("包裹1");
             titles.add("包裹1");
-            Express defail= new Express();
+            Express defail = new Express();
             expresses = new ArrayList<>();
             expresses.add(defail);
             expresses.add(defail);
@@ -76,8 +79,9 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
         }
         FragmentPagerAdapter adapter = new OrderShipmentDetail(getSupportFragmentManager());
         pager.setAdapter(adapter);
-        indicator.setViewPager(pager);
 
+        indicator.setViewPager(pager);
+        indicator.setCurrentItem(current);
     }
 
     class OrderShipmentDetail extends FragmentPagerAdapter {

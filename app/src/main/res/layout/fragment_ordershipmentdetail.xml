@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="10dp"
-                android:background="#e2e2e2 "></View>
+                android:background="#e2e2e2"></View>
 
             <RelativeLayout
                 android:id="@+id/rl_product"

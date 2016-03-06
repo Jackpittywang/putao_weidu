@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.putao.wd.ColorConstant;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -314,7 +313,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                         Bundle bundle = new Bundle();
                         ArrayList<Express> expresses = mOrderDetail.getExpress();
                         bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
-                        bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, mOrderDetail.getExpress().size());
+                        bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, expresses.size());
                         bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, 0);
                         startActivity(OrderShipmentDetailActivity.class, bundle);
                     }
