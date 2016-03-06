@@ -63,6 +63,12 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
+                    }
                 });
     }
 

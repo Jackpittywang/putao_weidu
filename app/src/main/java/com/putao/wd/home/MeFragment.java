@@ -240,7 +240,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 btn_after_sale.show(result.getService().getNum());
                 loading.dismiss();
             }
-        });
+        }, false);
     }
 
     @Override
