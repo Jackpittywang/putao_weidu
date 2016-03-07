@@ -63,6 +63,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     //    private RelativeLayout.LayoutParams mRight2LayoutParams;
     private RelativeLayout.LayoutParams mSmartLayoutParams;
     private boolean isLoginChange = false;
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
     @Override
     protected int getLayoutId() {
@@ -72,6 +74,21 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoCompanionFragment启动");
+        mProductsAdapter = new ProductsAdapter(mActivity, null);
+        rv_products.setAdapter(mProductsAdapter);
+        rv_products.setOnItemClickListener(this);
+        isPrepared = true;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        isPrepared = false;
+        if (AccountHelper.isLogin()) {
+            checkDevices();
+        }
     }
 
     private void addClickListener() {
@@ -122,12 +139,8 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         cv_empty.setVisibility(View.VISIBLE);
         btn_explore_empty.setVisibility(View.VISIBLE);
         cv_no_empty.setVisibility(View.GONE);
-//        RelativeLayout.LayoutParams right2LayoutParams = new RelativeLayout.LayoutParams(iv_user_icon.getLayoutParams());
-//        right2LayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-//        iv_title_bar_right2.setLayoutParams(right2LayoutParams);
         mSmartLayoutParams.addRule(RelativeLayout.ABOVE, R.id.btn_explore_empty);
         mSmartLayoutParams.setMargins(0, 0, 0, DensityUtil.dp2px(mActivity, 45));
-//        iv_user_icon.setVisibility(View.GONE);
     }
 
 
@@ -181,20 +194,11 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     @Override
     public void onStart() {
         super.onStart();
-//        mRight2LayoutParams = (RelativeLayout.LayoutParams) iv_title_bar_right2.getLayoutParams();
         mSmartLayoutParams = (RelativeLayout.LayoutParams) iv_smart.getLayoutParams();
         addClickListener();
         if (isLoginChange && !AccountHelper.isLogin()) empty();
-
-        if (!IndexActivity.isNotRefreshUserInfo && !isLoginChange && AccountHelper.isLogin()) {
-            isLoginChange = AccountHelper.isLogin();
-            mProductsAdapter = new ProductsAdapter(mActivity, null);
-            rv_products.setAdapter(mProductsAdapter);
+        if (!IndexActivity.isNotRefreshUserInfo && !isLoginChange && AccountHelper.isLogin() && !isPrepared) {
             checkDevices();
-            rv_products.setOnItemClickListener(this);
-//            iv_user_icon.setVisibility(View.VISIBLE);
-//            iv_title_bar_right2.setLayoutParams(mRight2LayoutParams);
-//            iv_user_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
         }
         isLoginChange = AccountHelper.isLogin();
     }

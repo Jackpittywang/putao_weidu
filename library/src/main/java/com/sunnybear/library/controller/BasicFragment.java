@@ -53,6 +53,8 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     private Fragment currentFragment;//当前Fragment
     private Fragment targetFragment;//目标Fragment
 
+    protected boolean isVisible;//当前Fragment是否显示
+
     /**
      * 设置布局id
      *
@@ -397,5 +399,32 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
             mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
             mOkHttpClient.newCall(request).enqueue(callback);
         }
+    }
+
+    /**
+     * 在这里实现Fragment数据的缓加载.
+     *
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+
+    protected void onVisible() {
+        lazyLoad();
+    }
+
+    protected void lazyLoad() {
+    }
+
+    protected void onInvisible() {
     }
 }

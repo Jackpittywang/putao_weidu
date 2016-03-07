@@ -48,7 +48,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
     public void onBindItem(final CreateHolder holder, final Create create, final int position) {
         holder.iv_sign.setImageURL(create.getCover());
         holder.tv_title.setText(create.getTitle());
-        holder.iv_user_icon.setImageURL(create.getAvatar());
+        holder.iv_user_icon.setImageURL(create.getReal_avatar());
         if (null != create.getTag()) {
             Map map = JSONObject.parseObject(create.getTag());
             if (map != null && map.size() > 0) {

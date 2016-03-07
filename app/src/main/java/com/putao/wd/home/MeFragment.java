@@ -61,6 +61,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     private static final String EVENT_EDIT_USER_INFO = "edit_user_info";
     public static boolean ONREFRESH = true;
 
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
+
     @Bind(R.id.si_message)
     SettingItem si_message;
     @Bind(R.id.ll_me)
@@ -102,6 +105,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     }
 
     @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        isPrepared = false;
+        //填充各控件的数据
+        mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
+        mHeadHeight = mHeadLayoutParams.height;
+        mStatusBarHeight = getStatusBarHeight();
+        sv_me.setOnTouchListener(this);
+        ll_me.getParent().requestDisallowInterceptTouchEvent(false);
+        getUserInfo();
+    }
+
+    @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mHandlerThread = new HandlerThread("blurThread");
         mHandlerThread.start();
@@ -133,22 +151,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 }
             }
         };
-        mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
-        mHeadHeight = mHeadLayoutParams.height;
-//        mStatusBarHeight = DensityUtil.dp2px(mActivity, 24f);
-        mStatusBarHeight = getStatusBarHeight();
-        sv_me.setOnTouchListener(this);
-        ll_me.getParent().requestDisallowInterceptTouchEvent(false);
-//        ll_me.requestDisallowInterceptTouchEvent(true);
-//        ll_me.setOnTouchListener(this);
-        new Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        getUserInfo();
-                    }
-                }
-                , 3000);
+        isPrepared = true;
     }
 
     private void setDefaultBlur() {
@@ -164,7 +167,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             message.what = 2;
             mHandler.sendMessage(message);
             hideNum();
-        } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin()) {
+        } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
             hideNum();
             getOrderCount();
         }

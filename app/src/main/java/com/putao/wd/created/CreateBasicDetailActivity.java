@@ -176,7 +176,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
         sb_cool_icon.setClickable(false);
         iv_sign.setImageURL(mCreate.getCover());
         tv_title.setText(mCreate.getTitle());
-        iv_user_icon.setImageURL(mCreate.getAvatar());
+        iv_user_icon.setImageURL(mCreate.getReal_avatar());
         tv_count_comment.setText(mCommentCount == 0 ? "评论" : mCommentCount + "");
         tv_digest.setText(mCreate.getNickname());
         wv_content.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mContext, getWindowManager().getDefaultDisplay().getWidth() - 200), mCreate.getContent()), "text/html", "utf-8", null);

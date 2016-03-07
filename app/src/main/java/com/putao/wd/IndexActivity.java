@@ -32,7 +32,7 @@ import butterknife.Bind;
  */
 public class IndexActivity extends BasicFragmentActivity {
     public static boolean isNotRefreshUserInfo = false;
-    public final static String PAY_ALL="pay_all";
+    public final static String PAY_ALL = "pay_all";
 
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;
@@ -167,7 +167,7 @@ public class IndexActivity extends BasicFragmentActivity {
     }
 
     @Subcriber(tag = PaySuccessActivity.PAY_FINISH)
-    private void setPay(String pay){
+    private void setPay(String pay) {
         tb_tab.setTabItemSelected(R.id.ti_create);
         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }

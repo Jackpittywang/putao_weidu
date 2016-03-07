@@ -34,6 +34,8 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     @Bind(R.id.rb_step3)
     RadioButton rb_step3;
     private SparseArray<Fragment> mFragments;
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
     @Override
     protected int getLayoutId() {
@@ -43,6 +45,17 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("PutaoCreatedFragment启动");
+        isPrepared = true;
+        lazyLoad();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        isPrepared = false;
+        //填充各控件的数据
         addFragments();
         rg_create.setOnCheckedChangeListener(this);
         vp_content.setCurrentItem(1, false);
@@ -53,6 +66,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
      * 添加Fragment
      */
     private void addFragments() {
+        vp_content.setOffscreenPageLimit(1);
         mFragments = new SparseArray<>();
         mFragments.put(0, Fragment.instantiate(mActivity, FancyFragment.class.getName()));
         mFragments.put(1, Fragment.instantiate(mActivity, PutaoCreatedSecondFragment.class.getName()));
@@ -99,7 +113,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     }
 
     @Subcriber(tag = PaySuccessActivity.PAY_FINISH)
-    private void setPay(String pay){
+    private void setPay(String pay) {
         rg_create.check(R.id.rb_step3);
         vp_content.setCurrentItem(2, false);
     }
