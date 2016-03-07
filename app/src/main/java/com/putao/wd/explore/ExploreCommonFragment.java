@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -115,7 +116,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 break;
         }
     }
-
+    @Bind(R.id.ll_count_cool)
+    LinearLayout ll_count_cool;
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
@@ -126,6 +128,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         if (mPosition == position) {
             sb_cool_icon.setState(true);
             mExploreIndex.setCount_likes(mExploreIndex.getCount_likes() + 1);
+            ll_count_cool.setClickable(false);
             tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
             networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                     new SimpleFastJsonCallback<String>(String.class, loading) {
