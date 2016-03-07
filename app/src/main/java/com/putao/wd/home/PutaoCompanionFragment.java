@@ -18,17 +18,14 @@ import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.qrcode.CaptureActivity;
-import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +61,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
     private RelativeLayout.LayoutParams mSmartLayoutParams;
     private boolean isLoginChange = false;
     // 标志位，标志已经初始化完成。
-    private boolean isPrepared;
+    public static boolean isPrepared;
 
     @Override
     protected int getLayoutId() {

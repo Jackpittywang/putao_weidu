@@ -25,13 +25,11 @@ import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.FastBlur;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -75,6 +73,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private int mI;
+    // 标志位，标志已经初始化完成。
+    public static boolean isPrepared;
 
     @Override
     protected int getLayoutId() {
@@ -122,14 +122,18 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 }
             }
         };
-        initData();
         addListener();
-       /* mThread = new PageChangeThread() {
-            @Override
-            public void run() {
-                super.run();
-            }
-        };*/
+        initData();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        isPrepared = false;
+        //填充各控件的数据
+        initData();
     }
 
     private void pageSelected(int position) {
@@ -226,6 +230,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 new SimpleFastJsonCallback<ArrayList<ExploreIndex>>(ExploreIndex.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ExploreIndex> result) {
+                        Logger.d("", "-----------++++" + result.get(0).is_like());
                         if (null != result && result.size() > 0) {
                             mExploreIndexs = result;
                             mExploreIndex = mExploreIndex == null ? new ExploreIndexs() : mExploreIndex;

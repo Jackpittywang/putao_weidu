@@ -83,34 +83,9 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mExploreIndex = (ExploreIndex) args.getSerializable(ExploreCommonFragment.INDEX_DATA);
         mCount_comments = mExploreIndex.getCount_comments();
         mSharePopupWindow = new SharePopupWindow(getActivity());
-        isCool = null != mDiskFileCacheHelper.getAsString(COOL + mExploreIndex.getArticle_id());
+        isCool = !TextUtils.isEmpty(AccountHelper.getCurrentUid()) ? mExploreIndex.is_like() : null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
         iv_close.setVisibility(View.GONE);
-//        wb_explore_detail.setInitialScale(80);
-     /*   wb_explore_detail.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                String url = request.getUrl().toString();
-//                Logger.d("shouldInterceptRequest url=" + url + ";threadInfo" + Thread.currentThread());
-//                WebResourceResponse response = null;
-//                if (url.contains("http://k.youku.com/player")) {
-//                    response = new WebResourceResponse("image/png", "UTF-8", null);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(YoukuVideoPlayerActivity.BUNDLE_LOCAL_VID, url);
-//                    bundle.putBoolean(YoukuVideoPlayerActivity.BUNDLE_IS_FROM_LOCAL, true);
-//                    startActivity(YoukuVideoPlayerActivity.class, bundle);
-//                }
-                return response;
-            }
-        });*/
-//        WebSettings webSettings = wb_explore_detail.getSettings();
-//        webSettings.setUseWideViewPort(true);//关键点
-//        webSettings.setJavaScriptEnabled(true);
-//        webSettings.setMinimumFontSize(64);
-//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//        webSettings.setUseWideViewPort(false);
-//        webSettings.setLoadWithOverviewMode(true);
         initView();
         addListener();
     }
@@ -128,9 +103,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mExploreIndex.setCount_comments(mCount_comments);
 
         tv_count_cool.setText(mExploreIndex.getCount_likes() == 0 ? "赞" : mExploreIndex.getCount_likes() + "");
-//        String cache_comment = mDiskFileCacheHelper.getAsString(COMMENT_COUNT + mExploreIndex.getArticle_id());
-//        mCount_comments = TextUtils.isEmpty(cache_comment) ? mCount_comments : Integer.parseInt(cache_comment);
-        // mExploreIndex.setCount_comments(mCount_comments);
         tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);

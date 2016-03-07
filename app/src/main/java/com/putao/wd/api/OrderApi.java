@@ -43,7 +43,7 @@ public class OrderApi {
     public static final String REQUEST_EXPRESS_NAME = "express_name";//快递公司
     public static final String REQUEST_EXPRESS_CODE = "express_code";//快递单号
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu-store.start.wang/" : "http://api.store.test.putao.com/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu-store.start.wang/" : "http://api-store.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;

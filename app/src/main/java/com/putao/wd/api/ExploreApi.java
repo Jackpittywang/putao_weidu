@@ -218,7 +218,7 @@ public class ExploreApi {
      */
     public static Request getArticleList() {
         return PTWDRequestHelper.explore()
-                .build(RequestMethod.GET, URL_ARTICLE_INDEX);
+                .build(RequestMethod.POST, URL_ARTICLE_INDEX);
     }
 
     /**

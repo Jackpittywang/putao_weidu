@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
 import com.sunnybear.library.controller.BasicFragment;
@@ -44,6 +45,8 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     SwitchButton sb_cool_icon;
     @Bind(R.id.rl_nexplore)
     RelativeLayout rl_nexplore;
+    @Bind(R.id.ll_count_cool)
+    LinearLayout ll_count_cool;
     public static final String INDEX_DATA_PAGE = "index_data_page";
     public static final String INDEX_DATA = "index_data";
     private ExploreIndex mExploreIndex;
@@ -64,7 +67,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         String cache_count = mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id());
         mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
         sb_cool_icon.setClickable(false);
-        isCool = null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
+        isCool = !TextUtils.isEmpty(AccountHelper.getCurrentUid()) ? mExploreIndex.is_like() : null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
         initView();
     }
@@ -109,15 +112,14 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                             @Override
                             public void onSuccess(String url, String result) {
                                 mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
-                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes()+"");
+                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                                 loading.dismiss();
                             }
                         });
                 break;
         }
     }
-    @Bind(R.id.ll_count_cool)
-    LinearLayout ll_count_cool;
+
     @Override
     protected String[] getRequestUrls() {
         return new String[0];

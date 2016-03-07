@@ -17,7 +17,6 @@ import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.store.pay.PaySuccessActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TabBar;

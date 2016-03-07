@@ -35,7 +35,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     RadioButton rb_step3;
     private SparseArray<Fragment> mFragments;
     // 标志位，标志已经初始化完成。
-    private boolean isPrepared;
+    public static boolean isPrepared;
 
     @Override
     protected int getLayoutId() {
