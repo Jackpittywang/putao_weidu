@@ -12,10 +12,10 @@ public class ExploreIndex extends CacheTime implements Serializable {
     private String title;//文章标题
     private String description;//文章描述
     private String explanation;//网页
-    private int send_time;//更新时间
+    private long send_time;//更新时间
     private int count_likes;//点赞数量
     private int count_comments;//评论数量
-    private boolean is_like;//评论数量
+    private boolean is_like;//是否赞过
     private List<ExploreBanner> banner;//详情头
     private String share_url;//分享链接
 
@@ -51,11 +51,11 @@ public class ExploreIndex extends CacheTime implements Serializable {
         this.explanation = explanation;
     }
 
-    public int getSend_time() {
-        return send_time;
+    public long getSend_time() {
+        return send_time * 1000;
     }
 
-    public void setSend_time(int send_time) {
+    public void setSend_time(long send_time) {
         this.send_time = send_time;
     }
 
