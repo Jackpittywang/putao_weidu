@@ -25,6 +25,7 @@ import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.image.FastBlur;
 
@@ -153,8 +154,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 if (position == 0) {
                     vp_content.setCurrentItem(1);
                     return;
-                } else if (position == mFragments.size() + 1) {
-                    vp_content.setCurrentItem(mFragments.size());
+                } else if (position == mExploreIndexs.size() + 2) {
+                    vp_content.setCurrentItem(mExploreIndexs.size() + 1);
                     return;
                 }
                 mI = BACKGROUND_CAN_CHANGGE;
@@ -191,7 +192,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private void addDate(int position) {
         DateFormat formatMon = new SimpleDateFormat("MM");
         DateFormat formatDay = new SimpleDateFormat("dd");
-        Date date = new Date((long) (mExploreIndexs.get(position - 1).getSend_time() * 1000));
+        Date date = new Date(mExploreIndexs.get(position - 1).getSend_time());
         Date dateNow = new Date(System.currentTimeMillis());
         String day = formatDay.format(date);
         String mon = formatMon.format(date);
