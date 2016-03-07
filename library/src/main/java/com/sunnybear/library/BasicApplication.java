@@ -58,7 +58,7 @@ public abstract class BasicApplication extends Application {
         //偏好设置文件初始化
         Hawk.init(getApplicationContext(), getPackageName(), isDebug() ? LogLevel.FULL : LogLevel.NONE);
         //日志输出
-        Logger.init(getLogTag()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.NONE);
+        Logger.init(getLogTag()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.FULL);
         //OkHttp初始化
         mOkHttpClient = OkHttpManager.getInstance(getNetworkCacheDirectoryPath(), getNetworkCacheSize())
                 .addInterceptor(new NetworkInterceptor())

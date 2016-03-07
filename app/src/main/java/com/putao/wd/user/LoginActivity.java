@@ -77,8 +77,9 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.setCurrentUid(result.getString("uid"));
                                 AccountHelper.setCurrentToken(result.getString("token"));
-                                checkLogin();
-                                loading.dismiss();
+                                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                                startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                                finish();
                             }
 
                             @Override
@@ -109,12 +110,13 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
      * 验证登录
      */
     private void checkLogin() {
-        networkRequest(UserApi.getUserInfo(),
+        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+       /* networkRequest(UserApi.getUserInfo(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         AccountHelper.setUserInfo(result);
-                        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         loading.dismiss();
                         finish();
@@ -123,9 +125,15 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        ToastUtils.showToastLong(mContext, "登录失败请重新登录");
+//                        ToastUtils.showToastLong(mContext, "登录失败请重新登录");
                     }
-                });
+
+                    @Override
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+                        btn_login.setClickable(true);
+                    }
+                });*/
     }
 
     @Override

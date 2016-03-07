@@ -163,10 +163,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     public void onStart() {
         super.onStart();
         if (!AccountHelper.isLogin()) {
-            Message message = new Message();
-            message.what = 2;
-            mHandler.sendMessage(message);
-            hideNum();
+            setDefaultBlur();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
             hideNum();
             getOrderCount();
@@ -231,7 +228,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         ONREFRESH = true;
-                        ToastUtils.showToastLong(mActivity, "登录失败请重新登录");
+//                        ToastUtils.showToastLong(mActivity, "登录失败请重新登录");
                     }
                 });
     }

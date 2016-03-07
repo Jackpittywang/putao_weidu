@@ -133,7 +133,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
     private void pageSelected(int position) {
         Message message = new Message();
-        message.what = position == mExploreIndexs.size() ? 2 : 1;
+        message.what = position == mExploreIndexs.size() + 1 ? 2 : 1;
         Bundle bundle = new Bundle();
         bundle.putInt(POSITION, position);
         message.obj = bundle;
@@ -153,12 +153,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 if (position == 0) {
                     vp_content.setCurrentItem(1);
                     return;
-                } else if (position == mFragments.size() - 1) {
-                    vp_content.setCurrentItem(mFragments.size() - 2);
+                } else if (position == mFragments.size() + 1) {
+                    vp_content.setCurrentItem(mFragments.size());
                     return;
                 }
                 mI = BACKGROUND_CAN_CHANGGE;
-                if (position == mExploreIndexs.size()) {
+                if (position == mExploreIndexs.size() + 1) {
                     hindDate("MORE");
                 } else {
                     showDate();
@@ -276,11 +276,11 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private void addFragments() {
         mFragments = new SparseArray<>();
         mFragments.put(0, new Fragment());
-        for (int i = 1; i < mExploreIndexs.size(); i++) {
+        for (int i = 1; i <= mExploreIndexs.size(); i++) {
             mFragments.put(i, Fragment.instantiate(mActivity, ExploreCommonFragment.class.getName(), addBundle(i - 1)));
         }
-        mFragments.put(mExploreIndexs.size(), Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
-        mFragments.put(mExploreIndexs.size() + 1, new Fragment());
+        mFragments.put(mExploreIndexs.size() + 1, Fragment.instantiate(mActivity, ExploreMoreFragment.class.getName()));
+        mFragments.put(mExploreIndexs.size() + 2, new Fragment());
         vp_content.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

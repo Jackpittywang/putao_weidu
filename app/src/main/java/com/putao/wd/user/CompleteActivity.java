@@ -262,7 +262,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     checkSha1(filePath);
                     break;
                 case ALBUM_REQCODE://相册选择
-                    ToastUtils.showToastShort(this, "系统图库返回");
+//                    ToastUtils.showToastShort(this, "系统图库返回");
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
                     Cursor cursor = getContentResolver().query(selectedImage,

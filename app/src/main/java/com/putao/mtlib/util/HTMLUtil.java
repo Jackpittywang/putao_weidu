@@ -12,7 +12,7 @@ public class HTMLUtil {
 
     public static String setWidth(float width, String html) {
         float videoHeight = (width * 9) / 16 + 2;
-        return setImageWidth("<iframe class=\"video_iframe\"([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true);
+        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true);
     }
 
     private static String setImageWidth(String reg, String explanation, float width, float height, boolean isVideo) {
