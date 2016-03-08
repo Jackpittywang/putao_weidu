@@ -138,7 +138,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
             case OrderCommonState.ORDER_PAY_WAIT://待支付
                 holder.tv_order_status.setText("待支付");
                 holder.tv_order_status.setTextColor(Color.RED);
-                setBtn(holder, "", "取消订单", "马上支付");
+                setBtn(holder, "", "取消订单", "立即支付");
                 break;
             case OrderCommonState.ORDER_WAITING_SHIPMENT://待发货
                 holder.tv_order_status.setText("待发货");
