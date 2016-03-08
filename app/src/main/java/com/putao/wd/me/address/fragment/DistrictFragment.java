@@ -47,6 +47,7 @@ public class DistrictFragment extends PTWDFragment<GlobalApplication> {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        addNavigation();
         province_name = args.getString(KEY_PROVINCE_NAME);
         city_name = args.getString(KEY_CITY_NAME);
 

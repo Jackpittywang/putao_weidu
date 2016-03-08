@@ -15,9 +15,13 @@
     <!--内容区-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/layout_background">
 
+
+        <!-- auto:divider_color="@color/divider_color"
+         auto:divider_height="1px"
+         auto:has_row_divider="true"-->
         <!--有收货地址时-->
         <com.sunnybear.library.view.recycler.BasicRecyclerView
             android:id="@+id/rv_addresses"
@@ -25,9 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:background="@color/white"
-            auto:divider_color="@color/divider_color"
-            auto:divider_height="1px"
-            auto:has_row_divider="true" />
+           />
 
         <!--没有收货地址时-->
         <RelativeLayout
@@ -67,9 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/service_btn_nor"
-                android:padding="10dp"
-                android:background="@drawable/btn_order_state_selector"
                 android:text="新增地址" />
         </RelativeLayout>
     </FrameLayout>
