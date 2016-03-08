@@ -88,7 +88,7 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
                     comment.setIs_like(true);
                     String count_likes = comment.getCount_likes();
                     comment.setCount_likes(TextUtils.equals("赞", count_likes) ? "1" : Integer.parseInt(count_likes) + 1 + "");
-                    holder.tv_count_cool.setText(Integer.parseInt(count_likes) + 1 + "");
+                    holder.tv_count_cool.setText(Integer.parseInt(comment.getCount_likes()) + 1 + "");
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
             }
         });

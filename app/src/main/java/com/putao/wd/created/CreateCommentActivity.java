@@ -336,7 +336,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        adapter.notifyItemChanged(currPosition);
+//                        adapter.notifyItemChanged(currPosition);
                         mDiskFileCacheHelper.put(COOL + comment.getId(), "true");
                         EventBusHelper.post(true, EVENT_COUNT_COOL);
                     }

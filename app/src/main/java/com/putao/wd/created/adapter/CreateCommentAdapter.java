@@ -82,8 +82,8 @@ public class CreateCommentAdapter extends LoadMoreAdapter<CreateComment, CreateC
                     EventBusHelper.post(position, EVENT_COMMIT_COOL);
                     holder.sb_cool_icon.setState(true);
                     comment.setLike_status(true);
-                    comment.setLike_count(comment.getComment_reply_count() + 1);
-                    holder.tv_count_cool.setText(comment.getComment_reply_count() + 1 + "");
+                    comment.setLike_count(comment.getLike_count() + 1);
+                    holder.tv_count_cool.setText(comment.getLike_count() + "");
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
             }
         });

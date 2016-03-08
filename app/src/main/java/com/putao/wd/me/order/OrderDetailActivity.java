@@ -1,5 +1,6 @@
 package com.putao.wd.me.order;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,10 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
@@ -25,10 +29,13 @@ import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
 import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.product.ProductDetailActivity;
+import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -273,12 +280,30 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                 btn_order_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bundle = new Bundle();
+                        /*Bundle bundle = new Bundle();
                         bundle.putString(PayActivity.BUNDLE_ORDER_ID, mOrderDetail.getId());
                         bundle.putString(PayActivity.BUNDLE_ORDER_SN, mOrderDetail.getOrder_sn());
                         bundle.putString(PayActivity.BUNDLE_ORDER_PRICE, mOrderDetail.getTotal_amount());
                         bundle.putString(PayActivity.BUNDLE_ORDER_DATE, mOrderDetail.getCreate_time());
-                        startActivity(PayActivity.class, bundle);
+                        startActivity(PayActivity.class, bundle);*/
+                        final AlipayHelper alipayHelper = new AlipayHelper();
+                        networkRequest(StoreApi.pay(mOrderDetail.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                if (!StringUtils.isEmpty(result)) {
+                                    JSONObject object = JSON.parseObject(result);
+                                    String orderInfo = object.getString("code");
+                                    if (StringUtils.isEmpty(orderInfo)) {
+                                        ToastUtils.showToastShort(mContext, "支付失败");
+                                        return;
+                                    }
+                                    alipayHelper.pay((Activity) mContext, orderInfo);
+                                } else {
+                                    ToastUtils.showToastLong(mContext, "无法支付");
+                                }
+                                loading.dismiss();
+                            }
+                        });
                     }
                 });
                 break;

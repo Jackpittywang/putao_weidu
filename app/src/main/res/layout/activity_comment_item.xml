@@ -22,7 +22,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="8dp"
-            auto:placeholderImage="@drawable/img_head_q"/>
+            auto:placeholderImage="@drawable/img_head_default"/>
 
         <LinearLayout
             android:layout_width="match_parent"
