@@ -3,14 +3,12 @@ package com.putao.wd.api;
 import android.content.Context;
 
 import com.putao.wd.GlobalApplication;
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.PreferenceUtils;
-import com.sunnybear.library.util.StringUtils;
 
 /**
  * 用户接口

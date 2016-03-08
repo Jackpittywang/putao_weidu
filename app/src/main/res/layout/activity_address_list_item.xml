@@ -1,72 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="8dp">
-
-    <!--收货人姓名-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="收货人姓名"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_18sp" />
-
-        <TextView
-            android:id="@+id/tv_default"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/text_default_background"
-            android:padding="2dp"
-            android:text="默认"
-            android:textColor="@color/text_color_ED5564" />
-    </LinearLayout>
-
-    <!--收货人地址-->
-    <TextView
-        android:id="@+id/tv_customer_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:maxLines="2"
-        android:singleLine="false"
-        android:text="上海上海市徐汇区宜山路810号贝岭大厦14楼葡萄科技"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/text_size_16sp" />
-
-    <!--手机号码-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp">
-
-        <TextView
-            android:id="@+id/tv_mobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="13800138000"
-            android:textColor="@color/text_color" />
-
-        <TextView
-            android:id="@+id/tv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/icon_20_15"
-            android:drawablePadding="4dp"
-            android:text="编辑" />
-    </RelativeLayout>
+    android:clipChildren="false">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#e1e1e1" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/distance_8dp"
+        android:layout_marginRight="@dimen/distance_8dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <!--收货人姓名-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收货人姓名"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <TextView
+                android:id="@+id/tv_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/text_default_background"
+                android:padding="2dp"
+                android:text="默认"
+                android:textColor="@color/text_color_ED5564" />
+        </LinearLayout>
+
+        <!--收货人地址-->
+        <TextView
+            android:id="@+id/tv_customer_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:text="上海上海市徐汇区宜山路810号贝岭大厦14楼葡萄科技"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <!--手机号码-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/tv_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13800138000"
+                android:textColor="@color/text_color" />
+
+            <TextView
+                android:id="@+id/tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/icon_20_15"
+                android:drawablePadding="4dp"
+                android:text="编辑" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/v_diviver"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginRight="-10dp"
+            android:background="#e1e1e1" />
+    </LinearLayout>
+
+</FrameLayout>

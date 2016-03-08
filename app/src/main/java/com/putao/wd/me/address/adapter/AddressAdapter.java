@@ -3,6 +3,7 @@ package com.putao.wd.me.address.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -58,6 +59,11 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
                 context.startActivity(AddressEditActivity.class, bundle);
             }
         });
+        if (position == getItemCount() - 1) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.v_diviver.getLayoutParams();
+            layoutParams.setMargins(-100, 0, -100, 0);
+            holder.v_diviver.setLayoutParams(layoutParams);
+        }
 //        String addressInfo = address.getRealname() + "/" + addr + "/" + address.getMobile();
 //        EventBusHelper.post(addressInfo, EVENT_ADDRESS);
     }
@@ -101,6 +107,8 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
         TextView tv_mobile;
         @Bind(R.id.tv_edit)
         TextView tv_edit;
+        @Bind(R.id.v_diviver)
+        View v_diviver;
 
         public AddressViewHolder(View itemView) {
             super(itemView);

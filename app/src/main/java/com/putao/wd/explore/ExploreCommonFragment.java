@@ -14,13 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.model.ExploreIndex;
-import com.putao.wd.share.ShareTools;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -29,11 +27,11 @@ import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * 探索--前7
@@ -123,7 +121,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.rl_nexplore:
                 Bundle bundleDetial = new Bundle();
-                bundleDetial.putSerializable(INDEX_DATA, args.getSerializable(INDEX_DATA));
+                bundleDetial.putSerializable(INDEX_DATA, (Serializable) mExploreIndexs);
                 bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
@@ -137,12 +135,14 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 sb_cool_icon.setState(true);
                 mExploreIndexs.get(mPosition).setCount_likes(mExploreIndex.getCount_likes() + 1);
                 tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
+                mExploreIndexs.get(mPosition).setIs_like(true);
+                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
+                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
-                                mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
+
                                 loading.dismiss();
                             }
                         });

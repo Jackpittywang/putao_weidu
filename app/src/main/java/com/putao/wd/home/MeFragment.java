@@ -196,8 +196,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获取用户信息
      */
     private void getUserInfo() {
-        Logger.d("-------","-----------------------------------------用户信息");
         ONREFRESH = false;
+        if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
         networkRequest(UserApi.getUserInfo(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
@@ -238,7 +238,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获得订单数量
      */
     private void getOrderCount() {
-        Logger.d("-------","-----------------------------------------订单数量");
+        if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
         networkRequest(OrderApi.getOrderCount(), new SimpleFastJsonCallback<OrderCount>(OrderCount.class, loading) {
             @Override
             public void onSuccess(String url, OrderCount result) {

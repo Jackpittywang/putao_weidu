@@ -26,7 +26,6 @@
             android:id="@+id/rv_addresses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
             android:background="@color/color_EBEBEB" />
 
         <!--没有收货地址时-->
@@ -55,7 +54,6 @@
                 android:textSize="@dimen/text_size_18sp" />
         </RelativeLayout>
 
-        <!--android:layout_gravity="bottom"-->
         <!--新增地址-->
         <RelativeLayout
             android:id="@+id/rl_add_address"
@@ -67,13 +65,16 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#e1e1e1" />
+                android:background="@color/divider_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="新增地址" />
+                android:background="@drawable/btn_order_state_selector"
+                android:padding="10dp"
+                android:text="新增地址"
+                android:textColor="@color/service_btn_nor" />
         </RelativeLayout>
 
     </FrameLayout>
