@@ -15,8 +15,7 @@
     <!--内容区-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/layout_background">
+        android:layout_height="wrap_content">
 
 
         <!-- auto:divider_color="@color/divider_color"
@@ -56,6 +55,7 @@
                 android:textSize="@dimen/text_size_18sp" />
         </RelativeLayout>
 
+        <!--android:layout_gravity="bottom"-->
         <!--新增地址-->
         <RelativeLayout
             android:id="@+id/rl_add_address"
@@ -75,5 +75,8 @@
                 android:layout_centerInParent="true"
                 android:text="新增地址" />
         </RelativeLayout>
+
     </FrameLayout>
+
+
 </LinearLayout>
