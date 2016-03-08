@@ -28,8 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:background="@color/white"
-           />
+            android:background="@color/color_EBEBEB" />
 
         <!--没有收货地址时-->
         <RelativeLayout
@@ -64,6 +63,11 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom"
             android:background="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e1e1e1" />
 
             <TextView
                 android:layout_width="wrap_content"
