@@ -53,7 +53,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public static final String BLUR = "blur";
     public static final String POSITION = "position";
     private static int SAVE_TIME = 5;
-//    private static int BACKGROUND_CAN_CHANGGE = 1;
+    //    private static int BACKGROUND_CAN_CHANGGE = 1;
 //    private static int BACKGROUND_CAN_NOT_CHANGGE = 2;
     public static boolean BACKGROUND_CAN_CHANGGE = true;
 
@@ -115,7 +115,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
             }
         };*/
         addListener();
-        initData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+            }
+        }, 200);
     }
 
     @Override

@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * 闪屏页面
  * Created by guchenkai on 2015/12/11.
@@ -29,6 +31,7 @@ public class SplashActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        ShareSDK.initSDK(mContext);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
         SuperTask.with(this)
