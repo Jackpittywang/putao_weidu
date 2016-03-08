@@ -1,12 +1,8 @@
 package com.putao.wd.home;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,15 +19,9 @@ import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.view.image.FastBlur;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,8 +53,10 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public static final String BLUR = "blur";
     public static final String POSITION = "position";
     private static int SAVE_TIME = 5;
-    private static int BACKGROUND_CAN_CHANGGE = 1;
-    private static int BACKGROUND_CAN_NOT_CHANGGE = 2;
+//    private static int BACKGROUND_CAN_CHANGGE = 1;
+//    private static int BACKGROUND_CAN_NOT_CHANGGE = 2;
+    public static boolean BACKGROUND_CAN_CHANGGE = true;
+
 
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
@@ -85,7 +77,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         vp_content.setOffscreenPageLimit(3);
-        mHandlerThread = new HandlerThread("blurThread");
+       /* mHandlerThread = new HandlerThread("blurThread");
         mHandlerThread.start();
         Looper looper = mHandlerThread.getLooper();
         mHandler = new Handler(looper) {
@@ -121,7 +113,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                         break;
                 }
             }
-        };
+        };*/
         addListener();
         initData();
     }
@@ -134,16 +126,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         isPrepared = false;
         //填充各控件的数据
         initData();
-    }
-
-    private void pageSelected(int position) {
-        Message message = new Message();
-        message.what = position == mExploreIndexs.size() + 1 ? 2 : 1;
-        Bundle bundle = new Bundle();
-        bundle.putInt(POSITION, position);
-        message.obj = bundle;
-        mHandler.removeCallbacksAndMessages(null);
-        mHandler.sendMessage(message);
     }
 
     private void addListener() {
@@ -162,15 +144,13 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     vp_content.setCurrentItem(mExploreIndexs.size() + 1);
                     return;
                 }
-                mI = BACKGROUND_CAN_CHANGGE;
+//                mI = BACKGROUND_CAN_CHANGGE;
                 if (position == mExploreIndexs.size() + 1) {
                     hindDate("MORE");
                 } else {
                     showDate();
                     addDate(position);
                 }
-                pageSelected(position);
-//                mThread.start(position);
             }
 
             @Override
@@ -230,7 +210,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                 new SimpleFastJsonCallback<ArrayList<ExploreIndex>>(ExploreIndex.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ExploreIndex> result) {
-                        Logger.d("", "-----------++++" + result.get(0).is_like());
                         if (null != result && result.size() > 0) {
                             mExploreIndexs = result;
                             mExploreIndex = mExploreIndex == null ? new ExploreIndexs() : mExploreIndex;

@@ -56,7 +56,7 @@ public abstract class BasicApplication extends Application {
         //ButterKnife的Debug模式
         ButterKnife.setDebug(isDebug());
         //偏好设置文件初始化
-        Hawk.init(getApplicationContext(), getPackageName(), isDebug() ? LogLevel.FULL : LogLevel.NONE);
+        Hawk.init(getApplicationContext(), getPackageName(), isDebug() ? LogLevel.FULL : LogLevel.FULL);
         //日志输出
         Logger.init(getLogTag()).hideThreadInfo().setLogLevel(isDebug() ? Logger.LogLevel.FULL : Logger.LogLevel.FULL);
         //OkHttp初始化

@@ -117,6 +117,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         sv_me.setOnTouchListener(this);
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
         getUserInfo();
+        getOrderCount();
     }
 
     @Override
@@ -195,7 +196,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获取用户信息
      */
     private void getUserInfo() {
-
+        Logger.d("-------","-----------------------------------------用户信息");
         ONREFRESH = false;
         networkRequest(UserApi.getUserInfo(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
@@ -237,6 +238,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获得订单数量
      */
     private void getOrderCount() {
+        Logger.d("-------","-----------------------------------------订单数量");
         networkRequest(OrderApi.getOrderCount(), new SimpleFastJsonCallback<OrderCount>(OrderCount.class, loading) {
             @Override
             public void onSuccess(String url, OrderCount result) {

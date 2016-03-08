@@ -108,7 +108,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                 mTvSex = "M";
         }
         mTvBirthday = tv_birthday.getText().toString();
-        if (StringUtils.isEmpty(mEtNickname)) {
+        if (mEtNickname.trim().isEmpty()) {
             ToastUtils.showToastShort(mContext, "昵称不能为空");
             return false;
         }

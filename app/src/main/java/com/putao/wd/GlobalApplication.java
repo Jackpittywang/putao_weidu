@@ -33,6 +33,7 @@ public class GlobalApplication extends BasicApplication {
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
 
     public static String shareImagePath;
+    public static String blurIndex;
     public static String resourcePath;
 
     public static YoukuPlayerBaseConfiguration mYoukuPlayerBaseConfiguration;
@@ -41,6 +42,7 @@ public class GlobalApplication extends BasicApplication {
     public void onCreate() {
         super.onCreate();
         shareImagePath = sdCardPath + File.separator + "screenshot.jpg";
+        blurIndex = sdCardPath + File.separator + "screenindex.jpg";
         resourcePath = sdCardPath + File.separator + "patch";
 
         installDataBase();
@@ -131,8 +133,8 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected boolean isDebug() {
-       // return false;
-        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+        return true;
+//        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override

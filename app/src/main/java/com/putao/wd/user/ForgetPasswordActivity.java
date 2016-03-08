@@ -120,6 +120,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                             @Override
                             public void onError(String error_msg) {
                                 ToastUtils.showToastLong(mContext, error_msg);
+                                tb_get_verify.reset();
                             }
                         });
                 break;

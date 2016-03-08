@@ -224,8 +224,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         wb_explore_detail.onPause();
     }
 }

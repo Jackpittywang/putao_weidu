@@ -163,6 +163,7 @@ public class IndexActivity extends BasicFragmentActivity {
     @Subcriber(tag = PutaoExploreFragment.BLUR)
     private void setBlur(Bitmap bitmap) {
         iv_blur.setDefaultImage(bitmap);
+        PutaoExploreFragment.BACKGROUND_CAN_CHANGGE = true;
     }
 
     @Subcriber(tag = PaySuccessActivity.PAY_FINISH)

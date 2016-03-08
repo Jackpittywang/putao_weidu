@@ -146,7 +146,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(),  mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(mContext, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
             }
 
             @Override
@@ -222,8 +222,8 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         wb_explore_detail.onPause();
     }
 }

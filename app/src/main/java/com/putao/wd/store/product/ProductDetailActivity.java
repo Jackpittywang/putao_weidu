@@ -229,6 +229,11 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         getCartCount();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wv_content  .onPause();
+    }
    /* private void addListener() {
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override

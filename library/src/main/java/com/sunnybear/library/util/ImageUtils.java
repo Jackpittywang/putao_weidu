@@ -199,8 +199,16 @@ public final class ImageUtils {
      *
      * @param view view源
      */
-    public static Bitmap cutOutViewToBitmap(View view) {
-        return Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+    public static Bitmap cutOutViewToSmallBitmap(View view) {
+//        return Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Bitmap bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888);
+        if (null != view) {
+            view.setBackgroundResource(R.color.white);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+        }
+        return bitmap;
     }
 
     /**

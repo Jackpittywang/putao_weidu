@@ -1,15 +1,16 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
-import com.putao.wd.model.HomeExplore;
+import com.putao.wd.home.PutaoExploreFragment;
 import com.sunnybear.library.controller.BasicFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.ImageUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -20,16 +21,26 @@ import butterknife.OnClick;
  */
 public class ExploreMoreFragment extends BasicFragment {
 
-//  @Bind(R.id.rv_content)
+    //  @Bind(R.id.rv_content)
 //  BasicRecyclerView rv_content;
 //    @Bind(R.id.iv_said)
 //    ImageView iv_said;
 //    @Bind(R.id.iv_play)
 //    ImageView iv_play;
-//    @Bind(R.id.iv_plus)
-//    ImageView iv_plus;
+    @Bind(R.id.iv_video)
+    ImageView iv_video;
 
 //    private ExploreMoreAdapter adapter;
+
+    @Override
+    protected void lazyLoad() {
+        if (!isVisible || !PutaoExploreFragment.BACKGROUND_CAN_CHANGGE) {
+            return;
+        }
+        PutaoExploreFragment.BACKGROUND_CAN_CHANGGE = false;
+        EventBusHelper.post(ImageUtils.cutOutViewToSmallBitmap(iv_video), PutaoExploreFragment.BLUR);
+        iv_video.setBackgroundResource(R.drawable.img_explore_more_cover);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -47,29 +58,9 @@ public class ExploreMoreFragment extends BasicFragment {
         return new String[0];
     }
 
-//    private void addListener() {
-//        rv_content.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(Serializable serializable, int position) {
-//                startActivity(ExploreMoreActivity.class);
-//            }
-//        });
-//    }
-//
-//
-//    private List<HomeExplore> getTest() {
-//        List<HomeExplore> list = new ArrayList<>();
-//        HomeExplore homeExplore = null;
-//        for (int i = 0; i < 3; i++) {
-//            homeExplore = new HomeExplore();
-//            homeExplore.setImageUrl(R.drawable.test_flaunt_taotao_bg_01);
-//            list.add(homeExplore);
-//        }
-//        return list;
-//    }
 
     @OnClick({R.id.ll_more})
-    public void onClick(View v){
+    public void onClick(View v) {
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             /*case R.id.iv_said :

@@ -25,7 +25,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         this.isCopy = isCopy;
         mOnShareClickListener = onShareClickListener;
         if (!isCopy) {
-            LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_second);
+            LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_copy_url);
             ll_second.setVisibility(View.GONE);
         }
     }

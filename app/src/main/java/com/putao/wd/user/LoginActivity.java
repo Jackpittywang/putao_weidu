@@ -146,7 +146,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() > 0) {
+        if (et_mobile.length() == 11 && et_password.length() >= 6) {
             btn_login.setClickable(true);
             btn_login.setBackgroundResource(R.drawable.btn_get_focus);
         } else {

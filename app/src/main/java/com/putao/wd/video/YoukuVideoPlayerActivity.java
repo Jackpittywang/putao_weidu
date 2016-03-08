@@ -85,7 +85,7 @@ public class YoukuVideoPlayerActivity extends BasicFragmentActivity {
             onBackPressed();
         }
         // 控制竖屏和全屏时候的布局参数。这两句必填。
-        fl_player.setSmallScreenLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        fl_player.setSmallScreenLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         fl_player.setFullScreenLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //初始化播放器相关数据
         fl_player.initialize(mBasePlayerManager);

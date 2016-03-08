@@ -549,8 +549,8 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         wv_content.onPause();
     }
 }

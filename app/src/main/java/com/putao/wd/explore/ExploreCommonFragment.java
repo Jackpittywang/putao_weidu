@@ -1,6 +1,10 @@
 package com.putao.wd.explore;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,13 +14,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.share.ShareTools;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
@@ -24,6 +33,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * 探索--前7
@@ -54,6 +64,22 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     private int mPosition;
     private boolean isCool;//是否赞过
 
+    private Handler mHandler;
+    private HandlerThread mHandlerThread;
+
+    // 标志位，标志已经初始化完成。
+    public static boolean isPrepared;
+
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible || !PutaoExploreFragment.BACKGROUND_CAN_CHANGGE) {
+            return;
+        }
+        PutaoExploreFragment.BACKGROUND_CAN_CHANGGE = false;
+        EventBusHelper.post(ImageUtils.cutOutViewToSmallBitmap(iv_video), PutaoExploreFragment.BLUR);
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_nexplore_common;
@@ -69,6 +95,10 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setClickable(false);
         isCool = !TextUtils.isEmpty(AccountHelper.getCurrentUid()) ? mExploreIndex.is_like() : null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
         sb_cool_icon.setState(isCool);
+        mHandlerThread = new HandlerThread("blurThread");
+        mHandlerThread.start();
+        Looper looper = mHandlerThread.getLooper();
+        isPrepared = true;
         initView();
     }
 
