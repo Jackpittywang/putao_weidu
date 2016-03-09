@@ -287,6 +287,26 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
                         bundle.putString(PayActivity.BUNDLE_ORDER_DATE, mOrderDetail.getCreate_time());
                         startActivity(PayActivity.class, bundle);*/
                         final AlipayHelper alipayHelper = new AlipayHelper();
+                        alipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
+                            @Override
+                            public void onPayResult(boolean isSuccess, String msg) {
+                                if (isSuccess) {
+
+                                } else {
+                                    ToastUtils.showToastShort(mContext, "支付失败");
+                                }
+                            }
+
+                            @Override
+                            public void onPayVerify(String msg) {
+                                ToastUtils.showToastShort(mContext, msg);
+                            }
+
+                            @Override
+                            public void onPayCancel(String msg) {
+                                ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
+                            }
+                        });
                         networkRequest(StoreApi.pay(mOrderDetail.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
