@@ -1,6 +1,7 @@
 package com.putao.wd.created.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public class CreateCommentAdapter extends LoadMoreAdapter<CreateComment, CreateC
         if (!StringUtils.isEmpty(comment.getReal_avatar()))
             holder.iv_comment_icon.setImageURL(comment.getReal_avatar());
         else
-            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
+            holder.iv_comment_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
         if (!StringUtils.isEmpty(comment.getUsername()))
             holder.tv_username.setText(comment.getUsername());
         String create_time = DateUtils.timeCalculate(comment.getCreated_at());

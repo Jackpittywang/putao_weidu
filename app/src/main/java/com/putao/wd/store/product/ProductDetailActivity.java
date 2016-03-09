@@ -232,7 +232,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     protected void onPause() {
         super.onPause();
-        wv_content  .onPause();
+//        wv_content.onPause();
+        wv_content.loadUrl("");
     }
    /* private void addListener() {
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {

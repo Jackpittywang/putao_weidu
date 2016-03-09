@@ -120,7 +120,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
             public void onSuccess(String url, UserInfo result) {
                 iv_header_icon.setImageURL(result.getHead_img());
                 tv_nick_name.setText(result.getNick_name());
-                tv_user_info.setText(result.getProfile());
+                tv_user_info.setText(result.getProfile().isEmpty() ? "这个用户很懒" : result.getProfile());
                 AccountHelper.setUserInfo(result);
                 loading.dismiss();
             }

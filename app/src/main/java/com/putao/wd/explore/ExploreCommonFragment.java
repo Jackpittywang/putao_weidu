@@ -160,6 +160,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
         if (mPosition == position) {
             sb_cool_icon.setState(true);
             mExploreIndex.setCount_likes(mExploreIndex.getCount_likes() + 1);
+            mExploreIndex.setIs_like(true);
             ll_count_cool.setClickable(false);
             tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
             networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),
