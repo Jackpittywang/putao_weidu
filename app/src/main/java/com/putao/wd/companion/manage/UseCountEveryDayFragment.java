@@ -8,7 +8,6 @@ import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementEdit;
-import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;

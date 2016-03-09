@@ -94,8 +94,8 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
 
                     setDeviceText(result.getSlave_device_list(), false);
                     setProductText(result.getProduct_list(), false);
-                    tv_usecount_byday.setText(result.getUse_num() + "次");
-                    tv_usetime_byday.setText(result.getUse_time() + "分钟");
+                    tv_usecount_byday.setText(result.getUse_num().equals("0")?"无限":result.getUse_num() + "次");
+                    tv_usetime_byday.setText(result.getUse_time().equals("0")?"无限":result.getUse_time() + "分钟");
                     Object stop_time = mDiskFileCacheHelper.getAsSerializable(STOP_PLAY);
                     if (null != stop_time) {
                         mTime = (System.currentTimeMillis()) - (long) stop_time;
