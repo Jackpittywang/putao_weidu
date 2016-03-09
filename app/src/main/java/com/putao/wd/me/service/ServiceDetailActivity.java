@@ -161,7 +161,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             tv_no_shipment.setText(express.get(0).getExpress_message());
         }
         tv_customer_name.setText(order_info.getConsignee());
-        tv_customer_address.setText(order_info.getAddress());
+        tv_customer_address.setText(order_info.getProvince() + " " + order_info.getCity() + " " + order_info.getAddress());//设置收货地址
         tv_customer_phone.setText(order_info.getMobile());
         tv_pay_method.setText("支付方式：" + order_info.getPay_type());
         tv_shipment_method.setText("配送方式：" + order_info.getDeliver_type());

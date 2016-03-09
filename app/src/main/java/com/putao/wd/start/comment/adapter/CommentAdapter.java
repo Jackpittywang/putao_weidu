@@ -51,6 +51,9 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
     public void onBindItem(final CommentViewHolder holder, final Comment comment, final int position) {
         if (!StringUtils.isEmpty(comment.getHead_img()))
             holder.iv_comment_icon.setImageURL(comment.getHead_img());
+        else {
+            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
+        }
         if (!StringUtils.isEmpty(comment.getUser_name()))
             holder.tv_username.setText(comment.getUser_name());
         if (StringUtils.isEmpty(comment.getUser_id()))
@@ -88,7 +91,7 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
                     comment.setIs_like(true);
                     String count_likes = comment.getCount_likes();
                     comment.setCount_likes(TextUtils.equals("赞", count_likes) ? "1" : Integer.parseInt(count_likes) + 1 + "");
-                    holder.tv_count_cool.setText(Integer.parseInt(comment.getCount_likes())+ "");
+                    holder.tv_count_cool.setText(Integer.parseInt(comment.getCount_likes()) + "");
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
             }
         });

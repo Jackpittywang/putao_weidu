@@ -226,6 +226,10 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     CreateComment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
                     msg = msg.substring(msg.lastIndexOf(":") + 2);
+                    if (msg.trim().isEmpty()) {
+                        ToastUtils.showToastShort(mContext, "评论不能为空");
+                        return;
+                    }
                     networkRequest(CreateApi.addComment(msg, action_id, comment.getId(), comment.getUid()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -237,6 +241,10 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                             });
                 } else {
                     String msg = et_msg.getText().toString();
+                    if (msg.trim().isEmpty()) {
+                        ToastUtils.showToastShort(mContext, "评论不能为空");
+                        return;
+                    }
                     networkRequest(CreateApi.addComment(msg, action_id),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override

@@ -131,7 +131,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     public void run() {
                         reply();
                     }
-                },200);
+                }, 200);
             }
         };
         mSelectPopupWindow.tv_second.setText("回复");
@@ -194,7 +194,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         });
     }
 
-    @OnClick({R.id.tv_emojis, R.id.tv_send,R.id.et_msg})
+    @OnClick({R.id.tv_emojis, R.id.tv_send, R.id.et_msg})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -207,6 +207,10 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     Comment comment = adapter.getItem(mPosition);
                     String msg = et_msg.getText().toString();
                     msg = msg.substring(msg.lastIndexOf(":") + 2);
+                    if (msg.trim().isEmpty()) {
+                        ToastUtils.showToastShort(mContext, "评论不能为空");
+                        return;
+                    }
                     networkRequest(ExploreApi.addComment(msg, action_id, comment.getComment_id()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -218,6 +222,10 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                             });
                 } else {
                     String msg = et_msg.getText().toString();
+                    if (msg.trim().isEmpty()) {
+                        ToastUtils.showToastShort(mContext, "评论不能为空");
+                        return;
+                    }
                     networkRequest(ExploreApi.addComment(msg, action_id),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
@@ -234,7 +242,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                 vp_emojis.setVisibility(View.GONE);
                 break;
             case R.id.et_msg://点击文本输入框
-                isShowEmoji=false;
+                isShowEmoji = false;
                 vp_emojis.setVisibility(View.GONE);
                 break;
         }
