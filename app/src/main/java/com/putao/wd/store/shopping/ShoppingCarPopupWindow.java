@@ -89,6 +89,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         networkRequest(StoreApi.getProductSpce(product_id),
                 new SimpleFastJsonCallback<ProductNorms>(ProductNorms.class, loading) {
                     private List<Norms> normses;
+
                     @Override
                     public void onSuccess(String url, ProductNorms result) {
                         skus = result.getSku();
@@ -118,6 +119,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "添加成功！");
                 Logger.d(result.toString());
+                mCount = "1";//初始化商品默认数量
                 EventBusHelper.post(EVENT_REFRESH_TITLE_COUNT, EVENT_REFRESH_TITLE_COUNT);
             }
         });

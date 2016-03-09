@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_service_order_text"
                     android:layout_marginTop="5dp"
-                    android:text="2015112614082887661001"
+                    android:text=""
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_size_16sp" />
 
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_service_no"
                     android:layout_marginTop="5dp"
-                    android:text="2015-08-02 13:48:37"
+                    android:text=""
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
 
@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="待支付"
+                    android:text=""
                     android:textColor="@color/text_color_red"
                     android:textSize="@dimen/text_size_16sp"
                     android:textStyle="bold" />
@@ -276,7 +276,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="13800000000"
+                    android:text=""
                     android:textColor="#313131"
                     android:textSize="@dimen/text_size_16sp" />
 

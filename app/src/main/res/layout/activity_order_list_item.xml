@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="待支付"
+            android:text=""
             android:textColor="@color/text_color_red"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold" />

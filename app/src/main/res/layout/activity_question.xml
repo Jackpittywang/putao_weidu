@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_emojis"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/btn_emoji_select" />
+                android:background="@drawable/btn_emoji_select" />-->
 
             <com.sunnybear.library.view.emoji.EmojiEditText
                 android:id="@+id/et_msg"

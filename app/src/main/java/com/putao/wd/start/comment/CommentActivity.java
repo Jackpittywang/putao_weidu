@@ -114,7 +114,8 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
 
                         @Override
                         public void onSuccess(String url, String result) {
-                            adapter.delete(item);
+//                            adapter.delete(item);
+                            refreshCommentList();
                             EventBusHelper.post(mSuperPosition, EVENT_DELETE_CREAT_COMMENT);
                         }
                     });

@@ -78,14 +78,14 @@ public class QuestionActivity extends PTWDActivity implements View.OnClickListen
         return new String[0];
     }
 
-    @OnClick({R.id.tv_emojis, R.id.tv_send})
+    @OnClick({ R.id.tv_send})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_emojis://点击表情栏
+            /*case R.id.tv_emojis://点击表情栏
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
-                break;
+                break;*/
             case R.id.tv_send://点击发送
                 String msg = et_msg.getText().toString();
                 networkRequest(UserApi.questionAdd(et_msg.getText().toString(), userInfo.getNick_name(), userInfo.getHead_img()),
