@@ -27,7 +27,6 @@ import com.putao.wd.model.Express;
 import com.putao.wd.model.OrderDetail;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.store.order.adapter.OrdersAdapter;
-import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -43,12 +42,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 订单详情
  * Created by yanguoqiang on 15/11/29.
  */
-public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
+public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener{
 
     public static final String KEY_ORDER = "order";
     public static final String KEY_ORDER_ID = "order_id";
@@ -403,6 +403,27 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> {
         if (3 == mOrderDetail.getShipping_status()) {
             tv_order_status.setText("退签");
             btn_order_left.setText("申请售后");
+        }
+    }
+    @OnClick({R.id.ll_shipment})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_shipment:// 查看物流信息
+                if (null == mOrderDetail.getExpress() || mOrderDetail.getExpress().size() == 0) {
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("提示")
+                            .setMessage("没有物流信息")
+                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    loading.dismiss();
+                                }
+                            })
+                            .show();
+                } else {
+                }
+                break;
         }
     }
 
