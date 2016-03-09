@@ -197,6 +197,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获取用户信息
      */
     private void getUserInfo() {
+        if (!ONREFRESH) return;
         ONREFRESH = false;
         if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
         networkRequest(UserApi.getUserInfo(),
@@ -239,6 +240,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      * 获得订单数量
      */
     private void getOrderCount() {
+        if (!ONREFRESH) return;
         if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
         networkRequest(OrderApi.getOrderCount(), new SimpleFastJsonCallback<OrderCount>(OrderCount.class, loading) {
             @Override
@@ -423,18 +425,15 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 rl_user_head_icon.getLocationOnScreen(position);
                 if (position[1] < mStatusBarHeight) return false;
                 if (height < mHeadHeight) {
-                    mHeadLayoutParams.height = mHeadHeight;
-                    rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                    rl_user_head_icon.getLayoutParams().height = mHeadHeight;
                     return false;
                 }
-                mHeadLayoutParams.height = height;
-                rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                rl_user_head_icon.getLayoutParams().height = height;
                 y = newY;
                 break;
             case MotionEvent.ACTION_CANCEL:
                 isClick = true;
-                mHeadLayoutParams.height = mHeadHeight;
-                rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                rl_user_head_icon.getLayoutParams().height = mHeadHeight;
                 if (y - oldY < 300 || oldY == 0) break;
                 oldY = 0;
                 if (ONREFRESH) {
@@ -444,20 +443,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
                 break;
             case MotionEvent.ACTION_UP:
-//                float flo = (float)mHeadHeight / mHeadLayoutParams.height;
-//                iv_user_icon_background.getLayoutParams().height = mHeadLayoutParams.height;
-//                ObjectAnimator animator1 = ObjectAnimator.ofFloat(iv_user_icon_background, "scaleY", 1.0f, flo);
-//                animator1.setDuration(500).start();
                 isClick = true;
-                mHeadLayoutParams.height = mHeadHeight;
-                rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
+                rl_user_head_icon.getLayoutParams().height = mHeadHeight;
                 if (y - oldY < 300 || oldY == 0) break;
                 oldY = 0;
                 if (ONREFRESH) {
                     getUserInfo();
                     getOrderCount();
                 }
-
                 break;
         }
         return true;

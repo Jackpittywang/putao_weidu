@@ -45,7 +45,7 @@ public class PutaoStoreFragment extends BasicFragment {
         Logger.d("PutaoStoreFragment启动");
 
         adapter = new StoreAdapter(mActivity, null);
-//        adapter.setAnimations(new ScaleInAnimation(0.9F));
+        adapter.setAnimations(new ScaleInAnimation(1.0F));
         rv_content.setAdapter(adapter);
         addListener();
 

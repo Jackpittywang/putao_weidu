@@ -56,6 +56,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         addNavigation();
         et_mobile.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
+        btn_login.setClickable(false);
         IndexActivity.isNotRefreshUserInfo = false;
     }
 
