@@ -133,7 +133,7 @@ public class ImageDraweeView extends SimpleDraweeView {
         Uri uri = Uri.parse(url);
         setImageURI(uri);
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
-                .setPostprocessor(mProcessor)
+//                .setPostprocessor(mProcessor)
                 .setAutoRotateEnabled(true)
                 .setLocalThumbnailPreviewsEnabled(true)
                 .setResizeOptions(mResizeOptions)
