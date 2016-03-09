@@ -290,15 +290,8 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
                 case ALBUM_REQCODE://相册选择
                     ToastUtils.showToastShort(this, "系统图库返回");
                     Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(selectedImage,
-                            filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-
+                    String picturePath=  ImageUtils.getImageAbsolutePath(PerfectActivity.this,selectedImage);
                     Logger.d(picturePath);
-                    cursor.close();
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.resize(320, 320).setDefaultImage(bitmap);
                     ImageUtils.bitmapOutSdCard(bitmap, filePath);
