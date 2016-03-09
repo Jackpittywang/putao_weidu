@@ -48,14 +48,6 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Intent intent = getIntent();
-        mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
-        mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE, 1);
-        addFragment();
-    }
 
     @Override
     protected String[] getRequestUrls() {
