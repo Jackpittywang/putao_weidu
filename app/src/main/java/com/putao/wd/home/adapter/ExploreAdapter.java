@@ -99,9 +99,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
     @Override
     public int getMultiItemViewType(int position) {
         Diary diary = getItem(position);
-        if (diary.getTag_type() == 2)
-            return TYPE_TASKS;
-        if (diary.getTag_type() == 1) {
+        if (diary.getTag_type() == 1 || diary.getTag_type() == 2) {
             if (diary.getOption_type() == 1)
                 return TYPE_CHALLENGE;
             if (diary.getOption_type() == 2)

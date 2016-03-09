@@ -38,7 +38,7 @@ import butterknife.OnClick;
 public class AddressEditActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
     //    public static final String EVENT_ADDRESS_ADD = "address_add";
     public static final String EVENT_ADDRESS_UPDATE = "address_update";
-    //    public static final String EVENT_ADDRESS_DELETE = "address_delete";
+    public static final String EVENT_ADDRESS_DELETE = "address_delete";
     public static final String EVENT_ADDRESS_IS_DEFAULT = "address_is_default";
     public static final String BUNDLE_KEY_ADDRESS = "address";
 
@@ -151,6 +151,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
+                EventBusHelper.post("", EVENT_ADDRESS_DELETE);
                 loading.dismiss();
             }
         });
@@ -167,7 +168,6 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
                 addressDelete(mAddress.getId() + "");
-                EventBusHelper.post("", EVENT_ADDRESS_UPDATE);
                 finish();
                 break;
             case R.id.ll_city_sel://地区选择

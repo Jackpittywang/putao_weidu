@@ -144,8 +144,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         map = BitmapFactory.decodeStream(in);
                         Bitmap apply = FastBlur.doBlur(map, 50, false);
                         EventBusHelper.post(apply, ME_BLUR);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        setDefaultBlur();
                     }
                 } else if (msg.what == 2) {
                     setDefaultBlur();
@@ -275,6 +276,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
         mImg = "";
+        hideNum();
         iv_user_icon.setDefaultImage(R.drawable.img_head_default);
         tv_user_nickname.setText("葡星人");
     }
