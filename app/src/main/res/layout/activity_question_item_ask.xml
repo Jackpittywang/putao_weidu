@@ -45,6 +45,6 @@
             android:layout_gravity="bottom"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            auto:placeholderImage="@drawable/img_head_signup" />
+            auto:placeholderImage="@drawable/img_head_default" />
     </LinearLayout>
 </LinearLayout>
