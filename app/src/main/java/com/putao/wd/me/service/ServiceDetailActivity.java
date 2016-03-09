@@ -16,7 +16,6 @@ import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.service.adapter.ServiceAdapter;
 import com.putao.wd.model.Express;
-import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
@@ -25,10 +24,8 @@ import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -161,7 +158,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             tv_no_shipment.setText(express.get(0).getExpress_message());
         }
         tv_customer_name.setText(order_info.getConsignee());
-        tv_customer_address.setText(order_info.getAddress());
+        tv_customer_address.setText(order_info.getProvince() + " " + order_info.getCity() + " " + order_info.getAddress());//设置收货地址
         tv_customer_phone.setText(order_info.getMobile());
         tv_pay_method.setText("支付方式：" + order_info.getPay_type());
         tv_shipment_method.setText("配送方式：" + order_info.getDeliver_type());
@@ -296,9 +293,22 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_shipment:// 查看物流信息
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable) express);
-                startActivity(ServiceShipmentDetailActivity.class, bundle);
+                if (null == express || express.size()== 0) {
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("提示")
+                            .setMessage("没有物流信息")
+                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    loading.dismiss();
+                                }
+                            })
+                            .show();
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable) express);
+                    startActivity(ServiceShipmentDetailActivity.class, bundle);
+                }
                 break;
             case R.id.btn_execute:
                 if ("取消申请".equals(btn_execute.getText())) {
