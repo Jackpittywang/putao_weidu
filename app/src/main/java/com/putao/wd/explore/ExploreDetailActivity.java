@@ -2,25 +2,17 @@ package com.putao.wd.explore;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.view.SwipeBackLayout;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,6 +46,8 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
         mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE, 1);
         addFragment();
     }
+
+
 
     @Override
     protected String[] getRequestUrls() {

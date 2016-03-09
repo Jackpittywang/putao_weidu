@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/transparent"
+              android:background="#e1e1e1"
               android:orientation="vertical">
 
     <com.sunnybear.library.view.image.ImageDraweeView
@@ -19,6 +19,7 @@
         android:layout_height="50dp"
         android:textSize="@dimen/text_size_16sp"
         android:gravity="center"
+        android:background="#e1e1e1"
         android:text="涂涂世界"/>
 </LinearLayout>
 
