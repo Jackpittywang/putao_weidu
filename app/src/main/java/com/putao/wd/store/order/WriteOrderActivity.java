@@ -78,6 +78,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     private String invoice_type = "";
     private String invoice_title = "";
     private String invoice_content = "";
+    private String address_id = "";
 
 
     @Override
@@ -123,6 +124,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
             public void onSuccess(String url, Address result) {
                 Logger.d(result.toString());
                 if (result != null) {
+                    address_id = result.getId();
                     ll_receiving_address.setVisibility(View.VISIBLE);
                     ll_no_receiving_address.setVisibility(View.GONE);
                     setAddress(result);
@@ -166,6 +168,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.fl_address://选择地址
                 bundle.putBoolean(AddressListActivity.BUNDLE_IS_CLOSE, true);
+                bundle.putString(AddressListActivity.BUNDLE_ADDRESS_ID, address_id);
                 startActivity(AddressListActivity.class, bundle);
                 break;
             case R.id.ll_need_invoice://发票信息
@@ -203,6 +206,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
     public void eventSelectAddress(Address address) {
         ll_receiving_address.setVisibility(View.VISIBLE);
         ll_no_receiving_address.setVisibility(View.GONE);
+        address_id = address.getId();
         setAddress(address);
         ll_submit.setBackgroundColor(ColorConstant.MAIN_COLOR_NOR);
         ll_submit.setClickable(true);

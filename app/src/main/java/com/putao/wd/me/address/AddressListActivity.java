@@ -36,6 +36,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     public static final String EVENT_SELECT_ADDRESS = "select_address";
     public static final String BUNDLE_IS_CLOSE = "is_close";
     public static final String IS_ADDRESS_EMPTY = "is_address_empty";
+    public static final String BUNDLE_ADDRESS_ID = "bundle_address_id";
 
     @Bind(R.id.rv_addresses)
     BasicRecyclerView rv_addresses;
@@ -50,6 +51,8 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     private boolean isAddressEmpty = true;
 
     private boolean isClose = false;
+    private String mId = "";
+    private ArrayList<Address> mAddress;
 
     private AlertDialog mDeleteDialog;
 
@@ -63,6 +66,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
         addNavigation();
 
         isClose = args.getBoolean(BUNDLE_IS_CLOSE);
+        mId = args.getString(BUNDLE_ADDRESS_ID);
 
         mProvinceDBManager = (ProvinceDBManager) mApp.getDataBaseManager(ProvinceDBManager.class);
         mCityDBManager = (CityDBManager) mApp.getDataBaseManager(CityDBManager.class);
@@ -92,6 +96,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                     isAddressEmpty = false;
                     adapter.replaceAll(result);
                     rl_no_address.setVisibility(View.GONE);
+                    mAddress = result;
                 } else rl_no_address.setVisibility(View.VISIBLE);
                 loading.dismiss();
             }
@@ -178,15 +183,22 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     }
 
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
-    public void eventAddressDelete(String tag) {
+    public void eventAddressDelete(String id) {
 //        adapter.delete(adapter.getEditPosition());
         if (adapter.getItemCount() == 0)
             rl_no_address.setVisibility(View.VISIBLE);
         else
             getAddressLists();
+        if (mId.equals(id)) {
+            for (Address address : mAddress) {
+                if ("1".equals(address.getStatus())) {
+                    EventBusHelper.post(address, EVENT_SELECT_ADDRESS);
+                    return;
+                }
+            }
+            EventBusHelper.post(mAddress.get(0), EVENT_SELECT_ADDRESS);
+        }
     }
-
-
 
 
 }

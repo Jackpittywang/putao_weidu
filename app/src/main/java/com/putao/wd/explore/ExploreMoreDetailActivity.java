@@ -222,8 +222,8 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
 //        wb_explore_detail.onPause();
         wb_explore_detail.loadUrl("");
     }

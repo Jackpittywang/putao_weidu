@@ -230,8 +230,8 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
 //        wv_content.onPause();
         wv_content.loadUrl("");
     }

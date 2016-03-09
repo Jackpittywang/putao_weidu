@@ -146,12 +146,12 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     /**
      * 删除收货地址
      */
-    private void addressDelete(String address_id) {
+    private void addressDelete(final String address_id) {
         networkRequest(OrderApi.addressDelete(address_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 Logger.d(result.toString());
-                EventBusHelper.post("", EVENT_ADDRESS_DELETE);
+                EventBusHelper.post(address_id, EVENT_ADDRESS_DELETE);
                 loading.dismiss();
             }
         });
