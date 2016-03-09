@@ -1,6 +1,7 @@
 package com.putao.wd.start.comment.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -52,7 +53,8 @@ public class CommentAdapter extends LoadMoreAdapter<Comment, CommentAdapter.Comm
         if (!StringUtils.isEmpty(comment.getHead_img()))
             holder.iv_comment_icon.setImageURL(comment.getHead_img());
         else {
-            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
+            holder.iv_comment_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
+//            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
         }
         if (!StringUtils.isEmpty(comment.getUser_name()))
             holder.tv_username.setText(comment.getUser_name());
