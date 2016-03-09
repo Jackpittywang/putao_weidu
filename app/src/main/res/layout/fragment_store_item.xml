@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#e1e1e1"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ebebeb"
+    android:orientation="vertical">
 
     <com.sunnybear.library.view.image.ImageDraweeView
+        xmlns:auto="http://schemas.android.com/apk/res-auto"
         android:id="@+id/iv_product"
         style="@style/image_style"
-        xmlns:auto="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        auto:aspect_ratio="2"/>
+        auto:aspect_ratio="2" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="@dimen/text_size_16sp"
         android:gravity="center"
-        android:background="#e1e1e1"
-        android:text="涂涂世界"/>
+        android:text="涂涂世界"
+        android:textSize="@dimen/text_size_16sp" />
 </LinearLayout>
 
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
