@@ -176,11 +176,17 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     public void eventAddressUpdate(String tag) {
         getAddressLists();
     }
-//
-//    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
-//    public void eventAddressDelete(Address address) {
+
+    @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
+    public void eventAddressDelete(String tag) {
 //        adapter.delete(adapter.getEditPosition());
-//        if (adapter.getItemCount() == 0)
-//            rl_no_address.setVisibility(View.VISIBLE);
-//    }
+        if (adapter.getItemCount() == 0)
+            rl_no_address.setVisibility(View.VISIBLE);
+        else
+            getAddressLists();
+    }
+
+
+
+
 }
