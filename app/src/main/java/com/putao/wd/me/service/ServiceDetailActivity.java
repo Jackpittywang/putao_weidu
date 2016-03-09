@@ -175,7 +175,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_DETAIL, true);
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_DETAIL, true);
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_SERVICE, true);
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });

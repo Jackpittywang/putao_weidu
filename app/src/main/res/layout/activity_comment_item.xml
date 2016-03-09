@@ -21,7 +21,8 @@
             style="@style/image_circle"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginLeft="8dp"
+            auto:default_drawable="@drawable/img_head_default"/>
 
         <LinearLayout
             android:layout_width="match_parent"
