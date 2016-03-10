@@ -22,6 +22,7 @@
             android:src="@drawable/img_bg_signup" />
 
         <com.sunnybear.library.view.image.ImageDraweeView
+            android:background="@drawable/img_aboutus_logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_above="@+id/tv_company"
