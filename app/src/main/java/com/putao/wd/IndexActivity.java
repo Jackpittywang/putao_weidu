@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
@@ -32,7 +33,10 @@ import butterknife.Bind;
 public class IndexActivity extends BasicFragmentActivity {
     public static boolean isNotRefreshUserInfo = false;
     public final static String PAY_ALL = "pay_all";
-
+    @Bind(R.id.ll_loading)
+    LinearLayout ll_loading;
+    @Bind(R.id.v_shelter)
+    View v_shelter;
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;
     @Bind(R.id.tb_tab)
@@ -170,5 +174,15 @@ public class IndexActivity extends BasicFragmentActivity {
     private void setPay(String pay) {
         tb_tab.setTabItemSelected(R.id.ti_create);
         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+    }
+
+    public void hideLoading() {
+        v_shelter.setVisibility(View.VISIBLE);
+        ll_loading.setVisibility(View.GONE);
+    }
+
+    public void showLoading() {
+        v_shelter.setVisibility(View.GONE);
+        ll_loading.setVisibility(View.VISIBLE);
     }
 }
