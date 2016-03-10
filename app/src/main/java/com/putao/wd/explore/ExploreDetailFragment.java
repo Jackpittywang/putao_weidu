@@ -119,12 +119,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(),  mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(),  mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
             }
 
             @Override
@@ -141,7 +141,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mActivity
                         .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText( mExploreIndex.getShare_url());
+                copy.setText(mExploreIndex.getShare_url());
                 ToastUtils.showToastShort(mActivity, "复制成功");
             }
         });
@@ -224,8 +224,43 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            if (wb_explore_detail != null) {
+                wb_explore_detail.getClass().getMethod("onPause").invoke(wb_explore_detail, (Object[]) null);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            if (wb_explore_detail != null) {
+                wb_explore_detail.getClass().getMethod("onResume").invoke(wb_explore_detail, (Object[]) null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        wb_explore_detail.destroy();
+        super.onDestroy();
+    }
+
+
+}
+    /*@Override
     public void onDestroy() {
         super.onDestroy();
         wb_explore_detail.loadUrl("");
-    }
-}
+    }*/
+
+
+
+

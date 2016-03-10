@@ -221,11 +221,40 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         tv_count_comment.setText(--mCount_comments + "");
     }
 
-    @Override
+    /*@Override
     protected void onDestroy() {
         super.onDestroy();
 //        wb_explore_detail.onPause();
         wb_explore_detail.loadUrl("");
+    }*/
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            if (wb_explore_detail != null) {
+                wb_explore_detail.getClass().getMethod("onPause").invoke(wb_explore_detail, (Object[]) null);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            if (wb_explore_detail != null) {
+                wb_explore_detail.getClass().getMethod("onResume").invoke(wb_explore_detail, (Object[]) null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        wb_explore_detail.destroy();
+        super.onDestroy();
     }
 }
 

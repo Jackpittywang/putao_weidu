@@ -23,6 +23,7 @@ import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
 import com.putao.wd.store.pay.PayActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -193,6 +194,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                                     Bundle bundle = new Bundle();
                                     bundle.putString(OrderDetailActivity.KEY_ORDER, result.getOrder_id());
                                     bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, result);
+                                    ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                                     startActivity(PayActivity.class, bundle);
                                     IndexActivity.isNotRefreshUserInfo = false;
                                 }
@@ -210,6 +212,13 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         setAddress(address);
         ll_submit.setBackgroundColor(ColorConstant.MAIN_COLOR_NOR);
         ll_submit.setClickable(true);
+    }
+
+    @Subcriber(tag = AddressListActivity.EVENT_SELECT_ADDRESS_EMPTY)
+    public void eventSelectAddressEmpty(String address) {
+        ll_receiving_address.setVisibility(View.GONE);
+        ll_no_receiving_address.setVisibility(View.VISIBLE);
+        addressId = "";
     }
 
     /**

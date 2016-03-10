@@ -34,6 +34,7 @@ import butterknife.OnClick;
  */
 public class AddressListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     public static final String EVENT_SELECT_ADDRESS = "select_address";
+    public static final String EVENT_SELECT_ADDRESS_EMPTY = "event_select_address_empty";
     public static final String BUNDLE_IS_CLOSE = "is_close";
     public static final String IS_ADDRESS_EMPTY = "is_address_empty";
     public static final String BUNDLE_ADDRESS_ID = "bundle_address_id";
@@ -185,20 +186,34 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     @Subcriber(tag = AddressEditActivity.EVENT_ADDRESS_DELETE)
     public void eventAddressDelete(String id) {
 //        adapter.delete(adapter.getEditPosition());
-        if (adapter.getItemCount() == 0)
-            rl_no_address.setVisibility(View.VISIBLE);
-        else
-            getAddressLists();
         if (mId.equals(id)) {
+            if (1 == mAddress.size()) {
+                EventBusHelper.post(EVENT_SELECT_ADDRESS_EMPTY, EVENT_SELECT_ADDRESS_EMPTY);
+                rl_no_address.setVisibility(View.VISIBLE);
+                return;
+            }
+            int i = 0;
             for (Address address : mAddress) {
-                if ("1".equals(address.getStatus())) {
-                    EventBusHelper.post(address, EVENT_SELECT_ADDRESS);
+                if (mId.equals(address.getId()) && "1".equals(address.getStatus())) {
+                    EventBusHelper.post(i == 0 ? mAddress.get(1) : mAddress.get(0), EVENT_SELECT_ADDRESS);
+                    getAddressLists();
                     return;
                 }
+                i++;
             }
-            EventBusHelper.post(mAddress.get(0), EVENT_SELECT_ADDRESS);
+            i = 0;
+            boolean b = false;
+            for (Address address : mAddress) {
+                if (mId.equals(address.getId()) && i == 0) b = true;
+                if ("1".equals(address.getStatus())) {
+                    EventBusHelper.post(address, EVENT_SELECT_ADDRESS);
+                    getAddressLists();
+                    return;
+                }
+                i++;
+            }
+            EventBusHelper.post(b ? mAddress.get(1) : mAddress.get(0), EVENT_SELECT_ADDRESS);
+            getAddressLists();
         }
     }
-
-
 }

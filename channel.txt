@@ -1,5 +1,6 @@
 local_release
 local_debug
+putao
 yingyonghui
 360
 xiaomi

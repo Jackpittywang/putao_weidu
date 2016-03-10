@@ -229,12 +229,12 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         getCartCount();
     }
 
-    @Override
+  /*  @Override
     protected void onDestroy() {
         super.onDestroy();
 //        wv_content.onPause();
         wv_content.loadUrl("");
-    }
+    }*/
    /* private void addListener() {
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
@@ -311,5 +311,35 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Subcriber(tag = ShoppingCarPopupWindow.EVENT_GET_PRODUCT_SPEC)
     public void eventGetProductSpec(String tag) {
         mShoppingCarPopupWindow.show(rl_main);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            if (wv_content != null) {
+                wv_content.getClass().getMethod("onPause").invoke(wv_content, (Object[]) null);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            if (wv_content != null) {
+                wv_content.getClass().getMethod("onResume").invoke(wv_content, (Object[]) null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        wv_content.destroy();
+        super.onDestroy();
     }
 }
