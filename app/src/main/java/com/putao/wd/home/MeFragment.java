@@ -136,7 +136,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             return;
                         }
                         Bitmap map;
-                        URL url = new URL(msg.obj.toString());
+                        URL url = new URL(setSmallImageUrl(msg.obj.toString()));
                         URLConnection conn = url.openConnection();
                         conn.connect();
                         InputStream in;
@@ -192,6 +192,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         btn_after_sale.hide();
     }
 
+    private String setSmallImageUrl(String str) {
+        return str.substring(0, str.length() - 4) + "_120x120" + str.substring(str.length() - 4);
+    }
+
     /**
      * 获取用户信息
      */
@@ -216,7 +220,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             return;
                         }
                         mImg = result.getHead_img();
-                        iv_user_icon.setImageURL(result.getHead_img());
+                        String head_img = result.getHead_img();
+                        iv_user_icon.setImageURL(setSmallImageUrl(result.getHead_img()));
                         Message message = new Message();
                         message.obj = mImg;
                         message.what = 1;

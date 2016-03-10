@@ -154,11 +154,19 @@
           </LinearLayout>
       </android.support.v7.widget.CardView>-->
 
+    <TextView
+        android:id="@+id/tv_ques"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/i_top"
+        android:layout_margin="10dp"
+        android:drawableBottom="@drawable/img_carve_up_article" />
+
     <LinearLayout
         android:id="@+id/ll_top_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/i_top"
+        android:layout_below="@+id/tv_ques"
         android:orientation="horizontal">
 
         <RelativeLayout

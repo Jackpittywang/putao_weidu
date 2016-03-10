@@ -198,6 +198,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.v_check.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
                 DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
                 viewHolder.tv_title.setText(diary.getAsk());
+                viewHolder.tv_ques.setText(diaryTitle.getText());
                 Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
                 Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
                 if (finalCacheDiary.isFinish()) {
@@ -291,10 +292,11 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             final DiaryChallengePicViewHolder viewHolder = (DiaryChallengePicViewHolder) holder;
             viewHolder.v_check.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
             DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
+            viewHolder.tv_ques.setText(diaryTitle.getText());
             Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
             Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
-            viewHolder.tv_title.setText(diary.getAsk());
-            if (diary.isFinish()) {
+            viewHolder.tv_title.setText(finalCacheDiary.getAsk());
+            if (finalCacheDiary.isFinish()) {
                 viewHolder.iv_check.setVisibility(View.VISIBLE);
                 initPicAnswer(viewHolder, finalCacheDiary.getAnswer(), finalCacheDiary.isTrue());
                 if (finalCacheDiary.isTrue())
@@ -536,6 +538,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         ImageView iv_check;
         @Bind(R.id.v_check)
         View v_check;
+        @Bind(R.id.tv_ques)
+        TextView tv_ques;
 
         public DiaryChallengeViewHolder(View itemView) {
             super(itemView);
@@ -574,6 +578,8 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
         ImageView iv_check;
         @Bind(R.id.v_check)
         View v_check;
+        @Bind(R.id.tv_ques)
+        TextView tv_ques;
 
         public DiaryChallengePicViewHolder(View itemView) {
             super(itemView);
