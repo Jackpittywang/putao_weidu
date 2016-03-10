@@ -29,7 +29,6 @@ import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.SmallBang;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
@@ -185,6 +184,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                     ExploreProductPlot exploreProductPlot = new ExploreProductPlot();
                     exploreProductPlot.setContent(diaryTitle.getText());
                     exploreProductPlot.setImg_url(diaryTitle.getImg());
+                    exploreProductPlot.setVideo_id(diaryTitle.getVideo());
                     EventBusHelper.post(exploreProductPlot, EVENT_DIARY_SHARE);
                 }
             });
