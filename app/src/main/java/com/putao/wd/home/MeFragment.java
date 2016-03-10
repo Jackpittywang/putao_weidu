@@ -295,6 +295,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
         mImg = "";
+        payCount = 0;
+        payDeliver = 0;
+        payTakeDeliver = 0;
+        payAfterSale = 0;
         getUserInfo();
         getOrderCount();
     }
