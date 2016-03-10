@@ -99,6 +99,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                 Bundle bundle = new Bundle();
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, serviceId);
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_STATUS, ServiceList.getStatusText());
+              //  ActivityManager.getInstance().addActivity(this);
                 startActivity(ServiceDetailActivity.class, bundle);
             }
         });
