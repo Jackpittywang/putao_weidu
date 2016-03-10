@@ -157,7 +157,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:visibility="gone" />
+                        android:visibility="visible"
+                        auto:dis_color="#657885"
+                        auto:nor_color="#657885"/>
                 </FrameLayout>
 
                 <!--规格参数-->
