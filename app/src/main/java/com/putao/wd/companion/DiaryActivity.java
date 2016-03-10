@@ -1,12 +1,10 @@
 package com.putao.wd.companion;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -37,8 +35,6 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import butterknife.Bind;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.tencent.qq.QQWebShareAdapter;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
@@ -167,10 +163,15 @@ public class DiaryActivity extends PTWDActivity {
 
 
     private Handler mHandler;
+    private String video_id;
+    private String content;
+    private String img_url;
 
     @Subcriber(tag = ExploreAdapter.EVENT_DIARY_SHARE)
     public void eventShare(ExploreProductPlot exploreProductPlot) {
-        String img_url = exploreProductPlot.getImg_url();
+        content = exploreProductPlot.getContent();
+        video_id = exploreProductPlot.getVideo_id();
+        img_url = exploreProductPlot.getImg_url();
         if (TextUtils.isEmpty(img_url)) {
             iv_plot_icon.setVisibility(View.GONE);
             mSharePopupWindow.show(rl_main);
@@ -199,16 +200,20 @@ public class DiaryActivity extends PTWDActivity {
         mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
-                        new ImageUtils.OnImageSaveCallback() {
-                            @Override
-                            public void onImageSave(boolean isSuccess) {
-                                ShareTools.newInstance(Wechat.NAME)
-                                        .setImagePath(GlobalApplication.shareImagePath)
-                                        .execute(mContext);
-                                mSharePopupWindow.dismiss();
-                            }
-                        });
+                if (TextUtils.isEmpty(video_id)) {
+                    ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
+                            new ImageUtils.OnImageSaveCallback() {
+                                @Override
+                                public void onImageSave(boolean isSuccess) {
+                                    ShareTools.newInstance(Wechat.NAME)
+                                            .setImagePath(GlobalApplication.shareImagePath)
+                                            .execute(mContext);
+                                    mSharePopupWindow.dismiss();
+                                }
+                            });
+                } else {
+                    ShareTools.wechatWebShare(mContext, true, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
+                }
             }
 
             @Override

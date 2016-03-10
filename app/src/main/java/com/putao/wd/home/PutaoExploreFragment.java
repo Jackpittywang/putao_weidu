@@ -10,6 +10,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.explore.ExploreCommonFragment;
@@ -197,12 +198,14 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         if (null != mExploreIndex) {
             mExploreIndexs = mExploreIndex.getExploreIndexes();
             if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
+                ((IndexActivity) getActivity()).hideLoading();
                 addFragments();
                 addDate(vp_content.getCurrentItem());
                 if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) < System.currentTimeMillis()) {
                     getIndexList();
                 }
             } else {
+                ((IndexActivity) getActivity()).showLoading();
                 getIndexList();
             }
         } else {
@@ -238,6 +241,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                         if (null == mExploreIndexs) return;
                         addFragments();
                         addDate(vp_content.getCurrentItem());
+                    }
+
+                    @Override
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+                        ((IndexActivity) getActivity()).hideLoading();
                     }
                 }, false);
     }

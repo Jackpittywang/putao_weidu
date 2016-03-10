@@ -15,7 +15,6 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -78,7 +77,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.setCurrentUid(result.getString("uid"));
                                 AccountHelper.setCurrentToken(result.getString("token"));
-                                PutaoCompanionFragment.isPrepared = true;
+//                                PutaoCompanionFragment.isPrepared = true;
                                 PutaoCreatedFragment.isPrepared = true;
                                 PutaoExploreFragment.isPrepared = true;
                                 EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);

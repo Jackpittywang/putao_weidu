@@ -11,6 +11,15 @@ public class ExploreProductPlot implements Serializable {
     private String img_url;//背景图
     private String img_list;//
     private String plot_id;//情节id
+    private String video_id;//视频id
+
+    public String getVideo_id() {
+        return video_id;
+    }
+
+    public void setVideo_id(String video_id) {
+        this.video_id = video_id;
+    }
 
     public String getContent() {
         return content;

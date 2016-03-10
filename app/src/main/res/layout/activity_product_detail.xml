@@ -212,7 +212,8 @@
     <View
         android:id="@+id/v_line_horizontal"
         style="@style/line_horizontal"
-        android:layout_above="@+id/ll_price"/>
+        android:layout_above="@+id/ll_price"
+        />
     <!--价格栏-->
     <LinearLayout
         android:id="@+id/ll_price"
