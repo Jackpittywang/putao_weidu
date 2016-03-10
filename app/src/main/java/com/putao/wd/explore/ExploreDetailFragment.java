@@ -228,14 +228,13 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     @Override
     protected void onInvisible() {
         super.onInvisible();
-        wb_explore_detail.loadUrl("");
-        wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
+        setVideoPause();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
+        setVideoPause();
     }
 
     @Override
@@ -244,6 +243,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         super.onDestroy();
     }
 
+    private void setVideoPause(){
+        if (null != wb_explore_detail) {
+            wb_explore_detail.loadUrl("");
+            wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
+        }
+    }
 
 }
     /*@Override

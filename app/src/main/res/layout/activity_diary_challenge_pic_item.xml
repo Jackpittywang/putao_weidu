@@ -160,7 +160,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/i_top"
         android:layout_margin="10dp"
-        android:drawableBottom="@drawable/img_carve_up_article" />
+        android:drawableBottom="@drawable/img_carve_up_article"
+        android:drawablePadding="10dp" />
 
     <LinearLayout
         android:id="@+id/ll_top_answer"

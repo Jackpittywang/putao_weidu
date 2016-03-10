@@ -186,6 +186,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      */
 
     private void hideNum() {
+        payCount = 0;
+        payDeliver = 0;
+        payTakeDeliver = 0;
+        payAfterSale = 0;
         btn_pay.hide();
         btn_deliver.hide();
         btn_take_deliver.hide();
@@ -295,10 +299,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Subcriber(tag = LoginActivity.EVENT_LOGIN)
     public void eventLogin(String tag) {
         mImg = "";
-        payCount = 0;
-        payDeliver = 0;
-        payTakeDeliver = 0;
-        payAfterSale = 0;
         getUserInfo();
         getOrderCount();
     }

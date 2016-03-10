@@ -3,6 +3,7 @@ package com.putao.wd.home.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -167,7 +168,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                     EventBusHelper.post(bundle, EVENT_PLAYER);
                 }
             });
-        }
+        } else basicHolder.iv_player.setVisibility(View.GONE);
         basicHolder.ll_date.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
         basicHolder.tv_date.setText(format);
         basicHolder.tv_sign.setText(diary.getTag_name());
@@ -198,6 +199,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 viewHolder.v_check.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
                 DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
                 viewHolder.tv_title.setText(diary.getAsk());
+                viewHolder.tv_ques.setVisibility(TextUtils.isEmpty(diaryTitle.getText()) ? View.GONE : View.VISIBLE);
                 viewHolder.tv_ques.setText(diaryTitle.getText());
                 Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
                 Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
@@ -292,6 +294,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
             final DiaryChallengePicViewHolder viewHolder = (DiaryChallengePicViewHolder) holder;
             viewHolder.v_check.setVisibility(mIsShowDate.get(position) ? View.VISIBLE : View.GONE);
             DiaryQuestion diaryQuestion = JSONObject.parseObject(diary.getOption(), DiaryQuestion.class);
+            viewHolder.tv_ques.setVisibility(TextUtils.isEmpty(diaryTitle.getText()) ? View.GONE : View.VISIBLE);
             viewHolder.tv_ques.setText(diaryTitle.getText());
             Diary cacheDiary = (Diary) mDiskCacheHelper.getAsSerializable(diary.getConfig_id() + AccountHelper.getCurrentUid());
             Diary finalCacheDiary = cacheDiary == null ? diary : cacheDiary;
