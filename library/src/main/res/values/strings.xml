@@ -15,7 +15,7 @@
     <string name="not_network">当前网络不可用</string>
     <string name="fail_request">数据请求失败</string>
     <!--<string name="not_cache">当前请求无缓存</string>-->
-    <string name="not_cache">网络不给力</string>
+    <string name="not_cache"></string>
 
     <string name="crop__done" translatable="false">确认</string>
     <string name="crop__cancel" translatable="false" tools:ignore="ButtonCase">取消</string>
