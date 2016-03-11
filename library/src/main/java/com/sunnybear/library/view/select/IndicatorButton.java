@@ -23,6 +23,7 @@ public class IndicatorButton extends LinearLayout {
     private View mRootView;
 
     private ImageView mIndicatorIcon;
+    private TextView mTvNumber;
     private TextView mTitle;
     private RelativeLayout mMainView;
     /*private RelativeLayout mIndicatorLayout;*/
@@ -65,6 +66,7 @@ public class IndicatorButton extends LinearLayout {
     private void initView(Context context) {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_indicator_button, this);
         mIndicatorIcon = (ImageView) mRootView.findViewById(R.id.iv_icon);
+        mTvNumber = (TextView) mRootView.findViewById(R.id.tv_number);
         mTitle = (TextView) mRootView.findViewById(R.id.tv_title);
         /*mIndicatorLayout = (RelativeLayout) mRootView.findViewById(R.id.rl_indicator);*/
         mMainView = (RelativeLayout) mRootView.findViewById(R.id.ll_main);
@@ -86,18 +88,23 @@ public class IndicatorButton extends LinearLayout {
             hide();
             return;
         }
-        mIndicator = new BadgeView(getContext(), mMainView);
-        mIndicator.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        mIndicator.setBackgroundResource(R.drawable.indicator_background);
+        if (mTvNumber.getVisibility() == GONE) mTvNumber.setVisibility(VISIBLE);
+
+        mTvNumber.setText(count + "");
+       /* if(mIndicator == null) {
+            mIndicator = new BadgeView(getContext(), mMainView);
+            mIndicator.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+            mIndicator.setBackgroundResource(R.drawable.indicator_background);
+        }
         mIndicator.setText(String.valueOf(count));
         if (mIndicatorTextColor != -1)
             mIndicator.setTextColor(mIndicatorTextColor);
         mIndicator.setBadgeMargin(8, 8);
-        mIndicator.show();
+        mIndicator.show();*/
     }
-
     public void hide() {
-        if (mIndicator != null && mIndicator.isShown())
-            mIndicator.hide();
+        mTvNumber.setVisibility(GONE);
+        /*if (mIndicator != null && mIndicator.isShown())
+            mIndicator.hide();*/
     }
 }

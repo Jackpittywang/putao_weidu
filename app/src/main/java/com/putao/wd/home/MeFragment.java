@@ -273,14 +273,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
 
     private void setOrderEmpty(int payCount, int newCount, IndicatorButton btn_pay) {
-        if (newCount == 0) {
+        /*if (newCount == 0) {
             btn_pay.hide();
             return;
         }
         if (payCount != newCount) {
-            btn_pay.hide();
-            btn_pay.show(newCount);
-        }
+        }*/
+//        btn_pay.hide();
+        btn_pay.show(newCount);
 
     }
 

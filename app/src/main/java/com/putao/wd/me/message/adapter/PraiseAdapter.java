@@ -1,6 +1,7 @@
 package com.putao.wd.me.message.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.PraiseDetail;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -41,7 +43,11 @@ public class PraiseAdapter extends LoadMoreAdapter<PraiseDetail, PraiseAdapter.P
 
     @Override
     public void onBindItem(PraiseViewHolder holder, PraiseDetail praiseDetail, int position) {
-        holder.iv_head_icon.setImageURL(praiseDetail.getHead_img());
+        if (!StringUtils.isEmpty(praiseDetail.getHead_img()))
+            holder.iv_head_icon.setImageURL(praiseDetail.getHead_img());
+        else {
+            holder.iv_head_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
+        }
         holder.tv_nickname.setText(praiseDetail.getNick_name());
         holder.tv_praise_date.setText(DateUtils.timeCalculate(Integer.parseInt(praiseDetail.getCreate_time())));
         //holder.tv_praised_content.setText(praiseDetail.getContent());

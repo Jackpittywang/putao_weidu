@@ -1,6 +1,7 @@
 package com.putao.wd.me.message.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,6 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.ReplyDetail;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -38,7 +40,12 @@ public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail, ReplyAdapter.Repl
 
     @Override
     public void onBindItem(ReplyViewHolder holder, ReplyDetail replyDetail, int position) {
-        holder.iv_head_icon.setImageURL(replyDetail.getHead_img());
+        if (!StringUtils.isEmpty(replyDetail.getHead_img()))
+            holder.iv_head_icon.setImageURL(replyDetail.getHead_img());
+        else {
+            holder.iv_head_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
+//            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
+        }
         holder.tv_nickname.setText(replyDetail.getNick_name());
         holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getModified_time())));
         holder.tv_reply_content.setText(replyDetail.getReplay_content());
