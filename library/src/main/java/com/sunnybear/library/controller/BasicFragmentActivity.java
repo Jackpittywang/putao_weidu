@@ -214,6 +214,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      */
     protected void networkRequest(Request request, RequestCallback callback) {
         networkRequest(request, -1, callback);
+        loading.show();
     }
 
     /**

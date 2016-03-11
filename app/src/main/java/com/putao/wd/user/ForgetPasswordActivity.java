@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.IndexActivity;
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;

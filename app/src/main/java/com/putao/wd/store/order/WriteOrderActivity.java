@@ -186,6 +186,7 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                     ToastUtils.showToastShort(mContext, "请填写收货地址");
                     return;
                 }
+                ll_submit.setClickable(false);
                 networkRequest(StoreApi.orderSubmit("2", pid, "", addressId, need_invoice, invoice_type, invoice_title, invoice_content, consignee, mobile, tel),
                         new SimpleFastJsonCallback<OrderSubmitReturn>(OrderSubmitReturn.class, loading) {
                             @Override
@@ -198,6 +199,12 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                                     startActivity(PayActivity.class, bundle);
                                     IndexActivity.isNotRefreshUserInfo = false;
                                 }
+                            }
+
+                            @Override
+                            public void onFinish(String url, boolean isSuccess, String msg) {
+                                super.onFinish(url, isSuccess, msg);
+                                ll_submit.setClickable(true);
                             }
                         });
                 break;

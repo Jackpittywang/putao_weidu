@@ -62,15 +62,19 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
     private String mCount = "1";//总数量
     private float Price = 0;
     private String product_id;
+    private String title;
+    private String subtitle;
 
     private List<Tag> mSelTags = new ArrayList<>();
     private int mSpecItemCount;
     private List<ProductNormsSku> skus;
     private ProductNormsSku sku;//选中的商品
 
-    public ShoppingCarPopupWindow(Context context, String pid) {
+    public ShoppingCarPopupWindow(Context context, String pid, String title, String subtitle) {
         super(context);
         product_id = pid;
+        this.title = title;
+        this.subtitle = subtitle;
         ll_join_car.setClickable(false);
         adapter = new NormsSelectAdapter(mActivity, null);
         rv_norms.setAdapter(adapter);
@@ -92,6 +96,8 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
                     @Override
                     public void onSuccess(String url, ProductNorms result) {
+                        tv_product_title.setText(title);
+                        tv_product_intro.setText(subtitle);
                         skus = result.getSku();
                         try {
                             mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());

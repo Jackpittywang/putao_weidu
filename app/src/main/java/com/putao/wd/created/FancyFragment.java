@@ -71,7 +71,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
                         super.onFinish(url, isSuccess, msg);
                         ptl_refresh.refreshComplete();
                     }
-                });
+                }, false);
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
