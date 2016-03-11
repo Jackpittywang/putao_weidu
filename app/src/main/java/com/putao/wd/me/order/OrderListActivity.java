@@ -183,6 +183,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      */
     @Override
     public void onTitleItemSelected(TitleItem item, int position) {
+        adapter.clear();
         currentPage = 1;
         switch (item.getId()) {
             case R.id.ll_all://全部
