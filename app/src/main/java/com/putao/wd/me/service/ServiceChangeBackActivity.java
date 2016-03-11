@@ -245,16 +245,9 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
                     break;
                 case ALBUM_REQCODE://相册选择
                     Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(selectedImage,
-                            filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
+                    String picturePath = ImageUtils.getImageAbsolutePath(ServiceChangeBackActivity.this, selectedImage);
 
                     Logger.d(picturePath);
-                    cursor.close();
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     break;
             }
