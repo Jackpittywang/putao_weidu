@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
@@ -293,7 +294,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_shipment:// 查看物流信息
-                if (null == express || express.size()== 0) {
+                if (null == express || express.size() == 0) {
                     new AlertDialog.Builder(mContext)
                             .setTitle("提示")
                             .setMessage("没有物流信息")
@@ -304,7 +305,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                                 }
                             })
                             .show();
-                }else {
+                } else {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(ServiceShipmentDetailActivity.KEY_EXPRESS_INFO, (Serializable) express);
                     startActivity(ServiceShipmentDetailActivity.class, bundle);
@@ -335,7 +336,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                         networkRequest(OrderApi.cancelService(serviceId), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                ActivityManager.getInstance().removeCurrentActivity();
+                                ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                                 startActivity(ServiceListActivity.class);
                                 loading.dismiss();
                             }

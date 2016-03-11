@@ -218,16 +218,20 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onWechatFriend() {
-                ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
-                        new ImageUtils.OnImageSaveCallback() {
-                            @Override
-                            public void onImageSave(boolean isSuccess) {
-                                ShareTools.newInstance(WechatMoments.NAME)
-                                        .setImagePath(GlobalApplication.shareImagePath)
-                                        .execute(mContext);
-                                mSharePopupWindow.dismiss();
-                            }
-                        });
+                if (TextUtils.isEmpty(video_id)) {
+                    ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
+                            new ImageUtils.OnImageSaveCallback() {
+                                @Override
+                                public void onImageSave(boolean isSuccess) {
+                                    ShareTools.newInstance(WechatMoments.NAME)
+                                            .setImagePath(GlobalApplication.shareImagePath)
+                                            .execute(mContext);
+                                    mSharePopupWindow.dismiss();
+                                }
+                            });
+                } else {
+                    ShareTools.wechatWebShare(mContext, false, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
+                }
             }
 
             @Override
