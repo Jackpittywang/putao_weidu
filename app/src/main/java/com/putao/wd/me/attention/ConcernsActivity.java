@@ -3,12 +3,12 @@ package com.putao.wd.me.attention;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
+import com.putao.wd.created.CreateCommentActivity;
 import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
@@ -64,11 +64,12 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                         if (details != null && details.size() > 0) {
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
-                            adapter.addAll(details);
+                            adapter.replaceAll(details);
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
 
@@ -109,7 +110,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                 new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
                     @Override
                     public void onSuccess(String url, Creates result) {
-                        adapter.replaceAll(result.getData());
+                        adapter.addAll(result.getData());
                         rv_created.loadMoreComplete();
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
@@ -124,6 +125,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
         mCreate = create;
         Bundle bundle = new Bundle();
         bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
+        bundle.putInt(CreateBasicDetailActivity.POSITION, position);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, create.getType() == 1 ? true : false);
         startActivity(CreateBasicDetailActivity.class, bundle);
     }
@@ -135,6 +137,20 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
             ptl_refresh.setVisibility(View.GONE);
             ll_empty.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
+    public void eventAddCommentCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getComment().setCount(item.getComment().getCount() + 1);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
+    public void evenDeleteCommentCount(int position) {
+        Create item = adapter.getItem(position);
+        item.getComment().setCount(item.getComment().getCount() - 1);
+        adapter.notifyItemChanged(position);
     }
 
     @Override

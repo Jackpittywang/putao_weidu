@@ -22,27 +22,29 @@
             android:src="@drawable/img_bg_signup" />
 
         <com.sunnybear.library.view.image.ImageDraweeView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/img_company"
+            android:background="@drawable/img_aboutus_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/tv_company"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             auto:roundedCornerRadius="5dp" />
 
         <TextView
             android:id="@+id/tv_company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="葡萄纬度"
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
             android:textColor="@color/text_main_color_nor"
-            android:textSize="40sp" />
+             />
 
         <TextView
             android:id="@+id/tv_version"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/tv_company"
+            android:layout_height="14dp"
+            android:layout_alignRight="@+id/img_company"
             android:layout_below="@+id/tv_company"
             android:text="v1.1.1" />
 

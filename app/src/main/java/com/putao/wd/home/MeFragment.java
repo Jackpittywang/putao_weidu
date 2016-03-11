@@ -136,7 +136,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             return;
                         }
                         Bitmap map;
-                        URL url = new URL(msg.obj.toString());
+                        URL url = new URL(setSmallImageUrl(msg.obj.toString()));
                         URLConnection conn = url.openConnection();
                         conn.connect();
                         InputStream in;
@@ -186,10 +186,18 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      */
 
     private void hideNum() {
+        payCount = 0;
+        payDeliver = 0;
+        payTakeDeliver = 0;
+        payAfterSale = 0;
         btn_pay.hide();
         btn_deliver.hide();
         btn_take_deliver.hide();
         btn_after_sale.hide();
+    }
+
+    private String setSmallImageUrl(String str) {
+        return str.substring(0, str.length() - 4) + "_120x120" + str.substring(str.length() - 4);
     }
 
     /**
@@ -216,7 +224,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             return;
                         }
                         mImg = result.getHead_img();
-                        iv_user_icon.setImageURL(result.getHead_img());
+                        String head_img = result.getHead_img();
+                        iv_user_icon.setImageURL(setSmallImageUrl(result.getHead_img()));
                         Message message = new Message();
                         message.obj = mImg;
                         message.what = 1;
@@ -234,6 +243,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 });
     }
 
+    private int payCount = 0;
+    private int payDeliver = 0;
+    private int payTakeDeliver = 0;
+    private int payAfterSale = 0;
+
     /**
      * 获得订单数量
      */
@@ -243,14 +257,31 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             @Override
             public void onSuccess(String url, OrderCount result) {
                 Logger.d(result.toString());
-                hideNum();
-                btn_pay.show(result.getUnpaid().getNum());
-                btn_deliver.show(result.getUndelivery().getNum());
-                btn_take_deliver.show(result.getUnCheck().getNum());
-                btn_after_sale.show(result.getService().getNum());
+                setOrderEmpty(payCount, result.getUnpaid().getNum(), btn_pay);
+                setOrderEmpty(payDeliver, result.getUndelivery().getNum(), btn_deliver);
+                setOrderEmpty(payTakeDeliver, result.getUnCheck().getNum(), btn_take_deliver);
+                setOrderEmpty(payAfterSale, result.getService().getNum(), btn_after_sale);
+                payCount = result.getUnpaid().getNum();
+                payDeliver = result.getUndelivery().getNum();
+                payTakeDeliver = result.getUnCheck().getNum();
+                payAfterSale = result.getService().getNum();
                 loading.dismiss();
             }
-        }, false);
+
+        });
+    }
+
+
+    private void setOrderEmpty(int payCount, int newCount, IndicatorButton btn_pay) {
+        if (newCount == 0) {
+            btn_pay.hide();
+            return;
+        }
+        if (payCount != newCount) {
+            btn_pay.hide();
+            btn_pay.show(newCount);
+        }
+
     }
 
     @Override
@@ -275,6 +306,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
         mImg = "";
+        hideNum();
         iv_user_icon.setDefaultImage(R.drawable.img_head_default);
         tv_user_nickname.setText("葡星人");
     }

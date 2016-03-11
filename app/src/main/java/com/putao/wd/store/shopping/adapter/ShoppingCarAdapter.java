@@ -78,12 +78,12 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
 //        }
         //修改开关状态
         if (cart.isSelect()) {
-            if(!cart.isNull()) {
+            if (!cart.isNull()) {
                 selected.put(position, cart);
             }
             EventBusHelper.post(selected, EVENT_EDITABLE);
         } else {
-            if(!cart.isNull()) {
+            if (!cart.isNull()) {
                 selected.remove(position);
                 if (selected.size() == 0)
                     cart.setEditable(false);
@@ -112,6 +112,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
             @Override
             public void onAmountSelected(int count, boolean isPlus) {
                 Cart curCart = selected.get(position);
+                if (null == curCart) return;
                 curCart.setGoodsCount(count + "");
                 selected.put(position, curCart);
                 EventBusHelper.post(selected, EVENT_EDIT_COUNT);
@@ -214,7 +215,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
      */
     public void initUselessState(int useCount) {
         List<Cart> carts = getItems();
-        for(int i = useCount; i < carts.size(); i++) {
+        for (int i = useCount; i < carts.size(); i++) {
             Cart cart = carts.get(i);
             cart.setIsSelect(false);
             notifyItemChanged(i);

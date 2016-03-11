@@ -71,6 +71,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     public final static String COMMENT_COUNT = "comment_count";//评论数量
     private int mPosition;
     private int mCount_comments;
+    private String loadData;
 
     @Override
     protected int getLayoutId() {
@@ -106,7 +107,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
         if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
-        wb_explore_detail.loadDataWithBaseURL("about:blank", HTMLUtil.setWidth(DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation()), "text/html", "utf-8", null);
+        loadData = HTMLUtil.setWidth(DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation());
+        wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
     }
 
 
@@ -224,27 +226,15 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        try {
-            if (wb_explore_detail != null) {
-                wb_explore_detail.getClass().getMethod("onPause").invoke(wb_explore_detail, (Object[]) null);
-            }
-        } catch (Exception e) {
-
-        }
+    protected void onInvisible() {
+        super.onInvisible();
+        setVideoPause();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            if (wb_explore_detail != null) {
-                wb_explore_detail.getClass().getMethod("onResume").invoke(wb_explore_detail, (Object[]) null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void onPause() {
+        super.onPause();
+        setVideoPause();
     }
 
     @Override
@@ -253,6 +243,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         super.onDestroy();
     }
 
+    private void setVideoPause(){
+        if (null != wb_explore_detail) {
+            wb_explore_detail.loadUrl("");
+            wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
+        }
+    }
 
 }
     /*@Override
