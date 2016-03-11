@@ -69,6 +69,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
 
