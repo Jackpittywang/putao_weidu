@@ -5,11 +5,13 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@android:color/black</item>
     </style>
-   <!-- <style name="StyledIndicators" parent="@android:style/Theme.Light">-->
+    <!-- <style name="StyledIndicators" parent="@android:style/Theme.Light">-->
     <style name="StyledIndicators" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@android:color/black</item>
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
     </style>
+
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar"></style>
 
     <style name="CustomTabPageIndicator">
         <item name="android:background">@drawable/custom_tab_indicator</item>
@@ -22,7 +24,7 @@
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
     </style>
-//以上
+    //以上
 
     <style name="WeiduText" parent="TextAppearance.AppCompat.Medium" />
     <!--编辑字体样式-->
