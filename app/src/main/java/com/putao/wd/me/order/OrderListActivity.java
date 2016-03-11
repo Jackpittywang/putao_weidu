@@ -79,7 +79,8 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         rv_order.setAdapter(adapter);
         addListener();
         setCurrentItem();
-//        getOrderLists(currentType, String.valueOf(currentPage));
+        if (TYPE_ALL.equals(currentType))
+            getOrderLists(currentType, String.valueOf(currentPage));
 
         mAlipayHelper = new AlipayHelper();
         mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
@@ -138,7 +139,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         rv_order.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                getOrderLists(currentType, String.valueOf(currentPage));
+                getMoreList();
             }
         });
         ll_title.setOnTitleItemSelectedListener(this);
@@ -152,18 +153,32 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
+                        rv_order.loadMoreComplete();
                         if (result != null && result.size() > 0) {
-                            adapter.clear();
                             rl_no_order.setVisibility(View.GONE);
-                            adapter.addAll(result);
-                            rv_order.loadMoreComplete();
+                            adapter.replaceAll(result);
                             currentPage++;
-                        } else if (currentPage > 1) {
-                            rv_order.loadMoreComplete();
-                            rv_order.noMoreLoading();
                         } else {
                             rv_order.loadMoreComplete();
-                            rl_no_order.setVisibility(View.VISIBLE);
+                            rv_order.noMoreLoading();
+                        }
+                        loading.dismiss();
+                    }
+                });
+    }
+
+
+    private void getMoreList() {
+        networkRequest(OrderApi.getOrderLists(currentType, currentPage + ""),
+                new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<Order> result) {
+                        rv_order.loadMoreComplete();
+                        if (result != null && result.size() > 0) {
+                            adapter.addAll(result);
+                            currentPage++;
+                        } else {
+                            rv_order.noMoreLoading();
                         }
                         loading.dismiss();
                     }
@@ -203,11 +218,15 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
-                        adapter.replaceAll(result);
-                        if (result != null && result.size() > 0)
+                        rv_order.loadMoreComplete();
+                        if (result != null && result.size() > 0) {
+                            adapter.replaceAll(result);
+                            currentPage++;
                             rl_no_order.setVisibility(View.GONE);
-                        else
+                        } else {
                             rl_no_order.setVisibility(View.VISIBLE);
+                            rv_order.noMoreLoading();
+                        }
                         loading.dismiss();
                     }
                 });
@@ -302,7 +321,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                                         break;
                                     case TYPE_WAITING_PAY:
                                         adapter.delete(order);
-                                        if (adapter.getItemCount()==1)
+                                        if (adapter.getItemCount() == 1)
                                             rl_no_order.setVisibility(View.GONE);
                                         break;
                                 }

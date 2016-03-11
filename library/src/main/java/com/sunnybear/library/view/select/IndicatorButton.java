@@ -24,8 +24,8 @@ public class IndicatorButton extends LinearLayout {
 
     private ImageView mIndicatorIcon;
     private TextView mTitle;
-    private LinearLayout mMainView;
-    private RelativeLayout mIndicatorLayout;
+    private RelativeLayout mMainView;
+    /*private RelativeLayout mIndicatorLayout;*/
 
     private Drawable mIndicatorDrawable;
     private String mTitleText;
@@ -66,8 +66,8 @@ public class IndicatorButton extends LinearLayout {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_indicator_button, this);
         mIndicatorIcon = (ImageView) mRootView.findViewById(R.id.iv_icon);
         mTitle = (TextView) mRootView.findViewById(R.id.tv_title);
-        mIndicatorLayout = (RelativeLayout) mRootView.findViewById(R.id.rl_indicator);
-        mMainView = (LinearLayout) mRootView.findViewById(R.id.ll_main);
+        /*mIndicatorLayout = (RelativeLayout) mRootView.findViewById(R.id.rl_indicator);*/
+        mMainView = (RelativeLayout) mRootView.findViewById(R.id.ll_main);
     }
 
     private void init() {

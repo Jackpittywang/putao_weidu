@@ -129,6 +129,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         if (!isPrepared || !isVisible) {
             return;
         }
+        if (null == vp_content) return;
         isPrepared = false;
         //填充各控件的数据
         initData();

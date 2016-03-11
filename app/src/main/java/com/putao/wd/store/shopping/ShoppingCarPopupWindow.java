@@ -141,15 +141,23 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                     return;
                 }
                 ProductNormsSku sku = SpecUtils.getProductSku(skus, mSelTags);
-                if (!MathUtils.compare(mCount, sku.getQuantity()))
+                if (!MathUtils.compareIntFromString(mCount, sku.getQuantity()))
                     carAdd(sku.getPid(), mCount);
-                else
+                else {
                     ToastUtils.showToastShort(mContext, "库存不足！");
+                    initCar();
+                }
                 //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
 //                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);
                 break;
         }
         dismiss();
+    }
+
+    private void initCar() {
+        mCount = "1";//初始化商品默认数量
+        ll_join_car.setBackgroundResource(R.color.text_main_color_nor);
+        ll_join_car.setClickable(true);
     }
 
     @Subcriber(tag = NormsSelectAdapter.EVENT_DEFAULT_TAG)
@@ -177,7 +185,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 ll_join_car.setClickable(true);
                 tv_product_price.setText(sku.getPrice());
                 adapter.resetAmount();
-                if (MathUtils.compare(mCount, sku.getQuantity())) {
+                if (MathUtils.compareIntFromString(mCount, sku.getQuantity())) {
                     ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
                     ll_join_car.setClickable(false);
                 }

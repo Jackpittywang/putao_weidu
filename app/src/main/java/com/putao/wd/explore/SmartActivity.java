@@ -23,11 +23,11 @@ import butterknife.OnClick;
  */
 public class SmartActivity extends PTWDActivity implements View.OnClickListener{
     @Bind(R.id.iv_rotate)
-    ImageView iv_rotate;
+    ImageView iv_rotate;/*
     @Bind(R.id.iv_rotate_point1)
     ImageView iv_rotate_point1;
     @Bind(R.id.iv_rotate_point2)
-    ImageView iv_rotate_point2;
+    ImageView iv_rotate_point2;*/
 
     public final static String SMART_LIST = "SMART_LIST";
 
@@ -41,8 +41,8 @@ public class SmartActivity extends PTWDActivity implements View.OnClickListener{
         addNavigation();
         LinearInterpolator linearInterpolator = new LinearInterpolator();
         iv_rotate.startAnimation(loadAnim(R.anim.smart_rotate, linearInterpolator));
-        iv_rotate_point1.startAnimation(loadAnim(R.anim.smart_rotate_point1, linearInterpolator));
-        iv_rotate_point2.startAnimation(loadAnim(R.anim.smart_rotate_point2, linearInterpolator));
+/*        iv_rotate_point1.startAnimation(loadAnim(R.anim.smart_rotate_point1, linearInterpolator));
+        iv_rotate_point2.startAnimation(loadAnim(R.anim.smart_rotate_point2, linearInterpolator));*/
         showList();
     }
 

@@ -21,7 +21,7 @@
         android:layout_marginRight="-300dp"
         android:layout_marginBottom="-250dp"
         android:background="@drawable/img_tmi_ecliptic" />
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/iv_rotate_point1"
         android:layout_width="700dp"
         android:layout_height="700dp"
@@ -36,7 +36,7 @@
         android:layout_gravity="bottom|right"
         android:layout_marginRight="-300dp"
         android:layout_marginBottom="-250dp"
-        android:background="@drawable/img_tmi_ecliptic_star_02" />
+        android:background="@drawable/img_tmi_ecliptic_star_02" />-->
 
     <FrameLayout
         android:id="@+id/fl_smart"
