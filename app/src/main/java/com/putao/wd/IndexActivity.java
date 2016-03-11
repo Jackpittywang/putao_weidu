@@ -1,13 +1,16 @@
 package com.putao.wd;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
@@ -23,6 +26,14 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateConfig;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
+import android.content.DialogInterface;
+
+import java.io.File;
 
 import butterknife.Bind;
 
@@ -72,12 +83,20 @@ public class IndexActivity extends BasicFragmentActivity {
     private SparseArray<Fragment> mFragments;
 
     @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+    }
+
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_index;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        UmengUpdateAgent.setDefault();
+        UmengUpdateAgent.update(IndexActivity.this);
         addFragments();
         addListener();
         vp_content.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
