@@ -69,7 +69,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                         super.onFailure(url, statusCode, msg);
                         ptl_refresh.refreshComplete();
                     }
-                });
+                }, false);
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
@@ -177,6 +177,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         item.setVote_status(2);
         adapter.notifyItemChanged(position);
     }
+
     @Subcriber(tag = EVENT_CREAT_CONCERNS_CHANGE)
     public void ChangeConcerns(int position) {
         Create item = adapter.getItem(position);

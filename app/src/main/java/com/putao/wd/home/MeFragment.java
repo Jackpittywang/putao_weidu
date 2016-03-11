@@ -240,7 +240,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         ONREFRESH = true;
 //                        ToastUtils.showToastLong(mActivity, "登录失败请重新登录");
                     }
-                });
+                },false);
     }
 
     private int payCount = 0;
@@ -268,7 +268,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 loading.dismiss();
             }
 
-        });
+        }, false);
     }
 
 

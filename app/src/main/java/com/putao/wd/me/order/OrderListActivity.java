@@ -79,7 +79,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         rv_order.setAdapter(adapter);
         addListener();
         setCurrentItem();
-        getOrderLists(currentType, String.valueOf(currentPage));
+//        getOrderLists(currentType, String.valueOf(currentPage));
 
         mAlipayHelper = new AlipayHelper();
         mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {

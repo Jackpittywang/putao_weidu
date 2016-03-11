@@ -12,6 +12,7 @@ import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
 import com.youku.player.YoukuPlayerBaseConfiguration;
@@ -107,6 +108,7 @@ public class GlobalApplication extends BasicApplication {
                 };
     }
 
+
     /**
      * 获取DataBaseManager
      *
@@ -133,7 +135,7 @@ public class GlobalApplication extends BasicApplication {
     @Override
     protected boolean isDebug() {
         return false;
-       // return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+//        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override

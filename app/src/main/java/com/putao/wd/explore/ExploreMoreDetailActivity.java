@@ -91,6 +91,9 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         mPosition = args.getInt(POSITION);
         mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200);
         mHeight = (mWidth * 9) / 16 + 2;
+        ll_cool.setClickable(false);
+        ll_comment.setClickable(false);
+        ll_share.setClickable(false);
         initData();
     }
 
@@ -102,6 +105,9 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                         if (null != result) {
                             mExploreIndex = result;
                             mCount_comments = mExploreIndex.getCount_comments();
+                            ll_cool.setClickable(true);
+                            ll_comment.setClickable(true);
+                            ll_share.setClickable(true);
                             initView();
                         }
                         loading.dismiss();

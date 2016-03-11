@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.putao.wd.IndexActivity;
-import com.putao.wd.MainActivity;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.OrderDetailActivity;

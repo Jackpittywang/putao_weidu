@@ -46,6 +46,8 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("PutaoCreatedFragment启动");
         isPrepared = true;
+        rg_create.check(R.id.rb_step2);
+        vp_content.setCurrentItem(1, false);
         lazyLoad();
     }
 
@@ -58,6 +60,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
         //填充各控件的数据
         addFragments();
         rg_create.setOnCheckedChangeListener(this);
+        rg_create.check(R.id.rb_step2);
         vp_content.setCurrentItem(1, false);
         vp_content.setOffscreenPageLimit(3);
     }

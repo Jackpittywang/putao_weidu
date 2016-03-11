@@ -100,39 +100,30 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                         .addParam("pid", storeProduct.getProduct_id())
                         .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
                 tv_product_price.setText(storeProduct.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getProduct_id());
+                getProduct(storeProduct.getProduct_id());
             } else {
                 OrderProduct storeProduct = (OrderProduct) args.getSerializable(BUNDLE_PRODUCT);
                 wv_content.loadUrl(PTWDRequestHelper.store()
                         .addParam("pid", storeProduct.getProduct_id())
                         .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
                 tv_product_price.setText(storeProduct.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getProduct_id());
+                getProduct(storeProduct.getProduct_id());
             }
         } else if (is_remind) {
             String product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
             wv_content.loadUrl(PTWDRequestHelper.store()
                     .addParam("pid", product_id)
                     .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
-            networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
-                @Override
-                public void onSuccess(String url, ProductDetail result) {
-                    if (null == result) {
-                        finish();
-                        return;
-                    }
-                    detail = result;
-                    tv_product_price.setText(result.getPrice());
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());
-                    loading.dismiss();
-                }
-            });
+            getProduct(product_id);
+
         } else {
             StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
             wv_content.loadUrl(storeProduct.getMobile_url());
             tv_product_price.setText(storeProduct.getPrice());
-            mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId());
+            mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
         }
+
+
    /*   imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
         product_id = args.getString(BUNDLE_PRODUCT_ID);
         mSharePopupWindow = new SharePopupWindow(mContext);
@@ -141,6 +132,24 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         getProductDetail(product_id);
         stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);*/
     }
+
+    private void getProduct(String product_id) {
+        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
+            @Override
+            public void onSuccess(String url, ProductDetail result) {
+                if (null == result) {
+                    finish();
+                    return;
+                }
+                detail = result;
+                tv_product_price.setText(result.getPrice());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
+                loading.dismiss();
+            }
+
+        });
+    }
+
     /**
      * 加载WebView
      *

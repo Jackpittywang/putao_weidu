@@ -263,7 +263,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     if (comments != null && comments.size() > 0) {
                         checkLiked(comments);
                         adapter.replaceAll(comments);
-                    }
+                    }else adapter.clear();
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;
