@@ -60,6 +60,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
         //填充各控件的数据
         addFragments();
         rg_create.setOnCheckedChangeListener(this);
+        rg_create.check(R.id.rb_step2);
         vp_content.setCurrentItem(1, false);
         vp_content.setOffscreenPageLimit(3);
     }

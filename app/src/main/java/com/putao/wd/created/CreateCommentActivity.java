@@ -285,7 +285,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;
-                }
+                }else adapter.clear();
                 if (result.getCurrentPage() >= result.getTotalPage()) {
                     rv_content.noMoreLoading();
                 }

@@ -73,12 +73,6 @@ public class OrderShipmentDetailFragment extends BasicFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //outState.putString(KEY_CONTENT, mContent);
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.fragment_order_shipment_detail;
     }
