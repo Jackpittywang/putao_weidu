@@ -82,11 +82,6 @@ public class IndexActivity extends BasicFragmentActivity {
 
     private SparseArray<Fragment> mFragments;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-    }
-
 
     @Override
     protected int getLayoutId() {

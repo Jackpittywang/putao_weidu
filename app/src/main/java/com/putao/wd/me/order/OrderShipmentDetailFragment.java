@@ -65,14 +65,6 @@ public class OrderShipmentDetailFragment extends BasicFragment {
     private Express mContent ;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
-          //  mContent = savedInstanceState.getString(KEY_CONTENT);
-        }
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.fragment_order_shipment_detail;
     }
