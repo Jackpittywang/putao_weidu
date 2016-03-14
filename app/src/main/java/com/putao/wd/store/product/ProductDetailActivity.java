@@ -267,6 +267,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             /*case R.id.ll_share://分享
                 mSharePopupWindow.show(ll_main);
                 break;*/
