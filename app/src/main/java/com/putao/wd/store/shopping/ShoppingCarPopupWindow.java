@@ -96,10 +96,10 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
                     @Override
                     public void onSuccess(String url, ProductNorms result) {
-                        tv_product_title.setText(title);
-                        tv_product_intro.setText(subtitle);
-                        skus = result.getSku();
                         try {
+                            tv_product_title.setText(title);
+                            tv_product_intro.setText(subtitle);
+                            skus = result.getSku();
                             mSpecItemCount = SpecUtils.getSpecItemCount(result.getSpec().getSpec_item());
                             normses = SpecUtils.getNormses(result.getSpec());
                         } catch (Exception e) {

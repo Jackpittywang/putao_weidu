@@ -166,7 +166,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         if (!AccountHelper.isLogin()) {
             setDefaultBlur();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
-            hideNum();
             getOrderCount();
         }
     }
@@ -186,10 +185,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      */
 
     private void hideNum() {
-        payCount = 0;
-        payDeliver = 0;
-        payTakeDeliver = 0;
-        payAfterSale = 0;
         btn_pay.hide();
         btn_deliver.hide();
         btn_take_deliver.hide();
@@ -261,10 +256,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 setOrderEmpty(payDeliver, result.getUndelivery().getNum(), btn_deliver);
                 setOrderEmpty(payTakeDeliver, result.getUnCheck().getNum(), btn_take_deliver);
                 setOrderEmpty(payAfterSale, result.getService().getNum(), btn_after_sale);
-                payCount = result.getUnpaid().getNum();
+                /*payCount = result.getUnpaid().getNum();
                 payDeliver = result.getUndelivery().getNum();
                 payTakeDeliver = result.getUnCheck().getNum();
-                payAfterSale = result.getService().getNum();
+                payAfterSale = result.getService().getNum();*/
                 loading.dismiss();
             }
 

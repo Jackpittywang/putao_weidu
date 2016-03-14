@@ -432,7 +432,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
             mOkHttpClient.networkInterceptors().add(interceptor);
         if (request == null)
             throw new NullPointerException("request为空");
-        loading.show();
+        if (null != loading) loading.show();
         mOkHttpClient.newCall(request).enqueue(callback);
     }
 
