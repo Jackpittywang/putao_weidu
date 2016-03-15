@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhanghao on 2016/3/15.
  */
 public abstract class LoadMoreFragmentPagerAdapter<T extends Serializable> extends FragmentPagerAdapter {
-    private ArrayList<T> mDatas;
+    private List<T> mDatas;
 
     public LoadMoreFragmentPagerAdapter(FragmentManager fm, ArrayList<T> datas) {
         super(fm);
@@ -39,7 +40,12 @@ public abstract class LoadMoreFragmentPagerAdapter<T extends Serializable> exten
     }
 
 
-    public abstract ArrayList<T> loadMoreData();
+    public abstract void loadMoreData();
 
-    public abstract Fragment getItem(ArrayList<T> datas, int position);
+    public void addData(List<T> datas) {
+        mDatas.addAll(datas);
+        notifyDataSetChanged();
+    }
+
+    public abstract Fragment getItem(List<T> datas, int position);
 }

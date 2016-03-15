@@ -38,6 +38,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
     public static final String EVENT_CREAT_CONCERNS_CHANGE = "event_creat_concerns_change";
     private CreateAdapter adapter;
     private int mPage;
+    private boolean hasMoreData;
 
 
     @Override
@@ -75,9 +76,13 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage)
+        if (currentPage == totalPage) {
+            hasMoreData = false;
             rv_created.noMoreLoading();
-        else mPage++;
+        } else {
+            hasMoreData = true;
+            mPage++;
+        }
     }
 
     private void addListenter() {
@@ -94,9 +99,11 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
     @Override
     public void onItemClick(Create create, int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CreateBasicDetailActivity.CREATE, (Serializable) adapter.getItems());
-        bundle.putInt(CreateBasicDetailActivity.POSITION, position);
-        bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, true);
+        bundle.putSerializable(CreateDetailActivity.CREATE, (Serializable) adapter.getItems());
+        bundle.putInt(CreateDetailActivity.POSITION, position);
+        bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
+        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
+        bundle.putBoolean(CreateDetailActivity.SHOW_PROGRESS, true);
         startActivity(CreateDetailActivity.class, bundle);
     }
 

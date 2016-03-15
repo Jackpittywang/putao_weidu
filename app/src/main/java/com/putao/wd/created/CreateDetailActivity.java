@@ -7,11 +7,15 @@ import android.util.SparseArray;
 import android.view.View;
 
 import com.putao.wd.R;
+import com.putao.wd.api.CreateApi;
+import com.putao.wd.model.Creates;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.viewpager.adapter.LoadMoreFragmentPagerAdapter;
 import com.putao.wd.model.Create;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -28,7 +32,15 @@ public class CreateDetailActivity extends BasicFragmentActivity {
     private SparseArray<Fragment> mFragments;
     private ArrayList<Create> mCreates;
     private int mPosition;
+    private int mPageCount;
     private boolean isShowProgress;
+    private boolean has_more_data;
+
+    public static final String POSITION = "position";
+    public static final String SHOW_PROGRESS = "show_progress";
+    public static final String PAGE_COUNT = "page_count";
+    public static final String CREATE = "create";
+    public static final String HAS_MORE_DATA = "has_more_data";
 
     @Override
     protected int getLayoutId() {
@@ -37,20 +49,34 @@ public class CreateDetailActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        mCreates = (ArrayList<Create>) args.getSerializable(CreateBasicDetailActivity.CREATE);
-        mPosition = args.getInt(CreateBasicDetailActivity.POSITION);
-        isShowProgress = args.getBoolean(CreateBasicDetailActivity.SHOW_PROGRESS);
+        mCreates = (ArrayList<Create>) args.getSerializable(CREATE);
+        mPosition = args.getInt(POSITION);
+        isShowProgress = args.getBoolean(SHOW_PROGRESS);
+        mPageCount = args.getInt(PAGE_COUNT);
+        has_more_data = args.getBoolean(HAS_MORE_DATA);
         LoadMoreFragmentPagerAdapter fragmentPagerAdapter = new LoadMoreFragmentPagerAdapter<Create>(getSupportFragmentManager(), mCreates) {
             @Override
-            public ArrayList loadMoreData() {
-                return null;
+            public void loadMoreData() {
+                if (!has_more_data) return;
+                networkRequest(CreateApi.getCreateList(1, mPageCount),
+                        new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+                            @Override
+                            public void onSuccess(String url, Creates result) {
+                                if (result.getData().size() > 0)
+                                    addData(result.getData());
+                                if (result.getCurrentPage() == result.getTotalPage())
+                                    has_more_data = false;
+                                else mPageCount++;
+                                loading.dismiss();
+                            }
+                        });
             }
 
             @Override
-            public Fragment getItem(ArrayList<Create> datas, int position) {
+            public Fragment getItem(List<Create> datas, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(CreateBasicDetailActivity.POSITION, position);
-                bundle.putSerializable(CreateBasicDetailActivity.CREATE, datas.get(position));
+                bundle.putInt(POSITION, position);
+                bundle.putSerializable(CREATE, datas.get(position));
                 return new CreateBasicDetailFragment(bundle);
             }
         };
