@@ -2,19 +2,19 @@ package com.putao.wd.created;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
+import android.view.View;
 
 import com.putao.wd.R;
-import com.putao.wd.created.adapter.CreateFragmentPagerAdapter;
+import com.sunnybear.library.view.viewpager.adapter.LoadMoreFragmentPagerAdapter;
 import com.putao.wd.model.Create;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.view.select.TabItem;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 只有一个viewpager和一个关闭按钮的activity
@@ -40,15 +40,33 @@ public class CreateDetailActivity extends BasicFragmentActivity {
         mCreates = (ArrayList<Create>) args.getSerializable(CreateBasicDetailActivity.CREATE);
         mPosition = args.getInt(CreateBasicDetailActivity.POSITION);
         isShowProgress = args.getBoolean(CreateBasicDetailActivity.SHOW_PROGRESS);
-        CreateFragmentPagerAdapter fragmentPagerAdapter = new CreateFragmentPagerAdapter(mContext, getSupportFragmentManager(), mCreates, mPosition) {
+        LoadMoreFragmentPagerAdapter fragmentPagerAdapter = new LoadMoreFragmentPagerAdapter<Create>(getSupportFragmentManager(), mCreates) {
             @Override
-            public void getNewsData(int position) {
+            public ArrayList loadMoreData() {
+                return null;
+            }
 
+            @Override
+            public Fragment getItem(ArrayList<Create> datas, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CreateBasicDetailActivity.POSITION, position);
+                bundle.putSerializable(CreateBasicDetailActivity.CREATE, datas.get(position));
+                return new CreateBasicDetailFragment(bundle);
             }
         };
         vp_content.setAdapter(fragmentPagerAdapter);
         vp_content.setOffscreenPageLimit(3);
         vp_content.setCurrentItem(mPosition, true);
+    }
+
+    @OnClick({R.id.iv_close})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_close:
+                finish();
+                break;
+        }
+
     }
 
     @Override

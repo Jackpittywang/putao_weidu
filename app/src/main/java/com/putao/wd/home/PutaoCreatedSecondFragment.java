@@ -1,12 +1,12 @@
 package com.putao.wd.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.CreateCommentActivity;
+import com.putao.wd.created.CreateDetailActivity;
 import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
@@ -18,6 +18,8 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+
+import java.io.Serializable;
 
 import butterknife.Bind;
 
@@ -91,13 +93,11 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
 
     @Override
     public void onItemClick(Create create, int position) {
-        Intent intent = new Intent(getActivity(), CreateBasicDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
+        bundle.putSerializable(CreateBasicDetailActivity.CREATE, (Serializable) adapter.getItems());
         bundle.putInt(CreateBasicDetailActivity.POSITION, position);
         bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, true);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, 2);
+        startActivity(CreateDetailActivity.class, bundle);
     }
 
     @Override

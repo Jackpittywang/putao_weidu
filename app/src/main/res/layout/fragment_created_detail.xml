@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+    <!--
+        &lt;!&ndash;标题栏&ndash;&gt;
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            android:background="@color/white"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_main_title="创造详情"/>-->
+
+    <!--底部操作栏-->
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:weightSum="12">
+
+        <LinearLayout
+            android:id="@+id/ll_cool"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/sb_cool_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                auto:isSelect="false"
+                auto:norDrawable="@drawable/icon_16_16"
+                auto:selDrawable="@drawable/icon_16_17"/>
+
+            <TextView
+                android:id="@+id/tv_count_cool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="关注"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="@color/divider_color"/>
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_comment"/>
+
+            <TextView
+                android:id="@+id/tv_count_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="评论"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="@color/divider_color"/>
+
+        <LinearLayout
+            android:id="@+id/ll_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_16_18"/>
+
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="分享"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--内容-->
+    <com.sunnybear.library.view.scroll.SupportScrollView
+        android:id="@+id/sv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_bottom"
+        android:layout_alignParentTop="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/ll_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <!--标题图-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_sign"
+                style="@style/image_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                auto:aspect_ratio="2"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:singleLine="true"
+                android:text="和孩子一起打造创作空间"
+                android:textSize="16sp"/>
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_user_icon"
+                style="@style/image_circle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                auto:placeholderImage="@drawable/img_head_default"/>
+
+
+            <TextView
+                android:id="@+id/tv_digest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:text="这里显示作者的名字"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp"/>
+
+            <View
+                android:id="@+id/v_fancy"
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/img_carve_up_article"
+                android:visibility="gone"/>
+
+            <FrameLayout
+                android:id="@+id/fl_progress"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#48cfac"/>
+
+                <View
+                    android:id="@+id/v_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ebebeb"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/steps_mask_667h"/>
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_step1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="创想"
+                    android:textColor="@color/color_C2C2C2"/>
+
+                <TextView
+                    android:id="@+id/tv_step2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_step3"
+                    android:layout_toRightOf="@+id/tv_step1"
+                    android:gravity="center_horizontal"
+                    android:text="采用"
+                    android:textColor="@color/color_C2C2C2"/>
+
+                <TextView
+                    android:id="@+id/tv_step3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="研发"
+                    android:textColor="@color/color_C2C2C2"/>
+
+                <TextView
+                    android:id="@+id/tv_step4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_step5"
+                    android:layout_toRightOf="@+id/tv_step3"
+                    android:gravity="center_horizontal"
+                    android:text="体验"
+                    android:textColor="@color/color_C2C2C2"/>
+
+                <TextView
+                    android:id="@+id/tv_step5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:text="发行"
+                    android:textColor="@color/color_C2C2C2"/>
+            </RelativeLayout>
+
+
+            <com.sunnybear.library.view.BasicWebView
+                android:id="@+id/wv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </com.sunnybear.library.view.scroll.SupportScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/ll_bottom"
+        android:background="@color/divider_color"/>
+
+    <!--悬浮按钮-->
+    <RelativeLayout
+        android:id="@+id/rl_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/rl_support"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="80dp">
+
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_support"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/icon_16_10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="支持"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                auto:background_color="#48CFAE"/>
+
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_support_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/icon_16_10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="已支持"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="gone"
+                auto:background_color="@color/divider_color"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_no_support"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="80dp">
+
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_no_support"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:drawableTop="@drawable/icon_16_13"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="无感"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                auto:background_color="#ED5564"/>
+
+            <com.sunnybear.library.view.CircleTextView
+                android:id="@+id/tv_no_support_result"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:drawableTop="@drawable/icon_16_13"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="已无感"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="gone"
+                auto:background_color="@color/divider_color"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -106,8 +106,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
     TextView tv_count_comment;
     @Bind(R.id.ll_share)
     LinearLayout ll_share;
-    @Bind(R.id.iv_close)
-    ImageView iv_close;
 
     private int mSpace;
     private int mMargin;
@@ -136,14 +134,14 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
     private boolean isEnd;
 
 
-    public CreateBasicDetailFragment(Bundle bundle){
+    public CreateBasicDetailFragment(Bundle bundle) {
         mPosition = bundle.getInt(POSITION);
         mCreate = (Create) bundle.getSerializable(CREATE);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_created_detail;
+        return R.layout.fragment_created_detail;
     }
 
     @Override
@@ -316,7 +314,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
     }
 
     @Override
-    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool, R.id.ll_share, R.id.ll_comment, R.id.iv_close})
+    @OnClick({R.id.rl_support, R.id.rl_no_support, R.id.ll_cool, R.id.ll_share, R.id.ll_comment})
     public void onClick(final View v) {
         if (R.id.rl_support == v.getId() || R.id.rl_no_support == v.getId()) {
             v.setEnabled(false);
@@ -415,9 +413,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
             case R.id.ll_share:
                 mSharePopupWindow.show(ll_share);
                 break;
-            case R.id.iv_close:
-                break;
-
         }
     }
 
