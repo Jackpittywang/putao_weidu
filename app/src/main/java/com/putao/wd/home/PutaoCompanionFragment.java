@@ -143,11 +143,11 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tv_background) {
+        /*if (v.getId() == R.id.tv_background) {
             startActivity(SmartActivity.class);
             getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
             return;
-        }
+        }*/
         if (!AccountHelper.isLogin()) {
             Bundle bundle = new Bundle();
             toLoginActivity(v, bundle);

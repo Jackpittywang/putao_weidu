@@ -337,7 +337,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         startService(intent);
     }
 
-    @Override
+   /* @Override
     public boolean dispatchTouchEvent(@Nullable MotionEvent ev) {
         if (ev != null && ev.getAction() == MotionEvent.ACTION_DOWN) {
             View view = getCurrentFocus();
@@ -347,7 +347,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         }
         //必不可少,否则所有的组件都不会有TouchEvent了
         return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
-    }
+    }*/
 
     /**
      * 双击退出App

@@ -16,7 +16,7 @@ import butterknife.Bind;
  * Created by guchenkai on 2016/1/11.
  */
 @Deprecated
-public class CreatedDetailActivity extends CreateBasicDetailActivity {
+public class CreatedDetailActivityDes extends CreateBasicDetailActivity {
 
     @Bind(R.id.v_progress)
     View v_progress;

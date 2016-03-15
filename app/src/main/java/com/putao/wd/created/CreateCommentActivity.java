@@ -29,6 +29,7 @@ import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -218,6 +219,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_emojis://点击表情栏
+                KeyboardUtils.closeKeyboard(mContext, et_msg);
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
@@ -285,7 +287,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;
-                }else adapter.clear();
+                } else adapter.clear();
                 if (result.getCurrentPage() >= result.getTotalPage()) {
                     rv_content.noMoreLoading();
                 }

@@ -27,6 +27,7 @@ import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -199,6 +200,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_emojis://点击表情栏
+                KeyboardUtils.closeKeyboard(mContext, et_msg);
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
