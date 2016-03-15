@@ -112,7 +112,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
     private int mTextWidth;
     private Handler mHandler;
     private int mTime = 1000;
-    public static final String CREATE = "CREATE";
     public static final String EVENT_CONCERNS_REFRESH = "event_concerns_refresh";
     public static final String EVENT_EXPLORER_ID = "event_explorer_id";
     public static final String EVENT_IS_REMIND = "event_is_remind";
@@ -136,7 +135,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
 
     public CreateBasicDetailFragment(Bundle bundle) {
         mPosition = bundle.getInt(POSITION);
-        mCreate = (Create) bundle.getSerializable(CREATE);
+        mCreate = (Create) bundle.getSerializable(CreateDetailActivity.CREATE);
     }
 
     @Override
@@ -162,7 +161,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
         mSharePopupWindow = new SharePopupWindow(mActivity);
         isDid = false;
         addListener();
-        mCreate = (Create) bundle.getSerializable(CREATE);
+        mCreate = (Create) bundle.getSerializable(CreateDetailActivity.CREATE);
         mPosition = bundle.getInt(POSITION);
 //        isShowProgress = args.getBoolean(SHOW_PROGRESS);
         initView();
@@ -362,7 +361,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateBasicDetailFragment.class);
-                    bundle.putSerializable(CREATE, mCreate);
+                    bundle.putSerializable(CreateDetailActivity.CREATE, mCreate);
                     startActivity(LoginActivity.class, bundle);
                     return;
                 }
