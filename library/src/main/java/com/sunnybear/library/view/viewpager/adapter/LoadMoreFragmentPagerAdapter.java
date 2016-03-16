@@ -34,8 +34,9 @@ public abstract class LoadMoreFragmentPagerAdapter<T extends Serializable> exten
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
         if (position >= mDatas.size() - 3) {
-            mDatas.addAll(mDatas);
-            notifyDataSetChanged();
+            /*mDatas.addAll(mDatas);
+            notifyDataSetChanged();*/
+            loadMoreData();
         }
     }
 
