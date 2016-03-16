@@ -8,8 +8,9 @@ import android.text.ClipboardManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -240,6 +240,12 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                     showBtn(isEnd);
             }
         });
+        wv_content.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
         sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {
             @Override
             public void onScroll(int scrollY) {
@@ -251,6 +257,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                     showBtn(isEnd);
             }
         });
+
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
@@ -520,14 +527,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
         }, step * (mTime - 250));
     }
 
-    /*@Override
-    public void finish() {
-        super.finish();
-        if (isConcernsInit && isConcernsRefresh) {
-            EventBusHelper.post(EVENT_CONCERNS_REFRESH, EVENT_CONCERNS_REFRESH);
-        }
-    }*/
-
     @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
         if (position == mPosition)
@@ -553,13 +552,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                     }
                 });
     }
-
-   /* @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        wv_content.onPause();
-        wv_content.loadUrl("");
-    }*/
 
     @Override
     public void onPause() {

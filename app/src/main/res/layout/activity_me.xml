@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.sunnybear.library.view.scroll.SupportScrollView
         android:id="@+id/sv_me"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -215,7 +215,7 @@
                     auto:setting_text="葡萄籽" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.sunnybear.library.view.scroll.SupportScrollView>
 
     <ImageView
         android:id="@+id/iv_setting"

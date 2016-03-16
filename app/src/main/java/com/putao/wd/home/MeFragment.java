@@ -38,13 +38,11 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.ResourcesUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.scroll.SupportScrollView;
 import com.sunnybear.library.view.select.IndicatorButton;
 
 import java.io.IOException;
@@ -72,7 +70,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Bind(R.id.ll_me)
     LinearLayout ll_me;
     @Bind(R.id.sv_me)
-    ScrollView sv_me;
+    SupportScrollView sv_me;
     @Bind(R.id.btn_pay)
     IndicatorButton btn_pay;//待付款
     @Bind(R.id.btn_deliver)
@@ -96,11 +94,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     private int y;
     int oldY = 0;
     int newY;
+    private boolean isScroll;
 
 
     private int mHeadHeight;
     private ViewGroup.LayoutParams mHeadLayoutParams;
-    private int mStatusBarHeight;
 
     @Override
     protected int getLayoutId() {
@@ -116,7 +114,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         //填充各控件的数据
         mHeadLayoutParams = rl_user_head_icon.getLayoutParams();
         mHeadHeight = mHeadLayoutParams.height;
-        mStatusBarHeight = getStatusBarHeight();
         sv_me.setOnTouchListener(this);
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
         getUserInfo();
@@ -156,6 +153,12 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             }
         };
         isPrepared = true;
+        sv_me.setOnScrollListener(new SupportScrollView.OnScrollListener() {
+            @Override
+            public void onScroll(int scrollY) {
+                isScroll = scrollY > 0;
+            }
+        });
     }
 
     private void setDefaultBlur() {
@@ -171,18 +174,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
             getOrderCount();
         }
-    }
-
-    public int getStatusBarHeight() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return DensityUtil.dp2px(mActivity, 20);
-        }
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
     /**
@@ -449,10 +440,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                     oldY = y = newY;
                     isClick = false;
                 }
+                if (isScroll) return false;
                 height = mHeadLayoutParams.height + (newY - y) / 3;
-                rl_user_head_icon.getLocationOnScreen(position);
-                if (position[1] < mStatusBarHeight)
-                    return false;
+//                rl_user_head_icon.getLocationOnScreen(position);
                 if (height < mHeadHeight) {
                     mHeadLayoutParams.height = mHeadHeight;
                     rl_user_head_icon.setLayoutParams(mHeadLayoutParams);
