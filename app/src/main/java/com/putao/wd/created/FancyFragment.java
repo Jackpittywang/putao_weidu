@@ -1,7 +1,6 @@
 package com.putao.wd.created;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
@@ -9,7 +8,6 @@ import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.home.adapter.CreateAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
-import com.putao.wd.model.Marketing;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -39,6 +37,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
 
     private FancyAdapter adapter;
     private int mPage;
+    private boolean hasMoreData;
 
     @Override
     protected int getLayoutId() {
@@ -75,9 +74,13 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage)
+        if (currentPage == totalPage) {
             rv_created.noMoreLoading();
-        else mPage++;
+            hasMoreData = false;
+        } else {
+            mPage++;
+            hasMoreData = true;
+        }
     }
 
     private void addListenter() {
@@ -114,10 +117,12 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
     @Override
     public void onItemClick(Create create, int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
-        bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, false);
-        bundle.putInt(CreateBasicDetailActivity.POSITION, position);
-        startActivity(CreateBasicDetailActivity.class, bundle);
+        bundle.putSerializable(CreateDetailActivity.CREATE, (Serializable) adapter.getItems());
+        bundle.putInt(CreateDetailActivity.POSITION, position);
+        bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
+        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
+        bundle.putBoolean(CreateDetailActivity.SHOW_PROGRESS, true);
+        startActivity(CreateDetailActivity.class, bundle);
     }
 
     @Subcriber(tag = CreateAdapter.COOL)

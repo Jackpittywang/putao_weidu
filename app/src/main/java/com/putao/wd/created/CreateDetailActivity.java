@@ -5,14 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
+import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.viewpager.adapter.LoadMoreFragmentPagerAdapter;
-import com.putao.wd.model.Create;
-import com.sunnybear.library.controller.BasicFragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class CreateDetailActivity extends BasicFragmentActivity {
 
     @Bind(R.id.vp_content)
     ViewPager vp_content;
+    @Bind(R.id.rl_main)
+    RelativeLayout rl_main;
 
     private SparseArray<Fragment> mFragments;
     private ArrayList<Create> mCreates;
@@ -69,7 +72,7 @@ public class CreateDetailActivity extends BasicFragmentActivity {
                                 else mPageCount++;
                                 loading.dismiss();
                             }
-                        });
+                        }, false);
             }
 
             @Override
@@ -82,7 +85,12 @@ public class CreateDetailActivity extends BasicFragmentActivity {
         };
         vp_content.setAdapter(fragmentPagerAdapter);
         vp_content.setOffscreenPageLimit(3);
-        vp_content.setCurrentItem(mPosition, true);
+        vp_content.setCurrentItem(mPosition);
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
     }
 
     @OnClick({R.id.iv_close})
@@ -93,10 +101,5 @@ public class CreateDetailActivity extends BasicFragmentActivity {
                 break;
         }
 
-    }
-
-    @Override
-    protected String[] getRequestUrls() {
-        return new String[0];
     }
 }

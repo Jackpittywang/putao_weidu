@@ -2,6 +2,7 @@ package com.putao.wd.home;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -169,7 +170,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             getOrderCount();
         }
     }
-
 
     public int getStatusBarHeight() {
         int result = 0;
@@ -446,7 +446,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 }
                 height = mHeadLayoutParams.height + (newY - y) / 3;
                 rl_user_head_icon.getLocationOnScreen(position);
-                if (position[1] < mStatusBarHeight) return false;
+                if (position[1] < mStatusBarHeight && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+                    return false;
                 if (height < mHeadHeight) {
                     mHeadLayoutParams.height = mHeadHeight;
                     rl_user_head_icon.setLayoutParams(mHeadLayoutParams);

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:orientation="vertical">
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/immersive"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
@@ -21,7 +22,7 @@
             android:gravity="center"
             android:text="01"
             android:textColor="@color/white"
-            android:textSize="36sp"/>
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/tv_modified"
@@ -32,7 +33,7 @@
             android:text="今天"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_modified_time_mon"
@@ -43,7 +44,7 @@
             android:gravity="center"
             android:text="JAY"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"/>
+            android:textSize="@dimen/text_size_20sp" />
 
         <TextView
             android:id="@+id/tv_thinking"
@@ -59,7 +60,7 @@
             android:text="创想"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
         <!--        <ImageView
@@ -74,21 +75,13 @@
 
     </RelativeLayout>
 
-    <!-- <com.sunnybear.library.view.viewpager.BounceBackViewPager
-         android:id="@+id/vp_content"
-         android:layout_width="950px"
-         android:layout_height="match_parent"
-         android:layout_marginBottom="15dp"
-         android:layout_marginTop="15dp"
-         auto:overscroll_translation="500px"/>-->
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_top"
         android:layout_marginBottom="15dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="15dp"
-        android:clipChildren="false"/>
+        android:clipChildren="false" />
 
-</RelativeLayout>
+</LinearLayout>

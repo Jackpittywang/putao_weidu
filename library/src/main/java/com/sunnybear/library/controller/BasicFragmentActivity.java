@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.squareup.okhttp.Callback;
@@ -89,7 +91,6 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
         setContentView(layoutId);
         ButterKnife.bind(this);
-
         mContext = this;
         mApp = (App) getApplication();
         mOkHttpClient = mApp.getOkHttpClient();
@@ -215,6 +216,19 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     protected void networkRequest(Request request, RequestCallback callback) {
         networkRequest(request, -1, callback);
         loading.show();
+    }
+
+    /**
+     * 网络请求
+     *
+     * @param request     request主体
+     * @param callback    请求回调(建议使用SimpleFastJsonCallback)
+     * @param showLoading 是不是显示loading
+     */
+    protected void networkRequest(Request request, RequestCallback callback, boolean showLoading) {
+        networkRequest(request, -1, callback);
+        if (showLoading)
+            loading.show();
     }
 
     /**

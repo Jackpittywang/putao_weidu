@@ -25,7 +25,7 @@ public class BounceBackViewPager extends ViewPager {
     /**
      * 最大的拉伸距离
      */
-    private static final int DEFAULT_OVERSCROLL_TRANSLATION = 150;
+    private static final int DEFAULT_OVERSCROLL_TRANSLATION = 300;
 
     /**
      * 回弹效果持续时间
@@ -249,22 +249,22 @@ public class BounceBackViewPager extends ViewPager {
                     final float deltaX = mLastMotionX - x;
                     final float oldScrollX = getScrollX();
                     final int width = getWidth();
-                    final int widthWithMargin = width + getPageMargin();
+//                    final int widthWithMargin = width + getPageMargin();
                     final int lastItemIndex = getAdapter().getCount() - 1;
                     final int currentItemIndex = getCurrentItem();
-                    final float leftBound = Math.max(0, (currentItemIndex - 1) * widthWithMargin);
-                    final float rightBound = Math.min(currentItemIndex + 1, lastItemIndex) * widthWithMargin;
-                    final float scrollX = oldScrollX + deltaX;
+                    final float leftBound = Math.max(0, (currentItemIndex - 1)/* * widthWithMargin*/);
+                    final float rightBound = Math.min(currentItemIndex + 1, lastItemIndex)/* * widthWithMargin*/;
+//                    final float scrollX = oldScrollX + deltaX;
                     if (mScrollPositionOffset == 0) {
-                        if (scrollX < leftBound) {
+                        if (mScrollPosition == 0/*scrollX < leftBound*/) {
                             if (leftBound == 0) {
-                                final float over = deltaX + mTouchSlop;
-                                mOverscrollEffect.setPull(over / width);
+//                                final float over = deltaX + mTouchSlop;
+                                mOverscrollEffect.setPull(deltaX / width);
                             }
-                        } else if (scrollX > rightBound) {
-                            if (rightBound == lastItemIndex * widthWithMargin) {
-                                final float over = scrollX - rightBound - mTouchSlop;
-                                mOverscrollEffect.setPull(over / width);
+                        } else if ((getAdapter().getCount() - 1) == mScrollPosition/*scrollX > rightBound*/) {
+                            if (rightBound == lastItemIndex/* * widthWithMargin*/) {
+//                                final float over = scrollX - rightBound - mTouchSlop;
+                                mOverscrollEffect.setPull(deltaX / width);
                             }
                         }
                     } else {
@@ -307,7 +307,7 @@ public class BounceBackViewPager extends ViewPager {
         if (child.getWidth() == 0) return false;
         final int position = child.getLeft() / child.getWidth();
         final boolean isFirstOrLast = position == 0 || (position == getAdapter().getCount() - 1);
-        if (mOverscrollEffect.isOverscrolling() && isFirstOrLast) {
+        if (mOverscrollEffect.isOverscrolling()/* && isFirstOrLast*/) {
             final float dx = getWidth() / 2;
             final int dy = getHeight() / 2;
             t.getMatrix().reset();
