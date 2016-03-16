@@ -101,7 +101,6 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         bundle.putInt(CreateDetailActivity.POSITION, position);
         bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
         bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
-        bundle.putBoolean(CreateDetailActivity.SHOW_PROGRESS, true);
         startActivity(CreateDetailActivity.class, bundle);
     }
 
@@ -155,38 +154,49 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
 
     @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getComment().setCount(item.getComment().getCount() + 1);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getComment().setCount(item.getComment().getCount() + 1);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
     public void evenDeleteCommentCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getComment().setCount(item.getComment().getCount() - 1);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getComment().setCount(item.getComment().getCount() - 1);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = EVENT_ADD_CREAT_COOL)
     public void eventAddCoolCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getVote().setUp(item.getVote().getUp() + 1);
-        item.setVote_status(1);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+
+            Create item = adapter.getItem(position);
+            item.getVote().setUp(item.getVote().getUp() + 1);
+            item.setVote_status(1);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = EVENT_ADD_CREAT_NOT_COOL)
     public void eventAddNotCoolCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getVote().setDown(item.getVote().getDown() + 1);
-        item.setVote_status(2);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getVote().setDown(item.getVote().getDown() + 1);
+            item.setVote_status(2);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = EVENT_CREAT_CONCERNS_CHANGE)
     public void ChangeConcerns(int position) {
-        Create item = adapter.getItem(position);
-        item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
+        }
     }
 
 /*    @Subcriber(tag = CreateBasicDetailActivity.COOL)

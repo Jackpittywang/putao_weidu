@@ -145,6 +145,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+        isShowProgress = 1 == mCreate.getType();
         rl_support.setClickable(false);
         rl_no_support.setClickable(false);
         mWidthPixels = mActivity.getResources().getDisplayMetrics().widthPixels / 2;
@@ -529,13 +530,15 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
 
     @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
-        tv_count_comment.setText(++mCommentCount + "");
+        if (position == mPosition)
+            tv_count_comment.setText(++mCommentCount + "");
     }
 
 
     @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
     public void evenDeleteCommentCount(int position) {
-        tv_count_comment.setText(--mCommentCount + "");
+        if (position == mPosition)
+            tv_count_comment.setText(--mCommentCount + "");
     }
 
     public void getRemindCreate(String id) {
@@ -544,7 +547,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                     @Override
                     public void onSuccess(String url, Create result) {
                         mCreate = result;
-                        isShowProgress = "1".equals(mCreate.getType());
+                        isShowProgress = 1 == mCreate.getType();
                         initView();
                         loading.dismiss();
                     }

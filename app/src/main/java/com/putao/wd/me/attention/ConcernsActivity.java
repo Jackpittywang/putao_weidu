@@ -9,6 +9,7 @@ import com.putao.wd.api.CreateApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.CreateCommentActivity;
+import com.putao.wd.created.CreateDetailActivity;
 import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
@@ -19,6 +20,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,6 +39,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
 
     private boolean isRefresh = false;
     private FancyAdapter adapter;
+    private boolean hasMoreData;
     private int mPage;
 
     @Override
@@ -81,9 +84,13 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage)
+        if (currentPage == totalPage) {
             rv_created.noMoreLoading();
-        else mPage++;
+            hasMoreData = false;
+        } else {
+            mPage++;
+            hasMoreData = true;
+        }
     }
 
     private void addListenter() {
@@ -124,10 +131,11 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     public void onItemClick(Create create, int position) {
         mCreate = create;
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CreateBasicDetailActivity.CREATE, create);
-        bundle.putInt(CreateBasicDetailActivity.POSITION, position);
-        bundle.putBoolean(CreateBasicDetailActivity.SHOW_PROGRESS, create.getType() == 1 ? true : false);
-        startActivity(CreateBasicDetailActivity.class, bundle);
+        bundle.putSerializable(CreateDetailActivity.CREATE, (Serializable) adapter.getItems());
+        bundle.putInt(CreateDetailActivity.POSITION, position);
+        bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
+        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
+        startActivity(ConcernsDetailActivity.class, bundle);
     }
 
     @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
@@ -141,16 +149,20 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
 
     @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getComment().setCount(item.getComment().getCount() + 1);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getComment().setCount(item.getComment().getCount() + 1);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
     public void evenDeleteCommentCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getComment().setCount(item.getComment().getCount() - 1);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getComment().setCount(item.getComment().getCount() - 1);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Override

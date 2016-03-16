@@ -1,4 +1,4 @@
-package com.putao.wd.created;
+package com.putao.wd.me.attention;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
+import com.putao.wd.created.CreateBasicDetailActivity;
+import com.putao.wd.created.CreateBasicDetailFragment;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.sunnybear.library.controller.BasicFragmentActivity;
@@ -22,22 +24,18 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * 奇思妙想详情
+ * 我的关注详情托管activity
  * Created by zhanghao on 2016/1/15.
  */
-public class FancyDetailActivity extends BasicFragmentActivity {
+public class ConcernsDetailActivity extends BasicFragmentActivity {
 
 
     @Bind(R.id.vp_content)
     ViewPager vp_content;
-    @Bind(R.id.rl_main)
-    RelativeLayout rl_main;
 
-    private SparseArray<Fragment> mFragments;
     private ArrayList<Create> mCreates;
     private int mPosition;
     private int mPageCount;
-    private boolean isShowProgress;
     private boolean has_more_data;
 
     public static final String POSITION = "position";
@@ -55,14 +53,13 @@ public class FancyDetailActivity extends BasicFragmentActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         mCreates = (ArrayList<Create>) args.getSerializable(CREATE);
         mPosition = args.getInt(POSITION);
-        isShowProgress = args.getBoolean(SHOW_PROGRESS);
         mPageCount = args.getInt(PAGE_COUNT);
         has_more_data = args.getBoolean(HAS_MORE_DATA);
         LoadMoreFragmentPagerAdapter fragmentPagerAdapter = new LoadMoreFragmentPagerAdapter<Create>(getSupportFragmentManager(), mCreates) {
             @Override
             public void loadMoreData() {
                 if (!has_more_data) return;
-                networkRequest(CreateApi.getCreateList(2, mPageCount),
+                networkRequest(CreateApi.getCreateMyfollows(mPageCount),
                         new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
                             @Override
                             public void onSuccess(String url, Creates result) {
@@ -73,7 +70,7 @@ public class FancyDetailActivity extends BasicFragmentActivity {
                                 else mPageCount++;
                                 loading.dismiss();
                             }
-                        }, false);
+                        });
             }
 
             @Override

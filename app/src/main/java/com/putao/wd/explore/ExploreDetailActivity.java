@@ -47,49 +47,10 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
         addFragment();
     }
 
-
-
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
-
-/*    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setContentView(getContainer());
-        Intent intent = getIntent();
-        mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
-        mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE,1);
-//        initView();
-        addFragment();
-    }*/
-
-    /**
-     * 初始化视图
-     */
-/*    private void initView() {
-        View view = LayoutInflater.from(this).inflate(R.layout.activity_nexplore_detail, null);
-//        mSwipeBackLayout.addView(view);
-        vp_container = (ViewPager) findViewById(R.id.vp_container);
-//        mSwipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.TOP);
-    }*/
-
-    /**
-     * 初始化容器视图
-     * @return
-     */
-/*    private View getContainer() {
-        RelativeLayout container = new RelativeLayout(this);
-//        mSwipeBackLayout = new SwipeBackLayout(this);
-//        mSwipeBackLayout.setOnSwipeBackListener(this);
-        ivShadow = new ImageView(this);
-        ivShadow.setBackgroundColor(getResources().getColor(R.color.popup_background));
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        container.addView(ivShadow, params);
-        container.addView(mSwipeBackLayout);
-        return container;
-    }*/
 
     /**
      * 初始化Fragment
@@ -126,42 +87,6 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
         bundle.putSerializable(ExploreCommonFragment.INDEX_DATA, mExploreIndexs.get(position));
         return bundle;
     }
-
-/*
-    @Override
-    public void onViewPositionChanged(float fractionAnchor, float fractionScreen) {
-        ivShadow.setAlpha(1 - fractionScreen);
-    }
-*/
-
-
-    //    @Override
-//    protected int getLayoutId() {
-//        return R.layout.activity_nexplore_detail;
-//    }
-//
-//    @Override
-//    protected void onViewCreatedFinish(Bundle saveInstanceState) {
-//        addFragment();
-//        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-//            @Override
-//            public int getCount() {
-//                return mFragments.size();
-//            }
-//
-//            @Override
-//            public Fragment getItem(int position) {
-//                return mFragments.get(position);
-//            }
-//        };
-//        vp_container.setAdapter(adapter);
-//        vp_container.setCurrentItem(0);
-//    }
-//
-//    @Override
-//    protected String[] getRequestUrls() {
-//        return new String[0];
-//    }
 
     @Override
     public void finish() {

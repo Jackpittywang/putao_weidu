@@ -122,7 +122,7 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
         bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
         bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
         bundle.putBoolean(CreateDetailActivity.SHOW_PROGRESS, true);
-        startActivity(CreateDetailActivity.class, bundle);
+        startActivity(FancyDetailActivity.class, bundle);
     }
 
     @Subcriber(tag = CreateAdapter.COOL)
@@ -146,23 +146,29 @@ public class FancyFragment extends BasicFragment implements PullToRefreshLayout.
 
     @Subcriber(tag = EVENT_ADD_FANCY_COOL)
     public void eventAddCoolCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getVote().setUp(item.getVote().getUp() + 1);
-        item.setVote_status(1);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getVote().setUp(item.getVote().getUp() + 1);
+            item.setVote_status(1);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = EVENT_ADD_FANCY_NOT_COOL)
     public void eventAddNotCoolCount(int position) {
-        Create item = adapter.getItem(position);
-        item.getVote().setDown(item.getVote().getDown() + 1);
-        item.setVote_status(2);
-        adapter.notifyItemChanged(position);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getVote().setDown(item.getVote().getDown() + 1);
+            item.setVote_status(2);
+            adapter.notifyItemChanged(position);
+        }
     }
 
     @Subcriber(tag = EVENT_FANCY_CONCERNS_CHANGE)
     public void ChangeConcerns(int position) {
-        Create item = adapter.getItem(position);
-        item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
+        }
     }
 }

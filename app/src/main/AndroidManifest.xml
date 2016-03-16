@@ -314,9 +314,13 @@
         <activity
             android:name=".companion.DiaryActivity"
             android:screenOrientation="portrait" />
-        <!--陪伴日志-->
+        <!--我的关注-->
         <activity
             android:name=".me.attention.ConcernsActivity"
+            android:screenOrientation="portrait" />
+        <!--我的关注详情-->
+        <activity
+            android:name=".me.attention.ConcernsDetailActivity"
             android:screenOrientation="portrait" />
         <!--创造奇思妙想详情-->
         <activity

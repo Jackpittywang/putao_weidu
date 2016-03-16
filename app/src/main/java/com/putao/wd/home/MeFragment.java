@@ -38,7 +38,9 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
@@ -172,6 +174,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     }
 
     public int getStatusBarHeight() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return DensityUtil.dp2px(mActivity, 20);
+        }
         int result = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
@@ -396,7 +401,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             case R.id.iv_user_icon://完善用户信息
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
                 break;
-            case R.id.si_concerns://完善用户信息
+            case R.id.si_concerns://我的关注
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ConcernsActivity.class);
                 break;
             case R.id.si_message://消息中心
@@ -446,7 +451,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 }
                 height = mHeadLayoutParams.height + (newY - y) / 3;
                 rl_user_head_icon.getLocationOnScreen(position);
-                if (position[1] < mStatusBarHeight && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+                if (position[1] < mStatusBarHeight)
                     return false;
                 if (height < mHeadHeight) {
                     mHeadLayoutParams.height = mHeadHeight;
