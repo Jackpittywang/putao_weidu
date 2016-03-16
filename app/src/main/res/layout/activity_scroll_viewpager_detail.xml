@@ -7,6 +7,7 @@
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <ImageView
         android:id="@+id/iv_close"
         android:layout_width="50dp"
@@ -15,5 +16,9 @@
         android:padding="10dp"
         android:src="@drawable/btn_30_close_sel" />
 
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        />
 </RelativeLayout>
 

@@ -300,7 +300,11 @@
             android:screenOrientation="portrait" />
         <!--创造详情-->
         <activity
-            android:name=".created.CreatedDetailActivity"
+            android:name=".created.CreatedDetailActivityDes"
+            android:screenOrientation="portrait" />
+        <!--创造详情-->
+        <activity
+            android:name=".created.CreateDetailActivity"
             android:screenOrientation="portrait" />
         <!--奇思妙想详情-->
         <activity
