@@ -15,6 +15,8 @@ import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
@@ -88,6 +90,9 @@ public class GlobalApplication extends BasicApplication {
             Logger.e(e);
             e.printStackTrace();
         }
+        //注册微信支付APPID
+        final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
+        msgApi.registerApp("wx46c90751eea478fe");
         //启动推送
 //        startService(new Intent(ACTION_PUSH_SERVICE));
     }

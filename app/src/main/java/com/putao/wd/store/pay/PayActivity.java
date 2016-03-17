@@ -19,6 +19,7 @@ import com.putao.wd.util.AlipayHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.SwitchButton;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -35,8 +36,11 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     public static final String BUNDLE_ORDER_DATE = "order_date";
     public static final String BUNDLE_ORDER_PRICE = "order_price";
 
-    private final int SDK_PAY_FLAG = 1;
-    private final int SDK_CHECK_FLAG = 2;
+//    private final int SDK_PAY_FLAG = 1;
+//    private final int SDK_CHECK_FLAG = 2;
+
+    private final int ALI_PAY = 1;
+    private final int WEIX_PAY = 2;
 
     @Bind(R.id.tv_order_sn)
     TextView tv_order_sn;//订单号
@@ -44,11 +48,16 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     TextView tv_order_date;//订单日期
     @Bind(R.id.tv_cash_pay_summoney)
     TextView tv_cash_pay_summoney;//订单金额
+    @Bind(R.id.sb_alipay_point)
+    SwitchButton sb_alipay_point;
+    @Bind(R.id.sb_weixinpay_point)
+    SwitchButton sb_weixinpay_point;
 
     private String order_id;
     private String order_sn;
     private String order_date;
     private String order_price;
+    private int pay_way;
 
     private OrderSubmitReturn mSubmitReturn;
 
@@ -70,7 +79,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
         order_sn = args.getString(BUNDLE_ORDER_SN);
         order_date = args.getString(BUNDLE_ORDER_DATE);
         order_price = args.getString(BUNDLE_ORDER_PRICE);
-
+        pay_way = ALI_PAY;
         initView();
         mAlipayHelper = new AlipayHelper();
         mAlipayHelper.setOnAlipayCallback(
@@ -107,6 +116,8 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
      */
 
     private void initView() {
+        sb_alipay_point.setEnabled(false);
+        sb_weixinpay_point.setEnabled(false);
         if (mSubmitReturn != null) {
             tv_order_sn.setText(mSubmitReturn.getOrder_sn());
             tv_order_date.setText(mSubmitReturn.getTime());
@@ -143,7 +154,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
         return new String[]{StoreApi.URL_PAY};
     }
 
-    @OnClick(R.id.tv_pay)
+    @OnClick({R.id.tv_pay, R.id.ll_alipay, R.id.ll_weixpay})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -152,7 +163,19 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                     ToastUtils.showToastShort(mContext, "支付失败");
                     return;
                 }
-                mAlipayHelper.pay((Activity) mContext, orderInfo);
+                if (ALI_PAY == pay_way)
+                    mAlipayHelper.pay((Activity) mContext, orderInfo);
+                else if (WEIX_PAY == pay_way) ;
+                break;
+            case R.id.ll_alipay://选择支付宝支付
+                sb_weixinpay_point.setState(false);
+                sb_alipay_point.setState(true);
+                pay_way = ALI_PAY;
+                break;
+            case R.id.ll_weixpay://选择微信支付
+                sb_weixinpay_point.setState(true);
+                sb_alipay_point.setState(false);
+                pay_way = WEIX_PAY;
                 break;
         }
     }

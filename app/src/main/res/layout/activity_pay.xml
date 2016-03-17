@@ -200,6 +200,7 @@
             android:textSize="@dimen/text_size_14sp" />
 
         <LinearLayout
+            android:id="@+id/ll_alipay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -207,7 +208,7 @@
             android:padding="10dp">
 
             <com.sunnybear.library.view.SwitchButton
-                android:id="@+id/btn_pay_zfb"
+                android:id="@+id/sb_alipay_point"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginLeft="10dp"
@@ -237,6 +238,7 @@
             android:background="@color/color_EBEBEB" />
 
         <LinearLayout
+            android:id="@+id/ll_weixpay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -244,27 +246,27 @@
             android:padding="10dp">
 
             <com.sunnybear.library.view.SwitchButton
-                android:id="@+id/btn_pay_wexin"
+                android:id="@+id/sb_weixinpay_point"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginLeft="10dp"
-                auto:isSelect="true"
-                auto:norDrawable="@drawable/check_box_sel"
-                auto:selDrawable="@drawable/check_box_nor" />
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/icon_30_03" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
                 android:text="微信支付"
-                android:textSize="@dimen/text_size_16sp"
-                android:textColor="@color/color_313131" />
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
 
         <View
