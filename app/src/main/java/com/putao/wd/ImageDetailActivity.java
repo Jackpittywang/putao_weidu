@@ -13,7 +13,7 @@ import butterknife.Bind;
  */
 public class ImageDetailActivity extends BasicFragmentActivity {
 
-    private static final String IMAGE_URL = "image_url";
+    public  static final String IMAGE_URL = "image_url";
     @Bind(R.id.explore_image_pager)
     ViewPager image_Pager;
 
