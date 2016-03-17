@@ -99,4 +99,13 @@
     <string name="tb_munion_tip_download_prefix">正在下载:</string>
     <string name="umeng_common_icon">icon</string>
     <string name="UMUpdateCheck">2.6.0.1.20150312</string>
+
+    <!--陪伴的默认详情-->
+    <string name="companion_taotaoright">通过视觉识别系统，\n\n小朋友线下完成七巧板拼图，\n\n和线上精灵伙伴淘淘进行冒险之旅。\n\n孩子在解决困难后，\n\n专注力、想象力、创造力、\n\n空间智能将得到大大的提升。</string>
+    <string name="companion_mofang">利用计算机视觉技术，\n\n实现实体魔方玩具的\n\n所有面和颜色的精准识别，\n\n实时生成魔方还原步骤，\n\n让孩子可以无师自通学会还原魔方，\n\n体验魔方的魅力。</string>
+    <string name="companion_banderui">跟着活泼生动的故事情节，\n\n敲击无国界多元化的音乐节奏，\n\n经历着一场又一场可爱的冒险，\n\n让操作空间更广阔，音乐学习更有趣。</string>
+    <string name="companion_maisisi">神秘的麦斯丝世界，奇幻而未知的冒险，\n\n变换莫测的难关疑题，\n\n在这里能让原本枯燥乏味的数学充满乐趣，\n\n提升数学能力多喝逻辑思维能力。</string>
+    <string name="companion_tutuWord">以小Q克服各种困难拯救地球为故事背景，\n\n孩子通过对配套涂色卡进行涂色和识别，\n\n解锁任务关卡，培养孩子的创造力。</string>
+    <string name="companion_hello">简单的积木式指令模块配合生动三维影像，\n\n带给孩子全新的学习体验！\n\n让孩子早人一步get新时代的必备技能\n\n──编程技术吧！</string>
+    <string name="companion_hani">探索海洋世界，\n\n和各类真实还原的海洋生物进行对话与互动，\n\n由孩子们亲手创造出的鱼儿\n\n传递海洋中的众多科普知识。</string>
 </resources>

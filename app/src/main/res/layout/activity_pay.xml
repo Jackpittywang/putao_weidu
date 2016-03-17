@@ -216,10 +216,55 @@
                 auto:selDrawable="@drawable/check_box_sel" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/img_pay_zfb" />
+                android:src="@drawable/icon_30_02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="支付宝支付"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_EBEBEB" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_pay_wexin"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="10dp"
+                auto:isSelect="true"
+                auto:norDrawable="@drawable/check_box_sel"
+                auto:selDrawable="@drawable/check_box_nor" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_30_03" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:text="微信支付"
+                android:textSize="@dimen/text_size_16sp"
+                android:textColor="@color/color_313131" />
         </LinearLayout>
 
         <View

@@ -209,4 +209,14 @@
         <item name="android:textSize">@dimen/text_size_16sp</item>
     </style>
 
+    <!--陪伴的默认显示文字-->
+    <style name="companion_textstyle">
+        <item name="android:textColor">@color/color_313131</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:paddingBottom">7dp</item>
+    </style>
+
 </resources>

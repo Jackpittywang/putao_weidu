@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +23,7 @@ import com.putao.wd.model.ExploreProductPlot;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -48,7 +49,7 @@ public class DiaryActivity extends PTWDActivity {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ll_date_empty)
-    LinearLayout ll_date_empty;
+    RelativeLayout ll_date_empty;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rl_main)
@@ -57,6 +58,12 @@ public class DiaryActivity extends PTWDActivity {
     TextView tv_content;
     @Bind(R.id.iv_plot_icon)
     ImageDraweeView iv_plot_icon;
+    @Bind(R.id.txt_companion_text)
+    TextView txt_companion_text;
+    @Bind(R.id.btn_companion_look_detail)
+    Button btn_companion_look_detail;
+    @Bind(R.id.companion_no_image)
+    ImageDraweeView companion_no_image;
 
     public static String DIARY_APP = "diary_app";
 
@@ -64,6 +71,7 @@ public class DiaryActivity extends PTWDActivity {
     private DiaryApp mDiaryApp;
     private SharePopupWindow mSharePopupWindow;
     private int mPage;
+    private int mPostion;
 
 
     @Override
@@ -75,12 +83,15 @@ public class DiaryActivity extends PTWDActivity {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         addListener();
+        Bundle bundle = getIntent().getExtras();
+        mPostion = bundle.getInt("position");
         mDiaryApp = (DiaryApp) args.getSerializable(DIARY_APP);
         navigation_bar.setMainTitle(mDiaryApp.getProduct_name());
         adapter = new ExploreAdapter(this, null);
         rv_content.setAdapter(adapter);
         mSharePopupWindow = new SharePopupWindow(mContext);
         getDiaryIndex();
+
     }
 
     private void addListener() {
@@ -135,7 +146,18 @@ public class DiaryActivity extends PTWDActivity {
                             ptl_refresh.setVisibility(View.VISIBLE);
                         } else {
                             ll_date_empty.setVisibility(View.VISIBLE);
+                            OnCompanionDiary(mPostion);
                             ptl_refresh.setVisibility(View.GONE);
+                            //各种详情的点击跳转
+                            btn_companion_look_detail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, );
+//                                    startActivity(ProductDetailActivity.class, bundle);
+
+                                }
+                            });
                         }
                         ptl_refresh.refreshComplete();
                         checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
@@ -162,7 +184,6 @@ public class DiaryActivity extends PTWDActivity {
     public void eventPlayer(Bundle bundle) {
         startActivity(YoukuVideoPlayerActivity.class, bundle);
     }
-
 
     private Handler mHandler;
     private String video_id;
@@ -199,6 +220,7 @@ public class DiaryActivity extends PTWDActivity {
                 mSharePopupWindow.show(rl_main);
             }
         };
+
         mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
@@ -235,7 +257,6 @@ public class DiaryActivity extends PTWDActivity {
                     ShareTools.wechatWebShare(mContext, false, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
                 }
             }
-
 
             @Override
             public void onQQFriend() {
@@ -277,14 +298,45 @@ public class DiaryActivity extends PTWDActivity {
                 }
 
             }
-
         });
-
-
     }
 
     public DiskFileCacheHelper getDiskCacheHelper() {
         return mDiskFileCacheHelper;
     }
 
+
+    //跳转显示默认界面的判断
+    public void OnCompanionDiary(int postion) {
+        switch (postion) {
+            case 0:
+                txt_companion_text.setText(R.string.companion_taotaoright);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_01);
+                break;
+            case 1:
+                txt_companion_text.setText(R.string.companion_banderui);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_03);
+                break;
+            case 2:
+                txt_companion_text.setText(R.string.companion_mofang);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_02);
+                break;
+            case 3:
+                txt_companion_text.setText(R.string.companion_maisisi);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_04);
+                break;
+            case 4:
+                txt_companion_text.setText(R.string.companion_hello);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_06);
+                break;
+            case 5:
+                txt_companion_text.setText(R.string.companion_hani);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_07);
+                break;
+            case 6:
+                txt_companion_text.setText(R.string.companion_tutuWord);
+                companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_05);
+                break;
+        }
+    }
 }

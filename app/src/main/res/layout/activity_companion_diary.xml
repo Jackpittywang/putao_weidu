@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/fl_main"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -11,8 +10,7 @@
         android:id="@+id/rl_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        >
+        android:visibility="invisible">
 
         <!--标题图-->
         <com.sunnybear.library.view.image.ImageDraweeView
@@ -22,7 +20,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             auto:aspect_ratio="2"
-            auto:default_drawable="@drawable/test_flaunt_taotao_bg_01"/>
+            auto:default_drawable="@drawable/test_flaunt_taotao_bg_01" />
 
 
         <TextView
@@ -37,7 +35,7 @@
             android:paddingRight="20dp"
             android:paddingTop="10dp"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_18sp"/>
+            android:textSize="@dimen/text_size_18sp" />
 
         <!--公司logo-->
         <ImageView
@@ -47,7 +45,7 @@
             android:layout_centerInParent="true"
             android:paddingBottom="8dp"
             android:paddingTop="7dp"
-            android:src="@drawable/img_explore_flaunte_logo"/>
+            android:src="@drawable/img_explore_flaunte_logo" />
     </RelativeLayout>
 
     <LinearLayout
@@ -63,8 +61,7 @@
             auto:nav_has_divider="true"
             auto:nav_left_icon="@drawable/btn_20_back_p_nor"
             auto:nav_main_title="葡萄陪伴成长记"
-            auto:nav_main_title_color="@color/white"/>
-
+            auto:nav_main_title_color="@color/white" />
 
         <!--下拉刷新-->
         <com.sunnybear.library.view.PullToRefreshLayout
@@ -82,28 +79,54 @@
                 android:layout_height="wrap_content"
                 auto:divider_color="@color/divider_color"
                 auto:divider_height="1px"
-                auto:has_row_divider="true"/>
+                auto:has_row_divider="true" />
         </com.sunnybear.library.view.PullToRefreshLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_date_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/color_EBEBEB"
-            android:gravity="center"
             android:orientation="vertical">
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/img_explore_nodata"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_explore_nodata"/>
-
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="20dp"
+                   android:text="孩子还没有成长记数据"/>-->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="孩子还没有成长记数据"/>
+                android:id="@+id/txt_companion_text"
+                style="@style/companion_textstyle"
+                android:layout_above="@+id/btn_companion_look_detail"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_companion_look_detail"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_above="@+id/companion_no_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_compantion_default_detail"
+                android:gravity="center"
+                android:text="查看详情"
+                android:textColor="@color/text_main_color_nor"
+                android:textSize="@dimen/text_size_14sp" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/companion_no_image"
+                android:layout_width="320dp"
+                android:layout_height="160dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
     </LinearLayout>
 </FrameLayout>
