@@ -307,7 +307,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
                                 ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
                             }
                         });
-                        networkRequest(StoreApi.pay(mOrderDetail.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
+                        networkRequest(StoreApi.aliPay(mOrderDetail.getId()), new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
                                 if (!StringUtils.isEmpty(result)) {

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class PicClickResult implements Serializable {
     private int clickIndex;
-    private ArrayList<PicList> picLists;
+    private ArrayList<PicList> picList;
 
     public int getClickIndex() {
         return clickIndex;
@@ -19,18 +19,18 @@ public class PicClickResult implements Serializable {
     }
 
     public ArrayList<PicList> getPicLists() {
-        return picLists;
+        return picList;
     }
 
     public void setPicLists(ArrayList<PicList> picLists) {
-        this.picLists = picLists;
+        this.picList = picLists;
     }
 
     @Override
     public String toString() {
         return "PicClickResult{" +
                 "clickIndex=" + clickIndex +
-                ", picLists=" + picLists +
+                ", picLists=" + picList +
                 '}';
     }
 }

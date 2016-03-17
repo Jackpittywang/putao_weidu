@@ -274,7 +274,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     public void eventPay(Order order) {
         IndexActivity.isNotRefreshUserInfo = false;
         order_id = order.getId();
-        networkRequest(StoreApi.pay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(StoreApi.aliPay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 if (!StringUtils.isEmpty(result)) {

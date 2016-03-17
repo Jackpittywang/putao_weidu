@@ -37,6 +37,7 @@ public class StoreApi {
     private static final String REQUEST_ORDER_MOBILE = "mobile";//手机
     private static final String REQUEST_ORDER_TEL = "tel";//固话   N
     private static final String REQUEST_ORDER_ID = "order_id";//订单id
+    private static final String REQUEST_PAYMENT_TYPE = "payment_type";//微信支付时的支付方式
 
     //    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api.store.start.wang/" : "http://api.sotre.putao.com/";//基础url
     //商城请求所使用的预发布域名
@@ -297,19 +298,37 @@ public class StoreApi {
     }
 
     /**
-     * 手机支付
+     * 支付宝支付
      */
-    public static final String URL_PAY = BASE_URL + "pay/mobile/order";
+    public static final String URL_ALIPAY = BASE_URL + "pay/mobile/order";
 
     /**
-     * 手机支付
+     * 支付宝支付
      *
      * @param order_id 订单id
      */
-    public static Request pay(String order_id) {
+    public static Request aliPay(String order_id) {
         return PTWDRequestHelper.shopCar()
                 .addParam(REQUEST_ORDER_ID, order_id)
-                .build(RequestMethod.POST, URL_PAY);
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .build(RequestMethod.POST, URL_ALIPAY);
+    }
+
+    /**
+     * 微信支付
+     */
+    public static final String WEIXIN_PAY = BASE_URL + "pay/mobile/toPay";
+
+    /**
+     * 微信支付
+     *
+     * @param order_id 订单id
+     */
+    public static Request weixPay(String order_id) {
+        return PTWDRequestHelper.shopCar()
+                .addParam(REQUEST_ORDER_ID, order_id)
+                .addParam(REQUEST_PAYMENT_TYPE, "WX_APP")
+                .build(RequestMethod.POST, WEIXIN_PAY);
     }
 
     /**
@@ -324,6 +343,7 @@ public class StoreApi {
         return PTWDRequestHelper.store()
                 .build(RequestMethod.POST, URL_DEFAULT_ADDRESS);
     }
+
     /**
      * 获取详情页面
      */
