@@ -22,6 +22,7 @@ import com.putao.wd.model.OrderSubmitReturn;
 import com.putao.wd.store.invoice.InvoiceInfoActivity;
 import com.putao.wd.store.order.adapter.WriteOrderAdapter;
 import com.putao.wd.store.pay.PayActivity;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -94,7 +95,13 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
         sticky_layout.canScrollView();
 
         Bundle bundle = getIntent().getExtras();
-        pid = bundle.getString(ShoppingCarActivity.PRODUCT_ID);
+        int count = bundle.getInt("product_count", 0);
+        if (count == 0) {//购物车页面传送过来的
+            pid = bundle.getString(ShoppingCarActivity.PRODUCT_ID);
+        } else {//商品详情页面传送过来的
+            pid = bundle.getString(ProductDetailActivity.PRODUCT_ID);
+        }
+
         Logger.w("pid = " + pid);
         getDefaultAddress();
         networkRequest(StoreApi.orderConfirm("2", pid, ""),

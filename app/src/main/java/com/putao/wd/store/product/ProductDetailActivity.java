@@ -1,7 +1,10 @@
 package com.putao.wd.store.product;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,16 +23,21 @@ import com.putao.wd.model.ProductDetail;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.model.StoreProduct;
+import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.user.LoginActivity;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 
 import java.io.Serializable;
@@ -42,9 +50,9 @@ import butterknife.OnClick;
  * 商品详情
  * Created by guchenkai on 2015/11/30.
  */
-public class ProductDetailActivity extends PTWDActivity implements View.OnClickListener {
-    /*public static final String BUNDLE_PRODUCT_ID = "product_id";
-    public static final String BUNDLE_PRODUCT_ICON = "product_icon";*/
+public class ProductDetailActivity extends BasicFragmentActivity implements View.OnClickListener {
+    public static final String PRODUCT_ID = "product_id";
+    /* public static final String BUNDLE_PRODUCT_ICON = "product_icon";*/
     public static final String BUNDLE_PRODUCT = "bundle_product";
     public static final String BUNDLE_IS_DETAIL = "bundle_is_detail";
     public static final String BUNDLE_IS_SERVICE = "bundle_is_service";
@@ -55,13 +63,22 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     @Bind(R.id.rl_main)
     RelativeLayout rl_main;
-
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
     @Bind(R.id.tv_product_price)
     TextView tv_product_price;
-    @Bind(R.id.ll_join_car)
-    LinearLayout ll_join_car;//加入购物车
+    @Bind(R.id.shopping_back)
+    ImageView shopping_back;
+    @Bind(R.id.shopping_share)
+    ImageView shopping_share;
+    @Bind(R.id.shopping_relative_car)
+    RelativeLayout shopping_relative_car;
+    @Bind(R.id.shopping_add_car)
+    TextView shopping_add_car;//加入购物车
+    @Bind(R.id.shopping_car_buy)
+    TextView shopping_car_buy;//立即购买
+    @Bind(R.id.shopping_txt_number)
+    TextView shopping_txt_number;//立即购买
 
     /*@Bind(R.id.sticky_layout)
     StickyHeaderLayout sticky_layout;
@@ -76,6 +93,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
+    StoreProduct storeProduct;
 
     private String product_id;//产品id
 
@@ -89,7 +107,7 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
+        mSharePopupWindow = new SharePopupWindow(mContext);
         is_detail = args.getBoolean(BUNDLE_IS_DETAIL);
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
         is_remind = args.getBoolean(BUNDLE_IS_REMIND);
@@ -115,22 +133,57 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                     .addParam("pid", product_id)
                     .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
             getProduct(product_id);
-
         } else {
-            StoreProduct storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
+            storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
             wv_content.loadUrl(storeProduct.getMobile_url());
             tv_product_price.setText(storeProduct.getPrice());
             mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
         }
-
-
-   /*   imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
-        product_id = args.getString(BUNDLE_PRODUCT_ID);
-        mSharePopupWindow = new SharePopupWindow(mContext);
-        sticky_layout.canScrollView();
         addListener();
-        getProductDetail(product_id);
-        stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);*/
+
+//         imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
+//        product_id = args.getString(BUNDLE_PRODUCT_ID);
+//        mSharePopupWindow = new SharePopupWindow(mContext);
+//        sticky_layout.canScrollView();
+//        addListener();
+//        getProductDetail(product_id);
+//        stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
+    }
+
+    private void addListener() {
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+            @Override
+            public void onWechat() {
+                ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+            }
+
+            @Override
+            public void onWechatFriend() {
+                ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+            }
+
+            @Override
+            public void onQQFriend() {
+                ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+            }
+
+            @Override
+            public void onQQZone() {
+                ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+            }
+
+            public void onSinaWeibo() {
+                ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+            }
+
+            @Override
+            public void onCopyUrl() {
+                ClipboardManager copy = (ClipboardManager) ProductDetailActivity.this
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText(storeProduct.getMobile_url());
+                ToastUtils.showToastShort(ProductDetailActivity.this, "复制成功");
+            }
+        });
     }
 
     private void getProduct(String product_id) {
@@ -222,10 +275,10 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
                 JSONObject object = JSON.parseObject(result);
                 int count = object.getInteger("qt");
                 if (count != 0) {
-                    navigation_bar.hideRightTitleIcon(false);
-                    navigation_bar.setRightTitleIcon(count + "");
+                    shopping_txt_number.setVisibility(View.VISIBLE);
+                    shopping_txt_number.setText(count + "");
                 } else {
-                    navigation_bar.hideRightTitleIcon(true);
+                    shopping_txt_number.setVisibility(View.GONE);
                 }
                 loading.dismiss();
             }
@@ -263,21 +316,33 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         return new String[0];
     }
 
-    @OnClick({R.id.ll_join_car})
+    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_car_buy, R.id.shopping_share, R.id.shopping_relative_car})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-            /*case R.id.ll_share://分享
-                mSharePopupWindow.show(ll_main);
-                break;*/
-            case R.id.ll_join_car://加入购物车
+            case R.id.shopping_share://分享
+                mSharePopupWindow.show(shopping_share);
+                break;
+            case R.id.shopping_add_car://加入购物车
                 mShoppingCarPopupWindow.getProductSpec();
                 break;
+            case R.id.shopping_back://返回
+                finish();
+                break;
+            case R.id.shopping_car_buy://立即购买
+                Bundle bundle = new Bundle();
+                bundle.putString(PRODUCT_ID, storeProduct.getId());
+                bundle.putInt("product_count", 1);
+                startActivity(WriteOrderActivity.class, bundle);
+                break;
+            case R.id.shopping_relative_car://点击进入购物车
+                startActivity(ShoppingCarActivity.class);
+                break;
+
         }
     }
 
-    @Override
+
     public void onRightAction() {
         if (!AccountHelper.isLogin()) {
             Bundle bundle = new Bundle();
@@ -288,24 +353,23 @@ public class ProductDetailActivity extends PTWDActivity implements View.OnClickL
         startActivity(ShoppingCarActivity.class);
     }
 
-   /* @Override
-    public void onTitleItemSelected(TitleItem item, int position) {
-        switch (item.getId()) {
-            case R.id.ti_summary://概述
-                loadHtml(product_id, "0");
-                break;
-            case R.id.ti_parameter://规格参数
-                loadHtml(product_id, "1");
-                break;
-            case R.id.ti_pack://包装清单
-                loadHtml(product_id, "2");
-                break;
-            case R.id.ti_service://售后
-                loadHtml(product_id, "3");
-                break;
-        }
-    }*/
-
+    /* @Override
+     public void onTitleItemSelected(TitleItem item, int position) {
+         switch (item.getId()) {
+             case R.id.ti_summary://概述
+                 loadHtml(product_id, "0");
+                 break;
+             case R.id.ti_parameter://规格参数
+                 loadHtml(product_id, "1");
+                 break;
+             case R.id.ti_pack://包装清单
+                 loadHtml(product_id, "2");
+                 break;
+             case R.id.ti_service://售后
+                 loadHtml(product_id, "3");
+                 break;
+         }
+     }*/
     @Subcriber(tag = ShoppingCarPopupWindow.EVENT_REFRESH_TITLE_COUNT)
     public void eventRefreshCount(String tag) {
         getCartCount();

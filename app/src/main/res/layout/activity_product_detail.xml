@@ -1,29 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_main"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!--标题栏-->
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        auto:nav_has_divider="true"
-        auto:nav_has_right_title_icon="true"
-        auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="商品详情"
-        auto:nav_right_icon="@drawable/shipping_car_selector"
-        auto:nav_right_title_icon_text_color="@color/text_main_color_nor"
-        auto:nav_right_title_indicator_background="@drawable/indicator_background"/>
+    <RelativeLayout
+        android:id="@+id/shoping_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:id="@+id/shopping_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/back_selector" />
+        <!--标题栏-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="商品详情"
+            android:textColor="@color/text_main_color_nor"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <ImageView
+            android:id="@+id/shopping_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/shopping_relative_car"
+            android:src="@drawable/shopping_share_selector" />
+
+        <RelativeLayout
+            android:id="@+id/shopping_relative_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/shipping_car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="18dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/shipping_car_selector" />
+
+            <LinearLayout
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginRight="-28dp"
+                android:layout_marginTop="9dp"
+                android:layout_toLeftOf="@+id/shipping_car"
+                android:background="@drawable/indicator_background">
+
+                <TextView
+                    android:id="@+id/shopping_txt_number"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="#985EC9"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:layout_below="@+id/shoping_title"
+        android:background="@color/color_C2C2C2" />
+
 
     <com.sunnybear.library.view.BasicWebView
         android:id="@+id/wv_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/v_line_horizontal"
-        android:layout_below="@+id/navigation_bar"/>
+        android:layout_below="@+id/view" />
 
     <!-- <FrameLayout
          android:layout_width="match_parent"
@@ -43,7 +106,8 @@
                  android:orientation="vertical">
 
                  &lt;!&ndash;广告位&ndash;&gt;
-                 <com.sunnybear.library.view.viewpager.banner.ConvenientBanner
+                 <com.sunnybear.library.view.viewpager.bann
+                 er.ConvenientBanner
                      android:id="@+id/cb_banner"
                      android:layout_width="match_parent"
                      android:layout_height="300dp"
@@ -212,8 +276,7 @@
     <View
         android:id="@+id/v_line_horizontal"
         style="@style/line_horizontal"
-        android:layout_above="@+id/ll_price"
-        />
+        android:layout_above="@+id/ll_price" />
     <!--价格栏-->
     <LinearLayout
         android:id="@+id/ll_price"
@@ -226,7 +289,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.2"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -237,7 +300,7 @@
                 android:layout_height="wrap_content"
                 android:text="￥"
                 android:textColor="@color/text_color_red"
-                android:textSize="@dimen/text_size_12sp"/>
+                android:textSize="@dimen/text_size_12sp" />
 
             <TextView
                 android:id="@+id/tv_product_price"
@@ -246,7 +309,7 @@
                 android:layout_marginLeft="4dp"
                 android:text="399.00"
                 android:textColor="@color/text_color_red"
-                android:textSize="@dimen/text_size_20sp"/>
+                android:textSize="@dimen/text_size_20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -254,16 +317,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@color/text_main_color_sel"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/shopping_add_car"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:background="@color/text_main_color_sel"
                 android:gravity="center"
                 android:text="加入购物车"
                 android:textColor="@color/text_color_white"
-                android:textSize="@dimen/text_size_20sp"/>
+                android:textSize="@dimen/text_size_20sp" />
+
+            <TextView
+                android:id="@+id/shopping_car_buy"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:background="@color/text_color_ED5564"
+                android:gravity="center"
+                android:text="立即购买"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/text_size_20sp" />
         </LinearLayout>
     </LinearLayout>
     <!--</FrameLayout>-->
