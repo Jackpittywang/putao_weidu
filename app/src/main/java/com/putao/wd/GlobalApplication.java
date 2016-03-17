@@ -30,6 +30,7 @@ import cn.sharesdk.framework.ShareSDK;
  */
 public class GlobalApplication extends BasicApplication {
     public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
+    public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
 
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
@@ -92,7 +93,7 @@ public class GlobalApplication extends BasicApplication {
         }
         //注册微信支付APPID
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
-        msgApi.registerApp("wx46c90751eea478fe");
+        msgApi.registerApp(WX_APP_ID);
         //启动推送
 //        startService(new Intent(ACTION_PUSH_SERVICE));
     }

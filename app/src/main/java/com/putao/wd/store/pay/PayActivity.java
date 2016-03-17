@@ -27,6 +27,7 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -65,6 +66,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     private String order_date;
     private String order_price;
     private int pay_way;
+    private WeixPayResult mWeixPayResult;
 
     private OrderSubmitReturn mSubmitReturn;
 
@@ -72,6 +74,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     private Handler mHandler;
 
     private AlipayHelper mAlipayHelper;
+    private IWXAPI mMsgApi;
 
     @Override
     protected int getLayoutId() {
@@ -115,6 +118,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                 }
 
         );
+        mMsgApi = WXAPIFactory.createWXAPI(this, null);
         //获取支付宝的预支付订单id
         aliPay(mSubmitReturn != null ? mSubmitReturn.getOrder_id() : order_id);
         //获取微信支付的预支付订单id
@@ -165,11 +169,12 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
      * @param order_id
      */
     private void weixPay(final String order_id) {
-        networkRequest(StoreApi.weixPay(order_id), new SimpleFastJsonCallback<WeixPayResult>(String.class, loading) {
+        networkRequest(StoreApi.weixPay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
-            public void onSuccess(String url, WeixPayResult result) {
-                if (null != result) {
-
+            public void onSuccess(String url, String result) {
+                if (!StringUtils.isEmpty(result)){
+                    JSONObject object = JSON.parseObject(result);
+                    mWeixPayResult = JSON.parseObject(object.getString("code"), WeixPayResult.class);
                 } else {
                     ToastUtils.showToastLong(mContext, "无法支付");
                 }
@@ -194,67 +199,16 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                 }
                 if (ALI_PAY == pay_way)
                     mAlipayHelper.pay((Activity) mContext, orderInfo);
-                else if (WEIX_PAY == pay_way){
-                    IWXAPI api = new IWXAPI() {
-                        @Override
-                        public boolean registerApp(String s) {
-                            return false;
-                        }
-
-                        @Override
-                        public void unregisterApp() {
-
-                        }
-
-                        @Override
-                        public boolean handleIntent(Intent intent, IWXAPIEventHandler iwxapiEventHandler) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean isWXAppInstalled() {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean isWXAppSupportAPI() {
-                            return false;
-                        }
-
-                        @Override
-                        public int getWXAppSupportAPI() {
-                            return 0;
-                        }
-
-                        @Override
-                        public boolean openWXApp() {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean sendReq(BaseReq baseReq) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean sendResp(BaseResp baseResp) {
-                            return false;
-                        }
-
-                        @Override
-                        public void detach() {
-
-                        }
-                    };
+                else if (WEIX_PAY == pay_way) {
                     PayReq request = new PayReq();
-                    request.appId = "wxd930ea5d5a258f4f";
-                    request.partnerId = "1900000109";
-                    request.prepayId= "1101000000140415649af9fc314aa427";
+                    request.appId = mWeixPayResult.getAppid();
+                    request.partnerId = mWeixPayResult.getPartnerid();
+                    request.prepayId = mWeixPayResult.getPrepayid();
                     request.packageValue = "Sign=WXPay";
-                    request.nonceStr= "1101000000140429eb40476f8896f4c9";
-                    request.timeStamp= "1398746574";
-                    request.sign= "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
-                    api.sendReq(request);
+                    request.nonceStr = mWeixPayResult.getNoncestr();
+                    request.timeStamp = mWeixPayResult.getTimestamp();
+                    request.sign = mWeixPayResult.getSign();
+                    mMsgApi.sendReq(request);
                 }
                 break;
             case R.id.ll_alipay://选择支付宝支付
