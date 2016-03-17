@@ -24,6 +24,9 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.BitmapLoader;
 
 import butterknife.Bind;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
@@ -111,12 +114,44 @@ public class PlotActivity extends BasicFragmentActivity {
 
             @Override
             public void onQQFriend() {
+                ImageUtils.cutOutViewToImage(ll_main, GlobalApplication.shareImagePath,
+                        new ImageUtils.OnImageSaveCallback() {
+                            @Override
+                            public void onImageSave(boolean isSuccess) {
+                                ShareTools.newInstance(QQ.NAME)
+                                        .setImagePath(GlobalApplication.shareImagePath)
+                                        .execute(mContext);
+                                mSharePopupWindow.dismiss();
+                            }
+                        });
 
             }
 
             @Override
             public void onQQZone() {
+                ImageUtils.cutOutViewToImage(ll_main, GlobalApplication.shareImagePath,
+                        new ImageUtils.OnImageSaveCallback() {
+                            @Override
+                            public void onImageSave(boolean isSuccess) {
+                                ShareTools.newInstance(QZone.NAME)
+                                        .setImagePath(GlobalApplication.shareImagePath)
+                                        .execute(mContext);
+                                mSharePopupWindow.dismiss();
+                            }
+                        });
+            }
 
+            public void onSinaWeibo() {
+                ImageUtils.cutOutViewToImage(ll_main, GlobalApplication.shareImagePath,
+                        new ImageUtils.OnImageSaveCallback() {
+                            @Override
+                            public void onImageSave(boolean isSuccess) {
+                                ShareTools.newInstance(SinaWeibo.NAME)
+                                        .setImagePath(GlobalApplication.shareImagePath)
+                                        .execute(mContext);
+                                mSharePopupWindow.dismiss();
+                            }
+                        });
             }
         });
 

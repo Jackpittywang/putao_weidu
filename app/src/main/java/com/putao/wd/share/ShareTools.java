@@ -2,9 +2,17 @@ package com.putao.wd.share;
 
 import android.content.Context;
 
+import com.sunnybear.library.util.ToastUtils;
+
+import java.util.HashMap;
+
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.favorite.WechatFavorite;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
@@ -120,28 +128,70 @@ public class ShareTools {
             plat = ShareSDK.getPlatform(Wechat.NAME);
         else
             plat = ShareSDK.getPlatform(WechatMoments.NAME);
+        // 设置分享事件回调wwwww
+        plat.setPlatformActionListener(new MyPlatformActionListener(context));
         plat.share(params);
     }
 
-    public static void qqWebShare(Context context, boolean isQQ, String title, String text, String imageUrl, String url) {
-
-
-        WechatHelper.ShareParams params = null;
-        if (isQQ)
-            params = new Wechat.ShareParams();
-        else
-            params = new WechatFavorite.ShareParams();
+    /**
+     * QQ、空间分享
+     */
+    public static void OnQQZShare(final Context context, boolean isWebQQ, String title, String text, String imageUrl, String url) {
+        QQ.ShareParams params = new QQ.ShareParams();
         params.title = title;
         params.text = text;
         params.imageUrl = imageUrl;
-        params.url = url;
-        params.setShareType(Platform.SHARE_WEBPAGE);
+        params.titleUrl = url;
+        params.setShareType(Platform.SHARE_TEXT);
 
         Platform plat = null;
-        if (isQQ)
-            plat = ShareSDK.getPlatform(Wechat.NAME);
-        else
-            plat = ShareSDK.getPlatform(WechatMoments.NAME);
+        if (isWebQQ) {
+            plat = ShareSDK.getPlatform(QQ.NAME);
+        } else {
+            plat = ShareSDK.getPlatform(QZone.NAME);
+        }
+
+        // 设置分享事件回调
+        plat.setPlatformActionListener(new MyPlatformActionListener(context));
+        // 执行图文分享
         plat.share(params);
     }
+
+    /**
+     * 微博的分享
+     */
+    public static void OnWeiboShare(final Context context, String text, String imageUrl) {
+        Platform.ShareParams params=new Platform.ShareParams();
+        params.text=text;
+        params.imagePath=imageUrl;
+//http://blog.csdn.net/love_javc_you/article/details/39956631--------微博链接
+        Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
+        // 设置分享事件回调
+        plat.setPlatformActionListener(new MyPlatformActionListener(context));
+        // 执行图文分享
+        plat.share(params);
+    }
+
+    static class MyPlatformActionListener implements PlatformActionListener {
+        private Context mContext;
+
+        public MyPlatformActionListener(Context context) {
+            mContext = context;
+        }
+
+        public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            ToastUtils.showToastShort(mContext, "分享成功");
+        }
+
+        @Override
+        public void onError(Platform platform, int i, Throwable throwable) {
+            ToastUtils.showToastShort(mContext, "分享失败");
+        }
+
+        @Override
+        public void onCancel(Platform platform, int i) {
+            ToastUtils.showToastShort(mContext, "取消分享");
+        }
+    }
+
 }

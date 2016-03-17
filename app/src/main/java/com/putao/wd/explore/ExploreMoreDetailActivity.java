@@ -166,6 +166,11 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             }
 
             @Override
+            public void onSinaWeibo() {
+
+            }
+
+            @Override
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mContext
                         .getSystemService(Context.CLIPBOARD_SERVICE);

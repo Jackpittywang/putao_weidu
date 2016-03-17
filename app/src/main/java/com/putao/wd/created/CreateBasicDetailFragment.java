@@ -271,13 +271,19 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
 
             @Override
             public void onQQFriend() {
-//                ShareTools.newInstance(QQ.NAME).setTitle(mCreate.getTitle()).setText(mCreate.getDescrip()).setImageUrl(mCreate.getCover()).setUrl("http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId()).execute(mContext);
+                ShareTools.OnQQZShare(mActivity, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
             }
 
             @Override
             public void onQQZone() {
-
+                ShareTools.OnQQZShare(mActivity, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
             }
+
+            @Override
+            public void onSinaWeibo() {
+                ShareTools.OnWeiboShare(mActivity, mCreate.getTitle(), mCreate.getShare_links());
+            }
+
 
             @Override
             public void onCopyUrl() {

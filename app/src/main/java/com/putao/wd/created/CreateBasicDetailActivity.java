@@ -256,12 +256,17 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
 
             @Override
             public void onQQFriend() {
-//                ShareTools.newInstance(QQ.NAME).setTitle(mCreate.getTitle()).setText(mCreate.getDescrip()).setImageUrl(mCreate.getCover()).setUrl("http://h5.putao.com/weidu/share/creation.html?id=%" + mCreate.getId()).execute(mContext);
+                ShareTools.OnQQZShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
             }
 
             @Override
             public void onQQZone() {
+                ShareTools.OnQQZShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
+            }
 
+            @Override
+            public void onSinaWeibo() {
+                ShareTools.OnWeiboShare(mContext, mCreate.getTitle(), mCreate.getShare_links());
             }
 
             @Override

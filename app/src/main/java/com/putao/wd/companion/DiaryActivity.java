@@ -35,6 +35,8 @@ import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import butterknife.Bind;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
@@ -234,9 +236,23 @@ public class DiaryActivity extends PTWDActivity {
                 }
             }
 
+
             @Override
             public void onQQFriend() {
-
+                if (TextUtils.isEmpty(video_id)) {
+                    ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
+                            new ImageUtils.OnImageSaveCallback() {
+                                @Override
+                                public void onImageSave(boolean isSuccess) {
+                                    ShareTools.newInstance(QQ.NAME)
+                                            .setImagePath(GlobalApplication.shareImagePath)
+                                            .execute(mContext);
+                                    mSharePopupWindow.dismiss();
+                                }
+                            });
+                } else {
+                    ShareTools.OnQQZShare(mContext, true, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
+                }
             }
 
             @Override
@@ -244,7 +260,27 @@ public class DiaryActivity extends PTWDActivity {
 
             }
 
+            public void onSinaWeibo() {
+                if (TextUtils.isEmpty(video_id)) {
+                    ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
+                            new ImageUtils.OnImageSaveCallback() {
+                                @Override
+                                public void onImageSave(boolean isSuccess) {
+                                    ShareTools.newInstance(SinaWeibo.NAME)
+                                            .setImagePath(GlobalApplication.shareImagePath)
+                                            .execute(mContext);
+                                    mSharePopupWindow.dismiss();
+                                }
+                            });
+                } else {
+                    ShareTools.OnWeiboShare(mContext, content, "http://v.youku.com/v_show/id_" + video_id);
+                }
+
+            }
+
         });
+
+
     }
 
     public DiskFileCacheHelper getDiskCacheHelper() {

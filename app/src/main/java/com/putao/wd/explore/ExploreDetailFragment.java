@@ -131,12 +131,17 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
             @Override
             public void onQQFriend() {
-
+                ShareTools.OnQQZShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
             }
 
             @Override
             public void onQQZone() {
+                ShareTools.OnQQZShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+            }
 
+            @Override
+            public void onSinaWeibo() {
+                ShareTools.OnWeiboShare(getActivity(), mExploreIndex.getDescription(), mExploreIndex.getShare_url());
             }
 
             @Override
@@ -243,7 +248,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         super.onDestroy();
     }
 
-    private void setVideoPause(){
+    private void setVideoPause() {
         if (null != wb_explore_detail) {
             wb_explore_detail.loadUrl("");
             wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
