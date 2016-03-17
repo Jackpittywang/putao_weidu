@@ -11,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -128,13 +130,8 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         isCool = mExploreIndex.is_like();
         sb_cool_icon.setState(isCool || mExploreIndex.is_like());
         tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
-//        wb_explore_detail.setInitialScale(80);
-
         WebSettings webSettings = wb_explore_detail.getSettings();
-//        webSettings.setMinimumFontSize(64);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//        webSettings.setUseWideViewPort(false);
-//        webSettings.setLoadWithOverviewMode(true);
         addListener();
     }
 
@@ -176,6 +173,18 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                         .getSystemService(Context.CLIPBOARD_SERVICE);
                 copy.setText(mExploreIndex.getShare_url());
                 ToastUtils.showToastShort(mContext, "复制成功");
+            }
+        });
+        wb_explore_detail.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
+            @Override
+            public void onParsePutaoUrl(String scheme, JSONObject result) {
+                PicClickResult picClickResult = JSONObject.parseObject(result.toJSONString(), PicClickResult.class);
+
+            }
+
+            @Override
+            public void onWebPageLoaderFinish(String url) {
+
             }
         });
     }

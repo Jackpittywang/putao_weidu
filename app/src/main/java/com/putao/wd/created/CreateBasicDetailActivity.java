@@ -23,6 +23,7 @@ import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
+import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -217,6 +218,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
         wv_content.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
+                PicClickResult picClickResult = JSONObject.parseObject(result.toJSONString(), PicClickResult.class);
 
             }
 

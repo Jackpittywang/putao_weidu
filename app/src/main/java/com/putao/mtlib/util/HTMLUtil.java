@@ -1,38 +1,47 @@
 package com.putao.mtlib.util;
 
 
+import com.alibaba.fastjson.JSON;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.putao.wd.model.PicList;
 
 /**
  * Created by JIDONGDONG on 2015/7/16.
  */
 public class HTMLUtil {
 
+    private static int imageCount;
+    private static ArrayList<PicList> mPicLists;
 
     public static String setWidth(float width, String html) {
+        mPicLists = new ArrayList<>();
+        imageCount = 0;
         float videoHeight = (width * 9) / 16 + 2;
-        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true);
+        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true) + SCRIPT_START + JSON.toJSONString(mPicLists) + SCRIPT_END;
     }
 
     private static String setImageWidth(String reg, String explanation, float width, float height, boolean isVideo) {
         Pattern p = Pattern.compile(reg);
         String replaceAll = explanation;
-        Matcher m = p.matcher(explanation);// 开始编译
+        Matcher m = p.matcher(explanation);
         while (m.find()) {
             String group = m.group(1);
-            group = addWidHei(group, width, height, isVideo);
-            group = addStyle(group, width, height, isVideo);
-            replaceAll = replaceAll.replace(m.group(1), group);
-            System.out.println(replaceAll);
             if (isVideo) {
                 Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
-                Matcher mVideo = pVideo.matcher(group);// 开始编译
+                Matcher mVideo = pVideo.matcher(group);
                 while (mVideo.find()) {
                     String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + width, isVideo);
                     video = replaceHTML("height=([^&]*)", video, "height=" + height, isVideo);
                     replaceAll = replaceAll.replace(mVideo.group(1), video);
                 }
+            } else {
+                group = addImageClick(group);
+                group = addWidHei(group, width, height, isVideo);
+                group = addStyle(group, width, height, isVideo);
+                replaceAll = replaceAll.replace(m.group(1), group);
             }
         }
         return replaceAll;
@@ -45,6 +54,19 @@ public class HTMLUtil {
         else
             group = replaceHTML("height=\"([^\"]*)", group, "", isVideo);
 
+        return group;
+    }
+
+    private static String addImageClick(String group) {
+        group = replaceHTML("<img([^>]*)", group, " onclick=\"imageClick(" + imageCount + ")\"", false);
+        Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
+        Matcher mVideo = pVideo.matcher(group);
+        if (mVideo.find()) {
+            PicList picList = new PicList();
+            picList.setSrc(mVideo.group().substring(6));
+            mPicLists.add(picList);
+        }
+        imageCount++;
         return group;
     }
 
@@ -70,4 +92,15 @@ public class HTMLUtil {
         }
         return group;
     }
+
+
+    private static final String SCRIPT_START = "<script>\n" +
+            "  function imageClick(index) {\n" +
+            "    var json = { clickIndex: index,\n" +
+            "   picList: \n";
+    private static final String SCRIPT_END =
+            "    };\n" +
+                    "    document.location = 'putao://viewPic/' + window.JSON.stringify(json);\n" +
+                    "  }\n" +
+                    "</script>";
 }

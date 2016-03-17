@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
@@ -23,6 +24,7 @@ import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
+import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -225,7 +227,8 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
         wv_content.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
-
+                PicClickResult picClickResult = JSONObject.parseObject(result.toJSONString(), PicClickResult.class);
+//                startActivity();
             }
 
             @Override
@@ -238,12 +241,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                     showDidBtn(isEnd);
                 } else
                     showBtn(isEnd);
-            }
-        });
-        wv_content.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return super.shouldOverrideUrlLoading(view, url);
             }
         });
         sv_detail.setOnScrollListener(new SupportScrollView.OnScrollListener() {

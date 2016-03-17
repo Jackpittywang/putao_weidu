@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -29,6 +31,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
@@ -150,6 +153,18 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                         .getSystemService(Context.CLIPBOARD_SERVICE);
                 copy.setText(mExploreIndex.getShare_url());
                 ToastUtils.showToastShort(mActivity, "复制成功");
+            }
+        });
+        wb_explore_detail.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
+            @Override
+            public void onParsePutaoUrl(String scheme, JSONObject result) {
+                PicClickResult picClickResult = JSONObject.parseObject(result.toJSONString(), PicClickResult.class);
+
+            }
+
+            @Override
+            public void onWebPageLoaderFinish(String url) {
+
             }
         });
     }
