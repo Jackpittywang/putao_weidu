@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
+import com.putao.wd.ImageDetailActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
@@ -228,7 +229,9 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
                 PicClickResult picClickResult = JSONObject.parseObject(result.toJSONString(), PicClickResult.class);
-//                startActivity();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ImageDetailActivity.IMAGE_URL, picClickResult);
+                startActivity(ImageDetailActivity.class, bundle);
             }
 
             @Override
