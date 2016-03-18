@@ -38,6 +38,7 @@ public class GlobalApplication extends BasicApplication {
     public static String shareImagePath;
     public static String blurIndex;
     public static String resourcePath;
+    public static String orderId;
 
     public static YoukuPlayerBaseConfiguration mYoukuPlayerBaseConfiguration;
 

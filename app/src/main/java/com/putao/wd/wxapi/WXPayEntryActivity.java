@@ -4,9 +4,13 @@ package com.putao.wd.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.IndexActivity;
+import com.putao.wd.me.order.OrderDetailActivity;
+import com.putao.wd.store.pay.PaySuccessActivity;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -44,10 +48,16 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 //        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
         String result;
-
+        String mOrderId = GlobalApplication.orderId;
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "支付成功";
+                Intent intent = new Intent(this, PaySuccessActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(OrderDetailActivity.KEY_ORDER, TextUtils.isEmpty(mOrderId) ? "" : mOrderId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                IndexActivity.isNotRefreshUserInfo = false;
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = "取消支付";
@@ -61,6 +71,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         }
 
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+        finish();
         /*if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.app_tip);

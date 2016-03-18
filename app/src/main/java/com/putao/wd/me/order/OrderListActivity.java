@@ -7,24 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
-import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.order.adapter.OrderListAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderDetail;
-import com.putao.wd.store.pay.PaySuccessActivity;
-import com.putao.wd.util.AlipayHelper;
+import com.putao.wd.model.OrderSubmitReturn;
+import com.putao.wd.store.pay.PayActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.select.TitleBar;
@@ -61,7 +57,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     private int currentPage = 1;
     private String currentType = TYPE_ALL;
 
-    private AlipayHelper mAlipayHelper;
+//    private AlipayHelper mAlipayHelper;
     private String order_id;
 
     @Override
@@ -82,7 +78,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         if (TYPE_ALL.equals(currentType))
             getOrderLists(currentType, String.valueOf(currentPage));
 
-        mAlipayHelper = new AlipayHelper();
+       /* mAlipayHelper = new AlipayHelper();
         mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
             @Override
             public void onPayResult(boolean isSuccess, String msg) {
@@ -104,7 +100,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
             public void onPayCancel(String msg) {
                 ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
             }
-        });
+        });*/
     }
 
     /**
@@ -274,7 +270,16 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     public void eventPay(Order order) {
         IndexActivity.isNotRefreshUserInfo = false;
         order_id = order.getId();
-        networkRequest(StoreApi.aliPay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+        Bundle bundle = new Bundle();
+        OrderSubmitReturn orderSubmitReturn = new OrderSubmitReturn();
+        orderSubmitReturn.setPrice(order.getTotal_amount());
+        orderSubmitReturn.setOrder_id(order_id);
+        orderSubmitReturn.setOrder_sn(order.getOrder_sn());
+        orderSubmitReturn.setTime(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
+        bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
+        bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, orderSubmitReturn);
+        startActivity(PayActivity.class, bundle);
+       /* networkRequest(StoreApi.aliPay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 if (!StringUtils.isEmpty(result)) {
@@ -290,7 +295,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                 }
                 loading.dismiss();
             }
-        });
+        });*/
     }
 
     @Override

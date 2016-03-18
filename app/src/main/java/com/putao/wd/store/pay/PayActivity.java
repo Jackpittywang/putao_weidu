@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.StoreApi;
@@ -22,11 +23,8 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import butterknife.Bind;
@@ -39,7 +37,7 @@ import butterknife.OnClick;
 public class PayActivity extends PTWDActivity implements View.OnClickListener {
     public static final String BUNDLE_ORDER_INFO = "order_info";
 
-    public static final String BUNDLE_ORDER_ID = "order_id";
+    public static final String EVENT_ORDER_ID = "event_order_id";
     public static final String BUNDLE_ORDER_SN = "order_sn";
     public static final String BUNDLE_ORDER_DATE = "order_date";
     public static final String BUNDLE_ORDER_PRICE = "order_price";
@@ -172,7 +170,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
         networkRequest(StoreApi.weixPay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                if (!StringUtils.isEmpty(result)){
+                if (!StringUtils.isEmpty(result)) {
                     JSONObject object = JSON.parseObject(result);
                     mWeixPayResult = JSON.parseObject(object.getString("code"), WeixPayResult.class);
                 } else {
@@ -191,6 +189,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
     @OnClick({R.id.tv_pay, R.id.ll_alipay, R.id.ll_weixpay})
     @Override
     public void onClick(View v) {
+        PayReq request = null;
         switch (v.getId()) {
             case R.id.tv_pay://马上支付
                 if (StringUtils.isEmpty(orderInfo)) {
@@ -200,15 +199,19 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                 if (ALI_PAY == pay_way)
                     mAlipayHelper.pay((Activity) mContext, orderInfo);
                 else if (WEIX_PAY == pay_way) {
-                    PayReq request = new PayReq();
-                    request.appId = mWeixPayResult.getAppid();
-                    request.partnerId = mWeixPayResult.getPartnerid();
-                    request.prepayId = mWeixPayResult.getPrepayid();
-                    request.packageValue = "Sign=WXPay";
-                    request.nonceStr = mWeixPayResult.getNoncestr();
-                    request.timeStamp = mWeixPayResult.getTimestamp();
-                    request.sign = mWeixPayResult.getSign();
+                    GlobalApplication.orderId = order_id;
+                    if (null == request) {
+                        request = new PayReq();
+                        request.appId = mWeixPayResult.getAppid();
+                        request.partnerId = mWeixPayResult.getPartnerid();
+                        request.prepayId = mWeixPayResult.getPrepayid();
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = mWeixPayResult.getNoncestr();
+                        request.timeStamp = mWeixPayResult.getTimestamp();
+                        request.sign = mWeixPayResult.getSign();
+                    }
                     mMsgApi.sendReq(request);
+                    weixPay(mSubmitReturn != null ? mSubmitReturn.getOrder_id() : order_id);
                 }
                 break;
             case R.id.ll_alipay://选择支付宝支付
