@@ -213,6 +213,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String PREFERENCE_KEY_BABY_ID = "baby_id";
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
+    public static final String SECRET = "499478a81030bb177e578f86410cda8641a22799";
 
     /**
      * H5页面定义Scheme

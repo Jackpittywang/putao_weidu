@@ -1,10 +1,17 @@
 package com.putao.wd.redpoint;
 
 import com.putao.wd.GlobalApplication;
+import com.sunnybear.library.util.Logger;
+
+import org.msgpack.MessagePack;
+import org.msgpack.packer.Packer;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -30,7 +37,7 @@ public class NettyClientBootstrap {
     private static final int PT_MT_PORT = GlobalApplication.isDebug ? 8040 : 8083;
     private int port;
     private String host;
-    private SocketChannel socketChannel;
+    private SocketChannel socketChanne;
     private static final EventExecutorGroup group = new DefaultEventExecutorGroup(20);
 
     public NettyClientBootstrap() throws InterruptedException {
@@ -57,19 +64,71 @@ public class NettyClientBootstrap {
         });
         ChannelFuture future = bootstrap.connect(host, port).sync();
         if (future.isSuccess()) {
-            socketChannel = (SocketChannel) future.channel();
+            socketChanne = (SocketChannel) future.channel();
             System.out.println("connect server  成功---------");
+            MessagePack msgPack = new MessagePack();
+            byte[] outbytes = null;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Packer packer = msgPack.createPacker(out);
+            Map postData = new HashMap();
+            postData.put("SId", "1");
+            try {
+//                packer.write(postData);
+                packer.write("struct  499478a81030bb177e578f86410cda8641a22799 {ubyte 1;}");
+                outbytes = out.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            socketChanne.writeAndFlush(outbytes);
+            BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+            while (true) {
+                String msg = null;
+                try {
+                    msg = console.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (null != msg)
+                    Logger.d("-------------+++++++++++", msg);
+                if (msg == null) {
+                    break;
+                } else if ("bye".equals(msg.toLowerCase())) {
+                    break;
+                } else if ("ping".equals(msg.toLowerCase())) {
+                } else {
+                    AskMsg askMsg = new AskMsg();
+                    AskParams askParams = new AskParams();
+                    askParams.setAuth("authToken");
+                    askParams.setContent(msg);
+                    askMsg.setParams(askParams);
+                    socketChanne.writeAndFlush(askMsg);
+                }
+            }
         }
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-       /* Constants.setClientId("002");
-        NettyClientBootstrap bootstrap = new NettyClientBootstrap(9999, "localhost");
 
-        LoginMsg loginMsg = new LoginMsg();
+        NettyClientBootstrap bootstrap = new NettyClientBootstrap();
+        MessagePack msgPack = new MessagePack();
+        byte[] outbytes = null;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Packer packer = msgPack.createPacker(out);
+        Map postData = new HashMap();
+        postData.put("SId", "1");
+        try {
+            packer.write(postData);
+            outbytes = out.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        Constants.setClientId("002");
+
+       /* LoginMsg loginMsg = new LoginMsg();
         loginMsg.setPassword("yao");
-        loginMsg.setUserName("robin");
-        bootstrap.socketChannel.writeAndFlush(loginMsg);
+        loginMsg.setUserName("robin");*/
+        bootstrap.socketChanne.writeAndFlush(outbytes);
 //        while (true){
 //            TimeUnit.SECONDS.sleep(3);
 //            AskMsg askMsg=new AskMsg();
@@ -82,6 +141,7 @@ public class NettyClientBootstrap {
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             String msg = console.readLine();
+            Logger.d("-------------+++++++++++", msg);
             if (msg == null) {
                 break;
             } else if ("bye".equals(msg.toLowerCase())) {
@@ -93,9 +153,8 @@ public class NettyClientBootstrap {
                 askParams.setAuth("authToken");
                 askParams.setContent(msg);
                 askMsg.setParams(askParams);
-                bootstrap.socketChannel.writeAndFlush(askMsg);
+                bootstrap.socketChanne.writeAndFlush(askMsg);
             }
-        }*/
-
+        }
     }
 }

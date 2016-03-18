@@ -112,7 +112,6 @@ dependencies {
     compile project(':library')
     //    compile project(':vitamio')
     compile project(':youku_player_open_sdk')
-    compile files('libs/netty-all-5.0.0.Alpha2.jar')
 }
 //编译结束后删除unaligned包
 android.applicationVariants.all { variant ->
