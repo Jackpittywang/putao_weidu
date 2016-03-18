@@ -15,7 +15,6 @@ public abstract class YoukuPlayerBaseConfiguration extends YoukuPlayerConfigurat
         DownloadManager.getInstance();
 
         DecAPI.init(context, R.raw.aes);
-
         new Handler().postDelayed(new Runnable() {
 
             @Override

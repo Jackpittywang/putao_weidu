@@ -5,14 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.putao.wd.account.AccountApi;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.redpoint.NettyClientBootstrap;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
-import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -96,6 +97,13 @@ public class GlobalApplication extends BasicApplication {
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
         msgApi.registerApp(WX_APP_ID);
         //启动推送
+        if (null != AccountHelper.getCurrentUserInfo()) {
+            try {
+                new NettyClientBootstrap();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 //        startService(new Intent(ACTION_PUSH_SERVICE));
     }
 
