@@ -43,6 +43,7 @@ import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -416,6 +417,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateCommentActivity.class);
                     bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                     bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
+                    MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_comment");
                     startActivity(LoginActivity.class, bundle);
                     return;
                 }

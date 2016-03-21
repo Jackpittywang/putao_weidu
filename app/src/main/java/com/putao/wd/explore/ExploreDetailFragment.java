@@ -37,6 +37,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -191,6 +192,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
+                                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_good");
                                 mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
                                 mDiskFileCacheHelper.put(COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                                 isCool = true;
@@ -207,6 +209,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                     login();
                     return;
                 }
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_comment");
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 bundle.putInt(CommentActivity.POSITION, mPosition);
                 startActivity(CommentActivity.class, bundle);

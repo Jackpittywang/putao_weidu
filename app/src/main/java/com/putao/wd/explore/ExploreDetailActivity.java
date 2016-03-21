@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.putao.wd.R;
 import com.putao.wd.model.ExploreIndex;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -45,6 +46,27 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
         mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
         mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE, 1);
         addFragment();
+        addListener();
+    }
+
+    private void addListener() {
+        vp_container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                MobclickAgent.onEvent(mContext, "ChoiceHome_home_switch");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

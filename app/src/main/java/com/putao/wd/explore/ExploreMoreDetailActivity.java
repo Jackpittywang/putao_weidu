@@ -34,6 +34,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -217,6 +218,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
+                                MobclickAgent.onEvent(mContext, "ChoiceHome_detail_good");
                                 mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
                                 loading.dismiss();
                             }
@@ -226,6 +228,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             case R.id.ll_comment:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 bundle.putInt(POSITION, mPosition);
+                MobclickAgent.onEvent(mContext, "ChoiceHome_detail_comment");
                 startActivity(CommentActivity.class, bundle);
                 break;
             case R.id.ll_share:
