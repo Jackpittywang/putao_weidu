@@ -326,7 +326,10 @@
         <activity
             android:name=".created.CreateBasicDetailActivity"
             android:screenOrientation="portrait" />
-
+        <!--图片的加载显示-->
+        <activity
+            android:name=".image.ImageDetailActivity"
+            android:screenOrientation="portrait"></activity>
         <!-- ===============================业务activity定义在这条线之上================================== -->
         <!-- 二维码 -->
         <activity

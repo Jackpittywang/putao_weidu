@@ -18,19 +18,19 @@ public class PicClickResult implements Serializable {
         this.clickIndex = clickIndex;
     }
 
-    public ArrayList<PicList> getPicLists() {
+    public ArrayList<PicList> getPicList() {
         return picList;
     }
 
-    public void setPicLists(ArrayList<PicList> picLists) {
-        this.picList = picLists;
+    public void setPicList(ArrayList<PicList> picList) {
+        this.picList = picList;
     }
 
     @Override
     public String toString() {
         return "PicClickResult{" +
                 "clickIndex=" + clickIndex +
-                ", picLists=" + picList +
+                ", picList=" + picList +
                 '}';
     }
 }

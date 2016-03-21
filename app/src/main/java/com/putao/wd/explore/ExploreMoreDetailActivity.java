@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
-import com.putao.wd.ImageDetailActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.image.ImageDetailActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;

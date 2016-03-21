@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
-import com.putao.wd.ImageDetailActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
+import com.putao.wd.image.ImageDetailActivity;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;

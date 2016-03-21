@@ -108,4 +108,7 @@
     <string name="companion_tutuWord">以小Q克服各种困难拯救地球为故事背景，\n\n孩子通过对配套涂色卡进行涂色和识别，\n\n解锁任务关卡，培养孩子的创造力。</string>
     <string name="companion_hello">简单的积木式指令模块配合生动三维影像，\n\n带给孩子全新的学习体验！\n\n让孩子早人一步get新时代的必备技能\n\n──编程技术吧！</string>
     <string name="companion_hani">探索海洋世界，\n\n和各类真实还原的海洋生物进行对话与互动，\n\n由孩子们亲手创造出的鱼儿\n\n传递海洋中的众多科普知识。</string>
+
+    <!--图片的加载显示-->
+    <string name="viewpager_indicator">%1$d/%2$d</string>
 </resources>
