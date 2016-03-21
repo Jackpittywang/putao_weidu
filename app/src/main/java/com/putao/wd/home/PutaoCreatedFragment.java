@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.created.FancyFragment;
 import com.putao.wd.store.pay.PaySuccessActivity;
 import com.sunnybear.library.controller.BasicFragment;
@@ -106,15 +107,15 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_step1:
-                MobclickAgent.onEvent(mActivity, "CreatorHome_conceit");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.CreatorHome_next,"妙想");
                 vp_content.setCurrentItem(0, false);
                 break;
             case R.id.rb_step2:
-                MobclickAgent.onEvent(mActivity, "CreatorHome_mall");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.CreatorHome_next,"创造");
                 vp_content.setCurrentItem(1, false);
                 break;
             case R.id.rb_step3:
-                MobclickAgent.onEvent(mActivity, "CreatorHome__originate");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.CreatorHome_next,"精选");
                 vp_content.setCurrentItem(2, false);
                 break;
         }

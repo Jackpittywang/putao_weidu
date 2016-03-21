@@ -8,18 +8,16 @@ import android.text.ClipboardManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.image.ImageDetailActivity;
@@ -264,31 +262,31 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
             @Override
             public void onWechat() {
                 ShareTools.wechatWebShare(mActivity, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? "CreatorHome__originate_detail_share_WxSession" : "CreatorHome_conceit_detail_share_WxSession");
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信好友");
             }
 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mActivity, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? "CreatorHome__originate_detail_share_WxTimeline" : "CreatorHome_conceit_detail_share_WxTimeline");
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信朋友圈");
             }
 
             @Override
             public void onQQFriend() {
                 ShareTools.OnQQZShare(mActivity, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? "CreatorHome__originate_detail_share_qq" : "CreatorHome_conceit_detail_share_qq");
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ好友");
             }
 
             @Override
             public void onQQZone() {
                 ShareTools.OnQQZShare(mActivity, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? "CreatorHome__originate_detail_share_QZone" : "CreatorHome_conceit_detail_share_QZone");
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ空间");
             }
 
             @Override
             public void onSinaWeibo() {
                 ShareTools.OnWeiboShare(mActivity, mCreate.getTitle(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? "CreatorHome__originate_detail_share_Sina" : "CreatorHome_conceit_detail_share_Sina");
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
             }
 
 
@@ -352,7 +350,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
-                                    MobclickAgent.onEvent(mActivity, isShowProgress?"CreatorHome__originate_detail_good":"CreatorHome_conceit_detail_good");
                                 }
                             });
                     break;
@@ -367,7 +364,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
-                                    MobclickAgent.onEvent(mActivity, isShowProgress?"CreatorHome__originate_detail_bad":"CreatorHome_conceit_detail_bad");
                                 }
                             });
                     break;
@@ -379,7 +375,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
         }
         switch (v.getId()) {
             case R.id.ll_cool:
-                MobclickAgent.onEvent(mActivity, isShowProgress?"CreatorHome__originate_detail_interested":"CreatorHome_conceit_detail_interested");
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateBasicDetailFragment.class);
@@ -390,6 +385,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 ll_cool.setClickable(false);
                 Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_interested);
                 if (mCreate.getFollow_status() == 1) {
                     sb_cool_icon.setState(false);
                     tv_count_cool.setText("关注");
@@ -415,16 +411,14 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                                 }
                             });
                 }
-                EventBusHelper.post(mPosition, isShowProgress ? PutaoCreatedSecondFragment.EVENT_CREAT_CONCERNS_CHANGE : FancyFragment.EVENT_FANCY_CONCERNS_CHANGE);
                 break;
             case R.id.ll_comment:
-                MobclickAgent.onEvent(mActivity, isShowProgress?"CreatorHome__originate_detail_comment":"CreatorHome_conceit_detail_comment");
+                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_comment);
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateCommentActivity.class);
                     bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                     bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
-                    MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_comment");
                     startActivity(LoginActivity.class, bundle);
                     return;
                 }
@@ -435,7 +429,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 break;
             case R.id.ll_share:
                 mSharePopupWindow.show(ll_share);
-                MobclickAgent.onEvent(mActivity, isShowProgress ? "CreatorHome__originate_detail_share" : "CreatorHome_conceit_detail_share");
                 break;
         }
     }

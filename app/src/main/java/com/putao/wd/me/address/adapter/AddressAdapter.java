@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.me.address.AddressEditActivity;
 import com.putao.wd.me.address.AddressListActivity;
 import com.putao.wd.model.Address;
@@ -59,7 +60,7 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
                 if (1 == getItemCount())
                     bundle.putBoolean(AddressListActivity.IS_ADDRESS_EMPTY, true);
                 bundle.putSerializable(AddressEditActivity.BUNDLE_KEY_ADDRESS, address);
-                MobclickAgent.onEvent(mContext, "UserHome_address_edit");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_edit);
                 context.startActivity(AddressEditActivity.class, bundle);
             }
         });

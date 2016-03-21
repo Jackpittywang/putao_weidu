@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.image.ImageDetailActivity;
 import com.putao.wd.model.ExploreIndex;
@@ -128,30 +129,30 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             @Override
             public void onWechat() {
                 ShareTools.wechatWebShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_WxTimeline");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "微信好友");
             }
 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_WxSession");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "微信朋友圈");
             }
 
             @Override
             public void onQQFriend() {
                 ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_qq");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "QQ好友");
             }
 
             @Override
             public void onQQZone() {
                 ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_QZone");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "QQ空间");
             }
 
             public void onSinaWeibo() {
                 ShareTools.OnWeiboShare(mActivity, mExploreIndex.getTitle(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_Sina");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "新浪微博");
             }
 
             @Override
@@ -197,7 +198,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                         new SimpleFastJsonCallback<String>(String.class, loading) {
                             @Override
                             public void onSuccess(String url, String result) {
-                                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_good");
                                 mDiskFileCacheHelper.put(COOL + mExploreIndex.getArticle_id(), true);
                                 mDiskFileCacheHelper.put(COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                                 isCool = true;
@@ -210,17 +210,16 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 //                startActivity(PraiseListActivity.class, bundle);
                 break;
             case R.id.ll_comment:
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_comment");
                 if (!AccountHelper.isLogin()) {
                     login();
                     return;
                 }
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 bundle.putInt(CommentActivity.POSITION, mPosition);
+                MobclickAgent.onEvent(mActivity, YouMengHelper.CreatorHome_originate_detail_comment);
                 startActivity(CommentActivity.class, bundle);
                 break;
             case R.id.ll_share:
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share");
                 mSharePopupWindow.show(ll_share);
                 break;
         }

@@ -3,6 +3,7 @@ package com.putao.wd.explore;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
@@ -117,6 +118,7 @@ public class ExploreMoreActivity extends PTWDActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID, homeExploreMore.getArticle_id());
                 bundle.putInt(ExploreMoreDetailActivity.POSITION, position);
+                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_home_detail);
                 startActivity(ExploreMoreDetailActivity.class, bundle);
             }
         });

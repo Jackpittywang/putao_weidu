@@ -3,6 +3,7 @@ package com.putao.wd.home;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.StoreAdapter;
@@ -154,7 +155,7 @@ public class PutaoStoreFragment extends BasicFragment {
                 Bundle bundle = new Bundle();
                 /*bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
                 bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());*/
-                MobclickAgent.onEvent(mActivity, "CreatorHome_mall_detail");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 startActivity(ProductDetailActivity.class, bundle);
             }

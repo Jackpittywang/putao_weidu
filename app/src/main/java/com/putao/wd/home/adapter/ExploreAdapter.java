@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.companion.PlotPreviewDialog;
 import com.putao.wd.model.Diary;
@@ -472,7 +473,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 smallBang.bang(holder.iv_answer4);
                 break;
         }
-        MobclickAgent.onEvent(mActivity, "AccompanyHome_app_detail_choice");
+        MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_detail_choice);
         return isTrue;
     }
 
@@ -502,7 +503,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 smallBang.bang(holder.iv_answer4);
                 break;
         }
-        MobclickAgent.onEvent(mActivity, "AccompanyHome_app_detail_choice");
+        MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_detail_choice);
         return isTrue;
     }
 

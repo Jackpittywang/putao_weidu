@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.me.address.AddressListActivity;
@@ -314,20 +315,20 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         }
         switch (v.getId()) {
             case R.id.iv_setting:
-                MobclickAgent.onEvent(mActivity, "UserHome_setup");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "设置");
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
-                MobclickAgent.onEvent(mActivity, "UserHome_myorder");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的订单");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.si_child_info://孩子信息
-                MobclickAgent.onEvent(mActivity, "UserHome_childinfo");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "孩子信息");
                 startActivity(ChildInfoActivity.class);
                 break;
             case R.id.si_address://收货地址
-                MobclickAgent.onEvent(mActivity, "UserHome_address");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "收货地址");
                 startActivity(AddressListActivity.class);
                 break;
             /*case R.id.si_action://我参与的活动
@@ -336,39 +337,35 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 break;*/
             case R.id.si_question://葡萄籽
 //                startActivity(QuestionActivity.class);
-                MobclickAgent.onEvent(mActivity, "UserHome_qa");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "葡萄籽");
                 startActivity(GrapestoneActivity.class);
                 break;
             case R.id.iv_user_icon://完善用户信息
-                MobclickAgent.onEvent(mActivity, "UserHome_myinfo");
                 startActivity(CompleteActivity.class);
                 break;
             case R.id.si_concerns://我的关注
-                MobclickAgent.onEvent(mActivity, "UserHome_interested");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的关注");
                 startActivity(ConcernsActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
-                MobclickAgent.onEvent(mActivity, "UserHome_infocenter");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "消息中心");
                 startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
                 MobclickAgent.onEvent(mActivity, "UserHome_pay");
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_deliver://待发货\
-                MobclickAgent.onEvent(mActivity, "UserHome_shipped");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_take_deliver://待收货
-                MobclickAgent.onEvent(mActivity, "UserHome_receipt");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_after_sale://售后
-                MobclickAgent.onEvent(mActivity, "UserHome_service");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "售后");
                 startActivity(ServiceListActivity.class, bundle);
                 break;
         }

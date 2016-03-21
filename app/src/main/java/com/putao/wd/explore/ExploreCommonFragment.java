@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.model.ExploreIndex;
@@ -125,7 +126,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 bundleDetial.putSerializable(INDEX_DATA, (Serializable) mExploreIndexs);
                 bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_home_detail");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_home_detail);
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
                 break;
 
