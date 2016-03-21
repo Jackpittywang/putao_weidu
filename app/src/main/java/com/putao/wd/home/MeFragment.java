@@ -478,7 +478,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                     getUserInfo();
                     getOrderCount();
                 }
-
+                /*if (null != AccountHelper.getCurrentUserInfo()) {
+                    try {
+                        new NettyClientBootstrap();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }*/
                 break;
         }
         return true;
