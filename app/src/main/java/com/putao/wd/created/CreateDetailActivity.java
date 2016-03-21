@@ -14,6 +14,7 @@ import com.putao.wd.model.Creates;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.viewpager.adapter.LoadMoreFragmentPagerAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,22 @@ public class CreateDetailActivity extends BasicFragmentActivity {
         vp_content.setAdapter(fragmentPagerAdapter);
         vp_content.setOffscreenPageLimit(3);
         vp_content.setCurrentItem(mPosition);
+        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                MobclickAgent.onEvent(mContext, "CreatorHome__originate_detail_switch");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -97,6 +114,7 @@ public class CreateDetailActivity extends BasicFragmentActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_close:
+                MobclickAgent.onEvent(mContext, "CreatorHome__originate_detail_close");
                 finish();
                 break;
         }

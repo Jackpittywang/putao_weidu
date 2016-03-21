@@ -404,10 +404,10 @@
             android:name=".TestAnimationActivity"
             android:screenOrientation="portrait" />
 
-        <!--友盟自动更新-->
+        <!--友盟-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="56e147cbe0f55ac874000a7e" />
+            android:value="56e147cbe0f55ac874000a7e"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />

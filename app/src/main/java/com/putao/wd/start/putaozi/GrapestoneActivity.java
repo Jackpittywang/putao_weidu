@@ -13,6 +13,7 @@ import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 
@@ -49,6 +50,7 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
 
     @Override
     public void onRightAction() {
+        MobclickAgent.onEvent(mContext, "UserHome_qa_question");
         if (!AccountHelper.isLogin())
             startActivity(LoginActivity.class);
         else
@@ -68,5 +70,11 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     @Override
     public void onWebPageLoaderFinish(String url) {
 
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        MobclickAgent.onEvent(mContext, "UserHome_qa_back");
     }
 }

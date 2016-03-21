@@ -20,6 +20,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 

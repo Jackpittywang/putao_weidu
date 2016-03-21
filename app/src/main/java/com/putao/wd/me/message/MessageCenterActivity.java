@@ -10,6 +10,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 
@@ -78,12 +79,16 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
             case R.id.ll_reply://回复
+                MobclickAgent.onEvent(mContext, "UserHome_infocenter_reply");
                 break;
             case R.id.ll_cool://赞
+                MobclickAgent.onEvent(mContext, "UserHome_infocenter_good");
                 break;
             case R.id.ll_remind://提醒
+                MobclickAgent.onEvent(mContext, "UserHome_infocenter_remind");
                 break;
             case R.id.ll_notice://通知
+                MobclickAgent.onEvent(mContext, "UserHome_infocenter_notice");
                 break;
         }
         vp_message.setCurrentItem(position);

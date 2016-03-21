@@ -10,6 +10,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.me.address.AboutUsActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.OnClick;
 
@@ -41,18 +42,27 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
         switch (v.getId()) {
             case R.id.si_about_us://关于我们
                 startActivity(AboutUsActivity.class);
+                MobclickAgent.onEvent(mContext, "UserHome_setup_about");
                 break;
             case R.id.si_modify_password://修改密码
+                MobclickAgent.onEvent(mContext, "UserHome_setup_changepsd");
 //                Bundle bundle = new Bundle();
 //                bundle.putBoolean("isresetpass", true);
                 startActivity(ModifyPasswardActivity.class);
                 break;
             case R.id.tv_exit://退出登录
+                MobclickAgent.onEvent(mContext, "UserHome_setup_logout");
                 AccountHelper.logout();
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
                 IndexActivity.isNotRefreshUserInfo = false;
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        MobclickAgent.onEvent(mContext, "UserHome_setup_back");
     }
 }

@@ -25,6 +25,7 @@ import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -130,8 +131,10 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 更新收货地址
      */
     private void addressUpdate(String address_id, String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        if (isAddressEmpty)
+        if (isAddressEmpty){
             status = "1";
+            MobclickAgent.onEvent(mContext, "UserHome_address_edit_default");
+        }
         networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
@@ -167,6 +170,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
+                MobclickAgent.onEvent(mContext, "UserHome_address_edit_delet");
                 addressDelete(mAddress.getId() + "");
                 finish();
                 break;
@@ -222,7 +226,14 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                     mAddress.getArea_id(),
                     mAddress.getAddress(), mAddress.getMobile(),
                     null, null, mAddress.getStatus());
+        MobclickAgent.onEvent(mContext, "UserHome_address_edit_save");
         finish();
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        MobclickAgent.onEvent(mContext, "UserHome_address_edit_cancel");
     }
 
     /**

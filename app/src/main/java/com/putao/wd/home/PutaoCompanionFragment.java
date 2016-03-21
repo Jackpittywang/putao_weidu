@@ -25,6 +25,7 @@ import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,9 +163,11 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                 startActivity(ManageActivity.class);
                 break;
             case R.id.iv_title_bar_right2:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_scan");
                 startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_explore_empty:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_scan");
                 startActivity(CaptureActivity.class);
                 break;
         }
@@ -202,6 +205,29 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onItemClick(DiaryApp diaryApp, int position) {
+        switch (position){
+            case 0:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_taotao");
+                break;
+            case 1:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_banderui");
+                break;
+            case 2:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_mofang");
+                break;
+            case 3:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_maisisi");
+                break;
+            case 4:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_hellobc");
+                break;
+            case 5:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_hanihaiyang");
+                break;
+            case 6:
+                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_tutushijie");
+                break;
+        }
         Bundle bundle = new Bundle();
         bundle.putSerializable(DiaryActivity.DIARY_APP, diaryApp);
         startActivity(DiaryActivity.class, bundle);

@@ -57,7 +57,7 @@ public class GlobalApplication extends BasicApplication {
         //开启shareSDK
         ShareSDK.initSDK(getApplicationContext());//开启shareSDK
         //Baidu地图初始化
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
         //初始化优酷播放器
         try {
             mYoukuPlayerBaseConfiguration = new YoukuPlayerBaseConfiguration(getApplicationContext()) {

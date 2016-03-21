@@ -15,6 +15,7 @@ import com.putao.wd.model.Address;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -27,9 +28,11 @@ import butterknife.Bind;
 public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.AddressViewHolder> {
     public static final String EVENT_ADDRESS = "send_address";//可编辑
     private int index;
+    private Context mContext;
 
     public AddressAdapter(Context context, List<Address> shippingAddressDBs) {
         super(context, shippingAddressDBs);
+        mContext = context;
     }
 
     @Override
@@ -56,6 +59,7 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
                 if (1 == getItemCount())
                     bundle.putBoolean(AddressListActivity.IS_ADDRESS_EMPTY, true);
                 bundle.putSerializable(AddressEditActivity.BUNDLE_KEY_ADDRESS, address);
+                MobclickAgent.onEvent(mContext, "UserHome_address_edit");
                 context.startActivity(AddressEditActivity.class, bundle);
             }
         });

@@ -19,6 +19,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.image.ImageDetailActivity;
 import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.model.Marketing;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -126,27 +127,31 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_WxTimeline");
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_WxSession");
             }
 
             @Override
             public void onQQFriend() {
-                ShareTools.OnQQZShare(getActivity(), true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_qq");
             }
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(getActivity(), false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_QZone");
             }
 
-            @Override
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(getActivity(), mExploreIndex.getDescription(), mExploreIndex.getShare_url());
+                ShareTools.OnWeiboShare(mActivity, mExploreIndex.getTitle(), mExploreIndex.getShare_url());
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share_Sina");
             }
 
             @Override
@@ -205,16 +210,17 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 //                startActivity(PraiseListActivity.class, bundle);
                 break;
             case R.id.ll_comment:
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_comment");
                 if (!AccountHelper.isLogin()) {
                     login();
                     return;
                 }
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_comment");
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 bundle.putInt(CommentActivity.POSITION, mPosition);
                 startActivity(CommentActivity.class, bundle);
                 break;
             case R.id.ll_share:
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_detail_share");
                 mSharePopupWindow.show(ll_share);
                 break;
         }

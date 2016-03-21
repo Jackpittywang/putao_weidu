@@ -48,7 +48,7 @@ android {
         }
     }
     dexOptions {
-        javaMaxHeapSize "4g"
+        javaMaxHeapSize "2g"
     }
     //产品渠道配置
     productFlavors {
@@ -115,6 +115,7 @@ dependencies {
     compile project(':library')
     //    compile project(':vitamio')
     compile project(':youku_player_open_sdk')
+    compile files('libs/netty-all-4.1.0.CR3.jar')
 }
 //编译结束后删除unaligned包
 android.applicationVariants.all { variant ->

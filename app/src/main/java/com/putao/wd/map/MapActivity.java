@@ -19,8 +19,23 @@ import butterknife.Bind;
  * 地图
  * Created by guchenkai on 2015/12/14.
  */
+@Deprecated
 public class MapActivity extends PTWDActivity {
-    public static final String KEY_ACTION_ID = "action_id";
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
+
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+   /* public static final String KEY_ACTION_ID = "action_id";
 
     @Bind(R.id.mv_map)
     MapView mv_map;
@@ -92,5 +107,5 @@ public class MapActivity extends PTWDActivity {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mv_map.onDestroy();
-    }
+    }*/
 }

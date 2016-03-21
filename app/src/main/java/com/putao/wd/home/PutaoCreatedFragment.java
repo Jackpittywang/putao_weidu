@@ -16,6 +16,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 
@@ -105,12 +106,15 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_step1:
+                MobclickAgent.onEvent(mActivity, "CreatorHome_conceit");
                 vp_content.setCurrentItem(0, false);
                 break;
             case R.id.rb_step2:
+                MobclickAgent.onEvent(mActivity, "CreatorHome_mall");
                 vp_content.setCurrentItem(1, false);
                 break;
             case R.id.rb_step3:
+                MobclickAgent.onEvent(mActivity, "CreatorHome__originate");
                 vp_content.setCurrentItem(2, false);
                 break;
         }

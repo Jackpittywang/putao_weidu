@@ -16,6 +16,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.animators.ScaleInAnimation;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -153,6 +154,7 @@ public class PutaoStoreFragment extends BasicFragment {
                 Bundle bundle = new Bundle();
                 /*bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
                 bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());*/
+                MobclickAgent.onEvent(mActivity, "CreatorHome_mall_detail");
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
                 startActivity(ProductDetailActivity.class, bundle);
             }

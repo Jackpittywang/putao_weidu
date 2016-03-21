@@ -44,6 +44,7 @@ import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
 import com.sunnybear.library.view.select.IndicatorButton;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -313,16 +314,20 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         }
         switch (v.getId()) {
             case R.id.iv_setting:
+                MobclickAgent.onEvent(mActivity, "UserHome_setup");
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
+                MobclickAgent.onEvent(mActivity, "UserHome_myorder");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.si_child_info://孩子信息
+                MobclickAgent.onEvent(mActivity, "UserHome_childinfo");
                 startActivity(ChildInfoActivity.class);
                 break;
             case R.id.si_address://收货地址
+                MobclickAgent.onEvent(mActivity, "UserHome_address");
                 startActivity(AddressListActivity.class);
                 break;
             /*case R.id.si_action://我参与的活动
@@ -331,35 +336,39 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 break;*/
             case R.id.si_question://葡萄籽
 //                startActivity(QuestionActivity.class);
+                MobclickAgent.onEvent(mActivity, "UserHome_qa");
                 startActivity(GrapestoneActivity.class);
                 break;
             case R.id.iv_user_icon://完善用户信息
+                MobclickAgent.onEvent(mActivity, "UserHome_myinfo");
                 startActivity(CompleteActivity.class);
                 break;
             case R.id.si_concerns://我的关注
+                MobclickAgent.onEvent(mActivity, "UserHome_interested");
                 startActivity(ConcernsActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
+                MobclickAgent.onEvent(mActivity, "UserHome_infocenter");
                 startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
-//                btn_pay.hide();
+                MobclickAgent.onEvent(mActivity, "UserHome_pay");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_deliver://待发货\
-//                btn_deliver.hide();
+                MobclickAgent.onEvent(mActivity, "UserHome_shipped");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_take_deliver://待收货
-//                btn_take_deliver.hide();
+                MobclickAgent.onEvent(mActivity, "UserHome_receipt");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_after_sale://售后
-//                btn_after_sale.hide();
+                MobclickAgent.onEvent(mActivity, "UserHome_service");
                 startActivity(ServiceListActivity.class, bundle);
                 break;
         }

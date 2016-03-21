@@ -22,6 +22,7 @@ import butterknife.Bind;
  * 葡星圈活动和新闻适配器
  * Created by guchenkai on 2015/12/2.
  */
+@Deprecated
 public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHolder> {
     private static final int TYPE_ACTION = 1;
     private static final int TYPE_NEWS = 2;
@@ -73,7 +74,7 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHold
 
     @Override
     public void onBindItem(BasicViewHolder holder, final ActionNews actionNews, int position) {
-        if (holder instanceof ActionViewHolder) {
+        /*if (holder instanceof ActionViewHolder) {
             ActionViewHolder viewHolder = (ActionViewHolder) holder;
             viewHolder.iv_action_icon.setImageURL(actionNews.getBanner_url());
             viewHolder.tv_action_title.setText(actionNews.getTitle());
@@ -107,7 +108,7 @@ public class ActionNewsAdapter extends LoadMoreAdapter<ActionNews, BasicViewHold
             viewHolder.tv_news_description.setText(actionNews.getDescription());
             viewHolder.tv_news_label.setText(actionNews.getLabel());
             viewHolder.iv_news_icon.setImageURL(actionNews.getBanner_url());
-        }
+        }*/
 //        if (holder instanceof ActionViewHolder) {
 //            ActionViewHolder viewHolder = (ActionViewHolder) holder;
 //            viewHolder.tv_action_type.setText(actionNewsItem.getType());

@@ -36,6 +36,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.LoadingHUD;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -483,5 +484,19 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
             mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(pastTime));//存入过期时间
             mOkHttpClient.newCall(request).enqueue(callback);
         }
+    }
+
+
+    /**
+     * 注册统计
+     */
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

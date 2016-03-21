@@ -59,7 +59,7 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
 
             @Override
             public void onPageSelected(int position) {
-                MobclickAgent.onEvent(mContext, "ChoiceHome_home_switch");
+                MobclickAgent.onEvent(mContext, "ChoiceHome_detail_switch");
             }
 
             @Override
@@ -119,7 +119,10 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
     @OnClick(R.id.iv_close)
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.iv_close) finish();
+        if (v.getId() == R.id.iv_close) {
+            MobclickAgent.onEvent(mContext, "ChoiceHome_detail_close");
+            finish();
+        }
     }
 
     @Override

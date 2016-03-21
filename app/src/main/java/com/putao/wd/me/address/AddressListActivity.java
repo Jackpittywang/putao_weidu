@@ -22,6 +22,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -160,6 +161,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(IS_ADDRESS_EMPTY, isAddressEmpty);
                 startActivity(AddressEditActivity.class, bundle);
+                MobclickAgent.onEvent(mContext, "UserHome_address_add");
                 break;
         }
     }
@@ -215,5 +217,11 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
             EventBusHelper.post(b ? mAddress.get(1) : mAddress.get(0), EVENT_SELECT_ADDRESS);
             getAddressLists();
         }
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        MobclickAgent.onEvent(mContext, "UserHome_address_back");
     }
 }

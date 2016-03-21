@@ -34,6 +34,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.image.BitmapLoader;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -192,6 +193,7 @@ public class DiaryActivity extends PTWDActivity {
 
     @Subcriber(tag = ExploreAdapter.EVENT_DIARY_SHARE)
     public void eventShare(ExploreProductPlot exploreProductPlot) {
+        MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share");
         content = exploreProductPlot.getContent();
         video_id = exploreProductPlot.getVideo_id();
         img_url = exploreProductPlot.getImg_url();
@@ -224,6 +226,7 @@ public class DiaryActivity extends PTWDActivity {
         mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
+                MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share_WxSession");
                 if (TextUtils.isEmpty(video_id)) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -242,6 +245,7 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onWechatFriend() {
+                MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share_WxTimeline");
                 if (TextUtils.isEmpty(video_id)) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -260,6 +264,7 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onQQFriend() {
+                MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share_qq");
                 if (TextUtils.isEmpty(video_id)) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -338,5 +343,11 @@ public class DiaryActivity extends PTWDActivity {
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_05);
                 break;
         }
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_back");
     }
 }

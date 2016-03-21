@@ -1,10 +1,8 @@
 package com.putao.wd;
 
-import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
@@ -12,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
@@ -29,14 +26,6 @@ import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateConfig;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
-
-import android.content.DialogInterface;
-
-import java.io.File;
 
 import butterknife.Bind;
 
