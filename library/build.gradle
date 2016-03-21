@@ -45,4 +45,5 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:1.2.8'
     compile 'cz.msebera.android:httpclient:4.4.1.1'
     compile 'com.github.ShogoMizumoto:ZDepthShadowLayout:1.0.4'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

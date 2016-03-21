@@ -24,6 +24,7 @@ import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -160,6 +161,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     showDate();
                     addDate(position);
                 }
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_home_switch");
             }
 
             @Override

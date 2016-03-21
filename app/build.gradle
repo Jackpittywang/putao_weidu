@@ -53,10 +53,10 @@ android {
     //产品渠道配置
     productFlavors {
 //        local_release { versionName = "V" + defaultConfig.versionName }
-//        local_debug { versionName = "D" + defaultConfig.versionName }
+        local_debug { versionName = "D" + defaultConfig.versionName }
         channel_putao { versionName = "V" + defaultConfig.versionName }
 //        channel_baiduzhushou { versionName = "V" + defaultConfig.versionName }
-//        channel_360{ versionName = "V" + defaultConfig.versionName }
+//        channel_360{ versionName = "V" + defaultConfig.versionName }S
 //        channel_wandoujia{ versionName = "V" + defaultConfig.versionName }
 //        channel_xiaomi{ versionName = "V" + defaultConfig.versionName }
 //        channel_yingyongbao{ versionName = "V" + defaultConfig.versionName }
@@ -100,6 +100,9 @@ android {
 //        channel_anzhuo{ versionName = "V" + defaultConfig.versionName }
 //        channel_jinli{ versionName = "V" + defaultConfig.versionName }
 //        channel_sougouzhushou{ versionName = "V" + defaultConfig.versionName }
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
     }
 }
 

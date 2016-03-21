@@ -26,6 +26,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.List;
@@ -124,6 +125,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                 bundleDetial.putSerializable(INDEX_DATA, (Serializable) mExploreIndexs);
                 bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
+                MobclickAgent.onEvent(mActivity, "ChoiceHome_home_detail");
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
                 break;
 
@@ -167,6 +169,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                     new SimpleFastJsonCallback<String>(String.class, loading) {
                         @Override
                         public void onSuccess(String url, String result) {
+                            MobclickAgent.onEvent(mActivity, "ChoiceHome_home_good");
                             mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
                             mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                             loading.dismiss();
