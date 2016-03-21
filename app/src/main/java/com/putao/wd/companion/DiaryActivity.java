@@ -222,12 +222,12 @@ public class DiaryActivity extends PTWDActivity {
                 mSharePopupWindow.show(rl_main);
             }
         };
-
-        mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
+        final boolean isVideo = TextUtils.isEmpty(video_id);
+        mSharePopupWindow.setOnShareClickListener(!isVideo, new OnShareClickListener() {
             @Override
             public void onWechat() {
                 MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信好友");
-                if (TextUtils.isEmpty(video_id)) {
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -246,7 +246,7 @@ public class DiaryActivity extends PTWDActivity {
             @Override
             public void onWechatFriend() {
                 MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信朋友圈");
-                if (TextUtils.isEmpty(video_id)) {
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -265,7 +265,7 @@ public class DiaryActivity extends PTWDActivity {
             @Override
             public void onQQFriend() {
                 MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ好友");
-                if (TextUtils.isEmpty(video_id)) {
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -283,14 +283,15 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onQQZone() {
-                if (!TextUtils.isEmpty(video_id)) {
+                if (isVideo) {
                     MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ空间");
+                    ShareTools.OnQQZShare(mContext, false, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
                 }
             }
 
             public void onSinaWeibo() {
                 MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "新浪微博");
-                if (TextUtils.isEmpty(video_id)) {
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
