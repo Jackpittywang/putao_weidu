@@ -14,6 +14,7 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
@@ -118,9 +119,9 @@ public class GlobalApplication extends BasicApplication {
         ImageLoader.getInstance().init(configuration);
 
 
-        JPushInterface.setAliasAndTags(getApplicationContext(), AccountHelper.getCurrentUid(), null);
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
+        new JPushHeaper().setAlias(this, AccountHelper.getCurrentUid());
 
     }
 

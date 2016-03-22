@@ -8,6 +8,7 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.me.address.AboutUsActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.umeng.analytics.MobclickAgent;
@@ -52,6 +53,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 AccountHelper.logout();
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
                 IndexActivity.isNotRefreshUserInfo = false;
+                new JPushHeaper().setAlias(mContext, "");
                 finish();
                 break;
         }

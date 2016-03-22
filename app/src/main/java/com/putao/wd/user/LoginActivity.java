@@ -18,6 +18,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoExploreFragment;
+import com.putao.wd.jpush.JPushHeaper;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
@@ -82,6 +83,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             public void onSuccess(JSONObject result) {
                                 AccountHelper.setCurrentUid(result.getString("uid"));
                                 AccountHelper.setCurrentToken(result.getString("token"));
+                                new JPushHeaper().setAlias(mContext, result.getString("uid"));
 //                                PutaoCompanionFragment.isPrepared = true;
                                 PutaoCreatedFragment.isPrepared = true;
                                 PutaoExploreFragment.isPrepared = true;
