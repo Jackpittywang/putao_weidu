@@ -24,7 +24,7 @@ public class JPushReceiver extends BroadcastReceiver {
     public static final String IDEA = "idea"; //创想
     public static final String PRODUCT = "product"; //商品
     public static final String ORDER = "order"; //商品
-    public static final String CUSTOMER = "Customer"; //售后
+    public static final String CUSTOMER = "customer"; //售后
 
     @Override
     public void onReceive(Context context, Intent intent) {
