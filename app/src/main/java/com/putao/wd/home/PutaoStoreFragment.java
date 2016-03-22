@@ -157,6 +157,7 @@ public class PutaoStoreFragment extends BasicFragment {
                 bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());*/
                 MobclickAgent.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
                 bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
+                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "diaryStore");
                 startActivity(ProductDetailActivity.class, bundle);
             }
         });

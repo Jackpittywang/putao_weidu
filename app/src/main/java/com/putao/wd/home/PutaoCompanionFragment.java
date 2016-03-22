@@ -232,6 +232,7 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         }
         Bundle bundle = new Bundle();
         bundle.putSerializable(DiaryActivity.DIARY_APP, diaryApp);
+        bundle.putSerializable("position", position);
         startActivity(DiaryActivity.class, bundle);
     }
 }
