@@ -327,7 +327,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 break;
             case R.id.shopping_add_car://加入购物车
                 mShoppingCarPopupWindow.getProductSpec();
-                MobclickAgent.onEvent(mContext, "CreatorHome_mall_detail_cart");
                 break;
             case R.id.shopping_back://返回
                 MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);

@@ -89,22 +89,6 @@ public class FancyDetailActivity extends BasicFragmentActivity {
         vp_content.setAdapter(fragmentPagerAdapter);
         vp_content.setOffscreenPageLimit(3);
         vp_content.setCurrentItem(mPosition);
-        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                MobclickAgent.onEvent(mContext, "CreatorHome_conceit_detail_switch");
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override

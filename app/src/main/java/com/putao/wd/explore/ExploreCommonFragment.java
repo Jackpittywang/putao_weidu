@@ -170,7 +170,6 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
                     new SimpleFastJsonCallback<String>(String.class, loading) {
                         @Override
                         public void onSuccess(String url, String result) {
-                            MobclickAgent.onEvent(mActivity, "ChoiceHome_home_good");
                             mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
                             mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                             loading.dismiss();

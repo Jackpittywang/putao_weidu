@@ -161,7 +161,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     showDate();
                     addDate(position);
                 }
-                MobclickAgent.onEvent(mActivity, "ChoiceHome_home_switch");
             }
 
             @Override

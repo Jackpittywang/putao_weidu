@@ -353,7 +353,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
-                MobclickAgent.onEvent(mActivity, "UserHome_pay");
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_deliver://待发货\

@@ -262,7 +262,6 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
                             loading.dismiss();
                             Logger.i(result + "-----------------");
                             ToastUtils.showToastShort(ChildInfoActivity.this, "保存成功！");
-                            MobclickAgent.onEvent(mContext, "UserHome_childinfo_save");
                             finish();
                         }
                     });
@@ -271,6 +270,5 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_childinfo_back");
     }
 }

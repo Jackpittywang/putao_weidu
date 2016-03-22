@@ -146,17 +146,14 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.rl_header_icon://选择用户头像
                 mSelectPopupWindow.show(ll_main);
-                MobclickAgent.onEvent(mContext, "UserHome_myinfo_photo");
                 break;
             case R.id.rl_nick_name://修改用户昵称
-                MobclickAgent.onEvent(mContext, "UserHome_myinfo_nickname");
                 bundle.putString(NICK_NAME, tv_nick_name.getText().toString());
                 Intent nickIntent = new Intent(this, NickActivity.class);
                 nickIntent.putExtra(NICK_NAME, bundle);
                 startActivityForResult(nickIntent, CHANGE_NICK);
                 break;
             case R.id.rl_user_info://修改用户简介
-                MobclickAgent.onEvent(mContext, "UserHome_myinfo_summary");
                 bundle.putString(USER_INFO, tv_user_info.getText().toString());
                 Intent infoiIntent = new Intent(this, UserInfoActivity.class);
                 infoiIntent.putExtra(USER_INFO, bundle);
@@ -295,6 +292,5 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_myinfo_back");
     }
 }

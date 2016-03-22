@@ -47,28 +47,9 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
         mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
         mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE, 1);
         addFragment();
-        addListener();
     }
 
-    private void addListener() {
-        vp_container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                MobclickAgent.onEvent(mContext, "ChoiceHome_detail_switch");
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
 
     @Override
     protected String[] getRequestUrls() {
