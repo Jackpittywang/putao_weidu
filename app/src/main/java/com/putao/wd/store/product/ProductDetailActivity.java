@@ -17,6 +17,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDRequestHelper;
+import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.message.RemindFragment;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.Product;
@@ -137,9 +138,16 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
             getProduct(product_id);
         } else {
             storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
-            wv_content.loadUrl(storeProduct.getMobile_url());
-            tv_product_price.setText(storeProduct.getPrice());
-            mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+            if (null == storeProduct) {
+                wv_content.loadUrl(PTWDRequestHelper.store()
+                        .addParam("pid", args.getString(JPushReceiver.MID))
+                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+                getProduct(args.getString(JPushReceiver.MID));
+            } else {
+                wv_content.loadUrl(storeProduct.getMobile_url());
+                tv_product_price.setText(storeProduct.getPrice());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+            }
         }
         addListener();
 

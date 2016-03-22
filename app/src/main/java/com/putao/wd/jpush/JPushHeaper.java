@@ -53,8 +53,8 @@ public class JPushHeaper {
             super.handleMessage(msg);
             switch (msg.what) {
                 case MSG_SET_ALIAS:
-//                    set.add(GlobalApplication.isDebug ? "Android开发" : "Android生产");
-                    set.add("Android生产");
+//                    set.add(GlobalApplication.isDebug ? "dev" : "pro");
+                    set.add("dev");
                     // 调用 JPush 接口来设置别名。
                     JPushInterface.setAliasAndTags(mContext,
                             (String) msg.obj, set

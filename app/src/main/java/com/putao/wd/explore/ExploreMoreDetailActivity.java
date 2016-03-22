@@ -17,6 +17,8 @@ import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.image.ImageDetailActivity;
+import com.putao.wd.jpush.JPushHeaper;
+import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
@@ -92,13 +94,15 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        mArticleId = args.getString(ARTICLE_ID);
-        mPosition = args.getInt(POSITION);
-        mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200);
-        mHeight = (mWidth * 9) / 16 + 2;
         ll_cool.setClickable(false);
         ll_comment.setClickable(false);
         ll_share.setClickable(false);
+        mWidth = DensityUtil.px2dp(mContext, this.getWindowManager().getDefaultDisplay().getWidth() - 200);
+        mHeight = (mWidth * 9) / 16 + 2;
+
+        mArticleId = args.getString(ARTICLE_ID);
+        if (null == mArticleId) mArticleId = args.getString(JPushReceiver.MID);
+        mPosition = args.getInt(POSITION);
         initData();
     }
 

@@ -21,6 +21,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.order.adapter.ShipmentAdapter;
 import com.putao.wd.me.service.ServiceChooseActivity;
 import com.putao.wd.model.Express;
@@ -48,7 +49,7 @@ import butterknife.OnClick;
  * 订单详情
  * Created by yanguoqiang on 15/11/29.
  */
-public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener{
+public class OrderDetailActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     public static final String KEY_ORDER = "order";
     public static final String KEY_ORDER_ID = "order_id";
@@ -165,6 +166,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         //获取order数据
         Intent intent = getIntent();
         mOrderId = args.getString(KEY_ORDER);
+        if (null == mOrderId) mOrderId = args.getString(JPushReceiver.MID);
         //初始化布局对象
         initComponent();
         getOrderDetail();
@@ -405,6 +407,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
             btn_order_left.setText("申请售后");
         }
     }
+
     @OnClick({R.id.ll_shipment})
     @Override
     public void onClick(View v) {

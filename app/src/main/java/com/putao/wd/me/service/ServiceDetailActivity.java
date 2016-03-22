@@ -15,6 +15,7 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.service.adapter.ServiceAdapter;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.ServiceList;
@@ -123,13 +124,15 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 
         Bundle bundle = getIntent().getExtras();
         serviceId = bundle.getString(KEY_SERVICE_ID);
-        serviceStatus = bundle.getString(KEY_SERVICE_STATUS);
+        if (null == serviceId) serviceId = args.getString(JPushReceiver.MID);
         networkRequest(OrderApi.getServiceDetail(serviceId), new SimpleFastJsonCallback<ArrayList<ServiceList>>(ServiceList.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<ServiceList> result) {
                 Logger.d("售后详情 = " + result.toString());
-                setContent(result.get(0));
-                List<ServiceProduct> products = result.get(0).getProduct();
+                ServiceList serviceList = result.get(0);
+                setContent(serviceList);
+                serviceStatus = serviceList.getStatus();
+                List<ServiceProduct> products = serviceList.getProduct();
                 if (products.size() != 0) {
                     adapter.replaceAll(products);
                 }

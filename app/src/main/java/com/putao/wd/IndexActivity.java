@@ -1,23 +1,31 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.putao.wd.created.CreateBasicDetailActivity;
+import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.jpush.JPushReceiver;
+import com.putao.wd.me.order.OrderDetailActivity;
+import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.store.pay.PaySuccessActivity;
+import com.putao.wd.store.product.ProductDetailActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -27,7 +35,10 @@ import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 import com.umeng.update.UmengUpdateAgent;
 
+import org.json.JSONObject;
+
 import butterknife.Bind;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 新首页
@@ -102,6 +113,7 @@ public class IndexActivity extends BasicFragmentActivity {
         });
         vp_content.setOffscreenPageLimit(4);
     }
+
 
     /**
      * 添加Fragment
