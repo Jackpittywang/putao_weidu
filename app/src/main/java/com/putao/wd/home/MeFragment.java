@@ -180,7 +180,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     /**
      * 订单上数字没有登录则不显示
      */
-
     private void hideNum() {
         btn_pay.hide();
         btn_deliver.hide();

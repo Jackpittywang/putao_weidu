@@ -1,6 +1,7 @@
 package com.putao.wd;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -13,6 +14,7 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.Logger;
@@ -22,8 +24,11 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -111,6 +116,12 @@ public class GlobalApplication extends BasicApplication {
                 .createDefault(this);
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(configuration);
+
+
+        JPushInterface.setAliasAndTags(getApplicationContext(), AccountHelper.getCurrentUid(), null);
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
+
     }
 
     /**
@@ -128,7 +139,6 @@ public class GlobalApplication extends BasicApplication {
                     }
                 };
     }
-
 
     /**
      * 获取DataBaseManager
