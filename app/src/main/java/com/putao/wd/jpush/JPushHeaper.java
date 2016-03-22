@@ -3,8 +3,11 @@ package com.putao.wd.jpush;
 import android.content.Context;
 import android.os.Handler;
 
+import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
@@ -43,16 +46,19 @@ public class JPushHeaper {
         }
     };
     private static final int MSG_SET_ALIAS = 1001;
+    Set<String> set = new HashSet<String>();
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case MSG_SET_ALIAS:
+//                    set.add(GlobalApplication.isDebug ? "Android开发" : "Android生产");
+                    set.add("Android生产");
                     // 调用 JPush 接口来设置别名。
                     JPushInterface.setAliasAndTags(mContext,
-                            (String) msg.obj,
-                            null,
+                            (String) msg.obj, set
+                            ,
                             mAliasCallback);
                     break;
             }

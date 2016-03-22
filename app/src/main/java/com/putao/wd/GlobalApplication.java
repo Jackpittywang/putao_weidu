@@ -1,10 +1,10 @@
 package com.putao.wd;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.putao.wd.account.AccountApi;
@@ -15,7 +15,6 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.jpush.JPushHeaper;
-import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.Logger;
@@ -25,11 +24,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -111,7 +108,9 @@ public class GlobalApplication extends BasicApplication {
 //                e.printStackTrace();
 //            }
 //        }
-//        startService(new Intent(ACTION_PUSH_SERVICE));
+        Intent intent = new Intent(ACTION_PUSH_SERVICE);
+        intent.setPackage("com.putao.wd");
+        startService(intent);
         // 创建默认的ImageLoader配置参数
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration
                 .createDefault(this);
@@ -121,7 +120,12 @@ public class GlobalApplication extends BasicApplication {
 
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
-        new JPushHeaper().setAlias(this, AccountHelper.getCurrentUid());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new JPushHeaper().setAlias(GlobalApplication.this, AccountHelper.getCurrentUid());
+            }
+        }, 3000);
 
     }
 
