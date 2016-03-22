@@ -52,14 +52,14 @@ public class ImageDetailFragment extends BasicFragment {
         mImageUrl = getArguments() != null ? getArguments().getString("url") : null;
         String isJPG = mImageUrl.substring(mImageUrl.length() - 3, mImageUrl.length());
         if (isJPG.equals("gif")) {
+            imageView_gif.setVisibility(View.VISIBLE);
+            mImageView.setVisibility(View.GONE);
             DraweeController draweeController =
                     Fresco.newDraweeControllerBuilder()
                             .setUri(mImageUrl)
                             .setAutoPlayAnimations(true) // 设置加载图片完成后是否直接进行播放
                             .build();
             imageView_gif.setController(draweeController);
-            imageView_gif.setVisibility(View.VISIBLE);
-            mImageView.setVisibility(View.GONE);
         } else {
             imageView_gif.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
