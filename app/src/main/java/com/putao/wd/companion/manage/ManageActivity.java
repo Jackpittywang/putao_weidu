@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Management;
@@ -154,23 +155,23 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             case R.id.ll_equipment://受控设备
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_EQUIPMENT);
                 bundle.putSerializable(ManagerSettingsActivity.KEY_MANAGER, management);
-                MobclickAgent.onEvent(mContext, "AccompanyHome_control_device");
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "受控设备");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_product://受控产品
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_PRODUCT);
                 bundle.putSerializable(ManagerSettingsActivity.KEY_MANAGER, management);
-                MobclickAgent.onEvent(mContext, "AccompanyHome_control_app");
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "受控产品");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_usecount://使用次数
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_USE_COUNT);
-                MobclickAgent.onEvent(mContext, "AccompanyHome_control_everyday");
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "每日使用次数");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.usetime://使用时间
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_USE_TIME);
-                MobclickAgent.onEvent(mContext, "AccompanyHome_control_everytime");
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "每次使用时间");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
         }

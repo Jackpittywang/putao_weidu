@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.start.question.QuestionActivity;
 import com.putao.wd.user.LoginActivity;
@@ -50,7 +51,6 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
 
     @Override
     public void onRightAction() {
-        MobclickAgent.onEvent(mContext, "UserHome_qa_question");
         if (!AccountHelper.isLogin())
             startActivity(LoginActivity.class);
         else
@@ -62,6 +62,32 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
         Logger.w("葡萄籽 = " + result.toString());
         String url = result.getString("url");
         if (!StringUtils.isEmpty(url)) {
+            switch (url) {
+                case "http://api-weidu.putao.com/faq/detail?product_id=null":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "综合");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=601":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "淘淘向右走");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=602":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "班得瑞的奇幻花园");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=603":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "旋转吧魔方");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=7000":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "麦斯丝");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=8000":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "Hello编程");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=8001":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "哈泥海洋");
+                    break;
+                case "http://api-weidu.putao.com/faq/detail?product_id=8002":
+                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "涂涂世界");
+                    break;
+            }
             args.putString(CommonQuestionActivity.URL_QUESTION, url);
             startActivity(CommonQuestionActivity.class, args);
         }
@@ -75,6 +101,5 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_qa_back");
     }
 }

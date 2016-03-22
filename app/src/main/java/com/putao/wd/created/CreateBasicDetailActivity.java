@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.image.ImageDetailActivity;
@@ -42,6 +43,7 @@ import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -252,26 +254,31 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             @Override
             public void onWechat() {
                 ShareTools.wechatWebShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
+                MobclickAgent.onEvent(mContext, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信好友");
             }
 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
+                MobclickAgent.onEvent(mContext, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信朋友圈");
             }
 
             @Override
             public void onQQFriend() {
                 ShareTools.OnQQZShare(mContext, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
+                MobclickAgent.onEvent(mContext, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ好友");
             }
 
             @Override
             public void onQQZone() {
                 ShareTools.OnQQZShare(mContext, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
+                MobclickAgent.onEvent(mContext, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ空间");
             }
 
             @Override
             public void onSinaWeibo() {
                 ShareTools.OnWeiboShare(mContext, mCreate.getTitle(), mCreate.getShare_links());
+                MobclickAgent.onEvent(mContext, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
             }
 
             @Override
@@ -371,6 +378,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 ll_cool.setClickable(false);
                 Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_interested);
                 if (mCreate.getFollow_status() == 1) {
                     sb_cool_icon.setState(false);
                     tv_count_cool.setText("关注");
@@ -404,6 +412,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateCommentActivity.class);
                     bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
                     bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mCreate.getId());
+                    MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_comment);
                     startActivity(LoginActivity.class, bundle);
                     return;
                 }
@@ -416,6 +425,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 mSharePopupWindow.show(ll_share);
                 break;
             case R.id.iv_close:
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_close);
                 finish();
                 break;
 

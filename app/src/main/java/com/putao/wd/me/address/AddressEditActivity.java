@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.ColorConstant;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CityDBManager;
@@ -131,9 +132,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      * 更新收货地址
      */
     private void addressUpdate(String address_id, String realname, String city_id, String province_id, String area_id, String address, String mobile, String tel, String postcode, String status) {
-        if (isAddressEmpty){
+        if (isAddressEmpty) {
             status = "1";
-            MobclickAgent.onEvent(mContext, "UserHome_address_edit_default");
+            MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_edit_default);
         }
         networkRequest(OrderApi.addressUpdate(address_id, realname, city_id, province_id, area_id, address, mobile, tel, postcode, status),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -170,7 +171,7 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_delete_address://删除本条地址
-                MobclickAgent.onEvent(mContext, "UserHome_address_edit_delet");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_edit_delet);
                 addressDelete(mAddress.getId() + "");
                 finish();
                 break;
@@ -226,14 +227,14 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                     mAddress.getArea_id(),
                     mAddress.getAddress(), mAddress.getMobile(),
                     null, null, mAddress.getStatus());
-        MobclickAgent.onEvent(mContext, "UserHome_address_edit_save");
+        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_edit_save);
         finish();
     }
 
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_address_edit_cancel");
+        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_edit_cancel);
     }
 
     /**

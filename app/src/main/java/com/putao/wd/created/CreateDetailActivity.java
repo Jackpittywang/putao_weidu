@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
@@ -87,22 +88,6 @@ public class CreateDetailActivity extends BasicFragmentActivity {
         vp_content.setAdapter(fragmentPagerAdapter);
         vp_content.setOffscreenPageLimit(3);
         vp_content.setCurrentItem(mPosition);
-        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                MobclickAgent.onEvent(mContext, "CreatorHome__originate_detail_switch");
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override
@@ -114,7 +99,7 @@ public class CreateDetailActivity extends BasicFragmentActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_close:
-                MobclickAgent.onEvent(mContext, "CreatorHome__originate_detail_close");
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_close, "按钮点击");
                 finish();
                 break;
         }

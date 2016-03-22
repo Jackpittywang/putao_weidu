@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
@@ -193,7 +194,6 @@ public class DiaryActivity extends PTWDActivity {
 
     @Subcriber(tag = ExploreAdapter.EVENT_DIARY_SHARE)
     public void eventShare(ExploreProductPlot exploreProductPlot) {
-        MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share");
         content = exploreProductPlot.getContent();
         video_id = exploreProductPlot.getVideo_id();
         img_url = exploreProductPlot.getImg_url();
@@ -222,12 +222,12 @@ public class DiaryActivity extends PTWDActivity {
                 mSharePopupWindow.show(rl_main);
             }
         };
-
-        mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
+        final boolean isVideo = TextUtils.isEmpty(video_id);
+        mSharePopupWindow.setOnShareClickListener(!isVideo, new OnShareClickListener() {
             @Override
             public void onWechat() {
-                MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share_WxSession");
-                if (TextUtils.isEmpty(video_id)) {
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信好友");
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -245,8 +245,8 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onWechatFriend() {
-                MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share_WxTimeline");
-                if (TextUtils.isEmpty(video_id)) {
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信朋友圈");
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -264,8 +264,8 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onQQFriend() {
-                MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_share_qq");
-                if (TextUtils.isEmpty(video_id)) {
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ好友");
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -283,11 +283,15 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onQQZone() {
-
+                if (isVideo) {
+                    MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ空间");
+                    ShareTools.OnQQZShare(mContext, false, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
+                }
             }
 
             public void onSinaWeibo() {
-                if (TextUtils.isEmpty(video_id)) {
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "新浪微博");
+                if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
                                 @Override
@@ -348,6 +352,6 @@ public class DiaryActivity extends PTWDActivity {
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "AccompanyHome_app_detail_back");
+        MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_back);
     }
 }

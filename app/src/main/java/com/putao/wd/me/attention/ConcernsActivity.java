@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
@@ -136,7 +137,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
         bundle.putInt(CreateDetailActivity.POSITION, position);
         bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
         bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
-        MobclickAgent.onEvent(mContext, "UserHome_interested_detail");
+        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
         startActivity(ConcernsDetailActivity.class, bundle);
     }
 
@@ -175,6 +176,6 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_interested_detail");
+        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_interested_back);
     }
 }

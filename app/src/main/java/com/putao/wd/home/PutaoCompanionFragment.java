@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.companion.manage.ManageActivity;
@@ -160,14 +161,15 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                 startActivity(CompleteActivity.class);
                 break;*/
             case R.id.iv_title_bar_right1:
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_control);
                 startActivity(ManageActivity.class);
                 break;
             case R.id.iv_title_bar_right2:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_scan");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_scan);
                 startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_explore_empty:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_scan");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_scan);
                 startActivity(CaptureActivity.class);
                 break;
         }
@@ -205,27 +207,27 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onItemClick(DiaryApp diaryApp, int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_taotao");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
                 break;
             case 1:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_banderui");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "班得瑞的奇幻花园");
                 break;
             case 2:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_mofang");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "旋转吧魔方");
                 break;
             case 3:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_maisisi");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
                 break;
             case 4:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_hellobc");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "Hello编程");
                 break;
             case 5:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_hanihaiyang");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
                 break;
             case 6:
-                MobclickAgent.onEvent(mActivity, "AccompanyHome_app_tutushijie");
+                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
         }
         Bundle bundle = new Bundle();

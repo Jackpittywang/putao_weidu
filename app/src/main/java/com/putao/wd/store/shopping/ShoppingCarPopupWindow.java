@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.model.Norms;
 import com.putao.wd.model.ProductNorms;
@@ -24,6 +25,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.select.Tag;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +129,13 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 Logger.d(result.toString());
                 mCount = "1";//初始化商品默认数量
                 EventBusHelper.post(EVENT_REFRESH_TITLE_COUNT, EVENT_REFRESH_TITLE_COUNT);
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail_add_success);
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail_add_fail);
             }
         });
     }
@@ -146,6 +155,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 else {
                     ToastUtils.showToastShort(mContext, "库存不足！");
                     initCar();
+                    MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail_add_fail);
                 }
                 //ToastUtils.showToastLong(mActivity, SpecUtils.getProductSku(skus, mSelTags).toString());
 //                EventBusHelper.post(EVENT_JOIN_CAR, EVENT_JOIN_CAR);

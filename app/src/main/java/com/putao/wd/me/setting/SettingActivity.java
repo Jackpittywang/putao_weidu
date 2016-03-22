@@ -42,16 +42,13 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
         switch (v.getId()) {
             case R.id.si_about_us://关于我们
                 startActivity(AboutUsActivity.class);
-                MobclickAgent.onEvent(mContext, "UserHome_setup_about");
                 break;
             case R.id.si_modify_password://修改密码
-                MobclickAgent.onEvent(mContext, "UserHome_setup_changepsd");
 //                Bundle bundle = new Bundle();
 //                bundle.putBoolean("isresetpass", true);
                 startActivity(ModifyPasswardActivity.class);
                 break;
             case R.id.tv_exit://退出登录
-                MobclickAgent.onEvent(mContext, "UserHome_setup_logout");
                 AccountHelper.logout();
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
                 IndexActivity.isNotRefreshUserInfo = false;
@@ -63,6 +60,5 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_setup_back");
     }
 }

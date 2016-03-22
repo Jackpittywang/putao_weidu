@@ -19,18 +19,29 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
 
     public void setOnShareClickListener(OnShareClickListener onShareClickListener) {
         mOnShareClickListener = onShareClickListener;
+        LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_copy_url);
+        LinearLayout linear_qqz = (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
+        //复制
+        ll_second.setVisibility(View.VISIBLE);
+        //QQ空间
+        linear_qqz.setVisibility(View.VISIBLE);
     }
 
     public void setOnShareClickListener(boolean isCopy, OnShareClickListener onShareClickListener) {
         this.isCopy = isCopy;
         mOnShareClickListener = onShareClickListener;
+        LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_copy_url);
+        LinearLayout linear_qqz = (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
         if (!isCopy) {
             //复制
-            LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_copy_url);
             ll_second.setVisibility(View.GONE);
             //QQ空间
-            LinearLayout linear_qqz= (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
             linear_qqz.setVisibility(View.GONE);
+        } else {
+            //复制
+            ll_second.setVisibility(View.VISIBLE);
+            //QQ空间
+            linear_qqz.setVisibility(View.VISIBLE);
         }
     }
 

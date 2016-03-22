@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDRequestHelper;
@@ -326,10 +327,9 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 break;
             case R.id.shopping_add_car://加入购物车
                 mShoppingCarPopupWindow.getProductSpec();
-                MobclickAgent.onEvent(mContext, "CreatorHome_mall_detail_add");
                 break;
             case R.id.shopping_back://返回
-                MobclickAgent.onEvent(mContext, "CreatorHome_mall_detail_back");
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
                 finish();
                 break;
             case R.id.shopping_car_buy://立即购买
@@ -339,7 +339,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 startActivity(WriteOrderActivity.class, bundle);
                 break;
             case R.id.shopping_relative_car://点击进入购物车
-                MobclickAgent.onEvent(mContext, "CreatorHome_mall_detail_cart");
+                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
                 startActivity(ShoppingCarActivity.class);
                 break;
 

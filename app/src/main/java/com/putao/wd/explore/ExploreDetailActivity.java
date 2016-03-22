@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.model.ExploreIndex;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -46,28 +47,9 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
         mExploreIndexs = (List<ExploreIndex>) intent.getSerializableExtra(ExploreCommonFragment.INDEX_DATA);
         mPosition = intent.getIntExtra(ExploreCommonFragment.INDEX_DATA_PAGE, 1);
         addFragment();
-        addListener();
     }
 
-    private void addListener() {
-        vp_container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                MobclickAgent.onEvent(mContext, "ChoiceHome_detail_switch");
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
 
     @Override
     protected String[] getRequestUrls() {
@@ -120,7 +102,7 @@ public class ExploreDetailActivity extends BasicFragmentActivity implements View
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_close) {
-            MobclickAgent.onEvent(mContext, "ChoiceHome_detail_close");
+            MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_close, "按钮点击");
             finish();
         }
     }

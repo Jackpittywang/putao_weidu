@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CityDBManager;
@@ -161,7 +162,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(IS_ADDRESS_EMPTY, isAddressEmpty);
                 startActivity(AddressEditActivity.class, bundle);
-                MobclickAgent.onEvent(mContext, "UserHome_address_add");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_add);
                 break;
         }
     }
@@ -222,6 +223,6 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, "UserHome_address_back");
+        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_back);
     }
 }

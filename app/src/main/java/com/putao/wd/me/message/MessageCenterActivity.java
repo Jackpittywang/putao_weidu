@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
@@ -79,16 +80,16 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     public void onTitleItemSelected(TitleItem item, int position) {
         switch (item.getId()) {
             case R.id.ll_reply://回复
-                MobclickAgent.onEvent(mContext, "UserHome_infocenter_reply");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_reply);
                 break;
             case R.id.ll_cool://赞
-                MobclickAgent.onEvent(mContext, "UserHome_infocenter_good");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_good);
                 break;
             case R.id.ll_remind://提醒
-                MobclickAgent.onEvent(mContext, "UserHome_infocenter_remind");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_remind);
                 break;
             case R.id.ll_notice://通知
-                MobclickAgent.onEvent(mContext, "UserHome_infocenter_notice");
+                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_notice);
                 break;
         }
         vp_message.setCurrentItem(position);
