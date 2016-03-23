@@ -17,6 +17,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDRequestHelper;
+import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.message.RemindFragment;
 import com.putao.wd.model.OrderProduct;
@@ -55,6 +56,7 @@ import butterknife.OnClick;
  */
 public class ProductDetailActivity extends BasicFragmentActivity implements View.OnClickListener {
     public static final String PRODUCT_ID = "product_id";
+    public static final String BUNDLE_PRODUCT_NUM = "bundle_product_num";
     /* public static final String BUNDLE_PRODUCT_ICON = "product_icon";*/
     public static final String BUNDLE_PRODUCT = "bundle_product";
     public static final String BUNDLE_IS_DETAIL = "bundle_is_detail";
@@ -99,6 +101,8 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     StoreProduct storeProduct;
 
     private String product_id;//产品id
+    private String product_num;//是否是从陪伴传送过来的数据
+    private String title, subtitle, shareUrl;
 
     private ProductDetail detail = null;
     private String imageUrl;//商品图片
@@ -114,6 +118,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         is_detail = args.getBoolean(BUNDLE_IS_DETAIL);
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
         is_remind = args.getBoolean(BUNDLE_IS_REMIND);
+        product_num = args.getString(BUNDLE_PRODUCT_NUM);
         if (is_detail) {
             if (is_service) {
                 ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
@@ -131,7 +136,11 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 getProduct(storeProduct.getProduct_id());
             }
         } else if (is_remind) {
-            String product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
+            if (product_num.equals("diary")) {
+                product_id = args.getString(DiaryActivity.BUNDLE_PRODUCT_ID);
+            } else {
+                product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
+            }
             wv_content.loadUrl(PTWDRequestHelper.store()
                     .addParam("pid", product_id)
                     .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
@@ -149,6 +158,8 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
             }
         }
+
+        //分享弹框的点击事件
         addListener();
 
 //         imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
@@ -164,33 +175,57 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onQQFriend() {
-                ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) ProductDetailActivity.this
                         .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText(storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    copy.setText(shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    copy.setText(storeProduct.getMobile_url());
+                }
                 ToastUtils.showToastShort(ProductDetailActivity.this, "复制成功");
             }
         });
@@ -205,6 +240,9 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                     return;
                 }
                 detail = result;
+                title = result.getTitle();
+                subtitle = result.getSubtitle();
+                shareUrl = result.getShare();
                 tv_product_price.setText(result.getPrice());
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
                 loading.dismiss();

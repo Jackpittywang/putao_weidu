@@ -1,6 +1,7 @@
 package com.putao.wd.companion;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,13 +69,13 @@ public class DiaryActivity extends PTWDActivity {
     ImageDraweeView companion_no_image;
 
     public static String DIARY_APP = "diary_app";
+    public static final String BUNDLE_PRODUCT_ID = "bundle_product_id";
 
     private ExploreAdapter adapter;
     private DiaryApp mDiaryApp;
     private SharePopupWindow mSharePopupWindow;
     private int mPage;
     private int mPostion;
-
 
     @Override
     protected int getLayoutId() {
@@ -154,10 +155,7 @@ public class DiaryActivity extends PTWDActivity {
                             btn_companion_look_detail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, );
-//                                    startActivity(ProductDetailActivity.class, bundle);
-
+                                    OnCompanionDetail(DiaryActivity.this, mPostion);
                                 }
                             });
                         }
@@ -318,35 +316,68 @@ public class DiaryActivity extends PTWDActivity {
     //跳转显示默认界面的判断
     public void OnCompanionDiary(int postion) {
         switch (postion) {
-            case 0:
+            case 0://淘淘向右走
                 txt_companion_text.setText(R.string.companion_taotaoright);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_01);
                 break;
-            case 1:
+            case 1://班得瑞的秘密花园
                 txt_companion_text.setText(R.string.companion_banderui);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_03);
                 break;
-            case 2:
+            case 2://旋转吧，魔方
                 txt_companion_text.setText(R.string.companion_mofang);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_02);
                 break;
-            case 3:
+            case 3://麦斯丝
                 txt_companion_text.setText(R.string.companion_maisisi);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_04);
                 break;
-            case 4:
+            case 4://hello编程
                 txt_companion_text.setText(R.string.companion_hello);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_06);
                 break;
-            case 5:
+            case 5://哈尼海洋
                 txt_companion_text.setText(R.string.companion_hani);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_07);
                 break;
-            case 6:
+            case 6://涂涂世界
                 txt_companion_text.setText(R.string.companion_tutuWord);
                 companion_no_image.setBackgroundResource(R.drawable.img_p_dataempty_05);
                 break;
         }
+    }
+
+    //通过postion跳转到详情页面
+    public void OnCompanionDetail(Context context, int postion) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ProductDetailActivity.BUNDLE_IS_REMIND, true);
+        bundle.putSerializable(BUNDLE_PRODUCT_ID, mDiaryApp.getMall_product_id());
+        switch (postion) {
+            case 0://淘淘向右走
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
+                break;
+            case 1://班得瑞的秘密花园
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "班得瑞的秘密花园");
+                break;
+            case 2://旋转吧，魔方
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "旋转吧，魔方");
+                break;
+            case 3://麦斯丝
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
+                break;
+            case 4://hello编程
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "hello编程");
+                break;
+            case 5://哈尼海洋
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
+                break;
+            case 6://涂涂世界
+                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
+                break;
+        }
+        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "diary");
+        startActivity(ProductDetailActivity.class, bundle);
+        finish();
     }
 
     @Override

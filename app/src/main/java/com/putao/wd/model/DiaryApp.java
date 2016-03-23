@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class DiaryApp implements Serializable {
     private String product_id;//应用id
+    private String mall_product_id;//商品id
     private String product_name;//当前游戏名称
     private String product_icon;//游戏图标
 
@@ -36,10 +37,19 @@ public class DiaryApp implements Serializable {
         this.product_icon = product_icon;
     }
 
+    public String getMall_product_id() {
+        return mall_product_id;
+    }
+
+    public void setMall_product_id(String mall_product_id) {
+        this.mall_product_id = mall_product_id;
+    }
+
     @Override
     public String toString() {
-        return "DiaryＡpp{" +
+        return "DiaryApp{" +
                 "product_id='" + product_id + '\'' +
+                ", mall_product_id='" + mall_product_id + '\'' +
                 ", product_name='" + product_name + '\'' +
                 ", product_icon='" + product_icon + '\'' +
                 '}';

@@ -167,8 +167,8 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                             picList.add(object.getString("src"));
                         }
                         Bundle bundle = new Bundle();
-                        bundle.putInt(PictrueBrowseActivity.BUNDLE_CLICK_INDEX, clickIndex);
-                        bundle.putSerializable(PictrueBrowseActivity.BUNDLE_PICTRUES, (Serializable) picList);
+//                        bundle.putInt(PictrueBrowseActivity.BUNDLE_CLICK_INDEX, clickIndex);
+//                        bundle.putSerializable(PictrueBrowseActivity.BUNDLE_PICTRUES, (Serializable) picList);
                         startActivity(PictrueBrowseActivity.class, bundle);
                         break;
                 }
@@ -215,7 +215,7 @@ public class ActionsDetailActivity extends PTWDActivity<GlobalApplication> imple
                 } else {
                     UserInfo userInfo = AccountHelper.getCurrentUserInfo();
                     networkRequest(StartApi.coolAdd(action_id, userInfo.getNick_name(), "EVENT",
-                            AccountHelper.getCurrentUid(), userInfo.getHead_img()),
+                                    AccountHelper.getCurrentUid(), userInfo.getHead_img()),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
