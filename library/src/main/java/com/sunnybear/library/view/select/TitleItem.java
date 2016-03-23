@@ -19,6 +19,7 @@ public class TitleItem extends LinearLayout {
     private View mRootView;
     private TextView mTitleView;
     private View mIndicator;
+    private View mRedDot;
 
     private String mTitleText;
     private boolean isActive;
@@ -56,6 +57,7 @@ public class TitleItem extends LinearLayout {
     private void initView(Context context) {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_title_item, this);
         mTitleView = (TextView) mRootView.findViewById(R.id.tv_title);
+        mRedDot = mRootView.findViewById(R.id.red_dot);
         mIndicator = mRootView.findViewById(R.id.indicator);
     }
 
@@ -104,5 +106,21 @@ public class TitleItem extends LinearLayout {
 
     public void setIndicatorColor(int indicatorColor) {
         mIndicatorColor = indicatorColor;
+    }
+
+    /**
+     * 显示指示
+     */
+    public void show() {
+        mRedDot.setVisibility(VISIBLE);
+        postInvalidate();
+
+    }
+
+    /**
+     * 隐藏指示
+     */
+    public void hide() {
+        mRedDot.setVisibility(GONE);
     }
 }

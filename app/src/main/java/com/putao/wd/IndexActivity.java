@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.home.MeFragment;
@@ -112,6 +113,11 @@ public class IndexActivity extends BasicFragmentActivity {
             }
         });
         vp_content.setOffscreenPageLimit(4);
+        //红点显示
+        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid()))) {
+            ti_index_companion.show(-1);
+            ti_companion.show(-1);
+        }
     }
 
 
@@ -126,14 +132,10 @@ public class IndexActivity extends BasicFragmentActivity {
         mFragments.put(3, Fragment.instantiate(mContext, MeFragment.class.getName()));
     }
 
-    private boolean canTableClick = true;
-
     private void addListener() {
         tb_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
-                if (!canTableClick) return;
-                canTableClick = false;
                 if (position == 0) {
                     tb_tab.setVisibility(View.GONE);
                     tb_index_tab.setVisibility(View.VISIBLE);
@@ -141,8 +143,7 @@ public class IndexActivity extends BasicFragmentActivity {
                     tb_index_tab.setTabItemSelected(R.id.ti_index_explore);
                     return;
                 } else if (position == 3) {
-                    ti_index_companion.hide();
-                    ti_companion.hide();
+                    hideRedDot();
                 }
                 vp_content.setCurrentItem(position, false);
             }
@@ -150,8 +151,6 @@ public class IndexActivity extends BasicFragmentActivity {
         tb_index_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
-                if (!canTableClick) return;
-                canTableClick = false;
                 if (position != 0) {
                     tb_tab.setVisibility(View.VISIBLE);
                     tb_index_tab.setVisibility(View.GONE);
@@ -164,9 +163,8 @@ public class IndexActivity extends BasicFragmentActivity {
                             tb_tab.setTabItemSelected(R.id.ti_store);
                             return;
                         case 3:
-                            ti_index_companion.hide();
-                            ti_companion.hide();
                             tb_tab.setTabItemSelected(R.id.ti_companion);
+                            hideRedDot();
                             return;
                     }
                 }
@@ -218,10 +216,17 @@ public class IndexActivity extends BasicFragmentActivity {
         ll_loading.setVisibility(View.VISIBLE);
     }
 
+    private void hideRedDot() {
+        ti_index_companion.hide();
+        ti_companion.hide();
+        mDiskFileCacheHelper.remove(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid());
+    }
+
     @Subcriber(tag = RedDotReceiver.ME_TABBAR)
     private void setDot(String pay) {
         ti_index_companion.show(-1);
         ti_companion.show(-1);
+        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), pay);
     }
 
 }

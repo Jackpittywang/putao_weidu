@@ -122,12 +122,12 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_nexplore:
-                Bundle bundleDetial = new Bundle();
+                /*Bundle bundleDetial = new Bundle();
                 bundleDetial.putSerializable(INDEX_DATA, (Serializable) mExploreIndexs);
                 bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
                 startActivity(ExploreDetailActivity.class, bundleDetial);
                 MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_home_detail);
-                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
+                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);*/
                 break;
 
             case R.id.ll_count_cool:

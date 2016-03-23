@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
@@ -161,6 +162,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 isScroll = scrollY > 0;
             }
         });
+        //红点显示
+        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid()))) {
+            si_message.show();
+        }
     }
 
     private void setDefaultBlur() {
@@ -401,6 +406,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
+                mDiskFileCacheHelper.remove(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid());
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
@@ -492,5 +498,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 break;
         }
         return true;
+    }
+
+    @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
+    private void setDot(String me_tabbar) {
+        si_message.show();
+        mDiskFileCacheHelper.put(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid(), me_tabbar);
     }
 }

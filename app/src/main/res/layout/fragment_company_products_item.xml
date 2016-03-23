@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="110dp"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="110dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_product"
@@ -11,15 +12,26 @@
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
-        android:background="@null"/>
+        android:background="@null" />
 
     <TextView
+        android:id="@+id/tv_product"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_product"
-        android:maxLines="3"
-        android:textColor="@color/color_313131"
+        android:layout_below="@+id/iv_product"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="14sp"/>
-</LinearLayout>
+        android:maxLines="3"
+        android:textColor="@color/color_313131"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/red_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginLeft="-4dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/iv_product"
+        android:background="@drawable/red_dot_shape"
+        android:visibility="visible" />
+</RelativeLayout>

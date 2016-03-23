@@ -41,6 +41,8 @@ public class ProductsAdapter extends BasicAdapter<DiaryApp, ProductsAdapter.Prod
         if (!TextUtils.isEmpty(diaryApp.getProduct_icon())) {
             holder.iv_product.setImageURL(diaryApp.getProduct_icon());
             holder.tv_product.setText(diaryApp.getProduct_name());
+            if (diaryApp.isShowRedDot()) holder.red_dot.setVisibility(View.VISIBLE);
+            else holder.red_dot.setVisibility(View.GONE);
         }
     }
 
@@ -49,6 +51,8 @@ public class ProductsAdapter extends BasicAdapter<DiaryApp, ProductsAdapter.Prod
         ImageDraweeView iv_product;
         @Bind(R.id.tv_product)
         TextView tv_product;
+        @Bind(R.id.red_dot)
+        View red_dot;
 
         public ProductsViewHolder(View itemView) {
             super(itemView);

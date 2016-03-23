@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
+import com.sunnybear.library.view.select.IndicatorDrawable;
 
 /**
  * 设置条目按钮
@@ -24,6 +25,7 @@ public class SettingItem extends LinearLayout {
     private LinearLayout mMainView;
     private ImageView mSettingIconView;
     private TextView mSettingTextView;
+    private View mRedDot;
 
     private Drawable mSettingIcon;
     private String mSettingText;
@@ -65,9 +67,9 @@ public class SettingItem extends LinearLayout {
         mMainView = (LinearLayout) mRootView.findViewById(R.id.ll_main);
         mSettingIconView = (ImageView) mRootView.findViewById(R.id.setting_icon);
         mSettingTextView = (TextView) mRootView.findViewById(R.id.setting_text);
+        mRedDot = mRootView.findViewById(R.id.red_dot);
         View dividerTop = mRootView.findViewById(R.id.divider_top);
         View dividerBottom = mRootView.findViewById(R.id.divider_bottom);
-
         mSettingIconView.setImageDrawable(mSettingIcon);
         mSettingTextView.setText(mSettingText);
         if (mSettingDividerColor != -1) {
@@ -93,24 +95,28 @@ public class SettingItem extends LinearLayout {
     /**
      * 显示指示
      *
-     * @param count 条目数
      */
-    public void show(int count) {
-        mIndicator = new BadgeView(getContext(), mMainView);
+    public void show() {
+        /*mIndicator = new BadgeView(getContext(), mMainView);
         mIndicator.setBadgePosition(BadgeView.POSITION_CENTER_RIGHT);
         mIndicator.setBadgeMargin(100);
         mIndicator.setBackground(mSettingIndicatorBackground);
         mIndicator.setText(String.valueOf(count));
         if (mSettingIndicatorColor != -1)
             mIndicator.setTextColor(mSettingIndicatorColor);
-        mIndicator.show();
+        mIndicator.show();*/
+
+        mRedDot.setVisibility(VISIBLE);
+        postInvalidate();
+
     }
 
     /**
      * 隐藏指示
      */
     public void hide() {
-        if (mIndicator != null && mIndicator.isShown())
-            mIndicator.hide();
+        /*if (mIndicator != null && mIndicator.isShown())
+            mIndicator.hide();*/
+        mRedDot.setVisibility(GONE);
     }
 }

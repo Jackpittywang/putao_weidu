@@ -75,7 +75,7 @@
 
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.sunnybear.library.view.viewpager.ChildViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

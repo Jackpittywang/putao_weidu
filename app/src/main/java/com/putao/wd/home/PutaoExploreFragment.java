@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.explore.ExploreCommonFragment;
+import com.putao.wd.explore.ExploreDetailActivity;
 import com.putao.wd.explore.ExploreDetailFragment;
 import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
@@ -24,8 +26,10 @@ import com.putao.wd.model.ExploreIndexs;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.viewpager.ChildViewPager;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +51,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     //    @Bind(R.id.iv_scan)
 //    ImageView iv_scan;
     @Bind(R.id.vp_content)
-    ViewPager vp_content;
+    ChildViewPager vp_content;
     @Bind(R.id.tv_modified_time_day)
     TextView tv_modified_time_day;
     @Bind(R.id.tv_modified_time_mon)
@@ -65,6 +69,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
+    private int mPosition;
     //    private PageChangeThread mThread;
     private Handler mHandler;
     private HandlerThread mHandlerThread;
@@ -147,6 +152,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageSelected(final int position) {
+                mPosition = position + 1;
                 if (position == 0) {
                     vp_content.setCurrentItem(1);
                     return;
@@ -166,6 +172,17 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        vp_content.setOnSingleTouchListener(new ChildViewPager.OnSingleTouchListener() {
+            @Override
+            public void onSingleTouch() {
+                Bundle bundleDetial = new Bundle();
+                bundleDetial.putSerializable(ExploreCommonFragment.INDEX_DATA, mExploreIndexs);
+                bundleDetial.putInt(ExploreCommonFragment.INDEX_DATA_PAGE, mPosition);
+                startActivity(ExploreDetailActivity.class, bundleDetial);
+                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_home_detail);
+                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
             }
         });
     }

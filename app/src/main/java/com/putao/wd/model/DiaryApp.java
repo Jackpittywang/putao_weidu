@@ -12,6 +12,7 @@ public class DiaryApp implements Serializable {
     private String mall_product_id;//商品id
     private String product_name;//当前游戏名称
     private String product_icon;//游戏图标
+    private boolean showRedDot;//
 
     public String getProduct_id() {
         return product_id;
@@ -45,6 +46,14 @@ public class DiaryApp implements Serializable {
         this.mall_product_id = mall_product_id;
     }
 
+    public boolean isShowRedDot() {
+        return showRedDot;
+    }
+
+    public void setShowRedDot(boolean showRedDot) {
+        this.showRedDot = showRedDot;
+    }
+
     @Override
     public String toString() {
         return "DiaryApp{" +
@@ -52,6 +61,7 @@ public class DiaryApp implements Serializable {
                 ", mall_product_id='" + mall_product_id + '\'' +
                 ", product_name='" + product_name + '\'' +
                 ", product_icon='" + product_icon + '\'' +
+                ", showRedDot=" + showRedDot +
                 '}';
     }
 }
