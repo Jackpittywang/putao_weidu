@@ -159,11 +159,9 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
             }
         }
 
-        if (product_num.equals("diary")) {
-            addDiaryListener();
-        } else {//不是从陪伴页面传送过来的数据
-            addListener();
-        }
+        //分享弹框的点击事件
+        addListener();
+
 //         imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
 //        product_id = args.getString(BUNDLE_PRODUCT_ID);
 //        mSharePopupWindow = new SharePopupWindow(mContext);
@@ -177,69 +175,57 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onQQFriend() {
-                ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                }
             }
 
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+                if (product_num.equals("diary")) {
+                    ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+                }
             }
 
             @Override
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) ProductDetailActivity.this
                         .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText(storeProduct.getMobile_url());
-                ToastUtils.showToastShort(ProductDetailActivity.this, "复制成功");
-            }
-        });
-    }
-
-    public void addDiaryListener() {
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
-            @Override
-            public void onWechat() {
-                ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
-            }
-
-            @Override
-            public void onWechatFriend() {
-                ShareTools.wechatWebShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
-            }
-
-            @Override
-            public void onQQFriend() {
-                ShareTools.OnQQZShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
-            }
-
-            @Override
-            public void onQQZone() {
-                ShareTools.OnQQZShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
-            }
-
-            public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
-            }
-
-            @Override
-            public void onCopyUrl() {
-                ClipboardManager copy = (ClipboardManager) ProductDetailActivity.this
-                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText(shareUrl);
+                if (product_num.equals("diary")) {
+                    copy.setText(shareUrl);
+                } else {//不是从陪伴页面传送过来的数据
+                    copy.setText(storeProduct.getMobile_url());
+                }
                 ToastUtils.showToastShort(ProductDetailActivity.this, "复制成功");
             }
         });
