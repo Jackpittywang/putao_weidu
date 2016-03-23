@@ -105,6 +105,11 @@ public class PTSocketInputThread extends Thread {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                Intent intent = new Intent(PTMessageReceiver.RecAction);
+                Bundle b = new Bundle();
+                b.putString(PTMessageReceiver.KeyMessage, data);
+                intent.putExtras(b);
+                mContext.sendBroadcast(intent);
                 PTSenderManager.sharedInstance().sendMsg(PTMessageUtil.getMesageByteArray(PTMessageType.CS_NOTICEACK, null),
                         null);
                 break;
@@ -112,11 +117,6 @@ public class PTSocketInputThread extends Thread {
 
         if (msg.type > 0) {
             PTRecMessage receiveMsg = new PTRecMessage(msg.type, data);
-            Intent intent = new Intent(PTMessageReceiver.RecAction);
-            Bundle b = new Bundle();
-            b.putSerializable(PTMessageReceiver.KeyMessage, receiveMsg);
-            intent.putExtras(b);
-            mContext.sendBroadcast(intent);
             if (mOnSocketResponseListener != null)
                 mOnSocketResponseListener.onResponse(receiveMsg);
         }

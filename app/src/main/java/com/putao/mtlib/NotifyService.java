@@ -42,20 +42,21 @@ public class NotifyService extends Service {
 
         mPTSenderManager = PTSenderManager.sharedInstance();
         mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                .setHost(HOST).setPort(PORT).setHeartSecond(3 * 60).build());
+                .setHost(HOST).setPort(PORT).setHeartSecond(30).build());
         mPTSenderManager.init(getApplicationContext());
         mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
             @Override
             public void onResponse(PTRecMessage response) {
+                Logger.d("-------------------++++++++++++++++++", response.getMessage());
                 switch (response.getType()) {
                     case 2:
                         Logger.d(mThreadName, "连接成功");
                         break;
-                    case 3:
+                   /* case 3:
                         String message = response.getMessage();
                         String result = message.substring(message.indexOf("{"), message.length());
                         Logger.d(mThreadName, result);
-                        break;
+                        break;*/
                 }
             }
         });

@@ -126,16 +126,23 @@ public class IndexActivity extends BasicFragmentActivity {
         mFragments.put(3, Fragment.instantiate(mContext, MeFragment.class.getName()));
     }
 
+    private boolean canTableClick = true;
+
     private void addListener() {
         tb_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
+                if (!canTableClick) return;
+                canTableClick = false;
                 if (position == 0) {
                     tb_tab.setVisibility(View.GONE);
                     tb_index_tab.setVisibility(View.VISIBLE);
                     v_line_horizontal.setVisibility(View.INVISIBLE);
                     tb_index_tab.setTabItemSelected(R.id.ti_index_explore);
                     return;
+                } else if (position == 3) {
+                    ti_index_companion.hide();
+                    ti_companion.hide();
                 }
                 vp_content.setCurrentItem(position, false);
             }
@@ -143,6 +150,8 @@ public class IndexActivity extends BasicFragmentActivity {
         tb_index_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
+                if (!canTableClick) return;
+                canTableClick = false;
                 if (position != 0) {
                     tb_tab.setVisibility(View.VISIBLE);
                     tb_index_tab.setVisibility(View.GONE);
@@ -155,6 +164,8 @@ public class IndexActivity extends BasicFragmentActivity {
                             tb_tab.setTabItemSelected(R.id.ti_store);
                             return;
                         case 3:
+                            ti_index_companion.hide();
+                            ti_companion.hide();
                             tb_tab.setTabItemSelected(R.id.ti_companion);
                             return;
                     }
@@ -206,4 +217,11 @@ public class IndexActivity extends BasicFragmentActivity {
         v_shelter.setVisibility(View.GONE);
         ll_loading.setVisibility(View.VISIBLE);
     }
+
+    @Subcriber(tag = RedDotReceiver.ME_TABBAR)
+    private void setDot(String pay) {
+        ti_index_companion.show(-1);
+        ti_companion.show(-1);
+    }
+
 }
