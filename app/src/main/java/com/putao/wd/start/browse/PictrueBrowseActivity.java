@@ -1,31 +1,48 @@
 package com.putao.wd.start.browse;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.PicClickResult;
+import com.putao.wd.model.PicList;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 图片浏览
  * Created by guchenkai on 2015/12/24.
  */
 public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnPageChangeListener {
-    public static final String BUNDLE_CLICK_INDEX = "click_index";
-    public static final String BUNDLE_PICTRUES = "pictrues";
+    //    public static final String BUNDLE_CLICK_INDEX = "click_index";
+//    public static final String BUNDLE_PICTRUES = "pictrues";
+    public static final String IMAGE_URL = "image_url";
 
     @Bind(R.id.vp_pics)
     ViewPager vp_pics;
@@ -33,9 +50,11 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
     RelativeLayout ll_main;
     private SharePopupWindow mSharePopupWindow;//分享弹框
 
-    private int mClickIndex;//当前点击的项目
-    private ArrayList<String> mPicList;//图片数据源
-    private int size;
+    //    private int mClickIndex;//当前点击的项目
+    //    private ArrayList<String> mPicList;//图片数据源
+    private int startNum;
+    PicClickResult picClickResult;
+    ArrayList<PicList> mPicList;
 
     @Override
     protected int getLayoutId() {
@@ -46,13 +65,17 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
-        mClickIndex = args.getInt(BUNDLE_CLICK_INDEX);
-        mPicList = (ArrayList<String>) args.getSerializable(BUNDLE_PICTRUES);
-        size = mPicList.size();
+//        mClickIndex = args.getInt(BUNDLE_CLICK_INDEX);
+//        mPicList = (ArrayList<String>) args.getSerializable(BUNDLE_PICTRUES);
+        picClickResult = (PicClickResult) args.getSerializable(IMAGE_URL);
+        //开始的张数
+        startNum = picClickResult.getClickIndex();
+        mPicList = picClickResult.getPicList();
 
         setMainTitleColor(Color.WHITE);
-        setMainTitle((mClickIndex + 1) + "/" + mPicList.size());
+        setMainTitle((startNum + 1) + "/" + mPicList.size());
 
+        vp_pics.setOffscreenPageLimit(3);
         vp_pics.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -66,12 +89,39 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                ImageDraweeView imageView = new ImageDraweeView(mContext);
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) DensityUtil.px2dp(mContext, 300));
-                imageView.setLayoutParams(params);
-                imageView.setImageURL(mPicList.get(position));
-                container.addView(imageView);
-                return imageView;
+                ImageView mImageView = null;
+                ViewGroup.LayoutParams params;
+                String imageUrl = mPicList.get(position).getSrc();
+                String isJPG = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
+
+                if (isJPG.equals("gif")) {
+                    mImageView = new ImageDraweeView(mContext);
+                    ((ImageDraweeView) mImageView).setAspectRatio(DensityUtil.getDeviceHeight(mContext) / DensityUtil.getDeviceWidth(mContext));
+                    params = new ViewGroup.LayoutParams(DensityUtil.getDeviceWidth(mContext), ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ((ImageDraweeView) mImageView).setImageURL(imageUrl);
+                } else {
+                    mImageView = new PhotoView(mContext);
+                    params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    ImageLoader.getInstance().displayImage(mPicList.get(position).getSrc(), mImageView, new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            super.onLoadingFailed(imageUri, view, failReason);
+                            ToastUtils.showToast(PictrueBrowseActivity.this, "加载失败，请重新加载", 0);
+                        }
+
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+                            super.onLoadingStarted(imageUri, view);
+                        }
+                    });
+                }
+                container.addView(mImageView, params);
+                return mImageView;
             }
 
             @Override
@@ -79,7 +129,7 @@ public class PictrueBrowseActivity extends PTWDActivity implements ViewPager.OnP
                 container.removeView((View) object);
             }
         });
-        vp_pics.setCurrentItem(mClickIndex);
+        vp_pics.setCurrentItem(startNum);
         vp_pics.setPageTransformer(true, new ViewPager.PageTransformer() {
             private static final float MIN_SCALE = 0.85f;
             private static final float MIN_ALPHA = 0.5f;

@@ -18,7 +18,6 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.image.ImageDetailActivity;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.Marketing;
 import com.putao.wd.model.PicClickResult;
@@ -26,6 +25,7 @@ import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.user.LoginActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
@@ -168,8 +168,8 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
             public void onParsePutaoUrl(String scheme, JSONObject result) {
                 PicClickResult picClickResult = JSONObject.parseObject(result.toJSONString(), PicClickResult.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ImageDetailActivity.IMAGE_URL, picClickResult);
-                startActivity(ImageDetailActivity.class, bundle);
+                bundle.putSerializable(PictrueBrowseActivity.IMAGE_URL, picClickResult);
+                startActivity(PictrueBrowseActivity.class, bundle);
             }
 
             @Override

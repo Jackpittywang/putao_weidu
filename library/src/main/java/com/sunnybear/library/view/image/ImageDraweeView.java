@@ -139,6 +139,7 @@ public class ImageDraweeView extends SimpleDraweeView {
                 .setResizeOptions(mResizeOptions)
                 .build();
         DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setAutoPlayAnimations(true)
                 .setImageRequest(request)
                 .setTapToRetryEnabled(true)//加载失败时点击重新加载
                 .setOldController(getController())
