@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 更多内容
  * Created by yanghx on 2016/1/12.
  */
+@Deprecated
 public class HomeExploreMore implements Serializable {
 
     private String article_id;

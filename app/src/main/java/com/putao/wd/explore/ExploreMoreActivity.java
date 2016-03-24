@@ -8,8 +8,11 @@ import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.CreateCommentActivity;
+import com.putao.wd.created.CreateDetailActivity;
 import com.putao.wd.explore.adapter.MoreAdapter;
 import com.putao.wd.model.Create;
+import com.putao.wd.model.ExploreIndex;
+import com.putao.wd.model.ExploreIndexs;
 import com.putao.wd.model.HomeExploreMore;
 import com.putao.wd.model.HomeExploreMores;
 import com.putao.wd.start.action.ActionsDetailActivity;
@@ -24,6 +27,7 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 
@@ -35,8 +39,6 @@ public class ExploreMoreActivity extends PTWDActivity {
 
     public static final String KEY_TAB = "key_title";
 
-    //    @Bind(R.id.tb_bar)
-//    DynamicTitleBar tb_bar;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_more)
@@ -47,6 +49,8 @@ public class ExploreMoreActivity extends PTWDActivity {
     private MoreAdapter adapter;
     public static final String EVENT_COMMENT = "event_comment";
     public static final String EVENT_COOL = "event_cool";
+    private boolean hasMoreData;
+    private ArrayList<ExploreIndex> mExploreIndexs;
 
     @Override
     protected int getLayoutId() {
@@ -56,14 +60,6 @@ public class ExploreMoreActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-/*        int tab = args.getInt(KEY_TAB);
-        tb_bar.addTitles(Arrays.asList(titles), tab);
-        tb_bar.setOnTitleItemSelectedListener(new TitleBar.OnTitleItemSelectedListener() {
-            @Override
-            public void onTitleItemSelected(TitleItem item, int position) {
-                ToastUtils.showToastLong(mContext, "点击了第" + position + "项");
-            }
-        });*/
         adapter = new MoreAdapter(mContext, null);
         rv_more.setAdapter(adapter);
         refreshList();
@@ -89,12 +85,17 @@ public class ExploreMoreActivity extends PTWDActivity {
                 new SimpleFastJsonCallback<HomeExploreMores>(HomeExploreMores.class, loading) {
                     @Override
                     public void onSuccess(String url, HomeExploreMores result) {
-                        if (null != result.getList() && result.getList().size() > 0)
+                        mExploreIndexs = result.getList();
+                        if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
                             adapter.replaceAll(result.getList());
-                        if (result.getTotal_page() > 1)
+                        }
+                        if (result.getTotal_page() > 1) {
+                            hasMoreData = true;
                             mPage++;
-                        else if (result.getTotal_page() == 1)
+                        } else if (result.getTotal_page() == 1) {
+                            hasMoreData = false;
                             rv_more.noMoreLoading();
+                        }
                         loading.dismiss();
                         ptl_refresh.refreshComplete();
                     }
@@ -111,15 +112,21 @@ public class ExploreMoreActivity extends PTWDActivity {
      */
 
     private void addListener() {
-        rv_more.setOnItemClickListener(new OnItemClickListener<HomeExploreMore>() {
+        rv_more.setOnItemClickListener(new OnItemClickListener<ExploreIndex>() {
 
             @Override
-            public void onItemClick(HomeExploreMore homeExploreMore, int position) {
-                Bundle bundle = new Bundle();
+            public void onItemClick(ExploreIndex homeExploreMore, int position) {
+               /*
                 bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID, homeExploreMore.getArticle_id());
                 bundle.putInt(ExploreMoreDetailActivity.POSITION, position);
+                bundle.putBoolean(ExploreDetailNActivity.HAS_MORE_DATA, hasMoreData);
+                startActivity(ExploreMoreDetailActivity.class, bundle);*/
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ExploreDetailNActivity.DATAS, mExploreIndexs);
+                bundle.putInt(ExploreDetailNActivity.POSITION, position);
+                bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, false);
                 MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_home_detail);
-                startActivity(ExploreMoreDetailActivity.class, bundle);
+                startActivity(ExploreDetailNActivity.class, bundle);
             }
         });
         rv_more.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
@@ -132,10 +139,13 @@ public class ExploreMoreActivity extends PTWDActivity {
                                 if (result.getCurrent_page() < result.getTotal_page()) {
                                     adapter.addAll(result.getList());
                                     mPage++;
+                                    hasMoreData = true;
                                     loading.dismiss();
                                     rv_more.loadMoreComplete();
-                                } else
+                                } else {
+                                    hasMoreData = false;
                                     rv_more.noMoreLoading();
+                                }
                             }
                         });
             }
@@ -163,21 +173,21 @@ public class ExploreMoreActivity extends PTWDActivity {
 
     @Subcriber(tag = CommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
-        HomeExploreMore item = adapter.getItem(position);
+        ExploreIndex item = adapter.getItem(position);
         item.setCount_comments(item.getCount_comments() + 1);
         adapter.notifyItemChanged(position);
     }
 
     @Subcriber(tag = CommentActivity.EVENT_DELETE_CREAT_COMMENT)
     public void evenDeleteCommentCount(int position) {
-        HomeExploreMore item = adapter.getItem(position);
+        ExploreIndex item = adapter.getItem(position);
         item.setCount_comments(item.getCount_comments() - 1);
         adapter.notifyItemChanged(position);
     }
 
     @Subcriber(tag = ExploreMoreDetailActivity.EVENT_ADD_MORE_DETAIL_COOL)
     public void eventAddCoolCount(int position) {
-        HomeExploreMore item = adapter.getItem(position);
+        ExploreIndex item = adapter.getItem(position);
         item.setCount_likes(item.getCount_likes() + 1);
         item.setIs_like(true);
         adapter.notifyItemChanged(position);

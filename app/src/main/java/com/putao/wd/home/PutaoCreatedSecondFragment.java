@@ -145,13 +145,6 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                 });
     }
 
-   /* @Subcriber(tag = CreateAdapter.CREAT_COMMENT)
-    public void eventComment(String id) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, id);
-        startActivity(CreateCommentActivity.class, bundle);
-    }*/
-
     @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
     public void eventAddCommentCount(int position) {
         if (adapter.getItemCount() > position) {
@@ -198,17 +191,4 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
             item.setFollow_status(item.getFollow_status() == 1 ? 0 : 1);
         }
     }
-
-/*    @Subcriber(tag = CreateBasicDetailActivity.COOL)
-    public void eventAddCool(int position) {
-
-    }
-
-    @Subcriber(tag = CreateBasicDetailActivity.NOT_COOL)
-    public void eventAddNotCool(int position) {
-        Create item = adapter.getItem(position);
-        item.getVote().setDown(item.getVote().getDown() + 1);
-        adapter.notifyItemChanged(position);
-    }*/
-
 }

@@ -21,6 +21,7 @@ public class ChildViewPager extends ViewPager {
 
     public ChildViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        canClick = true;
     }
 
     @Override
@@ -49,6 +50,10 @@ public class ChildViewPager extends ViewPager {
                 getParent().requestDisallowInterceptTouchEvent(true);
                 break;
             default:
+                if (!canClick) {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+                }
                 //在up时判断是否按下和松手的坐标为一个点如果是一个点，将执行点击事件，这是我自己写的点击事件，而不是onclick
                 getParent().requestDisallowInterceptTouchEvent(false);
                 if (downP.x == curP.x && downP.y == curP.y) {
@@ -65,6 +70,15 @@ public class ChildViewPager extends ViewPager {
     public void onSingleTouch() {
         if (onSingleTouchListener != null)
             onSingleTouchListener.onSingleTouch();
+    }
+
+    private boolean canClick;
+
+    /**
+     * 单击
+     */
+    public void setClickAble(boolean b) {
+        canClick = b;
     }
 
     /**

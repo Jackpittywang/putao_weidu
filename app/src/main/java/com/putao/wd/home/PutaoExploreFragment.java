@@ -16,9 +16,12 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.created.CreateDetailActivity;
 import com.putao.wd.explore.ExploreCommonFragment;
 import com.putao.wd.explore.ExploreDetailActivity;
 import com.putao.wd.explore.ExploreDetailFragment;
+import com.putao.wd.explore.ExploreDetailNActivity;
+import com.putao.wd.explore.ExploreMoreActivity;
 import com.putao.wd.explore.ExploreMoreFragment;
 import com.putao.wd.explore.MarketingActivity;
 import com.putao.wd.model.ExploreIndex;
@@ -69,7 +72,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     private ArrayList<ExploreIndex> mExploreIndexs;
     private ExploreIndexs mExploreIndex;
     private SparseArray<Fragment> mFragments;
-    private int mPosition;
     //    private PageChangeThread mThread;
     private Handler mHandler;
     private HandlerThread mHandlerThread;
@@ -86,43 +88,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoExploreFragment启动");
         vp_content.setOffscreenPageLimit(3);
-       /* mHandlerThread = new HandlerThread("blurThread");
-        mHandlerThread.start();
-        Looper looper = mHandlerThread.getLooper();
-        mHandler = new Handler(looper) {
-            @Override
-            public void handleMessage(Message msg) {
-                mI = BACKGROUND_CAN_NOT_CHANGGE;
-                Bundle obj = (Bundle) msg.obj;
-                int position = obj.getInt(POSITION);
-                switch (msg.what) {
-                    case 1:
-                        try {
-                            Bitmap map;
-                            URL url = new URL(mExploreIndexs.get(position - 1).getBanner().get(0).getCover_pic());
-                            URLConnection conn = url.openConnection();
-                            conn.connect();
-                            InputStream in;
-                            in = conn.getInputStream();
-                            map = BitmapFactory.decodeStream(in);
-                            if (mI != BACKGROUND_CAN_NOT_CHANGGE || null == map) return;
-                            Bitmap apply = FastBlur.doBlur(map, 50, false);
-                            if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
-                            EventBusHelper.post(apply, BLUR);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case 2:
-                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.img_explore_more_cover);
-                        if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
-                        Bitmap apply = FastBlur.doBlur(bmp, 50, false);
-                        if (mI != BACKGROUND_CAN_NOT_CHANGGE) return;
-                        EventBusHelper.post(apply, BLUR);
-                        break;
-                }
-            }
-        };*/
         addListener();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -143,6 +108,8 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         initData();
     }
 
+    private boolean canClick;
+
     private void addListener() {
         //切换页面刷新日期
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -152,7 +119,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageSelected(final int position) {
-                mPosition = position + 1;
                 if (position == 0) {
                     vp_content.setCurrentItem(1);
                     return;
@@ -160,7 +126,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     vp_content.setCurrentItem(mExploreIndexs.size() + 1);
                     return;
                 }
-//                mI = BACKGROUND_CAN_CHANGGE;
                 if (position == mExploreIndexs.size() + 1) {
                     hindDate("MORE");
                 } else {
@@ -171,17 +136,26 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    vp_content.setClickAble(true);
+                } else {
+                    vp_content.setClickAble(false);
+                }
             }
         });
         vp_content.setOnSingleTouchListener(new ChildViewPager.OnSingleTouchListener() {
             @Override
             public void onSingleTouch() {
-                Bundle bundleDetial = new Bundle();
-                bundleDetial.putSerializable(ExploreCommonFragment.INDEX_DATA, mExploreIndexs);
-                bundleDetial.putInt(ExploreCommonFragment.INDEX_DATA_PAGE, mPosition);
-                startActivity(ExploreDetailActivity.class, bundleDetial);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_home_detail);
+                int position = vp_content.getCurrentItem() - 1;
+                if (position == 7) {
+                    startActivity(ExploreMoreActivity.class);
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ExploreDetailNActivity.DATAS, mExploreIndexs);
+                bundle.putInt(ExploreDetailNActivity.POSITION, position);
+                bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, false);
+                startActivity(ExploreDetailNActivity.class, bundle);
                 mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
             }
         });
@@ -284,9 +258,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
             case R.id.tv_thinking:
                 startActivity(MarketingActivity.class);
                 break;
-/*            case R.id.iv_scan:
-                startActivity(CaptureActivity.class);
-                break;*/
         }
     }
 
@@ -351,25 +322,4 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         }
         return "";
     }
-
-    /*class PageChangeThread extends Thread {
-        private int position;
-        private boolean isStart = false;
-
-        @Override
-        public void run() {
-            super.run();
-            Logger.d(Thread.currentThread().getName() + "---------------------------");
-            pageSelected(position);
-        }
-
-        public void start(int position) {
-            if (!isStart) {
-                isStart = true;
-                start();
-            }
-            this.position = position;
-            run();
-        }
-    }*/
 }

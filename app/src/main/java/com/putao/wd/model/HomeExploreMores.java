@@ -1,6 +1,6 @@
 package com.putao.wd.model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 更多内容
@@ -8,19 +8,19 @@ import java.util.List;
  */
 public class HomeExploreMores extends Page {
 
-    private List<HomeExploreMore> list;
+    private ArrayList<ExploreIndex> list;
 
-    public List<HomeExploreMore> getList() {
+    public ArrayList<ExploreIndex> getList() {
         return list;
     }
 
-    public void setList(List<HomeExploreMore> list) {
+    public void setList(ArrayList<ExploreIndex> list) {
         this.list = list;
     }
 
     @Override
     public String toString() {
-        return "HomeExploreMores{" +
+        return "ExploreIndex{" +
                 "list=" + list +
                 '}';
     }

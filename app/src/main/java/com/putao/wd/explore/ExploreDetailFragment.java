@@ -99,10 +99,17 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
     }
 
 
+    private boolean isMore;
+    private String mPic;
+
     private void initView() {
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
-        iv_top.setImageURL(mExploreIndex.getBanner().get(0).getCover_pic());
+        isMore = null == mExploreIndex.getBanner();
+        mPic = isMore ? mExploreIndex.getCover_pic() : mExploreIndex.getBanner().get(0).getUrl();
+        iv_top.setImageURL(mPic);
+        if (isMore ? "VIDEO".equals(mExploreIndex.getType()) : "VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
+            iv_player.setVisibility(View.VISIBLE);
         String cache_count = mDiskFileCacheHelper.getAsString(COOL_COUNT + mExploreIndex.getArticle_id());
         mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
 
@@ -112,8 +119,6 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
         tv_count_cool.setText(mExploreIndex.getCount_likes() == 0 ? "赞" : mExploreIndex.getCount_likes() + "");
         tv_count_comment.setText(mCount_comments == 0 ? "评论" : mCount_comments + "");
-        if ("VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
-            iv_player.setVisibility(View.VISIBLE);
         loadData = HTMLUtil.setWidth(DensityUtil.px2dp(mActivity, mActivity.getWindowManager().getDefaultDisplay().getWidth() - 200), mExploreIndex.getExplanation());
         wb_explore_detail.loadDataWithBaseURL("about:blank", loadData, "text/html", "utf-8", null);
     }
@@ -128,19 +133,19 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mPic, mExploreIndex.getShare_url());
                 MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "微信好友");
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.wechatWebShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mPic, mExploreIndex.getShare_url());
                 MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "微信朋友圈");
             }
 
             @Override
             public void onQQFriend() {
-                ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mPic, mExploreIndex.getShare_url());
                 MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "QQ好友");
             }
 
@@ -185,7 +190,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.iv_player:
-                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, mExploreIndex.getBanner().get(0).getUrl());
+                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, isMore ? mExploreIndex.getUrl() : mExploreIndex.getBanner().get(0).getUrl());
                 startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
             case R.id.ll_cool:

@@ -26,6 +26,8 @@ public class ExploreApi {
     private static final String COMMENT_ID = "comment_id";//首页评论ID
     private static final String MESSAGE = "message";//首页评论内容
     private static final String COOL_TYPE = "cool_type";//赞类型
+    private static final String IS_DISPLAY_EXPLANATION = "is_display_explanation";//是否请求文章内容
+
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
@@ -346,6 +348,7 @@ public class ExploreApi {
         return PTWDRequestHelper.start()
                 .addParam("type", "0")
                 .addParam(REQUEST_PAGE, page + "")
+                .addParam(IS_DISPLAY_EXPLANATION, "1")
                 .build(RequestMethod.POST, URL_ARTICLE_LIST);
     }
 }

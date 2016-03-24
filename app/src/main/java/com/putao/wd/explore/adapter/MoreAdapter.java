@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.explore.ExploreMoreActivity;
+import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.HomeExploreMore;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.SwitchButton;
@@ -24,12 +25,12 @@ import butterknife.Bind;
  * 更多内容适配器
  * Created by yanghx on 2016/1/12.
  */
-public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.MoreContentViewHolder> {
+public class MoreAdapter extends LoadMoreAdapter<ExploreIndex, MoreAdapter.MoreContentViewHolder> {
 
     private Context mContext;
     private Animation mAnim;
 
-    public MoreAdapter(Context context, List<HomeExploreMore> homeExploreMores) {
+    public MoreAdapter(Context context, List<ExploreIndex> homeExploreMores) {
         super(context, homeExploreMores);
         mContext = context;
         mAnim = AnimationUtils.loadAnimation(mContext, R.anim.anim_cool);
@@ -46,14 +47,14 @@ public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.Mo
     }
 
     @Override
-    public void onBindItem(final MoreContentViewHolder holder, final HomeExploreMore homeExploreMore, int position) {
+    public void onBindItem(final MoreContentViewHolder holder, final ExploreIndex homeExploreMore, int position) {
         holder.iv_icon.setImageURL(homeExploreMore.getCover_pic());
         holder.tv_title.setText(homeExploreMore.getTitle());
         holder.tv_content.setText(homeExploreMore.getDescription());
         holder.tv_count_comment.setText(homeExploreMore.getCount_comments() + "");
         holder.tv_count_cool.setText(homeExploreMore.getCount_likes() + "");
         holder.sb_cool_icon.setClickable(false);
-        holder.sb_cool_icon.setState(homeExploreMore.getIs_like());
+        holder.sb_cool_icon.setState(homeExploreMore.is_like());
         holder.ll_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +65,7 @@ public class MoreAdapter extends LoadMoreAdapter<HomeExploreMore, MoreAdapter.Mo
             @Override
             public void onClick(View v) {
                 holder.sb_cool_icon.startAnimation(mAnim);
-                if (homeExploreMore.getIs_like())
+                if (homeExploreMore.is_like())
                     return;
                 EventBusHelper.post(homeExploreMore.getArticle_id(), ExploreMoreActivity.EVENT_COOL);
                 holder.sb_cool_icon.setState(true);

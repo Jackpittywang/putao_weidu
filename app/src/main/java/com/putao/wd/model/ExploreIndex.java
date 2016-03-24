@@ -18,6 +18,9 @@ public class ExploreIndex extends CacheTime implements Serializable {
     private boolean is_like;//是否赞过
     private List<ExploreBanner> banner;//详情头
     private String share_url;//分享链接
+    private String cover_pic;//列表图
+    private String type;//头类型
+    private String url;//头地址
 
     public String getArticle_id() {
         return article_id;
@@ -99,6 +102,30 @@ public class ExploreIndex extends CacheTime implements Serializable {
         this.share_url = share_url;
     }
 
+    public String getCover_pic() {
+        return cover_pic;
+    }
+
+    public void setCover_pic(String cover_pic) {
+        this.cover_pic = cover_pic;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "ExploreIndex{" +
@@ -112,6 +139,9 @@ public class ExploreIndex extends CacheTime implements Serializable {
                 ", is_like=" + is_like +
                 ", banner=" + banner +
                 ", share_url='" + share_url + '\'' +
+                ", cover_pic='" + cover_pic + '\'' +
+                ", type='" + type + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }
