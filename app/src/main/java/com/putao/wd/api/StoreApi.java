@@ -357,4 +357,18 @@ public class StoreApi {
                 .addParam(REQUEST_PRODUCT_PID, pid)
                 .build(RequestMethod.POST, URL_PRODUCT_VIEW_V2);
     }
+
+    /**
+     * 获取商品是否下架(跳转到精品还是非精品)
+     */
+    public static final String URL_PRODUCT_STATUS = "http://api.store.test.putao.com/product/status";
+
+    /**
+     * 获取商品是否下架
+     */
+    public static Request getProductStatus(String pid) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_PRODUCT_PID, pid)
+                .build(RequestMethod.POST, URL_PRODUCT_STATUS);
+    }
 }
