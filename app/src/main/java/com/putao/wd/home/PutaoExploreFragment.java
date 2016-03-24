@@ -1,24 +1,20 @@
 package com.putao.wd.home;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.MyViewPager;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
-import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.created.CreateDetailActivity;
 import com.putao.wd.explore.ExploreCommonFragment;
-import com.putao.wd.explore.ExploreDetailActivity;
 import com.putao.wd.explore.ExploreDetailFragment;
 import com.putao.wd.explore.ExploreDetailNActivity;
 import com.putao.wd.explore.ExploreMoreActivity;
@@ -30,9 +26,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.viewpager.ChildViewPager;
-import com.umeng.analytics.MobclickAgent;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -108,11 +102,9 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         initData();
     }
 
-    private boolean canClick;
-
     private void addListener() {
         //切换页面刷新日期
-        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp_content.addOnPageChangeListener(new MyViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -136,11 +128,7 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    vp_content.setClickAble(true);
-                } else {
-                    vp_content.setClickAble(false);
-                }
+
             }
         });
         vp_content.setOnSingleTouchListener(new ChildViewPager.OnSingleTouchListener() {

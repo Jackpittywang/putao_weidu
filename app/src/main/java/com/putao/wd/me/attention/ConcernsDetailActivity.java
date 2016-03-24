@@ -3,13 +3,10 @@ package com.putao.wd.me.attention;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.SparseArray;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.api.CreateApi;
-import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.CreateBasicDetailFragment;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;

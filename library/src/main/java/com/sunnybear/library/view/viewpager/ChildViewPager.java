@@ -2,7 +2,7 @@ package com.sunnybear.library.view.viewpager;
 
 import android.content.Context;
 import android.graphics.PointF;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.MyViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -10,7 +10,7 @@ import android.view.MotionEvent;
  * 嵌套的ViewPager
  * Created by guchenkai on 2016/1/13.
  */
-public class ChildViewPager extends ViewPager {
+public class ChildViewPager extends MyViewPager {
     private PointF downP = new PointF();//触摸时按下的点
     private PointF curP = new PointF();//触摸时当前的点
     private OnSingleTouchListener onSingleTouchListener;
@@ -21,7 +21,7 @@ public class ChildViewPager extends ViewPager {
 
     public ChildViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        canClick = true;
+
     }
 
     @Override
@@ -50,13 +50,10 @@ public class ChildViewPager extends ViewPager {
                 getParent().requestDisallowInterceptTouchEvent(true);
                 break;
             default:
-                if (!canClick) {
-                    getParent().requestDisallowInterceptTouchEvent(true);
-                    break;
-                }
+                setCurrentItem(getCurrentItem(), true, true);
                 //在up时判断是否按下和松手的坐标为一个点如果是一个点，将执行点击事件，这是我自己写的点击事件，而不是onclick
                 getParent().requestDisallowInterceptTouchEvent(false);
-                if (downP.x == curP.x && downP.y == curP.y) {
+                if (downP.x == curP.x && downP.y == curP.y && getScrollState() == MyViewPager.SCROLL_STATE_IDLE) {
                     onSingleTouch();
                     return true;
                 }
@@ -70,15 +67,6 @@ public class ChildViewPager extends ViewPager {
     public void onSingleTouch() {
         if (onSingleTouchListener != null)
             onSingleTouchListener.onSingleTouch();
-    }
-
-    private boolean canClick;
-
-    /**
-     * 单击
-     */
-    public void setClickAble(boolean b) {
-        canClick = b;
     }
 
     /**
