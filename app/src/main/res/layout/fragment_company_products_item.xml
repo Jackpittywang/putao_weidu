@@ -10,7 +10,7 @@
         style="@style/image_round_10dp"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
         android:background="@null" />
 
@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_product"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
         android:gravity="center"
         android:maxLines="3"
         android:textColor="@color/color_313131"
