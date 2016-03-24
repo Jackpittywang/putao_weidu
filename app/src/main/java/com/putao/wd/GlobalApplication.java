@@ -239,9 +239,8 @@ public class GlobalApplication extends BasicApplication {
         public void onReceive(Context context, Intent intent) {
             if (isServiceClose) {
                 startRedDotService();
-                isServiceShouldNotClose = false;
-            } else
-                isServiceShouldNotClose = true;
+                isServiceClose = false;
+            }
         }
     }
 
@@ -251,6 +250,7 @@ public class GlobalApplication extends BasicApplication {
      */
     public static final String MAP_EMOJI = "map_emoji";
     public static final String Fore_Message = "com.putao.isFore.message";
+    public static final String Not_Fore_Message = "com.putao.isNotFore.message";
     //===================preference key===========================
     public static final String PREFERENCE_KEY_UID = "uid";
     public static final String PREFERENCE_KEY_TOKEN = "token";

@@ -70,7 +70,8 @@ public class NotifyService extends Service {
         });
         sendConnectValidate();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.putao.isFore.message");
+        intentFilter.addAction(GlobalApplication.Fore_Message);
+        intentFilter.addAction(GlobalApplication.Not_Fore_Message);
         registerReceiver(new HomeBroadcastReceiver(), intentFilter);
     }
 
@@ -100,20 +101,30 @@ public class NotifyService extends Service {
      * 监听程序已经在后台
      */
     private class HomeBroadcastReceiver extends BroadcastReceiver {
+        Timer timer;
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (GlobalApplication.isServiceShouldNotClose)
-                        return;
-                    stopSelf();
-                    unregisterReceiver(HomeBroadcastReceiver.this);
-                    GlobalApplication.isServiceClose = true;
-                    Logger.d("---------++++", "停止服务");
-                }
-            }, 10 * 1000);
+
+            switch (intent.getAction()) {
+                case GlobalApplication.Fore_Message:
+                    if (null == timer)
+                        timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            stopSelf();
+                            unregisterReceiver(HomeBroadcastReceiver.this);
+                            GlobalApplication.isServiceClose = true;
+                            Logger.d("---------++++", "停止服务");
+                        }
+                    }, 10 * 1000);
+                    break;
+                case GlobalApplication.Not_Fore_Message:
+                    if (null != timer)
+                        timer.cancel();
+                    break;
+            }
         }
     }
 }
