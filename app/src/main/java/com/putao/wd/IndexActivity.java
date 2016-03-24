@@ -38,6 +38,8 @@ import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import butterknife.Bind;
 import cn.jpush.android.api.JPushInterface;
 
@@ -222,11 +224,32 @@ public class IndexActivity extends BasicFragmentActivity {
         mDiskFileCacheHelper.remove(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid());
     }
 
+
+    //-------------------------------以下是红点信息缓存-------------------------//
     @Subcriber(tag = RedDotReceiver.ME_TABBAR)
-    private void setDot(String pay) {
+    private void setMeDot(String me_tabbar) {
         ti_index_companion.show(-1);
         ti_companion.show(-1);
-        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), pay);
+        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), me_tabbar);
     }
 
+    @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
+    private void setMeMessageCenterDot(String me_messagecenter) {
+        mDiskFileCacheHelper.put(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid(), me_messagecenter);
+    }
+
+
+    @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
+    private void setMessageCenterDot(String messagecenter) {
+        HashMap<String, String> redDotMap = new HashMap<>();
+        redDotMap.put(messagecenter, messagecenter);
+        mDiskFileCacheHelper.put(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), redDotMap);
+    }
+
+    @Subcriber(tag = RedDotReceiver.APPPRODUCT_ID)
+    private void setCompanionDot(String appproduct_id) {
+        HashMap<String, String> redDotMap = new HashMap<>();
+        redDotMap.put(appproduct_id, appproduct_id);
+        mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), redDotMap);
+    }
 }

@@ -151,7 +151,6 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
                 break;
         }
         mRedDotMap.put(messagecenter, messagecenter);
-        mDiskFileCacheHelper.put(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDotMap);
     }
 
 }

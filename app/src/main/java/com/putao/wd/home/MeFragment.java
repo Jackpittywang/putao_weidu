@@ -503,6 +503,5 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
     private void setDot(String me_tabbar) {
         si_message.show();
-        mDiskFileCacheHelper.put(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid(), me_tabbar);
     }
 }

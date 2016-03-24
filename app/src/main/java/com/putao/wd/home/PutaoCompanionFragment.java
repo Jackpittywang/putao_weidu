@@ -310,8 +310,6 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         if (position != -1) {
             mProductsAdapter.getItem(position).setShowRedDot(true);
             mProductsAdapter.notifyItemChanged(position);
-            mRedDotMap.put(appproduct_id, appproduct_id);
-            mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), mRedDotMap);
         }
     }
 }
