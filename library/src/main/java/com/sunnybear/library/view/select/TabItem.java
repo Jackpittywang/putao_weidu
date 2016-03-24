@@ -41,7 +41,7 @@ public class TabItem extends View {
 
     private void initStyleable(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TabItem);
-        mIndicatorRadius = array.getInt(R.styleable.TabItem_indicator_radius, 3);
+        mIndicatorRadius = array.getInt(R.styleable.TabItem_indicator_radius, 4);
         mActive = array.getBoolean(R.styleable.TabItem_active, false);
         mActiveDrawable = array.getDrawable(R.styleable.TabItem_activeDrawable);
         mInActiveDrawable = array.getDrawable(R.styleable.TabItem_inactiveDrawable);
@@ -95,8 +95,8 @@ public class TabItem extends View {
 
         if (mNotificationSize != 0) {
             canvas.save();
-            canvas.translate(measuredWidth / 2 + drawableWidth / 2 - mIndicator.getIntrinsicWidth(), 0);
-            mIndicator.setBounds(0, 0, mIndicator.getIntrinsicWidth(), mIndicator.getIntrinsicHeight());
+            canvas.translate(measuredWidth / 2 + drawableWidth / 2 - mIndicator.getIntrinsicWidth() - 20, 15);
+//            mIndicator.setBounds(0, 50, 30/*mIndicator.getIntrinsicWidth()*/, 0/* mIndicator.getIntrinsicHeight()*/);
             mIndicator.draw(canvas);
             canvas.restore();
         }

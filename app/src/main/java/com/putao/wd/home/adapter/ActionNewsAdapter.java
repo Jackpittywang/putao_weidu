@@ -1,15 +1,12 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.map.MapActivity;
 import com.putao.wd.model.ActionNews;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;

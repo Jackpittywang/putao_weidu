@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.BasicApplication;
@@ -21,14 +20,12 @@ import com.sunnybear.library.R;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
-import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.LoadingHUD;
 
 import java.io.Serializable;
-import java.util.List;
 
 import butterknife.ButterKnife;
 

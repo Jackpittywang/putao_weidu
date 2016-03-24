@@ -1,9 +1,13 @@
 package com.putao.wd;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -24,6 +28,8 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.jpush.android.api.JPushInterface;
@@ -36,6 +42,8 @@ import cn.sharesdk.framework.ShareSDK;
 public class GlobalApplication extends BasicApplication {
     public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
+    public static boolean isServiceClose;
+    public static boolean isServiceShouldNotClose;
 
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
@@ -101,16 +109,10 @@ public class GlobalApplication extends BasicApplication {
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
         msgApi.registerApp(WX_APP_ID);
         //启动推送
-//        if (null != AccountHelper.getCurrentUserInfo()) {
-//            try {
-//                new NettyClientBootstrap();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        Intent intent = new Intent(ACTION_PUSH_SERVICE);
-        intent.setPackage("com.putao.wd");
-        startService(intent);
+        startRedDotService();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.putao.isNotFore.message");
+        registerReceiver(new HomeBroadcastReceiver(), intentFilter);
         // 创建默认的ImageLoader配置参数
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration
                 .createDefault(this);
@@ -126,7 +128,6 @@ public class GlobalApplication extends BasicApplication {
                 new JPushHeaper().setAlias(GlobalApplication.this, AccountHelper.getCurrentUid());
             }
         }, 3000);
-
     }
 
     /**
@@ -143,6 +144,15 @@ public class GlobalApplication extends BasicApplication {
 
                     }
                 };
+    }
+
+    /**
+     * 启动内部推送
+     */
+    private void startRedDotService() {
+        Intent intent = new Intent(ACTION_PUSH_SERVICE);
+        intent.setPackage("com.putao.wd");
+        startService(intent);
     }
 
     /**
@@ -221,9 +231,26 @@ public class GlobalApplication extends BasicApplication {
     }
 
     /**
+     * 监听程序已经在后台
+     */
+    private class HomeBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (isServiceClose) {
+                startRedDotService();
+                isServiceShouldNotClose = false;
+            } else
+                isServiceShouldNotClose = true;
+        }
+    }
+
+
+    /**
      * 有此至下为常量定义
      */
     public static final String MAP_EMOJI = "map_emoji";
+    public static final String Fore_Message = "com.putao.isFore.message";
     //===================preference key===========================
     public static final String PREFERENCE_KEY_UID = "uid";
     public static final String PREFERENCE_KEY_TOKEN = "token";

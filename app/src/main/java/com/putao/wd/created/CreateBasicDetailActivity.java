@@ -24,7 +24,6 @@ import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.order.OrderListActivity;
 import com.putao.wd.model.Create;
-import com.putao.wd.model.Creates;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;

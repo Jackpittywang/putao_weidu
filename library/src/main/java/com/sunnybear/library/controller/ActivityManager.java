@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 public class ActivityManager {
     //activity管理栈
-    private volatile Stack<Activity> activityStack;
+    private volatile Stack<BasicFragmentActivity> activityStack;
     //全局单例
     private static volatile ActivityManager instance;
 
@@ -35,7 +35,7 @@ public class ActivityManager {
      *
      * @param activity activity
      */
-    public void addActivity(Activity activity) {
+    public void addActivity(BasicFragmentActivity activity) {
         activityStack.add(activity);
     }
 
@@ -44,7 +44,7 @@ public class ActivityManager {
      *
      * @return 栈顶的activity
      */
-    public Activity getCurrentActivity() {
+    public BasicFragmentActivity getCurrentActivity() {
         return activityStack.lastElement();
     }
 
@@ -52,7 +52,7 @@ public class ActivityManager {
      * 将指定的activity移出管理堆栈
      */
     public void removeCurrentActivity() {
-        Activity activity = getCurrentActivity();
+        BasicFragmentActivity activity = getCurrentActivity();
         if (activity != null)
             activityStack.remove(activity);
     }
@@ -70,7 +70,7 @@ public class ActivityManager {
      *
      * @param activity activity
      */
-    public void finishActivity(Activity activity) {
+    public void finishActivity(BasicFragmentActivity activity) {
         if (activity != null) {
             activityStack.remove(activity);
             activity.finish();
@@ -83,11 +83,23 @@ public class ActivityManager {
      *
      * @param activityClass activityClass
      */
-    public void finishActivity(Class<? extends Activity> activityClass) {
-        for (Activity activity : activityStack) {
+    public void finishActivity(Class<? extends BasicFragmentActivity> activityClass) {
+        for (BasicFragmentActivity activity : activityStack) {
             if (activityClass.equals(activity.getClass()))
                 finishActivity(activity);
         }
+    }
+
+    /**
+     * 程序是否进入后台
+     *
+     */
+    public boolean isAppFore() {
+        for (BasicFragmentActivity activity : activityStack) {
+            if (activity.isResume)
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -105,9 +117,9 @@ public class ActivityManager {
      *
      * @param cls activityClass
      */
-    public void popOtherActivity(Class<? extends Activity> cls) {
+    public void popOtherActivity(Class<? extends BasicFragmentActivity> cls) {
         if (null == cls) return;
-        for (Activity activity : activityStack) {
+        for (BasicFragmentActivity activity : activityStack) {
             if (null == activity || activity.getClass().equals(cls))
                 continue;
             activity.finish();

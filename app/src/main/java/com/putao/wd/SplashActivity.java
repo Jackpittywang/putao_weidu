@@ -10,7 +10,6 @@ import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.order.OrderDetailActivity;
 import com.putao.wd.me.service.ServiceDetailActivity;
-import com.putao.wd.me.service.ServiceListActivity;
 import com.putao.wd.store.product.ProductDetailActivity;
 import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;

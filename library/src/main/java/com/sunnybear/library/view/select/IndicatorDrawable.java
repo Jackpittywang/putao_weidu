@@ -30,11 +30,11 @@ public class IndicatorDrawable extends Drawable {
     public IndicatorDrawable(Context context) {
         mTextBounds = new Rect();
         mDensityDpi = context.getResources().getDisplayMetrics().density;
-        mRadius = dp(7);
+        mRadius = dp(8);
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setAntiAlias(true);
-        mPaint.setTextSize(dp(7));
+        mPaint.setTextSize(dp(8));
         mPaint.setTextAlign(Paint.Align.CENTER);
     }
 
@@ -46,7 +46,7 @@ public class IndicatorDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-        mPaint.setColor(0xffff6e11);
+        mPaint.setColor(0xffed5564);
         mPaint.setStrokeWidth(1);
         canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
         if (!isShowSize) {

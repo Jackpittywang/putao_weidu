@@ -6,17 +6,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.squareup.okhttp.Callback;
@@ -31,7 +28,6 @@ import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
-import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -54,6 +50,8 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     protected App mApp;
     private OkHttpClient mOkHttpClient;
     protected LoadingHUD loading;
+    private boolean isRunningForeground;
+    public boolean isResume;
 
     protected Bundle args;
     private static WeakHandler mWeakHandler;
@@ -118,16 +116,6 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         onViewCreatedFinish(savedInstanceState);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        loading.dismiss();
-        //Activity停止时取消所有请求
-        String[] urls = getRequestUrls();
-        for (String url : urls) {
-            OkHttpRequestHelper.newInstance().cancelRequest(url);
-        }
-    }
 
     @Override
     protected void onDestroy() {
@@ -487,11 +475,38 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        loading.dismiss();
+        isResume = false;
+        //Activity停止时取消所有请求
+        String[] urls = getRequestUrls();
+        for (String url : urls) {
+            OkHttpRequestHelper.newInstance().cancelRequest(url);
+        }
+        if (ActivityManager.getInstance().isAppFore()) {
+            Logger.d("ActivityManager-------", "应用到后台了");
+            isRunningForeground = true;
+            Intent intent = new Intent("com.putao.isFore.message");
+            mContext.sendBroadcast(intent);
+        }
+    }
+
     /**
      * 注册统计
      */
     protected void onResume() {
         super.onResume();
+        isResume = true;
+        if (isRunningForeground) {
+            Logger.d("ActivityManager", "应用恢复到前台了");
+            /*Intent intent = new Intent("com.putao.mtlib.message");
+            mContext.sendBroadcast(intent);*/
+            isRunningForeground = false;
+            Intent intent = new Intent("com.putao.isNotFore.message");
+            mContext.sendBroadcast(intent);
+        }
         MobclickAgent.onResume(this);
     }
 
@@ -499,4 +514,5 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 }

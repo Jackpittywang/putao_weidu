@@ -1,11 +1,15 @@
 package com.putao.mtlib;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.putao.mtlib.model.CS_CONNECT;
 import com.putao.mtlib.tcp.OnReceiveMessageListener;
@@ -15,8 +19,12 @@ import com.putao.mtlib.tcp.PTRecMessage;
 import com.putao.mtlib.tcp.PTSenderManager;
 import com.putao.mtlib.util.MD5Util;
 import com.putao.mtlib.util.MsgPackUtil;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 通知服务
@@ -61,6 +69,9 @@ public class NotifyService extends Service {
             }
         });
         sendConnectValidate();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.putao.isFore.message");
+        registerReceiver(new HomeBroadcastReceiver(), intentFilter);
     }
 
     /**
@@ -83,5 +94,26 @@ public class NotifyService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    /**
+     * 监听程序已经在后台
+     */
+    private class HomeBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (GlobalApplication.isServiceShouldNotClose)
+                        return;
+                    stopSelf();
+                    unregisterReceiver(HomeBroadcastReceiver.this);
+                    GlobalApplication.isServiceClose = true;
+                    Logger.d("---------++++", "停止服务");
+                }
+            }, 10 * 1000);
+        }
     }
 }
