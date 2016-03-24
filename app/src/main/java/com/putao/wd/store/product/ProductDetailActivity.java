@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,41 +12,42 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
-import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.me.message.RemindFragment;
 import com.putao.wd.model.OrderProduct;
-import com.putao.wd.model.Product;
 import com.putao.wd.model.ProductDetail;
-import com.putao.wd.model.Service;
+import com.putao.wd.model.ProductStatus;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
-import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.store.order.WriteOrderActivity;
 import com.putao.wd.store.shopping.ShoppingCarActivity;
 import com.putao.wd.store.shopping.ShoppingCarPopupWindow;
 import com.putao.wd.user.LoginActivity;
-import com.squareup.okhttp.FormEncodingBuilder;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.select.TitleBar;
+import com.sunnybear.library.view.select.TitleItem;
+import com.sunnybear.library.view.sticky.StickyHeaderLayout;
+import com.sunnybear.library.view.viewpager.banner.ConvenientBanner;
+import com.sunnybear.library.view.viewpager.banner.holder.CBViewHolderCreator;
+import com.sunnybear.library.view.viewpager.banner.holder.Holder;
+import com.sunnybear.library.view.viewpager.transformer.CardsTransformer;
 import com.umeng.analytics.MobclickAgent;
-
-import java.io.Serializable;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -54,10 +56,10 @@ import butterknife.OnClick;
  * 商品详情
  * Created by guchenkai on 2015/11/30.
  */
-public class ProductDetailActivity extends BasicFragmentActivity implements View.OnClickListener {
+public class ProductDetailActivity extends BasicFragmentActivity implements View.OnClickListener, TitleBar.OnTitleItemSelectedListener {
     public static final String PRODUCT_ID = "product_id";
     public static final String BUNDLE_PRODUCT_NUM = "bundle_product_num";
-    /* public static final String BUNDLE_PRODUCT_ICON = "product_icon";*/
+    public static final String BUNDLE_PRODUCT_ICON = "product_icon";
     public static final String BUNDLE_PRODUCT = "bundle_product";
     public static final String BUNDLE_IS_DETAIL = "bundle_is_detail";
     public static final String BUNDLE_IS_SERVICE = "bundle_is_service";
@@ -84,8 +86,9 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     TextView shopping_car_buy;//立即购买
     @Bind(R.id.shopping_txt_number)
     TextView shopping_txt_number;//立即购买
-
-    /*@Bind(R.id.sticky_layout)
+    @Bind(R.id.ll_share)
+    LinearLayout ll_share;//精品界面的分享
+    @Bind(R.id.sticky_layout)
     StickyHeaderLayout sticky_layout;
     @Bind(R.id.cb_banner)
     ConvenientBanner<String> cb_banner;
@@ -94,15 +97,20 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     @Bind(R.id.tv_product_intro)
     TextView tv_product_intro;
     @Bind(R.id.stickyHeaderLayout_sticky)
-    TitleBar stickyHeaderLayout_sticky;*/
+    TitleBar stickyHeaderLayout_sticky;
+    @Bind(R.id.relative_product_detail)
+    RelativeLayout relative_product_detail;
+    @Bind(R.id.stickyHeaderLayout_scrollable)
+    BasicWebView stickyHeaderLayout_scrollable;
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
     StoreProduct storeProduct;
 
-    private String product_id;//产品id
+    private String product_id, pid;//产品id
     private String product_num;//是否是从陪伴传送过来的数据
     private String title, subtitle, shareUrl;
+    private int status, has_special;
 
     private ProductDetail detail = null;
     private String imageUrl;//商品图片
@@ -147,28 +155,31 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
             getProduct(product_id);
         } else {
             storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
-            if (null == storeProduct) {
+            pid = args.getString(PRODUCT_ID);
+            if (null == pid) {
                 wv_content.loadUrl(PTWDRequestHelper.store()
                         .addParam("pid", args.getString(JPushReceiver.MID))
                         .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
                 getProduct(args.getString(JPushReceiver.MID));
             } else {
-                wv_content.loadUrl(storeProduct.getMobile_url());
-                tv_product_price.setText(storeProduct.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+                sticky_layout.canScrollView();
+                stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
+                getProductStatus(pid);
             }
+//            if (null == storeProduct) {
+//                wv_content.loadUrl(PTWDRequestHelper.store()
+//                        .addParam("pid", args.getString(JPushReceiver.MID))
+//                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+//                getProduct(args.getString(JPushReceiver.MID));
+//            } else {
+//                wv_content.loadUrl(storeProduct.getMobile_url());
+//                tv_product_price.setText(storeProduct.getPrice());
+//                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+//            }
         }
 
         //分享弹框的点击事件
         addListener();
-
-//         imageUrl = args.getString(BUNDLE_PRODUCT_ICON);
-//        product_id = args.getString(BUNDLE_PRODUCT_ID);
-//        mSharePopupWindow = new SharePopupWindow(mContext);
-//        sticky_layout.canScrollView();
-//        addListener();
-//        getProductDetail(product_id);
-//        stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
     }
 
     private void addListener() {
@@ -247,7 +258,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
                 loading.dismiss();
             }
-
         });
     }
 
@@ -257,21 +267,50 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
      * @param product_id 产品id
      * @param type       种类
      */
-  /*  private void loadHtml(String product_id, String type) {
+    private void loadHtml(String product_id, String type) {
         String base_url = GlobalApplication.isDebug ? "http://static.uzu.wang/weidu_event/" : "http://static.putaocdn.com/weidu/";
         String webUrl = base_url + "uncdn/index.html?id=" + product_id + "&nav=" + type;
-        wv_content.loadUrl(args.getString(BUNDLE_PRODUCT_ICON));
-    }*/
+        stickyHeaderLayout_scrollable.loadUrl(webUrl);
+    }
+
+    /**
+     * 商品详情(商品是否已下架)
+     */
+    private void getProductStatus(final String product_id) {
+        networkRequest(StoreApi.getProductStatus(product_id), new SimpleFastJsonCallback<ProductStatus>(ProductStatus.class, loading) {
+            @Override
+            public void onSuccess(String url, ProductStatus result) {
+                status = result.getStatus();
+                has_special = result.getHas_special();
+                if (result.equals("") && result == null || status == 0) {
+                    return;//跳转到下架界面
+                } else {
+                    //判断是否是精品(1.精品，0.非精品)
+                    if (has_special == 1) {
+                        sticky_layout.setVisibility(View.GONE);
+                        relative_product_detail.setVisibility(View.VISIBLE);
+                        wv_content.loadUrl(storeProduct.getMobile_url());
+                        tv_product_price.setText(storeProduct.getPrice());
+                        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+                    } else if (has_special == 0) {//显示h5
+                        sticky_layout.setVisibility(View.VISIBLE);
+                        relative_product_detail.setVisibility(View.GONE);
+                        getProductDetail(product_id);
+                    }
+                }
+            }
+        });
+    }
 
     /**
      * 商品详情
-     *//*
-    private void getProductDetail(String product_id) {
+     */
+    private void getProductDetail(final String product_id) {
         networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
                 detail = result;
-                loadHtml(result.getId(), "0");
+                loadHtml(product_id, "0");
                 tv_product_title.setText(result.getTitle());
                 tv_product_intro.setText(result.getSubtitle());
                 tv_product_price.setText(result.getPrice());
@@ -286,15 +325,15 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                     }, result.getPictures())
                             .setPageTransformer(new CardsTransformer());
                 }
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
                 loading.dismiss();
             }
         });
     }
 
-    *//**
+    /**
      * 广告页适配器
-     *//*
+     */
     static class ImageHolderView implements Holder<String> {
         private ImageDraweeView imageView;
 
@@ -310,7 +349,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         public void UpdateUI(Context context, int position, String data) {
             imageView.setImageURL(data);
         }
-    }*/
+    }
 
     /**
      * 获得购物车数量
@@ -364,7 +403,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         return new String[0];
     }
 
-    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_car_buy, R.id.shopping_share, R.id.shopping_relative_car})
+    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_car_buy, R.id.shopping_share, R.id.shopping_relative_car, R.id.ll_share})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -378,20 +417,22 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
                 finish();
                 break;
-            case R.id.shopping_car_buy://立即购买
-                Bundle bundle = new Bundle();
-                bundle.putString(PRODUCT_ID, storeProduct.getId());
-                bundle.putInt("product_count", 1);
-                startActivity(WriteOrderActivity.class, bundle);
-                break;
+//            case R.id.shopping_car_buy://立即购买
+//                Bundle bundle = new Bundle();
+//                bundle.putString(PRODUCT_ID, storeProduct.getId());
+//                bundle.putInt("product_count", 1);
+//                startActivity(WriteOrderActivity.class, bundle);
+//                break;
             case R.id.shopping_relative_car://点击进入购物车
                 MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
                 startActivity(ShoppingCarActivity.class);
                 break;
+            case R.id.ll_share://非精品的商品的分享
+                mSharePopupWindow.show(ll_share);
+                break;
 
         }
     }
-
 
     public void onRightAction() {
         if (!AccountHelper.isLogin()) {
@@ -403,23 +444,24 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         startActivity(ShoppingCarActivity.class);
     }
 
-    /* @Override
-     public void onTitleItemSelected(TitleItem item, int position) {
-         switch (item.getId()) {
-             case R.id.ti_summary://概述
-                 loadHtml(product_id, "0");
-                 break;
-             case R.id.ti_parameter://规格参数
-                 loadHtml(product_id, "1");
-                 break;
-             case R.id.ti_pack://包装清单
-                 loadHtml(product_id, "2");
-                 break;
-             case R.id.ti_service://售后
-                 loadHtml(product_id, "3");
-                 break;
-         }
-     }*/
+    @Override
+    public void onTitleItemSelected(TitleItem item, int position) {
+        switch (item.getId()) {
+            case R.id.ti_summary://概述
+                loadHtml(pid, "0");
+                break;
+            case R.id.ti_parameter://规格参数
+                loadHtml(pid, "1");
+                break;
+            case R.id.ti_pack://包装清单
+                loadHtml(pid, "2");
+                break;
+            case R.id.ti_service://售后
+                loadHtml(pid, "3");
+                break;
+        }
+    }
+
     @Subcriber(tag = ShoppingCarPopupWindow.EVENT_REFRESH_TITLE_COUNT)
     public void eventRefreshCount(String tag) {
         getCartCount();
