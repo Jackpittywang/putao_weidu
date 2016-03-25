@@ -154,8 +154,11 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
         mCameraManager = new CameraManager(this);
         try {
             mCameraManager.openDriver();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            ToastUtils.showToastShort(mContext, "相机打开失败,请打开相机");
+            finish();
+            return;
         }
         mCamera = mCameraManager.getCamera();
         mPreview = new com.putao.wd.qrcode.CameraPreview(this, mCamera, previewCb, autoFocusCB);

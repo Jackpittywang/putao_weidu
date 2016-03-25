@@ -61,12 +61,12 @@ public class ControlledEquipmentAdapter extends BasicAdapter<ManagementDevice, C
                 if ("1".equals(item.getStatus())) {
                     EventBusHelper.post(item, MANAGER);
                     holder.iv_select_icon.setBackgroundResource(R.drawable.switch_close);
-                    ToastUtils.showToast(context, "取消保存", 0);
+                    ToastUtils.showToast(context, "解绑成功", 0);
                     item.setStatus("0");
                 } else {
                     EventBusHelper.post(item, MANAGER);
                     holder.iv_select_icon.setBackgroundResource(R.drawable.switch_open);
-                    ToastUtils.showToast(context, "保存成功", 0);
+                    ToastUtils.showToast(context, "绑定成功", 0);
                     item.setStatus("1");
                 }
             }
