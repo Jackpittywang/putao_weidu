@@ -6,7 +6,9 @@ import com.alibaba.fastjson.JSON;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import com.putao.wd.model.PicList;
+import com.sunnybear.library.util.Logger;
 
 /**
  * Created by JIDONGDONG on 2015/7/16.
@@ -20,7 +22,7 @@ public class HTMLUtil {
         mPicLists = new ArrayList<>();
         imageCount = 0;
         float videoHeight = (width * 9) / 16 + 2;
-        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true) + SCRIPT_START + JSON.toJSONString(mPicLists) + SCRIPT_END;
+        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true) + SCRIPT_START + JSON.toJSONString(mPicLists) + SCRIPT_END;;
     }
 
     private static String setImageWidth(String reg, String explanation, float width, float height, boolean isVideo) {
@@ -29,20 +31,20 @@ public class HTMLUtil {
         Matcher m = p.matcher(explanation);
         while (m.find()) {
             String group = m.group(1);
+            group = addWidHei(group, width, height, isVideo);
             if (isVideo) {
                 Pattern pVideo = Pattern.compile(" src=\"([^\"]*)");
                 Matcher mVideo = pVideo.matcher(group);
-                while (mVideo.find()) {
+                if (mVideo.find()) {
                     String video = replaceHTML("width=([^&]*)", mVideo.group(1), "width=" + width, isVideo);
                     video = replaceHTML("height=([^&]*)", video, "height=" + height, isVideo);
-                    replaceAll = replaceAll.replace(mVideo.group(1), video);
+                    group.replace(mVideo.group(1), video);
                 }
             } else {
                 group = addImageClick(group);
-                group = addWidHei(group, width, height, isVideo);
                 group = addStyle(group, width, height, isVideo);
-                replaceAll = replaceAll.replace(m.group(1), group);
             }
+            replaceAll = replaceAll.replace(m.group(1), group);
         }
         return replaceAll;
     }

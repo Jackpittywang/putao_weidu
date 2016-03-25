@@ -79,7 +79,7 @@ public class ExploreDetailNActivity extends BasicFragmentActivity {
             }
         };
         vp_content.setAdapter(fragmentPagerAdapter);
-        vp_content.setOffscreenPageLimit(3);
+        vp_content.setOffscreenPageLimit(2);
         vp_content.setCurrentItem(mPosition);
     }
 

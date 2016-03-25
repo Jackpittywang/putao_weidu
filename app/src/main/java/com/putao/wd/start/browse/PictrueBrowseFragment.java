@@ -2,20 +2,18 @@ package com.putao.wd.start.browse;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.putao.wd.R;
-import com.putao.wd.model.PicClickResult;
-import com.putao.wd.model.PicList;
 import com.sunnybear.library.controller.BasicFragment;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import uk.co.senab.photoview.PhotoView;
@@ -34,8 +32,8 @@ public class PictrueBrowseFragment extends BasicFragment {
     @Bind(R.id.loading)
     ProgressBar loading;
 
-    private boolean isGif;
-    private String picUrl;
+    private boolean mIsGif;
+    private String mPicUrl;
     public static final String IS_GIF = "is_gif";
     public static final String PIC_URL = "pic_url";
 
@@ -46,12 +44,17 @@ public class PictrueBrowseFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
-        isGif = args.getBoolean(IS_GIF);
-        picUrl = args.getString(PIC_URL);
-        if (isGif) {
+        mIsGif = args.getBoolean(IS_GIF);
+        mPicUrl = args.getString(PIC_URL);
+        int deviceWidth = DensityUtil.getDeviceWidth(mActivity);
+        if (mIsGif) {
+            ViewGroup.LayoutParams layoutParams = iv_image.getLayoutParams();
+            layoutParams.width = deviceWidth;
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            iv_image.setLayoutParams(layoutParams);
             pv_image.setVisibility(View.GONE);
             iv_image.setVisibility(View.VISIBLE);
-            iv_image.setImageURL(picUrl);
+            iv_image.setImageURL(mPicUrl);
             iv_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -59,6 +62,10 @@ public class PictrueBrowseFragment extends BasicFragment {
                 }
             });
         } else {
+            ViewGroup.LayoutParams layoutParams = pv_image.getLayoutParams();
+            layoutParams.width = deviceWidth;
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            pv_image.setLayoutParams(layoutParams);
             pv_image.setVisibility(View.VISIBLE);
             iv_image.setVisibility(View.GONE);
             pv_image.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
@@ -68,7 +75,7 @@ public class PictrueBrowseFragment extends BasicFragment {
                     getActivity().finish();
                 }
             });
-            ImageLoader.getInstance().displayImage(picUrl, pv_image, new SimpleImageLoadingListener() {
+            ImageLoader.getInstance().displayImage(mPicUrl, pv_image, new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
                     super.onLoadingStarted(imageUri, view);
@@ -78,7 +85,7 @@ public class PictrueBrowseFragment extends BasicFragment {
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                     super.onLoadingFailed(imageUri, view, failReason);
-                    loading.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
                 }
 
                 @Override

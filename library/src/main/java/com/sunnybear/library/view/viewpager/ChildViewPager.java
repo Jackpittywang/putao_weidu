@@ -6,6 +6,8 @@ import android.support.v4.view.MyViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.sunnybear.library.util.MathUtils;
+
 /**
  * 嵌套的ViewPager
  * Created by guchenkai on 2016/1/13.
@@ -53,7 +55,7 @@ public class ChildViewPager extends MyViewPager {
                 setCurrentItem(getCurrentItem(), true, true);
                 //在up时判断是否按下和松手的坐标为一个点如果是一个点，将执行点击事件，这是我自己写的点击事件，而不是onclick
                 getParent().requestDisallowInterceptTouchEvent(false);
-                if (downP.x == curP.x && downP.y == curP.y && getScrollState() == MyViewPager.SCROLL_STATE_IDLE) {
+                if (Math.abs(downP.x - curP.x) < 10 && Math.abs(downP.y - curP.y) < 10 && getScrollState() == MyViewPager.SCROLL_STATE_IDLE) {
                     onSingleTouch();
                     return true;
                 }

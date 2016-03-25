@@ -41,8 +41,8 @@ public class PictrueBrowseActivity extends PTWDActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         initData();
+        vp_pics.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
         initView();
-        addListener();
         vp_pics.setPageTransformer(true, new ViewPager.PageTransformer() {
                     private static final float MIN_SCALE = 0.85f;
                     private static final float MIN_ALPHA = 0.5f;
@@ -72,7 +72,7 @@ public class PictrueBrowseActivity extends PTWDActivity {
                     }
                 }
         );
-        vp_pics.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
+        addListener();
     }
 
     private void initView() {
