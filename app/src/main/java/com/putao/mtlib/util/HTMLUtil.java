@@ -22,7 +22,7 @@ public class HTMLUtil {
         mPicLists = new ArrayList<>();
         imageCount = 0;
         float videoHeight = (width * 9) / 16 + 2;
-        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true) + SCRIPT_START + JSON.toJSONString(mPicLists) + SCRIPT_END;;
+        return setImageWidth("<iframe([^>]*)", setImageWidth("<img([^>]*)", html, width, videoHeight, false), width, videoHeight, true) + SCRIPT_START + JSON.toJSONString(mPicLists) + SCRIPT_END;
     }
 
     private static String setImageWidth(String reg, String explanation, float width, float height, boolean isVideo) {
