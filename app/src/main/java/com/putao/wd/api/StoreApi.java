@@ -361,7 +361,7 @@ public class StoreApi {
     /**
      * 获取商品是否下架(跳转到精品还是非精品)
      */
-    public static final String URL_PRODUCT_STATUS = "http://api.store.test.putao.com/product/status";
+    public static final String URL_PRODUCT_STATUS = BASE_URL + "product/status";
 
     /**
      * 获取商品是否下架

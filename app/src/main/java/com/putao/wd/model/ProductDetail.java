@@ -18,6 +18,8 @@ public class ProductDetail implements Serializable {
     private String attribute_name;//属性的项目名称
     private String services;//售后服务
     private String pack;//包装清单
+    private String qt;
+    private String current_spec;
     private List<String> pictures;//图片集
 
     public String getId() {
@@ -108,6 +110,22 @@ public class ProductDetail implements Serializable {
         this.pictures = pictures;
     }
 
+    public String getQt() {
+        return qt;
+    }
+
+    public void setQt(String qt) {
+        this.qt = qt;
+    }
+
+    public String getCurrent_spec() {
+        return current_spec;
+    }
+
+    public void setCurrent_spec(String current_spec) {
+        this.current_spec = current_spec;
+    }
+
     @Override
     public String toString() {
         return "ProductDetail{" +
@@ -121,6 +139,8 @@ public class ProductDetail implements Serializable {
                 ", attribute_name='" + attribute_name + '\'' +
                 ", services='" + services + '\'' +
                 ", pack='" + pack + '\'' +
+                ", qt='" + qt + '\'' +
+                ", current_spec='" + current_spec + '\'' +
                 ", pictures=" + pictures +
                 '}';
     }
