@@ -1,6 +1,8 @@
 package com.putao.wd.start.browse;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +51,7 @@ public class PictrueBrowseFragment extends BasicFragment {
         int deviceWidth = DensityUtil.getDeviceWidth(mActivity);
         if (mIsGif) {
             ViewGroup.LayoutParams layoutParams = iv_image.getLayoutParams();
-            layoutParams.width = deviceWidth;
-            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = DensityUtil.dp2px(mActivity, 280);
             iv_image.setLayoutParams(layoutParams);
             pv_image.setVisibility(View.GONE);
             iv_image.setVisibility(View.VISIBLE);
@@ -62,10 +63,6 @@ public class PictrueBrowseFragment extends BasicFragment {
                 }
             });
         } else {
-            ViewGroup.LayoutParams layoutParams = pv_image.getLayoutParams();
-            layoutParams.width = deviceWidth;
-            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            pv_image.setLayoutParams(layoutParams);
             pv_image.setVisibility(View.VISIBLE);
             iv_image.setVisibility(View.GONE);
             pv_image.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
@@ -95,9 +92,9 @@ public class PictrueBrowseFragment extends BasicFragment {
                 }
             });
         }
-
-
     }
+
+
 
     @Override
     protected String[] getRequestUrls() {
