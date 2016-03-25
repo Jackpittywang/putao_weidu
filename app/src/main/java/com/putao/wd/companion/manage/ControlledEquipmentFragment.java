@@ -119,16 +119,15 @@ public class ControlledEquipmentFragment extends PTWDFragment {
         } else {
             selectItem.remove(devices);
         }
-        Management management = new Management();
-        management.setSlave_device_list(mManagement.getSlave_device_list());
         adapter.replaceAll(mManagement.getSlave_device_list());
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_EQUIPMENT);
-        networkRequest(ExploreApi.managementUnbind(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
-            @Override
-            public void onSuccess(String url, ManagementEdit result) {
-                Logger.i("探索号管理信息保存成功");
-            }
-        });
+        networkRequest(ExploreApi.managementUnbind(devices.getSlave_id(), devices.getSlave_device_id()),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.i("探索号管理信息保存成功");
+                    }
+                });
 
 //        networkRequest(ExploreApi.managementEdit(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
 //            @Override
