@@ -1,10 +1,13 @@
 package com.putao.wd.store.product;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -127,6 +130,19 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
         is_remind = args.getBoolean(BUNDLE_IS_REMIND);
         product_num = args.getString(BUNDLE_PRODUCT_NUM);
+        wv_content.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                loading.show();
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                loading.dismiss();
+            }
+        });
         if (is_detail) {
             if (is_service) {
                 ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
@@ -166,6 +182,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
                 getProductStatus(pid);
             }
+
 //            if (null == storeProduct) {
 //                wv_content.loadUrl(PTWDRequestHelper.store()
 //                        .addParam("pid", args.getString(JPushReceiver.MID))
@@ -292,15 +309,18 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                         wv_content.loadUrl(storeProduct.getMobile_url());
                         tv_product_price.setText(storeProduct.getPrice());
                         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+                        loading.dismiss();
                     } else if (has_special == 0) {//显示h5
                         sticky_layout.setVisibility(View.VISIBLE);
                         relative_product_detail.setVisibility(View.GONE);
                         getProductDetail(product_id);
                     }
                 }
+                System.out.println("===================" + has_special + "  " + status);
             }
         });
     }
+
 
     /**
      * 商品详情
