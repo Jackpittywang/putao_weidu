@@ -48,7 +48,6 @@ public class PictrueBrowseFragment extends BasicFragment {
     public void onViewCreatedFinish(Bundle saveInstanceState) {
         mIsGif = args.getBoolean(IS_GIF);
         mPicUrl = args.getString(PIC_URL);
-        int deviceWidth = DensityUtil.getDeviceWidth(mActivity);
         if (mIsGif) {
             ViewGroup.LayoutParams layoutParams = iv_image.getLayoutParams();
             layoutParams.height = DensityUtil.dp2px(mActivity, 280);

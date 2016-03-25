@@ -31,8 +31,8 @@ import java.util.TimerTask;
  * Created by Administrator on 2015/12/28.
  */
 public class NotifyService extends Service {
-    private static final String HOST = "10.1.11.31";
-    private static final int PORT = 8083;
+    private static final String HOST = GlobalApplication.isDebug ? "122.226.100.152" : "10.1.11.31";
+    private static final int PORT = GlobalApplication.isDebug ? 8040 : 8083;
     private static final String secret = "499478a81030bb177e578f86410cda8641a22799";
     private static final int appid = 611;
 

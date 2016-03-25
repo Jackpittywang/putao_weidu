@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.text.TextUtils;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
@@ -22,6 +20,7 @@ import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -29,8 +28,6 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.jpush.android.api.JPushInterface;
@@ -179,8 +176,8 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected boolean isDebug() {
-        return false;
-//        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+//        return false;
+        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override

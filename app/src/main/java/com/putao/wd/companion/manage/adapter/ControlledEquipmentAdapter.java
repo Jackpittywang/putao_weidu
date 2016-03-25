@@ -12,7 +12,6 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 
-import org.json.simple.JSONObject;
 
 import java.util.List;
 
