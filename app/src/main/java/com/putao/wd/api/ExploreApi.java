@@ -145,6 +145,20 @@ public class ExploreApi {
     }
 
     /**
+     * 管理设备解绑
+     */
+    public static final String URL_MANAGEMENT_UNBIND = COMPANION_URL + "management/unbind";
+
+    /**
+     * 管理设备解绑
+     */
+    public static Request managementUnbind(String slave_id) {
+        return PTWDRequestHelper.explore()
+                .addParam(REQUEST_PRODUCT_ID, slave_id)
+                .build(RequestMethod.POST, URL_MANAGEMENT_UNBIND);
+    }
+
+    /**
      * 立即停止使用所有产品
      */
     public static final String URL_MANAGEMENT_SETALL = COMPANION_URL + "management/setall";

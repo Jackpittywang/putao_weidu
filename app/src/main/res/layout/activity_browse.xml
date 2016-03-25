@@ -21,10 +21,15 @@
         android:background="@color/transparent"
         android:overScrollMode="never" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+    <RelativeLayout
+        android:id="@+id/relative_pager"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigation_bar"></RelativeLayout>
+    <!--   <ProgressBar
+           android:id="@+id/loading"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:visibility="gone" />-->
 </RelativeLayout>

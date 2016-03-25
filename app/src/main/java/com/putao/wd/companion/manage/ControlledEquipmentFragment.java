@@ -8,6 +8,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.companion.manage.adapter.ControlledEquipmentAdapter;
+import com.putao.wd.dto.ControllItem;
 import com.putao.wd.model.Management;
 import com.putao.wd.model.ManagementDevice;
 import com.putao.wd.model.ManagementEdit;
@@ -62,7 +63,6 @@ public class ControlledEquipmentFragment extends PTWDFragment {
                 loading.dismiss();
             }
         });
-
 //        addListener();
     }
 
@@ -123,11 +123,18 @@ public class ControlledEquipmentFragment extends PTWDFragment {
         management.setSlave_device_list(mManagement.getSlave_device_list());
         adapter.replaceAll(mManagement.getSlave_device_list());
         EventBusHelper.post(selectItem, EVENT_CONTROLLED_EQUIPMENT);
-        networkRequest(ExploreApi.managementEdit(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
+        networkRequest(ExploreApi.managementUnbind(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
             @Override
             public void onSuccess(String url, ManagementEdit result) {
                 Logger.i("探索号管理信息保存成功");
             }
         });
+
+//        networkRequest(ExploreApi.managementEdit(JSONObject.toJSONString(management)), new SimpleFastJsonCallback<ManagementEdit>(ManagementEdit.class, loading) {
+//            @Override
+//            public void onSuccess(String url, ManagementEdit result) {
+//                Logger.i("探索号管理信息保存成功");
+//            }
+//        });
     }
 }
