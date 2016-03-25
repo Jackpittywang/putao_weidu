@@ -60,7 +60,6 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     public static final String INDEX_DATA_PAGE = "index_data_page";
     public static final String INDEX_DATA = "index_data";
     private ExploreIndex mExploreIndex;
-    private List<ExploreIndex> mExploreIndexs;
     private int mPosition;
     private boolean isCool;//是否赞过
 
@@ -88,8 +87,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         mPosition = args.getInt(INDEX_DATA_PAGE);
-        mExploreIndexs = ((List<ExploreIndex>) args.getSerializable(INDEX_DATA));
-        mExploreIndex = mExploreIndexs.get(mPosition);
+        mExploreIndex = (ExploreIndex) args.getSerializable(INDEX_DATA);
         String cache_count = mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id());
         mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
         sb_cool_icon.setClickable(false);
@@ -121,24 +119,15 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_nexplore:
-                /*Bundle bundleDetial = new Bundle();
-                bundleDetial.putSerializable(INDEX_DATA, (Serializable) mExploreIndexs);
-                bundleDetial.putInt(INDEX_DATA_PAGE, mPosition);
-                startActivity(ExploreDetailActivity.class, bundleDetial);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.ChoiceHome_home_detail);
-                mActivity.overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);*/
-                break;
-
             case R.id.ll_count_cool:
                 Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
                 if (isCool) break;
                 isCool = true;
                 sb_cool_icon.setState(true);
-                mExploreIndexs.get(mPosition).setCount_likes(mExploreIndex.getCount_likes() + 1);
+                mExploreIndex.setCount_likes(mExploreIndex.getCount_likes() + 1);
                 tv_count_cool.setText(mExploreIndex.getCount_likes() + "");
-                mExploreIndexs.get(mPosition).setIs_like(true);
+                mExploreIndex.setIs_like(true);
                 mDiskFileCacheHelper.put(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id(), true);
                 mDiskFileCacheHelper.put(ExploreDetailFragment.COOL_COUNT + mExploreIndex.getArticle_id(), mExploreIndex.getCount_likes() + "");
                 networkRequest(ExploreApi.addLike(mExploreIndex.getArticle_id()),

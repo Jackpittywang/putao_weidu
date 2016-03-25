@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
 
     <uk.co.senab.photoview.PhotoView
-        android:id="@+id/image"
+        android:id="@+id/pv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop" />
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_image"
+        style="@style/image_style"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        auto:roundingBorderWidth="1dp" />
 
 
     <ProgressBar

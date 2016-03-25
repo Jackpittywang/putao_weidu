@@ -19,6 +19,7 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.jpush.JPushHeaper;
+import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.util.Logger;
@@ -113,11 +114,8 @@ public class GlobalApplication extends BasicApplication {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.putao.isNotFore.message");
         registerReceiver(new HomeBroadcastReceiver(), intentFilter);
-        // 创建默认的ImageLoader配置参数
-        ImageLoaderConfiguration configuration = ImageLoaderConfiguration
-                .createDefault(this);
         // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(configuration);
+        ImageLoaderUtil.initImageLoader(this);
 
 
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
