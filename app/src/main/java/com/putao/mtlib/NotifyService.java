@@ -118,11 +118,13 @@ public class NotifyService extends Service {
                             GlobalApplication.isServiceClose = true;
                             Logger.d("---------++++", "停止服务");
                         }
-                    }, 10 * 1000);
+                    }, 30 * 1000);
                     break;
                 case GlobalApplication.Not_Fore_Message:
-                    if (null != timer)
+                    if (null != timer) {
                         timer.cancel();
+                        timer = null;
+                    }
                     break;
             }
         }

@@ -1,5 +1,6 @@
 package com.putao.wd.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
@@ -84,6 +86,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                 AccountHelper.setCurrentUid(result.getString("uid"));
                                 AccountHelper.setCurrentToken(result.getString("token"));
                                 new JPushHeaper().setAlias(mContext, result.getString("uid"));
+                                mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
 //                                PutaoCompanionFragment.isPrepared = true;
                                 PutaoCreatedFragment.isPrepared = true;
                                 PutaoExploreFragment.isPrepared = true;

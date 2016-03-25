@@ -1,5 +1,6 @@
 package com.putao.wd.me.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -54,6 +55,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
                 IndexActivity.isNotRefreshUserInfo = false;
                 new JPushHeaper().setAlias(mContext, "");
+                mContext.sendBroadcast(new Intent(GlobalApplication.Fore_Message));
                 finish();
                 break;
         }

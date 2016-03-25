@@ -150,6 +150,7 @@ public class GlobalApplication extends BasicApplication {
      * 启动内部推送
      */
     private void startRedDotService() {
+        if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
         Intent intent = new Intent(ACTION_PUSH_SERVICE);
         intent.setPackage("com.putao.wd");
         startService(intent);
