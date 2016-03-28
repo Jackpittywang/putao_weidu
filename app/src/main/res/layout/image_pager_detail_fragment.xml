@@ -18,7 +18,7 @@
         style="@style/image_style"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <ProgressBar
         android:id="@+id/loading"

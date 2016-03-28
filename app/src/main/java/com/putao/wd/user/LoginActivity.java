@@ -16,14 +16,21 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.StoreApi;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.PTWDRequestHelper;
 import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.jpush.JPushHeaper;
+import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
+import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.util.Set;
 
@@ -50,6 +57,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     Button btn_login;
     @Bind(R.id.rl_graph_verify)
     RelativeLayout rl_graph_verify;//图形验证码
+    @Bind(R.id.et_graph_verify)
+    CleanableEditText et_graph_verify;
+    @Bind(R.id.image_graph_verify)
+    ImageDraweeView image_graph_verify;
 
     private int mErrorCount = 0;
 
@@ -65,6 +76,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         et_password.addTextChangedListener(this);
         btn_login.setClickable(false);
         IndexActivity.isNotRefreshUserInfo = false;
+
     }
 
     @Override
@@ -79,7 +91,9 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
             case R.id.btn_login://登录
                 loading.show();
                 btn_login.setClickable(false);
-                networkRequest(AccountApi.login(et_mobile.getText().toString(), et_password.getText().toString()),
+                final String mobile = et_mobile.getText().toString();
+                final String passWord = et_password.getText().toString();
+                networkRequest(AccountApi.login(mobile, passWord),
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
@@ -98,9 +112,15 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                             @Override
                             public void onError(String error_msg) {
                                 ToastUtils.showToastLong(mContext, error_msg);
-//                                mErrorCount++;
-//                                if (mErrorCount == 3)
-//                                    rl_graph_verify.setVisibility(View.VISIBLE);
+                                mErrorCount++;
+                                if (mErrorCount == 3) {
+                                    rl_graph_verify.setVisibility(View.VISIBLE);
+                                    /**
+                                     * 图形验证码的登录
+                                     * */
+                                    String verify = et_graph_verify.getText().toString();
+                                    getGraphVerify(mobile, passWord, verify);
+                                }
                             }
 
                             @Override
@@ -119,17 +139,48 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         }
     }
 
+
+    /**
+     * 密码输错三次，显示出图形验证码
+     */
+    private void getGraphVerify(String moblie, String passWord, String verify) {
+        /**
+         * 图形验证码
+         * */
+        AccountApi.OnGraphVerify(image_graph_verify,AccountConstants.Action.ACTION_LOGIN);
+
+        networkRequest(AccountApi.safeLogin(moblie, passWord, verify),
+                new AccountCallback(loading) {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        AccountHelper.setCurrentUid(result.getString("uid"));
+                        AccountHelper.setCurrentToken(result.getString("token"));
+                        new JPushHeaper().setAlias(mContext, result.getString("uid"));
+                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
+                        PutaoCreatedFragment.isPrepared = true;
+                        PutaoExploreFragment.isPrepared = true;
+                        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                        startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(String error_msg) {
+                        ToastUtils.showToastLong(mContext, error_msg);
+                    }
+                });
+    }
+
     /**
      * 验证登录
-     */
+     *//*
     private void checkLogin() {
         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-       /* networkRequest(UserApi.getUserInfo(),
+        networkRequest(UserApi.getUserInfo(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         AccountHelper.setUserInfo(result);
-
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         loading.dismiss();
                         finish();
@@ -146,9 +197,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         super.onFinish(url, isSuccess, msg);
                         btn_login.setClickable(true);
                     }
-                });*/
-    }
-
+                });
+    }*/
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

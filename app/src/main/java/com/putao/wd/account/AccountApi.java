@@ -7,6 +7,7 @@ import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.PreferenceUtils;
+import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.security.MessageDigest;
 import java.util.Comparator;
@@ -46,7 +47,7 @@ public class AccountApi {
      * @param password 密码
      * @param code     验证码
      */
-    public static Request register(String mobile, String password, String code) {
+    public static Request register(String mobile, String password, String code, String verfiy) {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
                 .addParam(AccountConstants.Parameter.PARAM_PASSWD_ONCE, password)
@@ -56,6 +57,7 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
                 .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(AccountConstants.Parameter.PARAM_CODE, code)
+                .addParam(AccountConstants.Parameter.PARAM_GRAPH_CODE, verfiy)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .build(RequestMethod.POST, URL_REGISTER);
     }
@@ -96,6 +98,26 @@ public class AccountApi {
                 .build(RequestMethod.POST, URL_SEND_VERIFY_CODE);
     }
 
+
+    /**
+     * 发送图形验证码
+     */
+    public static final String URL_SEND_PHOTO_CODE = BASE_URL + AccountConstants.Url.URL_SEND_PHOTO_CODE;
+
+    /**
+     * 发送图形验证码
+     *
+     * @param action 验证码发送原因
+     */
+    public static Request sendPhotoCode(String action) {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(AccountConstants.Parameter.PARAM_ACTION, action)
+                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
+                .build(RequestMethod.POST, URL_SEND_PHOTO_CODE);
+    }
+
+
     /**
      * 忘记密码
      */
@@ -108,11 +130,12 @@ public class AccountApi {
      * @param password 密码
      * @param code     验证码
      */
-    public static Request forget(String mobile, String code, String password) {
+    public static Request forget(String mobile, String code, String password, String verify) {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
                 .addParam(AccountConstants.Parameter.PARAM_CODE, code)
+                .addParam(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify)
                 .addParam(AccountConstants.Parameter.PARAM_PASSWD_ONCE, password)
                 .addParam(AccountConstants.Parameter.PARAM_PASSWD_TWICE, password)
                 .build(RequestMethod.POST, URL_FORGET);
@@ -151,6 +174,43 @@ public class AccountApi {
                 .build(RequestMethod.POST, URL_LOGIN);
     }
 
+
+    /**
+     * 图形验证码的登录
+     */
+    public static final String URL_SAFELOGIN = BASE_URL + AccountConstants.Url.URL_SAFELOGIN;
+
+    /**
+     * 图形验证码的登录
+     *
+     * @param mobile   账号
+     * @param password 密码
+     * @param verify   图形验证码
+     */
+    public static Request safeLogin(String mobile, String password, String verify) {
+        Map<String, String> params = new HashMap<>();
+        params.put(AccountConstants.Parameter.PARAM_MOBILE, mobile);
+        params.put(AccountConstants.Parameter.PARAM_PASSWD, password);
+        params.put(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE);
+        params.put(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION);
+        params.put(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID);
+        params.put(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify);
+        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
+        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
+        String sign = generateSign(params, SECRETKEY);
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
+                .addParam(AccountConstants.Parameter.PARAM_PASSWD, password)
+                .addParam(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE)
+                .addParam(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION)
+                .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
+                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
+                .addParam(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify)
+                .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
+                .build(RequestMethod.POST, URL_SAFELOGIN);
+    }
+
     /**
      * 修改密码
      */
@@ -159,8 +219,8 @@ public class AccountApi {
     /**
      * 修改密码
      *
-     * @param oldPassword   旧密码
-     * @param newPassword   新密码
+     * @param oldPassword    旧密码
+     * @param newPassword    新密码
      * @param repeatPassword 新密码确认
      */
     public static Request updatePassword(String oldPassword, String newPassword, String repeatPassword) {
@@ -307,4 +367,14 @@ public class AccountApi {
         }
         return md5StrBuff.toString().toLowerCase();
     }
+
+    public static void OnGraphVerify(ImageDraweeView image_graph_verify, String action) {
+        //图形验证码
+        image_graph_verify.setImageURL(PTWDRequestHelper.store()
+                .addParam("action", action)
+                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
+                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .joinURL(AccountApi.URL_SEND_PHOTO_CODE));
+    }
+
 }

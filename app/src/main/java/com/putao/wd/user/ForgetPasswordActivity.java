@@ -25,6 +25,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.TimeButton;
+import com.sunnybear.library.view.image.ImageDraweeView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -46,6 +47,10 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
     SwitchButton btn_lock;
     @Bind(R.id.tb_get_verify)
     TimeButton tb_get_verify;
+    @Bind(R.id.image_graph_verify)
+    ImageDraweeView image_graph_verify;
+    @Bind(R.id.et_graph_verify)
+    CleanableEditText et_graph_verify;
 
     @Override
     protected int getLayoutId() {
@@ -58,6 +63,11 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         et_mobile.addTextChangedListener(this);
         //et_password.addTextChangedListener(this);
         btn_lock.setOnSwitchClickListener(this);
+
+        /**
+         * 图形验证码
+         * */
+        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_FORGET);
     }
 
     @Override
@@ -76,7 +86,8 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 } else {
                     String smsCode = et_sms_verify.getText().toString();
                     final String password = et_password.getText().toString();
-                    networkRequest(AccountApi.forget(mobile, smsCode, password), new AccountCallback(loading) {
+                    final String verify = et_graph_verify.getText().toString();
+                    networkRequest(AccountApi.forget(mobile, smsCode, password, verify), new AccountCallback(loading) {
 
                         @Override
                         public void onSuccess(JSONObject result) {

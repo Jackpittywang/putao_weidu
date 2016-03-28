@@ -17,6 +17,7 @@ public class PTWDRequestHelper {
     public static final String REQUEST_KEY_APP_ID = "appid";
 
     public static final String REQUEST_KEY_START_DEVICE_ID = "deviceid";
+//    public static final String REQUEST_KEY_START_DEVICE_ID = "device_id";
 
 
     /**

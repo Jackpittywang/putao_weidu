@@ -89,6 +89,7 @@
 
             <!--图形验证码-->
             <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/image_graph_verify"
                 android:layout_width="88dp"
                 android:layout_height="32dp"
                 android:layout_alignParentRight="true"

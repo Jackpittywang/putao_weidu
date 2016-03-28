@@ -15,14 +15,18 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.PTWDRequestHelper;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.TimeButton;
+import com.sunnybear.library.view.image.ImageDraweeView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +53,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     TimeButton tb_get_verify;
     @Bind(R.id.btn_is_look)
     SwitchButton btn_is_look;
+    @Bind(R.id.image_graph_verify)
+    ImageDraweeView image_graph_verify;
 
     @Override
     protected int getLayoutId() {
@@ -63,6 +69,11 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
         et_password.addTextChangedListener(this);
         et_sms_verify.addTextChangedListener(this);
         btn_is_look.setOnSwitchClickListener(this);
+
+        /**
+         * 图形验证码
+         * */
+        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_REGISTER);
     }
 
     @Override
@@ -81,7 +92,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                 String phone = et_mobile.getText().toString();
                 String password = et_password.getText().toString();
                 String sms_verify = et_sms_verify.getText().toString();
-                networkRequest(AccountApi.register(phone, password, sms_verify), new AccountCallback(loading) {
+                String graph_verify = et_graph_verify.getText().toString();
+                networkRequest(AccountApi.register(phone, password, sms_verify, graph_verify), new AccountCallback(loading) {
                     @Override
                     public void onSuccess(JSONObject result) {
                         AccountHelper.login(result);
@@ -140,6 +152,27 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                 ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
             }
         });
+    }
+
+    /**
+     * 获取图片验证码
+     */
+    private void getGraphCode() {
+
+//        networkRequest(AccountApi.sendPhotoCode(AccountConstants.Action.ACTION_REGISTER), new AccountCallback(loading) {
+//            @Override
+//            public void onSuccess(JSONObject result) {
+//                Logger.d(result.toJSONString());
+//                image_graph_verify.setImageURL();
+//                System.out.println("=====================" + result.toJSONString());
+//            }
+//
+//
+//            @Override
+//            public void onError(String error_msg) {
+//                ToastUtils.showToastLong(mContext, "图形验证码错误");
+//            }
+//        });
     }
 
     @Override

@@ -20,8 +20,9 @@ public final class AccountConstants {
         public static final String PARAM_PLATFORM_ID = "platform_id";       //平台(putao:1)
         public static final String PARAM_DEVICE_ID = "device_id";           //设备id(IMEI)
         public static final String PARAM_CODE = "code";                     //手机验证码
+        public static final String PARAM_GRAPH_CODE = "verify";             //图形验证码
         public static final String PARAM_APPID = "appid";                   //平台ID(1101:ios,1102:Android)
-        public static final String PARAM_ACTION = "action";                 //验证码发送原因(register|forget|changephone|checkoldphone)
+        public static final String PARAM_ACTION = "action";                 //验证码发送原因(register|forget|changephone|checkoldphone|login)
         public static final String PARAM_TOKEN = "token";                   //令牌
         public static final String PARAM_REFRESH_TOKEN = "refresh_token";   //刷新用的token
         public static final String PARAM_UID = "uid";                       //用户ID
@@ -38,11 +39,13 @@ public final class AccountConstants {
         public static final String URL_SEND_VERIFY_CODE = "api/sendMsg";     //发送验证码
         public static final String URL_FORGET = "api/forget";               //忘记密码(手机)
         public static final String URL_LOGIN = "api/login";                 //登录
+        public static final String URL_SAFELOGIN = "api/safeLogin";//安全登录
         public static final String URL_UPDATE_PASSWORD = "api/changePasswd";  //修改密码
         public static final String URL_UPDATE_TOKEN = "api/updateToken";    //更新token
         public static final String URL_CHECK_TOKEN = "api/checkToken";      //验证token
         public static final String URL_GET_NICK_NAME = "api/getNickName";   //获取昵称
         public static final String URL_SET_NICK_NAME = "api/setNickName";   //设置昵称
+        public static final String URL_SEND_PHOTO_CODE = "api/verification";//发送图形验证码
     }
 
     /**
@@ -51,6 +54,7 @@ public final class AccountConstants {
     public static final class Action {
         public static final String ACTION_REGISTER = "register";            //注册
         public static final String ACTION_FORGET = "forget";                //忘记密码
+        public static final String ACTION_LOGIN = "login";//登录
         public static final String ACTION_CHANGEPHONE = "changephone";
         public static final String ACTION_CHECKOLDPHONE = "checkoldphone";
     }

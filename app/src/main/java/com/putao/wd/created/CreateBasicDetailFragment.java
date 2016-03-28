@@ -289,7 +289,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
             }
 
-
             @Override
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mActivity
