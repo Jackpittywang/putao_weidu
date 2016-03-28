@@ -1,7 +1,8 @@
 package com.sunnybear.library;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.okhttp.OkHttpClient;
@@ -26,7 +27,7 @@ import de.greenrobot.dao.query.QueryBuilder;
  * 基础Application
  * Created by guchenkai on 2015/11/19.
  */
-public abstract class BasicApplication extends Application {
+public abstract class BasicApplication extends MultiDexApplication {
     private static final String KEY_APP_ID = "app_id";
     private static Context mContext;
     private static OkHttpClient mOkHttpClient;//OkHttpClient
@@ -49,6 +50,7 @@ public abstract class BasicApplication extends Application {
 
     @Override
     public void onCreate() {
+        MultiDex.install(this);
         super.onCreate();
         mContext = getApplicationContext();
         //sdCard缓存路径
