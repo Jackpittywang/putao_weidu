@@ -14,7 +14,7 @@ import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.Bind;
 
@@ -64,28 +64,28 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
         if (!StringUtils.isEmpty(url)) {
             switch (url) {
                 case "http://api-weidu.putao.com/faq/detail?product_id=null":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "综合");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "综合");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=601":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "淘淘向右走");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "淘淘向右走");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=602":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "班得瑞的奇幻花园");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "班得瑞的奇幻花园");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=603":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "旋转吧魔方");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "旋转吧魔方");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=7000":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "麦斯丝");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "麦斯丝");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=8000":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "Hello编程");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "Hello编程");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=8001":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "哈泥海洋");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "哈泥海洋");
                     break;
                 case "http://api-weidu.putao.com/faq/detail?product_id=8002":
-                    MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_qa_item, "涂涂世界");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "涂涂世界");
                     break;
             }
             args.putString(CommonQuestionActivity.URL_QUESTION, url);

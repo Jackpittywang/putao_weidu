@@ -15,7 +15,7 @@ import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.HashMap;
 
@@ -111,22 +111,22 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
             case R.id.ll_reply://回复
                 ll_reply.hide();
                 messagecenter = RedDotReceiver.MESSAGECENTER_REPLY;
-                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_reply);
+                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_reply);
                 break;
             case R.id.ll_cool://赞
                 ll_cool.hide();
                 messagecenter = RedDotReceiver.MESSAGECENTER_PRAISE;
-                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_good);
+                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_good);
                 break;
             case R.id.ll_remind://提醒
                 ll_remind.hide();
                 messagecenter = RedDotReceiver.MESSAGECENTER_REMIND;
-                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_remind);
+                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_remind);
                 break;
             case R.id.ll_notice://通知
                 ll_notice.hide();
                 messagecenter = RedDotReceiver.MESSAGECENTER_NOTICE;
-                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_infocenter_notice);
+                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_notice);
                 break;
         }
         mRedDotMap.remove(messagecenter);

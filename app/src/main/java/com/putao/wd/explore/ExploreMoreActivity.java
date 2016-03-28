@@ -24,7 +24,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -125,7 +125,7 @@ public class ExploreMoreActivity extends PTWDActivity {
                 bundle.putSerializable(ExploreDetailNActivity.DATAS, mExploreIndexs);
                 bundle.putInt(ExploreDetailNActivity.POSITION, position);
                 bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, false);
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_home_detail);
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_home_detail);
                 startActivity(ExploreDetailNActivity.class, bundle);
             }
         });

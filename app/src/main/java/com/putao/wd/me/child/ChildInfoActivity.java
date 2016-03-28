@@ -21,7 +21,7 @@ import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.picker.DatePicker;
 import com.sunnybear.library.view.picker.OptionPicker;
 import com.sunnybear.library.view.picker.SexPicker;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.Bind;
 import butterknife.OnClick;

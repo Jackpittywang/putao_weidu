@@ -1,5 +1,8 @@
 package com.putao.wd.account;
 
+import android.content.Context;
+
+
 /**
  * 友盟Api
  * Created by guchenkai on 2015/11/2.
@@ -239,5 +242,16 @@ public class YouMengHelper {
      * @brief * 葡萄籽页面 葡萄籽条目的点击次数 item = {"我要提问","综合","淘淘向右走","班得瑞的奇幻花园","旋转吧魔方","麦斯丝","Hello编程","哈尼海洋","涂涂世界"}
      */
     public static final String UserHome_qa_item = "UserHome_qa_item";
+
+    /**
+     * 记录打点数据
+     */
+    public static void onEvent(Context context, String name, String tag) {
+//        YouMengHelper.onEvent(context, name, tag);
+    }
+
+    public static void onEvent(Context context, String name) {
+//        YouMengHelper.onEvent(context, name);
+    }
 
 }

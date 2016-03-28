@@ -16,7 +16,7 @@ import com.putao.wd.model.Address;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class AddressAdapter extends BasicAdapter<Address, AddressAdapter.Address
                 if (1 == getItemCount())
                     bundle.putBoolean(AddressListActivity.IS_ADDRESS_EMPTY, true);
                 bundle.putSerializable(AddressEditActivity.BUNDLE_KEY_ADDRESS, address);
-                MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_address_edit);
+                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_address_edit);
                 context.startActivity(AddressEditActivity.class, bundle);
             }
         });

@@ -33,7 +33,7 @@ import com.sunnybear.library.view.SmallBang;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -473,7 +473,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 smallBang.bang(holder.iv_answer4);
                 break;
         }
-        MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_detail_choice);
+        YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_detail_choice);
         return isTrue;
     }
 
@@ -503,7 +503,7 @@ public class ExploreAdapter extends LoadMoreAdapter<Diary, BasicViewHolder> {
                 smallBang.bang(holder.iv_answer4);
                 break;
         }
-        MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_detail_choice);
+        YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_detail_choice);
         return isTrue;
     }
 

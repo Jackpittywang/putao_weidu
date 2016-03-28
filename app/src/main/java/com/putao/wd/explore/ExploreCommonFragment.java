@@ -27,7 +27,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.io.Serializable;
 import java.util.List;

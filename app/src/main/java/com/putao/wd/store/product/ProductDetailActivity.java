@@ -50,7 +50,7 @@ import com.sunnybear.library.view.viewpager.banner.ConvenientBanner;
 import com.sunnybear.library.view.viewpager.banner.holder.CBViewHolderCreator;
 import com.sunnybear.library.view.viewpager.banner.holder.Holder;
 import com.sunnybear.library.view.viewpager.transformer.CardsTransformer;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -434,7 +434,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 mShoppingCarPopupWindow.getProductSpec();
                 break;
             case R.id.shopping_back://返回
-                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
+                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
                 finish();
                 break;
 //            case R.id.shopping_car_buy://立即购买
@@ -444,7 +444,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
 //                startActivity(WriteOrderActivity.class, bundle);
 //                break;
             case R.id.shopping_relative_car://点击进入购物车
-                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
+                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
                 startActivity(ShoppingCarActivity.class);
                 break;
             case R.id.ll_share://非精品的商品的分享

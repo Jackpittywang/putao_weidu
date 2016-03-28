@@ -41,7 +41,7 @@ import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -262,31 +262,31 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
             @Override
             public void onWechat() {
                 ShareTools.wechatWebShare(mActivity, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信好友");
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信好友");
             }
 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mActivity, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信朋友圈");
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "微信朋友圈");
             }
 
             @Override
             public void onQQFriend() {
                 ShareTools.OnQQZShare(mActivity, true, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ好友");
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ好友");
             }
 
             @Override
             public void onQQZone() {
                 ShareTools.OnQQZShare(mActivity, false, mCreate.getTitle(), mCreate.getDescrip(), mCreate.getCover(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ空间");
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "QQ空间");
             }
 
             @Override
             public void onSinaWeibo() {
                 ShareTools.OnWeiboShare(mActivity, mCreate.getTitle(), mCreate.getShare_links());
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
             }
 
 
@@ -385,7 +385,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 ll_cool.setClickable(false);
                 Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_cool);
                 sb_cool_icon.startAnimation(anim);
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_interested);
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_interested);
                 if (mCreate.getFollow_status() == 1) {
                     sb_cool_icon.setState(false);
                     tv_count_cool.setText("关注");
@@ -413,7 +413,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 }
                 break;
             case R.id.ll_comment:
-                MobclickAgent.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_comment);
+                YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_comment);
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CreateCommentActivity.class);

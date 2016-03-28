@@ -1,5 +1,6 @@
 package com.putao.wd.home;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -44,9 +45,10 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.image.processor.ProcessorInterface;
 import com.sunnybear.library.view.scroll.SupportScrollView;
 import com.sunnybear.library.view.select.IndicatorButton;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -138,7 +140,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             setDefaultBlur();
                             return;
                         }
-                        Bitmap map;
+                       /* Bitmap map;
                         URL url = new URL(setSmallImageUrl(msg.obj.toString()));
                         URLConnection conn = url.openConnection();
                         conn.connect();
@@ -146,8 +148,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         in = conn.getInputStream();
                         map = BitmapFactory.decodeStream(in);
                         Bitmap apply = FastBlur.doBlur(map, 50, false);
-                        EventBusHelper.post(apply, ME_BLUR);
-                    } catch (IOException e) {
+                        EventBusHelper.post(apply, ME_BLUR);*/
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else if (msg.what == 2) {
@@ -166,6 +168,12 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid()))) {
             si_message.show();
         }
+        iv_user_icon.addProcessor(new ProcessorInterface() {
+            @Override
+            public void process(Context context, Bitmap bitmap) {
+                EventBusHelper.post(bitmap, ME_BLUR);
+            }
+        });
     }
 
     private void setDefaultBlur() {
@@ -319,20 +327,20 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         }
         switch (v.getId()) {
             case R.id.iv_setting:
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "设置");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "设置");
                 startActivity(SettingActivity.class);
                 break;
             case R.id.si_order://我的订单
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的订单");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的订单");
                 bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.si_child_info://孩子信息
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "孩子信息");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "孩子信息");
                 startActivity(ChildInfoActivity.class);
                 break;
             case R.id.si_address://收货地址
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "收货地址");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "收货地址");
                 startActivity(AddressListActivity.class);
                 break;
             /*case R.id.si_action://我参与的活动
@@ -341,19 +349,19 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 break;*/
             case R.id.si_question://葡萄籽
 //                startActivity(QuestionActivity.class);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "葡萄籽");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "葡萄籽");
                 startActivity(GrapestoneActivity.class);
                 break;
             case R.id.iv_user_icon://完善用户信息
                 startActivity(CompleteActivity.class);
                 break;
             case R.id.si_concerns://我的关注
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的关注");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的关注");
                 startActivity(ConcernsActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "消息中心");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "消息中心");
                 startActivity(MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
@@ -368,7 +376,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 startActivity(OrderListActivity.class, bundle);
                 break;
             case R.id.btn_after_sale://售后
-                MobclickAgent.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "售后");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "售后");
                 startActivity(ServiceListActivity.class, bundle);
                 break;
         }

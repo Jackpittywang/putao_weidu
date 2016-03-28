@@ -86,7 +86,7 @@ public final class OkHttpManager {
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
-        setCache(okHttpClient);
+//        setCache(okHttpClient);
         return okHttpClient;
     }
 

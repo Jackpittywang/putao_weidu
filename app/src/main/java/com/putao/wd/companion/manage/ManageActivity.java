@@ -20,7 +20,7 @@ import com.putao.wd.model.ManagementProduct;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.List;
 
@@ -155,23 +155,23 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
             case R.id.ll_equipment://受控设备
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_EQUIPMENT);
                 bundle.putSerializable(ManagerSettingsActivity.KEY_MANAGER, management);
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "受控设备");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "受控设备");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_product://受控产品
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_PRODUCT);
                 bundle.putSerializable(ManagerSettingsActivity.KEY_MANAGER, management);
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "受控产品");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "受控产品");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.ll_usecount://使用次数
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_USE_COUNT);
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "每日使用次数");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "每日使用次数");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
             case R.id.usetime://使用时间
                 bundle.putString(ManagerSettingsActivity.KEY_MANAGER_SETTINGS, ManagerSettingsActivity.TYPE_SETTING_USE_TIME);
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "每次使用时间");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_control_item, "每次使用时间");
                 startActivity(ManagerSettingsActivity.class, bundle);
                 break;
         }

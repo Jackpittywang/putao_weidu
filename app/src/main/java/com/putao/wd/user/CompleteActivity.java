@@ -34,7 +34,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.io.File;
 

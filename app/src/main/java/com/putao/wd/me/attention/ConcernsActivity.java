@@ -20,7 +20,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -137,7 +137,7 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
         bundle.putInt(CreateDetailActivity.POSITION, position);
         bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
         bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
-        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
+        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
         startActivity(ConcernsDetailActivity.class, bundle);
     }
 
@@ -176,6 +176,6 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, YouMengHelper.UserHome_interested_back);
+        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
     }
 }

@@ -15,7 +15,7 @@ import com.putao.wd.model.Creates;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.viewpager.adapter.LoadMoreFragmentPagerAdapter;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,10 +98,13 @@ public class CreateDetailActivity extends BasicFragmentActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_close:
-                MobclickAgent.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_close, "按钮点击");
+                // YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_close, "按钮点击");
+                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_originate_detail_close, "按钮点击");
                 finish();
                 break;
         }
 
     }
+
+
 }

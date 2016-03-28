@@ -12,7 +12,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.me.address.AboutUsActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.OnClick;
 

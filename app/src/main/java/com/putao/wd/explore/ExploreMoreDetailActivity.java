@@ -35,7 +35,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -147,30 +147,30 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             @Override
             public void onWechat() {
                 ShareTools.wechatWebShare(mContext, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "微信好友");
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "微信好友");
             }
 
             @Override
             public void onWechatFriend() {
                 ShareTools.wechatWebShare(mContext, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "微信朋友圈");
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "微信朋友圈");
             }
 
             @Override
             public void onQQFriend() {
                 ShareTools.OnQQZShare(mContext, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "QQ好友");
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "QQ好友");
             }
 
             @Override
             public void onQQZone() {
                 ShareTools.OnQQZShare(mContext, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "QQ空间");
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "QQ空间");
             }
 
             public void onSinaWeibo() {
                 ShareTools.OnWeiboShare(mContext, mExploreIndex.getTitle(), mExploreIndex.getShare_url());
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "新浪微博");
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "新浪微博");
             }
 
             @Override
@@ -207,7 +207,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 startActivity(YoukuVideoPlayerActivity.class, bundle);
                 break;
             case R.id.iv_close:
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_close, "按钮点击");
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_close, "按钮点击");
                 finish();
                 break;
             case R.id.ll_cool:
@@ -232,7 +232,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             case R.id.ll_comment:
                 bundle.putString(ActionsDetailActivity.BUNDLE_ACTION_ID, mExploreIndex.getArticle_id());
                 bundle.putInt(POSITION, mPosition);
-                MobclickAgent.onEvent(mContext, YouMengHelper.ChoiceHome_detail_comment);
+                YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_comment);
                 startActivity(CommentActivity.class, bundle);
                 break;
             case R.id.ll_share:

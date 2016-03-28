@@ -27,7 +27,7 @@ import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -196,15 +196,15 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
                 startActivity(CompleteActivity.class);
                 break;*/
             case R.id.iv_title_bar_right1:
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_control);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_control);
                 startActivity(ManageActivity.class);
                 break;
             case R.id.iv_title_bar_right2:
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_scan);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_scan);
                 startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_explore_empty:
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_scan);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_scan);
                 startActivity(CaptureActivity.class);
                 break;
         }
@@ -245,31 +245,31 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
         switch (position) {
             case 0:
                 mRedDotMap.remove(PRO_601);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
                 break;
             case 1:
                 mRedDotMap.remove(PRO_602);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "班得瑞的奇幻花园");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "班得瑞的奇幻花园");
                 break;
             case 2:
                 mRedDotMap.remove(PRO_603);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "旋转吧魔方");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "旋转吧魔方");
                 break;
             case 3:
                 mRedDotMap.remove(PRO_7000);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
                 break;
             case 4:
                 mRedDotMap.remove(PRO_8000);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "Hello编程");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "Hello编程");
                 break;
             case 5:
                 mRedDotMap.remove(PRO_8001);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
                 break;
             case 6:
                 mRedDotMap.remove(PRO_8002);
-                MobclickAgent.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
         }
         mProductsAdapter.getItem(position).setShowRedDot(false);

@@ -36,7 +36,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.image.BitmapLoader;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.umeng.analytics.MobclickAgent;
+
 
 import butterknife.Bind;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -224,7 +224,7 @@ public class DiaryActivity extends PTWDActivity {
         mSharePopupWindow.setOnShareClickListener(!isVideo, new OnShareClickListener() {
             @Override
             public void onWechat() {
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信好友");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信好友");
                 if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -243,7 +243,7 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onWechatFriend() {
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信朋友圈");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信朋友圈");
                 if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -262,7 +262,7 @@ public class DiaryActivity extends PTWDActivity {
 
             @Override
             public void onQQFriend() {
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ好友");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ好友");
                 if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -282,13 +282,13 @@ public class DiaryActivity extends PTWDActivity {
             @Override
             public void onQQZone() {
                 if (isVideo) {
-                    MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ空间");
+                    YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "QQ空间");
                     ShareTools.OnQQZShare(mContext, false, null, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
                 }
             }
 
             public void onSinaWeibo() {
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "新浪微博");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "新浪微博");
                 if (isVideo) {
                     ImageUtils.cutOutViewToImage(rl_main, GlobalApplication.shareImagePath,
                             new ImageUtils.OnImageSaveCallback() {
@@ -354,25 +354,25 @@ public class DiaryActivity extends PTWDActivity {
         bundle.putSerializable(BUNDLE_PRODUCT_ID, mDiaryApp.getMall_product_id());
         switch (postion) {
             case 0://淘淘向右走
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
                 break;
             case 1://班得瑞的秘密花园
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "班得瑞的秘密花园");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "班得瑞的秘密花园");
                 break;
             case 2://旋转吧，魔方
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "旋转吧，魔方");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "旋转吧，魔方");
                 break;
             case 3://麦斯丝
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
                 break;
             case 4://hello编程
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "hello编程");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "hello编程");
                 break;
             case 5://哈尼海洋
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
                 break;
             case 6://涂涂世界
-                MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
         }
         bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "diary");
@@ -383,6 +383,6 @@ public class DiaryActivity extends PTWDActivity {
     @Override
     public void onLeftAction() {
         super.onLeftAction();
-        MobclickAgent.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_back);
+        YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_back);
     }
 }
