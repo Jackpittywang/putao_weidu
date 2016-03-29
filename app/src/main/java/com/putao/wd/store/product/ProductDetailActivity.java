@@ -105,6 +105,8 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     RelativeLayout relative_product_detail;
     @Bind(R.id.stickyHeaderLayout_scrollable)
     BasicWebView stickyHeaderLayout_scrollable;
+    @Bind(R.id.linear_shopping_number)
+    LinearLayout linear_shopping_number;
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
@@ -316,7 +318,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                         getProductDetail(product_id);
                     }
                 }
-                System.out.println("===================" + has_special + "  " + status);
             }
         });
     }
@@ -382,10 +383,10 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 JSONObject object = JSON.parseObject(result);
                 int count = object.getInteger("qt");
                 if (count != 0) {
-                    shopping_txt_number.setVisibility(View.VISIBLE);
+                    linear_shopping_number.setVisibility(View.VISIBLE);
                     shopping_txt_number.setText(count + "");
                 } else {
-                    shopping_txt_number.setVisibility(View.GONE);
+                    linear_shopping_number.setVisibility(View.GONE);
                 }
                 loading.dismiss();
             }
