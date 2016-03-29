@@ -155,7 +155,6 @@ public class ShareTools {
         } else {
             plat = ShareSDK.getPlatform(QZone.NAME);
         }
-
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
         // 执行图文分享
