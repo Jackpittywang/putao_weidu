@@ -211,7 +211,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                         request.sign = mWeixPayResult.getSign();
                     }
                     mMsgApi.sendReq(request);
-                    weixPay(mSubmitReturn != null ? mSubmitReturn.getOrder_id() : order_id);
+//                    weixPay(mSubmitReturn != null ? mSubmitReturn.getOrder_id() : order_id);
                 }
                 break;
             case R.id.ll_alipay://选择支付宝支付
