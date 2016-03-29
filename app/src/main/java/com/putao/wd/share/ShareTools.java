@@ -2,7 +2,10 @@ package com.putao.wd.share;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.sunnybear.library.util.ToastUtils;
 
@@ -163,6 +166,9 @@ public class ShareTools {
      * 微博的分享
      */
     public static void OnWeiboShare(final Context context, String text, String imageUrl) {
+        if (!checkApkExist(context, "com.sina.weibo")) {
+            return;
+        }
         Platform.ShareParams params = new Platform.ShareParams();
         params.text = text;
         params.imagePath = imageUrl;
@@ -209,6 +215,18 @@ public class ShareTools {
         @Override
         public void onCancel(Platform platform, int i) {
             ToastUtils.showToastShort(mContext, "取消分享");
+        }
+    }
+
+    public static boolean checkApkExist(Context context, String packageName) {
+        try {
+            ApplicationInfo info = context.getPackageManager()
+                    .getApplicationInfo(packageName,
+                            PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            ToastUtils.showToastShort(context, "您未安装该应用");
+            return false;
         }
     }
 
