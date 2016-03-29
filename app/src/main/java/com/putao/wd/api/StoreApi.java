@@ -79,6 +79,15 @@ public class StoreApi {
     }
 
     /**
+     * 商品详情html+pager
+     */
+    public static Request getProductDetailPager(String product_id) {
+        return PTWDRequestHelper.store()
+                .addParam(REQUEST_PRODUCT_PID, product_id)
+                .build(RequestMethod.POST, URL_PRODUCT_DETAIL);
+    }
+
+    /**
      * 商品规格
      */
     public static final String URL_PRODUCT_SPEC = BASE_URL + "product/spec";

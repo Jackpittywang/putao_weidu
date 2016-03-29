@@ -327,7 +327,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
      * 商品详情
      */
     private void getProductDetail(final String product_id) {
-        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
+        networkRequest(StoreApi.getProductDetailPager(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
                 detail = result;
