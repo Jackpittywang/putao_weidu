@@ -1,6 +1,8 @@
 package com.putao.wd.share;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 
 import com.sunnybear.library.util.ToastUtils;
 
@@ -128,17 +130,7 @@ public class ShareTools {
             plat = ShareSDK.getPlatform(Wechat.NAME);
         else
             plat = ShareSDK.getPlatform(WechatMoments.NAME);
-        // 操作失败的处理代码
-        String weChatName = plat.getClass().getSimpleName();
-        //判断有没有安装客户端
-        if ("WechatClientNotExistException".equals(weChatName)
-                || "WechatTimelineNotSupportedException".equals(weChatName)
-                || "WechatFavoriteNotSupportedException".equals(weChatName))
-
-        {
-            System.out.println("没有安装客端");
-        }
-        // 设置分享事件回调wwwww
+        // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
         plat.share(params);
     }
@@ -183,18 +175,36 @@ public class ShareTools {
 
     static class MyPlatformActionListener implements PlatformActionListener {
         private Context mContext;
+        private Handler mHandler;
 
         public MyPlatformActionListener(Context context) {
             mContext = context;
+            mHandler = new Handler();
         }
 
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
             ToastUtils.showToastShort(mContext, "分享成功");
         }
 
+        /**
+         * 此方法在子线程中执行
+         *
+         * @param platform
+         * @param i
+         * @param throwable
+         */
         @Override
-        public void onError(Platform platform, int i, Throwable throwable) {
-            ToastUtils.showToastShort(mContext, "分享失败");
+        public void onError(Platform platform, int i, final Throwable throwable) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Thread.currentThread().getName();
+                    if (throwable.getClass().getName().contains("NotExistException"))
+                        ToastUtils.showToastShort(mContext, "您未安装该应用");
+                    else
+                        ToastUtils.showToastShort(mContext, "分享失败");
+                }
+            });
         }
 
         @Override
