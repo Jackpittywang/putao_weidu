@@ -1,11 +1,13 @@
 package com.putao.wd.start.browse;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,6 +17,7 @@ import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.image.processor.ProcessorInterface;
 
 
 import butterknife.Bind;
@@ -92,7 +95,6 @@ public class PictrueBrowseFragment extends BasicFragment {
             });
         }
     }
-
 
 
     @Override

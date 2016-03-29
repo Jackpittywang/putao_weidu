@@ -127,36 +127,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        mHandlerThread = new HandlerThread("blurThread");
-        mHandlerThread.start();
         setDefaultBlur();
-        Looper looper = mHandlerThread.getLooper();
-        mHandler = new Handler(looper) {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 1) {
-                    try {
-                        if ("".equals(msg.obj.toString()) || null == msg.obj.toString()) {
-                            setDefaultBlur();
-                            return;
-                        }
-                       /* Bitmap map;
-                        URL url = new URL(setSmallImageUrl(msg.obj.toString()));
-                        URLConnection conn = url.openConnection();
-                        conn.connect();
-                        InputStream in;
-                        in = conn.getInputStream();
-                        map = BitmapFactory.decodeStream(in);
-                        Bitmap apply = FastBlur.doBlur(map, 50, false);
-                        EventBusHelper.post(apply, ME_BLUR);*/
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (msg.what == 2) {
-                    setDefaultBlur();
-                }
-            }
-        };
         isPrepared = true;
         sv_me.setOnScrollListener(new SupportScrollView.OnScrollListener() {
             @Override
@@ -168,10 +139,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid()))) {
             si_message.show();
         }
+        //添加后加载器方法
         iv_user_icon.addProcessor(new ProcessorInterface() {
             @Override
             public void process(Context context, Bitmap bitmap) {
-                EventBusHelper.post(bitmap, ME_BLUR);
+                EventBusHelper.post(FastBlur.doBlur(bitmap, 50, false), ME_BLUR);
             }
         });
     }
@@ -220,21 +192,16 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                         AccountHelper.setUserInfo(result);
                         tv_user_nickname.setText(result.getNick_name());
                         if (mImg.equals(result.getHead_img())) {
-                            if (TextUtils.isEmpty(result.getHead_img())) {
-                                Message message = new Message();
-                                message.what = 2;
-                                mHandler.sendMessage(message);
-                            }
+                            if (TextUtils.isEmpty(result.getHead_img())) setDefaultBlur();
                             loading.dismiss();
                             return;
                         }
                         mImg = result.getHead_img();
-                        String head_img = result.getHead_img();
-                        iv_user_icon.setImageURL(setSmallImageUrl(result.getHead_img()));
-                        Message message = new Message();
-                        message.obj = mImg;
-                        message.what = 1;
-                        mHandler.sendMessage(message);
+                        iv_user_icon.setImageURL(setSmallImageUrl(result.getHead_img()), true);
+                        if (TextUtils.isEmpty(mImg)) {
+                            setDefaultBlur();
+                            return;
+                        }
                         //message.obj = result.getHead_img();
                         loading.dismiss();
                     }
@@ -443,7 +410,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 
     private boolean isClick = true;
     int height;
-    int[] position = new int[2];
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

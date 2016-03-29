@@ -218,8 +218,15 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                 @Override
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
+                                    resetMsg();
                                     refreshCommentList();
                                     EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
+                                }
+
+                                @Override
+                                public void onFailure(String url, int statusCode, String msg) {
+                                    super.onFailure(url, statusCode, msg);
+                                    ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
                                 }
                             });
                 } else {
@@ -233,15 +240,18 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                                 @Override
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
+                                    resetMsg();
                                     refreshCommentList();
                                     EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
                                 }
+
+                                @Override
+                                public void onFailure(String url, int statusCode, String msg) {
+                                    super.onFailure(url, statusCode, msg);
+                                    ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
+                                }
                             });
                 }
-                isReply = false;
-                et_msg.setText("");
-                mMinLenght = 0;
-                vp_emojis.setVisibility(View.GONE);
                 break;
             case R.id.et_msg://点击文本输入框
                 isShowEmoji = false;
@@ -250,6 +260,12 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
         }
     }
 
+    private void resetMsg() {
+        isReply = false;
+        et_msg.setText("");
+        mMinLenght = 0;
+        vp_emojis.setVisibility(View.GONE);
+    }
 
     /**
      * 刷新评论列表
@@ -265,7 +281,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     if (comments != null && comments.size() > 0) {
                         checkLiked(comments);
                         adapter.replaceAll(comments);
-                    }else adapter.clear();
+                    } else adapter.clear();
                     hasComment = true;
                     rv_content.loadMoreComplete();
                     page++;

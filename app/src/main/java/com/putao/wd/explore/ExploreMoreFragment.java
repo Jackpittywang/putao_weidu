@@ -30,7 +30,7 @@ public class ExploreMoreFragment extends BasicFragment {
             return;
         }
         PutaoExploreFragment.BACKGROUND_CAN_CHANGGE = false;
-        EventBusHelper.post(ImageUtils.cutOutViewToSmallBitmap(iv_video), PutaoExploreFragment.BLUR);
+        EventBusHelper.post(ImageUtils.cutOutViewToSmallBitmap(mActivity, iv_video), PutaoExploreFragment.BLUR);
         iv_video.setBackgroundResource(R.drawable.img_explore_more_cover);
     }
 

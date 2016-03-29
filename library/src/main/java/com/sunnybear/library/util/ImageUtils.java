@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
@@ -206,16 +207,20 @@ public final class ImageUtils {
      *
      * @param view view源
      */
-    public static Bitmap cutOutViewToSmallBitmap(View view) {
+    public static Bitmap cutOutViewToSmallBitmap(Context context, View view) {
 //        return Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
 
-        Bitmap bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(DensityUtil.dp2px(context, 30), DensityUtil.dp2px(context, 30), Bitmap.Config.ARGB_8888);
         if (null != view) {
             view.setBackgroundResource(R.color.white);
             Canvas canvas = new Canvas(bitmap);
             view.draw(canvas);
         }
         return bitmap;
+        /*Matrix matrix = new Matrix();
+        matrix.postScale(0.1f, 0.1f); //长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;*/
     }
 
     /**

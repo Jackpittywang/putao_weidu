@@ -76,7 +76,7 @@ public class ExploreCommonFragment extends BasicFragment implements View.OnClick
             return;
         }
         PutaoExploreFragment.BACKGROUND_CAN_CHANGGE = false;
-        EventBusHelper.post(ImageUtils.cutOutViewToSmallBitmap(iv_video), PutaoExploreFragment.BLUR);
+        EventBusHelper.post(ImageUtils.cutOutViewToSmallBitmap(mActivity,iv_video), PutaoExploreFragment.BLUR);
     }
 
     @Override

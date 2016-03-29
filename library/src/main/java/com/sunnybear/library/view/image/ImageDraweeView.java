@@ -146,4 +146,33 @@ public class ImageDraweeView extends SimpleDraweeView {
                 .build();
         setController(controller);
     }
+
+    /**
+     * 加载图片
+     *
+     * @param url             图片的url
+     * @param isNeedProcessor 是否需要后加载器
+     */
+    public void setImageURL(String url, boolean isNeedProcessor) {
+        if (TextUtils.isEmpty(url))
+            return;
+        Uri uri = Uri.parse(url);
+        setImageURI(uri);
+        ImageRequestBuilder imageRequestBuilder = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setAutoRotateEnabled(true)
+                .setLocalThumbnailPreviewsEnabled(true)
+                .setResizeOptions(mResizeOptions);
+        ImageRequest request;
+        if (isNeedProcessor)
+            request = imageRequestBuilder.setPostprocessor(mProcessor).build();
+        else
+            request = imageRequestBuilder.build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setAutoPlayAnimations(true)
+                .setImageRequest(request)
+                .setTapToRetryEnabled(true)//加载失败时点击重新加载
+                .setOldController(getController())
+                .build();
+        setController(controller);
+    }
 }

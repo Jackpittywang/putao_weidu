@@ -112,8 +112,8 @@ public class OkHttpRequestHelper {
      * @return 响应体
      */
     private Response getResponse(Cache cache, Request request) {
-        Class clz = cache.getClass();
         try {
+            Class clz = cache.getClass();
             Method get = clz.getDeclaredMethod("get", Request.class);
             get.setAccessible(true);
             return (Response) get.invoke(cache, request);

@@ -38,7 +38,7 @@
         android:id="@+id/v_shelter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#cc000000"
+        android:background="#aa000000"
         android:visibility="gone" />
 
     <!--分割线-->
