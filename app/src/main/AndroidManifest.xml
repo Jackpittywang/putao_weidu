@@ -385,7 +385,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!-- 微信分享回调 -->
+        <!-- 微信支付回调 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

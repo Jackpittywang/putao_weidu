@@ -198,7 +198,6 @@ public class ShareTools {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Thread.currentThread().getName();
                     if (throwable.getClass().getName().contains("NotExistException"))
                         ToastUtils.showToastShort(mContext, "您未安装该应用");
                     else
