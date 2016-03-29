@@ -54,8 +54,9 @@
             <com.sunnybear.library.view.CleanableEditText
                 android:id="@+id/et_graph_verify"
                 style="@style/WeiduText.EditText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_toLeftOf="@id/image_graph_verify"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
                 android:hint="@string/graph_verify" />
@@ -67,8 +68,7 @@
                 android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@id/et_graph_verify" />
+                android:layout_marginRight="8dp" />
 
             <!--间隔线-->
             <View

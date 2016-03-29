@@ -3,6 +3,7 @@ package com.putao.wd.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -84,7 +86,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         return new String[0];
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget})
+    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget, R.id.image_graph_verify})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -93,7 +95,12 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 btn_login.setClickable(false);
                 final String mobile = et_mobile.getText().toString();
                 final String passWord = et_password.getText().toString();
-                networkRequest(AccountApi.login(mobile, passWord),
+                final String verify = et_graph_verify.getText().toString();
+//                if (TextUtils.isEmpty(verify)) {
+//                    ToastUtils.showToastLong(mContext, "图形验证码不能为空");
+//                    return;
+//                }
+                networkRequest(AccountApi.safeLogin(mobile, passWord, verify),
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
@@ -101,7 +108,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                 AccountHelper.setCurrentToken(result.getString("token"));
                                 new JPushHeaper().setAlias(mContext, result.getString("uid"));
                                 mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
-//                                PutaoCompanionFragment.isPrepared = true;
                                 PutaoCreatedFragment.isPrepared = true;
                                 PutaoExploreFragment.isPrepared = true;
                                 EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
@@ -111,15 +117,11 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 
                             @Override
                             public void onError(String error_msg) {
-                                ToastUtils.showToastLong(mContext, error_msg);
+                                ToastUtils.showToastShort(mContext, error_msg);
                                 mErrorCount++;
                                 if (mErrorCount == 3) {
                                     rl_graph_verify.setVisibility(View.VISIBLE);
-                                    /**
-                                     * 图形验证码的登录
-                                     * */
-                                    String verify = et_graph_verify.getText().toString();
-                                    getGraphVerify(mobile, passWord, verify);
+                                    AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
                                 }
                             }
 
@@ -136,39 +138,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
             case R.id.tv_forget://忘记密码
                 startActivity(ForgetPasswordActivity.class);
                 break;
+            case R.id.image_graph_verify:
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                break;
         }
-    }
-
-
-    /**
-     * 密码输错三次，显示出图形验证码
-     */
-    private void getGraphVerify(String moblie, String passWord, String verify) {
-        /**
-         * 图形验证码
-         * */
-        AccountApi.OnGraphVerify(image_graph_verify,AccountConstants.Action.ACTION_LOGIN);
-
-        networkRequest(AccountApi.safeLogin(moblie, passWord, verify),
-                new AccountCallback(loading) {
-                    @Override
-                    public void onSuccess(JSONObject result) {
-                        AccountHelper.setCurrentUid(result.getString("uid"));
-                        AccountHelper.setCurrentToken(result.getString("token"));
-                        new JPushHeaper().setAlias(mContext, result.getString("uid"));
-                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
-                        PutaoCreatedFragment.isPrepared = true;
-                        PutaoExploreFragment.isPrepared = true;
-                        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-                        startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(String error_msg) {
-                        ToastUtils.showToastLong(mContext, error_msg);
-                    }
-                });
     }
 
     /**

@@ -13,6 +13,7 @@ import java.security.MessageDigest;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 /**
@@ -90,11 +91,21 @@ public class AccountApi {
      * @param mobile 账号
      * @param action 验证码发送原因
      */
-    public static Request sendVerifyCode(String mobile, String action) {
+    public static Request sendVerifyCode(String mobile, String action, String verify) {
+        Map<String, String> params = new HashMap<>();
+        params.put(AccountConstants.Parameter.PARAM_MOBILE, mobile);
+        params.put(AccountConstants.Parameter.PARAM_ACTION, action);
+        params.put(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify);
+        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
+        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
+        String sign = generateSign(params, SECRETKEY);
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
                 .addParam(AccountConstants.Parameter.PARAM_ACTION, action)
+                .addParam(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
+                .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
+                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .build(RequestMethod.POST, URL_SEND_VERIFY_CODE);
     }
 
@@ -141,38 +152,38 @@ public class AccountApi {
                 .build(RequestMethod.POST, URL_FORGET);
     }
 
-    /**
-     * 登录
-     */
-    public static final String URL_LOGIN = BASE_URL + AccountConstants.Url.URL_LOGIN;
-
-    /**
-     * 登录
-     *
-     * @param mobile   账号
-     * @param password 密码
-     */
-    public static Request login(String mobile, String password) {
-        Map<String, String> params = new HashMap<>();
-        params.put(AccountConstants.Parameter.PARAM_MOBILE, mobile);
-        params.put(AccountConstants.Parameter.PARAM_PASSWD, password);
-        params.put(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE);
-        params.put(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION);
-        params.put(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID);
-        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
-        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
-        String sign = generateSign(params, SECRETKEY);
-        return FormEncodingRequestBuilder.newInstance()
-                .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
-                .addParam(AccountConstants.Parameter.PARAM_PASSWD, password)
-                .addParam(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE)
-                .addParam(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION)
-                .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
-                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
-                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-                .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
-                .build(RequestMethod.POST, URL_LOGIN);
-    }
+//    /**
+//     * 登录
+//     */
+//    public static final String URL_LOGIN = BASE_URL + AccountConstants.Url.URL_SAFELOGIN;
+//
+//    /**
+//     * 登录
+//     *
+//     * @param mobile   账号
+//     * @param password 密码
+//     */
+//    public static Request login(String mobile, String password) {
+//        Map<String, String> params = new HashMap<>();
+//        params.put(AccountConstants.Parameter.PARAM_MOBILE, mobile);
+//        params.put(AccountConstants.Parameter.PARAM_PASSWD, password);
+//        params.put(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE);
+//        params.put(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION);
+//        params.put(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID);
+//        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
+//        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
+//        String sign = generateSign(params, SECRETKEY);
+//        return FormEncodingRequestBuilder.newInstance()
+//                .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
+//                .addParam(AccountConstants.Parameter.PARAM_PASSWD, password)
+//                .addParam(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE)
+//                .addParam(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION)
+//                .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
+//                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+//                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
+//                .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
+//                .build(RequestMethod.POST, URL_LOGIN);
+//    }
 
 
     /**
@@ -189,14 +200,14 @@ public class AccountApi {
      */
     public static Request safeLogin(String mobile, String password, String verify) {
         Map<String, String> params = new HashMap<>();
+        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
+        params.put(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE);
+        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
         params.put(AccountConstants.Parameter.PARAM_MOBILE, mobile);
         params.put(AccountConstants.Parameter.PARAM_PASSWD, password);
-        params.put(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE);
         params.put(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION);
         params.put(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID);
         params.put(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify);
-        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
-        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
         String sign = generateSign(params, SECRETKEY);
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
@@ -369,11 +380,13 @@ public class AccountApi {
     }
 
     public static void OnGraphVerify(ImageDraweeView image_graph_verify, String action) {
+        Random random = new Random();
         //图形验证码
         image_graph_verify.setImageURL(PTWDRequestHelper.store()
                 .addParam("action", action)
                 .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
                 .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam("r", random.nextInt() + "")
                 .joinURL(AccountApi.URL_SEND_PHOTO_CODE));
     }
 
