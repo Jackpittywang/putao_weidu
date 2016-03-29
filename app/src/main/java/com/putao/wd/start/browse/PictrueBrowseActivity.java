@@ -6,17 +6,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.model.PicList;
+import com.putao.wd.share.SharePopupWindow;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+
 
 /**
  * 图片浏览
