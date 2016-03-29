@@ -39,7 +39,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	// 微信发送请求到第三方应用时，会回调到该方法
 	@Override
 	public void onReq(BaseReq req) {
-		Toast.makeText(this, "openid = " + req.openId, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, "openid = " + req.openId, Toast.LENGTH_SHORT).show();
 /*
 		switch (req.getType()) {
 			case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
@@ -59,7 +59,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	// 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
 	@Override
 	public void onResp(BaseResp resp) {
-		Toast.makeText(this, "openid = " + resp.openId, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, "openid = " + resp.openId, Toast.LENGTH_SHORT).show();
 /*
 		if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {
 			Toast.makeText(this, "code = " + ((SendAuth.Resp) resp).code, Toast.LENGTH_SHORT).show();
