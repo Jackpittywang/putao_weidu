@@ -179,6 +179,7 @@ public class CommentActivity extends PTWDActivity<GlobalApplication> implements 
                     mSelectPopupWindow.tv_first.setTextColor(0xffcc0000);
                 }
                 mSelectPopupWindow.show(rl_main);
+                KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
             }
         });
         et_msg.setOnKeyListener(new View.OnKeyListener() {
