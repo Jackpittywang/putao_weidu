@@ -128,6 +128,16 @@ public class ShareTools {
             plat = ShareSDK.getPlatform(Wechat.NAME);
         else
             plat = ShareSDK.getPlatform(WechatMoments.NAME);
+        // 操作失败的处理代码
+        String weChatName = plat.getClass().getSimpleName();
+        //判断有没有安装客户端
+        if ("WechatClientNotExistException".equals(weChatName)
+                || "WechatTimelineNotSupportedException".equals(weChatName)
+                || "WechatFavoriteNotSupportedException".equals(weChatName))
+
+        {
+            System.out.println("没有安装客端");
+        }
         // 设置分享事件回调wwwww
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
         plat.share(params);
@@ -161,10 +171,9 @@ public class ShareTools {
      * 微博的分享
      */
     public static void OnWeiboShare(final Context context, String text, String imageUrl) {
-        Platform.ShareParams params=new Platform.ShareParams();
-        params.text=text;
-        params.imagePath=imageUrl;
-//http://blog.csdn.net/love_javc_you/article/details/39956631--------微博链接
+        Platform.ShareParams params = new Platform.ShareParams();
+        params.text = text;
+        params.imagePath = imageUrl;
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));

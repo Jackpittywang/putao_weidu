@@ -85,8 +85,8 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     RelativeLayout shopping_relative_car;
     @Bind(R.id.shopping_add_car)
     TextView shopping_add_car;//加入购物车
-    @Bind(R.id.shopping_car_buy)
-    TextView shopping_car_buy;//立即购买
+    //    @Bind(R.id.shopping_car_buy)
+//    TextView shopping_car_buy;//立即购买
     @Bind(R.id.shopping_txt_number)
     TextView shopping_txt_number;//立即购买
     @Bind(R.id.ll_share)
@@ -423,7 +423,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         return new String[0];
     }
 
-    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_car_buy, R.id.shopping_share, R.id.shopping_relative_car, R.id.ll_share})
+    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_share, R.id.shopping_relative_car, R.id.ll_share})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

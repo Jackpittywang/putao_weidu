@@ -75,10 +75,11 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         return new String[0];
     }
 
-    @OnClick({R.id.btn_nextstep, R.id.tb_get_verify})
+    @OnClick({R.id.btn_nextstep, R.id.tb_get_verify, R.id.image_graph_verify})
     @Override
     public void onClick(View v) {
         final String mobile = et_mobile.getText().toString();
+        final String verify = et_graph_verify.getText().toString();
         switch (v.getId()) {
             case R.id.btn_nextstep://下一步
                 if (11 != et_mobile.getText().toString().length() || "" == et_mobile.getText().toString().trim()) {
@@ -86,12 +87,11 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 } else {
                     String smsCode = et_sms_verify.getText().toString();
                     final String password = et_password.getText().toString();
-                    final String verify = et_graph_verify.getText().toString();
                     networkRequest(AccountApi.forget(mobile, smsCode, password, verify), new AccountCallback(loading) {
 
                         @Override
                         public void onSuccess(JSONObject result) {
-                            networkRequest(AccountApi.login(mobile, password),
+                            networkRequest(AccountApi.safeLogin(mobile, password, verify),
                                     new AccountCallback(loading) {
                                         @Override
                                         public void onSuccess(JSONObject result) {
@@ -120,7 +120,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                     ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
-                networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET),
+                networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET, verify),
                         new AccountCallback(loading) {
                             @Override
                             public void onSuccess(JSONObject result) {
@@ -133,6 +133,9 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                                 tb_get_verify.reset();
                             }
                         });
+                break;
+            case R.id.image_graph_verify:
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
                 break;
         }
     }

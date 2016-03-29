@@ -81,18 +81,18 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
         return new String[0];
     }
 
-    @OnClick({R.id.tb_get_verify, R.id.btn_next, R.id.tv_user_protocol})
+    @OnClick({R.id.tb_get_verify, R.id.btn_next, R.id.tv_user_protocol, R.id.image_graph_verify})
     @Override
     public void onClick(View v) {
+        String graph_verify = et_graph_verify.getText().toString();
         switch (v.getId()) {
             case R.id.tb_get_verify://获取验证码
-                getVerifyCode();
+                getVerifyCode(graph_verify);
                 break;
             case R.id.btn_next://下一步
                 String phone = et_mobile.getText().toString();
                 String password = et_password.getText().toString();
                 String sms_verify = et_sms_verify.getText().toString();
-                String graph_verify = et_graph_verify.getText().toString();
                 networkRequest(AccountApi.register(phone, password, sms_verify, graph_verify), new AccountCallback(loading) {
                     @Override
                     public void onSuccess(JSONObject result) {
@@ -114,6 +114,9 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             case R.id.tv_user_protocol://用户服务协议
                 startActivity(ProtocolActivity.class);
                 break;
+            case R.id.image_graph_verify://改变图形验证码
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_REGISTER);
+                break;
         }
     }
 
@@ -128,7 +131,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     /**
      * 获取验证码
      */
-    private void getVerifyCode() {
+    private void getVerifyCode(String graph_verify) {
         String mobile = et_mobile.getText().toString().trim();
         String value = et_mobile.getText().toString();
         String regExp = "^[1]([3|7|5|8]{1}\\d{1})\\d{8}$";
@@ -139,7 +142,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             ToastUtils.showToastShort(mContext, "请输入正确的手机号码");
             return;
         }
-        networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER), new AccountCallback(loading) {
+
+        networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_REGISTER, graph_verify), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
                 Logger.d(result.toJSONString());
@@ -149,30 +153,10 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             @Override
             public void onError(String error_msg) {
                 tb_get_verify.reset();
-                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
+//                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
+                ToastUtils.showToastLong(mContext, error_msg);
             }
         });
-    }
-
-    /**
-     * 获取图片验证码
-     */
-    private void getGraphCode() {
-
-//        networkRequest(AccountApi.sendPhotoCode(AccountConstants.Action.ACTION_REGISTER), new AccountCallback(loading) {
-//            @Override
-//            public void onSuccess(JSONObject result) {
-//                Logger.d(result.toJSONString());
-//                image_graph_verify.setImageURL();
-//                System.out.println("=====================" + result.toJSONString());
-//            }
-//
-//
-//            @Override
-//            public void onError(String error_msg) {
-//                ToastUtils.showToastLong(mContext, "图形验证码错误");
-//            }
-//        });
     }
 
     @Override
