@@ -1,173 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!--标题栏-->
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        auto:nav_left_title="@string/cancel"
-        auto:nav_left_title_color="@drawable/text_select"
-        auto:nav_main_title="@string/address_manager"
-        auto:nav_right_title="@string/save"
-        auto:nav_right_title_color="@drawable/text_select" />
-
-    <!--收货人姓名-->
-    <LinearLayout style="@style/style_address_title">
-
-        <TextView
-            style="@style/style_address_title_text"
-            android:text="@string/consignee_name" />
-
-        <TextView
-            style="@style/style_address_title_text_must"
-            android:text="@string/must" />
-    </LinearLayout>
-    <!--收货人姓名编辑-->
-    <com.sunnybear.library.view.CleanableEditText
-        android:id="@+id/et_name"
-        style="@style/style_address_edit_text"
-
-        android:hint="@string/et_name" />
-
-    <!--所在地区和街道地址-->
-    <LinearLayout style="@style/style_address_title">
-
-        <TextView
-            style="@style/style_address_title_text"
-            android:text="@string/consignee_address" />
-
-        <TextView
-            style="@style/style_address_title_text_must"
-            android:text="@string/must" />
-    </LinearLayout>
-    <!--所在地区和街道地址编辑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--省份,城市,城区-->
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            auto:nav_left_title="@string/cancel"
+            auto:nav_left_title_color="@drawable/text_select"
+            auto:nav_main_title="@string/address_manager"
+            auto:nav_right_title="@string/save"
+            auto:nav_right_title_color="@drawable/text_select" />
+
+        <!--收货人姓名-->
+        <LinearLayout style="@style/style_address_title">
+
+            <TextView
+                style="@style/style_address_title_text"
+                android:text="@string/consignee_name" />
+
+            <TextView
+                style="@style/style_address_title_text_must"
+                android:text="@string/must" />
+        </LinearLayout>
+        <!--收货人姓名编辑-->
+        <com.sunnybear.library.view.CleanableEditText
+            android:id="@+id/et_name"
+            style="@style/style_address_edit_text"
+
+            android:hint="@string/et_name" />
+
+        <!--所在地区和街道地址-->
+        <LinearLayout style="@style/style_address_title">
+
+            <TextView
+                style="@style/style_address_title_text"
+                android:text="@string/consignee_address" />
+
+            <TextView
+                style="@style/style_address_title_text_must"
+                android:text="@string/must" />
+        </LinearLayout>
+        <!--所在地区和街道地址编辑-->
         <LinearLayout
-            android:id="@+id/ll_city_sel"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:layout_height="96dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_province"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:gravity="center_vertical"
+            <!--省份,城市,城区-->
+            <LinearLayout
+                android:id="@+id/ll_city_sel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:singleLine="false"
+                    android:text="省份" />
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:singleLine="false"
+                    android:text="城市" />
+
+                <TextView
+                    android:id="@+id/tv_district"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:singleLine="false"
+                    android:text="城区" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/btn_arrow_down" />
+            </LinearLayout>
+
+            <!--街道地址-->
+            <com.sunnybear.library.view.CleanableEditText
+                android:id="@+id/et_street"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:drawableRight="@drawable/btn_clear"
+                android:hint="@string/et_street"
                 android:paddingLeft="8dp"
-                android:singleLine="false"
-                android:text="省份" />
-
-            <TextView
-                android:id="@+id/tv_city"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:singleLine="false"
-                android:text="城市" />
-
-            <TextView
-                android:id="@+id/tv_district"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:singleLine="false"
-                android:text="城区" />
-
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="8dp"
-                android:layout_weight="0.1"
-                android:src="@drawable/btn_arrow_down" />
+                android:paddingRight="8dp"
+                android:singleLine="false" />
         </LinearLayout>
 
-        <!--街道地址-->
+        <!--电话号码-->
+        <LinearLayout style="@style/style_address_title">
+
+            <TextView
+                style="@style/style_address_title_text"
+                android:text="@string/consignee_mobile" />
+
+            <TextView
+                style="@style/style_address_title_text_must"
+                android:text="@string/must" />
+        </LinearLayout>
+        <!--收货人姓名编辑-->
         <com.sunnybear.library.view.CleanableEditText
-            android:id="@+id/et_street"
+            android:id="@+id/et_phone"
+            style="@style/style_address_edit_text"
+            android:hint="@string/et_phone"
+            android:inputType="number"
+            auto:maxLength="11" />
+
+        <!--默认收货地址-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/layout_background">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/btn_default"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                auto:norDrawable="@drawable/check_box_nor"
+                auto:selDrawable="@drawable/check_box_sel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="@string/default_address"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_20sp" />
+        </LinearLayout>
+
+        <!--删除本条地址-->
+        <LinearLayout
+            android:id="@+id/ll_delete_address"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/white"
-            android:drawableRight="@drawable/btn_clear"
-            android:hint="@string/et_street"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:singleLine="false" />
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:text="@string/delete_address"
+                android:textColor="@color/text_color_ED5564"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
     </LinearLayout>
-
-    <!--电话号码-->
-    <LinearLayout style="@style/style_address_title">
-
-        <TextView
-            style="@style/style_address_title_text"
-            android:text="@string/consignee_mobile" />
-
-        <TextView
-            style="@style/style_address_title_text_must"
-            android:text="@string/must" />
-    </LinearLayout>
-    <!--收货人姓名编辑-->
-    <com.sunnybear.library.view.CleanableEditText
-        android:id="@+id/et_phone"
-        style="@style/style_address_edit_text"
-        android:hint="@string/et_phone"
-        android:inputType="number"
-        auto:maxLength="11" />
-
-    <!--默认收货地址-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/layout_background">
-
-        <com.sunnybear.library.view.SwitchButton
-            android:id="@+id/btn_default"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            auto:norDrawable="@drawable/check_box_nor"
-            auto:selDrawable="@drawable/check_box_sel" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/default_address"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_20sp" />
-    </LinearLayout>
-
-    <!--删除本条地址-->
-    <LinearLayout
-        android:id="@+id/ll_delete_address"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:text="@string/delete_address"
-            android:textColor="@color/text_color_ED5564"
-            android:textSize="@dimen/text_size_18sp" />
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
