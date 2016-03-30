@@ -81,8 +81,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     ImageView shopping_back;
     @Bind(R.id.shopping_share)
     ImageView shopping_share;
-    @Bind(R.id.iv_close)
-    ImageView iv_close;
     @Bind(R.id.shopping_relative_car)
     RelativeLayout shopping_relative_car;
     @Bind(R.id.shopping_add_car)
@@ -103,13 +101,10 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     TextView tv_product_intro;
     @Bind(R.id.stickyHeaderLayout_sticky)
     TitleBar stickyHeaderLayout_sticky;
-    @Bind(R.id.relative_product_detail)
-    RelativeLayout relative_product_detail;
     @Bind(R.id.stickyHeaderLayout_scrollable)
     BasicWebView stickyHeaderLayout_scrollable;
     @Bind(R.id.linear_shopping_number)
     LinearLayout linear_shopping_number;
-
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
@@ -187,7 +182,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 stickyHeaderLayout_sticky.setOnTitleItemSelectedListener(this);
                 getProductStatus(pid);
             }
-
 //            if (null == storeProduct) {
 //                wv_content.loadUrl(PTWDRequestHelper.store()
 //                        .addParam("pid", args.getString(JPushReceiver.MID))
@@ -310,16 +304,16 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                     //判断是否是精品(1.精品，0.非精品)
                     if (has_special == 1) {
                         sticky_layout.setVisibility(View.GONE);
-                        iv_close.setVisibility(View.GONE);
-                        relative_product_detail.setVisibility(View.VISIBLE);
+                        wv_content.setVisibility(View.VISIBLE);
+                        shopping_share.setVisibility(View.VISIBLE);
                         wv_content.loadUrl(storeProduct.getMobile_url());
                         tv_product_price.setText(storeProduct.getPrice());
                         mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
                         loading.dismiss();
                     } else if (has_special == 0) {//显示h5
                         sticky_layout.setVisibility(View.VISIBLE);
-                        relative_product_detail.setVisibility(View.GONE);
-                        iv_close.setVisibility(View.VISIBLE);
+                        wv_content.setVisibility(View.GONE);
+                        shopping_share.setVisibility(View.GONE);
                         getProductDetail(product_id);
                     }
                 }
@@ -429,7 +423,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         return new String[0];
     }
 
-    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_share, R.id.shopping_relative_car, R.id.ll_share, R.id.iv_close})
+    @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_share, R.id.shopping_relative_car, R.id.ll_share})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -459,11 +453,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 if (null != mSharePopupWindow)
                     mSharePopupWindow.show(ll_share);
                 break;
-            case R.id.iv_close:
-                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
-                finish();
-                break;
-
         }
     }
 
