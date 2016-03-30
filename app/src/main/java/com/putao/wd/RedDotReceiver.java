@@ -27,8 +27,12 @@ public class RedDotReceiver extends PTMessageReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String message = intent.getExtras().getString(KeyMessage);
-        setResult(message);
+        try {
+            String message = intent.getExtras().getString(KeyMessage);
+            setResult(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         /*String result = message.substring(message.indexOf("{") + 1, message.indexOf("}") + 1);
         result = result.substring(message.indexOf("{"), result.length());
         JSONObject jsonObject = JSONObject.parseObject(result);*/

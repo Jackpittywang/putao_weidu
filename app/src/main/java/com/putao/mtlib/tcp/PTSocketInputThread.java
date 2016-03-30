@@ -105,10 +105,10 @@ public class PTSocketInputThread extends Thread {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(PTMessageReceiver.RecAction);
-                Bundle b = new Bundle();
-                b.putString(PTMessageReceiver.KeyMessage, data);
-                intent.putExtras(b);
+                Intent intent = new Intent(PTMessageReceiver.RedAction);
+                Bundle redActionBundle = new Bundle();
+                redActionBundle.putString(PTMessageReceiver.KeyMessage, data);
+                intent.putExtras(redActionBundle);
                 mContext.sendBroadcast(intent);
                 PTSenderManager.sharedInstance().sendMsg(PTMessageUtil.getMesageByteArray(PTMessageType.CS_NOTICEACK, null),
                         null);

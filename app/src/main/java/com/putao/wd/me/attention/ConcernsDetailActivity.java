@@ -75,7 +75,7 @@ public class ConcernsDetailActivity extends BasicFragmentActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt(POSITION, position);
                 bundle.putSerializable(CREATE, datas.get(position));
-                return new CreateBasicDetailFragment(bundle);
+                return Fragment.instantiate(getApplicationContext(), CreateBasicDetailFragment.class.getName(), bundle);
             }
         };
         vp_content.setAdapter(fragmentPagerAdapter);

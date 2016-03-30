@@ -12,7 +12,7 @@ import android.content.BroadcastReceiver;
  */
 public abstract class PTMessageReceiver extends BroadcastReceiver {
 
-	public final static String RecAction = "com.putao.mtlib.message";
+	public final static String RedAction = "com.putao.mtlib.message";
 	public final static String KeyMessage = "message";
 
 }

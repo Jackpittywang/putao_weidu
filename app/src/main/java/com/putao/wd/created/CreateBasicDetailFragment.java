@@ -134,12 +134,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
     private int mCommentCount;
     private boolean isEnd;
 
-
-    public CreateBasicDetailFragment(Bundle bundle) {
-        mPosition = bundle.getInt(POSITION);
-        mCreate = (Create) bundle.getSerializable(CreateDetailActivity.CREATE);
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_created_detail;
@@ -147,6 +141,8 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+        mPosition = args.getInt(POSITION);
+        mCreate = (Create) args.getSerializable(CreateDetailActivity.CREATE);
         isShowProgress = 1 == mCreate.getType();
         rl_support.setClickable(false);
         rl_no_support.setClickable(false);
@@ -154,19 +150,6 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
         mSharePopupWindow = new SharePopupWindow(mActivity);
         isDid = false;
         addListener();
-        initView();
-    }
-
-    public void setData(Bundle bundle) {
-        rl_support.setClickable(false);
-        rl_no_support.setClickable(false);
-        mWidthPixels = mActivity.getResources().getDisplayMetrics().widthPixels / 2;
-        mSharePopupWindow = new SharePopupWindow(mActivity);
-        isDid = false;
-        addListener();
-        mCreate = (Create) bundle.getSerializable(CreateDetailActivity.CREATE);
-        mPosition = bundle.getInt(POSITION);
-//        isShowProgress = args.getBoolean(SHOW_PROGRESS);
         initView();
     }
 
