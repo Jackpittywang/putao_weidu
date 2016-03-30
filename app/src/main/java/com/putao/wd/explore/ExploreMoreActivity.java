@@ -185,12 +185,11 @@ public class ExploreMoreActivity extends PTWDActivity {
         adapter.notifyItemChanged(position);
     }
 
-    @Subcriber(tag = ExploreMoreDetailActivity.EVENT_ADD_MORE_DETAIL_COOL)
+    @Subcriber(tag = ExploreDetailFragment.EVENT_ADD_COOL)
     public void eventAddCoolCount(int position) {
         ExploreIndex item = adapter.getItem(position);
         item.setCount_likes(item.getCount_likes() + 1);
         item.setIs_like(true);
         adapter.notifyItemChanged(position);
     }
-
 }
