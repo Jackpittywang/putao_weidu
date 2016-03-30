@@ -36,6 +36,7 @@ public class NotifyService extends Service {
     private static final String secret = "499478a81030bb177e578f86410cda8641a22799";
     private static final int appid = 611;
 
+    private Context mContext;
     private HandlerThread mStartThread;
     private Handler mHandler;
     private String mThreadName = NotifyService.class.getSimpleName();
@@ -44,6 +45,7 @@ public class NotifyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = NotifyService.this;
         mStartThread = new HandlerThread(mThreadName);
         mStartThread.start();
         mHandler = new Handler(mStartThread.getLooper());
@@ -72,7 +74,7 @@ public class NotifyService extends Service {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(GlobalApplication.Fore_Message);
         intentFilter.addAction(GlobalApplication.Not_Fore_Message);
-        registerReceiver(new HomeBroadcastReceiver(), intentFilter);
+        mContext.getApplicationContext().registerReceiver(new HomeBroadcastReceiver(), intentFilter);
     }
 
     /**
@@ -114,7 +116,7 @@ public class NotifyService extends Service {
                         @Override
                         public void run() {
                             stopSelf();
-                            unregisterReceiver(HomeBroadcastReceiver.this);
+                            mContext.getApplicationContext().unregisterReceiver(HomeBroadcastReceiver.this);
                             GlobalApplication.isServiceClose = true;
                             Logger.d("---------++++", "停止服务");
                         }
