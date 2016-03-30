@@ -86,7 +86,8 @@
                 android:layout_toLeftOf="@id/image_graph_verify"
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
-                android:hint="@string/graph_verify" />
+                android:hint="@string/graph_verify"
+                auto:maxLength="4" />
 
             <!--图形验证码-->
             <com.sunnybear.library.view.image.ImageDraweeView

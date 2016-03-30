@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -78,7 +79,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         et_password.addTextChangedListener(this);
         btn_login.setClickable(false);
         IndexActivity.isNotRefreshUserInfo = false;
-
     }
 
     @Override
@@ -96,41 +96,43 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 final String mobile = et_mobile.getText().toString();
                 final String passWord = et_password.getText().toString();
                 final String verify = et_graph_verify.getText().toString();
-//                if (TextUtils.isEmpty(verify)) {
-//                    ToastUtils.showToastLong(mContext, "图形验证码不能为空");
-//                    return;
-//                }
-                networkRequest(AccountApi.safeLogin(mobile, passWord, verify),
-                        new AccountCallback(loading) {
-                            @Override
-                            public void onSuccess(JSONObject result) {
-                                AccountHelper.setCurrentUid(result.getString("uid"));
-                                AccountHelper.setCurrentToken(result.getString("token"));
-                                new JPushHeaper().setAlias(mContext, result.getString("uid"));
-                                mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
-                                PutaoCreatedFragment.isPrepared = true;
-                                PutaoExploreFragment.isPrepared = true;
-                                EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-                                startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
-                                finish();
-                            }
-
-                            @Override
-                            public void onError(String error_msg) {
-                                ToastUtils.showToastShort(mContext, error_msg);
-                                mErrorCount++;
-                                if (mErrorCount == 3) {
-                                    rl_graph_verify.setVisibility(View.VISIBLE);
-                                    AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                if (NetManager.isNetworkAvailable(LoginActivity.this) == true) {//没有网络连接
+                    ToastUtils.showToastLong(mContext, "您的网络不给力");
+                    loading.dismiss();
+                    et_password.setText("");
+                } else {
+                    networkRequest(AccountApi.safeLogin(mobile, passWord, verify),
+                            new AccountCallback(loading) {
+                                @Override
+                                public void onSuccess(JSONObject result) {
+                                    AccountHelper.setCurrentUid(result.getString("uid"));
+                                    AccountHelper.setCurrentToken(result.getString("token"));
+                                    new JPushHeaper().setAlias(mContext, result.getString("uid"));
+                                    mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
+                                    PutaoCreatedFragment.isPrepared = true;
+                                    PutaoExploreFragment.isPrepared = true;
+                                    EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                                    startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                                    finish();
                                 }
-                            }
 
-                            @Override
-                            public void onFinish(String url, boolean isSuccess, String msg) {
-                                super.onFinish(url, isSuccess, msg);
-                                btn_login.setClickable(true);
-                            }
-                        });
+                                @Override
+                                public void onError(String error_msg) {
+                                    ToastUtils.showToastShort(mContext, error_msg);
+                                    mErrorCount++;
+                                    if (mErrorCount == 3) {
+                                        rl_graph_verify.setVisibility(View.VISIBLE);
+                                        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                                    }
+                                }
+
+                                @Override
+                                public void onFinish(String url, boolean isSuccess, String msg) {
+                                    super.onFinish(url, isSuccess, msg);
+                                    btn_login.setClickable(true);
+                                }
+                            });
+                }
                 break;
             case R.id.tv_register://注册新用户
                 startActivity(RegisterActivity.class);

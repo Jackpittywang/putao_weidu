@@ -21,9 +21,9 @@
                 android:id="@+id/shopping_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingRight="30dp"
                 android:layout_centerVertical="true"
                 android:paddingLeft="15dp"
+                android:paddingRight="30dp"
                 android:src="@drawable/back_selector" />
             <!--标题栏-->
             <TextView
@@ -66,7 +66,8 @@
                     android:layout_marginRight="-28dp"
                     android:layout_marginTop="9dp"
                     android:layout_toLeftOf="@+id/shipping_car"
-                    android:background="@drawable/indicator_background">
+                    android:background="@drawable/indicator_background"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/shopping_txt_number"
@@ -294,6 +295,14 @@
                 android:layout_marginTop="48dp" />
         </com.sunnybear.library.view.sticky.StickyHeaderLayout>
 
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:src="@drawable/btn_30_close_sel"
+            android:visibility="gone" />
     </RelativeLayout>
 
 
