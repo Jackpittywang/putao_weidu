@@ -2,6 +2,7 @@ package com.putao.wd.user;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -120,19 +121,23 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                     ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
-                networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET, verify),
-                        new AccountCallback(loading) {
-                            @Override
-                            public void onSuccess(JSONObject result) {
-                                ToastUtils.showToastLong(mContext, "验证码发送成功");
-                            }
+                if (TextUtils.isEmpty(verify)) {
+                    ToastUtils.showToastShort(mContext, "请输入图形验证码");
+                    tb_get_verify.reset();
+                } else
+                    networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET, verify),
+                            new AccountCallback(loading) {
+                                @Override
+                                public void onSuccess(JSONObject result) {
+                                    ToastUtils.showToastLong(mContext, "验证码发送成功");
+                                }
 
-                            @Override
-                            public void onError(String error_msg) {
-                                ToastUtils.showToastLong(mContext, error_msg);
-                                tb_get_verify.reset();
-                            }
-                        });
+                                @Override
+                                public void onError(String error_msg) {
+                                    ToastUtils.showToastLong(mContext, error_msg);
+                                    tb_get_verify.reset();
+                                }
+                            });
                 break;
             case R.id.image_graph_verify:
                 AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
