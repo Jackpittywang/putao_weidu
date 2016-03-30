@@ -66,7 +66,8 @@
                     android:layout_marginRight="-28dp"
                     android:layout_marginTop="9dp"
                     android:layout_toLeftOf="@+id/shipping_car"
-                    android:background="@drawable/indicator_background">
+                    android:background="@drawable/indicator_background"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/shopping_txt_number"
