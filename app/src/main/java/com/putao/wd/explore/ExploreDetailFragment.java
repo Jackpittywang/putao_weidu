@@ -106,7 +106,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
         sb_cool_icon.setClickable(false);
         tv_title.setText(mExploreIndex.getTitle());
         isMore = null == mExploreIndex.getBanner();
-        mPic = isMore ? mExploreIndex.getCover_pic() : mExploreIndex.getBanner().get(0).getUrl();
+        mPic = isMore ? mExploreIndex.getCover_pic() : mExploreIndex.getBanner().get(0).getCover_pic();
         iv_top.setImageURL(mPic);
         if (isMore ? "VIDEO".equals(mExploreIndex.getType()) : "VIDEO".equals(mExploreIndex.getBanner().get(0).getType()))
             iv_player.setVisibility(View.VISIBLE);
@@ -151,7 +151,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(mActivity, true, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.OnQQZShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
                 YouMengHelper.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "QQ空间");
             }
 
