@@ -13,6 +13,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.LoadingHUD;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -37,6 +38,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
     private CreateAdapter adapter;
     private int mPage;
     private boolean hasMoreData;
+    private LoadingHUD mLoading;
 
 
     @Override
@@ -51,6 +53,8 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
         rv_created.setAdapter(adapter);
         initData();
         addListenter();
+        mLoading = LoadingHUD.getInstance(mActivity);
+        mLoading.show();
     }
 
     private void initData() {
@@ -62,6 +66,7 @@ public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemC
                         adapter.replaceAll(result.getData());
                         ptl_refresh.refreshComplete();
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+                        mLoading.dismiss();
                         loading.dismiss();
                     }
 

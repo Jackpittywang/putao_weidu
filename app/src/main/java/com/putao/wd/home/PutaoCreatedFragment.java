@@ -65,7 +65,7 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
         rg_create.setOnCheckedChangeListener(this);
         rg_create.check(R.id.rb_step2);
         vp_content.setCurrentItem(1, false);
-        vp_content.setOffscreenPageLimit(3);
+        vp_content.setOffscreenPageLimit(2);
     }
 
     /**
@@ -107,15 +107,15 @@ public class PutaoCreatedFragment extends BasicFragment implements View.OnClickL
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_step1:
-                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_next,"妙想");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_next, "妙想");
                 vp_content.setCurrentItem(0, false);
                 break;
             case R.id.rb_step2:
-                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_next,"创造");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_next, "创造");
                 vp_content.setCurrentItem(1, false);
                 break;
             case R.id.rb_step3:
-                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_next,"精选");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_next, "精选");
                 vp_content.setCurrentItem(2, false);
                 break;
         }

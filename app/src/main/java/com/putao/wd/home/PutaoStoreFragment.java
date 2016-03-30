@@ -45,12 +45,10 @@ public class PutaoStoreFragment extends BasicFragment {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoStoreFragment启动");
-
         adapter = new StoreAdapter(mActivity, null);
         adapter.setAnimations(new ScaleInAnimation(1.0F));
         rv_content.setAdapter(adapter);
         addListener();
-
         getStoreHome();
     }
 
@@ -78,7 +76,7 @@ public class PutaoStoreFragment extends BasicFragment {
                         else
                             rv_content.noMoreLoading();
                         ptl_refresh.refreshComplete();
-                        loading.dismiss();
+//                        loading.dismiss();
                     }
 
                     @Override
