@@ -2,6 +2,7 @@ package com.putao.wd.user;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -87,7 +88,12 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
         String graph_verify = et_graph_verify.getText().toString();
         switch (v.getId()) {
             case R.id.tb_get_verify://获取验证码
-                getVerifyCode(graph_verify);
+                if (TextUtils.isEmpty(graph_verify)) {
+                    ToastUtils.showToastShort(mContext, "请输入图形验证码");
+                    tb_get_verify.reset();
+                } else {
+                    getVerifyCode(graph_verify);
+                }
                 break;
             case R.id.btn_next://下一步
                 String phone = et_mobile.getText().toString();
@@ -131,7 +137,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     /**
      * 获取验证码
      */
-    private void getVerifyCode(String graph_verify) {
+    private void getVerifyCode(final String graph_verify) {
         String mobile = et_mobile.getText().toString().trim();
         String value = et_mobile.getText().toString();
         String regExp = "^[1]([3|7|5|8]{1}\\d{1})\\d{8}$";
@@ -153,10 +159,12 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             @Override
             public void onError(String error_msg) {
                 tb_get_verify.reset();
-//                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
                 ToastUtils.showToastLong(mContext, error_msg);
+//                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
+
             }
         });
+
     }
 
     @Override
