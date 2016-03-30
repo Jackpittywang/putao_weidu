@@ -200,6 +200,10 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
                     mAlipayHelper.pay((Activity) mContext, orderInfo);
                 else if (WEIX_PAY == pay_way) {
                     GlobalApplication.orderId = order_id;
+                    if (null == mWeixPayResult) {
+                        ToastUtils.showToastShort(mContext, "微信订单生成失败");
+                        return;
+                    }
                     if (null == request) {
                         request = new PayReq();
                         request.appId = mWeixPayResult.getAppid();

@@ -11,7 +11,9 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.CreateCommentActivity;
 import com.putao.wd.created.CreateDetailActivity;
+import com.putao.wd.created.FancyFragment;
 import com.putao.wd.created.adapter.FancyAdapter;
+import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -164,6 +166,26 @@ public class ConcernsActivity extends PTWDActivity implements PullToRefreshLayou
         if (adapter.getItemCount() > position) {
             Create item = adapter.getItem(position);
             item.getComment().setCount(item.getComment().getCount() - 1);
+            adapter.notifyItemChanged(position);
+        }
+    }
+
+    @Subcriber(tag = PutaoCreatedSecondFragment.EVENT_ADD_CREAT_COOL)
+    public void eventAddCoolCount(int position) {
+        addCool(position);
+    }
+
+
+    @Subcriber(tag = FancyFragment.EVENT_ADD_FANCY_COOL)
+    public void eventAddCoolCount2(int position) {
+        addCool(position);
+    }
+
+    private void addCool(int position) {
+        if (adapter.getItemCount() > position) {
+            Create item = adapter.getItem(position);
+            item.getVote().setUp(item.getVote().getUp() + 1);
+            item.setVote_status(1);
             adapter.notifyItemChanged(position);
         }
     }

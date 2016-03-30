@@ -429,10 +429,12 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shopping_share://分享
-                mSharePopupWindow.show(shopping_share);
+                if (null != mSharePopupWindow)
+                    mSharePopupWindow.show(shopping_share);
                 break;
             case R.id.shopping_add_car://加入购物车
-                mShoppingCarPopupWindow.getProductSpec();
+                if (null != mSharePopupWindow)
+                    mShoppingCarPopupWindow.getProductSpec();
                 break;
             case R.id.shopping_back://返回
                 YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
@@ -449,7 +451,8 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 startActivity(ShoppingCarActivity.class);
                 break;
             case R.id.ll_share://非精品的商品的分享
-                mSharePopupWindow.show(ll_share);
+                if (null != mSharePopupWindow)
+                    mSharePopupWindow.show(ll_share);
                 break;
 
         }
