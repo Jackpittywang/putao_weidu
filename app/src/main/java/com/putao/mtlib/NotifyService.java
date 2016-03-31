@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.putao.mtlib.model.CS_CONNECT;
 import com.putao.mtlib.tcp.OnReceiveMessageListener;
 import com.putao.mtlib.tcp.PTMessageConfig;
@@ -31,8 +32,8 @@ import java.util.TimerTask;
  * Created by Administrator on 2015/12/28.
  */
 public class NotifyService extends Service {
-    private static final String HOST = GlobalApplication.isDebug ? "122.226.100.152" : "10.1.11.31";
-    private static final int PORT = GlobalApplication.isDebug ? 8040 : 8083;
+    private static final String HOST = GlobalApplication.isDebug ? "10.1.11.31" : "122.226.100.152";
+    private static final int PORT = GlobalApplication.isDebug ? 8083 : 8040;
     private static final String secret = "499478a81030bb177e578f86410cda8641a22799";
     private static final int appid = 611;
 
