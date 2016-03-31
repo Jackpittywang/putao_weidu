@@ -241,6 +241,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
                                     refreshCommentList();
+                                    resetMsg();
                                     EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
                                 }
 
@@ -262,6 +263,7 @@ public class CreateCommentActivity extends PTWDActivity<GlobalApplication> imple
                                 public void onSuccess(String url, String result) {
                                     Logger.i("评论与回复提交成功");
                                     refreshCommentList();
+                                    resetMsg();
                                     EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
                                 }
 

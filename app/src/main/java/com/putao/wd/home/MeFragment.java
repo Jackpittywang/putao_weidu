@@ -50,11 +50,6 @@ import com.sunnybear.library.view.scroll.SupportScrollView;
 import com.sunnybear.library.view.select.IndicatorButton;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -62,7 +57,7 @@ import butterknife.OnClick;
  * 我
  * Created by guchenkai on 2015/11/25.
  */
-public class MeFragment extends BasicFragment implements View.OnClickListener, View.OnTouchListener {
+public class  MeFragment extends BasicFragment implements View.OnClickListener, View.OnTouchListener {
     public static final String ME_BLUR = "me_blur";
     private static final String EVENT_EDIT_USER_INFO = "edit_user_info";
     public static boolean ONREFRESH = true;
