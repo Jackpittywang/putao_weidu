@@ -220,11 +220,5 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         return super.dispatchKeyEvent(event);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mErrorCount = 0;
-        rl_graph_verify.setVisibility(View.GONE);
-    }
 
 }
