@@ -112,11 +112,10 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
 
     private String product_id, pid;//产品id
     private String product_num;//是否是从陪伴传送过来的数据
-    private String title, subtitle, shareUrl;
+    private String title, subtitle, shareUrl, imageUrl;
     private int status, has_special;
 
     private ProductDetail detail = null;
-    private String imageUrl;//商品图片
 
     @Override
     protected int getLayoutId() {
@@ -203,36 +202,53 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
             @Override
             public void onWechat() {
                 if (product_num.equals("diary")) {
-                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    if (has_special == 1) {
+                        ShareTools.wechatWebShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    } else {
+                        ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, imageUrl, shareUrl);
+                    }
                 }
             }
 
             @Override
             public void onWechatFriend() {
                 if (product_num.equals("diary")) {
-                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
+                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    if (has_special == 1) {
+                        ShareTools.wechatWebShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    } else {
+                        ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, imageUrl, shareUrl);
+                    }
                 }
             }
 
             @Override
             public void onQQFriend() {
                 if (product_num.equals("diary")) {
-                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, title, subtitle, null, shareUrl);
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    if (has_special == 1) {
+                        ShareTools.OnQQZShare(ProductDetailActivity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    } else {
+                        ShareTools.OnQQZShare(ProductDetailActivity.this, true, title, subtitle, imageUrl, shareUrl);
+                    }
                 }
             }
 
             @Override
             public void onQQZone() {
                 if (product_num.equals("diary")) {
-                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, title, subtitle, null, shareUrl);
+                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    if (has_special == 1) {
+                        ShareTools.OnQQZShare(ProductDetailActivity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    } else {
+                        ShareTools.OnQQZShare(ProductDetailActivity.this, false, title, subtitle, imageUrl, shareUrl);
+                    }
+
                 }
             }
 
@@ -240,7 +256,11 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 if (product_num.equals("diary")) {
                     ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+                    if (has_special == 1) {
+                        ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+                    } else {
+                        ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
+                    }
                 }
             }
 
@@ -251,7 +271,11 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 if (product_num.equals("diary")) {
                     copy.setText(shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    copy.setText(storeProduct.getMobile_url());
+                    if (has_special == 1) {
+                        copy.setText(storeProduct.getMobile_url());
+                    } else {
+                        copy.setText(shareUrl);
+                    }
                 }
                 ToastUtils.showToastShort(ProductDetailActivity.this, "复制成功");
             }
@@ -270,6 +294,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 title = result.getTitle();
                 subtitle = result.getSubtitle();
                 shareUrl = result.getShare();
+                imageUrl = result.getPictures().get(0);
                 tv_product_price.setText(result.getPrice());
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
                 loading.dismiss();
@@ -331,6 +356,10 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
             public void onSuccess(String url, ProductDetail result) {
                 detail = result;
                 loadHtml(product_id, "0");
+                title = result.getTitle();
+                subtitle = result.getSubtitle();
+                shareUrl = result.getShare();
+                imageUrl = result.getPictures().get(0);
                 tv_product_title.setText(result.getTitle());
                 tv_product_intro.setText(result.getSubtitle());
                 tv_product_price.setText(result.getPrice());
@@ -345,7 +374,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                     }, result.getPictures())
                             .setPageTransformer(new CardsTransformer());
                 }
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, product_id, result.getTitle(), result.getSubtitle());
                 loading.dismiss();
             }
         });
