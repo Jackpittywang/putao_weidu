@@ -221,7 +221,7 @@ public class DiaryActivity extends PTWDActivity {
             }
         };
         final boolean isVideo = TextUtils.isEmpty(video_id);
-        mSharePopupWindow.setOnShareClickListener(!isVideo, new OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
                 YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_share, "微信好友");
