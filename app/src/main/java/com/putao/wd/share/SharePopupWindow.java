@@ -2,7 +2,9 @@ package com.putao.wd.share;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicPopupWindow;
@@ -18,30 +20,27 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     private OnShareClickListener mOnShareClickListener;
 
     public void setOnShareClickListener(OnShareClickListener onShareClickListener) {
-        mOnShareClickListener = onShareClickListener;
-        LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_copy_url);
-        LinearLayout linear_qqz = (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
-        //复制
-        ll_second.setVisibility(View.VISIBLE);
-        //QQ空间
-        linear_qqz.setVisibility(View.VISIBLE);
+        setOnShareClickListener(true, onShareClickListener);
     }
 
     public void setOnShareClickListener(boolean isCopy, OnShareClickListener onShareClickListener) {
         this.isCopy = isCopy;
         mOnShareClickListener = onShareClickListener;
-        LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_copy_url);
-        LinearLayout linear_qqz = (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
+        LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_second);
+        TextView tv_qq_zone = (TextView) mRootView.findViewById(R.id.tv_qq_zone);
+        ImageView iv_qq_zone = (ImageView) mRootView.findViewById(R.id.iv_qq_zone);
         if (!isCopy) {
             //复制
             ll_second.setVisibility(View.GONE);
             //QQ空间
-            linear_qqz.setVisibility(View.GONE);
+            tv_qq_zone.setText("新浪微博");
+            iv_qq_zone.setImageResource(R.drawable.icon_40_05);
         } else {
             //复制
             ll_second.setVisibility(View.VISIBLE);
             //QQ空间
-            linear_qqz.setVisibility(View.VISIBLE);
+            tv_qq_zone.setText("QQ空间");
+            iv_qq_zone.setImageResource(R.drawable.icon_40_04);
         }
     }
 
@@ -77,7 +76,11 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     mOnShareClickListener.onQQFriend();
                     break;
                 case R.id.ll_qq_zone://QQ空间
-                    mOnShareClickListener.onQQZone();
+                    if (isCopy) {
+                        mOnShareClickListener.onQQZone();
+                    } else {
+                        mOnShareClickListener.onSinaWeibo();
+                    }
                     break;
                 case R.id.ll_sina_weibo://新浪微博
                     mOnShareClickListener.onSinaWeibo();
