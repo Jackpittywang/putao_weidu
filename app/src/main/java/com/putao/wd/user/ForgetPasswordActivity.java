@@ -36,6 +36,8 @@ import butterknife.OnClick;
  * create by wangou
  */
 public class ForgetPasswordActivity extends PTWDActivity implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
+
+    public static final String FORGET_CODE = "forget_code";
     @Bind(R.id.btn_nextstep)
     Button btn_nextstep;//下一步
     @Bind(R.id.et_mobile)
@@ -52,6 +54,8 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
     ImageDraweeView image_graph_verify;
     @Bind(R.id.et_graph_verify)
     CleanableEditText et_graph_verify;
+
+    private int mErrorCount = 0;
 
     @Override
     protected int getLayoutId() {
@@ -116,28 +120,19 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
 //                    startActivity(ResetPasswordAcitivity.class);
                 break;
             case R.id.tb_get_verify://获取验证码
+                System.out.println("============" + mDiskFileCacheHelper.getAsString(FORGET_CODE + mobile) + "  " + verify + "  " + mErrorCount);
                 if (StringUtils.isEmpty(mobile)) {
                     tb_get_verify.reset();
                     ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
-                if (TextUtils.isEmpty(verify)) {
+                if (!TextUtils.isEmpty(verify) || !TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(FORGET_CODE + mobile))) {
+                    getSendCode(mobile, verify);
+                } else {
                     ToastUtils.showToastShort(mContext, "请输入图形验证码");
                     tb_get_verify.reset();
-                } else
-                    networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET, verify),
-                            new AccountCallback(loading) {
-                                @Override
-                                public void onSuccess(JSONObject result) {
-                                    ToastUtils.showToastLong(mContext, "验证码发送成功");
-                                }
+                }
 
-                                @Override
-                                public void onError(String error_msg) {
-                                    ToastUtils.showToastLong(mContext, error_msg);
-                                    tb_get_verify.reset();
-                                }
-                            });
                 break;
             case R.id.image_graph_verify:
                 AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
@@ -165,6 +160,29 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         }
     }
 
+    public void getSendCode(final String mobile, String verify) {
+        networkRequest(AccountApi.sendVerifyCode(mobile, AccountConstants.Action.ACTION_FORGET, verify),
+                new AccountCallback(loading) {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        ToastUtils.showToastLong(mContext, "验证码发送成功");
+                        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(FORGET_CODE + mobile))) {
+                            mDiskFileCacheHelper.remove(FORGET_CODE + mobile);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error_msg) {
+                        tb_get_verify.reset();
+                        ToastUtils.showToastLong(mContext, error_msg);
+                        mErrorCount++;
+                        if (mErrorCount >= 2) {
+                            mDiskFileCacheHelper.put(FORGET_CODE + mobile, FORGET_CODE);
+                        }
+                    }
+                });
+    }
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -190,4 +208,5 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             }
         });
     }
+
 }

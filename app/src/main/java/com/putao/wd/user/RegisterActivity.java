@@ -40,6 +40,8 @@ import butterknife.OnClick;
  * Created by guchenkai on 2015/11/29.
  */
 public class RegisterActivity extends PTWDActivity implements View.OnClickListener, TextWatcher, SwitchButton.OnSwitchClickListener {
+    public static final String REGISTER_CODE = "register_code";
+
     @Bind(R.id.et_mobile)
     CleanableEditText et_mobile;
     @Bind(R.id.et_graph_verify)
@@ -56,6 +58,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     SwitchButton btn_is_look;
     @Bind(R.id.image_graph_verify)
     ImageDraweeView image_graph_verify;
+
+    private int mErrorCount = 0;
 
     @Override
     protected int getLayoutId() {
@@ -85,18 +89,18 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     @OnClick({R.id.tb_get_verify, R.id.btn_next, R.id.tv_user_protocol, R.id.image_graph_verify})
     @Override
     public void onClick(View v) {
+        final String phone = et_mobile.getText().toString();
         String graph_verify = et_graph_verify.getText().toString();
         switch (v.getId()) {
             case R.id.tb_get_verify://获取验证码
-                if (TextUtils.isEmpty(graph_verify)) {
+                if (!TextUtils.isEmpty(graph_verify) || !TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(REGISTER_CODE + phone))) {
+                    getVerifyCode(graph_verify);
+                } else {
                     ToastUtils.showToastShort(mContext, "请输入图形验证码");
                     tb_get_verify.reset();
-                } else {
-                    getVerifyCode(graph_verify);
                 }
                 break;
             case R.id.btn_next://下一步
-                String phone = et_mobile.getText().toString();
                 String password = et_password.getText().toString();
                 String sms_verify = et_sms_verify.getText().toString();
                 networkRequest(AccountApi.register(phone, password, sms_verify, graph_verify), new AccountCallback(loading) {
@@ -138,8 +142,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
      * 获取验证码
      */
     private void getVerifyCode(final String graph_verify) {
-        String mobile = et_mobile.getText().toString().trim();
-        String value = et_mobile.getText().toString();
+        final String mobile = et_mobile.getText().toString().trim();
+        final String value = et_mobile.getText().toString();
         String regExp = "^[1]([3|7|5|8]{1}\\d{1})\\d{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(value);
@@ -153,15 +157,21 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             @Override
             public void onSuccess(JSONObject result) {
                 Logger.d(result.toJSONString());
+                if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(REGISTER_CODE + value))) {
+                    mDiskFileCacheHelper.remove(REGISTER_CODE + value);
+                }
                 ToastUtils.showToastLong(mContext, GlobalApplication.isDebug ? "1234" : "验证码已发送");
             }
 
             @Override
             public void onError(String error_msg) {
                 tb_get_verify.reset();
-                ToastUtils.showToastLong(mContext, error_msg);
+                ToastUtils.showToastShort(mContext, error_msg);
+                mErrorCount++;
+                if (mErrorCount >= 3) {
+                    mDiskFileCacheHelper.put(REGISTER_CODE + value, REGISTER_CODE);
+                }
 //                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
-
             }
         });
 
@@ -187,4 +197,5 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
     public void afterTextChanged(Editable s) {
 
     }
+
 }
