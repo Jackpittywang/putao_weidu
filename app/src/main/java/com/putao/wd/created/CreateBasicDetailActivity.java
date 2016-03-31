@@ -567,6 +567,12 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                         initView();
                         loading.dismiss();
                     }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastShort(mContext,"文章不存在");
+                    }
                 });
     }
 

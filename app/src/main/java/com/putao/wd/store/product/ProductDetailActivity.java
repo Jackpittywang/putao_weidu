@@ -258,7 +258,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         });
     }
 
-    private void getProduct(String product_id) {
+    private void getProduct(final String product_id) {
         networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
@@ -271,7 +271,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 subtitle = result.getSubtitle();
                 shareUrl = result.getShare();
                 tv_product_price.setText(result.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, result.getId(), result.getTitle(), result.getSubtitle());
+                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, null == result.getId() ? product_id : result.getId(), result.getTitle(), result.getSubtitle());
                 loading.dismiss();
             }
         });
@@ -432,8 +432,10 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                     mSharePopupWindow.show(shopping_share);
                 break;
             case R.id.shopping_add_car://加入购物车
-                if (null != mSharePopupWindow)
+                if (null != mShoppingCarPopupWindow)
                     mShoppingCarPopupWindow.getProductSpec();
+                else
+                    ToastUtils.showToastShort(mContext, "加入失败");
                 break;
             case R.id.shopping_back://返回
                 YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);

@@ -97,6 +97,10 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
 
         mArticleId = args.getString(ARTICLE_ID);
         if (null == mArticleId) mArticleId = args.getString(JPushReceiver.MID);
+        if (null == mArticleId) {
+            ToastUtils.showToastShort(mContext, "文章不存在");
+            finish();
+        }
         mPosition = args.getInt(POSITION);
         initData();
     }

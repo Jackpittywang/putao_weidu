@@ -138,7 +138,8 @@ public class RemindFragment extends BasicFragment {
             case "explore"://探索文章
                 bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID, remindDetail.getUrl());
                 startActivity(ExploreMoreDetailActivity.class, bundle);
-                break;          case "idea"://创想
+                break;
+            case "idea"://创想
                 bundle.putString(CreateBasicDetailActivity.EVENT_EXPLORER_ID, remindDetail.getUrl());
                 bundle.putBoolean(CreateBasicDetailActivity.EVENT_IS_REMIND, true);
                 startActivity(CreateBasicDetailActivity.class, bundle);
