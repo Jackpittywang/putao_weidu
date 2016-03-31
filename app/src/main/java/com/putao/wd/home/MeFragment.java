@@ -57,7 +57,7 @@ import butterknife.OnClick;
  * 我
  * Created by guchenkai on 2015/11/25.
  */
-public class  MeFragment extends BasicFragment implements View.OnClickListener, View.OnTouchListener {
+public class MeFragment extends BasicFragment implements View.OnClickListener, View.OnTouchListener {
     public static final String ME_BLUR = "me_blur";
     private static final String EVENT_EDIT_USER_INFO = "edit_user_info";
     public static boolean ONREFRESH = true;
@@ -370,7 +370,7 @@ public class  MeFragment extends BasicFragment implements View.OnClickListener, 
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, QuestionActivity.class);
                 break;*/
             case R.id.iv_user_icon://完善用户信息
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CompleteActivity.class);
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
                 break;
             case R.id.si_concerns://我的关注
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ConcernsActivity.class);
