@@ -86,6 +86,10 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
         loading.show();
         bundle = new Bundle();
 //        Management
+        initData();
+    }
+
+    private void initData() {
         networkRequest(ExploreApi.getManagement(), new SimpleFastJsonCallback<Management>(Management.class, loading) {
             @Override
             public void onSuccess(String url, Management result) {
@@ -241,9 +245,14 @@ public class ManageActivity extends PTWDActivity implements View.OnClickListener
         mTimer.start();
     }
 
-    @Subcriber(tag = ControlledEquipmentFragment.EVENT_CONTROLLED_EQUIPMENT)
+  /*  @Subcriber(tag = ControlledEquipmentFragment.EVENT_CONTROLLED_EQUIPMENT)
     public void eventControlledEquipment(List<ManagementDevice> devices) {
         setDeviceText(devices, true);
+    }*/
+
+    @Subcriber(tag = ControlledEquipmentFragment.EVENT_REFRESH_MANAGER)
+    public void eventreFreshManager(String str) {
+        initData();
     }
 
     @Subcriber(tag = ControlledProductFragment.EVENT_CONTROLLED_PRODUT)
