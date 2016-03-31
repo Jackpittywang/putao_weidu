@@ -100,6 +100,8 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                     adapter.replaceAll(result);
                     rl_no_address.setVisibility(View.GONE);
                     mAddress = result;
+                    if (result.size() == 1)
+                        EventBusHelper.post(mAddress.get(0), EVENT_SELECT_ADDRESS);
                 } else rl_no_address.setVisibility(View.VISIBLE);
                 loading.dismiss();
             }
@@ -131,6 +133,7 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                                         Logger.d(result.toString());
                                         adapter.delete(address);
                                         if (adapter.getItemCount() == 0) isAddressEmpty = true;
+                                        eventAddressDelete(address.getId());
                                         getAddressLists();
 //                                        EventBusHelper.post(address, AddressEditActivity.EVENT_ADDRESS_DELETE);
 //                                        loading.dismiss();

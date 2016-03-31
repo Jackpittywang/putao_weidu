@@ -16,6 +16,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.companion.DiaryActivity;
 import com.putao.wd.companion.manage.ManageActivity;
+import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -180,11 +181,11 @@ public class PutaoCompanionFragment extends BasicFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        /*if (v.getId() == R.id.tv_background) {
+        if (v.getId() == R.id.tv_background) {
             startActivity(SmartActivity.class);
             getActivity().overridePendingTransition(R.anim.in_from_down, R.anim.companion_in_from_down);
             return;
-        }*/
+        }
         if (!AccountHelper.isLogin()) {
             Bundle bundle = new Bundle();
             toLoginActivity(v, bundle);
