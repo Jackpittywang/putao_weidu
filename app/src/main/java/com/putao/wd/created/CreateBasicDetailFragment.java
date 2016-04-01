@@ -268,7 +268,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
 
             @Override
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(mActivity, mCreate.getTitle(), mCreate.getShare_links());
+                ShareTools.OnWeiboShare(mActivity, mCreate.getTitle(), mCreate.getCover(), mCreate.getShare_links());
                 YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
             }
 

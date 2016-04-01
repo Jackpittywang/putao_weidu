@@ -151,12 +151,12 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mExploreIndex.getBanner().get(0).getCover_pic(), mExploreIndex.getShare_url());
+                ShareTools.OnQQZShare(mActivity, false, mExploreIndex.getTitle(), mExploreIndex.getDescription(), mPic, mExploreIndex.getShare_url());
                 YouMengHelper.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "QQ空间");
             }
 
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(mActivity, mExploreIndex.getTitle(), mExploreIndex.getShare_url());
+                ShareTools.OnWeiboShare(mActivity, mExploreIndex.getTitle(), mPic, mExploreIndex.getShare_url());
                 YouMengHelper.onEvent(mActivity, YouMengHelper.ChoiceHome_detail_share, "新浪微博");
             }
 

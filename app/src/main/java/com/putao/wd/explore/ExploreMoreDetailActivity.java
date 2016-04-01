@@ -173,7 +173,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
             }
 
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(mContext, mExploreIndex.getTitle(), mExploreIndex.getShare_url());
+                ShareTools.OnWeiboShare(mContext, mExploreIndex.getTitle(), mExploreIndex.getCover_pic(), mExploreIndex.getShare_url());
                 YouMengHelper.onEvent(mContext, YouMengHelper.ChoiceHome_detail_share, "新浪微博");
             }
 

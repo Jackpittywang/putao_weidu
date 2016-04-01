@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.putao.wd.GlobalApplication;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.util.HashMap;
@@ -164,23 +165,22 @@ public class ShareTools {
     /**
      * 微博的分享
      */
-    public static void OnWeiboShare(final Context context, String text, String imageUrl) {
+    public static void OnWeiboShare(final Context context, String text, String imagePath, String url) {
         if (!checkApkExist(context, "com.sina.weibo")) {
             return;
         }
         SinaWeibo.ShareParams params = new SinaWeibo.ShareParams();
-        params.text = text;
-        params.imagePath = imageUrl;
-        params.setShareType(SinaWeibo.SHARE_TEXT);
+        params.setText(text);
+        params.setImageUrl(imagePath);
+        params.setTitleUrl(url);
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
         plat.SSOSetting(false);
-        plat.authorize();
-        // 执行图文分享
+        // 执行图`文分享
         plat.share(params);
-
     }
+
 
     static class MyPlatformActionListener implements PlatformActionListener {
         private Context mContext;
@@ -204,6 +204,7 @@ public class ShareTools {
          */
         @Override
         public void onError(Platform platform, int i, final Throwable throwable) {
+            ToastUtils.showToastShort(mContext, "");
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -219,6 +220,7 @@ public class ShareTools {
         public void onCancel(Platform platform, int i) {
             ToastUtils.showToastShort(mContext, "取消分享");
         }
+
     }
 
     public static boolean checkApkExist(Context context, String packageName) {

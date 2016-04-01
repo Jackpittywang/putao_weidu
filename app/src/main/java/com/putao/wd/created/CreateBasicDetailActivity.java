@@ -36,6 +36,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
@@ -279,7 +280,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
 
             @Override
             public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(mContext, mCreate.getTitle(), mCreate.getShare_links());
+                ShareTools.OnWeiboShare(mContext, mCreate.getTitle(), mCreate.getCover(), mCreate.getShare_links());
                 YouMengHelper.onEvent(mContext, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_share : YouMengHelper.CreatorHome_conceit_detail_share, "新浪微博");
             }
 
@@ -571,7 +572,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        ToastUtils.showToastShort(mContext,"文章不存在");
+                        ToastUtils.showToastShort(mContext, "文章不存在");
                     }
                 });
     }

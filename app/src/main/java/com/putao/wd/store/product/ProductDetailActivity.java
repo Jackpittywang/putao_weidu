@@ -254,12 +254,12 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
 
             public void onSinaWeibo() {
                 if (product_num.equals("diary")) {
-                    ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
+//                    ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     if (has_special == 1) {
-                        ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
+//                        ShareTools.OnWeiboShare(ProductDetailActivity.this, storeProduct.getTitle(), storeProduct.getMobile_url());
                     } else {
-                        ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
+//                        ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
                     }
                 }
             }

@@ -301,7 +301,7 @@ public class DiaryActivity extends PTWDActivity {
                                 }
                             });
                 } else {
-                    ShareTools.OnWeiboShare(mContext, content, "http://v.youku.com/v_show/id_" + video_id);
+                    ShareTools.OnWeiboShare(mContext, content, img_url, "http://v.youku.com/v_show/id_" + video_id);
                 }
 
             }
