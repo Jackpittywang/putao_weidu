@@ -171,7 +171,8 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                 if (mErrorCount >= 3) {
                     mDiskFileCacheHelper.put(REGISTER_CODE + value, REGISTER_CODE);
                 }
-//                ToastUtils.showToastLong(mContext, "您的手机已注册过了，请试一下登录吧");
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                et_graph_verify.setText("");
             }
         });
 
