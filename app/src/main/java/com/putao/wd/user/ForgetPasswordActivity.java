@@ -179,6 +179,8 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                         if (mErrorCount >= 2) {
                             mDiskFileCacheHelper.put(FORGET_CODE + mobile, FORGET_CODE);
                         }
+                        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                        et_graph_verify.setText("");
                     }
                 });
     }
