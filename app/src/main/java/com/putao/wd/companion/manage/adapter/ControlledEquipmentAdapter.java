@@ -1,5 +1,7 @@
 package com.putao.wd.companion.manage.adapter;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,13 +26,16 @@ import butterknife.Bind;
  */
 public class ControlledEquipmentAdapter extends BasicAdapter<ManagementDevice, ControlledEquipmentAdapter.ControlledEquipmentViewHolder> {
     public static final String MANAGER = "manager";
+    public static final String EVENT_ITEM_DELETE = "event_item_delete";
     List<ManagementDevice> managementDevices;
     Context context;
+    private boolean mShowDelete;
 
-    public ControlledEquipmentAdapter(Context context, List<ManagementDevice> managementDevices) {
+    public ControlledEquipmentAdapter(Context context, List<ManagementDevice> managementDevices, boolean showDelete) {
         super(context, managementDevices);
         this.managementDevices = managementDevices;
         this.context = context;
+        mShowDelete = showDelete;
     }
 
     @Override
@@ -53,23 +58,35 @@ public class ControlledEquipmentAdapter extends BasicAdapter<ManagementDevice, C
         } else {
             holder.iv_select_icon.setBackgroundResource(R.drawable.switch_close);
         }
-
         holder.iv_select_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mShowDelete) return;
                 if ("1".equals(item.getStatus())) {
                     EventBusHelper.post(item, MANAGER);
-                    holder.iv_select_icon.setBackgroundResource(R.drawable.switch_close);
-                    ToastUtils.showToast(context, "解绑成功", 0);
+                    holder.iv_select_icon.setBackgroundResource(R.drawable.companion_close);
                     item.setStatus("0");
                 } else {
                     EventBusHelper.post(item, MANAGER);
-                    holder.iv_select_icon.setBackgroundResource(R.drawable.switch_open);
-                    ToastUtils.showToast(context, "绑定成功", 0);
+                    holder.iv_select_icon.setBackgroundResource(R.drawable.companion_open);
                     item.setStatus("1");
                 }
             }
         });
+        if (mShowDelete) {
+            holder.iv_delete.setVisibility(View.VISIBLE);
+            PropertyValuesHolder pvh1 = PropertyValuesHolder.ofFloat("translationX", -20, 0);
+            PropertyValuesHolder pvh2 = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
+            ObjectAnimator.ofPropertyValuesHolder(holder.iv_delete, pvh1, pvh2).setDuration(200).start();
+            holder.iv_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBusHelper.post(item, EVENT_ITEM_DELETE);
+                }
+            });
+        } else {
+            holder.iv_delete.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -80,11 +97,17 @@ public class ControlledEquipmentAdapter extends BasicAdapter<ManagementDevice, C
         TextView tv_equipment_name;
         @Bind(R.id.iv_select_icon)
         ImageView iv_select_icon;
+        @Bind(R.id.iv_delete)
+        ImageView iv_delete;
 
         public ControlledEquipmentViewHolder(View itemView) {
             super(itemView);
         }
     }
 
+    public void setShowDelete(boolean showDelete) {
+        mShowDelete = showDelete;
+        notifyDataSetChanged();
+    }
 }
 

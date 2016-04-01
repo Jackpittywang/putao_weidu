@@ -168,16 +168,18 @@ public class ShareTools {
         if (!checkApkExist(context, "com.sina.weibo")) {
             return;
         }
-        Platform.ShareParams params = new Platform.ShareParams();
+        SinaWeibo.ShareParams params = new SinaWeibo.ShareParams();
         params.text = text;
         params.imagePath = imageUrl;
+        params.setShareType(SinaWeibo.SHARE_TEXT);
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
         plat.SSOSetting(false);
         plat.authorize();
         // 执行图文分享
-//        plat.share(params);
+        plat.share(params);
+
     }
 
     static class MyPlatformActionListener implements PlatformActionListener {
