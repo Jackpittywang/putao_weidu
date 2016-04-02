@@ -170,9 +170,8 @@ public class ShareTools {
             return;
         }
         SinaWeibo.ShareParams params = new SinaWeibo.ShareParams();
-        params.setText(text);
+        params.setText(text + url);
         params.setImageUrl(imagePath);
-        params.setTitleUrl(url);
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
