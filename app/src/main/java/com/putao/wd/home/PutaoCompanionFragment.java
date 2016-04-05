@@ -12,6 +12,7 @@ import com.putao.wd.home.adapter.StoreAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
+import com.putao.wd.pt_companion.BlackboardActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -79,7 +80,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
 
     @Override
     public void onItemClick(Serializable serializable, int position) {
-
+        if (0 == position) startActivity(BlackboardActivity.class);
     }
 }
 
