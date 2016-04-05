@@ -53,25 +53,9 @@ public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication>
 
         if (null == expresses || expresses.size() == 0) {
             titles.add("包裹1");
-            titles.add("包裹1");
-            titles.add("包裹1");
-            titles.add("包裹1");
-            titles.add("包裹1");
-            titles.add("包裹1");
-            titles.add("包裹1");
             Express defail = new Express();
             expresses = new ArrayList<>();
             expresses.add(defail);
-            expresses.add(defail);
-            expresses.add(defail);
-            expresses.add(defail);
-            expresses.add(defail);
-            expresses.add(defail);
-            expresses.add(defail);
-            /*TextView text = new TextView(getApplicationContext());
-            text.setGravity(Gravity.CENTER);
-            text.setText("沒有包裹");*/
-            //pager.setVisibility(View.GONE);
         } else {
             for (int i = 0; i < expresses.size(); i++) {
                 titles.add("包裹" + i);

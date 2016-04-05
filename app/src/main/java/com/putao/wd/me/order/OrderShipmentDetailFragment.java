@@ -52,7 +52,6 @@ public class OrderShipmentDetailFragment extends BasicFragment {
     RecyclerView rv_shipment_detail;
     private Express express;
     private ArrayList<Express> expresses;
-    private int id = 2356890;
 
     public static OrderShipmentDetailFragment newInstance(Express express) {
         OrderShipmentDetailFragment fragment = new OrderShipmentDetailFragment();
@@ -100,6 +99,4 @@ public class OrderShipmentDetailFragment extends BasicFragment {
             rv_shipment_detail.setAdapter(shipmentDetailAdapter);
         }
     }
-
-
 }

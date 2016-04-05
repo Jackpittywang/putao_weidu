@@ -1,13 +1,10 @@
 package com.putao.wd.share;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
-import android.text.TextUtils;
 
-import com.putao.wd.GlobalApplication;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.util.HashMap;
@@ -203,7 +200,6 @@ public class ShareTools {
          */
         @Override
         public void onError(Platform platform, int i, final Throwable throwable) {
-            ToastUtils.showToastShort(mContext, "");
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
