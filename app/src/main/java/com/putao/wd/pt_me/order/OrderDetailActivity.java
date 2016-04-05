@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -220,24 +221,19 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         tv_receipt_content.setText("发票内容：" + mOrderDetail.getInvoice_content());//设置发票内容
         //---------商品数量与费用----------//
         tv_goods_total_number.setText(mOrderDetail.getTotal_quantity());//设置商品数量
-        tv_cost.setText("¥" + mOrderDetail.getProduct_money()); //设置货物费用
-        tv_shipment_fee.setText("¥" + mOrderDetail.getExpress_money());//设置运费
-        tv_total_cost.setText("¥" + mOrderDetail.getTotal_amount());//设置总金额
+        tv_cost.setText("¥" + (!TextUtils.isEmpty(mOrderDetail.getProduct_money()) ? mOrderDetail.getProduct_money() : "0.00")); //设置货物费用
+        tv_shipment_fee.setText("¥" + (!TextUtils.isEmpty(mOrderDetail.getExpress_money()) ? mOrderDetail.getExpress_money() : "0.00"));//设置运费
+        tv_total_cost.setText("¥" + (!TextUtils.isEmpty(mOrderDetail.getTotal_amount()) ? mOrderDetail.getTotal_amount() : "0.00"));//设置总金额
         //设置物流信息
         if (mOrderDetail.getExpress() != null && mOrderDetail.getExpress().size() > 0) {
             tv_no_shipment.setVisibility(View.GONE);
             rv_shipment.setAdapter(mShipmentAdapter);
             mShipmentAdapter.addAll(mOrderDetail.getExpress());
-            //物流详情页
+            //详情页
             rv_shipment.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(Serializable serializable, int position) {
-                    Bundle bundle = new Bundle();
-                    ArrayList<Express> expresses = mOrderDetail.getExpress();
-                    bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
-                    bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, mOrderDetail.getExpress().size());
-                    bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, position);
-                    startActivity(OrderShipmentDetailActivity.class, bundle);
+                    checkShipment(position);
                 }
             });
         }
@@ -357,12 +353,7 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
                 btn_order_left.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        ArrayList<Express> expresses = mOrderDetail.getExpress();
-                        bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
-                        bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, expresses.size());
-                        bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, 0);
-                        startActivity(OrderShipmentDetailActivity.class, bundle);
+                        checkShipment(0);
                     }
                 });
                 break;
@@ -413,20 +404,29 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_shipment:// 查看物流信息
-                if (null == mOrderDetail.getExpress() || mOrderDetail.getExpress().size() == 0) {
-                    new AlertDialog.Builder(mContext)
-                            .setTitle("提示")
-                            .setMessage("没有物流信息")
-                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    loading.dismiss();
-                                }
-                            })
-                            .show();
-                } else {
-                }
+                checkShipment(0);
                 break;
+        }
+    }
+
+    private void checkShipment(int position) {
+        if (null == mOrderDetail.getExpress() || mOrderDetail.getExpress().size() == 0) {
+            new AlertDialog.Builder(mContext)
+                    .setTitle("提示")
+                    .setMessage("没有物流信息")
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            loading.dismiss();
+                        }
+                    })
+                    .show();
+        } else {
+            Bundle bundle = new Bundle();
+            ArrayList<Express> expresses = mOrderDetail.getExpress();
+            bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+            bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, position);
+            startActivity(OrderShipmentDetailActivity.class, bundle);
         }
     }
 

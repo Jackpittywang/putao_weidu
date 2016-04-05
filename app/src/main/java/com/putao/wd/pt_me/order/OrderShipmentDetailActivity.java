@@ -23,7 +23,6 @@ import butterknife.Bind;
 public class OrderShipmentDetailActivity extends PTWDActivity<GlobalApplication> {
 
     public static final String EXPRESS = "express";
-    public static final String PACKAGECOUNT = "packageCount";
     public static final String PACKAGINDEX = "packageIndex";
     private Express express;
     private ArrayList<Express> expresses;

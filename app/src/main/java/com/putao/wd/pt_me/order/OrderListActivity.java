@@ -56,7 +56,7 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
     private int currentPage = 1;
     private String currentType = TYPE_ALL;
 
-//    private AlipayHelper mAlipayHelper;
+    //    private AlipayHelper mAlipayHelper;
     private String order_id;
 
     @Override
@@ -252,12 +252,28 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
      */
     @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
     public void quereRefund(Order order) {
-        Bundle bundle = new Bundle();
-        ArrayList<Express> expresses = order.getExpress();
-        bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
-//        bundle.putInt(OrderShipmentDetailActivity.PACKAGECOUNT, expresses.size());
-        bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, 0);
-        startActivity(OrderShipmentDetailActivity.class, bundle);
+        checkShipment(order);
+    }
+
+    private void checkShipment(Order order) {
+        if (null == order.getExpress() || order.getExpress().size() == 0) {
+            new AlertDialog.Builder(mContext)
+                    .setTitle("提示")
+                    .setMessage("没有物流信息")
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            loading.dismiss();
+                        }
+                    })
+                    .show();
+        } else {
+            Bundle bundle = new Bundle();
+            ArrayList<Express> expresses = order.getExpress();
+            bundle.putSerializable(OrderShipmentDetailActivity.EXPRESS, expresses);
+            bundle.putInt(OrderShipmentDetailActivity.PACKAGINDEX, 0);
+            startActivity(OrderShipmentDetailActivity.class, bundle);
+        }
     }
 
     /**

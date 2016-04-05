@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_order_no_text"
-                    android:text="-------------------"
+                    android:text=""
                     android:textColor="#313131"
                     android:textSize="@dimen/text_size_16sp" />
 
@@ -172,7 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_order_no"
-                    android:text="---- : -- --"
+                    android:text=""
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
 
@@ -188,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:gravity="right"
-                        android:text="------"
+                        android:text=""
                         android:textColor="#ed5564"
                         android:textSize="@dimen/text_size_16sp" />
 
@@ -199,7 +199,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/tv_order_status"
                         android:gravity="right"
-                        android:text="¥ -----"
+                        android:text=""
                         android:textColor="#ed5564"
                         android:textSize="@dimen/text_size_14sp" />
 
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/img_info_icon"
-                    android:text="---"
+                    android:text=""
                     android:textColor="@color/text_color_646464"
                     android:textSize="@dimen/text_size_14sp" />
             </RelativeLayout>
@@ -493,7 +493,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/tv_shipment_fee"
                         android:gravity="end"
-                        android:text="¥ ------"
+                        android:text=""
                         android:textColor="#ed5564" />
                 </RelativeLayout>
             </LinearLayout>

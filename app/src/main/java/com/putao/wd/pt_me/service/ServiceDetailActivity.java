@@ -3,6 +3,7 @@ package com.putao.wd.pt_me.service;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -184,7 +185,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
             }
         });
         tv_goods_total_number.setText("" + serviceList.getSaleTotalQuantity());
-        tv_cost.setText("￥" + order_info.getProduct_money());
+        tv_cost.setText("￥" + (TextUtils.isEmpty(order_info.getProduct_money()) ? 0.00 : order_info.getProduct_money()));
         tv_shipment_fee.setText("￥0.00");
         tv_total_cost.setText("￥" + serviceList.getSaleTotalPrice());
     }
