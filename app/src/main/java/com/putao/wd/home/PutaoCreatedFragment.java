@@ -25,6 +25,7 @@ import butterknife.Bind;
  * 创造(首页)
  * Created by guchenkai on 2016/1/13.
  */
+@Deprecated
 public class PutaoCreatedFragment extends BasicFragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;

@@ -39,6 +39,7 @@ import butterknife.OnClick;
  * 探索(首页)
  * Created by guchenkai on 2016/1/11.
  */
+@Deprecated
 public class PutaoExploreFragment extends BasicFragment implements View.OnClickListener {
 
     @Bind(R.id.tv_thinking)
@@ -181,14 +182,12 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
         if (null != mExploreIndex) {
             mExploreIndexs = mExploreIndex.getExploreIndexes();
             if (null != mExploreIndexs && mExploreIndexs.size() > 0) {
-                ((IndexActivity) getActivity()).hideLoading();
                 addFragments();
                 addDate(vp_content.getCurrentItem());
                 if ((mExploreIndex.getSaveTime() + SAVE_TIME * 1000) < System.currentTimeMillis()) {
                     getIndexList();
                 }
             } else {
-                ((IndexActivity) getActivity()).showLoading();
                 getIndexList();
             }
         } else {
@@ -229,7 +228,6 @@ public class PutaoExploreFragment extends BasicFragment implements View.OnClickL
                     @Override
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         super.onFinish(url, isSuccess, msg);
-                        ((IndexActivity) getActivity()).hideLoading();
                     }
                 }, false);
     }

@@ -26,6 +26,7 @@ import butterknife.Bind;
  * 创造(首页)
  * Created by guchenkai on 2016/1/13.
  */
+@Deprecated
 public class PutaoCreatedSecondFragment extends BasicFragment implements OnItemClickListener<Create>, PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener {
     @Bind(R.id.rv_created)
     LoadMoreRecyclerView rv_created;
