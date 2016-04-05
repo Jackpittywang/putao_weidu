@@ -8,7 +8,8 @@
     <string name="address">收货地址</string>
     <string name="action">我参与的活动</string>
     <string name="question">我的提问</string>
-    <string name="concerns">我的关注</string>
+    <string name="participation">我的参与</string>
+    <string name="collection">我的收藏</string>
     <string name="message">消息中心</string>
     <string name="no_address">还没有收货地址</string>
     <string name="address_manager">地址管理</string>
@@ -31,6 +32,8 @@
     <!--探索号-->
     <string name="manager">管理</string>
     <!--葡星圈-->
+    <!--发现-->
+    <string name="discovery">发现</string>
 
     <!--分享-->
     <string name="wechat">微信</string>

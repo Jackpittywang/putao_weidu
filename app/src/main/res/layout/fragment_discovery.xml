@@ -6,14 +6,15 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:background="@color/white"
-        auto:nav_has_divider="true"
-        auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="发现"
-        auto:nav_main_title_color="@color/text_color"
-        auto:nav_right_title_color="@drawable/text_select" />
+        android:padding="10dp"
+        android:text="@string/discovery"
+        android:textColor="#000"
+        android:textSize="@dimen/text_size_18sp" />
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
