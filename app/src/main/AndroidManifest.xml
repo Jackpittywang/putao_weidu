@@ -337,13 +337,29 @@
         <activity
             android:name=".pt_companion.DiaryActivity"
             android:screenOrientation="portrait" />
-        <!--我的关注-->
+        <!--   &lt;!&ndash;我的关注&ndash;&gt;
+           <activity
+               android:name=".pt_me.attention.ConcernsActivity"
+               android:screenOrientation="portrait" />
+           &lt;!&ndash;我的关注详情&ndash;&gt;
+           <activity
+               android:name=".pt_me.attention.ConcernsDetailActivity"
+               android:screenOrientation="portrait" />-->
+        <!--我的参与-->
         <activity
-            android:name=".pt_me.attention.ConcernsActivity"
+            android:name=".pt_me.participation.ParticipationActivity"
             android:screenOrientation="portrait" />
-        <!--我的关注详情-->
+        <!--我的参与详情-->
         <activity
-            android:name=".pt_me.attention.ConcernsDetailActivity"
+            android:name=".pt_me.participation.ParticipationDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--我的收藏-->
+        <activity
+            android:name=".pt_me.collection.CollectionActivity"
+            android:screenOrientation="portrait" />
+        <!--我的收藏详情-->
+        <activity
+            android:name=".pt_me.collection.CollectionDetailActivity"
             android:screenOrientation="portrait" />
         <!--创造奇思妙想详情-->
         <activity

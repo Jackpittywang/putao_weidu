@@ -120,19 +120,17 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
 //                    startActivity(ResetPasswordAcitivity.class);
                 break;
             case R.id.tb_get_verify://获取验证码
-                System.out.println("============" + mDiskFileCacheHelper.getAsString(FORGET_CODE + mobile) + "  " + verify + "  " + mErrorCount);
                 if (StringUtils.isEmpty(mobile)) {
                     tb_get_verify.reset();
                     ToastUtils.showToastLong(mContext, "请输入手机号码");
                     return;
                 }
                 if (!TextUtils.isEmpty(verify) || !TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(FORGET_CODE + mobile))) {
-                    getSendCode(mobile, verify);
+                    IsRegister(mobile, verify);
                 } else {
                     ToastUtils.showToastShort(mContext, "请输入图形验证码");
                     tb_get_verify.reset();
                 }
-
                 break;
             case R.id.image_graph_verify:
                 AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
@@ -207,6 +205,27 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 startActivity(IndexActivity.class);
                 finish();
                 loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 是否注册
+     */
+    private void IsRegister(final String mobile, final String verify) {
+        networkRequest(AccountApi.checkMobile(mobile), new AccountCallback(loading) {
+            @Override
+            public void onSuccess(JSONObject result) {//未使用该号码
+                ToastUtils.showToastShort(mContext, "该号码未注册，获取验证码失败");
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                et_graph_verify.setText("");
+                et_mobile.setText("");
+                tb_get_verify.reset();
+            }
+
+            @Override
+            public void onError(String error_msg) {//已注册该号码
+                getSendCode(mobile, verify);
             }
         });
     }

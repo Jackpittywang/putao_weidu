@@ -21,15 +21,18 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
+
+import com.putao.wd.pt_me.collection.CollectionActivity;
+
+import com.putao.wd.pt_me.participation.ParticipationActivity;
+import com.putao.wd.model.OrderCount;
+import com.putao.wd.model.UserInfo;
 import com.putao.wd.pt_me.address.AddressListActivity;
-import com.putao.wd.pt_me.attention.ConcernsActivity;
 import com.putao.wd.pt_me.child.ChildInfoActivity;
 import com.putao.wd.pt_me.message.MessageCenterActivity;
 import com.putao.wd.pt_me.order.OrderListActivity;
 import com.putao.wd.pt_me.service.ServiceListActivity;
 import com.putao.wd.pt_me.setting.SettingActivity;
-import com.putao.wd.model.OrderCount;
-import com.putao.wd.model.UserInfo;
 import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
@@ -275,7 +278,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     }
 
     @OnClick({R.id.iv_setting, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
-            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale, R.id.si_concerns})
+            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale, R.id.si_participation, R.id.si_collection})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -313,9 +316,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             case R.id.iv_user_icon://完善用户信息
                 startActivity(CompleteActivity.class);
                 break;
-            case R.id.si_concerns://我的关注
-                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的关注");
-                startActivity(ConcernsActivity.class);
+            case R.id.si_participation://我的参与
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的参与");
+                startActivity(ParticipationActivity.class);
+                break;
+            case R.id.si_collection:
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "我的收藏");
+                startActivity(CollectionActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
@@ -368,8 +375,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             case R.id.iv_user_icon://完善用户信息
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
                 break;
-            case R.id.si_concerns://我的关注
+         /*   case R.id.si_concerns://我的关注
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ConcernsActivity.class);
+                break;*/
+            case R.id.si_participation://我的参与
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ParticipationActivity.class);
+                break;
+            case R.id.si_collection://我的收藏
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CollectionActivity.class);
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
