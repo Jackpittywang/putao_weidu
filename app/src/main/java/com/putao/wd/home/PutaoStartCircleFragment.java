@@ -10,7 +10,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.ActionNewsAdapter;
-import com.putao.wd.me.setting.SettingActivity;
+import com.putao.wd.pt_me.setting.SettingActivity;
 import com.putao.wd.model.ActionNews;
 import com.putao.wd.model.ActionNewsList;
 import com.putao.wd.model.Banner;

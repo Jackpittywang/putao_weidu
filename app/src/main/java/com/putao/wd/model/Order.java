@@ -1,7 +1,5 @@
 package com.putao.wd.model;
 
-import com.putao.wd.me.order.OrderDetailActivity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

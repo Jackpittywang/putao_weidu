@@ -1,30 +1,21 @@
 package com.putao.wd;
 
-import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
-import com.putao.wd.home.PutaoCreatedFragment;
-import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;
-import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.home.PutaoStoreFragment;
-import com.putao.wd.store.pay.PaySuccessActivity;
+import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
-import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;

@@ -6,7 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
-import com.putao.wd.store.pay.PayResult;
+import com.putao.wd.pt_store.pay.PayResult;
 
 /**
  * Created by guchenkai on 2016/1/7.

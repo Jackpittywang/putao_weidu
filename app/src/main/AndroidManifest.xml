@@ -115,56 +115,56 @@
             android:screenOrientation="portrait" />
         <!-- 收货地址列表 -->
         <activity
-            android:name=".me.address.AddressListActivity"
+            android:name=".pt_me.address.AddressListActivity"
             android:screenOrientation="portrait" />
         <!-- 地区选择 -->
         <activity
-            android:name=".me.address.CitySelectActivity"
+            android:name=".pt_me.address.CitySelectActivity"
             android:screenOrientation="portrait" />
         <!-- 收货地址编辑 -->
         <activity
-            android:name=".me.address.AddressEditActivity"
+            android:name=".pt_me.address.AddressEditActivity"
             android:screenOrientation="portrait" />
         <!-- 商品详情 -->
         <activity
-            android:name=".store.product.ProductDetailActivity"
+            android:name=".pt_store.product.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 订单列表 -->
         <activity
-            android:name=".me.order.OrderListActivity"
+            android:name=".pt_me.order.OrderListActivity"
             android:screenOrientation="portrait" />
         <!-- 订单详情页 -->
         <activity
-            android:name=".me.order.OrderDetailActivity"
+            android:name=".pt_me.order.OrderDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 订单物流详情页 -->
         <activity
-            android:name=".me.order.OrderShipmentDetailActivity"
+            android:name=".pt_me.order.OrderShipmentDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/StyledIndicators" />
         <!-- 关于我们 -->
         <activity
-            android:name=".me.address.AboutUsActivity"
+            android:name=".pt_me.address.AboutUsActivity"
             android:screenOrientation="portrait" />
         <!-- 设置 -->
         <activity
-            android:name=".me.setting.SettingActivity"
+            android:name=".pt_me.setting.SettingActivity"
             android:screenOrientation="portrait" />
         <!-- 修改密码 -->
         <activity
-            android:name=".me.setting.ModifyPasswardActivity"
+            android:name=".pt_me.setting.ModifyPasswardActivity"
             android:screenOrientation="portrait" />
         <!-- 消息中心 -->
         <activity
-            android:name=".me.message.MessageCenterActivity"
+            android:name=".pt_me.message.MessageCenterActivity"
             android:screenOrientation="portrait" />
         <!-- 关注成功 -->
         <activity
-            android:name=".companion.AttentionSuccessActivity"
+            android:name=".pt_companion.AttentionSuccessActivity"
             android:screenOrientation="portrait" />
         <!-- 购物车 -->
         <activity
-            android:name=".store.shopping.ShoppingCarActivity"
+            android:name=".pt_store.shopping.ShoppingCarActivity"
             android:screenOrientation="portrait" />
         <!-- 新闻详情 -->
         <activity
@@ -203,27 +203,27 @@
             android:screenOrientation="portrait" />
         <!-- 填写订单 -->
         <activity
-            android:name=".store.order.WriteOrderActivity"
+            android:name=".pt_store.order.WriteOrderActivity"
             android:screenOrientation="portrait" />
         <!--发票信息-->
         <activity
-            android:name=".store.invoice.InvoiceInfoActivity"
+            android:name=".pt_store.invoice.InvoiceInfoActivity"
             android:screenOrientation="portrait" />
         <!--支付-->
         <activity
-            android:name=".store.pay.PayActivity"
+            android:name=".pt_store.pay.PayActivity"
             android:screenOrientation="portrait" />
         <!--支付成功-->
         <activity
-            android:name=".store.pay.PaySuccessActivity"
+            android:name=".pt_store.pay.PaySuccessActivity"
             android:screenOrientation="portrait" />
         <!--管理-->
         <activity
-            android:name=".companion.manage.ManageActivity"
+            android:name=".pt_companion.manage.ManageActivity"
             android:screenOrientation="portrait" />
         <!--管理设置-->
         <activity
-            android:name=".companion.manage.ManagerSettingsActivity"
+            android:name=".pt_companion.manage.ManagerSettingsActivity"
             android:screenOrientation="portrait" />
         <!--活动地址-->
         <activity
@@ -231,23 +231,23 @@
             android:screenOrientation="portrait" />
         <!--我参与的活动-->
         <activity
-            android:name=".me.actions.MyActionsActivity"
+            android:name=".pt_me.actions.MyActionsActivity"
             android:screenOrientation="portrait" />
         <!--售后列表-->
         <activity
-            android:name=".me.service.ServiceListActivity"
+            android:name=".pt_me.service.ServiceListActivity"
             android:screenOrientation="portrait" />
         <!--售后详情-->
         <activity
-            android:name=".me.service.ServiceDetailActivity"
+            android:name=".pt_me.service.ServiceDetailActivity"
             android:screenOrientation="portrait" />
         <!--售后包裹界面-->
         <activity
-            android:name=".me.service.ServiceShipmentDetailActivity"
+            android:name=".pt_me.service.ServiceShipmentDetailActivity"
             android:screenOrientation="portrait" />
         <!--售后填写快递单号-->
         <activity
-            android:name=".me.service.ServiceExpressNumberActivity"
+            android:name=".pt_me.service.ServiceExpressNumberActivity"
             android:screenOrientation="portrait" />
         <!--图片浏览-->
         <activity
@@ -263,27 +263,27 @@
             android:screenOrientation="portrait" />
         <!--孩子信息-->
         <activity
-            android:name=".me.child.ChildInfoActivity"
+            android:name=".pt_me.child.ChildInfoActivity"
             android:screenOrientation="portrait" />
         <!--炫耀页面-->
         <activity
-            android:name=".companion.DisPlayActivity"
+            android:name=".pt_companion.DisPlayActivity"
             android:screenOrientation="portrait" />
         <!--教育理念页面-->
         <activity
-            android:name=".companion.PlotActivity"
+            android:name=".pt_companion.PlotActivity"
             android:screenOrientation="portrait" />
         <!--申请退款-->
         <activity
-            android:name=".me.service.ServiceRefundActivity"
+            android:name=".pt_me.service.ServiceRefundActivity"
             android:screenOrientation="portrait" />
         <!--申请售后选择页面-->
         <activity
-            android:name=".me.service.ServiceChooseActivity"
+            android:name=".pt_me.service.ServiceChooseActivity"
             android:screenOrientation="portrait" />
         <!--申请退换货-->
         <activity
-            android:name=".me.service.ServiceChangeBackActivity"
+            android:name=".pt_me.service.ServiceChangeBackActivity"
             android:screenOrientation="portrait" />
         <!--修改昵称-->
         <activity
@@ -335,15 +335,15 @@
             android:screenOrientation="portrait" />
         <!--陪伴日志-->
         <activity
-            android:name=".companion.DiaryActivity"
+            android:name=".pt_companion.DiaryActivity"
             android:screenOrientation="portrait" />
         <!--我的关注-->
         <activity
-            android:name=".me.attention.ConcernsActivity"
+            android:name=".pt_me.attention.ConcernsActivity"
             android:screenOrientation="portrait" />
         <!--我的关注详情-->
         <activity
-            android:name=".me.attention.ConcernsDetailActivity"
+            android:name=".pt_me.attention.ConcernsDetailActivity"
             android:screenOrientation="portrait" />
         <!--创造奇思妙想详情-->
         <activity

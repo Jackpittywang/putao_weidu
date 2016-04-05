@@ -1,6 +1,5 @@
 package com.putao.wd.home;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,7 +11,7 @@ import android.widget.RadioGroup;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.created.FancyFragment;
-import com.putao.wd.store.pay.PaySuccessActivity;
+import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.util.Logger;

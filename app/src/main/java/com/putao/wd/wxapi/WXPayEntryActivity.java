@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
-import com.putao.wd.me.order.OrderDetailActivity;
-import com.putao.wd.store.pay.PaySuccessActivity;
+import com.putao.wd.pt_me.order.OrderDetailActivity;
+import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
