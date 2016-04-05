@@ -222,14 +222,9 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/v_immersive"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:src="@drawable/setting_selector" />
 
-    <View
-        android:id="@+id/v_immersive"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/immersive" />
 </RelativeLayout>

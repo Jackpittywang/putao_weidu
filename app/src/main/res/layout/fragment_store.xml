@@ -6,6 +6,15 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/white"
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="精选"
+        auto:nav_main_title_color="@color/text_color"
+        auto:nav_right_title_color="@drawable/text_select" />
+
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
@@ -18,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/img_bg_store"
+            auto:duration_animator="500"
             auto:has_row_divider="true"
-            auto:is_start_animator="true"
-            auto:duration_animator="500" />
+            auto:is_start_animator="true" />
 
     </com.sunnybear.library.view.PullToRefreshLayout>
 
