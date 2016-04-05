@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
+import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.StoreAdapter;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
@@ -26,7 +27,7 @@ import butterknife.Bind;
  * 精选(首页)
  * Created by guchenkai on 2015/11/25.
  */
-public class PutaoStoreFragment extends BasicFragment {
+public class PutaoStoreFragment extends PTWDFragment {
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)

@@ -29,9 +29,7 @@ public class MainActivity extends BasicFragmentActivity<GlobalApplication> imple
 //
 //    //    private PutaoStartCircleFragment mPutaoStartCircleFragment;//葡星圈
 //    private PutaoExploreFragment mPutaoExploreFragment;//探索
-//    //   private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
 //    private PutaoStoreFragment mPutaoStoreFragment;//精选
-//    //    private PutaoCompanionFragment mPutaoCompanionFragment;//陪伴
 //    private PutaoCompanyFragment mPutaoCompanyFragment;//陪伴
 //    private MeFragment mMeFragment;//我
 //

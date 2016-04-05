@@ -27,7 +27,7 @@
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_index_explore"
             style="@style/style_tab_bar"
-            auto:active="true"
+            auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_create_sel"
             auto:inactiveDrawable="@drawable/tab_bar_create_nor" />
 
@@ -35,7 +35,7 @@
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_index_create"
             style="@style/style_tab_bar"
-            auto:active="false"
+            auto:active="true"
             auto:activeDrawable="@drawable/tab_bar_create_sel"
             auto:inactiveDrawable="@drawable/tab_bar_create_nor" />
 

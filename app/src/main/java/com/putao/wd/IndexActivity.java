@@ -74,6 +74,7 @@ public class IndexActivity extends BasicFragmentActivity {
             }
         });
         vp_content.setOffscreenPageLimit(4);
+        vp_content.setCurrentItem(1);
         //红点显示
         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid()))) {
             ti_index_companion.show(-1);

@@ -1,38 +1,26 @@
-package com.putao.wd.home;
+package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 
 import com.putao.wd.R;
-import com.putao.wd.account.YouMengHelper;
-import com.putao.wd.api.StoreApi;
+import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.CompanionAdapter;
-import com.putao.wd.home.adapter.StoreAdapter;
 import com.putao.wd.model.Companion;
-import com.putao.wd.model.StoreProduct;
-import com.putao.wd.model.StoreProductHome;
-import com.putao.wd.pt_store.product.ProductDetailActivity;
-import com.sunnybear.library.controller.BasicFragment;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.animators.ScaleInAnimation;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
 /**
- * 精选(首页)
+ * 葡萄黑板报
  * Created by zhanghao on 2016/04/05.
  */
-public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickListener {
+public class BlackboardActivity extends PTWDActivity implements OnItemClickListener {
     private CompanionAdapter mCompanionAdapter;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
@@ -51,7 +39,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
         companions.add(new Companion());
         companions.add(new Companion());
         companions.add(new Companion());
-        mCompanionAdapter = new CompanionAdapter(mActivity, companions);
+        mCompanionAdapter = new CompanionAdapter(mContext, companions);
         rv_content.setAdapter(mCompanionAdapter);
         addListener();
     }

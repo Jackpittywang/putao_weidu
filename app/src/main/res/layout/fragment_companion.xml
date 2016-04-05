@@ -1,143 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_EBEBEB">
+    android:background="@color/color_EBEBEB"
+    android:orientation="vertical">
 
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/white"
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="陪伴"
+        auto:nav_main_title_color="@color/text_color"
+        auto:nav_right_title_color="@drawable/text_select" />
 
-    <ScrollView
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        auto:refresh_layout="@layout/sky_wheel_refresh_header"
+        auto:refresh_layout_height="120">
 
-        <RelativeLayout
-            android:id="@+id/rl_background"
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/rv_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--底图-->
-            <ImageView
-                android:id="@+id/tv_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/img_p_cover" />
-            <!--多元智能图片-->
-            <ImageView
-                android:id="@+id/iv_smart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/btn_explore_empty"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="55dp"
-                android:src="@drawable/img_p_cover_title" />
+            android:layout_height="match_parent"
+            auto:duration_animator="500"
+            auto:has_row_divider="true" />
 
-            <!--扫一扫-->
-            <Button
-                android:id="@+id/btn_explore_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_above="@+id/cv_empty"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="45dp"
-                android:background="@drawable/btn_radius_background_shape"
-                android:drawableLeft="@drawable/btn_20_scan_w_sel"
-                android:gravity="center"
-                android:paddingLeft="45dp"
-                android:paddingRight="45dp"
-                android:text="   扫一扫"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18sp" />
+    </com.sunnybear.library.view.PullToRefreshLayout>
 
-            <!--没有绑定设备时卡片-->
-            <android.support.v7.widget.CardView
-                android:id="@+id/cv_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_background"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="-20dp"
-                auto:cardCornerRadius="0dp"
-                auto:cardElevation="6dp"
-                auto:cardUseCompatPadding="true">
-
-                <com.sunnybear.library.view.image.ImageDraweeView
-                    android:id="@+id/tv_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    auto:aspect_ratio="2"
-                    auto:default_drawable="@drawable/img_p_tip_01" />
-            </android.support.v7.widget.CardView>
-
-            <!--有绑定设备时卡片-->
-            <android.support.v7.widget.CardView
-                android:id="@+id/cv_no_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_background"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="-30dp"
-                android:visibility="gone"
-                auto:cardCornerRadius="0dp"
-                auto:cardElevation="6dp"
-                auto:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="20dp"
-                        android:drawableLeft="@drawable/img_carve_up_l"
-                        android:drawableRight="@drawable/img_carve_up_r"
-                        android:text="  智能应用  "
-                        android:textColor="@color/text_color_646464"
-                        android:textSize="16sp" />
-
-                    <com.sunnybear.library.view.recycler.BasicRecyclerView
-                        android:id="@+id/rv_products"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:minHeight="80dp"
-                        auto:column_num="3"
-                        auto:is_inner="true"
-                        auto:layout_mode="grid" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </RelativeLayout>
-    </ScrollView>
-    <!--标题栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-
-        <ImageView
-            android:id="@+id/iv_title_bar_right2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/btn_20_scan_w_selector" />
-
-        <ImageView
-            android:id="@+id/iv_title_bar_right1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="15dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/btn_20_control_w_selector" />
-
-    </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

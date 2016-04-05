@@ -349,6 +349,10 @@
         <activity
             android:name=".created.CreateBasicDetailActivity"
             android:screenOrientation="portrait" />
+        <!--葡萄黑板报-->
+        <activity
+            android:name=".pt_companion.BlackboardActivity"
+            android:screenOrientation="portrait" />
         <!--图片的加载显示-->
         <!--<activity
             android:name=".image.ImageDetailActivity"
