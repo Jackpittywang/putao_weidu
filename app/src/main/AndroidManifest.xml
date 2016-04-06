@@ -337,6 +337,10 @@
         <activity
             android:name=".pt_companion.DiaryActivity"
             android:screenOrientation="portrait" />
+        <!--陪伴日志-->
+        <activity
+            android:name=".pt_companion.GameDetailActivity"
+            android:screenOrientation="portrait" />
         <!--   &lt;!&ndash;我的关注&ndash;&gt;
            <activity
                android:name=".pt_me.attention.ConcernsActivity"

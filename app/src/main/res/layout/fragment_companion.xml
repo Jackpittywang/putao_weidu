@@ -15,20 +15,41 @@
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title_color="@drawable/text_select" />
 
-    <com.sunnybear.library.view.PullToRefreshLayout
-        android:id="@+id/ptl_refresh"
+    <com.sunnybear.library.view.scroll.NestScrollView
+        android:id="@+id/sv_load"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        auto:refresh_layout="@layout/sky_wheel_refresh_header"
-        auto:refresh_layout_height="120">
+        android:background="@color/text_color_red"
+        android:fillViewport="true">
 
-        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/rv_content"
+        <LinearLayout
+            android:id="@+id/rl_load"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            auto:duration_animator="500"
-            auto:has_row_divider="true" />
+            android:layout_height="1000dp"
+            android:fillViewport="true"
+            android:orientation="vertical">
 
-    </com.sunnybear.library.view.PullToRefreshLayout>
 
+            <WebView
+                android:id="@+id/wv_load"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="100dp"
+                android:background="@color/black" />
+
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/text_color_red"
+                auto:duration_animator="500"
+                auto:has_row_divider="true" />
+
+        </LinearLayout>
+    </com.sunnybear.library.view.scroll.NestScrollView>
 </LinearLayout>
