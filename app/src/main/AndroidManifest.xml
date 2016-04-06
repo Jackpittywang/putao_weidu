@@ -377,6 +377,10 @@
         <activity
             android:name=".pt_companion.GameDetailActivity"
             android:screenOrientation="portrait" />
+        <!--相册-->
+        <activity
+            android:name="PhotoAlbumActivity"
+            android:screenOrientation="portrait" />
         <!--图片的加载显示-->
         <!--<activity
             android:name=".image.ImageDetailActivity"
