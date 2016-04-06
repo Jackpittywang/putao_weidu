@@ -16,6 +16,7 @@ import com.putao.wd.home.PutaoCreatedSecondFragment;
 import com.putao.wd.home.adapter.DiscoveryAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
+import com.putao.wd.model.Participation;
 import com.putao.wd.pt_me.attention.ConcernsDetailActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -25,6 +26,7 @@ import com.sunnybear.library.view.recycler.animators.ScaleInAnimation;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,8 +35,8 @@ import butterknife.Bind;
  * 我的参与
  * Created by Administrator on 2016/4/5.
  */
-public class ParticipationActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create>, View.OnClickListener {
-
+public class ParticipationActivity extends PTWDActivity implements OnItemClickListener, View.OnClickListener {
+    //    PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener,
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_participation)
@@ -53,9 +55,11 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        adapter = new ParticipationAdapter(this, null);
+        ArrayList<Participation> list = new ArrayList<>();
+        list.add(new Participation());
+        adapter = new ParticipationAdapter(mContext, list);
         rv_participation.setAdapter(adapter);
-        initData();
+//        initData();
         addListenter();
     }
 
@@ -95,11 +99,26 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
         }
     }
 
-    private void addListenter() {
+    //    private void addListenter() {
+//        rv_participation.setOnItemClickListener(this);
+//        ll_empty.setOnClickListener(this);
+//        ptl_refresh.setOnRefreshListener(this);
+//        rv_participation.setOnLoadMoreListener(this);
+//    }
+    public void addListenter() {
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ptl_refresh.refreshComplete();
+            }
+        });
+        rv_participation.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                rv_participation.loadMoreComplete();
+            }
+        });
         rv_participation.setOnItemClickListener(this);
-        ll_empty.setOnClickListener(this);
-        ptl_refresh.setOnRefreshListener(this);
-        rv_participation.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -108,30 +127,30 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
     }
 
 
-    @Override
-    public void onRefresh() {
-        initData();
-    }
-
-    @Override
-    public void onLoadMore() {
-//        networkRequest(CreateApi.getCreateMyfollows(mPage),
-//                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
-//                    @Override
-//                    public void onSuccess(String url, Creates result) {
-////                        adapter.addAll(result.getData());
-//                        rv_participation.loadMoreComplete();
-//                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-//                        loading.dismiss();
-//                    }
-//                });
-    }
+//    @Override
+//    public void onRefresh() {
+//        initData();
+//    }
+//
+//    @Override
+//    public void onLoadMore() {
+////        networkRequest(CreateApi.getCreateMyfollows(mPage),
+////                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+////                    @Override
+////                    public void onSuccess(String url, Creates result) {
+//////                        adapter.addAll(result.getData());
+////                        rv_participation.loadMoreComplete();
+////                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+////                        loading.dismiss();
+////                    }
+////                });
+//    }
 
     private Create mCreate;
 
-    @Override
-    public void onItemClick(Create create, int position) {
-        mCreate = create;
+//    @Override
+//    public void onItemClick(Create create, int position) {
+//        mCreate = create;
 //        Bundle bundle = new Bundle();
 //        bundle.putSerializable(CreateDetailActivity.CREATE, (Serializable) adapter.getItems());
 //        bundle.putInt(CreateDetailActivity.POSITION, position);
@@ -139,7 +158,7 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
 //        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
 //        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
 //        startActivity(ConcernsDetailActivity.class, bundle);
-    }
+//    }
 
 //    @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
 //    private void eventRefresh(String str) {
@@ -197,6 +216,12 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
     public void onLeftAction() {
         super.onLeftAction();
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
+    }
+
+    @Override
+    public void onItemClick(Serializable serializable, int position) {
+        Bundle bundle = new Bundle();
+        startActivity(ParticipationDetailActivity.class, bundle);
     }
 }
 

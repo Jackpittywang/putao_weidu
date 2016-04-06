@@ -6,25 +6,24 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
         android:background="@color/white"
-        android:padding="10dp"
-        android:text="@string/discovery"
-        android:textColor="#000"
-        android:textSize="@dimen/text_size_18sp" />
+        auto:nav_has_divider="true"
+        auto:nav_main_title="发现"
+        auto:nav_main_title_color="@color/text_color"
+        auto:nav_right_title_color="@drawable/text_select" />
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         auto:refresh_layout="@layout/sky_wheel_refresh_header"
         auto:refresh_layout_height="120">
 
         <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-            android:id="@+id/rv_content"
+            android:id="@+id/rv_discovery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             auto:duration_animator="500"

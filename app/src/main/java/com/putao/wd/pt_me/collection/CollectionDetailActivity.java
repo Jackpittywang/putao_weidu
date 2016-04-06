@@ -21,7 +21,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * 我的关注详情托管activity
+ * 我的收藏详情托管activity
  * Created by zhanghao on 2016/1/15.
  */
 public class CollectionDetailActivity extends BasicFragmentActivity {

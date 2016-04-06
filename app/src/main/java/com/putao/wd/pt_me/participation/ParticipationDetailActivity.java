@@ -2,6 +2,7 @@ package com.putao.wd.pt_me.participation;
 
 import android.os.Bundle;
 
+import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 
 /**
@@ -11,7 +12,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 public class ParticipationDetailActivity extends BasicFragmentActivity {
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_scroll_viewpager_detail;
     }
 
     @Override
