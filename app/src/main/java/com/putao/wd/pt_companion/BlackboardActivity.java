@@ -84,7 +84,7 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
             @Override
             public void onRefresh() {
                 ptl_refresh.refreshComplete();
-               // getDiaryIndex();
+                // getDiaryIndex();
             }
         });
         rv_collection.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
@@ -104,7 +104,7 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
                 rv_collection.noMoreLoading();
             }
         });
-       // mBlackboardActivityAdapter.setOnItemClickListener(this);
+        // mBlackboardActivityAdapter.setOnItemClickListener(this);
     }
 
 
@@ -149,10 +149,10 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
     public void onItemClick(Serializable serializable, int position) {
         String response = mCompanionBlackboards.get(position).getResponse();
 
-        if(TextUtils.equals(response,"文章")){
-            startActivity(new Intent(this,ArticleDetailsActivity.class));
-        }else{
-            startActivity(new Intent(this,TopicDetailsActivity.class));
+        if (TextUtils.equals(response, "文章")) {
+            startActivity(new Intent(this, ArticleDetailsActivity.class));
+        } else {
+            startActivity(new Intent(this, TopicDetailsActivity.class));
         }
     }
 

@@ -15,7 +15,7 @@ import butterknife.Bind;
  * 游戏详情页
  * Created by zhanghao on 2016/04/05.
  */
-public class GameDetailActivity extends PTWDActivity {
+public class GameStepDetailActivity extends PTWDActivity {
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
 

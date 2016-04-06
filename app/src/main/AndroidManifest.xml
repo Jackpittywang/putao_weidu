@@ -373,6 +373,10 @@
         <activity
             android:name=".pt_companion.BlackboardActivity"
             android:screenOrientation="portrait" />
+        <!--游戏关卡详情页-->
+        <activity
+            android:name=".pt_companion.GameStepDetailActivity"
+            android:screenOrientation="portrait" />
         <!--游戏详情页-->
         <activity
             android:name=".pt_companion.GameDetailActivity"
