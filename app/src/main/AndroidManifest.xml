@@ -339,7 +339,7 @@
             android:screenOrientation="portrait" />
         <!--陪伴日志-->
         <activity
-            android:name=".pt_companion.GameDetailActivity"
+            android:name=".pt_companion.GameStepListActivity"
             android:screenOrientation="portrait" />
         <!--   &lt;!&ndash;我的关注&ndash;&gt;
            <activity
@@ -372,6 +372,10 @@
         <!--葡萄黑板报-->
         <activity
             android:name=".pt_companion.BlackboardActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏详情页-->
+        <activity
+            android:name=".pt_companion.GameDetailActivity"
             android:screenOrientation="portrait" />
         <!--图片的加载显示-->
         <!--<activity

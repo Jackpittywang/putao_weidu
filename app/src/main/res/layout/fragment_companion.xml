@@ -28,7 +28,7 @@
             android:fillViewport="true"
             android:orientation="vertical">
 
-            <WebView
+            <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wv_load"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -38,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 auto:duration_animator="500"
-                auto:has_row_divider="true" />
+                auto:has_row_divider="true"
+                auto:is_inner="true" />
 
         </LinearLayout>
     </com.sunnybear.library.view.scroll.NestScrollView>

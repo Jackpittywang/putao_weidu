@@ -1,6 +1,7 @@
 package com.sunnybear.library.view.recycler;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;

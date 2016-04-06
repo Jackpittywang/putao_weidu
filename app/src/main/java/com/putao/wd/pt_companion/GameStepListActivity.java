@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 /**
- * 游戏详情页
+ * 游戏步骤选择页
  * Created by zhanghao on 2016/04/05.
  */
-public class GameDetailActivity extends PTWDActivity{
+public class GameStepListActivity extends PTWDActivity {
     private GameStepListAdapter mGameStepListAdapter;
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
@@ -40,11 +40,16 @@ public class GameDetailActivity extends PTWDActivity{
         rv_content.setAdapter(mGameStepListAdapter);
     }
 
+
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
 
+    @Subcriber(tag = GameStepListAdapter.EVENT_START_TO_DETAIL)
+    private void startDetail(String str) {
+        startActivity(GameDetailActivity.class);
+    }
 }
 
 
