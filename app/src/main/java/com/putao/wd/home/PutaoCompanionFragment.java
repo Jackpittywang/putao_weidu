@@ -76,14 +76,14 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
             @Override
             public void run() {
 
-                /*ViewGroup.LayoutParams layoutParams1 = sv_load.getLayoutParams();
+                ViewGroup.LayoutParams layoutParams1 = sv_load.getLayoutParams();
                 layoutParams1.height = 3000;
-                sv_load.setLayoutParams(layoutParams1);*/
-               /* ViewGroup.LayoutParams layoutParams2 = rl_load.getLayoutParams();
+                sv_load.setLayoutParams(layoutParams1);
+                /*ViewGroup.LayoutParams layoutParams2 = rl_load.getLayoutParams();
                 layoutParams2.height = 3000;
                 rl_load.setLayoutParams(layoutParams2);*/
             }
-        }, 2000);
+        }, 1000);
         /*ViewGroup.LayoutParams layoutParams = wv_load.getLayoutParams();
         layoutParams.height = 1000;
         wv_load.setLayoutParams(layoutParams);*/
