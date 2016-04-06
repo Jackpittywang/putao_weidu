@@ -19,7 +19,6 @@
         android:id="@+id/sv_load"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/text_color_red"
         android:fillViewport="true">
 
         <LinearLayout
@@ -32,14 +31,12 @@
             <WebView
                 android:id="@+id/wv_load"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#00000000" />
+                android:layout_height="wrap_content" />
 
             <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
                 android:id="@+id/rv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/text_color_red"
                 auto:duration_animator="500"
                 auto:has_row_divider="true" />
 
