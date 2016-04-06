@@ -79,8 +79,8 @@ public class GameStepListActivity extends BasicFragmentActivity implements View.
         rv_content.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                startActivity(GameDetailActivity.class);
-                mGameStepListAdapter.notifyItemRemoved(position);
+                startActivity(GameDetailActivity.class);
+//                mGameStepListAdapter.notifyItemRemoved(position);
 //                mGameStepListAdapter.remove(mGameStepListAdapter.getItem(position));
             }
         }));

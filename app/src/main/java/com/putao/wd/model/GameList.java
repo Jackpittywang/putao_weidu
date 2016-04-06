@@ -7,14 +7,14 @@ import java.io.Serializable;
  * Created by zhanghao on 2015/12/8.
  */
 public class GameList implements Serializable {
-    private boolean isShowChild;
+    private int headId;
 
-    public boolean isShowChild() {
-        return isShowChild;
+    public int getHeadId() {
+        return headId;
     }
 
-    public void setIsShowChild(boolean isShowChild) {
-        this.isShowChild = isShowChild;
+    public void setHeadId(int headId) {
+        this.headId = headId;
     }
 
 }
