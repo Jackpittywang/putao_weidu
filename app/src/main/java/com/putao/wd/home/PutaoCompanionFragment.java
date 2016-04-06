@@ -8,6 +8,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.BlackboardActivity;
+import com.putao.wd.pt_companion.GameDetailActivity;
 import com.putao.wd.pt_companion.GameStepListActivity;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -41,7 +42,6 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        wv_load.loadUrl("http://www.putao.com/page/tutushijie");
         addListener();
     }
 
@@ -66,9 +66,6 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
         mCompanionAdapter = new CompanionAdapter(mActivity, companions);
         rv_content.setAdapter(mCompanionAdapter);
         mCompanionAdapter.setOnItemClickListener(this);
-/*        ViewGroup.LayoutParams layoutParams = rv_content.getLayoutParams();
-        layoutParams.height = 3000;
-        rv_content.setLayoutParams(layoutParams);*/
     }
 
     @Override
@@ -79,7 +76,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     @Override
     public void onItemClick(Serializable serializable, int position) {
         if (0 == position) startActivity(BlackboardActivity.class);
-        else startActivity(GameStepListActivity.class);
+        else startActivity(GameDetailActivity.class);
     }
 
 

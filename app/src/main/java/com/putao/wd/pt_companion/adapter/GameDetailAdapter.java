@@ -14,6 +14,7 @@ import com.putao.wd.model.GameList;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
+import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/1/13.
  */
-public class GameDetailAdapter extends BasicAdapter<GameList, GameDetailAdapter.GameDetailHolder> {
+public class GameDetailAdapter extends LoadMoreAdapter<GameList, GameDetailAdapter.GameDetailHolder> {
 
     public GameDetailAdapter(Context context, List<GameList> gameLists) {
         super(context, gameLists);
@@ -31,7 +32,7 @@ public class GameDetailAdapter extends BasicAdapter<GameList, GameDetailAdapter.
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.activity_game_step_detail_item;
+        return R.layout.activity_game_detail_item;
     }
 
     @Override
@@ -45,14 +46,14 @@ public class GameDetailAdapter extends BasicAdapter<GameList, GameDetailAdapter.
     }
 
     static class GameDetailHolder extends BasicViewHolder {
-        @Bind(R.id.rv_content)
+        /*@Bind(R.id.rv_content)
         BasicRecyclerView rv_content;
         @Bind(R.id.tv_intro)
         TextView tv_intro;
         @Bind(R.id.rl_game_step)
         RelativeLayout rl_game_step;
         @Bind(R.id.tv_game_step)
-        TextView tv_game_step;
+        TextView tv_game_step;*/
 
         public GameDetailHolder(View itemView) {
             super(itemView);
