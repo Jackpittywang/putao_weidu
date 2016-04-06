@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
@@ -36,8 +37,8 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     WebView wv_load;
     @Bind(R.id.sv_load)
     NestScrollView sv_load;
-    /*@Bind(R.id.rl_load)
-    LinearLayout rl_load;*/
+    @Bind(R.id.rl_load)
+    LinearLayout rl_load;
 
     @Override
     protected int getLayoutId() {
@@ -53,12 +54,12 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
 
     private void addListener() {
 
-       /* rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 rv_content.noMoreLoading();
             }
-        });*/
+        });
         ArrayList<Companion> companions = new ArrayList<>();
         companions.add(new Companion());
         companions.add(new Companion());
@@ -76,19 +77,11 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
             @Override
             public void run() {
 
-                ViewGroup.LayoutParams layoutParams1 = sv_load.getLayoutParams();
-                layoutParams1.height = 3000;
-                sv_load.setLayoutParams(layoutParams1);
-                /*ViewGroup.LayoutParams layoutParams2 = rl_load.getLayoutParams();
-                layoutParams2.height = 3000;
-                rl_load.setLayoutParams(layoutParams2);*/
+                ViewGroup.LayoutParams layoutParams = rv_content.getLayoutParams();
+                layoutParams.height = 3000;
+                rv_content.setLayoutParams(layoutParams);
             }
         }, 1000);
-        /*ViewGroup.LayoutParams layoutParams = wv_load.getLayoutParams();
-        layoutParams.height = 1000;
-        wv_load.setLayoutParams(layoutParams);*/
-
-
     }
 
     @Override
