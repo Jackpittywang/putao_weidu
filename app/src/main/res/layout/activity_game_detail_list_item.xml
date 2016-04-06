@@ -19,6 +19,7 @@
         android:textSize="@dimen/text_size_12sp" />
 
     <LinearLayout
+        android:id="@+id/ll_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_blackboard"
@@ -109,10 +110,10 @@
 
         <TextView
             android:id="@+id/tv_step2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
-            android:gravity="center|left"
+            android:gravity="center"
             android:text="查看成绩单"
             android:textColor="@color/color_313131"
             android:textSize="@dimen/text_size_16sp" />

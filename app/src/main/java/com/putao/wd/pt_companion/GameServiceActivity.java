@@ -1,18 +1,9 @@
 package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.GameList;
-import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
-
-import java.util.ArrayList;
-
-import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * 游戏服务支持
@@ -22,7 +13,7 @@ public class GameServiceActivity extends PTWDActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_game_step_detail;
+        return R.layout.activity_game_detail_list;
     }
 
     @Override

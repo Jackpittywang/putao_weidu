@@ -8,8 +8,7 @@ import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.BlackboardActivity;
-import com.putao.wd.pt_companion.GameDetailActivity;
-import com.putao.wd.pt_companion.GameStepListActivity;
+import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -76,7 +75,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     @Override
     public void onItemClick(Serializable serializable, int position) {
         if (0 == position) startActivity(BlackboardActivity.class);
-        else startActivity(GameDetailActivity.class);
+        else startActivity(GameDetailListActivity.class);
     }
 
 

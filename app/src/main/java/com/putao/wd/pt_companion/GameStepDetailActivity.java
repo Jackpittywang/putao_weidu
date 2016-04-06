@@ -21,7 +21,7 @@ public class GameStepDetailActivity extends PTWDActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_game_step_detail;
+        return R.layout.activity_game_detail_list;
     }
 
     @Override
