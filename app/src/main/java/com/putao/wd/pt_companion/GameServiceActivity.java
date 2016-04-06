@@ -13,7 +13,7 @@ public class GameServiceActivity extends PTWDActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_game_detail_list;
+        return R.layout.activity_game_step_detail;
     }
 
     @Override
