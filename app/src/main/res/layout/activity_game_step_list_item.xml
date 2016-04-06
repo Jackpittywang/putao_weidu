@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         auto:duration_animator="500"
         auto:has_row_divider="true"
+        android:visibility="gone"
         auto:is_inner="true" />
 
 </LinearLayout>
