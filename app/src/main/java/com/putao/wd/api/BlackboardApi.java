@@ -13,8 +13,9 @@ public class BlackboardApi {
     private static final String UID = "uid";//用户id
     private static final String TOKEN = "token";//登入后的标志 token
 
-    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
+//    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
 
+    private static final String COMPANION_URL = "http://api-weidu.ptdev.cn/";
     /**
      * 查询葡萄活动
      */

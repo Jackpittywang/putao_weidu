@@ -1,36 +1,18 @@
 
 package com.putao.wd.pt_companion;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-
 import com.putao.wd.R;
 import com.putao.wd.api.BlackboardApi;
-import com.putao.wd.api.CreateApi;
-import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.base.PTWDFragment;
-import com.putao.wd.home.adapter.CompanionAdapter;
-import com.putao.wd.model.Companion;
 import com.putao.wd.model.CompanionBlackboard;
-import com.putao.wd.model.CompanionBlackboards;
-import com.putao.wd.model.Creates;
-import com.putao.wd.model.Diarys;
 import com.putao.wd.pt_companion.manage.adapter.BlackboardActivityAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.view.NavigationBar;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 
@@ -54,33 +36,15 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
         return R.layout.activity_companion_blackboard;
     }
 
-    private List<String> list = new ArrayList<>();
-    ArrayList<CompanionBlackboard> mCompanionBlackboards = new ArrayList<>();
+    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<CompanionBlackboard> mCompanionBlackboards = new ArrayList<>();
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-
-
-//
-//        mCompanionBlackboards.add(new CompanionBlackboard("话题", "1234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊", 200, 1, 1, "1月12日-12月12日"));
-//        mCompanionBlackboards.add(new CompanionBlackboard("文章", "1234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊", 300, 1, 1, "1月12日-12月12日"));
-//        mCompanionBlackboards.add(new CompanionBlackboard("创意", "2234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊", 533, 1, 1, "1月12日-12月12日"));
-        mCompanionBlackboards.add(new CompanionBlackboard());
-//
-//        //遍历集合
-//        for (int position = 0; position < mCompanionBlackboards.size(); position++) {
-//            CompanionBlackboard blackboard = mCompanionBlackboards.get(position);
-//            if (!list.contains(blackboard.getDate())) {
-//                blackboard.setShowData(true);
-//                list.add(blackboard.getDate());
-//            } else {
-//                blackboard.setShowData(false);
-//            }
-//        }
-//
-        mBlackboardActivityAdapter = new BlackboardActivityAdapter(mContext, mCompanionBlackboards);
+        mBlackboardActivityAdapter = new BlackboardActivityAdapter(mContext, null);
         rv_collection.setAdapter(mBlackboardActivityAdapter);
+        initData();
         addListener();
     }
 
@@ -88,59 +52,37 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ptl_refresh.refreshComplete();
-                // getDiaryIndex();
+                initData();
             }
         });
-//        rv_collection.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                networkRequest(BlackboardApi.getDiaryData(mPage),
-//                        new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
-//                            @Override
-//                            public void onSuccess(String url, CompanionBlackboards result) {
-//                                if (result != null && result.getData().size() > 0)
-//                                    mBlackboardActivityAdapter.addAll(result.getData());
-//                                rv_collection.loadMoreComplete();
-//                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
-//                                loading.dismiss();
-//                            }
-//                        });
-//                rv_collection.noMoreLoading();
-//            }
-//        });
+        rv_collection.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                networkRequest(BlackboardApi.getCreateList(mPage),
+                        new SimpleFastJsonCallback<ArrayList<CompanionBlackboard>>(CompanionBlackboard.class, loading) {
+                            @Override
+                            public void onSuccess(String url, ArrayList<CompanionBlackboard> result) {
+                                mBlackboardActivityAdapter.addAll(result);
+                                rv_collection.loadMoreComplete();
+                                checkLoadMoreComplete(result);
+                                loading.dismiss();
+                            }
+                        });
+                rv_collection.noMoreLoading();
+            }
+        });
         mBlackboardActivityAdapter.setOnItemClickListener(this);
-    }
-
-
-    private void getDiaryIndex() {
-        mPage = 1;
-        networkRequest(BlackboardApi.getCreateList(mPage),
-                new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
-                    @Override
-                    public void onSuccess(String url, CompanionBlackboards result) {
-                        if (result != null && result.getData().size() > 0) {
-                            mBlackboardActivityAdapter.replaceAll(result.getData());
-                            ptl_refresh.setVisibility(View.VISIBLE);
-                        } else {
-                            ptl_refresh.setVisibility(View.GONE);
-                        }
-                        ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-                        loading.dismiss();
-                    }
-                });
     }
 
     private void initData() {
         mPage = 1;
-        networkRequest(CreateApi.getCreateList(1, mPage),
-                new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
+        networkRequest(BlackboardApi.getCreateList(mPage),
+                new SimpleFastJsonCallback<ArrayList<CompanionBlackboard>>(CompanionBlackboard.class, loading) {
                     @Override
-                    public void onSuccess(String url, CompanionBlackboards result) {
-                        mBlackboardActivityAdapter.replaceAll(result.getData());
+                    public void onSuccess(String url, ArrayList<CompanionBlackboard> result) {
+                        mBlackboardActivityAdapter.replaceAll(result);
                         ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
 
@@ -152,17 +94,11 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
                 }, false);
     }
 
-
-    private boolean hasMoreData;
-
-    private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage) {
-            hasMoreData = false;
+    private void checkLoadMoreComplete(ArrayList<CompanionBlackboard> result) {
+        if (null == result || result.size() < 20)
             rv_collection.noMoreLoading();
-        } else {
-            hasMoreData = true;
+        else
             mPage++;
-        }
     }
 
     @Override
@@ -172,14 +108,13 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
 
     @Override
     public void onItemClick(Serializable serializable, int position) {
-        startActivity(ArticleDetailForActivitiesActivity.class);
-        /*String response = mCompanionBlackboards.get(position).getResponse();
+        int type = mCompanionBlackboards.get(position).getType();
 
-        if(TextUtils.equals(response,"文章")){
-            startActivity(new Intent(this,ArticleDetailsActivity.class));
-        }else{
-            startActivity(new Intent(this,TopicDetailsActivity.class));
-        }*/
+        if (type == 1) {
+            startActivity(ArticleDetailForActivitiesActivity.class);
+        } else {
+            startActivity(TopicDetailsActivity.class);
+        }
     }
 
     @Override
@@ -187,37 +122,6 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
         super.onLeftAction();
         finish();
     }
-
-//    private void initData() {
-//        mPage = 1;
-//        networkRequest(CreateApi.getCreateList(1, mPage),
-//                new SimpleFastJsonCallback<CompanionBlackboard>(Creates.class, loading) {
-//                    @Override
-//                    public void onSuccess(String url, Creates result) {
-//                        mBlackboardActivityAdapter.replaceAll(result.getData());
-//                        ptl_refresh.refreshComplete();
-//                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-//                        mLoading.dismiss();
-//                        loading.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String url, int statusCode, String msg) {
-//                        super.onFailure(url, statusCode, msg);
-//                        ptl_refresh.refreshComplete();
-//                    }
-//                }, false);
-//    }
-//
-//    private void checkLoadMoreComplete(int currentPage, int totalPage) {
-//        if (currentPage == totalPage) {
-//            hasMoreData = false;
-//            rv_created.noMoreLoading();
-//        } else {
-//            hasMoreData = true;
-//            mPage++;
-//        }
-//    }
 }
 
 

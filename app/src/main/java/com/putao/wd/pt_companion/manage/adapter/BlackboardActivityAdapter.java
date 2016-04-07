@@ -44,35 +44,40 @@ public class BlackboardActivityAdapter extends LoadMoreAdapter<CompanionBlackboa
     @Override
     public void onBindItem(BlackboardHolder holder, CompanionBlackboard blackboard, int position) {
 
-
-        // holder.iv_sign.setImageURL(blackboard.imageurl);
-        /*holder.tv_title.setText(blackboard.getTitle());
-        holder.tv_content.setText(blackboard.getContent());
-
-
-        holder.ll_time.setVisibility(blackboard.isShowData() ? View.VISIBLE : View.GONE);
-        if (blackboard.isShowData())
-            holder.tv_time.setText(blackboard.getDate());
+        holder.iv_sign.setImageURL(blackboard.getIcon());// TODO
+        holder.tv_title.setText(blackboard.getTitle());
+        holder.tv_content.setText(blackboard.getSubtitle());
 
 
-        if (TextUtils.equals(blackboard.getResponse(), "文章")) {
-            holder.ll_blackboard_time.setVisibility(View.GONE);
-            holder.tv_participate.setText("已有" + blackboard.getCount() + "用户点了赞");
-        } else if (TextUtils.equals(blackboard.getResponse(), "话题")) {
-            holder.ll_blackboard_time.setVisibility(View.GONE);
-            holder.tv_tag.setVisibility(View.VISIBLE);
-            holder.tv_tag.setText(blackboard.getType() == 1 ? "话题征集" : "");
-            holder.tv_participate.setText("已有" + blackboard.getCount() + "用户参与");
-        } else if (TextUtils.equals(blackboard.getResponse(), "创意")) {
-            holder.ll_blackboard_time.setVisibility(View.GONE);
-            holder.tv_participate.setText("已有" + blackboard.getCount() + "用户参与");
-        } else if (TextUtils.equals(blackboard.getResponse(), "活动")) {
-            holder.ll_blackboard_time.setVisibility(View.VISIBLE);
-            holder.tv_action_status.setVisibility(View.VISIBLE);
-            holder.tv_action_status.setText(blackboard.getIsrun() == 1 ? "进行中" : "还有一天");
-            holder.tv_time_quantum.setText("活动时间：" + blackboard.getTime_quantum());
-            holder.tv_participate.setText("已有" + blackboard.getCount() + "用户参与活动");
-        }*/
+        holder.ll_time.setVisibility(blackboard.isShowDate() ? View.VISIBLE : View.GONE);
+        if (blackboard.isShowDate())
+            holder.tv_time.setText(blackboard.getTime());
+
+        switch (blackboard.getType()){
+            case 1://文章
+                holder.ll_blackboard_time.setVisibility(View.GONE);
+                holder.tv_participate.setText("已有" + blackboard.getTags().get(0).getLike_count() + "用户点了赞");
+                break;
+            case 2://创意
+                holder.ll_blackboard_time.setVisibility(View.GONE);
+                holder.tv_participate.setText("已有" + blackboard.getTags().get(0).getAttend_count() + "用户参与");
+                break;
+            case 3://话题
+                holder.ll_blackboard_time.setVisibility(View.GONE);
+                holder.tv_participate.setText("已有" + blackboard.getTags().get(0).getAttend_count() + "用户参与");
+                break;
+            case 4://运营
+                holder.ll_blackboard_time.setVisibility(View.GONE);
+                holder.tv_participate.setText("已有" + blackboard.getTags().get(0).getAttend_count() + "用户参与");
+                break;
+            case 5://活动
+                holder.ll_blackboard_time.setVisibility(View.VISIBLE);
+                holder.tv_action_status.setVisibility(View.VISIBLE);
+                holder.tv_action_status.setText(blackboard.getTags().get(0).getStatus() == 0 ? "未开始" : (blackboard.getTags().get(0).getStatus() == 1 ? "进行中" : "已结束") );
+                holder.tv_time_quantum.setText("活动时间：" + blackboard.getTags().get(0).getStart_time()+"-"+blackboard.getTags().get(0).getEnd_time());
+                holder.tv_participate.setText("已有" + blackboard.getTags().get(0).getAttend_count() + "用户参与活动");
+                break;
+        }
     }
 
     static class BlackboardHolder extends BasicViewHolder {
