@@ -37,9 +37,10 @@ public class ParticipationAdapter extends LoadMoreAdapter<Participation, Partici
 
     @Override
     public void onBindItem(final ParticipationViewHolder holder, final Participation participation, int position) {
-        holder.tv_title.setText("参与" + position);
+        holder.tv_title.setText(participation.getTitle());
+        holder.tv_content.setText(participation.getSubtitle());
+        holder.iv_icon.setImageURL(participation.getHead_img());
     }
-
 
     /**
      * 视图

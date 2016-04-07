@@ -202,7 +202,7 @@
                     android:id="@+id/si_collection"
                     style="@style/style_setting"
                     auto:setting_divider="bottom"
-                    auto:setting_icon="@drawable/icon_20_07"
+                    auto:setting_icon="@drawable/icon_20_39"
                     auto:setting_indicator_background="@drawable/setting_indicator"
                     auto:setting_indicator_color="@color/text_main_color_nor"
                     auto:setting_text="@string/collection" />
