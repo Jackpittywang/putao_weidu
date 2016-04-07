@@ -15,6 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent" />
+
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
