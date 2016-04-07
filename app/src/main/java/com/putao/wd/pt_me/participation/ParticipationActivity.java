@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
+import com.putao.wd.api.ParticipationApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.created.CreateCommentActivity;
@@ -55,33 +56,39 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        ArrayList<Participation> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new Participation());
-        }
-        adapter = new ParticipationAdapter(mContext, list);
+        adapter = new ParticipationAdapter(mContext, null);
         rv_participation.setAdapter(adapter);
-//        initData();
+        initData();
         addListenter();
     }
 
     private void initData() {
         mPage = 1;
-        networkRequest(CreateApi.getCreateMyfollows(mPage),
-                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+        networkRequest(ParticipationApi.getQueryPart(mPage),
+                new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
                     @Override
-                    public void onSuccess(String url, Creates result) {
-                        List<Create> details = result.getData();
-                        if (details != null && details.size() > 0) {
-                            ll_empty.setVisibility(View.GONE);
-                            ptl_refresh.setVisibility(View.VISIBLE);
-//                            adapter.replaceAll(details);
-                        } else {
-                            ptl_refresh.setVisibility(View.GONE);
-                            ll_empty.setVisibility(View.VISIBLE);
-                        }
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-                        ptl_refresh.refreshComplete();
+                    public void onSuccess(String url, ArrayList<Participation> result) {
+//                        participations.clear();
+//                        if (null != result) {
+//                            Participation participation = new Participation();
+//                            participation.setTitle(result.getTitle());
+//                            participation.setHead_img(result.getHead_img());
+//                            participation.setSubtitle(result.getSubtitle());
+//                            participations.add(participation);
+//                            adapter.replaceAll(participations);
+//                        }
+                        System.out.println("_______________________" + result.size());
+//                        List<Create> details = result.getData();
+//                        if (details != null && details.size() > 0) {
+//                            ll_empty.setVisibility(View.GONE);
+//                            ptl_refresh.setVisibility(View.VISIBLE);
+////                            adapter.replaceAll(details);
+//                        } else {
+//                            ptl_refresh.setVisibility(View.GONE);
+//                            ll_empty.setVisibility(View.VISIBLE);
+//                        }
+//                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+//                        ptl_refresh.refreshComplete();
                         loading.dismiss();
 
                         /*adapter.replaceAll(result.getData());
@@ -147,8 +154,6 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
 ////                    }
 ////                });
 //    }
-
-    private Create mCreate;
 
 //    @Override
 //    public void onItemClick(Create create, int position) {

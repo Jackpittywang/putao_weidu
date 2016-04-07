@@ -3,7 +3,7 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_EBEBEB"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.sunnybear.library.view.NavigationBar
@@ -20,6 +20,7 @@
         android:id="@+id/sv_load"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ll_comment_edit"
         android:layout_below="@+id/navigation_bar"
         android:fillViewport="true">
 
@@ -30,11 +31,52 @@
             android:fillViewport="true"
             android:orientation="vertical">
 
+            <!--标题图-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_sign"
+                style="@style/image_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                auto:aspect_ratio="2" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="这里显示活动的标题"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/tv_digest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:text="这里显示的是这边活动的简介，可以换行，限制两行内显示"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/img_carve_up_article"
+                android:visibility="visible" />
+
             <com.sunnybear.library.view.BasicWebView
                 android:id="@+id/wv_load"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp" />
+                android:layout_height="wrap_content" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -50,7 +92,7 @@
                     android:paddingRight="32dp">
 
                     <com.sunnybear.library.view.select.TitleItem
-                        android:id="@+id/ll_reply"
+                        android:id="@+id/ll_selection"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -58,18 +100,18 @@
                         auto:inactive_color="@color/text_color_gray"
                         auto:indicator_color="@color/text_main_color_nor"
                         auto:is_active="true"
-                        auto:title_text="回复" />
+                        auto:title_text="精选" />
 
 
                     <com.sunnybear.library.view.select.TitleItem
-                        android:id="@+id/ll_remind"
+                        android:id="@+id/ll_newest"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         auto:active_color="@color/text_main_color_nor"
                         auto:inactive_color="@color/text_color_gray"
                         auto:indicator_color="@color/text_main_color_nor"
-                        auto:title_text="提醒" />
+                        auto:title_text="最新" />
                 </com.sunnybear.library.view.select.TitleBar>
 
                 <TextView
@@ -78,7 +120,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:gravity="center_vertical"
-                    android:text="还没有用户参与"
+                    android:text="已有1234位用户参与"
                     android:textColor="@color/text_color_red" />
             </RelativeLayout>
 
@@ -92,9 +134,13 @@
                 android:id="@+id/rv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                auto:duration_animator="500"
-                auto:has_row_divider="true"
+                android:background="@color/white"
                 auto:is_inner="true" />
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/color_EBEBEB" />-->
 
         </LinearLayout>
     </com.sunnybear.library.view.scroll.NestScrollView>

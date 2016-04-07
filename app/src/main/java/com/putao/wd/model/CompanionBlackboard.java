@@ -120,57 +120,19 @@ public class CompanionBlackboard implements Serializable {
     private int id;
     private String time;
     private String icon;
+    private String title;
     private String subtitle;
-    private int like_count;
-    private int attend_count;
-    private String start_time;
-    private String end_time;
-
-    private List tags;
-
-    private String http_code;
-    private String msg;
 
     private boolean showDate;
 
-    public List getTags() {
-        return tags;
+    private List<Tag> tags;
+
+    public boolean isShowDate() {
+        return showDate;
     }
 
-    public void setTags(List tags) {
-        this.tags = tags;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getAttend_count() {
-        return attend_count;
-    }
-
-    public void setAttend_count(int attend_count) {
-        this.attend_count = attend_count;
-    }
-
-    public String getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(String end_time) {
-        this.end_time = end_time;
-    }
-
-    public String getHttp_code() {
-        return http_code;
-    }
-
-    public void setHttp_code(String http_code) {
-        this.http_code = http_code;
+    public void setShowDate(boolean showDate) {
+        this.showDate = showDate;
     }
 
     public String getIcon() {
@@ -189,44 +151,20 @@ public class CompanionBlackboard implements Serializable {
         this.id = id;
     }
 
-    public int getLike_count() {
-        return like_count;
-    }
-
-    public void setLike_count(int like_count) {
-        this.like_count = like_count;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public boolean isShowDate() {
-        return showDate;
-    }
-
-    public void setShowDate(boolean showDate) {
-        this.showDate = showDate;
-    }
-
-    public String getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
-    }
-
     public String getSubtitle() {
         return subtitle;
     }
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public String getTime() {
@@ -237,5 +175,32 @@ public class CompanionBlackboard implements Serializable {
         this.time = time;
     }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "CompanionBlackboard{" +
+                "icon='" + icon + '\'' +
+                ", type=" + type +
+                ", id=" + id +
+                ", time='" + time + '\'' +
+                ", title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", tags=" + tags +
+                '}';
+    }
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_comment_icon"
+            style="@style/image_circle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            auto:default_drawable="@drawable/img_head_default" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/iv_comment_icon"
+            android:text="这里显示用户名"
+            android:textColor="@color/color_313131"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <TextView
+            android:id="@+id/tv_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_username"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/iv_comment_icon"
+            android:text="2016/4/1 23:59"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp" />
+
+
+    </RelativeLayout>
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_sign"
+        style="@style/image_style"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/color_EBEBEB"
+        auto:default_drawable="@drawable/img_head_default" />
+
+    <!--标题-->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="left"
+        android:text="这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示"
+        android:textColor="@color/color_313131"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@color/divider_color" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="12">
+
+
+        <LinearLayout
+            android:id="@+id/ll_cool"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <com.sunnybear.library.view.SwitchButton
+                android:id="@+id/sb_cool_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                auto:isSelect="false"
+                auto:norDrawable="@drawable/btn_support_nor"
+                auto:selDrawable="@drawable/btn_support_sel" />
+
+            <TextView
+                android:id="@+id/tv_count_cool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="赞"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_comment" />
+
+            <TextView
+                android:id="@+id/tv_count_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="评论"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:id="@+id/ll_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_16_18" />
+
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="分享"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/divider_color" />
+</LinearLayout>

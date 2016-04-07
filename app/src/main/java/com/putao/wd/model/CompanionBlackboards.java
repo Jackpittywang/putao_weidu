@@ -6,13 +6,14 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/4/6.
  */
-public class CompanionBlackboards extends CreatePage{
+public class CompanionBlackboards extends CreatePage {
 
-        List<CompanionBlackboard> data;
+    List<CompanionBlackboard> data;
 
     private List<String> list = new ArrayList<>();
-        public List<CompanionBlackboard> getData() {
-            // 遍历集合
+
+    public List<CompanionBlackboard> getData() {
+        // 遍历集合
         for (int position = 0; position < data.size(); position++) {
             CompanionBlackboard blackboard = data.get(position);
             if (!list.contains(blackboard.getTime())) {
@@ -22,17 +23,17 @@ public class CompanionBlackboards extends CreatePage{
                 blackboard.setShowDate(false);
             }
         }
-            return data;
-        }
-
-        public void setData(List<CompanionBlackboard> data) {
-            this.data = data;
-        }
-
-        @Override
-        public String toString() {
-            return "CompanionBlackboards{" +
-                    "data=" + data +
-                    '}';
-        }
+        return data;
     }
+
+    public void setData(List<CompanionBlackboard> data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "CompanionBlackboards{" +
+                "data=" + data +
+                '}';
+    }
+}
