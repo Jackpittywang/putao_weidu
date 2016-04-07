@@ -7,6 +7,7 @@ import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.FormEncodingRequestBuilder;
 import com.sunnybear.library.model.http.request.RequestMethod;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.PreferenceUtils;
 
 /**
  * 探索号接口
@@ -34,6 +35,8 @@ public class ExploreApi {
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
     private static final String STATUS = "status";//控制设备名称
 
+    //    公网线上地址：api-weidu.putao.com ； admin-weidu.putao.com
+//    内网测试地址：api-weidu.ptdev.cn ; admin-weidu.ptdev.cn
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
     private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
 
@@ -77,6 +80,20 @@ public class ExploreApi {
 ////            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
 //        return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
 //    }
+
+    /**
+     * 视频发现
+     */
+    public static final String URL_VIDEO_FIND = COMPANION_URL + "find";
+
+    /**
+     * 视频发现
+     */
+    public static Request getfindVideo(int page) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_PAGE, page + "")
+                .build(RequestMethod.GET, URL_VIDEO_FIND);
+    }
 
     /**
      * 扫码关注产品（添加）

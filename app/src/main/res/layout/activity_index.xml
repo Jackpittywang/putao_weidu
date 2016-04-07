@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_bar_height"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         android:visibility="visible">
 
         <!--探索-->
@@ -28,8 +28,8 @@
             android:id="@+id/ti_index_explore"
             style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/tab_bar_create_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_create_nor" />
+            auto:activeDrawable="@drawable/tab_bar_p_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
 
         <!--创造-->
         <com.sunnybear.library.view.select.TabItem

@@ -219,4 +219,8 @@
         <item name="android:paddingBottom">7dp</item>
     </style>
 
+    <style name="bottom_anim_style">
+        <item name="android:windowEnterAnimation">@anim/bottom_enter_animation</item>
+        <item name="android:windowExitAnimation">@anim/bottom_exit_animation</item>
+    </style>
 </resources>

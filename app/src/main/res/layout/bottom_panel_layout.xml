@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#60000000"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/function_null"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/function_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/function_contain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_panel_bg"
+            android:orientation="vertical"></LinearLayout>
+
+        <TextView
+            android:id="@+id/function_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bottom_panel_bg"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_18sp" />
+    </LinearLayout>
+
+</LinearLayout>
