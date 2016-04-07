@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_comment_edit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,18 +9,29 @@
     android:orientation="vertical"
     android:visibility="visible">
 
+
     <!--发送栏-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal">
 
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_upload_pic"
+            style="@style/image_circle"
+            auto:placeholderImage="@drawable/img_head_default"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_emojis"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:background="@drawable/btn_emoji_select" />
 
@@ -64,5 +76,6 @@
         android:layout_height="180dp"
         android:overScrollMode="never"
         android:visibility="gone" />
+
 
 </LinearLayout>
