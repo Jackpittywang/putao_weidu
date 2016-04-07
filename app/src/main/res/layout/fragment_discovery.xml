@@ -26,6 +26,8 @@
             android:id="@+id/rv_discovery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            auto:divider_color="@color/white"
+            auto:divider_height="2dp"
             auto:duration_animator="500"
             auto:has_row_divider="true"
             auto:is_start_animator="true" />

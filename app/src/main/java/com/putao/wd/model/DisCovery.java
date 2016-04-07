@@ -10,9 +10,9 @@ public class DisCovery implements Serializable {
     private String id;
     private String title;
     private String video_img;//视频图片
-//    private String video_url;
-//    private String tag;
-//    private String time;
+    private String video_url;
+    private String tag;
+    private String time;
 
     public String getId() {
         return id;
@@ -38,29 +38,29 @@ public class DisCovery implements Serializable {
         this.video_img = video_img;
     }
 
-//    public String getVideo_url() {
-//        return video_url;
-//    }
-//
-//    public void setVideo_url(String video_url) {
-//        this.video_url = video_url;
-//    }
-//
-//    public String getTag() {
-//        return tag;
-//    }
-//
-//    public void setTag(String tag) {
-//        this.tag = tag;
-//    }
-//
-//    public String getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(String time) {
-//        this.time = time;
-//    }
+    public String getVideo_url() {
+        return video_url;
+    }
+
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     @Override
     public String toString() {
@@ -68,9 +68,9 @@ public class DisCovery implements Serializable {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", video_img='" + video_img + '\'' +
-//                ", video_url='" + video_url + '\'' +
-//                ", tag='" + tag + '\'' +
-//                ", time='" + time + '\'' +
+                ", video_url='" + video_url + '\'' +
+                ", tag='" + tag + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }
