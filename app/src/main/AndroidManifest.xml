@@ -407,7 +407,7 @@
             android:screenOrientation="portrait" />
         <!--相册-->
         <activity
-            android:name="PhotoAlbumActivity"
+            android:name=".album.activity.PhotoAlbumActivity"
             android:screenOrientation="portrait" />
         <!--图片的加载显示-->
         <!--<activity
