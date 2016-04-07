@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_C2C2C2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_comment_icon"
+            style="@style/image_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            auto:default_drawable="@drawable/img_head_default"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="这个用户很懒"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_comment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="评论时间"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_12sp"
+                />
+
+            <com.sunnybear.library.view.emoji.EmojiTextView
+                android:id="@+id/tv_comment_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="4dp"
+                android:lineSpacingExtra="4dp"
+                android:maxLength="200"
+                android:text="评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_cool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:clipChildren="false"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_count_cool"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/sb_cool_icon"
+                        android:paddingLeft="4dp"
+                        android:text="赞"
+                        android:textColor="@color/text_color_gray"
+                        android:textSize="@dimen/text_size_14sp"
+                        />
+
+
+                    <com.sunnybear.library.view.SwitchButton
+                        android:id="@+id/sb_cool_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        auto:isSelect="false"
+                        auto:norDrawable="@drawable/btn_support_nor"
+                        auto:selDrawable="@drawable/btn_support_sel"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_count_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@id/rl_cool"
+                    android:drawableLeft="@drawable/btn_comment"
+                    android:drawablePadding="4dp"
+                    android:text="评论"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_size_14sp"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

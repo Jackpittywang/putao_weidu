@@ -339,7 +339,7 @@
             android:screenOrientation="portrait" />
         <!--陪伴日志-->
         <activity
-            android:name=".pt_companion.GameDetailActivity"
+            android:name=".pt_companion.GameStepListActivity"
             android:screenOrientation="portrait" />
         <!--   &lt;!&ndash;我的关注&ndash;&gt;
            <activity
@@ -369,9 +369,41 @@
         <activity
             android:name=".created.CreateBasicDetailActivity"
             android:screenOrientation="portrait" />
-        <!--葡萄黑板报-->
+        <!--葡萄活动-->
         <activity
             android:name=".pt_companion.BlackboardActivity"
+            android:screenOrientation="portrait" />
+        <!-- 文章详情页-->
+        <activity
+            android:name=".pt_companion.ArticleDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 话题 \创意\运营详情页-->
+        <activity
+            android:name=".pt_companion.TopicDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏关卡详情页-->
+        <activity
+            android:name=".pt_companion.GameStepDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏详情页-->
+        <activity
+            android:name=".pt_companion.GameDetailListActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏详情页-->
+        <activity
+            android:name=".pt_companion.GameServiceActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏详情页-->
+        <activity
+            android:name=".pt_companion.GameDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--带评论详情-->
+        <activity
+            android:name=".pt_companion.ArticleDetailWithCommentsActivity"
+            android:screenOrientation="portrait" />
+        <!--活动详情页-->
+        <activity
+            android:name=".pt_companion.ArticleDetailForActivitiesActivity"
             android:screenOrientation="portrait" />
         <!--相册-->
         <activity

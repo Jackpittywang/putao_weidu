@@ -10,12 +10,9 @@ import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.created.adapter.FancyAdapter;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
-import com.putao.wd.pt_me.participation.ParticipationAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -27,17 +24,18 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 我的收藏
  * Created by Administrator on 2016/4/5.
  */
 public class CollectionActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create>, View.OnClickListener {
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
-    @Bind(R.id.rv_participation)
-    LoadMoreRecyclerView rv_participation;
+    @Bind(R.id.rv_collection)
+    LoadMoreRecyclerView rv_collection;
     @Bind(R.id.ll_empty)
     LinearLayout ll_empty;
 
-    private FancyAdapter adapter;
+    private CollectionAdapter adapter;
     private int mPage = 1;
     private boolean hasMoreData;
     private AlertDialog mDeleteDialog;
@@ -45,14 +43,14 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_participation;
+        return R.layout.activity_collection;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        adapter = new FancyAdapter(this, null);
-        rv_participation.setAdapter(adapter);
+        adapter = new CollectionAdapter(this, null);
+        rv_collection.setAdapter(adapter);
         initData();
         addListenter();
     }
@@ -72,21 +70,20 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
+
                         }
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
-
-                        /*adapter.replaceAll(result.getData());
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-                        loading.dismiss();*/
                     }
-                });
+                }
+        );
     }
+
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
         if (currentPage == totalPage) {
-            rv_participation.noMoreLoading();
+            rv_collection.noMoreLoading();
             hasMoreData = false;
         } else {
             mPage++;
@@ -95,16 +92,16 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     }
 
     private void addListenter() {
-        rv_participation.setOnItemClickListener(this);
+        rv_collection.setOnItemClickListener(this);
         ll_empty.setOnClickListener(this);
         ptl_refresh.setOnRefreshListener(this);
-        rv_participation.setOnLoadMoreListener(this);
-        rv_participation.setOnItemLongClickListener(new OnItemLongClickListener() {
+        rv_collection.setOnLoadMoreListener(this);
+        rv_collection.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public void onItemLongClick(Serializable serializable, int position) {
                 mDeleteDialog = new AlertDialog.Builder(mContext)
-                        .setTitle("删除收藏")
-                        .setMessage("是否删除该条收藏数据")
+//                        .setTitle("删除收藏数据")
+                        .setMessage("确定删除所选的收藏项？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -113,17 +110,13 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                                             @Override
                                             public void onSuccess(String url, String result) {
                                                 mCreate.setFollow_status(1);
-                                                Logger.d(result.toString());
-
-//                                        adapter.delete();
-//                                        if (adapter.getItemCount() == 0) isCollection = true;
-//                                        eventAddressDelete(address.getId());
-//                                        getAddressLists();
+//                                                adapter.replaceAll();
                                             }
                                         });
-
                             }
-                        }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mDeleteDialog.dismiss();
@@ -132,6 +125,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
             }
         });
     }
+
 
     @Override
     protected String[] getRequestUrls() {
@@ -151,7 +145,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                     @Override
                     public void onSuccess(String url, Creates result) {
                         adapter.addAll(result.getData());
-                        rv_participation.loadMoreComplete();
+                        rv_collection.loadMoreComplete();
                         checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
@@ -224,9 +218,9 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         initData();
     }
 
-//    @Override
-//    public void onLeftAction() {
-//        super.onLeftAction();
-//        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
-//    }
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
+    }
 }

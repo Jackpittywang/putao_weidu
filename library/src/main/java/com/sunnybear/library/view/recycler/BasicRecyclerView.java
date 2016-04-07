@@ -175,4 +175,5 @@ public class BasicRecyclerView extends RecyclerView {
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         getBasicAdapter().setOnItemLongClickListener(onItemLongClickListener);
     }
+
 }

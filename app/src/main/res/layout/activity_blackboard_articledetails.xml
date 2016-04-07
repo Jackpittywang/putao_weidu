@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--&lt;!&ndash;发送栏&ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_comment_edit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@color/white"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="visible">-->
+
+        <!--&lt;!&ndash;发送栏&ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_emojis"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:layout_marginBottom="5dp"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:background="@drawable/btn_emoji_select"/>-->
+
+            <!--<com.sunnybear.library.view.emoji.EmojiEditText-->
+                <!--android:id="@+id/et_msg"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginBottom="6dp"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:layout_marginRight="8dp"-->
+                <!--android:layout_marginTop="6dp"-->
+                <!--android:layout_weight="0.7"-->
+                <!--android:background="@drawable/comment_shape"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:hint="发表评论"-->
+                <!--android:imeOptions="actionSend"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:maxLines="5"-->
+                <!--android:minHeight="36dp"-->
+                <!--android:paddingLeft="10dp"-->
+                <!--android:paddingRight="10dp"-->
+                <!--android:scrollbars="vertical"-->
+                <!--android:singleLine="false"-->
+                <!--android:textColor="@color/text_color"-->
+                <!--android:textColorHint="@color/color_C2C2C2"-->
+                <!--android:textSize="@dimen/text_size_16sp"/>-->
+
+        <!--</LinearLayout>-->
+        <!--&lt;!&ndash;表情栏&ndash;&gt;-->
+        <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/vp_emojis"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="180dp"-->
+            <!--android:overScrollMode="never"-->
+            <!--android:visibility="gone"/>-->
+
+    <!--</LinearLayout>-->
+
+    <include layout="@layout/base_comment"
+        android:id="@+id/ll_blackboard_comment"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_blackboard_comment"
+        android:orientation="vertical">
+
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_main_title="评论"/>
+        <com.sunnybear.library.view.recycler.BasicRecyclerView
+            android:id="@+id/articledetails_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.sunnybear.library.view.recycler.BasicRecyclerView>
+    </LinearLayout>
+
+</RelativeLayout>

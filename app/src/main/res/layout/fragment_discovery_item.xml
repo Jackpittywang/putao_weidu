@@ -1,24 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ebebeb"
-    android:orientation="vertical">
+    android:background="#ebebeb">
 
+    <!--android:src="@drawable/btn_60_play_selector"-->
     <ImageView
         android:id="@+id/iv_discovery_player"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/btn_60_play_selector"
-        android:visibility="gone" />
+        android:background="@drawable/img_head_cs"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ebebeb"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="淘淘向右走"
-        android:textSize="@dimen/text_size_16sp" />
-</LinearLayout>
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="动画"
+            android:textColor="@color/color_C2C2C2"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14sp" />
+
+    </LinearLayout>
+</RelativeLayout>

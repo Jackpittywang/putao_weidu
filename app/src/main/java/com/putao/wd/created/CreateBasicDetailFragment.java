@@ -161,7 +161,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
     private void initView() {
         if (mCreate.getFollow_status() == 1) {
             sb_cool_icon.setState(true);
-            tv_count_cool.setText("已关注");
+            tv_count_cool.setText("已收藏");
         }
         mCommentCount = mCreate.getComment().getCount();
         isConcernsInit = mCreate.getFollow_status() == 1 ? true : false;
@@ -370,7 +370,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 YouMengHelper.onEvent(mActivity, isShowProgress ? YouMengHelper.CreatorHome_originate_detail_interested : YouMengHelper.CreatorHome_conceit_detail_interested);
                 if (mCreate.getFollow_status() == 1) {
                     sb_cool_icon.setState(false);
-                    tv_count_cool.setText("关注");
+                    tv_count_cool.setText("收藏");
                     isConcernsRefresh = true;
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 4),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -382,7 +382,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                             });
                 } else {
                     sb_cool_icon.setState(true);
-                    tv_count_cool.setText("已关注");
+                    tv_count_cool.setText("已收藏");
                     isConcernsRefresh = false;
                     networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
