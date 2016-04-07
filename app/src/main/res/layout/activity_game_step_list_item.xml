@@ -1,52 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_EBEBEB"
+    android:layout_height="30dp"
     android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:id="@+id/rl_game_step"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <TextView
-            android:id="@+id/tv_game_step"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:drawableLeft="@drawable/img_head_default"
-            android:drawablePadding="30dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="30dp"
-            android:text="游戏理念"
-            android:textSize="@dimen/text_size_14sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/btn_20_back_p_nor" />
-
-    </RelativeLayout>
-
     <TextView
-        android:id="@+id/tv_intro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv_game_step"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:layout_margin="10dp"
-        android:text="简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介"
-        android:visibility="gone" />
+        android:drawableLeft="@drawable/img_head_q"
+        android:gravity="center_vertical"
+        android:paddingLeft="50dp"
+        android:text="游戏理念"
+        android:textSize="@dimen/text_size_14sp" />
 
-    <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@+id/rv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        auto:duration_animator="500"
-        auto:has_row_divider="true"
-        android:visibility="gone"
-        auto:is_inner="true" />
+    <ImageView
+        android:id="@+id/iv_game_step"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/btn_20_close_p_nor" />
 
-</LinearLayout>
+</RelativeLayout>

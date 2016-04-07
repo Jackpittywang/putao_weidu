@@ -11,14 +11,11 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.GameList;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
-import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -39,7 +36,7 @@ public class GameStepListAdapter extends BasicAdapter<GameList, GameStepListAdap
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.activity_game_step_detail_item;
+        return R.layout.activity_game_step_list_item;
     }
 
     @Override
@@ -84,7 +81,7 @@ public class GameStepListAdapter extends BasicAdapter<GameList, GameStepListAdap
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_game_step_list_item, parent, false);
+                .inflate(R.layout.activity_game_step_list_head_item, parent, false);
         return new GameStepListAdapter.GameListHolder(view);
     }
 
@@ -119,37 +116,3 @@ public class GameStepListAdapter extends BasicAdapter<GameList, GameStepListAdap
         }
     }
 }
-
-/*    *//*class GameStepDetailAdapter extends BasicAdapter<GameList, GameStepDetailHolder> {
-        public GameStepDetailAdapter(Context context, List<GameList> gameLists) {
-            super(context, gameLists);
-        }
-
-        @Override
-        public int getLayoutId(int viewType) {
-            return R.layout.activity_game_step_detail_item;
-        }
-
-        @Override
-        public GameStepDetailHolder getViewHolder(View itemView, int viewType) {
-            return new GameStepDetailHolder(itemView);
-        }
-
-        @Override
-        public void onBindItem(GameStepDetailHolder holder, GameList gameList, int position) {
-
-        }
-
-    }
-
-    static class GameStepDetailHolder extends BasicViewHolder {
-        @Bind(R.id.tv_game_step)
-        TextView tv_game_step;
-        @Bind(R.id.iv_game_step)
-        ImageView iv_game_step;
-
-        public GameStepDetailHolder(View itemView) {
-            super(itemView);
-        }
-}*/
-

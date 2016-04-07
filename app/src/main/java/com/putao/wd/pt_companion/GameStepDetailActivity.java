@@ -22,7 +22,7 @@ public class GameStepDetailActivity extends BasicFragmentActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_game_step_list;
+        return R.layout.activity_game_step_detail;
     }
 
     @Override
