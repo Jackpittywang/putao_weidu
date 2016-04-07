@@ -12,8 +12,7 @@ public class CompanionBlackboards extends CreatePage{
 
     private List<String> list = new ArrayList<>();
         public List<CompanionBlackboard> getData() {
-
-                   // 遍历集合
+            // 遍历集合
         for (int position = 0; position < data.size(); position++) {
             CompanionBlackboard blackboard = data.get(position);
             if (!list.contains(blackboard.getTime())) {

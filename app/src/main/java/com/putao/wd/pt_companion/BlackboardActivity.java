@@ -1,4 +1,4 @@
-/*
+
 package com.putao.wd.pt_companion;
 
 import android.content.Intent;
@@ -34,11 +34,11 @@ import java.util.Map;
 
 import butterknife.Bind;
 
-*/
+
 /**
  * 葡萄黑板报
  * Created by zhanghao on 2016/04/05.
- *//*
+ */
 
 public class BlackboardActivity extends PTWDActivity implements OnItemClickListener {
     private static int mPage = 1;
@@ -61,22 +61,24 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
 
-        mCompanionBlackboards.add(new CompanionBlackboard("话题", "1234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊", 200, 1, 1, "1月12日-12月12日"));
-        mCompanionBlackboards.add(new CompanionBlackboard("文章", "1234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊", 300, 1, 1, "1月12日-12月12日"));
-        mCompanionBlackboards.add(new CompanionBlackboard("创意", "2234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊", 533, 1, 1, "1月12日-12月12日"));
-        mCompanionBlackboards.add(new CompanionBlackboard("活动", "5323231311", "0", "话题话题", "聊聊聊聊聊聊聊聊聊", 900, 1, 1, "1月12日-12月12日"));
 
-        //遍历集合
-        for (int position = 0; position < mCompanionBlackboards.size(); position++) {
-            CompanionBlackboard blackboard = mCompanionBlackboards.get(position);
-            if (!list.contains(blackboard.getDate())) {
-                blackboard.setShowData(true);
-                list.add(blackboard.getDate());
-            } else {
-                blackboard.setShowData(false);
-            }
-        }
-
+//
+//        mCompanionBlackboards.add(new CompanionBlackboard("话题", "1234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊", 200, 1, 1, "1月12日-12月12日"));
+//        mCompanionBlackboards.add(new CompanionBlackboard("文章", "1234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊聊", 300, 1, 1, "1月12日-12月12日"));
+//        mCompanionBlackboards.add(new CompanionBlackboard("创意", "2234123134", "0", "话题话题", "聊聊聊聊聊聊聊聊聊", 533, 1, 1, "1月12日-12月12日"));
+        mCompanionBlackboards.add(new CompanionBlackboard());
+//
+//        //遍历集合
+//        for (int position = 0; position < mCompanionBlackboards.size(); position++) {
+//            CompanionBlackboard blackboard = mCompanionBlackboards.get(position);
+//            if (!list.contains(blackboard.getDate())) {
+//                blackboard.setShowData(true);
+//                list.add(blackboard.getDate());
+//            } else {
+//                blackboard.setShowData(false);
+//            }
+//        }
+//
         mBlackboardActivityAdapter = new BlackboardActivityAdapter(mContext, mCompanionBlackboards);
         rv_collection.setAdapter(mBlackboardActivityAdapter);
         addListener();
@@ -87,34 +89,34 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
             @Override
             public void onRefresh() {
                 ptl_refresh.refreshComplete();
-               // getDiaryIndex();
+                // getDiaryIndex();
             }
         });
-        rv_collection.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                networkRequest(BlackboardApi.getDiaryData(mPage),
-                        new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
-                            @Override
-                            public void onSuccess(String url, CompanionBlackboards result) {
-                                if (result != null && result.getData().size() > 0)
-                                    mBlackboardActivityAdapter.addAll(result.getData());
-                                rv_collection.loadMoreComplete();
-                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
-                                loading.dismiss();
-                            }
-                        });
-                rv_collection.noMoreLoading();
-            }
-        });
-       // mBlackboardActivityAdapter.setOnItemClickListener(this);
+//        rv_collection.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                networkRequest(BlackboardApi.getDiaryData(mPage),
+//                        new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
+//                            @Override
+//                            public void onSuccess(String url, CompanionBlackboards result) {
+//                                if (result != null && result.getData().size() > 0)
+//                                    mBlackboardActivityAdapter.addAll(result.getData());
+//                                rv_collection.loadMoreComplete();
+//                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+//                                loading.dismiss();
+//                            }
+//                        });
+//                rv_collection.noMoreLoading();
+//            }
+//        });
+        mBlackboardActivityAdapter.setOnItemClickListener(this);
     }
 
 
     private void getDiaryIndex() {
         mPage = 1;
-        networkRequest(BlackboardApi.getDiaryData(mPage),
-                new SimpleFastJsonCallback<CompanionBlackboards>(Diarys.class, loading) {
+        networkRequest(BlackboardApi.getCreateList(mPage),
+                new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
                     @Override
                     public void onSuccess(String url, CompanionBlackboards result) {
                         if (result != null && result.getData().size() > 0) {
@@ -124,10 +126,30 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
                             ptl_refresh.setVisibility(View.GONE);
                         }
                         ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
+    }
+
+    private void initData() {
+        mPage = 1;
+        networkRequest(CreateApi.getCreateList(1, mPage),
+                new SimpleFastJsonCallback<CompanionBlackboards>(CompanionBlackboards.class, loading) {
+                    @Override
+                    public void onSuccess(String url, CompanionBlackboards result) {
+                        mBlackboardActivityAdapter.replaceAll(result.getData());
+                        ptl_refresh.refreshComplete();
+                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+                        loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
+                    }
+                }, false);
     }
 
 
@@ -150,13 +172,14 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
 
     @Override
     public void onItemClick(Serializable serializable, int position) {
-        String response = mCompanionBlackboards.get(position).getResponse();
+        startActivity(ArticleDetailForActivitiesActivity.class);
+        /*String response = mCompanionBlackboards.get(position).getResponse();
 
         if(TextUtils.equals(response,"文章")){
             startActivity(new Intent(this,ArticleDetailsActivity.class));
         }else{
             startActivity(new Intent(this,TopicDetailsActivity.class));
-        }
+        }*/
     }
 
     @Override
@@ -198,4 +221,4 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
 }
 
 
-*/
+

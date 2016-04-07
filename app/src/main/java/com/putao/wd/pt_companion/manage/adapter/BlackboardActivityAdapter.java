@@ -46,7 +46,7 @@ public class BlackboardActivityAdapter extends LoadMoreAdapter<CompanionBlackboa
 
 
         // holder.iv_sign.setImageURL(blackboard.imageurl);
-        holder.tv_title.setText(blackboard.getTitle());
+        /*holder.tv_title.setText(blackboard.getTitle());
         holder.tv_content.setText(blackboard.getContent());
 
 
@@ -72,7 +72,7 @@ public class BlackboardActivityAdapter extends LoadMoreAdapter<CompanionBlackboa
             holder.tv_action_status.setText(blackboard.getIsrun() == 1 ? "进行中" : "还有一天");
             holder.tv_time_quantum.setText("活动时间：" + blackboard.getTime_quantum());
             holder.tv_participate.setText("已有" + blackboard.getCount() + "用户参与活动");
-        }
+        }*/
     }
 
     static class BlackboardHolder extends BasicViewHolder {
