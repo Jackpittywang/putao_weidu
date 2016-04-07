@@ -22,6 +22,7 @@ import com.sunnybear.library.controller.intent.FragmentIntent;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
+import com.sunnybear.library.util.NetworkLogUtil;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.LoadingHUD;
 
@@ -350,6 +351,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      */
     @Deprecated
     protected void networkRequest(Request request, Callback callback) {
+        NetworkLogUtil.addLog(request);
         if (request == null)
             throw new NullPointerException("request为空");
         loading.show();

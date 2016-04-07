@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Interceptor;
@@ -29,6 +32,7 @@ import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DiskFileCacheHelper;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.NetworkLogUtil;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.LoadingHUD;
@@ -89,8 +93,11 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         if (layoutId == 0)
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
         setContentView(layoutId);
+
+
         ButterKnife.bind(this);
         mContext = this;
+
         mApp = (App) getApplication();
         mOkHttpClient = mApp.getOkHttpClient();
         this.loading = LoadingHUD.getInstance(this);
@@ -161,6 +168,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      * @param interceptors 网络拦截器组
      */
     protected void networkRequest(Request request, int cacheType, RequestCallback callback, List<Interceptor> interceptors) {
+        NetworkLogUtil.addLog(request);
         if (request == null)
             throw new NullPointerException("request为空");
         OkHttpRequestHelper helper = OkHttpRequestHelper.newInstance();
@@ -514,5 +522,6 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 
 }
