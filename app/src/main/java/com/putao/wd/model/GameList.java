@@ -16,5 +16,4 @@ public class GameList implements Serializable {
     public void setHeadId(int headId) {
         this.headId = headId;
     }
-
 }

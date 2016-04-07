@@ -381,6 +381,18 @@
         <activity
             android:name=".pt_companion.TopicDetailsActivity"
             android:screenOrientation="portrait" />
+        <!--游戏关卡详情页-->
+        <activity
+            android:name=".pt_companion.GameStepDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏详情页-->
+        <activity
+            android:name=".pt_companion.GameDetailListActivity"
+            android:screenOrientation="portrait" />
+        <!--游戏详情页-->
+        <activity
+            android:name=".pt_companion.GameServiceActivity"
+            android:screenOrientation="portrait" />
         <!--游戏详情页-->
         <activity
             android:name=".pt_companion.GameDetailActivity"

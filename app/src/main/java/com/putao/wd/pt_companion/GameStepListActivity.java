@@ -8,21 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.putao.wd.R;
-import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.GameList;
 import com.putao.wd.pt_companion.adapter.GameStepListAdapter;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -79,7 +75,7 @@ public class GameStepListActivity extends BasicFragmentActivity implements View.
         rv_content.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(GameDetailActivity.class);
+                startActivity(GameStepDetailActivity.class);
 //                mGameStepListAdapter.notifyItemRemoved(position);
 //                mGameStepListAdapter.remove(mGameStepListAdapter.getItem(position));
             }
@@ -108,7 +104,7 @@ public class GameStepListActivity extends BasicFragmentActivity implements View.
 
     @Subcriber(tag = GameStepListAdapter.EVENT_START_TO_DETAIL)
     private void startDetail(String str) {
-        startActivity(GameDetailActivity.class);
+        startActivity(GameStepDetailActivity.class);
     }
 
     @OnClick(R.id.iv_back)
