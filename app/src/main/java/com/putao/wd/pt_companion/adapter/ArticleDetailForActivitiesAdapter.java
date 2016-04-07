@@ -1,7 +1,6 @@
 package com.putao.wd.pt_companion.adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ArticleDetailActs;
-import com.putao.wd.model.GameList;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
@@ -42,14 +40,27 @@ public class ArticleDetailForActivitiesAdapter extends LoadMoreAdapter<ArticleDe
 
     @Override
     public void onBindItem(final ArticleDetailForActivitiesAdapter.ArticleDetailActsHolder holder, final ArticleDetailActs companion, final int position) {
-        final ViewTreeObserver viewTreeObserver = holder.ll_main.getViewTreeObserver();
+
+        refreshHeight(holder.ll_main, companion, position);
+
+    }
+
+    /**
+     * 计算高度
+     *
+     * @param ll_main
+     * @param companion
+     * @param position
+     */
+    private void refreshHeight(final LinearLayout ll_main, final ArticleDetailActs companion, final int position) {
+        final ViewTreeObserver viewTreeObserver = ll_main.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                final ViewGroup.LayoutParams layoutParams = holder.ll_main.getLayoutParams();
-                holder.ll_main.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                companion.setHeight(holder.ll_main.getHeight());
-                holder.ll_main.setLayoutParams(layoutParams);
+                final ViewGroup.LayoutParams layoutParams = ll_main.getLayoutParams();
+                ll_main.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                companion.setHeight(ll_main.getHeight());
+                ll_main.setLayoutParams(layoutParams);
                 if (position == getItemCount() - 2)
                     EventBusHelper.post(EVENT_REFRESH_HEIGHT, EVENT_REFRESH_HEIGHT);
             }
