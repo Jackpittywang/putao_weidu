@@ -23,7 +23,6 @@ public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements 
     @Bind(R.id.tvLog)
     TextView tvLog;
     private int count = 0;
-    private long time = 0;
 
     @Override
     protected int getLayoutId() {
@@ -36,18 +35,21 @@ public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements 
         tvLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (time < 0) {
-                    time = System.currentTimeMillis();
-                }
-                if (count > 4 && System.currentTimeMillis() - time < 3000) {
+                if (count > 4) {
                     Intent intent = new Intent(AboutUsActivity.this, NetworkLogActivty.class);
                     startActivity(intent);
                     count = 0;
-                    time = System.currentTimeMillis();
                 }
                 count++;
             }
         });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                count = 0;
+            }
+        }, 0, 5000);
 
     }
 
