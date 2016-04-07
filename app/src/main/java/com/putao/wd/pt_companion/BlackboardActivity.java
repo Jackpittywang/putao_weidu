@@ -1,3 +1,4 @@
+/*
 package com.putao.wd.pt_companion;
 
 import android.content.Intent;
@@ -33,10 +34,12 @@ import java.util.Map;
 
 import butterknife.Bind;
 
+*/
 /**
  * 葡萄黑板报
  * Created by zhanghao on 2016/04/05.
- */
+ *//*
+
 public class BlackboardActivity extends PTWDActivity implements OnItemClickListener {
     private static int mPage = 1;
 
@@ -195,3 +198,4 @@ public class BlackboardActivity extends PTWDActivity implements OnItemClickListe
 }
 
 
+*/
