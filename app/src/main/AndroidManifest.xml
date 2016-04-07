@@ -369,9 +369,17 @@
         <activity
             android:name=".created.CreateBasicDetailActivity"
             android:screenOrientation="portrait" />
-        <!--葡萄黑板报-->
+        <!--葡萄活动-->
         <activity
             android:name=".pt_companion.BlackboardActivity"
+            android:screenOrientation="portrait" />
+        <!-- 文章详情页-->
+        <activity
+            android:name=".pt_companion.ArticleDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 话题 \创意\运营详情页-->
+        <activity
+            android:name=".pt_companion.TopicDetailsActivity"
             android:screenOrientation="portrait" />
         <!--游戏详情页-->
         <activity

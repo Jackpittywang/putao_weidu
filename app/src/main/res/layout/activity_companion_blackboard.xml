@@ -19,7 +19,7 @@
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
+        android:layout_margin="10dp"
         auto:refresh_layout="@layout/sky_wheel_refresh_header"
         auto:refresh_layout_height="120">
 
