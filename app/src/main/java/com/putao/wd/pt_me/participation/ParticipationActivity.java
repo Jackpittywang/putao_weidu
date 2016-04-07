@@ -56,7 +56,9 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         ArrayList<Participation> list = new ArrayList<>();
-        list.add(new Participation());
+        for (int i = 0; i < 10; i++) {
+            list.add(new Participation());
+        }
         adapter = new ParticipationAdapter(mContext, list);
         rv_participation.setAdapter(adapter);
 //        initData();

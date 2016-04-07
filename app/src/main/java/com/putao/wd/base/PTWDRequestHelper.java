@@ -93,4 +93,13 @@ public class PTWDRequestHelper {
                 .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
+
+    /**
+     * 封装固定请求参数(发现视频使用)
+     */
+    public static FormEncodingRequestBuilder find() {
+        return FormEncodingRequestBuilder.newInstance()
+                .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken());
+    }
 }

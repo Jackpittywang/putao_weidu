@@ -30,9 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             auto:divider_color="@color/divider_color"
-            auto:divider_height="10dp"
+            auto:divider_height="0.5dp"
             auto:has_row_divider="true" />
-
 
     </com.sunnybear.library.view.PullToRefreshLayout>
 
