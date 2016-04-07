@@ -18,6 +18,15 @@ public class ArticleDetailActs implements Serializable {
     private int is_like;//是否点赞0未点赞，1已点赞
     private int sub_status;//是否收藏0未收藏，1已收藏
     private List<CommentLists> comment_list;//评论列表
+    private int height;//view高度
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
     public int getArticle_id() {
         return article_id;

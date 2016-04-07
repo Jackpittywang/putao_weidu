@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -55,16 +56,16 @@
         auto:default_drawable="@drawable/img_head_default" />
 
     <!--标题-->
-    <!--<TextView
+    <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="left"
-        android:text="这里显示的是用户参加这个活动输入的内容可以换行显示"
+        android:text="这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示"
         android:textColor="@color/color_313131"
-        android:textSize="@dimen/text_size_18sp" />-->
+        android:textSize="@dimen/text_size_18sp" />
 
     <View
         android:layout_width="match_parent"
@@ -77,6 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@color/white"
+        android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="12">
 

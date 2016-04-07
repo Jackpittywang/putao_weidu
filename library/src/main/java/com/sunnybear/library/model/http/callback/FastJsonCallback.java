@@ -43,7 +43,6 @@ abstract class FastJsonCallback<T extends Serializable> extends JSONObjectCallba
         JsonUtils.JsonType type = JsonUtils.getJSONType(data);
         switch (type) {
             case JSON_TYPE_OBJECT:
-                data = data.replaceAll("/[/]", "{}");
                 onSuccess(url, (T) JSON.parseObject(data, clazz));
                 break;
             case JSON_TYPE_ARRAY:

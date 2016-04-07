@@ -137,10 +137,10 @@
                 android:background="@color/white"
                 auto:is_inner="true" />
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:background="@color/color_EBEBEB" />
+                android:background="@color/color_EBEBEB" />-->
 
         </LinearLayout>
     </com.sunnybear.library.view.scroll.NestScrollView>
