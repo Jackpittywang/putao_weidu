@@ -26,6 +26,7 @@ import butterknife.Bind;
  * Created by Administrator on 2016/4/5.
  */
 public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapter.DiscoveryViewHolder> {
+
     public DiscoveryAdapter(Context context, List<DisCovery> disCoveries) {
         super(context, disCoveries);
     }
@@ -42,25 +43,10 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
 
     @Override
     public void onBindItem(final DiscoveryViewHolder holder, DisCovery disCoveries, int position) {
-//        holder.iv_discovery_player/*.addProcessor(new BlurProcessor(8))*/.setImageURL(product.getImage());
-        holder.tv_title.setText("发现" + position);
-        System.out.println("===============" + position);
-//        final Bundle bundle = new Bundle();
-//        holder.iv_discovery_player.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                bundle.putString(YoukuVideoPlayerActivity.BUNDLE_VID, isMore ? mExploreIndex.getUrl() : mExploreIndex.getBanner().get(0).getUrl());
-//                context.startActivity(YoukuVideoPlayerActivity.class, bundle);
-//                System.out.println("看视频");
-//            }
-//        });
-//
-//        holder.tv_title.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                System.out.println("同样看视频");
-//            }
-//        });
+        holder.tv_title.setText(disCoveries.getTitle());
+        holder.iv_discovery_player.setImageURL(disCoveries.getVideo_img());
+//        holder.tv_style.setText(disCoveries.getTag());
+//        holder.tv_time.setText(disCoveries.getTime());
     }
 
     /**
@@ -69,7 +55,7 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
     static class DiscoveryViewHolder extends BasicViewHolder {
 
         @Bind(R.id.iv_discovery_player)
-        ImageView iv_discovery_player;
+        ImageDraweeView iv_discovery_player;
         @Bind(R.id.tv_title)
         TextView tv_title;
         @Bind(R.id.tv_style)
