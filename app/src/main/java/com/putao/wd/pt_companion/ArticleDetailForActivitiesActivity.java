@@ -2,6 +2,7 @@ package com.putao.wd.pt_companion;
 
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
@@ -23,6 +24,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity {
     BasicWebView wv_load;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
+    @Bind(R.id.tv_title)
+    TextView tv_title;
     private ArticleDetailForActivitiesAdapter mArtivleDetailActsAdapter;
 
     @Override
@@ -47,6 +50,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity {
         objects.add(new ArticleDetailActs());
         objects.add(new ArticleDetailActs());
         mArtivleDetailActsAdapter.replaceAll(objects);
+        rv_content.getHeight();
     }
 
     @Override
