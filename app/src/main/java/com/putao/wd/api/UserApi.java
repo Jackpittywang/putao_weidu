@@ -63,13 +63,13 @@ public class UserApi {
     public static final String URL_USER_ADD = BASE_URL + "user/add";
     public static final String URL_USER_EDIT = BASE_URL + "user/edit";
 
-    public static Request userAdd(String ext, String filehash, String nick_name, String user_info) {
+    public static Request userAdd(String ext, String filehash, String nick_name, String profile) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_EXT, ext)
 //                .addParam(REQUEST_FILENAME, filename)
                 .addParam(REQUEST_FILEHASH, filehash)
                 .addParam(REQUEST_NICK_NAME, nick_name)
-                .addParam(REQUEST_PROFILE, user_info)
+                .addParam(REQUEST_PROFILE, profile)
                 .build(RequestMethod.POST, URL_USER_ADD);
     }
 
@@ -81,7 +81,7 @@ public class UserApi {
      * @param filehash 文件hash
      */
     public static Request userEdit(String ext, String filename, String filehash) {
-        return PTWDRequestHelper.explore()
+        return PTWDRequestHelper.find()
                 .addParam(REQUEST_EXT, ext)
                 .addParam(REQUEST_FILENAME, filename)
                 .addParam(REQUEST_FILEHASH, filehash)
@@ -94,7 +94,7 @@ public class UserApi {
      * @param nick_name 昵称
      */
     public static Request userNick(String nick_name) {
-        return PTWDRequestHelper.explore()
+        return PTWDRequestHelper.find()
                 .addParam(REQUEST_NICK_NAME, nick_name)
                 .build(RequestMethod.POST, URL_USER_EDIT);
     }

@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
@@ -131,10 +132,10 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         }
         loading.show();
         networkRequest(UserApi.userAdd(ext, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
+                new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        perfect();
+                        initInfo();
                     }
 
                     @Override
@@ -151,9 +152,18 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         startActivity(IndexActivity.class);
         EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+        loading.dismiss();
         finish();
     }
 
+    private void initInfo() {
+        networkRequest(AccountApi.login(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+            @Override
+            public void onSuccess(String url, UserInfo result) {
+                perfect();
+            }
+        });
+    }
 /*    private void initInfo() {
         networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
             @Override
