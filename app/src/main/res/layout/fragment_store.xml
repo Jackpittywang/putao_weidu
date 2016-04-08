@@ -10,7 +10,6 @@
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_has_divider="true"
-        auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="精选"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title_color="@drawable/text_select" />
