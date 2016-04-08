@@ -26,7 +26,7 @@ public class CompanionApi {
     /**
      * 设备管理(需登录)
      */
-    public static final String URL_ADD_SCAN = BASE_URL + "/scan/add";
+    private static final String URL_ADD_SCAN = BASE_URL + "/scan/add";
 
     /**
      * 设备管理(需登录)
@@ -42,7 +42,7 @@ public class CompanionApi {
     /**
      * 管理产品（查询）
      */
-    public static final String URL_MANAGEMENT_INDEX = BASE_URL + "/management/index";
+    private static final String URL_MANAGEMENT_INDEX = BASE_URL + "/management/index";
 
     /**
      * 管理产品（查询）
@@ -58,7 +58,7 @@ public class CompanionApi {
     /**
      * 陪伴首页
      */
-    public static final String URL_COMPANY = BASE_URL + "/company";
+    private static final String URL_COMPANY = BASE_URL + "/company";
 
     /**
      * 陪伴首页
@@ -71,7 +71,7 @@ public class CompanionApi {
     /**
      * 葡萄黑板报
      */
-    public static final String URL_COMPANY_BLACKBOARD = BASE_URL + "/company/blackboard";
+    private static final String URL_COMPANY_BLACKBOARD = BASE_URL + "/company/blackboard";
 
     /**
      * 葡萄黑板报
@@ -87,7 +87,7 @@ public class CompanionApi {
     /**
      * 葡萄黑板报
      */
-    public static final String URL_COMPANY_ARTICLE = BASE_URL + "/company/article";
+    private static final String URL_COMPANY_ARTICLE = BASE_URL + "/company/article";
 
     /**
      * 葡萄黑板报
@@ -103,7 +103,7 @@ public class CompanionApi {
     /**
      * 文章评论
      */
-    public static final String URL_COMPANY_ARTICLE_COMMENTS = BASE_URL + "/company/article/comments";
+    private static final String URL_COMPANY_ARTICLE_COMMENTS = BASE_URL + "/company/article/comments";
 
     /**
      * 文章评论
@@ -121,7 +121,7 @@ public class CompanionApi {
     /**
      * 发布评论
      */
-    public static final String URL_COMPANY_ARTICLE_ADDCOMMENT = BASE_URL + "/company/article/addcomment";
+    private static final String URL_COMPANY_ARTICLE_ADDCOMMENT = BASE_URL + "/company/article/addcomment";
 
     /**
      * 发布评论
@@ -141,7 +141,7 @@ public class CompanionApi {
     /**
      * 点赞
      */
-    public static final String URL_COMPANY_ARTICLE_LIKE = BASE_URL + "/company/article/like";
+    private static final String URL_COMPANY_ARTICLE_LIKE = BASE_URL + "/company/article/like";
 
     /**
      * 点赞
@@ -161,7 +161,7 @@ public class CompanionApi {
     /**
      * 话题/创意收集/运营任务详情
      */
-    public static final String URL_COMPANY_ACTIVE = BASE_URL + "/company/active";
+    private static final String URL_COMPANY_ACTIVE = BASE_URL + "/company/active";
 
     /**
      * 话题/创意收集/运营任务详情
@@ -177,7 +177,7 @@ public class CompanionApi {
     /**
      * 参与话题/创意收集/运营任务
      */
-    public static final String URL_COMPANY_ACTIVE_ATTEND = BASE_URL + "/company/active/attend";
+    private static final String URL_COMPANY_ACTIVE_ATTEND = BASE_URL + "/company/active/attend";
 
     /**
      * 参与话题/创意收集/运营任务
