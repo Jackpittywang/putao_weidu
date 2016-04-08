@@ -25,6 +25,7 @@ public class AccountApi {
     public static final String CLIENT_TYPE = "2";  //设备类型
 
     public static final String BASE_URL = GlobalApplication.isDebug ? "https://account-api-dev.putao.com/" : "https://account-api.putao.com/";
+    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
     public static String APP_ID;//app_id
     public static String VERSION;//版本号
     public static String SECRETKEY;
@@ -152,40 +153,6 @@ public class AccountApi {
                 .build(RequestMethod.POST, URL_FORGET);
     }
 
-//    /**
-//     * 登录
-//     */
-//    public static final String URL_LOGIN = BASE_URL + AccountConstants.Url.URL_SAFELOGIN;
-//
-//    /**
-//     * 登录
-//     *
-//     * @param mobile   账号
-//     * @param password 密码
-//     */
-//    public static Request login(String mobile, String password) {
-//        Map<String, String> params = new HashMap<>();
-//        params.put(AccountConstants.Parameter.PARAM_MOBILE, mobile);
-//        params.put(AccountConstants.Parameter.PARAM_PASSWD, password);
-//        params.put(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE);
-//        params.put(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION);
-//        params.put(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID);
-//        params.put(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()));
-//        params.put(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID);
-//        String sign = generateSign(params, SECRETKEY);
-//        return FormEncodingRequestBuilder.newInstance()
-//                .addParam(AccountConstants.Parameter.PARAM_MOBILE, mobile)
-//                .addParam(AccountConstants.Parameter.PARAM_PASSWD, password)
-//                .addParam(AccountConstants.Parameter.PARAM_CLIENT_TYPE, AccountApi.CLIENT_TYPE)
-//                .addParam(AccountConstants.Parameter.PARAM_VERSION, AccountApi.VERSION)
-//                .addParam(AccountConstants.Parameter.PARAM_PLATFORM_ID, AccountApi.PLATFORM_ID)
-//                .addParam(AccountConstants.Parameter.PARAM_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
-//                .addParam(AccountConstants.Parameter.PARAM_APPID, AccountApi.APP_ID)
-//                .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
-//                .build(RequestMethod.POST, URL_LOGIN);
-//    }
-
-
     /**
      * 图形验证码的登录
      */
@@ -220,6 +187,20 @@ public class AccountApi {
                 .addParam(AccountConstants.Parameter.PARAM_GRAPH_CODE, verify)
                 .addParam(AccountConstants.Parameter.PARAM_SIGN, sign)
                 .build(RequestMethod.POST, URL_SAFELOGIN);
+    }
+
+    /**
+     * 登陆后验证
+     */
+    public static final String URL_LOGIN_AFTER = COMPANION_URL + AccountConstants.Url.URL_LOGIN;
+
+    /**
+     * 登录后的验证
+     */
+    public static Request login() {
+        return PTWDRequestHelper.start()
+                .build(RequestMethod.POST, URL_LOGIN_AFTER);
+
     }
 
     /**

@@ -145,7 +145,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
-//                        checkLoadMoreComplete(result.size(), );
+                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
@@ -153,8 +153,8 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         );
     }
 
-    private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage) {
+    private void checkLoadMoreComplete(ArrayList<Collection> list) {
+        if (null == list) {
             rv_collection.noMoreLoading();
             hasMoreData = false;
         } else {
@@ -220,7 +220,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             adapter.addAll(result);
                         }
                         rv_collection.loadMoreComplete();
-//                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });

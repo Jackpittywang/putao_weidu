@@ -113,18 +113,18 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                 new AccountCallback(loading) {
                                     @Override
                                     public void onSuccess(JSONObject result) {
+                                        //登录后的连接传送
                                         AccountHelper.setCurrentUid(result.getString("uid"));
                                         AccountHelper.setCurrentToken(result.getString("token"));
                                         new JPushHeaper().setAlias(mContext, result.getString("uid"));
                                         mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
                                         PutaoCreatedFragment.isPrepared = true;
                                         PutaoExploreFragment.isPrepared = true;
-                                        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-                                        startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
                                         }
-                                        finish();
+                                        //验证后的连接发送
+                                        checkLogin();
                                     }
 
                                     @Override
@@ -135,9 +135,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                             rl_graph_verify.setVisibility(View.VISIBLE);
                                             AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
                                             mDiskFileCacheHelper.put(NEED_CODE + mobile, NEED_CODE);
+                                            et_graph_verify.setText("");
                                         }
-                                        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
-                                        et_graph_verify.setText("");
                                     }
 
                                     @Override
@@ -162,14 +161,14 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 
     /**
      * 验证登录
-     *//*
+     */
     private void checkLogin() {
         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-        networkRequest(UserApi.getUserInfo(),
+        networkRequest(AccountApi.login(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
-                        AccountHelper.setUserInfo(result);
+//                        AccountHelper.setUserInfo(result);
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         loading.dismiss();
                         finish();
@@ -187,7 +186,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         btn_login.setClickable(true);
                     }
                 });
-    }*/
+    }
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -222,5 +222,9 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         return super.dispatchKeyEvent(event);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mErrorCount = 0;
+    }
 }

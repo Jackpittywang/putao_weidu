@@ -134,7 +134,7 @@ public class UserApi {
      * 完善用户信息（查询）
      */
     public static Request getUserInfo() {
-        return PTWDRequestHelper.explore()
+        return PTWDRequestHelper.find()
                 .build(RequestMethod.POST, URL_USER_INFO);
     }
 

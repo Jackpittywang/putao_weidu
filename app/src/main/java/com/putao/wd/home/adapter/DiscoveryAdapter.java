@@ -45,8 +45,8 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
     public void onBindItem(final DiscoveryViewHolder holder, DisCovery disCoveries, int position) {
         holder.tv_title.setText(disCoveries.getTitle());
         holder.iv_discovery_player.setImageURL(disCoveries.getVideo_img());
-//        holder.tv_style.setText(disCoveries.getTag());
-//        holder.tv_time.setText(disCoveries.getTime());
+        holder.tv_style.setText(disCoveries.getTag());
+        holder.tv_time.setText(disCoveries.getTime());
     }
 
     /**
