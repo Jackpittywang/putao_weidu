@@ -16,7 +16,7 @@ public class ArticleDetailsActivity extends PTWDActivity{
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_blackboard_article;
+        return R.layout.activity_campaign_article;
     }
 
     @Override

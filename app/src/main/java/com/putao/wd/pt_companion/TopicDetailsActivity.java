@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
-import com.sunnybear.library.controller.BasicFragmentActivity;
 
 /**
  * Created by Administrator on 2016/4/6.
@@ -15,7 +14,7 @@ public class TopicDetailsActivity extends PTWDActivity
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_blackboard_topic;
+        return R.layout.activity_campaign_topic;
     }
 
     @Override

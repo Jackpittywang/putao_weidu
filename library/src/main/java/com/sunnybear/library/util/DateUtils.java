@@ -1,5 +1,7 @@
 package com.sunnybear.library.util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -16,6 +18,112 @@ public final class DateUtils {
     private static final String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
     private static final SimpleDateFormat mDataFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat mTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+
+    //    private long mToday;
+//
+//    {
+//        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+//        Date date = null;
+//        try {
+//            date = format.parse(format.format(new Date()));
+//            mToday = date.getTime();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private static final int ONEDAY = 24 * 60 * 60 * 1000;
+
+    /**
+     * 通过先将 当前时间 格式化成 年月日形式 ，然后又将所得到的字符串 解析成 Date类型 即 当天0点
+     *
+     * @return 当天 0 点 时的毫秒值
+     * @throws ParseException
+     */
+    public static long getDateToTime(Date date) throws ParseException {
+        return mDataFormat.parse(mDataFormat.format(date)).getTime();
+    }
+
+    /**
+     * 通过毫秒值  获取 当天 0 点的毫秒值
+     *
+     * @param millis
+     * @return 当天 0 点时的毫秒值
+     * @throws ParseException
+     */
+    public static long getMillisToTime(long millis) throws ParseException {
+        return getDateToTime(new Date(millis));
+    }
+
+    /**
+     * 通过 秒值 获取当天 0 点的毫秒值
+     *
+     * @param seconds
+     * @return 当天 0 点时的毫秒值
+     * @throws ParseException
+     */
+    public static long getSecondsToTime(int seconds) throws ParseException {
+        return getMillisToTime(seconds * 1000L);
+    }
+
+    /**
+     * 根据毫秒值 与 传入的日期  显示与之相近的日期格式的显示
+     *
+     * @param millis
+     * @param date
+     * @return 具体 (日期自己传入)对应日期格式显示的字符串
+     * @throws ParseException
+     */
+    public static String getMillisToDate(long millis, Date date) throws ParseException {
+
+        Log.d("tag", mDataFormat.format(new Date(millis)));
+        if (millis > getDateToTime(date)) {
+            return millisecondToDate(millis, "H:dd");
+        } else if ((millis + 1 * ONEDAY) >= getDateToTime(date)) {
+            return "昨天" + millisecondToDate(millis, "H:dd");
+        } else if ((millis + 3 * ONEDAY) >= getDateToTime(date)) {
+            return millisecondToDate(millis, "E H:dd");
+        } else {
+            return millisecondToDate(millis, "yyyy年M月d日 H:dd");
+        }
+    }
+
+    /**
+     * 根据  秒值 与 传入的日期  显示与之相近的日期格式的显示
+     *
+     * @param seconds
+     * @param date
+     * @return 具体 (日期自己传入) 对应日期格式显示的字符串
+     * @throws ParseException
+     */
+    public static String getSecondsToDate(int seconds, Date date) throws ParseException {
+        return getMillisToDate(seconds * 1000L, date);
+    }
+
+    /**
+     * 根据毫秒值  显示与之   当前日期   相近的日期格式的显示
+     *
+     * @param millis
+     * @return 具体（当前日期） 对应日期格式显示的字符串
+     * @throws ParseException
+     */
+    public static String getMillisToDate(long millis) throws ParseException {
+        Long time = System.currentTimeMillis();
+        return getMillisToDate(millis, new Date(time));
+    }
+
+    /**
+     * 根据秒值  显示与之   当前日期   相近的日期格式的显示
+     *
+     * @param seconds
+     * @return 具体（当前日期） 对应日期格式显示的字符串
+     * @throws ParseException
+     */
+    public static String getSecondsToDate(int seconds) throws ParseException {
+        return getMillisToDate(seconds * 1000L);
+    }
 
     /**
      * 计算两个日期相差的天数，是否取绝对值

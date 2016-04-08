@@ -371,7 +371,7 @@
             android:screenOrientation="portrait" />
         <!--葡萄活动-->
         <activity
-            android:name=".pt_companion.BlackboardActivity"
+            android:name=".pt_companion.CampaignActivity"
             android:screenOrientation="portrait" />
         <!-- 文章详情页-->
         <activity
