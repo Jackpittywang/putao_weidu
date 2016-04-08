@@ -48,12 +48,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/img_me_activity_empty" />
+            android:src="@drawable/img_page_empty" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="还没有参与" />
+            android:text="还未参与过活动，赶紧去参与哦！" />
     </LinearLayout>
 </RelativeLayout>

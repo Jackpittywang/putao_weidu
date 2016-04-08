@@ -345,7 +345,8 @@ public class StartApi {
      * 回复列表
      */
 //    public static final String URL_REPLY_LIST = BASE_URL + "user/comment/reply";
-    public static final String URL_REPLY_LIST = BASE_WEIDU_URL + "message/comments";
+//    public static final String URL_REPLY_LIST = BASE_WEIDU_URL + "message/comments";
+    public static final String URL_REPLY_LIST = BASE_WEIDU_URL + "user/comments";
 
     /**
      * 回复列表
@@ -353,7 +354,7 @@ public class StartApi {
      * @param page 分页
      */
     public static Request getReplyList(String page) {
-        return PTWDRequestHelper.start()
+        return PTWDRequestHelper.find()
                 .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.POST, URL_REPLY_LIST);
     }

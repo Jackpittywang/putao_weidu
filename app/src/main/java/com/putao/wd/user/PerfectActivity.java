@@ -130,7 +130,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
             hash = mObject.getString("hash");
         }
         loading.show();
-        networkRequest(UserApi.userAdd(ext, filename, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
+        networkRequest(UserApi.userAdd(ext, hash, et_nickname.getText().toString(), et_intro.getText().toString()),
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
@@ -290,7 +290,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
                 case ALBUM_REQCODE://相册选择
                     ToastUtils.showToastShort(this, "系统图库返回");
                     Uri selectedImage = data.getData();
-                    String picturePath=  ImageUtils.getImageAbsolutePath(PerfectActivity.this,selectedImage);
+                    String picturePath = ImageUtils.getImageAbsolutePath(PerfectActivity.this, selectedImage);
                     Logger.d(picturePath);
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.resize(320, 320).setDefaultImage(bitmap);

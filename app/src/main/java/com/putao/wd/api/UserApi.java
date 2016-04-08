@@ -63,10 +63,10 @@ public class UserApi {
     public static final String URL_USER_ADD = BASE_URL + "user/add";
     public static final String URL_USER_EDIT = BASE_URL + "user/edit";
 
-    public static Request userAdd(String ext, String filename, String filehash, String nick_name, String user_info) {
-        return PTWDRequestHelper.explore()
+    public static Request userAdd(String ext, String filehash, String nick_name, String user_info) {
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_EXT, ext)
-                .addParam(REQUEST_FILENAME, filename)
+//                .addParam(REQUEST_FILENAME, filename)
                 .addParam(REQUEST_FILEHASH, filehash)
                 .addParam(REQUEST_NICK_NAME, nick_name)
                 .addParam(REQUEST_PROFILE, user_info)

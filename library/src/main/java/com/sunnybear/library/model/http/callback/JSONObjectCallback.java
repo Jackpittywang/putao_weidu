@@ -13,6 +13,7 @@ import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.R;
 import com.sunnybear.library.util.JsonUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.NetworkLogUtil;
 import com.sunnybear.library.util.ResourcesUtils;
 
 import java.io.IOException;
@@ -119,6 +120,8 @@ public abstract class JSONObjectCallback extends RequestCallback {
         String json = response.body().string();
         int statusCode = response.code();
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
+
+        NetworkLogUtil.addLog(response,json);
         if (response.isSuccessful()) {
            /* if (isNetwork)
                 Logger.d(TAG, "网络请求url:" + url + "\n" + "网络请求成功,请求结果=" + JsonUtils.jsonFormatter(json));

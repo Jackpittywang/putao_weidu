@@ -1,6 +1,7 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 回复详情
@@ -14,6 +15,22 @@ public class ReplyDetail implements Serializable {
     private String user_id;//用户id
     private String parent_content;//被评论内容
     private String parent_comment_id;//被评论用户id
+//    private int comment_id;//评论id
+//    private int uid;//用户id
+//    private String nick_name;//用户昵称
+//    private String head_img;//用户头像
+//    private String content;//回复内容
+//    private String release_time;//回复时间
+//    private List<Parent> parent_content;
+
+
+//    comment_id	Int	是	未确定是否为空	评论id
+//    uid	Int	是	未确定是否为空	用户id
+//    nick_name	String	 是	 未确定是否为空	用户昵称
+//    head_img	String	 是	 未确定是否为空	用户头像
+//    content	String	 是	 未确定是否为空	回复内容
+//    release_time	String	 是	 未确定是否为空	回复时间
+//    parent_content	List		参照7.3.4-3	被回复的内容
 
     public String getHead_img() {
         return head_img;

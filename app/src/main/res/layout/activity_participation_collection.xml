@@ -8,20 +8,21 @@
     <LinearLayout
         android:id="@+id/back"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:tag="back">
+        android:layout_height="100dp"
+        android:tag="back"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_delete"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="#FF0000"
+            android:background="@color/text_color_ED5564"
             android:gravity="center"
             android:text="删除"
-            android:textColor="#38F709" />
+            android:textColor="#ffffff" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +37,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:clipChildren="false">
 
             <TextView
@@ -49,7 +49,7 @@
                 android:singleLine="true"
                 android:text="文章标题"
                 android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_18sp" />
+                android:textSize="@dimen/text_size_16sp" />
 
             <TextView
                 android:id="@+id/tv_content"
@@ -62,7 +62,7 @@
                 android:maxLines="2"
                 android:paddingRight="10dp"
                 android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
-                android:textColor="@color/color_C2C2C2"
+                android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_14sp" />
 
             <com.sunnybear.library.view.image.ImageDraweeView
