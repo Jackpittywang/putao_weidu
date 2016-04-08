@@ -46,7 +46,7 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_intro.setText(companion.getGame_subtitle());
             holder.tv_time.setText(DateUtils.timeCalculate(companion.getTime() * 1000L));
         }
-        holder.tv_number.setText(new Random().nextInt(10) + 1);
+        holder.tv_number.setText(new Random().nextInt(10) + 1 + "");
     }
 
     static class CompanionHolder extends BasicViewHolder {
