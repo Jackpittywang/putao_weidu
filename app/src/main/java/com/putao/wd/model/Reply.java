@@ -47,4 +47,21 @@ public class Reply extends Page {
                 ", current_page=" + current_page +
                 '}';
     }
+//
+//    private List<ReplyDetail> commit_list;
+//
+//    public List<ReplyDetail> getCommit_list() {
+//        return commit_list;
+//    }
+//
+//    public void setCommit_list(List<ReplyDetail> commit_list) {
+//        this.commit_list = commit_list;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "Reply{" +
+//                "commit_list=" + commit_list +
+//                '}';
+//    }
 }

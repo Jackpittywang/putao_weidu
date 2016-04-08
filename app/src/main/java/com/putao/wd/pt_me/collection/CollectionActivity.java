@@ -8,8 +8,10 @@ import android.widget.LinearLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
+import com.putao.wd.api.CollectionApi;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Collection;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -19,6 +21,7 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -27,7 +30,7 @@ import butterknife.Bind;
  * 我的收藏
  * Created by Administrator on 2016/4/5.
  */
-public class CollectionActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Create>, View.OnClickListener {
+public class CollectionActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Collection>, View.OnClickListener {
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_collection)
@@ -40,6 +43,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     private boolean hasMoreData;
     private AlertDialog mDeleteDialog;
     private boolean isCollection = true;
+    private Collection mCollection;
 
     @Override
     protected int getLayoutId() {
@@ -57,29 +61,27 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
 
     private void initData() {
         mPage = 1;
-        networkRequest(CreateApi.getCreateMyfollows(mPage),
-                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+        networkRequest(CollectionApi.getCollection(mPage),
+                new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
-                    public void onSuccess(String url, Creates result) {
-                        List<Create> details = result.getData();
-                        if (details != null && details.size() > 0) {
+                    public void onSuccess(String url, ArrayList<Collection> result) {
+                        System.out.println("____________________" + result.size());
+                        if (result != null && result.size() > 0) {
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(details);
+                            adapter.replaceAll(result);
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
-
                         }
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+//                        checkLoadMoreComplete(result.size(), );
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
                 }
         );
     }
-
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
         if (currentPage == totalPage) {
@@ -105,14 +107,14 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                networkRequest(CreateApi.setCreateAction(mCreate.getId(), 3),
-                                        new SimpleFastJsonCallback<String>(String.class, loading) {
-                                            @Override
-                                            public void onSuccess(String url, String result) {
-                                                mCreate.setFollow_status(1);
-//                                                adapter.replaceAll();
-                                            }
-                                        });
+//                                networkRequest(CreateApi.setCreateAction(mCollection.getId(), 3),
+//                                        new SimpleFastJsonCallback<String>(String.class, loading) {
+//                                            @Override
+//                                            public void onSuccess(String url, String result) {
+//                                                mCreate.setFollow_status(1);
+////                                                adapter.replaceAll();
+//                                            }
+//                                        });
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -140,23 +142,23 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
 
     @Override
     public void onLoadMore() {
-        networkRequest(CreateApi.getCreateMyfollows(mPage),
-                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+        networkRequest(CollectionApi.getCollection(mPage),
+                new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
-                    public void onSuccess(String url, Creates result) {
-                        adapter.addAll(result.getData());
+                    public void onSuccess(String url, ArrayList<Collection> result) {
+                        if (result != null && result.size() > 0) {
+                            adapter.addAll(result);
+                        }
                         rv_collection.loadMoreComplete();
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
+//                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
                         loading.dismiss();
                     }
                 });
     }
 
-    private Create mCreate;
-
     @Override
-    public void onItemClick(Create create, int position) {
-        mCreate = create;
+    public void onItemClick(Collection collection, int position) {
+        mCollection = collection;
         Bundle bundle = new Bundle();
         bundle.putSerializable(CollectionDetailActivity.CREATE, (Serializable) adapter.getItems());
         bundle.putInt(CollectionDetailActivity.POSITION, position);

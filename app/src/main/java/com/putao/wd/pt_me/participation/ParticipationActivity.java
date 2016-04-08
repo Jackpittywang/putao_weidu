@@ -36,8 +36,8 @@ import butterknife.Bind;
  * 我的参与
  * Created by Administrator on 2016/4/5.
  */
-public class ParticipationActivity extends PTWDActivity implements OnItemClickListener, View.OnClickListener {
-    //    PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener,
+public class ParticipationActivity extends PTWDActivity implements PullToRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadMoreListener, OnItemClickListener<Participation>, View.OnClickListener {
+
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_participation)
@@ -46,6 +46,7 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
     LinearLayout ll_empty;
 
     private ParticipationAdapter adapter;
+    private boolean hasMoreData;
     private int mPage = 1;
 
     @Override
@@ -68,66 +69,37 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
                 new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Participation> result) {
-//                        participations.clear();
-//                        if (null != result) {
-//                            Participation participation = new Participation();
-//                            participation.setTitle(result.getTitle());
-//                            participation.setHead_img(result.getHead_img());
-//                            participation.setSubtitle(result.getSubtitle());
-//                            participations.add(participation);
-//                            adapter.replaceAll(participations);
-//                        }
-                        System.out.println("_______________________" + result.size());
-//                        List<Create> details = result.getData();
-//                        if (details != null && details.size() > 0) {
-//                            ll_empty.setVisibility(View.GONE);
-//                            ptl_refresh.setVisibility(View.VISIBLE);
-////                            adapter.replaceAll(details);
-//                        } else {
-//                            ptl_refresh.setVisibility(View.GONE);
-//                            ll_empty.setVisibility(View.VISIBLE);
-//                        }
-//                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-//                        ptl_refresh.refreshComplete();
+                        if (result != null && result.size() > 0) {
+                            ll_empty.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.VISIBLE);
+                            adapter.replaceAll(result);
+                        } else {
+                            ptl_refresh.setVisibility(View.GONE);
+                            ll_empty.setVisibility(View.VISIBLE);
+                        }
+//                        checkLoadMoreComplete(result.size(), mPage);
+                        ptl_refresh.refreshComplete();
                         loading.dismiss();
-
-                        /*adapter.replaceAll(result.getData());
-                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-                        loading.dismiss();*/
                     }
                 });
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
+        System.out.println("==================" + currentPage + " " + totalPage);
         if (currentPage == totalPage) {
             rv_participation.noMoreLoading();
-//            hasMoreData = false;
+            hasMoreData = false;
         } else {
             mPage++;
-//            hasMoreData = true;
+            hasMoreData = true;
         }
     }
 
-    //    private void addListenter() {
-//        rv_participation.setOnItemClickListener(this);
-//        ll_empty.setOnClickListener(this);
-//        ptl_refresh.setOnRefreshListener(this);
-//        rv_participation.setOnLoadMoreListener(this);
-//    }
-    public void addListenter() {
-        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                ptl_refresh.refreshComplete();
-            }
-        });
-        rv_participation.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                rv_participation.loadMoreComplete();
-            }
-        });
+    private void addListenter() {
         rv_participation.setOnItemClickListener(this);
+        ll_empty.setOnClickListener(this);
+        ptl_refresh.setOnRefreshListener(this);
+        rv_participation.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -136,36 +108,36 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
     }
 
 
-//    @Override
-//    public void onRefresh() {
-//        initData();
-//    }
-//
-//    @Override
-//    public void onLoadMore() {
-////        networkRequest(CreateApi.getCreateMyfollows(mPage),
-////                new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
-////                    @Override
-////                    public void onSuccess(String url, Creates result) {
-//////                        adapter.addAll(result.getData());
-////                        rv_participation.loadMoreComplete();
-////                        checkLoadMoreComplete(result.getCurrentPage(), result.getTotalPage());
-////                        loading.dismiss();
-////                    }
-////                });
-//    }
+    @Override
+    public void onRefresh() {
+        initData();
+    }
 
-//    @Override
-//    public void onItemClick(Create create, int position) {
-//        mCreate = create;
-//        Bundle bundle = new Bundle();
+    @Override
+    public void onLoadMore() {
+        networkRequest(ParticipationApi.getQueryPart(mPage),
+                new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<Participation> result) {
+                        adapter.addAll(result);
+                        rv_participation.loadMoreComplete();
+                        checkLoadMoreComplete(result.size(), mPage);
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    @Override
+    public void onItemClick(Participation participation, int position) {
+
+        Bundle bundle = new Bundle();
 //        bundle.putSerializable(CreateDetailActivity.CREATE, (Serializable) adapter.getItems());
 //        bundle.putInt(CreateDetailActivity.POSITION, position);
 //        bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
-//        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, hasMoreData);
-//        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
-//        startActivity(ConcernsDetailActivity.class, bundle);
-//    }
+//        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, participation);
+        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
+        startActivity(ConcernsDetailActivity.class, bundle);
+    }
 
 //    @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
 //    private void eventRefresh(String str) {
@@ -225,10 +197,5 @@ public class ParticipationActivity extends PTWDActivity implements OnItemClickLi
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
     }
 
-    @Override
-    public void onItemClick(Serializable serializable, int position) {
-        Bundle bundle = new Bundle();
-        startActivity(ParticipationDetailActivity.class, bundle);
-    }
 }
 

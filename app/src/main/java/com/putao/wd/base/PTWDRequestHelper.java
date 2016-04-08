@@ -17,7 +17,8 @@ public class PTWDRequestHelper {
     public static final String REQUEST_KEY_APP_ID = "appid";
 
     public static final String REQUEST_KEY_START_DEVICE_ID = "deviceid";
-//    public static final String REQUEST_KEY_START_DEVICE_ID = "device_id";
+    public static final String REQUEST_KEY_START_DEVICE_ID1 = "device_id";
+    public static final String REQUEST_KEY_START_DEVICE_NAME = "device_name";
 
 
     /**
@@ -42,7 +43,8 @@ public class PTWDRequestHelper {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
                 .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
-                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_ID1, AppUtils.getDeviceId(GlobalApplication.getInstance()))
+                .addParam(PTWDRequestHelper.REQUEST_KEY_START_DEVICE_NAME, AppUtils.getDeviceName())
                 .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
 
@@ -100,6 +102,7 @@ public class PTWDRequestHelper {
     public static FormEncodingRequestBuilder find() {
         return FormEncodingRequestBuilder.newInstance()
                 .addParam(PTWDRequestHelper.REQUEST_KEY_UID, AccountHelper.getCurrentUid())
-                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken());
+                .addParam(PTWDRequestHelper.REQUEST_KEY_TOKEN, AccountHelper.getCurrentToken())
+                .addParam(PTWDRequestHelper.REQUEST_KEY_APP_ID, GlobalApplication.app_id);
     }
 }
