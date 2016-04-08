@@ -13,6 +13,7 @@ import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 
@@ -45,6 +46,7 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_intro.setText(companion.getGame_subtitle());
             holder.tv_time.setText(DateUtils.timeCalculate(companion.getTime() * 1000L));
         }
+        holder.tv_number.setText(new Random().nextInt(10) + 1);
     }
 
     static class CompanionHolder extends BasicViewHolder {
@@ -56,6 +58,8 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         TextView tv_time;
         @Bind(R.id.tv_intro)
         TextView tv_intro;
+        @Bind(R.id.tv_number)
+        TextView tv_number;
 
         public CompanionHolder(View itemView) {
             super(itemView);

@@ -366,6 +366,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
      */
     @Deprecated
     protected void networkRequest(Request request, Callback callback, boolean isLoadingShow) {
+        NetworkLogUtil.addLog(request);
         if (request == null)
             throw new NullPointerException("request为空");
         if (isLoadingShow)
