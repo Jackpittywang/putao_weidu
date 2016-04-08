@@ -22,24 +22,6 @@ public class CompanionApi {
     private static final String REQUEST_PICS = "pics";//作品图片，多图
 
 
-    private static final String REQUEST_SLAVE_DEVICE_ID = "slave_device_id";//受控设备标识id
-
-
-    private static final String REQUEST_START_TIME = "start_time";//起始时间的时间戳
-    private static final String REQUEST_END_TIME = "end_time";//结束时间的时间戳
-    private static final String REQUEST_EDIT_LIST = "edit_list";//用户修改的数据列表
-    private static final String REQUEST_PLOT_ID = "plot_id";//剧情理念详情id
-    private static final String REQUEST_PAGE = "page";//页码
-    private static final String TYPE = "type";//创造类型
-    private static final String ID = "id";//创造id
-    private static final String ACTION = "action";//操作类型
-    private static final String CREATE_ID = "create_id";//创造id
-    private static final String COMMENT_SOURCE = "comment_source";//创造评论id
-    private static final String COMMENT_SOURCE_UID = "comment_source_uid";//创造评论uid
-    private static final String COMMENT_ID = "comment_id";//创造评论id
-    private static final String CONTENT = "content";//评论内容
-
-
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
 
 
