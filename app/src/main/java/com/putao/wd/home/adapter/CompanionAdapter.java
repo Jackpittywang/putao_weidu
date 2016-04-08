@@ -1,6 +1,7 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,14 +40,21 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
     @Override
     public void onBindItem(CompanionAdapter.CompanionHolder holder, Companion companion, int position) {
         if (0 == position) {
+            holder.iv_icon.setImageURL(Uri.parse("res:///" + R.drawable.app_icon).toString());
             holder.tv_title.setText("葡萄活动");
+            holder.tv_intro.setText("这里显示活动间接简介简介");
+            holder.tv_time.setText(DateUtils.timeCalculate(1462654154 * 1000L));
         } else {
             holder.iv_icon.setImageURL(companion.getGame_icon());
             holder.tv_title.setText(companion.getGame_title());
             holder.tv_intro.setText(companion.getGame_subtitle());
             holder.tv_time.setText(DateUtils.timeCalculate(companion.getTime() * 1000L));
         }
-        holder.tv_number.setText(new Random().nextInt(10) + 1 + "");
+        if (0 == companion.getNum())
+            holder.tv_number.setVisibility(View.GONE);
+        else {
+            holder.tv_number.setText(companion.getNum() + "");
+        }
     }
 
     static class CompanionHolder extends BasicViewHolder {

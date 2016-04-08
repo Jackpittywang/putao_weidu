@@ -98,7 +98,7 @@ public class IndexActivity extends BasicFragmentActivity {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
                 vp_content.setCurrentItem(position, false);
-                if (3 == position) ti_index_companion.show(-1);
+                if (3 == position) ti_index_companion.hide();
             }
         });
     }

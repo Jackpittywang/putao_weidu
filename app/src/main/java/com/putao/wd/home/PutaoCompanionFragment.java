@@ -10,6 +10,7 @@ import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.CampaignActivity;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -22,10 +23,12 @@ import butterknife.Bind;
  * 陪伴
  * Created by zhanghao on 2016/04/05.
  */
-public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickListener {
+public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickListener<Companion> {
     private CompanionAdapter mCompanionAdapter;
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
 
     @Override
     protected int getLayoutId() {
@@ -47,6 +50,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
                     @Override
                     public void onSuccess(String url, ArrayList<Companion> result) {
                         mCompanionAdapter.addAll(result);
+                        ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
 
@@ -59,6 +63,12 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
 
     private void addListener() {
         mCompanionAdapter.setOnItemClickListener(this);
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
     }
 
     @Override
@@ -67,9 +77,11 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     }
 
     @Override
-    public void onItemClick(Serializable serializable, int position) {
+    public void onItemClick(Companion companion, int position) {
         if (0 == position) startActivity(CampaignActivity.class);
         else startActivity(GameDetailListActivity.class);
+        companion.setNum(0);
+        mCompanionAdapter.notifyItemChanged(position);
     }
 
 

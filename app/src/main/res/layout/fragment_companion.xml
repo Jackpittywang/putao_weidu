@@ -15,18 +15,25 @@
         auto:nav_right_icon="@drawable/btn_20_more_p_nor"
         auto:nav_right_title_color="@drawable/text_select" />
 
-
-    <com.sunnybear.library.view.recycler.BasicRecyclerView
-        android:id="@+id/rv_content"
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        auto:divider_color="@color/divider_color"
-        auto:divider_height="0.5dp"
-        auto:divider_marginLeft="15dp"
-        auto:duration_animator="500"
-        auto:has_row_divider="true"
-        auto:is_inner="true" />
+        android:layout_height="match_parent"
+        auto:refresh_layout="@layout/sky_wheel_refresh_header"
+        auto:refresh_layout_height="120">
+
+        <com.sunnybear.library.view.recycler.BasicRecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            auto:divider_color="@color/divider_color"
+            auto:divider_height="0.5dp"
+            auto:divider_marginLeft="15dp"
+            auto:duration_animator="500"
+            auto:has_row_divider="true"
+            auto:is_inner="true" />
+    </com.sunnybear.library.view.PullToRefreshLayout>
 
     <View
         android:layout_width="match_parent"
