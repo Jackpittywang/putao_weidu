@@ -7,7 +7,7 @@ import com.sunnybear.library.model.http.request.RequestMethod;
 
 /**
  * 创造接口
- * Created by 章浩 on 2015/1/28.
+ * Created by zhanghao on 2015/1/28.
  */
 public class CreateApi {
     private static final String REQUEST_SLAVE_DEVICE_ID = "slave_device_id";//关联设备唯一id，无关注设备时不请求
