@@ -46,7 +46,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         adapter.setAnimations(new ScaleInAnimation(1.0F));
         rv_discovery.setAdapter(adapter);
         addListener();
-//        getDisCovery();
+        getDisCovery();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                refreshDisCovery();
+                refreshDisCovery();
             }
         });
         /**
@@ -79,12 +79,9 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                                 if (null != result) {
                                     adapter.replaceAll(result);
                                 }
-                                if (result.size() == currentPage) {
-                                    rv_discovery.noMoreLoading();
-                                } else {
-                                    currentPage++;
-                                    rv_discovery.loadMoreComplete();
-                                }
+                                rv_discovery.loadMoreComplete();
+                                checkLoadMoreComplete(result);
+                                ptl_refresh.refreshComplete();
                                 loading.dismiss();
                             }
                         });
@@ -92,6 +89,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         });
         rv_discovery.setOnItemClickListener(this);
     }
+
 
     /**
      * 刷新视频列表
@@ -107,12 +105,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                         if (null != result) {
                             adapter.replaceAll(result);
                         }
-                        if (result.size() == currentPage) {
-                            rv_discovery.noMoreLoading();
-                        } else {
-                            currentPage++;
-                            rv_discovery.loadMoreComplete();
-                        }
+                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
@@ -123,6 +116,14 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                         ptl_refresh.refreshComplete();
                     }
                 });
+    }
+
+    private void checkLoadMoreComplete(ArrayList<DisCovery> list) {
+        if (list == null) {
+            rv_discovery.noMoreLoading();
+        } else {
+            currentPage++;
+        }
     }
 
     /**
@@ -138,12 +139,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                         if (null != result) {
                             adapter.replaceAll(result);
                         }
-                        if (result.size() == currentPage) {
-                            rv_discovery.noMoreLoading();
-                        } else {
-                            currentPage++;
-                            rv_discovery.loadMoreComplete();
-                        }
+                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                     }
 

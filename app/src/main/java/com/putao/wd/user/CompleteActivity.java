@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
@@ -122,7 +123,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                 iv_header_icon.setImageURL(result.getHead_img());
                 tv_nick_name.setText(result.getNick_name());
                 tv_user_info.setText(result.getProfile().isEmpty() ? "这个用户很懒" : result.getProfile());
-                AccountHelper.setUserInfo(result);
+//                AccountHelper.setUserInfo(result);
                 loading.dismiss();
             }
 

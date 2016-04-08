@@ -77,21 +77,18 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
-                        System.out.println("=================part" + adapter.getItems());
-//                        checkLoadMoreComplete(result.size(), mPage);
+                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
                 });
     }
 
-    private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage) {
+    private void checkLoadMoreComplete(ArrayList<Participation> result) {
+        if (null == result) {
             rv_participation.noMoreLoading();
-            hasMoreData = false;
         } else {
             mPage++;
-            hasMoreData = true;
         }
     }
 
@@ -121,7 +118,7 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                     public void onSuccess(String url, ArrayList<Participation> result) {
                         adapter.addAll(result);
                         rv_participation.loadMoreComplete();
-                        checkLoadMoreComplete(result.size(), mPage);
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
