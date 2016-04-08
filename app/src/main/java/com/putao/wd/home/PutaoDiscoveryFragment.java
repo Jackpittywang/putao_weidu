@@ -46,7 +46,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         adapter.setAnimations(new ScaleInAnimation(1.0F));
         rv_discovery.setAdapter(adapter);
         addListener();
-        getDisCovery();
+//        getDisCovery();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshDisCovery();
+//                refreshDisCovery();
             }
         });
         /**

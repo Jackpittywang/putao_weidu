@@ -101,7 +101,7 @@ public class CompanionApi {
     public static Request getCompanyBlackboard(int pages) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_PAGES, pages + "")
-                .build(RequestMethod.POST, URL_COMPANY);
+                .build(RequestMethod.POST, URL_COMPANY_BLACKBOARD);
     }
 
     /**
