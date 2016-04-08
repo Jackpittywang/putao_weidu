@@ -18,6 +18,7 @@ import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.DownloadCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 
 import org.json.JSONObject;
 
@@ -63,8 +64,10 @@ public class SplashActivity extends BasicFragmentActivity {
                         Logger.d("表情包设置完成");
                         mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
                         GlobalApplication.setEmojis(result);
-//                            startActivity(GuidanceActivity.class);
-                        startActivity(IndexActivity.class);
+                        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
+                            startActivity(GuidanceActivity.class);
+                        else
+                            startActivity(IndexActivity.class);
                         checkNotify();
                         finish();
                     }

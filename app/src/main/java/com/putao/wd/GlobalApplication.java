@@ -20,7 +20,6 @@ import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
-import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -258,7 +257,6 @@ public class GlobalApplication extends BasicApplication {
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
     public static final String SECRET = "499478a81030bb177e578f86410cda8641a22799";
-
     /**
      * H5页面定义Scheme
      */

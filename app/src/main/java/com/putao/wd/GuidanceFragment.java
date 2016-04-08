@@ -15,11 +15,8 @@ public class GuidanceFragment extends BasicFragment {
     @Bind(R.id.iv_guide_icon)
     ImageView iv_guide_icon;
 
+    public static final String BUNDLE_ICON_RES_ID = "bundle_icon_res_id";
     private int iconResId;
-
-    public GuidanceFragment(int iconResId) {
-        this.iconResId = iconResId;
-    }
 
     @Override
     protected int getLayoutId() {
@@ -28,6 +25,7 @@ public class GuidanceFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        iconResId = args.getInt(BUNDLE_ICON_RES_ID);
         iv_guide_icon.setImageResource(iconResId);
     }
 

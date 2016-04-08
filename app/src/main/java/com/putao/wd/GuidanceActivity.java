@@ -48,10 +48,12 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initAnimation();
+        final Bundle bundle = new Bundle();
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return new GuidanceFragment(icons[position]);
+                bundle.putInt(GuidanceFragment.BUNDLE_ICON_RES_ID, icons[position]);
+                return Fragment.instantiate(mContext, GuidanceFragment.class.getName(),bundle);
             }
 
             @Override
@@ -93,7 +95,7 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
 
     @Override
     public void onPageSelected(int position) {
-        if (position == icons.length - 1) {
+        if (position == icons.length - 1 && btn_start.getVisibility() != View.VISIBLE) {
             btn_start.setVisibility(View.VISIBLE);
             btn_start.startAnimation(animation);
         }
