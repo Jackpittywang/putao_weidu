@@ -24,14 +24,6 @@ public class ReplyDetail implements Serializable {
 //    private List<Parent> parent_content;
 
 
-//    comment_id	Int	是	未确定是否为空	评论id
-//    uid	Int	是	未确定是否为空	用户id
-//    nick_name	String	 是	 未确定是否为空	用户昵称
-//    head_img	String	 是	 未确定是否为空	用户头像
-//    content	String	 是	 未确定是否为空	回复内容
-//    release_time	String	 是	 未确定是否为空	回复时间
-//    parent_content	List		参照7.3.4-3	被回复的内容
-
     public String getHead_img() {
         return head_img;
     }

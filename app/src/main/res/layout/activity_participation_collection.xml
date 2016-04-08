@@ -7,8 +7,9 @@
 
     <LinearLayout
         android:id="@+id/back"
-        android:layout_width="match_parent"
+        android:layout_width="60dp"
         android:layout_height="100dp"
+        android:layout_gravity="right"
         android:tag="back"
         android:visibility="gone">
 
@@ -17,7 +18,6 @@
             android:layout_width="60dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@color/text_color_ED5564"
             android:gravity="center"
@@ -61,6 +61,7 @@
                 android:lineSpacingExtra="2dp"
                 android:maxLines="2"
                 android:paddingRight="10dp"
+
                 android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
                 android:textColor="@color/text_color_gray"
                 android:textSize="@dimen/text_size_14sp" />

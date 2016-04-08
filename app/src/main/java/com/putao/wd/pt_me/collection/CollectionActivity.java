@@ -2,7 +2,11 @@ package com.putao.wd.pt_me.collection;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,6 +26,7 @@ import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -57,6 +62,72 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         rv_collection.setAdapter(adapter);
         initData();
         addListenter();
+        initItem();
+    }
+
+    public void initItem() {
+        //0则不执行拖动或者滑动
+        ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
+            /**
+             * @param recyclerView
+             * @param viewHolder 拖动的ViewHolder
+             * @param target 目标位置的ViewHolder
+             * @return
+             */
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
+                int toPosition = target.getAdapterPosition() - 100;//得到目标ViewHolder的position
+//                if (fromPosition < toPosition) {
+//                    //分别把中间所有的item的位置重新交换
+//                    for (int i = fromPosition; i < toPosition; i++) {
+//                        Collections.swap(datas, i, i + 1);
+//                    }
+//                } else {
+//                    for (int i = fromPosition; i > toPosition; i--) {
+//                        Collections.swap(datas, i, i - 1);
+//                    }
+//                }
+                adapter.notifyItemMoved(fromPosition, toPosition);
+                //返回true表示执行拖动
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+//                mCollection.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    //左右滑动时改变Item的透明度
+                    final float alpha = 1 - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
+                    viewHolder.itemView.setAlpha(alpha);
+                    viewHolder.itemView.setTranslationX(dX);
+                }
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                //当选中Item时候会调用该方法，重写此方法可以实现选中时候的一些动画逻辑
+                Log.v("zxy", "onSelectedChanged");
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                //当动画已经结束的时候调用该方法，重写此方法可以实现恢复Item的初始状态
+                Log.v("zxy", "clearView");
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mCallback);
+        itemTouchHelper.attachToRecyclerView(rv_collection);
+
     }
 
     private void initData() {
@@ -65,7 +136,6 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
-                        System.out.println("____________________" + result.size());
                         if (result != null && result.size() > 0) {
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
@@ -163,7 +233,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         bundle.putSerializable(CollectionDetailActivity.CREATE, (Serializable) adapter.getItems());
         bundle.putInt(CollectionDetailActivity.POSITION, position);
         bundle.putInt(CollectionDetailActivity.PAGE_COUNT, mPage);
-        bundle.putBoolean(CollectionDetailActivity.HAS_MORE_DATA, hasMoreData);
+//        bundle.putBoolean(CollectionDetailActivity.HAS_MORE_DATA, hasMoreData);
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
         startActivity(CollectionDetailActivity.class, bundle);
     }

@@ -6,8 +6,11 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.putao.wd.R;
+import com.putao.wd.api.CollectionApi;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.created.CreateBasicDetailFragment;
+import com.putao.wd.model.Collection;
+import com.putao.wd.model.Cool;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.Creates;
 import com.sunnybear.library.controller.BasicFragmentActivity;
@@ -25,20 +28,17 @@ import butterknife.OnClick;
  * Created by zhanghao on 2016/1/15.
  */
 public class CollectionDetailActivity extends BasicFragmentActivity {
-
-
     @Bind(R.id.vp_content)
     ViewPager vp_content;
 
-    private ArrayList<Create> mCreates;
+    private ArrayList<Collection> mCollections;
     private int mPosition;
     private int mPageCount;
     private boolean has_more_data;
 
     public static final String POSITION = "position";
-    public static final String SHOW_PROGRESS = "show_progress";
     public static final String PAGE_COUNT = "page_count";
-    public static final String CREATE = "create";
+    public static final String CREATE = "collection";
     public static final String HAS_MORE_DATA = "has_more_data";
 
     @Override
@@ -48,22 +48,22 @@ public class CollectionDetailActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        mCreates = (ArrayList<Create>) args.getSerializable(CREATE);
+        mCollections = (ArrayList<Collection>) args.getSerializable(CREATE);
         mPosition = args.getInt(POSITION);
         mPageCount = args.getInt(PAGE_COUNT);
         has_more_data = args.getBoolean(HAS_MORE_DATA);
-        LoadMoreFragmentPagerAdapter fragmentPagerAdapter = new LoadMoreFragmentPagerAdapter<Create>(getSupportFragmentManager(), mCreates) {
+        LoadMoreFragmentPagerAdapter fragmentPagerAdapter = new LoadMoreFragmentPagerAdapter<Collection>(getSupportFragmentManager(), mCollections) {
             @Override
             public void loadMoreData() {
                 if (!has_more_data) return;
-                networkRequest(CreateApi.getCreateMyfollows(mPageCount),
-                        new SimpleFastJsonCallback<Creates>(Creates.class, loading) {
+                networkRequest(CollectionApi.getCollection(mPageCount),
+                        new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                             @Override
-                            public void onSuccess(String url, Creates result) {
-                                if (result.getData().size() > 0)
-                                    addData(result.getData());
-                                if (result.getCurrentPage() == result.getTotalPage())
-                                    has_more_data = false;
+                            public void onSuccess(String url, ArrayList<Collection> result) {
+                                if (result.size() > 0)
+                                    addData(result);
+//                                if (result.getCurrentPage() == result.getTotalPage())
+//                                    has_more_data = false;
                                 else mPageCount++;
                                 loading.dismiss();
                             }
@@ -71,11 +71,12 @@ public class CollectionDetailActivity extends BasicFragmentActivity {
             }
 
             @Override
-            public Fragment getItem(List<Create> datas, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(POSITION, position);
-                bundle.putSerializable(CREATE, datas.get(position));
-                return Fragment.instantiate(getApplicationContext(), CreateBasicDetailFragment.class.getName(), bundle);
+            public Fragment getItem(List<Collection> datas, int position) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(POSITION, position);
+//                bundle.putSerializable(CREATE, datas.get(position));
+                return null;
+//                return Fragment.instantiate(getApplicationContext(), CreateBasicDetailFragment.class.getName(), bundle);
             }
         };
         vp_content.setAdapter(fragmentPagerAdapter);

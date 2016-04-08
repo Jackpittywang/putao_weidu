@@ -77,6 +77,7 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
+                        System.out.println("=================part" + adapter.getItems());
 //                        checkLoadMoreComplete(result.size(), mPage);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
@@ -85,7 +86,6 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
     }
 
     private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        System.out.println("==================" + currentPage + " " + totalPage);
         if (currentPage == totalPage) {
             rv_participation.noMoreLoading();
             hasMoreData = false;
@@ -129,14 +129,13 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
 
     @Override
     public void onItemClick(Participation participation, int position) {
-
         Bundle bundle = new Bundle();
-//        bundle.putSerializable(CreateDetailActivity.CREATE, (Serializable) adapter.getItems());
-//        bundle.putInt(CreateDetailActivity.POSITION, position);
-//        bundle.putInt(CreateDetailActivity.PAGE_COUNT, mPage);
+        bundle.putSerializable(ParticipationDetailActivity.CREATE, (Serializable) adapter.getItems());
+        bundle.putInt(ParticipationDetailActivity.POSITION, position);
+        bundle.putInt(ParticipationDetailActivity.PAGE_COUNT, mPage);
 //        bundle.putBoolean(CreateDetailActivity.HAS_MORE_DATA, participation);
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
-        startActivity(ConcernsDetailActivity.class, bundle);
+        startActivity(ParticipationDetailActivity.class, bundle);
     }
 
 //    @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
