@@ -123,13 +123,14 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
                                         }
-                                        //验证后的连接发送
+                                        //验证登陆后的连接发送
                                         checkLogin();
                                     }
 
                                     @Override
                                     public void onError(String error_msg) {
                                         ToastUtils.showToastShort(mContext, error_msg);
+                                        loading.dismiss();
                                         mErrorCount++;
                                         if (mErrorCount == 3) {
                                             rl_graph_verify.setVisibility(View.VISIBLE);
@@ -142,6 +143,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                     @Override
                                     public void onFinish(String url, boolean isSuccess, String msg) {
                                         super.onFinish(url, isSuccess, msg);
+                                        loading.dismiss();
                                         btn_login.setClickable(true);
                                     }
                                 });
@@ -165,13 +167,12 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     private void checkLogin() {
         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
         networkRequest(AccountApi.login(),
-                new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
+                new SimpleFastJsonCallback<UserInfo>(UserInfo.class, null) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
-//                        AccountHelper.setUserInfo(result);
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
-                        loading.dismiss();
                         finish();
+                        loading.dismiss();
                     }
 
                     @Override
