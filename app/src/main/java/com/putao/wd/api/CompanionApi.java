@@ -1,7 +1,5 @@
 package com.putao.wd.api;
 
-import android.text.TextUtils;
-
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;

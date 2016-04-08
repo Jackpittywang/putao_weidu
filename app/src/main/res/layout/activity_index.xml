@@ -36,16 +36,16 @@
             android:id="@+id/ti_index_create"
             style="@style/style_tab_bar"
             auto:active="true"
-            auto:activeDrawable="@drawable/tab_bar_create_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_create_nor" />
+            auto:activeDrawable="@drawable/tab_bar_c_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_c_nor" />
 
         <!--精选-->
         <com.sunnybear.library.view.select.TabItem
             android:id="@+id/ti_index_store"
             style="@style/style_tab_bar"
             auto:active="false"
-            auto:activeDrawable="@drawable/tab_bar_p_sel"
-            auto:inactiveDrawable="@drawable/tab_bar_p_nor" />
+            auto:activeDrawable="@drawable/tab_bar_store_sel"
+            auto:inactiveDrawable="@drawable/tab_bar_store_nor" />
 
         <!--我-->
         <com.sunnybear.library.view.select.TabItem

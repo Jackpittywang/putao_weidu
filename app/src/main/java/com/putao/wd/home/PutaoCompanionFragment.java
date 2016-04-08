@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 /**
- * 精选(首页)
+ * 陪伴
  * Created by zhanghao on 2016/04/05.
  */
 public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickListener {

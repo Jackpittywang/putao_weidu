@@ -1,0 +1,89 @@
+package com.putao.wd.db;
+
+import com.putao.wd.db.dao.CityDBDao;
+import com.putao.wd.db.dao.DaoMaster;
+import com.putao.wd.db.entity.CityDB;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.query.WhereCondition;
+
+/**
+ * 城市操作
+ * Created by guchenkai on 2015/12/6.
+ */
+public class CompanionDBManager extends DataBaseManager<CityDB, String> {
+    private static CompanionDBManager mInstance;
+
+    public static CompanionDBManager getInstance(DaoMaster.OpenHelper helper) {
+        if (mInstance == null)
+            mInstance = new CompanionDBManager(helper);
+        return mInstance;
+    }
+
+    public CompanionDBManager(DaoMaster.OpenHelper helper) {
+        super(helper);
+    }
+
+    @Override
+    public AbstractDao<CityDB, String> getAbstractDao() {
+        return daoSession.getCityDBDao();
+    }
+
+    /**
+     * 根据省份id获取城市名
+     *
+     * @param provinceId 省份id
+     * @return 城市名列表
+     */
+    public List<String> getCityNamesByProvinceId(String provinceId) {
+        List<String> cityNames = new ArrayList<>();
+        List<CityDB> cityDBs = getQueryBuilder().where(CityDBDao.Properties.Province_id.eq(provinceId)).list();
+        for (CityDB cityDB : cityDBs) {
+            cityNames.add(cityDB.getName());
+        }
+        return cityNames;
+    }
+
+    /**
+     * 根据省份名称获取城市名
+     *
+     * @param provinceName 省份名称
+     * @return 城市名列表
+     */
+    public List<String> getCityNamesByProvinceName(String provinceName) {
+        List<String> cityNames = new ArrayList<>();
+        List<CityDB> cityDBs = getQueryBuilder().where(
+                new WhereCondition.StringCondition("PROVINCE_ID=" + "(SELECT PROVINCE_ID FROM putao_wd_province WHERE NAME=\"" + provinceName + "\")"))
+                .list();
+        for (CityDB cityDB : cityDBs) {
+            cityNames.add(cityDB.getName());
+        }
+        return cityNames;
+    }
+
+    /**
+     * 根据城市名称获得城市id
+     *
+     * @param province_id 省区id
+     * @param cityName    城市名称
+     * @return 城市id
+     */
+    public String getCityId(String province_id, String cityName) {
+        CityDB cityDB = getQueryBuilder().where(CityDBDao.Properties.Province_id.eq(province_id), CityDBDao.Properties.Name.eq(cityName)).uniqueOrThrow();
+        return cityDB.getCity_id();
+    }
+
+    /**
+     * 根据城市名称获得城市id
+     *
+     * @param cityId 城市名称
+     * @return 城市id
+     */
+    public String getCityNameByCityId(String cityId) {
+        CityDB cityDB = getQueryBuilder().where(CityDBDao.Properties.City_id.eq(cityId)).uniqueOrThrow();
+        return cityDB.getName();
+    }
+}

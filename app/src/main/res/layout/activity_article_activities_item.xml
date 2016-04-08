@@ -60,17 +60,17 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="10dp"
         android:gravity="left"
         android:text="这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示这里显示的是用户参加这个活动输入的内容可以换行显示"
         android:textColor="@color/color_313131"
-        android:textSize="@dimen/text_size_18sp" />
+        android:textSize="@dimen/text_size_14sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="@color/divider_color" />
 
     <LinearLayout
