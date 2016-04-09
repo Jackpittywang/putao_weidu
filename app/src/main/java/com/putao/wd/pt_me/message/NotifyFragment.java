@@ -14,6 +14,7 @@ import com.putao.wd.model.NotifyDetail;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.List;
@@ -27,6 +28,9 @@ import butterknife.Bind;
 public class NotifyFragment extends BasicFragment {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;//通知列表
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
+
     @Bind(R.id.rl_no_message)
     RelativeLayout rl_no_message;
     @Bind(R.id.tv_message_empty)
@@ -51,7 +55,7 @@ public class NotifyFragment extends BasicFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_message;
+        return R.layout.fragment_message_notify;
     }
 
     @Override
@@ -75,19 +79,27 @@ public class NotifyFragment extends BasicFragment {
                 getNotifyMore();
             }
         });
+
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNotifyList();
+            }
+        });
     }
 
     /**
      * 获取用户列表
      */
     private void getNotifyList() {
+        currentPage = 1;
         loading.show();
         networkRequest(StartApi.getNotifyList(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<Notify>(Notify.class, loading) {
                     @Override
                     public void onSuccess(String url, Notify result) {
                         List<NotifyDetail> details = result.getData();
-                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
+                        if (details != null && details.size() > 0) {//&& rl_no_message.getVisibility() == View.VISIBLE
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                             adapter.replaceAll(details);
@@ -95,11 +107,12 @@ public class NotifyFragment extends BasicFragment {
                             rl_no_message.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
                         }
-                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                        if (details != null) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
                             currentPage++;
                             rv_content.loadMoreComplete();
                         } else rv_content.noMoreLoading();
                         loading.dismiss();
+                        ptl_refresh.refreshComplete();
                     }
                 });
     }
@@ -116,7 +129,7 @@ public class NotifyFragment extends BasicFragment {
                         if (details != null && details.size() > 0) {
                             adapter.addAll(details);
                         }
-                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                        if (details != null) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
                             currentPage++;
                             rv_content.loadMoreComplete();
                         } else rv_content.noMoreLoading();

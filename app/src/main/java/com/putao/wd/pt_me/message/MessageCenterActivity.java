@@ -65,7 +65,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         };
         vp_message.setAdapter(adapter);
 
-        //关闭预加载，默认一次只加载一个Fragment
+        //打开预加载 一次就加载所有的fragment
         vp_message.setOffscreenPageLimit(mFragments.size());
         //红点显示
         mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid());
