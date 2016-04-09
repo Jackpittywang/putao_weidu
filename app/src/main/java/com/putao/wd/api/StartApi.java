@@ -363,7 +363,7 @@ public class StartApi {
      * 赞列表
      */
 //    public static final String URL_PRAISE_LIST = BASE_URL + "user/liked";
-    public static final String URL_PRAISE_LIST = BASE_WEIDU_URL + "message/likes";
+    public static final String URL_PRAISE_LIST = BASE_WEIDU_URL + "user/likes";
 
     /**
      * 赞列表
@@ -379,7 +379,7 @@ public class StartApi {
     /**
      * 提醒列表
      */
-    public static final String URL_REMIND_LIST = BASE_WEIDU_URL + "message/remind";
+    public static final String URL_REMIND_LIST = BASE_WEIDU_URL + "user/answers";
 
     /**
      * 提醒列表

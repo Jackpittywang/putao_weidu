@@ -377,6 +377,9 @@
         <activity
             android:name=".pt_companion.ArticleDetailsActivity"
             android:screenOrientation="portrait" />
+        <!-- 葡萄公众号账号-->
+        <activity android:name=".pt_companion.OfficialAccountsActivity"
+            android:screenOrientation="portrait"/>
         <!-- 话题 \创意\运营详情页-->
         <activity
             android:name=".pt_companion.TopicDetailsActivity"

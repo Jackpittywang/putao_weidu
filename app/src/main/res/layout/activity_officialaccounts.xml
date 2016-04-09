@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_EBEBEB">
+
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        android:background="@color/white"
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="葡萄活动"
+        auto:nav_main_title_color="@color/text_color"
+        auto:nav_right_title_color="@drawable/text_select" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_icon"
+            style="@style/image_style"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:id="@+id/tv_official_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:text="葡萄活动"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="功能介绍"/>
+        <TextView
+            android:id="@+id/tv_recommend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:lineSpacingExtra="3dp"
+            android:text="可以陪孩子一起学数学让孩子对数字敏感可以陪孩子一起学可以陪孩子一起学数学让孩子对数字敏感数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_cancel_associate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#FFFFFF"
+        android:text="取消关联产品"
+        android:textColor="@color/text_color_red"/>
+
+</LinearLayout>

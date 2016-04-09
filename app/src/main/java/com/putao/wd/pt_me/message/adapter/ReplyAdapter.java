@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.model.Reply;
 import com.putao.wd.model.ReplyDetail;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
@@ -23,8 +24,37 @@ import butterknife.Bind;
  * 消息中心：“回复”适配器
  * Created by wango on 2015/12/2.
  */
-public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail, ReplyAdapter.ReplyViewHolder> {
-    public ReplyAdapter(Context context, List<ReplyDetail> messageReplyItems) {
+public class ReplyAdapter extends LoadMoreAdapter<Reply, ReplyAdapter.ReplyViewHolder> {
+//    public ReplyAdapter(Context context, List<ReplyDetail> messageReplyItems) {
+//        super(context, messageReplyItems);
+//    }
+//
+//    @Override
+//    public int getLayoutId(int viewType) {
+//        return R.layout.fragment_message_reply_item;
+//    }
+//
+//    @Override
+//    public ReplyViewHolder getViewHolder(View itemView, int viewType) {
+//        return new ReplyViewHolder(itemView);
+//    }
+//
+//    @Override
+//    public void onBindItem(ReplyViewHolder holder, ReplyDetail replyDetail, int position) {
+//        if (!StringUtils.isEmpty(replyDetail.getHead_img()))
+//            holder.iv_head_icon.setImageURL(replyDetail.getHead_img());
+//        else {
+//            holder.iv_head_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
+////            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
+//        }
+//        holder.tv_nickname.setText(replyDetail.getNick_name());
+//        holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getModified_time())));
+//        holder.tv_reply_content.setText(replyDetail.getReplay_content());
+//        holder.tv_replied_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content());
+//    }
+
+
+    public ReplyAdapter(Context context, List<Reply> messageReplyItems) {
         super(context, messageReplyItems);
     }
 
@@ -39,7 +69,7 @@ public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail, ReplyAdapter.Repl
     }
 
     @Override
-    public void onBindItem(ReplyViewHolder holder, ReplyDetail replyDetail, int position) {
+    public void onBindItem(ReplyViewHolder holder, Reply replyDetail, int position) {
         if (!StringUtils.isEmpty(replyDetail.getHead_img()))
             holder.iv_head_icon.setImageURL(replyDetail.getHead_img());
         else {
@@ -47,9 +77,16 @@ public class ReplyAdapter extends LoadMoreAdapter<ReplyDetail, ReplyAdapter.Repl
 //            holder.iv_comment_icon.setDefaultImage(R.drawable.img_head_default);
         }
         holder.tv_nickname.setText(replyDetail.getNick_name());
-        holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getModified_time())));
-        holder.tv_reply_content.setText(replyDetail.getReplay_content());
-        holder.tv_replied_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content());
+        holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getRelease_time())));
+        holder.tv_reply_content.setText(replyDetail.getParent_content().getContent());
+
+        if(replyDetail.getParent_content().getComment_id() == 1){
+            holder.tv_replied_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" +"作品回复" + replyDetail.getParent_content().getContent());
+        }else if(replyDetail.getParent_content().getOpus_id() == 3){
+            holder.tv_replied_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + "内容回复" +replyDetail.getParent_content().getContent());
+        }else{
+            holder.tv_replied_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content().getContent());
+        }
     }
 
     /**

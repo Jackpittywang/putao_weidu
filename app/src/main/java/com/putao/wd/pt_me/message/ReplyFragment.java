@@ -16,6 +16,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -34,8 +35,10 @@ public class ReplyFragment extends BasicFragment {
     RelativeLayout rl_no_message;
 
     private ReplyAdapter adapter;
-
     private int mPage;
+
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared = true;
 
     @Override
     protected int getLayoutId() {
@@ -43,15 +46,74 @@ public class ReplyFragment extends BasicFragment {
     }
 
     @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        isPrepared = false;
+        getNotifyList();
+    }
+
+    @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
-        Logger.d("MessageCenterActivity","ReplyFragment启动");
+        Logger.d("MessageCenterActivity", "ReplyFragment启动");
         tv_message_empty.setText("还没有回复");
         adapter = new ReplyAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        getNotifyList();
-
+        isPrepared = true;
         addListener();
     }
+
+//    /**
+//     * 添加监听器
+//     */
+//    private void addListener() {
+//        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                //getNotifyList();
+//                networkRequest(StartApi.getReplyList(String.valueOf(mPage)),
+//                        new SimpleFastJsonCallback<Reply>(Praise.class, loading) {
+//                            @Override
+//                            public void onSuccess(String url, Reply result) {
+//                                adapter.addAll(result.getReply());
+//                                rv_content.loadMoreComplete();
+//                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+//                                loading.dismiss();
+//                            }
+//                        });
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 获取赞
+//     */
+//    private void getNotifyList() {
+//        mPage=1;
+//        loading.show();
+//        networkRequest(StartApi.getReplyList(String.valueOf(mPage)),
+//                new SimpleFastJsonCallback<Reply>(Reply.class, loading) {
+//                    @Override
+//                    public void onSuccess(String url, Reply result) {
+//                        List<ReplyDetail> details = result.getReply();
+//                        if (details != null && details.size() > 0) {
+//                            rl_no_message.setVisibility(View.GONE);
+//                            rv_content.setVisibility(View.VISIBLE);
+//                            adapter.replaceAll(details);
+//                        } else {
+//                            rl_no_message.setVisibility(View.VISIBLE);
+//                            rv_content.setVisibility(View.GONE);
+//                        }
+//                       /* if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+//                            currentPage++;
+//                            rv_content.loadMoreComplete();
+//                        } else rv_content.noMoreLoading();*/
+//                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+//                        loading.dismiss();
+//                    }
+//                });
+//    }
 
     /**
      * 添加监听器
@@ -62,12 +124,12 @@ public class ReplyFragment extends BasicFragment {
             public void onLoadMore() {
                 //getNotifyList();
                 networkRequest(StartApi.getReplyList(String.valueOf(mPage)),
-                        new SimpleFastJsonCallback<Reply>(Praise.class, loading) {
+                        new SimpleFastJsonCallback<ArrayList<Reply>>(Reply.class, loading) {
                             @Override
-                            public void onSuccess(String url, Reply result) {
-                                adapter.addAll(result.getReply());
+                            public void onSuccess(String url, ArrayList<Reply> result) {
+                                adapter.addAll(result);
                                 rv_content.loadMoreComplete();
-                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                                checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
                         });
@@ -79,17 +141,16 @@ public class ReplyFragment extends BasicFragment {
      * 获取赞
      */
     private void getNotifyList() {
-        mPage=1;
+        mPage = 1;
         loading.show();
         networkRequest(StartApi.getReplyList(String.valueOf(mPage)),
-                new SimpleFastJsonCallback<Reply>(Reply.class, loading) {
+                new SimpleFastJsonCallback<ArrayList<Reply>>(Reply.class, loading) {
                     @Override
-                    public void onSuccess(String url, Reply result) {
-                        List<ReplyDetail> details = result.getReply();
-                        if (details != null && details.size() > 0) {
+                    public void onSuccess(String url, ArrayList<Reply> result) {
+                        if (result != null && result.size() > 0) {
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(details);
+                            adapter.replaceAll(result);
                         } else {
                             rl_no_message.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
@@ -98,14 +159,14 @@ public class ReplyFragment extends BasicFragment {
                             currentPage++;
                             rv_content.loadMoreComplete();
                         } else rv_content.noMoreLoading();*/
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
     }
 
-    private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage)
+    private void checkLoadMoreComplete(ArrayList<Reply> result) {
+        if (result == null)
             rv_content.noMoreLoading();
         else mPage++;
     }

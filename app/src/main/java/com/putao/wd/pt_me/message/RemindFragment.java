@@ -9,6 +9,7 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
+import com.putao.wd.model.Reply;
 import com.putao.wd.pt_me.message.adapter.RemindAdapter;
 import com.putao.wd.model.Remind;
 import com.putao.wd.model.RemindDetail;
@@ -19,6 +20,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,10 +37,25 @@ public class RemindFragment extends BasicFragment {
     @Bind(R.id.tv_message_empty)
     TextView tv_message_empty;
 
+    private int mPage;
+
     private RemindAdapter adapter;
     public static final String BUNDLE_REMIND_PRODUCTID = "bundle_remind_productid";
 
     private int currentPage = 1;
+
+    private boolean isPrepared;
+
+    @Override
+    protected void lazyLoad() {
+        if(!isPrepared || !isVisible){
+            return;
+        }
+
+        isPrepared = false;
+
+        getRemindList();
+    }
 
     @Override
     protected int getLayoutId() {
@@ -51,8 +68,9 @@ public class RemindFragment extends BasicFragment {
         tv_message_empty.setText("还没有提醒");
         adapter = new RemindAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
+
+        isPrepared = true;
         addListener();
-        getRemindList();
     }
 
     /**
@@ -72,24 +90,25 @@ public class RemindFragment extends BasicFragment {
      */
     private void getRemindList() {
         loading.show();
-        currentPage = 1;
+        mPage=1;
         networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
-                new SimpleFastJsonCallback<Remind>(Remind.class, loading) {
+                new SimpleFastJsonCallback<ArrayList<Remind>>(Remind.class, loading) {
                     @Override
-                    public void onSuccess(String url, Remind result) {
-                        List<RemindDetail> details = result.getList();
-                        if (details != null && details.size() > 0) {
+                    public void onSuccess(String url, ArrayList<Remind> result) {
+                        if (result != null && result.size() > 0) {
                             rv_content.setVisibility(View.VISIBLE);
                             rl_no_message.setVisibility(View.GONE);
-                            adapter.replaceAll(details);
+                            adapter.replaceAll(result);
                         } else {
                             rv_content.setVisibility(View.GONE);
                             rl_no_message.setVisibility(View.VISIBLE);
                         }
-                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
-                            currentPage++;
-                            rv_content.loadMoreComplete();
-                        } else rv_content.noMoreLoading();
+//                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+//                            currentPage++;
+//                            rv_content.loadMoreComplete();
+//                        } else rv_content.noMoreLoading();
+
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
@@ -100,21 +119,27 @@ public class RemindFragment extends BasicFragment {
      */
     private void getRemindMore() {
         networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
-                new SimpleFastJsonCallback<Remind>(Remind.class, loading) {
+                new SimpleFastJsonCallback<ArrayList<Remind>>(Remind.class, loading) {
                     @Override
-                    public void onSuccess(String url, Remind result) {
-                        List<RemindDetail> details = result.getList();
-                        if (details != null && details.size() > 0) {
-                            adapter.addAll(details);
+                    public void onSuccess(String url, ArrayList<Remind> result) {
+                        if (result != null && result.size() > 0) {
+                            adapter.addAll(result);
                         }
                         rv_content.loadMoreComplete();
-                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
-                            currentPage++;
-                            rv_content.loadMoreComplete();
-                        } else rv_content.noMoreLoading();
+//                        if (result != null) {
+//                            currentPage++;
+//                            rv_content.loadMoreComplete();
+//                        } else rv_content.noMoreLoading();
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
+    }
+
+    private void checkLoadMoreComplete(ArrayList<Remind> result) {
+        if (result == null)
+            rv_content.noMoreLoading();
+        else mPage++;
     }
 
     @Override
