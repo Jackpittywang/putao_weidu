@@ -16,6 +16,10 @@ public abstract class OnShareClickListener {
 
     public abstract void onSinaWeibo();
 
+    public void onCollection() {
+
+    }
+
     public void onCopyUrl() {
 
     }

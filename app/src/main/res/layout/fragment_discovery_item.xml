@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="#ebebeb">
 
-    <!--  android:src="@drawable/btn_60_play_selector"-->
+    <!-- android:src="@drawable/btn_60_play_selector"-->
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_discovery_player"
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="淘淘向右走"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,8 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="动画"
-                android:textColor="@color/color_C2C2C2"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp" />
 
             <View
                 android:layout_width="1dp"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="时间"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_12sp" />
         </LinearLayout>
     </RelativeLayout>
 

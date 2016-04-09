@@ -29,6 +29,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_second);
         TextView tv_qq_zone = (TextView) mRootView.findViewById(R.id.tv_qq_zone);
         ImageView iv_qq_zone = (ImageView) mRootView.findViewById(R.id.iv_qq_zone);
+        ImageView iv_collection = (ImageView) mRootView.findViewById(R.id.iv_collection);
         if (!isCopy) {
             //复制
             ll_second.setVisibility(View.GONE);
@@ -56,6 +57,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     @OnClick({
             R.id.ll_wechat,
             R.id.ll_wechat_friend_circle,
+            R.id.ll_collection,
             R.id.ll_qq_friend,
             R.id.ll_qq_zone,
             R.id.ll_sina_weibo,
@@ -71,6 +73,9 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     break;
                 case R.id.ll_wechat_friend_circle://微信朋友圈
                     mOnShareClickListener.onWechatFriend();
+                    break;
+                case R.id.ll_collection://收藏
+                    mOnShareClickListener.onCollection();
                     break;
                 case R.id.ll_qq_friend://QQ好友
                     mOnShareClickListener.onQQFriend();

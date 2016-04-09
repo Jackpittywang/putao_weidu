@@ -66,6 +66,21 @@
                         android:text="@string/wechat_friend_circle" />
                 </LinearLayout>
 
+                <!--收藏-->
+                <LinearLayout
+                    android:id="@+id/ll_collection"
+                    style="@style/style_share_button"
+                    android:paddingLeft="8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_collection"
+                        style="@style/style_share_icon"
+                        android:src="@drawable/icon_40_13" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/share_collection" />
+                </LinearLayout>
 
                 <!--QQ好友-->
                 <LinearLayout
@@ -82,12 +97,17 @@
                         style="@style/style_share_text"
                         android:text="@string/qq" />
                 </LinearLayout>
+            </LinearLayout>
 
+            <!--第二排-->
+            <LinearLayout
+                android:id="@+id/ll_second"
+                style="@style/style_share_row">
                 <!--QQ空间-->
                 <LinearLayout
                     android:id="@+id/ll_qq_zone"
                     style="@style/style_share_button"
-                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
                     android:visibility="visible">
 
                     <ImageView
@@ -100,14 +120,6 @@
                         style="@style/style_share_text"
                         android:text="@string/qq_zone" />
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <!--第二排-->
-            <LinearLayout
-                android:id="@+id/ll_second"
-                style="@style/style_share_row">
-
                 <!--新浪微博-->
                 <LinearLayout
                     android:id="@+id/ll_sina_weibo"
@@ -137,10 +149,6 @@
                         style="@style/style_share_text"
                         android:text="@string/copy_url" />
                 </LinearLayout>
-                <!--占位-->
-                <LinearLayout
-                    style="@style/style_share_button"
-                    android:visibility="invisible" />
                 <!--占位-->
                 <LinearLayout
                     style="@style/style_share_button"
