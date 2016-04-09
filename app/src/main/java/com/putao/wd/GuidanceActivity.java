@@ -52,6 +52,7 @@ public class GuidanceActivity extends BasicFragmentActivity implements View.OnCl
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+                Bundle bundle = new Bundle();
                 bundle.putInt(GuidanceFragment.BUNDLE_ICON_RES_ID, icons[position]);
                 return Fragment.instantiate(mContext, GuidanceFragment.class.getName(),bundle);
             }

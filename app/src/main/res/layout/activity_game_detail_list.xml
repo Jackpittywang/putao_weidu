@@ -10,39 +10,38 @@
         android:background="@color/white"
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="淘淘向右走"
+        auto:nav_main_title="葡萄活动"
         auto:nav_main_title_color="@color/text_color"
-        auto:nav_right_title="管理"
-        auto:nav_right_title_color="@drawable/text_select" />
+        auto:nav_right_icon="@drawable/btn_20_more_p_nor" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/white">
+    <!--    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tv_game_step"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="关卡地图"
-            android:textColor="@drawable/text_select" />
+            <TextView
+                android:id="@+id/tv_game_step"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="关卡地图"
+                android:textColor="@drawable/text_select" />
 
-        <TextView
-            android:id="@+id/tv_game_service"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="服务支持"
-            android:textColor="@drawable/text_select" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_game_service"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="服务支持"
+                android:textColor="@drawable/text_select" />
+        </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/divider_color" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />-->
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
@@ -55,8 +54,7 @@
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:divider_color="@color/divider_color"
-            auto:has_row_divider="true" />
+            android:background="@color/color_EBEBEB" />
 
     </com.sunnybear.library.view.PullToRefreshLayout>
 </LinearLayout>

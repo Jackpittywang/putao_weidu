@@ -125,9 +125,13 @@
         <activity
             android:name=".pt_me.address.AddressEditActivity"
             android:screenOrientation="portrait" />
-        <!-- 商品详情 -->
+        <!-- 商品详情精品 -->
         <activity
             android:name=".pt_store.product.ProductDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--商品详情非精品-->
+        <activity
+            android:name=".pt_store.product.ProductDetailV2Activity"
             android:screenOrientation="portrait" />
         <!-- 订单列表 -->
         <activity

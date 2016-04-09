@@ -30,6 +30,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
 
     protected FragmentActivity mActivity;
     protected LoadingHUD loading;
+    private final ViewGroup mDecorView;
 
     /**
      * 设置布局
@@ -56,8 +57,11 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         setFocusable(true);// 设置PopupWindow可获得焦点
         setTouchable(true); // 设置PopupWindow可触摸
         setOutsideTouchable(true);// 设置非PopupWindow区域可触摸
-        ColorDrawable dw = new ColorDrawable(0xb0000000);
-        setBackgroundDrawable(dw);//设置背景
+        mDecorView = (ViewGroup) mActivity.getWindow().getDecorView();
+        View view = new View(mContext);view.setBackgroundColor(0xb000000);
+        mDecorView.addView(view);
+       /* ColorDrawable dw = new ColorDrawable(0xb0000000);
+        setBackgroundDrawable(dw);//设置背景*/
         //点击PopupWindow之外的区域关闭PopupWindow
         mRootView.setOnTouchListener(this);
         //响应返回键
@@ -95,9 +99,11 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
         showAtLocation(target, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
+
     @Override
     public void dismiss() {
         EventBusHelper.unregister(this);
+        mDecorView.setBackgroundColor(0x00000000);
         super.dismiss();
     }
 }

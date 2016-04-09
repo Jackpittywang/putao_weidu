@@ -28,6 +28,7 @@ import butterknife.OnClick;
  * 游戏步骤选择页
  * Created by zhanghao on 2016/04/05.
  */
+@Deprecated
 public class GameStepListActivity extends BasicFragmentActivity implements View.OnClickListener {
     private GameStepListAdapter mGameStepListAdapter;
     @Bind(R.id.rv_content)
