@@ -1,15 +1,18 @@
 package com.putao.wd.album.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.album.model.ImageInfo;
+import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -45,9 +48,9 @@ public class ImageInfoAdapter extends BasicAdapter<ImageInfo, ImageInfoAdapter.P
         ViewGroup.LayoutParams itemParam = new ViewGroup.LayoutParams(DensityUtil.getDeviceWidth(context) / 4, DensityUtil.getDeviceWidth(context) / 4);
         holder.rlItem.setLayoutParams(itemParam);
         if (TextUtils.isEmpty(photoInfo.THUMB_DATA))
-            holder.ivPhoto.setImageURI(Uri.parse("file://putao/" + photoInfo._DATA));
+            ImageLoaderUtil.getInstance(context).displayImage("file://" + photoInfo._DATA, holder.ivPhoto);
         else
-            holder.ivPhoto.setImageURI(Uri.parse("file://putao/" + photoInfo.THUMB_DATA));
+            ImageLoaderUtil.getInstance(context).displayImage("file://" + photoInfo._DATA, holder.ivPhoto);
         holder.cbPhotoSelect.setChecked(photoInfo.isSelect);
     }
 
@@ -55,7 +58,7 @@ public class ImageInfoAdapter extends BasicAdapter<ImageInfo, ImageInfoAdapter.P
         @Bind(R.id.rlItem)
         RelativeLayout rlItem;
         @Bind(R.id.ivPhoto)
-        ImageDraweeView ivPhoto;
+        ImageView ivPhoto;
         @Bind(R.id.cbPhotoSelect)
         CheckBox cbPhotoSelect;
 

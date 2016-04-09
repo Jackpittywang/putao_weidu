@@ -137,17 +137,7 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvClose:
-                BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"拍照", "从手机相册中选择"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
-                    @Override
-                    public void doFunction() {
-
-                    }
-                }, new BottomPanelUtil.FunctionPanelCallBack() {
-                    @Override
-                    public void doFunction() {
-
-                    }
-                }}, null);
+                finish();
             case R.id.tvSelectFolder:
                 showFolderSelect();
                 break;
