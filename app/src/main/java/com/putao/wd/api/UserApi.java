@@ -105,7 +105,7 @@ public class UserApi {
      * @param user_info 用户简介
      */
     public static Request userInfo(String user_info) {
-        return PTWDRequestHelper.explore()
+        return PTWDRequestHelper.find()
                 .addParam(REQUEST_PROFILE, user_info)
                 .build(RequestMethod.POST, URL_USER_EDIT);
     }
