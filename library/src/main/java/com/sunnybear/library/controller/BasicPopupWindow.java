@@ -73,9 +73,9 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-       /* int height = mMainLayout.getHeight();
+        int height = mRootView.getHeight() - mMainLayout.getHeight();
         int y = (int) event.getY();
-        if (event.getAction() == MotionEvent.ACTION_UP && y > height)*/
+        if (event.getAction() == MotionEvent.ACTION_UP && y < height)
             dismiss();
         return true;
     }
