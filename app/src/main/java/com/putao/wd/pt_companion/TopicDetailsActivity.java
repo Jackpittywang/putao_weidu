@@ -8,8 +8,8 @@ import com.putao.wd.base.PTWDActivity;
 /**
  * Created by Administrator on 2016/4/6.
  */
-public class TopicDetailsActivity extends PTWDActivity
-{
+@Deprecated
+public class TopicDetailsActivity extends PTWDActivity {
 
 
     @Override

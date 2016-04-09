@@ -23,7 +23,7 @@ import butterknife.Bind;
  * 葡萄活动
  * Created by zhanghao on 2016/04/05.
  */
-
+@Deprecated
 public class CampaignActivity extends PTWDActivity implements OnItemClickListener<CompanionCampaign> {
 
     private static int mPage = 1;
@@ -176,7 +176,7 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
     @Override
     public void onRightAction() {
         super.onRightAction();
-        startActivity(OfficialAccountsActivity.class);
+//        startActivity(OfficialAccountsActivity.class);
     }
 }
 

@@ -47,6 +47,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
 
     public SharePopupWindow(Context context) {
         super(context);
+        setAnimationStyle(R.style.bottom_anim_style);
     }
 
     @Override

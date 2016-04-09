@@ -21,12 +21,13 @@ import butterknife.OnClick;
  * 游戏详情页
  * Created by zhanghao on 2016/04/05.
  */
-public class GameDetailListActivity extends PTWDActivity implements View.OnClickListener {
+public class GameDetailListActivity extends PTWDActivity {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     private GameDetailAdapter mGameDetailAdapter;
+    private int mPosition;
 
     @Override
     protected int getLayoutId() {
@@ -36,6 +37,7 @@ public class GameDetailListActivity extends PTWDActivity implements View.OnClick
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        mPosition = args.getInt("position");
         ArrayList<GameList> gameLists = new ArrayList();
         gameLists.add(new GameList());
         gameLists.add(new GameList());
@@ -65,7 +67,10 @@ public class GameDetailListActivity extends PTWDActivity implements View.OnClick
         rv_content.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Serializable serializable, int position) {
-                startActivity(GameDetailActivity.class);
+                if (0 == mPosition)
+                    startActivity(ArticleDetailForActivitiesActivity.class);
+                else
+                    startActivity(GameDetailActivity.class);
             }
         });
     }
@@ -75,7 +80,7 @@ public class GameDetailListActivity extends PTWDActivity implements View.OnClick
         return new String[0];
     }
 
-    @OnClick({R.id.tv_game_step, R.id.tv_game_service})
+  /*  @OnClick({R.id.tv_game_step, R.id.tv_game_service})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -86,7 +91,7 @@ public class GameDetailListActivity extends PTWDActivity implements View.OnClick
                 startActivity(GameServiceActivity.class);
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onLeftAction() {

@@ -7,7 +7,6 @@ import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
-import com.putao.wd.pt_companion.CampaignActivity;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -79,8 +78,9 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
 
     @Override
     public void onItemClick(Companion companion, int position) {
-        if (0 == position) startActivity(CampaignActivity.class);
-        else startActivity(GameDetailListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        startActivity(GameDetailListActivity.class, bundle);
         companion.setNum(0);
         mCompanionAdapter.notifyItemChanged(position);
     }

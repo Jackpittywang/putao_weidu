@@ -48,6 +48,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  * 陪伴日志
  * Created by zhanghao on 2016/1/14.
  */
+@Deprecated
 public class DiaryActivity extends PTWDActivity {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
