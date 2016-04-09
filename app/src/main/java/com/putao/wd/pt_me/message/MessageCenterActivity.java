@@ -64,6 +64,8 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
             }
         };
         vp_message.setAdapter(adapter);
+
+        //关闭预加载，默认一次只加载一个Fragment
         vp_message.setOffscreenPageLimit(mFragments.size());
         //红点显示
         mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid());
@@ -131,7 +133,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         }
         mRedDotMap.remove(messagecenter);
         mDiskFileCacheHelper.put(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDotMap);
-        vp_message.setCurrentItem(position);
+        vp_message.setCurrentItem(position, false);
     }
 
     @Subcriber(tag = RedDotReceiver.MESSAGECENTER)

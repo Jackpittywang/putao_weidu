@@ -120,11 +120,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                         mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
                                         PutaoCreatedFragment.isPrepared = true;
                                         PutaoExploreFragment.isPrepared = true;
-                                        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
-                                            mDiskFileCacheHelper.remove(NEED_CODE + mobile);
-                                        }
                                         //验证登陆后的连接发送
-                                        checkLogin();
+                                        checkLogin(mobile);
                                     }
 
                                     @Override
@@ -164,13 +161,16 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     /**
      * 验证登录
      */
-    private void checkLogin() {
-        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+    private void checkLogin(final String mobile) {
         networkRequest(AccountApi.login(),
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, null) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
+                        EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
+                            mDiskFileCacheHelper.remove(NEED_CODE + mobile);
+                        }
                         finish();
                         loading.dismiss();
                     }

@@ -2,6 +2,7 @@ package com.putao.wd.pt_me.message;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,20 @@ public class NotifyFragment extends BasicFragment {
 
     private NotifyAdapter adapter;
 
+    private boolean isPrepared;
+
     private int currentPage = 1;
+
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        isPrepared = false;
+
+        getNotifyList();
+    }
 
     @Override
     protected int getLayoutId() {
@@ -46,9 +60,9 @@ public class NotifyFragment extends BasicFragment {
         tv_message_empty.setText("还没有消息通知");
         adapter = new NotifyAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        addListener();
 
-        getNotifyList();
+        isPrepared = true;
+        addListener();
     }
 
     /**
@@ -89,6 +103,7 @@ public class NotifyFragment extends BasicFragment {
                     }
                 });
     }
+
     /**
      * 获取用户列表
      */

@@ -15,6 +15,7 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,6 +34,8 @@ public class PraiseFragment extends BasicFragment {
 
     private PraiseAdapter adapter;
 
+    //标志位，标志是否已经初始化完成
+    private boolean isPrepared;
 
     @Override
     protected int getLayoutId() {
@@ -40,13 +43,23 @@ public class PraiseFragment extends BasicFragment {
     }
 
     @Override
+    protected void lazyLoad() {
+        if(!isPrepared || !isVisible){
+            return;
+        }
+        isPrepared = false;
+        getNotifyList();
+    }
+
+    @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+
         Logger.d("MessageCenterActivity", "PraiseFragment启动");
         tv_message_empty.setText("还没有赞");
         adapter = new PraiseAdapter(mActivity, null);
         rv_content.setAdapter(adapter);
-        getNotifyList();
-
+//        getNotifyList();
+        isPrepared = true;
         addListener();
     }
 
@@ -59,12 +72,12 @@ public class PraiseFragment extends BasicFragment {
             public void onLoadMore() {
                 //getNotifyList();
                 networkRequest(StartApi.getPraiseList(String.valueOf(mPage)),
-                        new SimpleFastJsonCallback<Praise>(Praise.class, loading) {
+                        new SimpleFastJsonCallback<ArrayList<Praise>>(Praise.class, loading) {
                             @Override
-                            public void onSuccess(String url, Praise result) {
-                                adapter.addAll(result.getLike());
+                            public void onSuccess(String url, ArrayList<Praise> result) {
+                                adapter.addAll(result);
                                 rv_content.loadMoreComplete();
-                                checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                                checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
                         });
@@ -80,14 +93,13 @@ public class PraiseFragment extends BasicFragment {
         loading.show();
         //String.valueOf(currentPage)
         networkRequest(StartApi.getPraiseList(String.valueOf(mPage)),
-                new SimpleFastJsonCallback<Praise>(Praise.class, loading) {
+                new SimpleFastJsonCallback<ArrayList<Praise>>(Praise.class, loading) {
                     @Override
-                    public void onSuccess(String url, Praise result) {
-                        List<PraiseDetail> details = result.getLike();
-                        if (details != null && details.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
+                    public void onSuccess(String url, ArrayList<Praise> result) {
+                        if (result != null && result.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(details);
+                            adapter.replaceAll(result);
                         } else {
                             rl_no_message.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
@@ -96,15 +108,15 @@ public class PraiseFragment extends BasicFragment {
                             currentPage++;
                             rv_content.loadMoreComplete();
                         } else rv_content.noMoreLoading();*/
-                        checkLoadMoreComplete(result.getCurrent_page(), result.getTotal_page());
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
     }
 
 
-    private void checkLoadMoreComplete(int currentPage, int totalPage) {
-        if (currentPage == totalPage)
+    private void checkLoadMoreComplete(ArrayList<Praise> result) {
+        if (null == result)
             rv_content.noMoreLoading();
         else mPage++;
     }

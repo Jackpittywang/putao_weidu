@@ -16,16 +16,19 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.home.adapter.ExploreAdapter;
 import com.putao.wd.model.DiaryApp;
 import com.putao.wd.model.Diarys;
 import com.putao.wd.model.ExploreProduct;
 import com.putao.wd.model.ExploreProductPlot;
+import com.putao.wd.model.ProductStatus;
+import com.putao.wd.pt_store.product.ProductDetailActivity;
+import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
-import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -36,7 +39,6 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.image.BitmapLoader;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-
 
 import butterknife.Bind;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -350,9 +352,6 @@ public class DiaryActivity extends PTWDActivity {
 
     //通过postion跳转到详情页面
     public void OnCompanionDetail(Context context, int postion) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ProductDetailActivity.BUNDLE_IS_REMIND, true);
-        bundle.putSerializable(BUNDLE_PRODUCT_ID, mDiaryApp.getMall_product_id());
         switch (postion) {
             case 0://淘淘向右走
                 YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
@@ -376,9 +375,41 @@ public class DiaryActivity extends PTWDActivity {
                 YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
         }
-        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "diary");
-        startActivity(ProductDetailActivity.class, bundle);
+        IsProductDetail(mDiaryApp.getMall_product_id());
         finish();
+    }
+
+    /**
+     * 判断是否是精品页面
+     */
+    public void IsProductDetail(final String product_id) {
+        networkRequest(StoreApi.getProductStatus(product_id), new SimpleFastJsonCallback<ProductStatus>(ProductStatus.class, loading) {
+            @Override
+            public void onSuccess(String url, ProductStatus result) {
+                int status = result.getStatus();
+                int has_special = result.getHas_special();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(ProductDetailActivity.BUNDLE_IS_REMIND, true);
+                if (result.equals("") && result == null || status == 0) {
+                    bundle.putSerializable("status", status);
+                    startActivity(ProductDetailActivity.class, bundle);
+                } else {
+                    //判断是否是精品(1.精品，0.非精品)
+                    if (has_special == 1) {//精品页面：ProductDetailActivity
+                        YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail);
+                        bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
+                        bundle.putSerializable("status", status);
+                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "diary");
+                        startActivity(ProductDetailActivity.class, bundle);
+                    } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
+                        YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "diary");
+                        bundle.putSerializable(ProductDetailV2Activity.PRODUCT_ID, product_id);
+                        startActivity(ProductDetailV2Activity.class, bundle);
+                    }
+                }
+            }
+        });
     }
 
     @Override
