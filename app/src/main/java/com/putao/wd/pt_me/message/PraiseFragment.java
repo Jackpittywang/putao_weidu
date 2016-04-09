@@ -96,7 +96,7 @@ public class PraiseFragment extends BasicFragment {
                 new SimpleFastJsonCallback<ArrayList<Praise>>(Praise.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Praise> result) {
-                        if (result != null && result.size() > 0 && rl_no_message.getVisibility() == View.VISIBLE) {
+                        if (result != null && result.size() > 0 ) {//&& rl_no_message.getVisibility() == View.VISIBLE
                             rl_no_message.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);

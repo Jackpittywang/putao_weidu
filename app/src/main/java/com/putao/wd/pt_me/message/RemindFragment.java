@@ -118,7 +118,7 @@ public class RemindFragment extends BasicFragment {
      * 获取通知
      */
     private void getRemindMore() {
-        networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
+        networkRequest(StartApi.getRemindList(String.valueOf(mPage)),
                 new SimpleFastJsonCallback<ArrayList<Remind>>(Remind.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Remind> result) {
