@@ -67,7 +67,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     public static final String BUNDLE_IS_DETAIL = "bundle_is_detail";
     public static final String BUNDLE_IS_SERVICE = "bundle_is_service";
     public static final String BUNDLE_IS_REMIND = "bundle_is_remind";
-    public static final String BUNDLE_IS_STATUS = "bundle_is_status";
     public boolean is_detail = false;
     public boolean is_service = false;
     public boolean is_remind = false;
@@ -84,14 +83,17 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     ImageView shopping_share;
     @Bind(R.id.shopping_relative_car)
     RelativeLayout shopping_relative_car;
+    @Bind(R.id.rl_detail)//商品没下架
+            RelativeLayout rl_detail;
+    @Bind(R.id.rl_no_detail)//商品已下架
+            RelativeLayout rl_no_detail;
     @Bind(R.id.shopping_add_car)
     TextView shopping_add_car;//加入购物车
-    //    @Bind(R.id.shopping_car_buy)
-//    TextView shopping_car_buy;//立即购买
     @Bind(R.id.shopping_txt_number)
     TextView shopping_txt_number;//购物车数量
     @Bind(R.id.linear_shopping_number)
     LinearLayout linear_shopping_number;
+
 
     private SharePopupWindow mSharePopupWindow;//分享弹框
     private ShoppingCarPopupWindow mShoppingCarPopupWindow;//购物车弹窗
@@ -99,6 +101,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
 
     private String product_id;//产品id
     private String product_num;//是否是从陪伴传送过来的数据
+    private int status;//判断是否已下架
     private String title, subtitle, shareUrl, imageUrl;
 
     private ProductDetail detail = null;
@@ -115,6 +118,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
         is_remind = args.getBoolean(BUNDLE_IS_REMIND);
         product_num = args.getString(BUNDLE_PRODUCT_NUM);
+        status = args.getInt("status");
         wv_content.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -156,15 +160,22 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
             getProduct(product_id);
         } else {
             storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
-            if (null == storeProduct) {
-                wv_content.loadUrl(PTWDRequestHelper.store()
-                        .addParam("pid", args.getString(JPushReceiver.MID))
-                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
-                getProduct(args.getString(JPushReceiver.MID));
-            } else {
-                wv_content.loadUrl(storeProduct.getMobile_url());
-                tv_product_price.setText(storeProduct.getPrice());
-                mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+            if (status == 0) {//已下架
+                rl_detail.setVisibility(View.GONE);
+                rl_no_detail.setVisibility(View.VISIBLE);
+            } else if (status == 1) {//未下架
+                rl_detail.setVisibility(View.VISIBLE);
+                rl_no_detail.setVisibility(View.GONE);
+                if (null == storeProduct) {
+                    wv_content.loadUrl(PTWDRequestHelper.store()
+                            .addParam("pid", args.getString(JPushReceiver.MID))
+                            .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+                    getProduct(args.getString(JPushReceiver.MID));
+                } else {
+                    wv_content.loadUrl(storeProduct.getMobile_url());
+                    tv_product_price.setText(storeProduct.getPrice());
+                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+                }
             }
         }
 
