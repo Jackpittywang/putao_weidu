@@ -4,10 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.album.model.ImageBucket;
+import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
@@ -41,16 +43,17 @@ public class BucketAdapter extends BasicAdapter<ImageBucket, BucketAdapter.Bucke
     public void onBindItem(BucketViewHolder holder, ImageBucket bucket, int position) {
         if (bucket.images.size() > 0)
             if (TextUtils.isEmpty(bucket.images.get(0).THUMB_DATA))
-                holder.ivFolder.setImageURI(Uri.parse("file://putao/" + bucket.images.get(0)._DATA));
+                ImageLoaderUtil.getInstance(context).displayImage("file://" + bucket.images.get(0)._DATA, holder.ivFolder);
             else
-                holder.ivFolder.setImageURI(Uri.parse("file://putao/" + bucket.images.get(0).THUMB_DATA));
+                ImageLoaderUtil.getInstance(context).displayImage("file://" + bucket.images.get(0).THUMB_DATA, holder.ivFolder);
+
         holder.tvName.setText(bucket.bucketName);
         holder.tvCount.setText(bucket.images.size() + "");
     }
 
     class BucketViewHolder extends BasicViewHolder {
         @Bind(R.id.ivFolder)
-        ImageDraweeView ivFolder;
+        ImageView ivFolder;
         @Bind(R.id.tvName)
         TextView tvName;
         @Bind(R.id.tvCount)
