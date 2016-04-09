@@ -132,7 +132,10 @@ public class AddressListActivity extends PTWDActivity<GlobalApplication> impleme
                                     public void onSuccess(String url, String result) {
                                         Logger.d(result.toString());
                                         adapter.delete(address);
-                                        if (adapter.getItemCount() == 0) isAddressEmpty = true;
+                                        if (adapter.getItemCount() == 0) {
+                                            isAddressEmpty = true;
+                                            rl_no_address.setVisibility(View.VISIBLE);
+                                        }
                                         eventAddressDelete(address.getId());
                                         getAddressLists();
 //                                        EventBusHelper.post(address, AddressEditActivity.EVENT_ADDRESS_DELETE);

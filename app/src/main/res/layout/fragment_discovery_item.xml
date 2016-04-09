@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ebebeb">
 
-    <!-- android:src="@drawable/btn_60_play_selector"-->
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_discovery_player"
+    <RelativeLayout
+        android:id="@+id/rl_video"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_centerInParent="true"
-        android:visibility="visible" />
+        android:layout_height="200dp">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_discovery"
+            style="@style/image_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            auto:placeholderImageScaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_player"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/btn_60_play_selector"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relative_discovery"

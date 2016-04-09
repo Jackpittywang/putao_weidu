@@ -1,12 +1,15 @@
 package com.putao.wd.home.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.putao.wd.R;
 import com.putao.wd.model.DisCovery;
 import com.putao.wd.model.StoreProduct;
@@ -44,7 +47,12 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
     @Override
     public void onBindItem(final DiscoveryViewHolder holder, DisCovery disCoveries, int position) {
         holder.tv_title.setText(disCoveries.getTitle());
-        holder.iv_discovery_player.setImageURL(disCoveries.getVideo_img());
+        if (!disCoveries.getVideo_img().equals("")) {
+            holder.iv_player.setVisibility(View.VISIBLE);
+            holder.iv_discovery.setImageURL(disCoveries.getVideo_img());
+        } else {
+            holder.iv_player.setVisibility(View.GONE);
+        }
         holder.tv_style.setText(disCoveries.getTag());
         holder.tv_time.setText(disCoveries.getTime());
     }
@@ -54,8 +62,10 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
      */
     static class DiscoveryViewHolder extends BasicViewHolder {
 
-        @Bind(R.id.iv_discovery_player)
-        ImageDraweeView iv_discovery_player;
+        @Bind(R.id.iv_discovery)
+        ImageDraweeView iv_discovery;
+        @Bind(R.id.iv_player)
+        ImageView iv_player;
         @Bind(R.id.tv_title)
         TextView tv_title;
         @Bind(R.id.tv_style)
