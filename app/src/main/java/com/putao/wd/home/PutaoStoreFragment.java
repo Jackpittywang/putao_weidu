@@ -7,9 +7,11 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.StoreAdapter;
+import com.putao.wd.model.ProductStatus;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
+import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -150,14 +152,36 @@ public class PutaoStoreFragment extends PTWDFragment {
         rv_content.setOnItemClickListener(new OnItemClickListener<StoreProduct>() {
             @Override
             public void onItemClick(StoreProduct product, int position) {
+                IsProductDetail(product.getId(), product);
+            }
+        });
+    }
+
+    /**
+     * 判断是否是精品页面
+     */
+    public void IsProductDetail(final String product_id, final StoreProduct product) {
+        networkRequest(StoreApi.getProductStatus(product_id), new SimpleFastJsonCallback<ProductStatus>(ProductStatus.class, loading) {
+            @Override
+            public void onSuccess(String url, ProductStatus result) {
+                int status = result.getStatus();
+                int has_special = result.getHas_special();
                 Bundle bundle = new Bundle();
-                /*bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getId());
-                bundle.putString(ProductDetailActivity.BUNDLE_PRODUCT_ICON, product.getMobile_url());*/
-                YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
-                bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product.getId());
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "diaryStore");
-                startActivity(ProductDetailActivity.class, bundle);
+                if (result.equals("") && result == null || status == 0) {
+                    bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_STATUS, status + "");
+                    startActivity(ProductDetailActivity.class, bundle);
+                } else {
+                    //判断是否是精品(1.精品，0.非精品)
+                    if (has_special == 1) {//精品页面：ProductDetailActivity
+                        YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
+                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
+                        startActivity(ProductDetailActivity.class, bundle);
+                    } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
+                        YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
+                        bundle.putSerializable(ProductDetailV2Activity.PRODUCT_ID, product_id);
+                        startActivity(ProductDetailV2Activity.class, bundle);
+                    }
+                }
             }
         });
     }

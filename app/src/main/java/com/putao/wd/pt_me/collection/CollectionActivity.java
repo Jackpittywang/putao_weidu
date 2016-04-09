@@ -65,7 +65,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
-                            rv_collection.setAdapter(adapter);
+                            adapter.replaceAll(result);
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
