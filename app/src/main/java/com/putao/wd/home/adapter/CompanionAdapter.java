@@ -53,7 +53,8 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         if (0 == companion.getNum())
             holder.tv_number.setVisibility(View.GONE);
         else {
-            holder.tv_number.setText(companion.getNum() + "");
+            holder.tv_number.setVisibility(View.VISIBLE);
+            holder.tv_number.setText(companion.getNum() > 99 ? 99 + "" : companion.getNum() + "");
         }
     }
 

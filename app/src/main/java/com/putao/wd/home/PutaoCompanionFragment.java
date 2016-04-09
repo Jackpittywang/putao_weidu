@@ -9,12 +9,12 @@ import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.CampaignActivity;
 import com.putao.wd.pt_companion.GameDetailListActivity;
+import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -37,6 +37,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
+        addNavigation();
         mCompanionAdapter = new CompanionAdapter(mActivity, null);
         mCompanionAdapter.add(new Companion());
         rv_content.setAdapter(mCompanionAdapter);
@@ -84,7 +85,11 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
         mCompanionAdapter.notifyItemChanged(position);
     }
 
-
+    @Override
+    public void onRightAction() {
+        super.onRightAction();
+        startActivity(CaptureActivity.class);
+    }
 }
 
 

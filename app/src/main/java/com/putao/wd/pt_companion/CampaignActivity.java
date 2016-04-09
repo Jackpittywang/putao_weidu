@@ -85,7 +85,10 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
      * 下拉刷新 以及 最初的初始化
      */
     private void initData() {
-        mPage = 1;
+        ArrayList<CompanionCampaign> companionCampaigns = new ArrayList<>();
+        companionCampaigns.add(new CompanionCampaign());
+        mCampaignAdapter.replaceAll(companionCampaigns);
+       /* mPage = 1;
         networkRequest(CompanionApi.getCompanyBlackboard(mPage),
                 new SimpleFastJsonCallback<ArrayList<CompanionCampaign>>(CompanionCampaign.class, loading) {
                     @Override
@@ -104,7 +107,7 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
                         super.onFailure(url, statusCode, msg);
                         ptl_refresh.refreshComplete();
                     }
-                }, false);
+                }, false);*/
     }
 
     /**
@@ -168,6 +171,12 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
         } else {
             startActivity(TopicDetailsActivity.class);
         }
+    }
+
+    @Override
+    public void onRightAction() {
+        super.onRightAction();
+        startActivity(OfficialAccountsActivity.class);
     }
 }
 
