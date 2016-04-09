@@ -31,6 +31,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     protected FragmentActivity mActivity;
     protected LoadingHUD loading;
     private final ViewGroup mDecorView;
+    private final View mBackgroundView;
 
     /**
      * 设置布局
@@ -50,18 +51,20 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
             throw new RuntimeException("找不到Layout资源,Fragment初始化失败!");
         mRootView = LayoutInflater.from(context).inflate(getLayoutId(), null);
         setContentView(mRootView);//设置布局
-        ButterKnife.bind(this, mRootView);
         mMainLayout = (ViewGroup) mRootView.findViewById(R.id.popup_layout);
+        ButterKnife.bind(this, mMainLayout);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);//设置宽
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);//设置高
         setFocusable(true);// 设置PopupWindow可获得焦点
         setTouchable(true); // 设置PopupWindow可触摸
         setOutsideTouchable(true);// 设置非PopupWindow区域可触摸
         mDecorView = (ViewGroup) mActivity.getWindow().getDecorView();
-        View view = new View(mContext);view.setBackgroundColor(0xb000000);
-        mDecorView.addView(view);
-       /* ColorDrawable dw = new ColorDrawable(0xb0000000);
-        setBackgroundDrawable(dw);//设置背景*/
+        mBackgroundView = new View(mContext);
+        mBackgroundView.setBackgroundColor(0xb0000000);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mBackgroundView.setLayoutParams(layoutParams);
+        ColorDrawable dw = new ColorDrawable(0x00000000);
+        setBackgroundDrawable(dw);//设置背景
         //点击PopupWindow之外的区域关闭PopupWindow
         mRootView.setOnTouchListener(this);
         //响应返回键
@@ -70,9 +73,9 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        int height = mMainLayout.getHeight();
+       /* int height = mMainLayout.getHeight();
         int y = (int) event.getY();
-        if (event.getAction() == MotionEvent.ACTION_UP && y > height)
+        if (event.getAction() == MotionEvent.ACTION_UP && y > height)*/
             dismiss();
         return true;
     }
@@ -96,6 +99,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
      */
     public void show(View target) {
         EventBusHelper.register(this);
+        mDecorView.addView(mBackgroundView);
         showAtLocation(target, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
@@ -103,7 +107,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     @Override
     public void dismiss() {
         EventBusHelper.unregister(this);
-        mDecorView.setBackgroundColor(0x00000000);
+        mDecorView.removeView(mBackgroundView);
         super.dismiss();
     }
 }
