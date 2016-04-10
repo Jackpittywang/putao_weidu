@@ -87,7 +87,7 @@ public class RemindAdapter extends LoadMoreAdapter<Remind, RemindAdapter.RemindV
 
     @Override
     public void onBindItem(RemindViewHolder holder, final Remind remindDetail, int position) {
-        holder.tv_notify_content.setText(remindDetail.getNick_name()+"/r/n"+remindDetail.getQuestion());
+        holder.tv_notify_content.setText(remindDetail.getQuestion());
         holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(remindDetail.getRelease_time())));
         if (StringUtils.isEmpty(remindDetail.getHead_img()))
             holder.iv_action_icon.setVisibility(View.GONE);
@@ -97,27 +97,27 @@ public class RemindAdapter extends LoadMoreAdapter<Remind, RemindAdapter.RemindV
         }
 
 
-        holder.tv_check_detail.setText(remindDetail.getAnswer());
+       // holder.tv_check_detail.setText(remindDetail.getAnswer());
 
-//        if (0 == remindDetail.getLocation())
-//            holder.tv_check_detail.setVisibility(View.GONE);
-//        else if (1 == remindDetail.getLocation()) {
-//            holder.tv_check_detail.setVisibility(View.VISIBLE);
-//            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    EventBusHelper.post(remindDetail,EVENT_REMIND);
-//                }
-//            });
-//        } else if (2 == remindDetail.getLocation()) {
-//            holder.tv_check_detail.setVisibility(View.VISIBLE);
-//            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//        }
+        if (0 == remindDetail.getQuestion_id())
+            holder.tv_check_detail.setVisibility(View.GONE);
+        else if (1 == remindDetail.getQuestion_id()) {
+            holder.tv_check_detail.setVisibility(View.VISIBLE);
+            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBusHelper.post(remindDetail,EVENT_REMIND);
+                }
+            });
+        } else if (2 == remindDetail.getQuestion_id()) {
+            holder.tv_check_detail.setVisibility(View.VISIBLE);
+            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
     }
 
     /**
