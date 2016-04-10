@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.album.adapter.BucketAdapter;
 import com.putao.wd.album.adapter.ImageInfoAdapter;
 import com.putao.wd.album.model.ImageBucket;
@@ -22,6 +23,7 @@ import com.putao.wd.album.model.ThumbImageInfo;
 import com.putao.wd.album.util.MediaImageUtil;
 import com.putao.wd.util.BottomPanelUtil;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -132,7 +134,7 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
         return new String[0];
     }
 
-    @OnClick({R.id.tvClose, R.id.tvSelectFolder})
+    @OnClick({R.id.tvClose, R.id.tvSelectFolder, R.id.tvNext})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -140,6 +142,9 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
                 finish();
             case R.id.tvSelectFolder:
                 showFolderSelect();
+                break;
+            case R.id.tvNext:
+                EventBusHelper.post(selectPhotos, AccountConstants.EventBus.EVENT_ALBUM_SELECT);
                 break;
         }
 
