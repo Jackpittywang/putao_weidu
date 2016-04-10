@@ -8,13 +8,12 @@
     android:orientation="vertical"
     android:padding="0.25dp">
 
-    <com.sunnybear.library.view.image.ImageDraweeView
+    <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_centerInParent="true"
-        fresco:placeholderImageScaleType="centerCrop"
-        fresco:viewAspectRatio="1" />
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true" />
 
     <CheckBox
         android:id="@+id/cbPhotoSelect"
