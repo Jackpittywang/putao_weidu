@@ -253,7 +253,7 @@ public final class DateUtils {
         String result = "";
         long diff = System.currentTimeMillis() - millisecond;//时间差
         if (diff < 1000 * 60/* && diff > 0*/)
-            return "刚刚而已";
+            return "刚刚";
         else if (diff >= 1000 * 60 && diff < 1000 * 60 * 60)
             return diff / (1000 * 60) + "分钟以前";
         else if (diff >= 1000 * 60 * 60 && diff < 1000 * 60 * 60 * 24)

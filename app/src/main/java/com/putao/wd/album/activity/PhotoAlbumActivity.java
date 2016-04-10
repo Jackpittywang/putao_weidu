@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
@@ -25,6 +26,7 @@ import com.putao.wd.util.BottomPanelUtil;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -54,6 +56,10 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
     TextView tvCount;
     @Bind(R.id.tvTip)
     TextView tvTip;
+    @Bind(R.id.tvNext)
+    TextView tvNext;
+    @Bind(R.id.llBottoom)
+    LinearLayout llBottoom;
 
     private int maxCount = 1;
     private List<ImageBucket> buckets = new ArrayList<>();
@@ -98,6 +104,13 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
                         selectPhotos.add(photoInfo);
                         adapter.notifyDataSetChanged();
                     }
+                }
+                if (selectPhotos.size() > 0) {
+                    tvCount.setBackgroundColor(getResources().getColor(R.color.text_main_color_nor));
+                    tvNext.setBackgroundColor(getResources().getColor(R.color.text_main_color_nor));
+                } else {
+                    tvCount.setBackgroundColor(getResources().getColor(R.color.player_gray));
+                    tvNext.setBackgroundColor(getResources().getColor(R.color.player_gray));
                 }
                 tvCount.setText(" " + selectPhotos.size());
             }
@@ -144,7 +157,10 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
                 showFolderSelect();
                 break;
             case R.id.tvNext:
-                EventBusHelper.post(selectPhotos, AccountConstants.EventBus.EVENT_ALBUM_SELECT);
+                if (selectPhotos.size() > 0) {
+                    EventBusHelper.post(selectPhotos, AccountConstants.EventBus.EVENT_ALBUM_SELECT);
+                    finish();
+                } else ToastUtils.showToastShort(mContext, "您还没有选择图片~");
                 break;
         }
 

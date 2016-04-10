@@ -11,10 +11,8 @@ import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
-import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
-import java.util.Random;
 
 import butterknife.Bind;
 
@@ -22,9 +20,11 @@ import butterknife.Bind;
  * Created by Administrator on 2016/1/13.
  */
 public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.CompanionHolder> {
+    private Context mContext;
 
     public CompanionAdapter(Context context, List<Companion> companions) {
         super(context, companions);
+        mContext = context;
     }
 
     @Override
@@ -48,7 +48,16 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.iv_icon.setImageURL(companion.getGame_icon());
             holder.tv_title.setText(companion.getGame_title());
             holder.tv_intro.setText(companion.getGame_subtitle());
-            holder.tv_time.setText(DateUtils.timeCalculate(companion.getTime() * 1000L));
+            if (0 == companion.getSub_status()) {
+                holder.tv_time.setText(DateUtils.timeCalculate(companion.getTime() * 1000L));
+                holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
+                holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));
+            } else {
+                holder.tv_time.setText("未绑定");
+                holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_main_color_nor));
+                holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
+            }
+
         }
         if (0 == companion.getNum())
             holder.tv_number.setVisibility(View.GONE);

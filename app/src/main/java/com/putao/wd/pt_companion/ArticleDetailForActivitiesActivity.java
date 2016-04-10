@@ -1,23 +1,34 @@
 package com.putao.wd.pt_companion;
 
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.album.activity.PhotoAlbumActivity;
+import com.putao.wd.album.model.ImageInfo;
+import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ArticleDetailActs;
+import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
 import com.putao.wd.share.SharePopupWindow;
 import com.sunnybear.library.controller.eventbus.Subcriber;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.scroll.NestScrollView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -34,7 +45,9 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     @Bind(R.id.tv_title)
     TextView tv_title;
     @Bind(R.id.iv_upload_pic)
-    ImageView iv_upload_pic;
+    ImageDraweeView iv_upload_pic;
+    @Bind(R.id.sv_load)
+    NestScrollView sv_load;
     private ArticleDetailForActivitiesAdapter mArtivleDetailActsAdapter;
     private ArrayList<ArticleDetailActs> objects;
     ViewGroup.LayoutParams mRvLayoutParams;
@@ -55,10 +68,33 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         mArtivleDetailActsAdapter = new ArticleDetailForActivitiesAdapter(mContext, null);
         rv_content.setAdapter(mArtivleDetailActsAdapter);
         initData();
+        addListener();
+    }
 
+    private void addListener() {
+        wv_load.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                sv_load.scrollTo(0, 0);
+            }
+        });
     }
 
     private void initData() {
+        networkRequest(CompanionApi.getCompany(),
+                new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<Companion> result) {
+                        loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                    }
+                }, false);
+
         objects = new ArrayList<>();
         objects.add(new ArticleDetailActs());
         objects.add(new ArticleDetailActs());
@@ -74,6 +110,12 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         return new String[0];
     }
 
+
+    /**
+     * 重新设置recycleview高度
+     *
+     * @param str
+     */
     @Subcriber(tag = ArticleDetailForActivitiesAdapter.EVENT_REFRESH_HEIGHT)
     private void setHeight(String str) {
         mRvLayoutParams.height = 0;
@@ -97,5 +139,11 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     public void onRightAction() {
         super.onRightAction();
         mSharePopupWindow.show(navigation_bar);
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
+    private void setPic(List<ImageInfo> selectPhotos) {
+        String uri = !TextUtils.isEmpty(selectPhotos.get(0).THUMB_DATA) ? selectPhotos.get(0).THUMB_DATA : selectPhotos.get(0)._DATA;
+        iv_upload_pic.setImageURL(Uri.parse("file://" + uri).toString());
     }
 }

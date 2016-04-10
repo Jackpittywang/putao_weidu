@@ -18,7 +18,7 @@
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_upload_pic"
-            style="@style/image_circle"
+            style="@style/image_round_4dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"

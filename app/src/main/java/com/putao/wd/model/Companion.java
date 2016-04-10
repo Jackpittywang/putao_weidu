@@ -12,7 +12,7 @@ public class Companion implements Serializable {
     private String game_title;//
     private String game_subtitle;//游戏介绍
     private int time;//更新时间
-    private String sub_status;//订阅状态，0未订阅，1已订阅
+    private int sub_status;//订阅状态，0未订阅，1已订阅
     private int num = new Random().nextInt(200) + 1;//数字显示
 
     public String getGame_id() {
@@ -39,11 +39,11 @@ public class Companion implements Serializable {
         this.game_subtitle = game_subtitle;
     }
 
-    public String getSub_status() {
+    public int getSub_status() {
         return sub_status;
     }
 
-    public void setSub_status(String sub_status) {
+    public void setSub_status(int sub_status) {
         this.sub_status = sub_status;
     }
 

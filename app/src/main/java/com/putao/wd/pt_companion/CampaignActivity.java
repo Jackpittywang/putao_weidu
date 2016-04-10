@@ -1,3 +1,4 @@
+/*
 
 package com.putao.wd.pt_companion;
 
@@ -19,10 +20,12 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 
+*/
 /**
  * 葡萄活动
  * Created by zhanghao on 2016/04/05.
- */
+ *//*
+
 @Deprecated
 public class CampaignActivity extends PTWDActivity implements OnItemClickListener<CompanionCampaign> {
 
@@ -81,14 +84,17 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
         mCampaignAdapter.setOnItemClickListener(this);
     }
 
-    /**
+    */
+/**
      * 下拉刷新 以及 最初的初始化
-     */
+     *//*
+
     private void initData() {
         ArrayList<CompanionCampaign> companionCampaigns = new ArrayList<>();
         companionCampaigns.add(new CompanionCampaign());
         mCampaignAdapter.replaceAll(companionCampaigns);
-       /* mPage = 1;
+       */
+/* mPage = 1;
         networkRequest(CompanionApi.getCompanyBlackboard(mPage),
                 new SimpleFastJsonCallback<ArrayList<CompanionCampaign>>(CompanionCampaign.class, loading) {
                     @Override
@@ -107,15 +113,18 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
                         super.onFailure(url, statusCode, msg);
                         ptl_refresh.refreshComplete();
                     }
-                }, false);*/
+                }, false);*//*
+
     }
 
-    /**
+    */
+/**
      * 设置是否为同一天
      *
      * @param result
      * @return
-     */
+     *//*
+
     private ArrayList<CompanionCampaign> setIsSameDate(ArrayList<CompanionCampaign> result) {
 
         // 如果是 下拉刷新或重新进入则将 list（存用户的临时集合） 集合清空
@@ -136,9 +145,11 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
         return result;
     }
 
-    /**
+    */
+/**
      * 取将时间装换为天数
-     */
+     *//*
+
     private String getTimeDate(CompanionCampaign blackboard) {
         long time = Integer.valueOf(blackboard.getTime()) * MILLISECOND;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -182,3 +193,4 @@ public class CampaignActivity extends PTWDActivity implements OnItemClickListene
 
 
 
+*/
