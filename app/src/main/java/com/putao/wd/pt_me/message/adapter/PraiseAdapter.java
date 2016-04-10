@@ -83,9 +83,9 @@ public class PraiseAdapter extends LoadMoreAdapter<Praise, PraiseAdapter.PraiseV
 
 
         if(praiseDetail.getParent_content().getComment_id() == 1){
-            holder.tv_praised_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" +"作品回复" + praiseDetail.getParent_content().getContent());
+            holder.tv_praised_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + praiseDetail.getParent_content().getContent());
         }else if(praiseDetail.getParent_content().getOpus_id() == 3){
-            holder.tv_praised_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + "内容回复" +praiseDetail.getParent_content().getContent());
+            holder.tv_praised_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" +praiseDetail.getParent_content().getContent());
         }else{
             holder.tv_praised_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + praiseDetail.getParent_content().getContent());
         }

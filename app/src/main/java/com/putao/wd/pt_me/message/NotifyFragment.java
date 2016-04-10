@@ -56,7 +56,7 @@ public class NotifyFragment extends BasicFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_message_notify;
+        return R.layout.fragment_message;
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.putao.wd.model.ReplyDetail;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ import butterknife.Bind;
 public class ReplyFragment extends BasicFragment {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;//回复列表
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
     @Bind(R.id.tv_message_empty)
     TextView tv_message_empty;
 
@@ -135,6 +138,13 @@ public class ReplyFragment extends BasicFragment {
                         });
             }
         });
+
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNotifyList();
+            }
+        });
     }
 
     /**
@@ -161,12 +171,14 @@ public class ReplyFragment extends BasicFragment {
                         } else rv_content.noMoreLoading();*/
                         checkLoadMoreComplete(result);
                         loading.dismiss();
+
+                        ptl_refresh.refreshComplete();
                     }
                 });
     }
 
     private void checkLoadMoreComplete(ArrayList<Reply> result) {
-        if (result == null)
+        if (result.size() < 20)
             rv_content.noMoreLoading();
         else mPage++;
     }

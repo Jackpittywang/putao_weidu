@@ -1,7 +1,13 @@
 package com.putao.wd.pt_me.message.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -78,14 +84,32 @@ public class ReplyAdapter extends LoadMoreAdapter<Reply, ReplyAdapter.ReplyViewH
         }
         holder.tv_nickname.setText(replyDetail.getNick_name());
         holder.tv_reply_date.setText(DateUtils.timeCalculate(Integer.parseInt(replyDetail.getRelease_time())));
-        holder.tv_reply_content.setText(replyDetail.getParent_content().getContent());
 
-        if(replyDetail.getParent_content().getComment_id() == 1){
-            holder.tv_replied_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" +"作品回复" + replyDetail.getParent_content().getContent());
-        }else if(replyDetail.getParent_content().getOpus_id() == 3){
-            holder.tv_replied_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + "内容回复" +replyDetail.getParent_content().getContent());
-        }else{
-            holder.tv_replied_content.setText(   AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content().getContent());
+//        SpannableString ss = new SpannableString("回复 您");
+//        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0,3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        mMinLenght = ss.length();
+//        et_msg.setText(ss);
+
+        //ForegroundColorSpan 文本颜色（前景色）
+
+        SpannableString spanText = new SpannableString("回复 您:"+replyDetail.getContent());
+
+        spanText.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.text_color_gray)), 0, 5,
+
+                Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+      //  mTVText.append("\n");
+
+        holder.tv_reply_content.setText(spanText);
+
+       // holder.tv_reply_content.setText(Html.fromHtml("回复 您:"+replyDetail.getContent());
+
+        if (replyDetail.getParent_content().getComment_id() == 1) {
+            holder.tv_replied_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content().getContent());
+        } else if (replyDetail.getParent_content().getOpus_id() == 3) {
+            holder.tv_replied_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content().getContent());
+        } else {
+            holder.tv_replied_content.setText(AccountHelper.getCurrentUserInfo().getNick_name() + ":" + replyDetail.getParent_content().getContent());
         }
     }
 

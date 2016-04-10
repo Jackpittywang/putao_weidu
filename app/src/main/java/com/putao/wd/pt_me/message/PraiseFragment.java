@@ -13,6 +13,7 @@ import com.putao.wd.model.PraiseDetail;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import butterknife.Bind;
 public class PraiseFragment extends BasicFragment {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;//赞列表
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rl_no_message)
     RelativeLayout rl_no_message;
     @Bind(R.id.tv_message_empty)
@@ -83,6 +86,13 @@ public class PraiseFragment extends BasicFragment {
                         });
             }
         });
+
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNotifyList();
+            }
+        });
     }
     private int mPage;
     /**
@@ -110,13 +120,14 @@ public class PraiseFragment extends BasicFragment {
                         } else rv_content.noMoreLoading();*/
                         checkLoadMoreComplete(result);
                         loading.dismiss();
+                        ptl_refresh.refreshComplete();
                     }
                 });
     }
 
 
     private void checkLoadMoreComplete(ArrayList<Praise> result) {
-        if (null == result)
+        if (result.size() < 20)
             rv_content.noMoreLoading();
         else mPage++;
     }

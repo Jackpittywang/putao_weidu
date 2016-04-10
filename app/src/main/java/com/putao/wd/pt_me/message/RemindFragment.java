@@ -18,6 +18,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ import butterknife.Bind;
 public class RemindFragment extends BasicFragment {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;//赞列表
+    @Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rl_no_message)
     RelativeLayout rl_no_message;
     @Bind(R.id.tv_message_empty)
@@ -83,6 +86,13 @@ public class RemindFragment extends BasicFragment {
                 getRemindMore();
             }
         });
+
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRemindList();
+            }
+        });
     }
 
     /**
@@ -110,6 +120,8 @@ public class RemindFragment extends BasicFragment {
 
                         checkLoadMoreComplete(result);
                         loading.dismiss();
+
+                        ptl_refresh.refreshComplete();
                     }
                 });
     }
@@ -137,7 +149,7 @@ public class RemindFragment extends BasicFragment {
     }
 
     private void checkLoadMoreComplete(ArrayList<Remind> result) {
-        if (result == null)
+        if (result.size() <20)
             rv_content.noMoreLoading();
         else mPage++;
     }
