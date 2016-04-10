@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
+import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.pt_me.message.adapter.NotifyAdapter;
 import com.putao.wd.model.Notify;
 import com.putao.wd.model.NotifyDetail;
@@ -67,6 +68,7 @@ public class NotifyFragment extends BasicFragment {
 
         isPrepared = true;
         addListener();
+
     }
 
     /**

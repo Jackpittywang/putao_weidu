@@ -143,7 +143,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
             }
 
             public void onSinaWeibo() {
-//                    ShareTools.OnWeiboShare(ProductDetailActivity.this, title, shareUrl);
+                ShareTools.OnWeiboShare(ProductDetailV2Activity.this, title, imageUrl, shareUrl);
             }
 
             @Override
