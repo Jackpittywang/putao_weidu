@@ -36,16 +36,14 @@ import butterknife.OnClick;
 /**
  * Created by zhanghao on 2016/4/6.
  */
-public class ArticleDetailForActivitiesActivity extends PTWDActivity implements View.OnClickListener {
+public class ArticleDetailForActivitiesActivity extends PTWDActivity {
 
     @Bind(R.id.wv_load)
     BasicWebView wv_load;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
-    @Bind(R.id.tv_title)
-    TextView tv_title;
-    @Bind(R.id.iv_upload_pic)
-    ImageDraweeView iv_upload_pic;
+    /* @Bind(R.id.iv_upload_pic)
+     ImageDraweeView iv_upload_pic;*/
     @Bind(R.id.sv_load)
     NestScrollView sv_load;
     private ArticleDetailForActivitiesAdapter mArtivleDetailActsAdapter;
@@ -61,7 +59,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        iv_upload_pic.setVisibility(View.VISIBLE);
+//        iv_upload_pic.setVisibility(View.VISIBLE);
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl("http://wap.baidu.com");
         mRvLayoutParams = rv_content.getLayoutParams();
@@ -113,7 +111,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         rv_content.setLayoutParams(mRvLayoutParams);
     }
 
-    @OnClick(R.id.iv_upload_pic)
+   /* @OnClick(R.id.iv_upload_pic)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -121,7 +119,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
                 startActivity(PhotoAlbumActivity.class);
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onRightAction() {
@@ -132,6 +130,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
     private void setPic(List<ImageInfo> selectPhotos) {
         String uri = !TextUtils.isEmpty(selectPhotos.get(0).THUMB_DATA) ? selectPhotos.get(0).THUMB_DATA : selectPhotos.get(0)._DATA;
-        iv_upload_pic.setImageURL(Uri.parse("file://" + uri).toString());
+//        iv_upload_pic.setImageURL(Uri.parse("file://" + uri).toString());
     }
 }

@@ -4,9 +4,8 @@
     android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="1dp"
     android:orientation="horizontal"
-    android:paddingTop="7dp">
+    android:paddingTop="@dimen/distance_8dp">
 
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_comment_icon"
