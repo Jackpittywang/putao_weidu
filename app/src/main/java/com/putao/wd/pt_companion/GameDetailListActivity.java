@@ -45,7 +45,6 @@ public class GameDetailListActivity extends PTWDActivity {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        mPosition = args.getInt("position");
         ArrayList<GameList> gameLists = new ArrayList();
         gameLists.add(new GameList());
         gameLists.add(new GameList());
@@ -145,10 +144,7 @@ public class GameDetailListActivity extends PTWDActivity {
         rv_content.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Serializable serializable, int position) {
-                if (0 == mPosition)
-                    startActivity(ArticleDetailForActivitiesActivity.class);
-                else
-                    startActivity(GameDetailActivity.class);
+                startActivity(ArticleDetailForActivitiesActivity.class);
             }
         });
     }

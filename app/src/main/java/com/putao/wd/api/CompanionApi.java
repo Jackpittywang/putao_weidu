@@ -59,14 +59,14 @@ public class CompanionApi {
     /**
      * 陪伴首页
      */
-    private static final String URL_COMPANY = BASE_URL + "/company";
+    private static final String URL_SERVICE_RELATION = BASE_URL + "/service/user/relation";
 
     /**
      * 陪伴首页
      */
-    public static Request getCompany() {
+    public static Request getServiceUserRelation() {
         return PTWDRequestHelper.start()
-                .build(RequestMethod.POST, URL_COMPANY);
+                .build(RequestMethod.POST, URL_SERVICE_RELATION);
     }
 
    /* *//**

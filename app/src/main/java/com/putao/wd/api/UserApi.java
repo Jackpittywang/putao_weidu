@@ -18,6 +18,7 @@ public class UserApi {
     private static final String REQUEST_NICK_NAME = "nick_name";//昵称
     private static final String REQUEST_PROFILE = "profile";//简介
     private static final String REQUEST_EXT = "ext";
+    private static final String REQUEST_UID = "uid";
     private static final String REQUEST_FILENAME = "file_name";
     private static final String REQUEST_FILEHASH = "hash";
     private static final String REQUEST_HEAD_ICON = "userProfilePhoto";//头像
@@ -55,6 +56,20 @@ public class UserApi {
     public static Request login() {
         return PTWDRequestHelper.explore()
                 .build(RequestMethod.POST, URL_LOGIN);
+    }
+
+    /**
+     * 查询登录的用户是否绑定过产品
+     */
+    public static final String URL_USER_ISRELATION = BASE_URL + "service/user/isrelation";
+
+    /**
+     * 查询登录的用户是否绑定过产品
+     */
+    public static Request checkInquiryBind(String uid) {
+        return PTWDRequestHelper.explore()
+                .addParam(REQUEST_UID, uid)
+                .build(RequestMethod.POST, URL_USER_ISRELATION);
     }
 
     /**

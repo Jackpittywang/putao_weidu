@@ -82,18 +82,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     }
 
     private void initData() {
-        networkRequest(CompanionApi.getCompany(),
-                new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ArrayList<Companion> result) {
-                        loading.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        super.onFailure(url, statusCode, msg);
-                    }
-                }, false);
 
         objects = new ArrayList<>();
         objects.add(new ArticleDetailActs());

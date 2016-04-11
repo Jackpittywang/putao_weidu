@@ -1,16 +1,13 @@
 package com.putao.wd.db;
 
-import com.putao.wd.db.dao.CityDBDao;
 import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
-import com.putao.wd.db.entity.CityDB;
 import com.putao.wd.db.entity.CompanionDB;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
-import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * 城市操作

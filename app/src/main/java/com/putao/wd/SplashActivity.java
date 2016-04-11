@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
+import com.putao.wd.account.AccountApi;
+import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.jpush.JPushReceiver;
@@ -13,9 +17,11 @@ import com.putao.wd.pt_me.service.ServiceDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.task.SuperTask;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.DownloadCallback;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -66,10 +72,12 @@ public class SplashActivity extends BasicFragmentActivity {
                         GlobalApplication.setEmojis(result);
                         if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                             startActivity(GuidanceActivity.class);
-                        else
-                            startActivity(IndexActivity.class);
-                        checkNotify();
-                        finish();
+                        else {
+                            if (TextUtils.isEmpty(AccountHelper.getCurrentUid()))
+                                finish();
+                            else
+                                checkInquiryBind(AccountHelper.getCurrentUid());
+                        }
                     }
                 }).execute();
 //        else
@@ -96,6 +104,7 @@ public class SplashActivity extends BasicFragmentActivity {
 
             }
         });
+    }
 //        networkRequestNoLoading(UserApi.resourceUpload(mContext), new JSONObjectCallback() {
 //                    @Override
 //                    public void onSuccess(String url, JSONObject result) {
@@ -185,6 +194,28 @@ public class SplashActivity extends BasicFragmentActivity {
 //                    }
 //                }
 //        );
+
+    /**
+     * 是不是绑定过设备
+     *
+     * @param currentUid uid
+     */
+    private void checkInquiryBind(String currentUid) {
+        networkRequest(UserApi.checkInquiryBind(currentUid),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        GlobalApplication.isBindDevice = com.alibaba.fastjson.JSONObject.parseObject(result).getBoolean("is_relation");
+                    }
+
+                    @Override
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+                        startActivity(IndexActivity.class);
+                        checkNotify();
+                        finish();
+                    }
+                });
     }
 
     private void checkNotify() {

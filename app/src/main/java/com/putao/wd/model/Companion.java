@@ -7,52 +7,44 @@ import java.util.Random;
  * Created by zhanghao on 2015/12/8.
  */
 public class Companion implements Serializable {
-    private String game_id;//游戏id
-    private String game_icon;//游戏ICON
-    private String game_title;//
-    private String game_subtitle;//游戏介绍
+    private String service_id;//游戏id
+    private String service_icon;//游戏ICON
+    private String service_name;//
+    private String service_description;//游戏介绍
     private int time;//更新时间
-    private int sub_status;//订阅状态，0未订阅，1已订阅
+    private int is_relation;//订阅状态，0未订阅，1已订阅
     private int num = new Random().nextInt(200) + 1;//数字显示
 
-    public String getGame_id() {
-        return game_id;
+    public String getService_id() {
+        return service_id;
     }
 
-    public void setGame_id(String game_id) {
-        this.game_id = game_id;
+    public void setService_id(String service_id) {
+        this.service_id = service_id;
     }
 
-    public String getGame_icon() {
-        return game_icon;
+    public String getService_icon() {
+        return service_icon;
     }
 
-    public void setGame_icon(String game_icon) {
-        this.game_icon = game_icon;
+    public void setService_icon(String service_icon) {
+        this.service_icon = service_icon;
     }
 
-    public String getGame_subtitle() {
-        return game_subtitle;
+    public String getService_name() {
+        return service_name;
     }
 
-    public void setGame_subtitle(String game_subtitle) {
-        this.game_subtitle = game_subtitle;
+    public void setService_name(String service_name) {
+        this.service_name = service_name;
     }
 
-    public int getSub_status() {
-        return sub_status;
+    public String getService_description() {
+        return service_description;
     }
 
-    public void setSub_status(int sub_status) {
-        this.sub_status = sub_status;
-    }
-
-    public String getGame_title() {
-        return game_title;
-    }
-
-    public void setGame_title(String game_title) {
-        this.game_title = game_title;
+    public void setService_description(String service_description) {
+        this.service_description = service_description;
     }
 
     public int getTime() {
@@ -63,21 +55,19 @@ public class Companion implements Serializable {
         this.time = time;
     }
 
+    public int getIs_relation() {
+        return is_relation;
+    }
+
+    public void setIs_relation(int is_relation) {
+        this.is_relation = is_relation;
+    }
+
     public int getNum() {
         return num;
     }
 
     public void setNum(int num) {
         this.num = num;
-    }
-
-    @Override
-    public String toString() {
-        return "Companion{" +
-                "game_id='" + game_id + '\'' +
-                ", game_icon='" + game_icon + '\'' +
-                ", game_subtitle='" + game_subtitle + '\'' +
-                ", sub_status='" + sub_status + '\'' +
-                '}';
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
@@ -118,8 +119,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                         AccountHelper.setCurrentToken(result.getString("token"));
                                         new JPushHeaper().setAlias(mContext, result.getString("uid"));
                                         mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
-                                        PutaoCreatedFragment.isPrepared = true;
-                                        PutaoExploreFragment.isPrepared = true;
                                         //验证登陆后的连接发送
                                         checkLogin(mobile);
                                     }
@@ -167,12 +166,12 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                        checkInquiryBind(AccountHelper.getCurrentUid());
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
                         }
                         loading.dismiss();
-                        finish();
                     }
 
                     @Override
@@ -185,6 +184,18 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         super.onFinish(url, isSuccess, msg);
                         btn_login.setClickable(true);
+                    }
+                });
+    }
+
+    private void checkInquiryBind(String currentUid) {
+        networkRequest(UserApi.checkInquiryBind(currentUid),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        GlobalApplication.isBindDevice = JSONObject.parseObject(result).getBoolean("is_relation");
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        finish();
                     }
                 });
     }

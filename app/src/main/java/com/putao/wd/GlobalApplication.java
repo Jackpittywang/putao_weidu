@@ -17,7 +17,6 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.DaoMaster;
-import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
@@ -29,7 +28,6 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.jpush.android.api.JPushInterface;
@@ -44,6 +42,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
     public static boolean isServiceClose;
     public static boolean isServiceShouldNotClose;
+    public static boolean isBindDevice;
 
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
@@ -125,55 +124,6 @@ public class GlobalApplication extends BasicApplication {
                 new JPushHeaper().setAlias(GlobalApplication.this, AccountHelper.getCurrentUid());
             }
         }, 3000);
-
-        getDataBaseManager(CompanionDBManager.class).insert(new CompanionDB("124", "article", "141239568", "[\n" +
-                "          {\n" +
-                "\t\t\t\"article_id\": 12,\n" +
-                "            \"title\": \"我是第一位文章\",\n" +
-                "            \"sub_title\": \"我是副标题\",\n" +
-                "            \"cover_pic\": \"http://mall.file.putaocdn.com/file/ad246993a08b21647ac4322fcfd3986337f1162c.png\",\n" +
-                "            \"link_url\": \"http://putao.com\",\n" +
-                "            \"release_time\": 141239568\n" +
-                "          },\n" +
-                "          {\n" +
-                "\t\t\t\"article_id\": 7,\n" +
-                "            \"title\": \"我是第二位文章\",\n" +
-                "            \"sub_title\": \"我是副标题\",\n" +
-                "            \"cover_pic\": \"http://mall.file.putaocdn.com/file/ad246993a08b21647ac4322fcfd3986337f1162c.png\",\n" +
-                "            \"link_url\": \"http://putao.com\",\n" +
-                "            \"release_time\": 141239568\n" +
-                "          }\n" +
-                "        ]", "1"));
-        getDataBaseManager(CompanionDBManager.class).insert(new CompanionDB("125", "", "", "", "0"));
-        getDataBaseManager(CompanionDBManager.class).insert(new CompanionDB("126", "article", "141239568", "[\n" +
-                "          {\n" +
-                "\t\t\t\"article_id\": 12,\n" +
-                "            \"title\": \"我是第一位文章\",\n" +
-                "            \"sub_title\": \"我是副标题\",\n" +
-                "            \"cover_pic\": \"http://mall.file.putaocdn.com/file/ad246993a08b21647ac4322fcfd3986337f1162c.png\",\n" +
-                "            \"link_url\": \"http://putao.com\",\n" +
-                "            \"release_time\": 141239568\n" +
-                "          },\n" +
-                "          {\n" +
-                "\t\t\t\"article_id\": 7,\n" +
-                "            \"title\": \"我是第二位文章\",\n" +
-                "            \"sub_title\": \"我是副标题\",\n" +
-                "            \"cover_pic\": \"http://mall.file.putaocdn.com/file/ad246993a08b21647ac4322fcfd3986337f1162c.png\",\n" +
-                "            \"link_url\": \"http://putao.com\",\n" +
-                "            \"release_time\": 141239568\n" +
-                "          }\n" +
-                "        ]", "1"));
-        getDataBaseManager(CompanionDBManager.class).insert(new CompanionDB("127", "", "", "", "0"));
-        getDataBaseManager(CompanionDBManager.class).insert(new CompanionDB("128", "", "", "", "0"));
-        getDataBaseManager(CompanionDBManager.class).insert(new CompanionDB("129", "", "", "", "0"));
-
-        CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
-        dataBaseManager.getCompanInfoById("124");
-        dataBaseManager.getNotDownloadIds();
-        dataBaseManager.getDownloadArticles();
-//        dataBaseManager.setDownloadFinish("196");
-
-
     }
 
     /**

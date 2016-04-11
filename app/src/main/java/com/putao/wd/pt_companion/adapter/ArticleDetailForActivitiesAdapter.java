@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.ArticleDetailActs;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
@@ -68,18 +69,16 @@ public class ArticleDetailForActivitiesAdapter extends LoadMoreAdapter<ArticleDe
     }
 
     static class ArticleDetailActsHolder extends BasicViewHolder {
-        @Bind(R.id.tv_title)
-        TextView tv_title;
+        /*@Bind(R.id.iv_pic)
+        ImageDraweeView iv_pic;*/
+        @Bind(R.id.tv_username)
+        TextView tv_username;
+        @Bind(R.id.iv_comment_icon)
+        ImageDraweeView iv_comment_icon;
+        @Bind(R.id.tv_comment_time)
+        TextView tv_comment_time;
         @Bind(R.id.ll_main)
         LinearLayout ll_main;
-        @Bind(R.id.iv_pic)
-        LinearLayout iv_pic;
-        /*@Bind(R.id.tv_intro)
-        TextView tv_intro;
-        @Bind(R.id.rl_game_step)
-        RelativeLayout rl_game_step;
-        @Bind(R.id.tv_game_step)
-        TextView tv_game_step;*/
 
         public ArticleDetailActsHolder(View itemView) {
             super(itemView);
