@@ -1,8 +1,10 @@
 package com.putao.wd.db;
 
 import com.putao.wd.db.dao.CityDBDao;
+import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.CityDB;
+import com.putao.wd.db.entity.CompanionDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import de.greenrobot.dao.query.WhereCondition;
  * 城市操作
  * Created by guchenkai on 2015/12/6.
  */
-public class CompanionDBManager extends DataBaseManager<CityDB, String> {
+public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     private static CompanionDBManager mInstance;
 
     public static CompanionDBManager getInstance(DaoMaster.OpenHelper helper) {
@@ -28,62 +30,45 @@ public class CompanionDBManager extends DataBaseManager<CityDB, String> {
     }
 
     @Override
-    public AbstractDao<CityDB, String> getAbstractDao() {
-        return daoSession.getCityDBDao();
+    public AbstractDao<CompanionDB, String> getAbstractDao() {
+        return daoSession.getCompanionDBDao();
     }
 
     /**
-     * 根据省份id获取城市名
+     * 根据推送id获取推送数据
      *
-     * @param provinceId 省份id
+     * @param id 省份id
      * @return 城市名列表
      */
-    public List<String> getCityNamesByProvinceId(String provinceId) {
-        List<String> cityNames = new ArrayList<>();
-        List<CityDB> cityDBs = getQueryBuilder().where(CityDBDao.Properties.Province_id.eq(provinceId)).list();
-        for (CityDB cityDB : cityDBs) {
-            cityNames.add(cityDB.getName());
+    public CompanionDB getCompanInfoById(String id) {
+        return getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id)).unique();
+    }
+
+    /**
+     * 获取没有还没有获取到数据的推送id
+     */
+    public List<String> getNotDownloadIds() {
+        List<String> notDownloadIds = new ArrayList<>();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0")).listLazy();
+        for (CompanionDB companionDB : companionDBs) {
+            notDownloadIds.add(companionDB.getId());
         }
-        return cityNames;
+        return notDownloadIds;
     }
 
     /**
-     * 根据省份名称获取城市名
-     *
-     * @param provinceName 省份名称
-     * @return 城市名列表
+     * 获取已经下载的文章列表
      */
-    public List<String> getCityNamesByProvinceName(String provinceName) {
-        List<String> cityNames = new ArrayList<>();
-        List<CityDB> cityDBs = getQueryBuilder().where(
-                new WhereCondition.StringCondition("PROVINCE_ID=" + "(SELECT PROVINCE_ID FROM putao_wd_province WHERE NAME=\"" + provinceName + "\")"))
-                .list();
-        for (CityDB cityDB : cityDBs) {
-            cityNames.add(cityDB.getName());
-        }
-        return cityNames;
+    public List<CompanionDB> getDownloadArticles() {
+        return getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("1")).build().list();
     }
 
     /**
-     * 根据城市名称获得城市id
-     *
-     * @param province_id 省区id
-     * @param cityName    城市名称
-     * @return 城市id
+     * 设置文章的下载状态
      */
-    public String getCityId(String province_id, String cityName) {
-        CityDB cityDB = getQueryBuilder().where(CityDBDao.Properties.Province_id.eq(province_id), CityDBDao.Properties.Name.eq(cityName)).uniqueOrThrow();
-        return cityDB.getCity_id();
-    }
-
-    /**
-     * 根据城市名称获得城市id
-     *
-     * @param cityId 城市名称
-     * @return 城市id
-     */
-    public String getCityNameByCityId(String cityId) {
-        CityDB cityDB = getQueryBuilder().where(CityDBDao.Properties.City_id.eq(cityId)).uniqueOrThrow();
-        return cityDB.getName();
+    public void setDownloadFinish(String id) {
+        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id)).unique();
+        unique.setIsDownload("1");
+        update(unique);
     }
 }

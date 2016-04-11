@@ -72,6 +72,8 @@ public class ArticleDetailForActivitiesAdapter extends LoadMoreAdapter<ArticleDe
         TextView tv_title;
         @Bind(R.id.ll_main)
         LinearLayout ll_main;
+        @Bind(R.id.iv_pic)
+        LinearLayout iv_pic;
         /*@Bind(R.id.tv_intro)
         TextView tv_intro;
         @Bind(R.id.rl_game_step)
