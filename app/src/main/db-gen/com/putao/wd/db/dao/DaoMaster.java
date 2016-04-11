@@ -72,6 +72,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ProvinceDBDao.class);
         registerDaoClass(CityDBDao.class);
         registerDaoClass(DistrictDBDao.class);
+        registerDaoClass(CompanionDBDao.class);
     }
 
     public DaoSession newSession() {

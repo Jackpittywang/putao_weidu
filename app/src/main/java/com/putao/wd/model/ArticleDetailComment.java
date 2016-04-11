@@ -14,7 +14,7 @@ public class ArticleDetailComment implements Serializable {
     private String comment_time;//评论时间戳
     private String comment;//评论内容
     private String content;//当评论为父评论时的评论内容
-    private boolean is_like;//赞
+    private int is_like;//赞
     private int like_count;//点赞数
     private int comment_count;//评论数
     private ArticleDetailComment parent_comment;//父评论，可为空
@@ -79,11 +79,11 @@ public class ArticleDetailComment implements Serializable {
         this.comment = comment;
     }
 
-    public boolean is_like() {
+    public int is_like() {
         return is_like;
     }
 
-    public void setIs_like(boolean is_like) {
+    public void setIs_like(int is_like) {
         this.is_like = is_like;
     }
 

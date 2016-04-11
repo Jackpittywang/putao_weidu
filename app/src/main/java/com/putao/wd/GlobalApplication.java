@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
+import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
@@ -41,6 +42,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
     public static boolean isServiceClose;
     public static boolean isServiceShouldNotClose;
+    public static boolean isBindDevice;
 
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
@@ -164,6 +166,8 @@ public class GlobalApplication extends BasicApplication {
                 return DistrictDBManager.getInstance(mHelper);
             case "ProvinceDBManager":
                 return ProvinceDBManager.getInstance(mHelper);
+            case "CompanionDBManager":
+                return CompanionDBManager.getInstance(mHelper);
         }
         return null;
     }
@@ -257,6 +261,7 @@ public class GlobalApplication extends BasicApplication {
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
     public static final String SECRET = "499478a81030bb177e578f86410cda8641a22799";
+
     /**
      * H5页面定义Scheme
      */

@@ -163,7 +163,7 @@ public class ReplyFragment extends BasicFragment {
                             adapter.replaceAll(result);
                         } else {
                             rl_no_message.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
                        /* if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
@@ -178,7 +178,7 @@ public class ReplyFragment extends BasicFragment {
     }
 
     private void checkLoadMoreComplete(ArrayList<Reply> result) {
-        if (result.size() < 20)
+        if (result == null)
             rv_content.noMoreLoading();
         else mPage++;
     }
