@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
 
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
@@ -370,9 +369,9 @@
         <activity
             android:name=".created.CreateBasicDetailActivity"
             android:screenOrientation="portrait" />
-        <!--葡萄活动-->
+
         <activity
-            android:name=".pt_companion.CampaignActivity"
+            android:name=".webview.BaseWebViewActivity"
             android:screenOrientation="portrait" />
         <!-- 文章详情页-->
         <activity
@@ -521,6 +520,7 @@
             android:name=".TestAnimationActivity"
             android:screenOrientation="portrait" />
 
+
         <!--友盟-->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -535,6 +535,8 @@
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+
 
         <!-- ===============================极光推送====================================== -->
         <!-- For test only 测试高级功能 -->
