@@ -163,7 +163,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
      */
     private void checkLogin(final String mobile) {
         networkRequest(AccountApi.login(),
-                new SimpleFastJsonCallback<UserInfo>(UserInfo.class, null) {
+                new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
@@ -171,8 +171,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
                         }
-                        finish();
                         loading.dismiss();
+                        finish();
                     }
 
                     @Override

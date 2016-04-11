@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -76,23 +78,34 @@ public class NickActivity extends PTWDActivity {
      */
     private void upload() {
         final String etIntro = et_intro.getText().toString();
-        networkRequest(UserApi.userNick(etIntro),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        Logger.i("保存用户信息");
-                        Intent intent = new Intent();
-                        intent.putExtra(CompleteActivity.NICK_NAME, etIntro);
-                        setResult(1, intent);
-                        finish();
-                    }
+        networkRequest(UserApi.userNick(etIntro), new JSONObjectCallback() {
+            @Override
+            public void onSuccess(String url, JSONObject result) {
+                Logger.i("保存用户信息");
+                int http_code = result.getInteger("http_code");
+                String msg = result.getString("msg");
+                if (http_code != 200) {
+                    ToastUtils.showToastShort(mContext, msg);
+                    loading.dismiss();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra(CompleteActivity.NICK_NAME, etIntro);
+                    setResult(1, intent);
+                    finish();
+                }
+            }
 
-                    @Override
-                    public void onFinish(String url, boolean isSuccess, String msg) {
-                        loading.dismiss();
-                        if (!TextUtils.isEmpty(msg))
-                            ToastUtils.showToastShort(mContext, msg);
-                    }
-                });
+            @Override
+            public void onCacheSuccess(String url, JSONObject result) {
+
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                loading.dismiss();
+                if (!TextUtils.isEmpty(msg))
+                    ToastUtils.showToastShort(mContext, msg);
+            }
+        });
     }
 }

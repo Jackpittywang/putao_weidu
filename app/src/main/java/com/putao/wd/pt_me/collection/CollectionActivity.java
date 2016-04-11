@@ -158,7 +158,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         bundle.putSerializable(CollectionDetailActivity.CREATE, (Serializable) adapter.getItems());
         bundle.putInt(CollectionDetailActivity.POSITION, position);
         bundle.putInt(CollectionDetailActivity.PAGE_COUNT, mPage);
-//        bundle.putBoolean(CollectionDetailActivity.HAS_MORE_DATA, hasMoreData);
+        bundle.putBoolean(CollectionDetailActivity.HAS_MORE_DATA, hasMoreData);
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
         startActivity(CollectionDetailActivity.class, bundle);
     }

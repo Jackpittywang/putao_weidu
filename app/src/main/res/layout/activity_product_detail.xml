@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/shopping_relative_car"
-                android:src="@drawable/shopping_share_selector"
+                android:src="@drawable/share_selector"
                 android:visibility="visible" />
 
             <RelativeLayout

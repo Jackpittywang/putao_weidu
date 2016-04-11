@@ -62,9 +62,7 @@ public class CollectionDetailActivity extends BasicFragmentActivity {
                             public void onSuccess(String url, ArrayList<Collection> result) {
                                 if (result.size() > 0)
                                     addData(result);
-//                                if (result.getCurrentPage() == result.getTotalPage())
-//                                    has_more_data = false;
-                                else mPageCount++;
+                                checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
                         });
@@ -72,16 +70,23 @@ public class CollectionDetailActivity extends BasicFragmentActivity {
 
             @Override
             public Fragment getItem(List<Collection> datas, int position) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(POSITION, position);
-//                bundle.putSerializable(CREATE, datas.get(position));
-                return null;
-//                return Fragment.instantiate(getApplicationContext(), CreateBasicDetailFragment.class.getName(), bundle);
+                Bundle bundle = new Bundle();
+                bundle.putInt(POSITION, position);
+                bundle.putSerializable(CREATE, datas.get(position));
+                return Fragment.instantiate(getApplicationContext(), CreateBasicDetailFragment.class.getName(), bundle);
             }
         };
         vp_content.setAdapter(fragmentPagerAdapter);
         vp_content.setOffscreenPageLimit(3);
         vp_content.setCurrentItem(mPosition);
+    }
+
+    private void checkLoadMoreComplete(ArrayList<Collection> list) {
+        if (null == list) {
+            has_more_data = false;
+        } else {
+            mPageCount++;
+        }
     }
 
     @Override
