@@ -69,7 +69,6 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                 new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Participation> result) {
-                        rv_participation.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
@@ -77,8 +76,8 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
-                            rv_participation.noMoreLoading();
                         }
+                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
@@ -110,15 +109,17 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                 new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Participation> result) {
-                        rv_participation.loadMoreComplete();
-                        if (result != null && result.size() > 0) {
-                            adapter.addAll(result);
-                            mPage++;
-                        } else
-                            rv_participation.noMoreLoading();
+                        adapter.addAll(result);
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
+    }
+
+    private void checkLoadMoreComplete(ArrayList<Participation> result) {
+        if (result.size() < 10)
+            rv_participation.noMoreLoading();
+        else mPage++;
     }
 
     @Override

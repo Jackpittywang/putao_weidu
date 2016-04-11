@@ -76,13 +76,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
 
                             @Override
                             public void onSuccess(String url, ArrayList<DisCovery> result) {
-                                rv_discovery.loadMoreComplete();
-                                if (null != result && result.size() > 0) {
-                                    adapter.replaceAll(result);
-                                    currentPage++;
-                                } else {
-                                    rv_discovery.noMoreLoading();
-                                }
+                                adapter.replaceAll(result);
+                                checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
                         });
@@ -102,7 +97,6 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                     @Override
                     public void onSuccess(String url, ArrayList<DisCovery> result) {
                         cacheData(url, result);
-                        rv_discovery.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             rl_no_discovery.setVisibility(View.GONE);
                             rv_discovery.setVisibility(View.VISIBLE);
@@ -110,8 +104,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                         } else {
                             rl_no_discovery.setVisibility(View.VISIBLE);
                             rv_discovery.setVisibility(View.GONE);
-                            rv_discovery.noMoreLoading();
                         }
+                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
@@ -122,6 +116,12 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                         ptl_refresh.refreshComplete();
                     }
                 }, 60 * 1000);
+    }
+
+    private void checkLoadMoreComplete(ArrayList<DisCovery> result) {
+        if (result.size() < 5)
+            rv_discovery.noMoreLoading();
+        else currentPage++;
     }
 
     @Override
