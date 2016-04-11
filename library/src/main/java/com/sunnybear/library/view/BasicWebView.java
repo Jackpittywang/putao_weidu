@@ -57,13 +57,15 @@ public class BasicWebView extends WebView {
                         break;
                     case ProtocolHeader.PROTOCOL_HEADER_PUTAO:
                         String scheme = getScheme(url);
-                        Logger.d(scheme);
+                        // Logger.d(scheme);
                         String content = getContentUrl(url);
-                        if (mOnWebViewLoadUrlCallback != null)
+                        if (mOnWebViewLoadUrlCallback != null) {
                             mOnWebViewLoadUrlCallback.onParsePutaoUrl(scheme, JSON.parseObject(content));
+                            return true;
+                        }
                         break;
                 }
-                return true;
+                return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
