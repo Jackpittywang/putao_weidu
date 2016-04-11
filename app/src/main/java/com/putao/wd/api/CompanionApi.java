@@ -19,6 +19,7 @@ public class CompanionApi {
     private static final String REQUEST_COMMENT = "comment";//作品内容
     private static final String REQUEST_PICS = "pics";//作品图片，多图
     private static final String REQUEST_SERVICE_ID = "service_id";//服务号id
+    private static final String REQUEST_SEND_DATA = "send_data";//接收推送的数据包，转发给纬度服务器
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
@@ -69,23 +70,6 @@ public class CompanionApi {
                 .build(RequestMethod.POST, URL_SERVICE_RELATION);
     }
 
-   /* *//**
-     * 葡萄黑板报
-     *//*
-    private static final String URL_COMPANY_BLACKBOARD = BASE_URL + "/company/blackboard";
-
-    *//**
-     * 葡萄黑板报
-     *
-     * @param pages 页码，没传默认为第一页
-     *//*
-    public static Request getCompanyBlackboard(int pages) {
-        return PTWDRequestHelper.start()
-                .addParam(REQUEST_PAGES, pages + "")
-                .build(RequestMethod.POST, URL_COMPANY_BLACKBOARD);
-    }*/
-
-
 
     /**
      * 菜单列表
@@ -99,6 +83,24 @@ public class CompanionApi {
      */
     public static Request getCompanyServiceMenus(String service_id) {
         return PTWDRequestHelper.start()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_COMPANY_SERVICE_MENUS);
+    }
+
+    /**
+     * 公众号首页消息获取
+     */
+    private static final String URL_SERVICE_MESSAGE_LISTS = BASE_URL + "/service/message/lists";
+
+    /**
+     * 公众号首页消息获取
+     *
+     * @param send_data 接收推送的数据包，转发给纬度服务器
+     * @param service_id 服务号唯一id
+     */
+    public static Request getServiceLists(String send_data, String service_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_SEND_DATA, send_data)
                 .addParam(REQUEST_SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_COMPANY_SERVICE_MENUS);
     }

@@ -7,7 +7,7 @@ import java.util.Random;
  * Created by zhanghao on 2015/12/8.
  */
 public class Companion implements Serializable {
-    private String service_id;//游戏id
+    private String service_id;//id
     private String service_icon;//游戏ICON
     private String service_name;//
     private String service_description;//游戏介绍

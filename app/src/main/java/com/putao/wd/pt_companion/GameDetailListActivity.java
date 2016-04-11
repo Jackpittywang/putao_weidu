@@ -1,13 +1,15 @@
 package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
-import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.CompanionCampaign;
-import com.putao.wd.model.GameList;
+import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -17,9 +19,9 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * 游戏详情页
@@ -45,14 +47,9 @@ public class GameDetailListActivity extends PTWDActivity {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        ArrayList<GameList> gameLists = new ArrayList();
-        gameLists.add(new GameList());
-        gameLists.add(new GameList());
-        gameLists.add(new GameList());
-        gameLists.add(new GameList());
-        gameLists.add(new GameList());
-        gameLists.add(new GameList());
-        mGameDetailAdapter = new GameDetailAdapter(mContext, gameLists);
+        String service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+
+        mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         initData();
         addListener();
@@ -63,14 +60,16 @@ public class GameDetailListActivity extends PTWDActivity {
      */
     private void initData() {
         mPage = 1;
-        networkRequest(CompanionApi.getCompanyServiceMenus(""),
-                new SimpleFastJsonCallback<ArrayList<CompanionCampaign>>(CompanionCampaign.class, loading) {
+        List<ServiceSendData> serviceSendDatas = new ArrayList<>();
+        serviceSendDatas.add(new ServiceSendData("124"));
+        serviceSendDatas.add(new ServiceSendData("125"));
+        networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID)),
+                new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<CompanionCampaign> result) {
-
+                    public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
-                        ArrayList<CompanionCampaign> newResult = setIsSameDate(result);
-//                        rv_content.replaceAll(newResult);
+                        ArrayList<ServiceMessageList> newResult = setIsSameDate(result.getLists());
+                        mGameDetailAdapter.replaceAll(result.getLists());
                         ptl_refresh.refreshComplete();
                         checkLoadMoreComplete(newResult);
                         loading.dismiss();
@@ -90,7 +89,7 @@ public class GameDetailListActivity extends PTWDActivity {
      * @param result
      * @return
      */
-    private ArrayList<CompanionCampaign> setIsSameDate(ArrayList<CompanionCampaign> result) {
+    private ArrayList<ServiceMessageList> setIsSameDate(ArrayList<ServiceMessageList> result) {
 
         // 如果是 下拉刷新或重新进入则将 list（存用户的临时集合） 集合清空
         if (!isLoadMore) {
@@ -98,13 +97,13 @@ public class GameDetailListActivity extends PTWDActivity {
         }
 
         for (int position = 0; position < result.size(); position++) {
-            CompanionCampaign blackboard = result.get(position);
+            ServiceMessageList blackboard = result.get(position);
 
             if (!list.contains(getTimeDate(blackboard))) {
-                blackboard.setShowDate(true);
+                blackboard.setIsShowData(true);
                 list.add(getTimeDate(blackboard));
             } else {
-                blackboard.setShowDate(false);
+                blackboard.setIsShowData(false);
             }
         }
         return result;
@@ -113,14 +112,14 @@ public class GameDetailListActivity extends PTWDActivity {
     /**
      * 取将时间装换为天数
      */
-    private String getTimeDate(CompanionCampaign blackboard) {
-        long time = Integer.valueOf(blackboard.getTime()) * 1000L;
+    private String getTimeDate(ServiceMessageList serviceMessageList) {
+        long time = Integer.valueOf(serviceMessageList.getRelease_time()) * 1000L;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         return dateFormat.format(time);
     }
 
-    private void checkLoadMoreComplete(ArrayList<CompanionCampaign> result) {
+    private void checkLoadMoreComplete(ArrayList<ServiceMessageList> result) {
         if (null == result)
             rv_content.noMoreLoading();
         else

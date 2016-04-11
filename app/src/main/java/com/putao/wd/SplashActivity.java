@@ -211,11 +211,11 @@ public class SplashActivity extends BasicFragmentActivity {
                     @Override
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         super.onFinish(url, isSuccess, msg);
-                        startActivity(IndexActivity.class);
                         checkNotify();
                         finish();
                     }
                 });
+        startActivity(IndexActivity.class);
     }
 
     private void checkNotify() {

@@ -76,4 +76,11 @@ public final class AccountConstants {
         public static final String EVENT_ALBUM_SELECT = "event_album_select";
         public static final String EVENT_REFRESH_COMPANION = "event_refresh_companion";
     }
+
+    /**
+     * Bundle常量
+     */
+    public static final class Bundle {
+        public static final String BUNDLE_SERVICE_ID = "bundle_service_id";
+    }
 }

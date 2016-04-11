@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDFragment;
@@ -103,10 +104,10 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     @Override
     public void onItemClick(Companion companion, int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        startActivity(GameDetailListActivity.class, bundle);
         companion.setNum(0);
         mCompanionAdapter.notifyItemChanged(position);
+        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, companion.getService_id());
+        startActivity(GameDetailListActivity.class, bundle);
     }
 
     @OnClick(R.id.btn_relevance_device)

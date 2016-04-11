@@ -25,6 +25,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
      */
     public static class Properties {
         public final static Property id = new Property(0, String.class, "id", true, "ID");
+        public final static Property service_id = new Property(0, String.class, "service_id", true, "SERVICE_ID");
         public final static Property type = new Property(1, String.class, "type", false, "TYPE");
         public final static Property release_time = new Property(2, String.class, "release_time", false, "RELEASE_TIME");
         public final static Property content_lists = new Property(3, String.class, "content_lists", false, "CONTENT_LISTS");
@@ -47,6 +48,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         String str = "CREATE TABLE " + constraint + "\"" + TABLENAME + "\"" + " (" +
                 "\"" + Properties.id.columnName + "\"" + " TEXT PRIMARY KEY NOT NULL," +
+                "\"" + Properties.service_id.columnName + "\"" + " TEXT NOT NULL," +
                 "\"" + Properties.type.columnName + "\"" + " TEXT," +
                 "\"" + Properties.release_time.columnName + "\"" + " TEXT," +
                 "\"" + Properties.content_lists.columnName + "\"" + " TEXT," +
@@ -77,10 +79,11 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
     public CompanionDB readEntity(Cursor cursor, int offset) {
         CompanionDB entity = new CompanionDB(
                 cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
-                cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // type
-                cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // release_time
-                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content_lists
-                cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // is_download
+                cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // service_id
+                cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // type
+                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // release_time
+                cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // content_lists
+                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // is_download
         );
         return entity;
     }
@@ -91,10 +94,11 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
     @Override
     public void readEntity(Cursor cursor, CompanionDB entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setType(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setRelease_time(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setContent_lists(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setIsDownload(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setService_id(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setType(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setRelease_time(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setContent_lists(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setIsDownload(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
     }
 
     @Override
@@ -106,22 +110,27 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
             stmt.bindString(1, id);
         }
 
+        String service_id = entity.getService_id();
+        if (service_id != null) {
+            stmt.bindString(2, service_id);
+        }
+
         String type = entity.getType();
         if (type != null) {
-            stmt.bindString(2, type);
+            stmt.bindString(3, type);
         }
 
         String release_time = entity.getRelease_time();
         if (release_time != null) {
-            stmt.bindString(3, release_time);
+            stmt.bindString(4, release_time);
         }
         String content_lists = entity.getContent_lists();
         if (release_time != null) {
-            stmt.bindString(4, content_lists);
+            stmt.bindString(5, content_lists);
         }
         String is_download = entity.getIsDownload();
         if (release_time != null) {
-            stmt.bindString(5, is_download);
+            stmt.bindString(6, is_download);
         }
     }
 

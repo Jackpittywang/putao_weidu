@@ -21,6 +21,7 @@ import com.putao.wd.model.ArticleDetailActs;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.webview.PutaoParse;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.BasicWebView;
@@ -81,9 +82,11 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity {
         wv_load.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
-                // putao://pageSetting/{isCommnet:1. zanNumber:5, commentNumber:10}
-
-                // viewPic
+                if (PutaoParse.PAGE_SETTING.equals(scheme)) {
+                    // putao://pageSetting/{isCommnet:1. zanNumber:5, commentNumber:10}
+                } else {
+                    PutaoParse.parseUrl(mContext, scheme, result);
+                }
             }
 
             @Override
