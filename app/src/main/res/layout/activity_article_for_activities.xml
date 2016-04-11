@@ -20,7 +20,7 @@
         android:id="@+id/sv_load"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ll_comment_edit"
+        android:layout_above="@+id/ll_bottom"
         android:layout_below="@+id/navigation_bar"
         android:fillViewport="true">
 

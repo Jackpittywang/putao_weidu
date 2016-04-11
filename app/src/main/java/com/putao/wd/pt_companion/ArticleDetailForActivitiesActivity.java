@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.album.activity.PhotoAlbumActivity;
@@ -75,6 +76,19 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 sv_load.scrollTo(0, 0);
+            }
+        });
+        wv_load.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
+            @Override
+            public void onParsePutaoUrl(String scheme, JSONObject result) {
+                // putao://pageSetting/{isCommnet:1. zanNumber:5, commentNumber:10}
+
+                // viewPic
+            }
+
+            @Override
+            public void onWebPageLoaderFinish(String url) {
+
             }
         });
     }
