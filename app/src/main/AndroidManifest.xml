@@ -366,9 +366,6 @@
             android:name=".pt_me.collection.CollectionActivity"
             android:screenOrientation="portrait" />
         <!--我的收藏详情-->
-        <activity
-            android:name=".pt_me.collection.CollectionDetailActivity"
-            android:screenOrientation="portrait" />
         <!--创造奇思妙想详情-->
         <activity
             android:name=".created.CreateBasicDetailActivity"

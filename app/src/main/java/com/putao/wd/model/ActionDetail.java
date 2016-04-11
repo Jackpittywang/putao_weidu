@@ -8,6 +8,93 @@ import java.util.List;
  * Created by guchenkai on 2015/12/8.
  */
 public class ActionDetail implements Serializable {
+
+    private String article_id;//活动ID
+    private String article_title;//活动标题
+    private String article_tag;//活动标签
+    private String article_contents;//活动内容
+    private String type;//文章类型
+    private int attend_count;//参与人数
+    private int sub_status;//是否收藏0未收藏，1已收藏
+
+    private List<ActionDetailComment> attend_list;
+
+    public String getArticle_contents() {
+        return article_contents;
+    }
+
+    public void setArticle_contents(String article_contents) {
+        this.article_contents = article_contents;
+    }
+
+    public String getArticle_id() {
+        return article_id;
+    }
+
+    public void setArticle_id(String article_id) {
+        this.article_id = article_id;
+    }
+
+    public String getArticle_tag() {
+        return article_tag;
+    }
+
+    public void setArticle_tag(String article_tag) {
+        this.article_tag = article_tag;
+    }
+
+    public String getArticle_title() {
+        return article_title;
+    }
+
+    public void setArticle_title(String article_title) {
+        this.article_title = article_title;
+    }
+
+    public int getAttend_count() {
+        return attend_count;
+    }
+
+    public void setAttend_count(int attend_count) {
+        this.attend_count = attend_count;
+    }
+
+    public List<ActionDetailComment> getAttend_list() {
+        return attend_list;
+    }
+
+    public void setAttend_list(List<ActionDetailComment> attend_list) {
+        this.attend_list = attend_list;
+    }
+
+    public int getSub_status() {
+        return sub_status;
+    }
+
+    public void setSub_status(int sub_status) {
+        this.sub_status = sub_status;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private String id;//活动ID
     private String banner_url;//Banner_url
     private String html_url;//Html5的地址
@@ -19,7 +106,7 @@ public class ActionDetail implements Serializable {
     private String description;//活动描述
     private String status;//活动状态
     private int registration_number;//注册号
-    private String type;//类型
+    //   private String type;//类型
     private String explanation;//活动说明
     private String site;//活动现场
     private String wonderful_review;//精彩回顾

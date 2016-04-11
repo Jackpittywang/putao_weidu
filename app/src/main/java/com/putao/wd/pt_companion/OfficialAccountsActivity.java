@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import org.w3c.dom.Text;
@@ -19,7 +21,7 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/4/9.
  */
-public class OfficialAccountsActivity extends PTWDActivity{
+public class OfficialAccountsActivity extends PTWDActivity {
 
     @Bind(R.id.iv_icon)
     ImageDraweeView iv_icon;
@@ -54,7 +56,6 @@ public class OfficialAccountsActivity extends PTWDActivity{
     }
 
     private void addListener() {
-
         btn_cancel_associate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,81 +65,29 @@ public class OfficialAccountsActivity extends PTWDActivity{
     }
 
     private void showDialog() {
+        builder = new AlertDialog.Builder(this);
 
+        final LayoutInflater inflater = OfficialAccountsActivity.this.getLayoutInflater();
+        view_custom = inflater.inflate(R.layout.activity_officialaccounts_dialog, null, false);
 
-//        builder = new AlertDialog.Builder(this);
-//
-//        final LayoutInflater inflater = OfficialAccountsActivity.this.getLayoutInflater();
-//        view_custom = inflater.inflate(R.layout.activity_officialaccounts_dialog, null, false);
-//
-//        builder.setView(view_custom);
-//        builder.setCancelable(false);
-//
-//        view_custom.findViewById(R.id.no_cancel).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mDialog.dismiss();
-//            }
-//        });
-//
-//        view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mDialog.dismiss();
-//            }
-//        });
+        builder.setView(view_custom);
+        builder.setCancelable(false);
 
-//        builder = new AlertDialog.Builder(this);
-//        builder.setIcon(R.drawable.ic_launcher);
-//        builder.setTitle("提示");
-//
-//        //设置对话框信息
-//        builder.setMessage("取消关联产品后，所有信息将会清空");
-//        //确定升级
-//        builder.setPositiveButton("不在关联", new DialogInterface.OnClickListener() {
-//
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // 下载服务器最新的apk
-//
-//
-//            }
-//        });
-//
-//        builder.setNegativeButton("暂不取消", new DialogInterface.OnClickListener() {
-//
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // 取消对话框
-//                mDialog.dismiss();
-//            }
-//        });
-//
-//        //对话框取消监听
-//        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//
-//            @Override
-//            public void onCancel(DialogInterface dialog) {
-//                mDialog.dismiss();
-//            }
-//        });
-//        //展示对话框
-//
-//        mDialog = builder.show();
+        view_custom.findViewById(R.id.no_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
 
+        view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        builder.show();
 
-        mDialog = new AlertDialog.Builder(mContext).setTitle("").setMessage("取消关联产品后，所有信息将会清空。")
-                .setCancelable(false)
-                .setPositiveButton("不在关联", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mDialog.dismiss();
-                    }
-                })
-                .setNegativeButton("暂不取消", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mDialog.cancel();
-                    }
-                }).show();
     }
 
 
