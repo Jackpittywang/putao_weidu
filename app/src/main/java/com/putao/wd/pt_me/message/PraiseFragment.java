@@ -112,7 +112,7 @@ public class PraiseFragment extends BasicFragment {
                             adapter.replaceAll(result);
                         } else {
                             rl_no_message.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
                         /*if (result.getTotal_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;
@@ -127,7 +127,7 @@ public class PraiseFragment extends BasicFragment {
 
 
     private void checkLoadMoreComplete(ArrayList<Praise> result) {
-        if (result.size() < 20)
+        if (result == null)
             rv_content.noMoreLoading();
         else mPage++;
     }

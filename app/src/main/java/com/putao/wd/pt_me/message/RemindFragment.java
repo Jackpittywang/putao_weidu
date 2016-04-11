@@ -109,7 +109,7 @@ public class RemindFragment extends BasicFragment {
                             rl_no_message.setVisibility(View.GONE);
                             adapter.replaceAll(result);
                         } else {
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                             rl_no_message.setVisibility(View.VISIBLE);
                         }
 //                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
@@ -148,7 +148,7 @@ public class RemindFragment extends BasicFragment {
     }
 
     private void checkLoadMoreComplete(ArrayList<Remind> result) {
-        if (result.size() < 20)
+        if (result == null)
             rv_content.noMoreLoading();
         else mPage++;
     }
