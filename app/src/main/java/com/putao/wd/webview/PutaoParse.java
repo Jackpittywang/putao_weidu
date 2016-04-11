@@ -13,9 +13,12 @@ import com.putao.wd.start.browse.PictrueBrowseActivity;
  * Created by yanguoqiang on 16/4/11.
  */
 public class PutaoParse {
-
+    // 开新的webview
     public static String OPEN_WEBVIEW = "openWebview";
+    // 打开画廊显示一组图片
     public static String VIEW_PIC = "viewPic";
+    // 文章详情页面是否显示评论以及评论和赞数量
+    public static String PAGE_SETTING = "pageSetting";
 
     public static boolean parseUrl(Context context, String scheme, JSONObject jsonObj) {
 
