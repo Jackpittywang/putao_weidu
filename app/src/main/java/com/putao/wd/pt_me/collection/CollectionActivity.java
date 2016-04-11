@@ -61,6 +61,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
+                        rv_collection.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
@@ -69,23 +70,13 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
+                            rv_collection.noMoreLoading();
                         }
-                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
                 }
         );
-    }
-
-    private void checkLoadMoreComplete(ArrayList<Collection> list) {
-        if (null == list) {
-            rv_collection.noMoreLoading();
-            hasMoreData = false;
-        } else {
-            mPage++;
-            hasMoreData = true;
-        }
     }
 
     private void addListenter() {
@@ -141,11 +132,13 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
+                        rv_collection.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             adapter.addAll(result);
+                            mPage++;
+                        } else {
+                            rv_collection.noMoreLoading();
                         }
-                        rv_collection.loadMoreComplete();
-                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });

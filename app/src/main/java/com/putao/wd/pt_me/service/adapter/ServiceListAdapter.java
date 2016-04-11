@@ -11,6 +11,7 @@ import com.putao.wd.R;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
+import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.MathUtils;
@@ -81,8 +82,8 @@ public class ServiceListAdapter extends LoadMoreAdapter<ServiceList, ServiceList
             public void onItemClick(ServiceProduct product, int position) {
                 Bundle bundle = new Bundle();
 //                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_ID, product.getSale_product_id());
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
-                context.startActivity(ProductDetailActivity.class, bundle);
+                bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
+                context.startActivity(ProductDetailV2Activity.class, bundle);
             }
         });
 

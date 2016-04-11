@@ -389,7 +389,7 @@ public class DiaryActivity extends PTWDActivity {
                 int status = result.getStatus();
                 int has_special = result.getHas_special();
                 Bundle bundle = new Bundle();
-                bundle.putBoolean(ProductDetailActivity.BUNDLE_IS_REMIND, true);
+                bundle.putBoolean(ProductDetailV2Activity.BUNDLE_IS_REMIND, true);
                 if (result.equals("") && result == null || status == 0) {
                     bundle.putSerializable("status", status);
                     startActivity(ProductDetailActivity.class, bundle);

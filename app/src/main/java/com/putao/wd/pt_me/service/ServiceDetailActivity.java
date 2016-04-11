@@ -14,15 +14,19 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
+import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.jpush.JPushReceiver;
+import com.putao.wd.model.ProductStatus;
 import com.putao.wd.pt_me.service.adapter.ServiceAdapter;
 import com.putao.wd.model.Express;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
+import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
@@ -177,17 +181,47 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
         rv_service_detail.setOnItemClickListener(new OnItemClickListener<ServiceProduct>() {
             @Override
             public void onItemClick(ServiceProduct product, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_DETAIL, true);
-                bundle.putSerializable(ProductDetailActivity.BUNDLE_IS_SERVICE, true);
-                startActivity(ProductDetailActivity.class, bundle);
+                IsProductDetail(product.getProduct_id(), product);
             }
         });
         tv_goods_total_number.setText("" + serviceList.getSaleTotalQuantity());
         tv_cost.setText("￥" + (TextUtils.isEmpty(order_info.getProduct_money()) ? 0.00 : order_info.getProduct_money()));
         tv_shipment_fee.setText("￥0.00");
         tv_total_cost.setText("￥" + serviceList.getSaleTotalPrice());
+    }
+
+    /**
+     * 判断是否下架以及是否是精品页面
+     */
+    public void IsProductDetail(final String product_id, final ServiceProduct product) {
+        networkRequest(StoreApi.getProductStatus(product_id), new SimpleFastJsonCallback<ProductStatus>(ProductStatus.class, loading) {
+            @Override
+            public void onSuccess(String url, ProductStatus result) {
+                int status = result.getStatus();
+                int has_special = result.getHas_special();
+                Bundle bundle = new Bundle();
+                if (result.equals("") && result == null || status == 0) {
+                    bundle.putSerializable("status", status);
+                    startActivity(ProductDetailV2Activity.class, bundle);
+                } else {
+                    //判断是否是精品(1.精品，0.非精品)
+                    if (has_special == 1) {//精品页面：ProductDetailActivity
+                        YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_IS_DETAIL, true);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_IS_SERVICE, true);
+                        bundle.putSerializable("status", status);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "");
+                        startActivity(ProductDetailV2Activity.class, bundle);
+                    } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
+                        YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail);
+                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "");
+                        bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
+                        startActivity(ProductDetailActivity.class, bundle);
+                    }
+                }
+            }
+        });
     }
 
     /**

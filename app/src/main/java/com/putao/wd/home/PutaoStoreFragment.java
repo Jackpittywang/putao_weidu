@@ -169,20 +169,20 @@ public class PutaoStoreFragment extends PTWDFragment {
                 Bundle bundle = new Bundle();
                 if (result.equals("") && result == null || status == 0) {
                     bundle.putSerializable("status", status);
-                    startActivity(ProductDetailActivity.class, bundle);
+                    startActivity(ProductDetailV2Activity.class, bundle);
                 } else {
                     //判断是否是精品(1.精品，0.非精品)
                     if (has_special == 1) {//精品页面：ProductDetailActivity
                         YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
-                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT, product);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
                         bundle.putSerializable("status", status);
-                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "");
-                        startActivity(ProductDetailActivity.class, bundle);
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "");
+                        startActivity(ProductDetailV2Activity.class, bundle);
                     } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
                         YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
-                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "");
-                        bundle.putSerializable(ProductDetailV2Activity.PRODUCT_ID, product_id);
-                        startActivity(ProductDetailV2Activity.class, bundle);
+                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "");
+                        bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
+                        startActivity(ProductDetailActivity.class, bundle);
                     }
                 }
             }

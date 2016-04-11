@@ -1,11 +1,11 @@
 package com.putao.wd.home;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.api.DisCoveryApi;
-import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.DiscoveryAdapter;
 import com.putao.wd.model.DisCovery;
@@ -18,7 +18,6 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -31,6 +30,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_discovery)
     LoadMoreRecyclerView rv_discovery;
+    @Bind(R.id.rl_no_discovery)
+    RelativeLayout rl_no_discovery;
 
     private int currentPage = 1;
     private DiscoveryAdapter adapter;
@@ -61,7 +62,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshDisCovery();
+                getDisCovery();
             }
         });
         /**
@@ -75,13 +76,13 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
 
                             @Override
                             public void onSuccess(String url, ArrayList<DisCovery> result) {
-                                cacheData(url, result);
-                                if (null != result) {
-                                    adapter.replaceAll(result);
-                                }
                                 rv_discovery.loadMoreComplete();
-                                checkLoadMoreComplete(result);
-                                ptl_refresh.refreshComplete();
+                                if (null != result && result.size() > 0) {
+                                    adapter.replaceAll(result);
+                                    currentPage++;
+                                } else {
+                                    rv_discovery.noMoreLoading();
+                                }
                                 loading.dismiss();
                             }
                         });
@@ -90,57 +91,29 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         rv_discovery.setOnItemClickListener(this);
     }
 
-
-    /**
-     * 刷新视频列表
-     */
-    private void refreshDisCovery() {
-        currentPage = 1;
-        networkRequest(DisCoveryApi.getfindVideo(currentPage),
-                new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
-
-                    @Override
-                    public void onSuccess(String url, ArrayList<DisCovery> result) {
-                        cacheData(url, result);
-                        if (null != result) {
-                            adapter.replaceAll(result);
-                        }
-                        checkLoadMoreComplete(result);
-                        ptl_refresh.refreshComplete();
-                        loading.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        super.onFailure(url, statusCode, msg);
-                        ptl_refresh.refreshComplete();
-                    }
-                });
-    }
-
-    private void checkLoadMoreComplete(ArrayList<DisCovery> list) {
-        if (list == null) {
-            rv_discovery.noMoreLoading();
-        } else {
-            currentPage++;
-        }
-    }
-
     /**
      * 加载视频列表
      */
     private void getDisCovery() {
+        currentPage = 1;
         networkRequestCache(DisCoveryApi.getfindVideo(currentPage),
                 new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
 
                     @Override
                     public void onSuccess(String url, ArrayList<DisCovery> result) {
                         cacheData(url, result);
-                        if (null != result) {
+                        rv_discovery.loadMoreComplete();
+                        if (result != null && result.size() > 0) {
+                            rl_no_discovery.setVisibility(View.GONE);
+                            rv_discovery.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
+                        } else {
+                            rl_no_discovery.setVisibility(View.VISIBLE);
+                            rv_discovery.setVisibility(View.GONE);
+                            rv_discovery.noMoreLoading();
                         }
-                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
+                        loading.dismiss();
                     }
 
                     @Override

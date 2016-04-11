@@ -69,6 +69,7 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                 new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Participation> result) {
+                        rv_participation.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
@@ -76,21 +77,14 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
+                            rv_participation.noMoreLoading();
                         }
-                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
                 });
     }
 
-    private void checkLoadMoreComplete(ArrayList<Participation> result) {
-        if (null == result) {
-            rv_participation.noMoreLoading();
-        } else {
-            mPage++;
-        }
-    }
 
     private void addListenter() {
         rv_participation.setOnItemClickListener(this);
@@ -116,9 +110,12 @@ public class ParticipationActivity extends PTWDActivity implements PullToRefresh
                 new SimpleFastJsonCallback<ArrayList<Participation>>(Participation.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Participation> result) {
-                        adapter.addAll(result);
                         rv_participation.loadMoreComplete();
-                        checkLoadMoreComplete(result);
+                        if (result != null && result.size() > 0) {
+                            adapter.addAll(result);
+                            mPage++;
+                        } else
+                            rv_participation.noMoreLoading();
                         loading.dismiss();
                     }
                 });

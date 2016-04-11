@@ -9,11 +9,10 @@ import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
-import com.putao.wd.model.Reply;
 import com.putao.wd.pt_me.message.adapter.RemindAdapter;
 import com.putao.wd.model.Remind;
 import com.putao.wd.model.RemindDetail;
-import com.putao.wd.pt_store.product.ProductDetailActivity;
+import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -51,7 +50,7 @@ public class RemindFragment extends BasicFragment {
 
     @Override
     protected void lazyLoad() {
-        if(!isPrepared || !isVisible){
+        if (!isPrepared || !isVisible) {
             return;
         }
 
@@ -100,7 +99,7 @@ public class RemindFragment extends BasicFragment {
      */
     private void getRemindList() {
         loading.show();
-        mPage=1;
+        mPage = 1;
         networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<ArrayList<Remind>>(Remind.class, loading) {
                     @Override
@@ -149,7 +148,7 @@ public class RemindFragment extends BasicFragment {
     }
 
     private void checkLoadMoreComplete(ArrayList<Remind> result) {
-        if (result.size() <20)
+        if (result.size() < 20)
             rv_content.noMoreLoading();
         else mPage++;
     }
@@ -167,8 +166,8 @@ public class RemindFragment extends BasicFragment {
         switch (link_type) {
             case "product"://精选商品
                 bundle.putSerializable(BUNDLE_REMIND_PRODUCTID, remindDetail.getUrl());
-                bundle.putBoolean(ProductDetailActivity.BUNDLE_IS_REMIND, true);
-                startActivity(ProductDetailActivity.class, bundle);
+                bundle.putBoolean(ProductDetailV2Activity.BUNDLE_IS_REMIND, true);
+                startActivity(ProductDetailV2Activity.class, bundle);
                 break;
             case "explore"://探索文章
                 bundle.putString(ExploreMoreDetailActivity.ARTICLE_ID, remindDetail.getUrl());
