@@ -19,6 +19,7 @@ import butterknife.Bind;
  */
 public class GameDetailActivity extends PTWDActivity {
 
+    public static final String POSITION = "position";
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
     @Bind(R.id.pb_webview)

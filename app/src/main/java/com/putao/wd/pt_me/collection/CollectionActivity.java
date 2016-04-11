@@ -11,6 +11,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CollectionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Collection;
+import com.putao.wd.pt_companion.GameDetailActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -39,7 +40,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     private boolean hasMoreData;
     private AlertDialog mDeleteDialog;
     private boolean isCollection = true;
-    private Collection mCollection;
+    private ArrayList<Collection> mCollection;
 
     @Override
     protected int getLayoutId() {
@@ -62,6 +63,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
                         if (result != null && result.size() > 0) {
+                            mCollection = result;
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
@@ -131,6 +133,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
+                        mCollection = result;
                         adapter.addAll(result);
                         checkLoadMoreComplete(result);
                         loading.dismiss();
@@ -146,62 +149,11 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
 
     @Override
     public void onItemClick(Collection collection, int position) {
-        mCollection = collection;
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CollectionDetailActivity.CREATE, (Serializable) adapter.getItems());
-        bundle.putInt(CollectionDetailActivity.POSITION, position);
-        bundle.putInt(CollectionDetailActivity.PAGE_COUNT, mPage);
-        bundle.putBoolean(CollectionDetailActivity.HAS_MORE_DATA, hasMoreData);
+        bundle.putInt(GameDetailActivity.POSITION, mCollection.get(position).getId());
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
-        startActivity(CollectionDetailActivity.class, bundle);
+        startActivity(GameDetailActivity.class, bundle);
     }
-
-//    @Subcriber(tag = CreateBasicDetailActivity.EVENT_CONCERNS_REFRESH)
-//    private void eventRefresh(String str) {
-////        adapter.delete(mCreate);
-//        if (adapter.getItemCount() == 1) {
-//            ptl_refresh.setVisibility(View.GONE);
-//            ll_empty.setVisibility(View.VISIBLE);
-//        }
-//    }
-//
-//    @Subcriber(tag = CreateCommentActivity.EVENT_ADD_CREAT_COMMENT)
-//    public void eventAddCommentCount(int position) {
-//        if (adapter.getItemCount() > position) {
-//            Create item = adapter.getItem(position);
-//            item.getComment().setCount(item.getComment().getCount() + 1);
-//            adapter.notifyItemChanged(position);
-//        }
-//    }
-//
-//    @Subcriber(tag = CreateCommentActivity.EVENT_DELETE_CREAT_COMMENT)
-//    public void evenDeleteCommentCount(int position) {
-//        if (adapter.getItemCount() > position) {
-//            Create item = adapter.getItem(position);
-//            item.getComment().setCount(item.getComment().getCount() - 1);
-//            adapter.notifyItemChanged(position);
-//        }
-//    }
-//
-//    @Subcriber(tag = PutaoCreatedSecondFragment.EVENT_ADD_CREAT_COOL)
-//    public void eventAddCoolCount(int position) {
-//        addCool(position);
-//    }
-//
-//
-//    @Subcriber(tag = FancyFragment.EVENT_ADD_FANCY_COOL)
-//    public void eventAddCoolCount2(int position) {
-//        addCool(position);
-//    }
-//
-//    private void addCool(int position) {
-//        if (adapter.getItemCount() > position) {
-//            Create item = adapter.getItem(position);
-//            item.getVote().setUp(item.getVote().getUp() + 1);
-//            item.setVote_status(1);
-//            adapter.notifyItemChanged(position);
-//        }
-//    }
 
     @Override
     public void onClick(View v) {
