@@ -183,10 +183,12 @@
                 <!--style="@style/style_setting"-->
                 <!--auto:setting_icon="@drawable/icon_20_08"-->
                 <!--auto:setting_text="@string/question" />-->
+                <!--隐藏我的参与-->
                 <com.sunnybear.library.view.SettingItem
                     android:id="@+id/si_participation"
                     style="@style/style_setting"
                     android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     auto:setting_divider="bottom"
                     auto:setting_icon="@drawable/icon_20_07"
                     auto:setting_indicator_background="@drawable/setting_indicator"
@@ -225,6 +227,7 @@
                     android:id="@+id/si_question"
                     style="@style/style_setting"
                     android:layout_marginBottom="20dp"
+                    android:visibility="gone"
                     auto:setting_icon="@drawable/icon_20_29"
                     auto:setting_text="葡萄籽" />
             </LinearLayout>
