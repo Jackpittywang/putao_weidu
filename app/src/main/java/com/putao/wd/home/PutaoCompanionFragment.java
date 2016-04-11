@@ -52,7 +52,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     }
 
     private void checkDevice() {
-        if (GlobalApplication.isBindDevice) {
+        if (/*GlobalApplication.isBindDevice*/true) {
             ll_companion_empty.setVisibility(View.GONE);
             navigation_bar.setVisibility(View.VISIBLE);
             ptl_refresh.setVisibility(View.VISIBLE);
@@ -73,7 +73,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
                 new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Companion> result) {
-                        mCompanionAdapter.addAll(result);
+                        mCompanionAdapter.replaceAll(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
