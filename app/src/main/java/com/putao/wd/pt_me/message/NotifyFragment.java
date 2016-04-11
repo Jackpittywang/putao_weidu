@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
+import com.putao.wd.model.Praise;
 import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.pt_me.message.adapter.NotifyAdapter;
 import com.putao.wd.model.Notify;
@@ -18,6 +19,7 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,7 +43,7 @@ public class NotifyFragment extends BasicFragment {
 
     private boolean isPrepared;
 
-    private int currentPage = 1;
+    private int mPage = 1;
 
 
     @Override
@@ -94,9 +96,9 @@ public class NotifyFragment extends BasicFragment {
      * 获取用户列表
      */
     private void getNotifyList() {
-        currentPage = 1;
+        mPage = 1;
         loading.show();
-        networkRequest(StartApi.getNotifyList(String.valueOf(currentPage)),
+        networkRequest(StartApi.getNotifyList(String.valueOf(mPage)),
                 new SimpleFastJsonCallback<Notify>(Notify.class, loading) {
                     @Override
                     public void onSuccess(String url, Notify result) {
@@ -107,12 +109,14 @@ public class NotifyFragment extends BasicFragment {
                             adapter.replaceAll(details);
                         } else {
                             rl_no_message.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
-                        if (details != null) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
-                            currentPage++;
-                            rv_content.loadMoreComplete();
-                        } else rv_content.noMoreLoading();
+//                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
+//                            mPage++;
+//                            rv_content.loadMoreComplete();
+//                        } else rv_content.noMoreLoading();
+                        rv_content.loadMoreComplete();
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                         ptl_refresh.refreshComplete();
                     }
@@ -123,7 +127,7 @@ public class NotifyFragment extends BasicFragment {
      * 获取用户列表
      */
     private void getNotifyMore() {
-        networkRequest(StartApi.getNotifyList(String.valueOf(currentPage)),
+        networkRequest(StartApi.getNotifyList(String.valueOf(mPage)),
                 new SimpleFastJsonCallback<Notify>(Notify.class, loading) {
                     @Override
                     public void onSuccess(String url, Notify result) {
@@ -131,10 +135,12 @@ public class NotifyFragment extends BasicFragment {
                         if (details != null && details.size() > 0) {
                             adapter.addAll(details);
                         }
-                        if (details != null) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
-                            currentPage++;
-                            rv_content.loadMoreComplete();
-                        } else rv_content.noMoreLoading();
+//                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
+//                            mPage++;
+//                            rv_content.loadMoreComplete();
+//                        } else rv_content.noMoreLoading();
+                        rv_content.loadMoreComplete();
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
@@ -143,6 +149,12 @@ public class NotifyFragment extends BasicFragment {
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
+    }
+
+    private void checkLoadMoreComplete(Notify result) {
+        if (result == null)
+            rv_content.noMoreLoading();
+        else mPage++;
     }
 
 
