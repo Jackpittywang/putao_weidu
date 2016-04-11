@@ -2,6 +2,9 @@ package com.putao.wd.start.putaozi;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
@@ -11,6 +14,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.start.question.QuestionActivity;
 import com.putao.wd.user.LoginActivity;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
@@ -26,6 +30,8 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     public static final String URL_GRAPESTONE = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/faq/list" : "http://api-weidu.putao.com/faq/list";
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
+    @Bind(R.id.pb_webview)
+    ProgressBar pb_webview;
 
     @Override
     protected int getLayoutId() {
@@ -37,6 +43,15 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
         addNavigation();
         wv_content.loadUrl(URL_GRAPESTONE);
         wv_content.setOnWebViewLoadUrlCallback(this);
+        wv_content.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                pb_webview.setProgress(newProgress);
+                if (newProgress >= 100)
+                    pb_webview.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -88,8 +103,13 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
                     YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_qa_item, "涂涂世界");
                     break;
             }
-            args.putString(CommonQuestionActivity.URL_QUESTION, url);
-            startActivity(CommonQuestionActivity.class, args);
+
+            // args.putString(CommonQuestionActivity.URL_QUESTION, url);
+            // startActivity(CommonQuestionActivity.class, args);
+            args.putString(BaseWebViewActivity.URL, url);
+            args.putString(BaseWebViewActivity.TITLE, "常见问题");
+            startActivity(BaseWebViewActivity.class, args);
+
         }
     }
 
