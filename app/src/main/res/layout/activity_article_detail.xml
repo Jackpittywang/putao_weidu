@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            android:id="@+id/navigation_bar"
+            style="@style/style_navigation_bar"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_right_icon="@drawable/share_selector" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/setting_item_height"
+            android:layout_centerInParent="true">
+
+            <!--作品用户头像-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_author_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--用户名-->
+                <TextView
+                    android:id="@+id/tv_author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:text="风" />
+
+                <!--发布时间-->
+                <TextView
+                    android:id="@+id/tv_author_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:text="2016/4/1 23:59" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.sunnybear.library.view.sticky.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_navigation_bar"
+        auto:scrollable_closeUpAnimatorInterpolator="@android:anim/bounce_interpolator">
+
+        <LinearLayout
+            android:id="@id/stickyHeaderLayout_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View style="@style/line_horizontal" />
+
+            <!--顶部图片区域-->
+            <RelativeLayout
+                android:id="@+id/layout_articlesdetail_header"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <com.sunnybear.library.view.image.ImageDraweeView
+                    android:id="@+id/iv_articlesdetail_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/tv_articlesdetail_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#985ec9"
+                    android:padding="5dp"
+                    android:text="体验"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <!--用户输入的活动内容-->
+            <TextView
+                android:id="@+id/tv_articlesdetail_resume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="这里显示的是用户参加这个活动输入的内容可以行显示"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <View style="@style/line_horizontal" />
+
+            <!--间隔区-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_EBEBEB" />
+
+            <!--参与点赞信息-->
+            <RelativeLayout
+                android:id="@+id/ll_join_list"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <!--参与人员的头像-->
+                <com.sunnybear.library.view.recycler.BasicRecyclerView
+                    android:id="@+id/rv_articlesdetail_applyusers"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="@dimen/distance_8dp"
+                    android:layout_marginLeft="@dimen/distance_5dp"
+                    android:layout_marginRight="@dimen/distance_8dp"
+                    android:layout_marginTop="@dimen/distance_8dp"
+                    android:visibility="visible"
+                    auto:divider_width="5dp"
+                    auto:has_rank_divider="true"
+                    auto:layout_mode="horizontal" />
+
+                <!--点赞的数量-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:gravity="left">
+
+                    <LinearLayout
+                        android:id="@+id/ll_praise_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_praise_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="666"
+                            android:textColor="@color/text_color_646464"
+                            android:textSize="@dimen/text_size_14sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="赞"
+                            android:textColor="@color/text_color_646464"
+                            android:textSize="@dimen/text_size_10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_icon_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/btn_arrow"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <View style="@style/line_horizontal" />
+            <!--间隔区-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_EBEBEB" />
+
+            <View style="@style/line_horizontal" />
+
+            <TextView
+                android:id="@+id/tv_amount_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="15"
+                android:padding="10dp"
+                android:text="2  条评论"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <View style="@style/line_horizontal" />
+
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_others_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                auto:divider_width="5dp"
+                auto:has_rank_divider="true"
+                auto:layout_mode="vertical" />
+        </LinearLayout>
+    </com.sunnybear.library.view.sticky.StickyHeaderLayout>
+
+    <include
+        android:id="@+id/ll_comment_edit"
+        layout="@layout/base_comment" />
+
+</RelativeLayout>

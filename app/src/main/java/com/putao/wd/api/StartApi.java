@@ -163,6 +163,19 @@ public class StartApi {
     }
 
     /**
+     * 活动详情（查询）
+     *
+     * @param action_id    活动ID
+     * @param is_user_like 是否被赞过
+     */
+    public static Request getArticleDetail(String action_id, boolean is_user_like) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_ACTION_ID, action_id)
+                .addParam(REQUEST_USER_LIKE, is_user_like ? "1" : "0")
+                .build(RequestMethod.POST, URL_ACTION_DETAIL);
+    }
+
+    /**
      * 获取个人信息（查询）
      */
     public static final String URL_PROFILE = BASE_URL + "user/profile";
