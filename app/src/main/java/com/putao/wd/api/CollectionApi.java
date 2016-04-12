@@ -26,6 +26,6 @@ public class CollectionApi {
     public static Request getCollection(int page) {
         return PTWDRequestHelper.find()
                 .addParam(COLLECTION_PAGE, page + "")
-                .build(RequestMethod.GET, URL_COLLECTION);
+                .build(RequestMethod.POST, URL_COLLECTION);
     }
 }

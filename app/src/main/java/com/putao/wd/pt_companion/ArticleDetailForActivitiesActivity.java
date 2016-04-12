@@ -46,7 +46,7 @@ import butterknife.OnClick;
  */
 public class ArticleDetailForActivitiesActivity extends PTWDActivity implements OnClickListener {
     public static final String COOL_COUNT = "like_count";
-    private static final String COMMENT_COUNT = "comment_count";
+    public static final String COLLECTION_ID = "collection_id";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
     @Bind(R.id.wv_load)
@@ -186,7 +186,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
      * 取消收藏
      */
     private void cancelCollection(final TextView textView, final ImageView imageView) {
-        networkRequest(CompanionApi.cancelCollects(type, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(CompanionApi.cancelCollects(null, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "取消收藏");

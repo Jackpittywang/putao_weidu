@@ -419,7 +419,7 @@ public class CompanionApi {
      * 取消收藏
      */
     public static Request cancelCollects(String type, String article_id) {
-        return PTWDRequestHelper.find()
+        return PTWDRequestHelper.start()
                 .addParam(REQUEST_TYPE, type)
                 .addParam(REQUEST_ARTICLE_ID, article_id)
                 .build(RequestMethod.POST, URL_COMPANY_CANCEL_COLLECTION);
