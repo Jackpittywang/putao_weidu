@@ -271,7 +271,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send://点击发送
-                sendComment(false);
+                sendComment(hasPic);
                 break;
             case R.id.et_msg://点击文本输入框
                 isShowEmoji = false;
@@ -307,7 +307,8 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
             iv_upload_pic.setDefaultImage(bitmap);
             String filePath = GlobalApplication.sdCardPath + File.separator + "upload.jpg";
             ImageUtils.bitmapOutSdCard(bitmap, filePath);
-            uploadFilePath = filePath;
+            uploadPic = filePath;
+            hasPic = true;
             iv_upload_pic.setImageURI(Uri.parse("file://putao/" + filePath));
         }
     }
@@ -468,17 +469,17 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
 
             if (!StringUtils.isEmpty(picStr)) {
                 hasPic = true;
-                uploadFilePath = picStr;
+                uploadPic = picStr;
             } else {
                 hasPic = false;
-                uploadFilePath = "";
+                uploadPic = "";
             }
         }
 
     }
 
     //=====================图片上传相关===========================
-    private String uploadFilePath;
+    private String uploadPic;
     private boolean hasPic = false;//评论是否带图片
     private String uploadToken;//上传token
     private File uploadFile;//上传文件
@@ -499,7 +500,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 if (StringUtils.isEmpty(hash))
                     getUploadToken();
                 else
-                    upload("jpg", hash, hash);
+                    sendCommentMsg(hash);
             }
 
             @Override
@@ -545,7 +546,6 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                         bundle.putString("ext", result.getString("ext"));
                         bundle.putString("filename", result.getString("filename"));
                         bundle.putString("hash", result.getString("hash"));
-                        //上传PHP服务器
                         mHandler.sendMessage(Message.obtain(mHandler, 0x01, bundle));
                     }
                 });
@@ -557,28 +557,15 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = (Bundle) msg.obj;
-            //上传PHP服务器
-            upload(bundle.getString("ext"), bundle.getString("filename"), bundle.getString("hash"));
+            //发送评论
+            sendCommentMsg(bundle.getString("filename") + "." + bundle.getString("filename"));
         }
     };
 
-    /**
-     * 上传PHP服务器
-     */
-    private void upload(String ext, String filename, String filehash) {
-        networkRequest(UserApi.userEdit(ext, filename, filehash),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        Logger.i("评论图片已上传");
-                        sendCommentMsg(sha1);
-                    }
-                });
-    }
 
     private void sendComment(boolean hasPic) {
         if (hasPic)
-            checkSha1(uploadFilePath);
+            checkSha1(uploadPic);
         else
             sendCommentMsg(null);
     }
