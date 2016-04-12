@@ -61,6 +61,7 @@
         android:layout_below="@+id/rl_navigation_bar"
         android:layout_centerVertical="true"
         android:layout_weight="1"
+        android:background="@color/white"
         android:visibility="visible"
         auto:divider_width="5dp"
         auto:has_rank_divider="true"
