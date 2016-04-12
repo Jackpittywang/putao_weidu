@@ -57,7 +57,7 @@ public class SplashActivity extends BasicFragmentActivity {
                     public ConcurrentHashMap<String, String> onBackground() {
                         try {
                             FileUtils.unZipInAsset(getApplicationContext(), "patch_10002_10003.zip", "patch", true);
-                            DistrictUtils.insertRegion();
+//                            DistrictUtils.insertRegion();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -212,10 +212,10 @@ public class SplashActivity extends BasicFragmentActivity {
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         super.onFinish(url, isSuccess, msg);
                         checkNotify();
+                        startActivity(IndexActivity.class);
                         finish();
                     }
                 });
-        startActivity(IndexActivity.class);
     }
 
     private void checkNotify() {
