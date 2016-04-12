@@ -69,6 +69,7 @@ public final class AccountConstants {
         public static final String check_nick_name_error_length_msg = "昵称长度必须大于4位且小于24位";
         public static final String check_nick_name_error_format_msg = "昵称仅支持中英文和数字";
     }
+
     /**
      * EventBus常量
      */

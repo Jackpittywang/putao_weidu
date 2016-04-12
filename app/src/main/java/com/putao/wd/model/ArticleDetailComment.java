@@ -1,6 +1,7 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 陪伴评论V1.3.0
@@ -8,16 +9,15 @@ import java.io.Serializable;
  */
 public class ArticleDetailComment implements Serializable {
     private String comment_id;//评论ID
+    private String content;//评论内容
     private String uid;//评论归属用户
+    private String release_time;//评论时间戳
     private String nick_name;//归属用户昵称
     private String head_img;//头像
-    private String comment_time;//评论时间戳
-    private String comment;//评论内容
-    private String content;//当评论为父评论时的评论内容
-    private int is_like;//赞
-    private int like_count;//点赞数
-    private int comment_count;//评论数
-    private ArticleDetailComment parent_comment;//父评论，可为空
+    private boolean is_like;//赞
+    private int count_likes;//点赞数
+    private int count_comments;//评论数
+    private List<ArticleDetailComment> parent_comment;//父评论，可为空
 
     public String getComment_id() {
         return comment_id;
@@ -51,12 +51,12 @@ public class ArticleDetailComment implements Serializable {
         this.head_img = head_img;
     }
 
-    public String getComment_time() {
-        return comment_time;
+    public String getRelease_time() {
+        return release_time;
     }
 
-    public void setComment_time(String comment_time) {
-        this.comment_time = comment_time;
+    public void setRelease_time(String release_time) {
+        this.release_time = release_time;
     }
 
     public String getContent() {
@@ -67,44 +67,36 @@ public class ArticleDetailComment implements Serializable {
         this.content = content;
     }
 
-    public void setParent_comment(ArticleDetailComment parent_comment) {
+    public List<ArticleDetailComment> getParent_comment() {
+        return parent_comment;
+    }
+
+    public void setParent_comment(List<ArticleDetailComment> parent_comment) {
         this.parent_comment = parent_comment;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public int is_like() {
+    public boolean is_like() {
         return is_like;
     }
 
-    public void setIs_like(int is_like) {
+    public void setIs_like(boolean is_like) {
         this.is_like = is_like;
     }
 
-    public int getLike_count() {
-        return like_count;
+    public int getCount_likes() {
+        return count_likes;
     }
 
-    public void setLike_count(int like_count) {
-        this.like_count = like_count;
+    public void setCount_likes(int count_likes) {
+        this.count_likes = count_likes;
     }
 
     public int getComment_count() {
-        return comment_count;
+        return count_comments;
     }
 
-    public void setComment_count(int comment_count) {
-        this.comment_count = comment_count;
-    }
-
-    public ArticleDetailComment getParent_comment() {
-        return parent_comment;
+    public void setComment_count(int count_comments) {
+        this.count_comments = count_comments;
     }
 
     @Override
@@ -114,12 +106,11 @@ public class ArticleDetailComment implements Serializable {
                 ", uid='" + uid + '\'' +
                 ", nick_name='" + nick_name + '\'' +
                 ", head_img='" + head_img + '\'' +
-                ", comment_time='" + comment_time + '\'' +
-                ", comment='" + comment + '\'' +
+                ", release_time='" + release_time + '\'' +
                 ", content='" + content + '\'' +
                 ", is_like=" + is_like +
-                ", like_count=" + like_count +
-                ", comment_count=" + comment_count +
+                ", count_likes=" + count_likes +
+                ", count_comments=" + count_comments +
                 ", parent_comment=" + parent_comment +
                 '}';
     }

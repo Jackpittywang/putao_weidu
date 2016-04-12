@@ -130,7 +130,6 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
     @Override
     public void onItemClick(Serializable serializable, int position) {
         Bundle bundle = new Bundle();
-        System.out.println("========================" + disCoveries.get(position).getId() + "  " + disCoveries.get(position).getVideo_url());
         bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, disCoveries.get(position).getVideo_url());
         startActivity(YoukuVideoPlayerActivity.class, bundle);
     }

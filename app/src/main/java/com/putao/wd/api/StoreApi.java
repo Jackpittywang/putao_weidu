@@ -74,18 +74,18 @@ public class StoreApi {
      */
     public static Request getProductDetail(String product_id) {
         return PTWDRequestHelper.store()
-                .addParam(REQUEST_PRODUCT_PID, product_id)
-                .build(RequestMethod.POST, URL_PRODUCT_DETAIL);
-    }
-
-    /**
-     * 商品详情html+pager
-    */
-    public static Request getProductDetailPager(String product_id) {
-        return PTWDRequestHelper.store()
                 .addParam(REQUEST_PRODUCT_ID, product_id)
                 .build(RequestMethod.POST, URL_PRODUCT_DETAIL);
     }
+//
+//    /**
+//     * 商品详情html+pager
+//     */
+//    public static Request getProductDetailPager(String product_id) {
+//        return PTWDRequestHelper.store()
+//                .addParam(REQUEST_PRODUCT_ID, product_id)
+//                .build(RequestMethod.POST, URL_PRODUCT_DETAIL);
+//    }
 
     /**
      * 商品规格

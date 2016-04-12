@@ -25,10 +25,14 @@ public class ExploreApi {
 
     private static final String LIMIT = "limit";//首页数据条目数量
     private static final String ARTICLE_ID = "article_id";//首页文章ID
+    private static final String WD_MID = "wd_mid";//评论页文章ID
+    private static final String CONTENT = "content";//文章评论内容
     private static final String COMMENT_ID = "comment_id";//首页评论ID
     private static final String MESSAGE = "message";//首页评论内容
     private static final String COOL_TYPE = "cool_type";//赞类型
     private static final String IS_DISPLAY_EXPLANATION = "is_display_explanation";//是否请求文章内容
+    private static final String SERVICE_ID = "sid"; //服务号唯一service_id
+    private static final String PICTURES = "pics";//评论图片
 
 
     private static final String CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
@@ -78,7 +82,6 @@ public class ExploreApi {
 ////            builder.addParam(REQUEST_SLAVE_DEVICE_ID, slave_device_id);
 //        return builder.build(RequestMethod.GET, URL_DIARY_INDEX);
 //    }
-
 
 
     /**
@@ -274,6 +277,65 @@ public class ExploreApi {
     }
 
     /**
+     * version 1.3
+     * 文章评论列表
+     */
+    public static final String URL_ARTICLE_COMMENT_LIST = BASE_URL + "first/comment";
+
+    /**
+     * 评论列表
+     *
+     * @param article_id 首页文章id
+     * @param page       首页评论页面
+     */
+    public static Request getArticleCommentList(String article_id, String page, String sid) {
+        return PTWDRequestHelper.start()
+                .addParam(WD_MID, article_id)
+                .addParam(REQUEST_PAGE, page)
+                .addParam(SERVICE_ID, sid)
+                .build(RequestMethod.POST, URL_ARTICLE_COMMENT_LIST);
+    }
+
+
+    /**
+     * version 1.3
+     * 添加评论
+     */
+    public static final String URL_ARTICLE_COMMENT_ADD = BASE_URL + "/set/first/comment";
+
+    /**
+     * 添加评论
+     *
+     * @param article_id 首页文章id
+     * @param content    首页评论内容
+     */
+    public static Request addArticleComment(String article_id, String content, String sid) {
+        return PTWDRequestHelper.start()
+                .addParam(CONTENT, content)
+                .addParam(WD_MID, article_id)
+                .addParam(SERVICE_ID, sid)
+                .build(RequestMethod.POST, URL_ARTICLE_COMMENT_ADD);
+    }
+
+    /**
+     * version 1.3
+     * 添加评论
+     *
+     * @param article_id 首页文章id
+     * @param content    首页评论内容
+     */
+    public static Request addArticleComment(String article_id, String content, String sid, String pics) {
+        return PTWDRequestHelper.start()
+                .addParam(CONTENT, content)
+                .addParam(WD_MID, article_id)
+                .addParam(SERVICE_ID, sid)
+                .addParam(PICTURES, sid)
+                .build(RequestMethod.POST, URL_ARTICLE_COMMENT_ADD);
+    }
+
+
+    /**
+     * version 1.3
      * 添加评论
      */
     public static final String URL_COMMENT_ADD = BASE_URL + "article/comment/add";
@@ -304,6 +366,23 @@ public class ExploreApi {
                 .addParam(ARTICLE_ID, article_id)
                 .addParam(COMMENT_ID, comment_id)
                 .build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+
+    /**
+     * V1.3
+     * 删除文章评论
+     */
+    public static final String URL_ARTICLE_COMMENT_DELETE = BASE_URL + "/del/comment";
+
+    /**
+     * 删除评论
+     *
+     * @param comment_id 评论id
+     */
+    public static Request deleteArticleComment(String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_ARTICLE_COMMENT_DELETE);
     }
 
     /**
@@ -350,6 +429,26 @@ public class ExploreApi {
                 .addParam(COMMENT_ID, comment_id)
                 .addParam(COOL_TYPE, "COMMENT")
                 .build(RequestMethod.POST, URL_LIKE_ADD);
+    }
+
+    /**
+     * V1.3
+     * 添加赞
+     */
+    public static final String URL_ARTICLE_LIKE_ADD = BASE_URL + "/set/second/like";
+
+
+    /**
+     * 赞评论
+     *
+     * @param article_id 文章id
+     */
+    public static Request addArticleLike(String article_id, String comment_id, String sid) {
+        return PTWDRequestHelper.start()
+                .addParam(COMMENT_ID, comment_id)
+                .addParam(WD_MID, article_id)
+                .addParam(SERVICE_ID, sid)
+                .build(RequestMethod.POST, URL_ARTICLE_LIKE_ADD);
     }
 
     /**

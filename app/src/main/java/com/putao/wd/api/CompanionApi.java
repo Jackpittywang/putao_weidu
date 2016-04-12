@@ -20,6 +20,7 @@ public class CompanionApi {
     private static final String REQUEST_PICS = "pics";//作品图片，多图
     private static final String REQUEST_SERVICE_ID = "service_id";//服务号id
     private static final String REQUEST_SEND_DATA = "send_data";//接收推送的数据包，转发给纬度服务器
+    private static final String REQUEST_URL = "url";
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
@@ -227,5 +228,19 @@ public class CompanionApi {
         return PTWDRequestHelper.find()
                 .addParam(REQUEST_SERVICE_ID, service_id)
                 .build(RequestMethod.GET, URL_COMPANY_SERVICE_BINDDEL);
+    }
+
+    /**
+     * 查询当前文章是否可以被评论、点赞数、评论数
+     */
+    private static final String URL_COMPANY_ARTICLE_PROPERTY = BASE_URL + "/article/property";
+
+    /**
+     * 查询当前文章是否可以被评论、点赞数、评论数
+     */
+    public static Request getProperty(String url) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_URL, url)
+                .build(RequestMethod.GET, URL_COMPANY_ARTICLE_PROPERTY);
     }
 }
