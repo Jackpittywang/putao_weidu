@@ -119,11 +119,10 @@ public class OfficialAccountsActivity extends PTWDActivity {
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        GlobalApplication.isBindDevice = JSONObject.parseObject(result).getBoolean("is_relation");
-                        if (GlobalApplication.isBindDevice == false) {//未关联
-
+                        Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
+                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, is_relation);
+                        if (!is_relation) {//未关联
                         } else {//已关联
-
                         }
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         finish();

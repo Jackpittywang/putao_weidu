@@ -41,8 +41,6 @@ public class GlobalApplication extends BasicApplication {
     public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
     public static boolean isServiceClose;
-    public static boolean isServiceShouldNotClose;
-    public static boolean isBindDevice;
 
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
@@ -254,6 +252,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String MAP_EMOJI = "map_emoji";
     public static final String Fore_Message = "com.putao.isFore.message";
     public static final String Not_Fore_Message = "com.putao.isNotFore.message";
+    public static final String IS_DEVICE_BIND = "is_device_bind";
     //===================preference key===========================
     public static final String PREFERENCE_KEY_UID = "uid";
     public static final String PREFERENCE_KEY_TOKEN = "token";

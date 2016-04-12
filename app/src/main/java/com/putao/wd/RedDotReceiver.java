@@ -82,7 +82,7 @@ public class RedDotReceiver extends PTMessageReceiver {
         JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
         //陪伴位置提醒红点
         if (null != accompanyNumber) {
-            EventBusHelper.post(accompanyNumber, ME_TABBAR);
+            EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
         }
 
        /* Pattern p1 = Pattern.compile("\"location_dot\":([^}]*)");

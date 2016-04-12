@@ -6,6 +6,7 @@ import com.putao.wd.db.entity.CompanionDB;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.greenrobot.dao.AbstractDao;
 
@@ -58,7 +59,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public ArrayList<String> getNotDownloadIds(String serviceId) {
         ArrayList<String> notDownloadIds = new ArrayList<>();
-        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"),CompanionDBDao.Properties.service_id.eq(serviceId)).listLazy();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId)).listLazy();
         for (CompanionDB companionDB : companionDBs) {
             notDownloadIds.add(companionDB.getId());
         }
@@ -85,6 +86,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 设置文章的下载状态
      */
     public void insertFixDownload(String service_id, String id) {
-        insert(new CompanionDB(id, "article", System.currentTimeMillis() + "", "", 0 + "", service_id));
+        Random random = new Random();
+        insert(new CompanionDB(id, "article", "", "", 0 + "", service_id));
     }
 }
