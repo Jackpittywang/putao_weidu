@@ -32,7 +32,7 @@
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/iv_icon"
-                style="@style/image_style"
+                style="@style/image_round_4dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
 

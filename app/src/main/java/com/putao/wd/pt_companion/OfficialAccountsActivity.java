@@ -17,6 +17,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Companion;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -52,6 +53,7 @@ public class OfficialAccountsActivity extends PTWDActivity {
     private View view_custom;
     private AlertDialog mDialog = null;
     private AlertDialog.Builder builder = null;
+    private String mServiceId;
 
     @Override
     protected int getLayoutId() {
@@ -61,7 +63,12 @@ public class OfficialAccountsActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-
+        Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+        setMainTitle(companion.getService_name());
+        tv_official_title.setText(companion.getService_name());
+        iv_icon.setImageURL(companion.getService_icon());
+        tv_recommend.setText(companion.getService_description());
+        mServiceId = companion.getService_id();
         addListener();
     }
 
@@ -93,7 +100,7 @@ public class OfficialAccountsActivity extends PTWDActivity {
         view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelServicce("12");
+                cancelServicce(mServiceId);
             }
         });
         mDialog = builder.show();
