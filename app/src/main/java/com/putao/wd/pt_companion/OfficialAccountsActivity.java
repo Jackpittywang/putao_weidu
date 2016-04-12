@@ -9,8 +9,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.CompanionApi;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.squareup.okhttp.Request;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
@@ -83,11 +92,43 @@ public class OfficialAccountsActivity extends PTWDActivity {
         view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDialog.dismiss();
+                cancelServicce("12");
             }
         });
-        builder.show();
+        mDialog = builder.show();
+        mDialog.show();
+    }
 
+    /**
+     * 取消绑定服务号
+     */
+    private void cancelServicce(String service_id) {
+        networkRequest(CompanionApi.cancelService(service_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                checkInquiryBind(AccountHelper.getCurrentUid());
+            }
+        });
+    }
+
+    /**
+     * 判断是哦否关联产品
+     */
+    private void checkInquiryBind(String currentUid) {
+        networkRequest(UserApi.checkInquiryBind(currentUid),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        GlobalApplication.isBindDevice = JSONObject.parseObject(result).getBoolean("is_relation");
+                        if (GlobalApplication.isBindDevice == false) {//未关联
+
+                        } else {//已关联
+
+                        }
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        finish();
+                    }
+                });
     }
 
 

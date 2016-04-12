@@ -33,7 +33,6 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
     @Bind(R.id.pb_webview)
     ProgressBar pb_webview;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_base_webview;
@@ -66,7 +65,6 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
     protected String[] getRequestUrls() {
         return new String[0];
     }
-
 
     @Override
     public void onParsePutaoUrl(String scheme, JSONObject result) {

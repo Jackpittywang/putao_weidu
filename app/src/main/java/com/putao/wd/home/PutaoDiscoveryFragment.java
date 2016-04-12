@@ -35,6 +35,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
 
     private int currentPage = 1;
     private DiscoveryAdapter adapter;
+    ArrayList<DisCovery> disCoveries;
 
     @Override
     protected int getLayoutId() {
@@ -76,6 +77,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
 
                             @Override
                             public void onSuccess(String url, ArrayList<DisCovery> result) {
+                                disCoveries = result;
                                 adapter.replaceAll(result);
                                 checkLoadMoreComplete(result);
                                 loading.dismiss();
@@ -98,6 +100,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                     public void onSuccess(String url, ArrayList<DisCovery> result) {
                         cacheData(url, result);
                         if (result != null && result.size() > 0) {
+                            disCoveries = result;
                             rl_no_discovery.setVisibility(View.GONE);
                             rv_discovery.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
@@ -127,7 +130,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
     @Override
     public void onItemClick(Serializable serializable, int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, (position + 1) + "");
+        System.out.println("========================" + disCoveries.get(position).getId() + "  " + disCoveries.get(position).getVideo_url());
+        bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, disCoveries.get(position).getVideo_url());
         startActivity(YoukuVideoPlayerActivity.class, bundle);
     }
 }
