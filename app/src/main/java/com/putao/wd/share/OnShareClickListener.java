@@ -19,7 +19,7 @@ public abstract class OnShareClickListener {
 
     public abstract void onSinaWeibo();
 
-    public void onCollection(TextView textView,ImageView imageView) {
+    public void onCollection() {
 
     }
 

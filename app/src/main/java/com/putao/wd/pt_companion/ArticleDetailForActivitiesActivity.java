@@ -181,24 +181,23 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
 
 
             @Override
-            public void onCollection(TextView textView, ImageView imageView) {
+            public void onCollection() {
                 if (!property.is_collect())
-                    addCollect(textView, imageView);
+                    addCollect();
                 else
-                    cancelCollection(textView, imageView);
+                    cancelCollection();
 
             }
         });
     }
 
-    private void addCollect(final TextView textView, final ImageView imageView) {
+    private void addCollect() {
         networkRequest(CompanionApi.addCollects(article_id, link_url), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "收藏成功");
                 property.setIs_collect(true);
-                imageView.setImageResource(R.drawable.icon_40_14);
-                textView.setText("已收藏");
+                mSharePopupWindow.setCollectState(true);
                 loading.dismiss();
             }
         });
@@ -207,14 +206,13 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     /**
      * 取消收藏
      */
-    private void cancelCollection(final TextView textView, final ImageView imageView) {
+    private void cancelCollection() {
         networkRequest(CompanionApi.cancelCollects(null, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "取消收藏");
                 property.setIs_collect(false);
-                imageView.setImageResource(R.drawable.icon_40_13);
-                textView.setText("收藏");
+                mSharePopupWindow.setCollectState(false);
                 loading.dismiss();
             }
         });
@@ -253,6 +251,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
                     tv_count_cool.setText("赞");
                 }
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
+                mSharePopupWindow.setCollectState(result.is_collect());
             }
         });
     }

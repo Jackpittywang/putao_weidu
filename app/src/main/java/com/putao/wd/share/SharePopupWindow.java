@@ -79,7 +79,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     mOnShareClickListener.onWechatFriend();
                     break;
                 case R.id.ll_collection://收藏
-                    mOnShareClickListener.onCollection(tv_collection, iv_collection);
+                    mOnShareClickListener.onCollection();
                     break;
                 case R.id.ll_qq_friend://QQ好友
                     mOnShareClickListener.onQQFriend();
@@ -106,5 +106,16 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         if (mOnShareClickListener != null)
             mOnShareClickListener.onCancel();
         super.dismiss();
+    }
+
+    public void setCollectState(boolean isCollect) {
+        if (isCollect) {
+            tv_collection.setText("已收藏");
+            iv_collection.setImageResource(R.drawable.icon_40_14);
+
+        } else {
+            iv_collection.setImageResource(R.drawable.icon_40_13);
+            tv_collection.setText("收藏");
+        }
     }
 }
