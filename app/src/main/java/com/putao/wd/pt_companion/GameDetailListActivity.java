@@ -269,8 +269,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     public void onRightAction() {
         super.onRightAction();
         Bundle bundle = new Bundle();
-        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
-        startActivity(OfficialAccountsActivity.class);
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, mCompanion);
+        startActivity(OfficialAccountsActivity.class,bundle);
     }
 
 
