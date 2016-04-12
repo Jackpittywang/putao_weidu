@@ -1,38 +1,31 @@
 package com.putao.wd.pt_companion;
 
 
-import android.net.Uri;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
-import com.putao.wd.album.activity.PhotoAlbumActivity;
 import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
-import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ArticleDetailActs;
-import com.putao.wd.model.ArticleDetailComment;
-import com.putao.wd.model.Companion;
 import com.putao.wd.model.Property;
+import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
+import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
-import com.putao.wd.start.action.ActionsDetailActivity;
-import com.putao.wd.start.comment.CommentActivity;
+import com.putao.wd.share.ShareTools;
 import com.putao.wd.webview.PutaoParse;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -40,9 +33,6 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
-import com.sunnybear.library.view.image.ImageDraweeView;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.scroll.NestScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +50,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
 
     @Bind(R.id.wv_load)
     BasicWebView wv_load;
-/*    @Bind(R.id.rv_content)
-    LoadMoreRecyclerView rv_content;*/
+    /*    @Bind(R.id.rv_content)
+        LoadMoreRecyclerView rv_content;*/
     @Bind(R.id.ll_cool)
     LinearLayout ll_cool;//点赞数
     @Bind(R.id.tv_count_cool)
@@ -100,7 +90,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         article_id = messageList.getContent_lists().get(0).getArticle_id();
         service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
         mSharePopupWindow = new SharePopupWindow(mContext);
-        wv_load.loadUrl("http://wap.baidu.com");
+        wv_load.loadUrl(link_url);
 /*        mRvLayoutParams = rv_content.getLayoutParams();
         mArtivleDetailActsAdapter = new ArticleDetailForActivitiesAdapter(mContext, null);
         rv_content.setAdapter(mArtivleDetailActsAdapter);*/
@@ -133,6 +123,45 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
             @Override
             public void onWebPageLoaderFinish(String url) {
 
+            }
+        });
+
+        final ServiceMessageContent content_list = messageList.getContent_lists().get(0);
+        final String title = content_list.getTitle();
+        final String sub_title = content_list.getSub_title();
+        final String cover_pic = content_list.getCover_pic();
+        final String link_url = content_list.getLink_url();
+        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+            @Override
+            public void onWechat() {
+                ShareTools.wechatWebShare(mContext, true, title, sub_title, cover_pic, link_url);
+            }
+
+            @Override
+            public void onWechatFriend() {
+                ShareTools.wechatWebShare(mContext, false, title, sub_title, cover_pic, link_url);
+            }
+
+            @Override
+            public void onQQFriend() {
+                ShareTools.OnQQZShare(mContext, true, title, sub_title, cover_pic, link_url);
+            }
+
+            @Override
+            public void onQQZone() {
+                ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
+            }
+
+            public void onSinaWeibo() {
+                ShareTools.OnWeiboShare(mContext, title, sub_title, link_url);
+            }
+
+            @Override
+            public void onCopyUrl() {
+                ClipboardManager copy = (ClipboardManager) mContext
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText(link_url);
+                ToastUtils.showToastShort(mContext, "复制成功");
             }
         });
     }

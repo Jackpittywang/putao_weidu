@@ -274,7 +274,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
      */
     private void processor(String result) {
         Logger.d(result);
-        result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
+//        result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
         String scheme = null;
         try {
             scheme = ScanUrlParseUtils.getScheme(result);
