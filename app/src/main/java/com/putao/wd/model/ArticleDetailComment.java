@@ -18,7 +18,7 @@ public class ArticleDetailComment implements Serializable {
     private boolean is_like;//赞
     private int count_likes;//点赞数
     private int count_comments;//评论数
-//    private List<String> pics;//图片
+    private List<String> pics;//图片
     private List<ArticleDetailComment> parent_comment;//父评论，可为空
 
     public String getComment_id() {
@@ -100,14 +100,14 @@ public class ArticleDetailComment implements Serializable {
     public void setComment_count(int count_comments) {
         this.count_comments = count_comments;
     }
-//
-//    public List<String> getPics() {
-//        return pics;
-//    }
-//
-//    public void setPics(List<String> pics) {
-//        this.pics = pics;
-//    }
+
+    public List<String> getPics() {
+        return pics;
+    }
+
+    public void setPics(List<String> pics) {
+        this.pics = pics;
+    }
 
     @Override
     public String toString() {

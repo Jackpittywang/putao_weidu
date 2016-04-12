@@ -3,6 +3,7 @@ package com.sunnybear.library.controller;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.R;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.NetworkLogUtil;
 import com.sunnybear.library.view.LoadingHUD;
 
 import butterknife.ButterKnife;
@@ -88,6 +90,7 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
     }
 
     public void networkRequest(Request Request, Callback Callback) {
+        NetworkLogUtil.addLog(Request);
         if (mActivity instanceof BasicFragmentActivity)
             ((BasicFragmentActivity) mActivity).networkRequest(Request, Callback);
     }
