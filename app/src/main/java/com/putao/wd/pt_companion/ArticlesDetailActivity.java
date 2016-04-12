@@ -35,13 +35,16 @@ import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
+import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
@@ -89,6 +92,11 @@ public class ArticlesDetailActivity extends PTWDActivity {
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
 
+    private String mWd_mid;
+    private String mSid;
+    private String mPcid;
+    private int mPage = 1;
+
 
     public final static String COOL = "CommentCool";//是否赞过
 
@@ -111,26 +119,36 @@ public class ArticlesDetailActivity extends PTWDActivity {
         mSharePopupWindow = new SharePopupWindow(mContext);
         mMinLenght = 0;
 
+        Bundle data = getIntent().getExtras();
+        if (data != null && data.containsKey("wd_mid")) {
+            mWd_mid = data.getString("wd_mid");
+        }
+        if (data != null && data.containsKey("sid")) {
+            mSid = data.getString("sid");
+        }
+        if (data != null && data.containsKey("pcid")) {
+            mPcid = data.getString("pcid");
+        }
+        if (StringUtils.isEmpty(mWd_mid) || StringUtils.isEmpty(mSid) || StringUtils.isEmpty(mPcid)) {
+            finish();
+            return;
+        }
+
         getNewCommentData();
         addListener();
     }
 
     private void getNewCommentData() {
-        //  TODO 文章id
-        networkRequest(CompanionApi.getCompanyArticleComment("117", "6000", "1", "1"), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
+        //
+        networkRequest(CompanionApi.getCompanyArticleComment(mWd_mid, mSid, mPcid, String.valueOf(mPage)), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
             @Override
             public void onSuccess(String url, CompanionCommentDetail result) {
                 iv_author_icon.setImageURL(result.getComment().getHead_img());
                 tv_author_name.setText(result.getComment().getNick_name());
-
-
-                tv_author_time.setText(result.getComment().getRelease_time());
-
-
+                tv_author_time.setText(DateUtils.secondToDate(Integer.valueOf(result.getComment().getRelease_time()), "yyyy/MM/dd HH:mm"));
 //                tv_praise_count.setVisibility(result.getComment().getCount_likes() != 0 ? View.VISIBLE : View.GONE);
 //                if (result.getComment().getCount_likes() != 0)
 //                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
-
 
                 //设置布局管理器
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ArticlesDetailActivity.this);
@@ -139,16 +157,25 @@ public class ArticlesDetailActivity extends PTWDActivity {
 //                rv_articlesdetail_applyusers.setAdapter(mCommentReplyAdapter);
 //                rv_articlesdetail_applyusers.setLayoutManager(linearLayoutManager);
 
-
 //                ll_praise_count.setVisibility(result.getComment().getIs_like() == 0 ? View.GONE : View.VISIBLE);
 //                if (result.getComment().getIs_like() != 0)
 //                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
 
-
-                CommentReply comment = result.getComment();
-                mReplyListsAdapter = new ReplyListsAdapter(mContext, result.getReply_lists(), new ReplyHeaderInfo(result.getComment().getContent(),result.getComment().getCount_comments(),result.getComment().getCount_likes(),result.getComment().getPics().get(0)));
-                rv_others_comment.setAdapter(mReplyListsAdapter); // TODO
-
+                ReplyHeaderInfo replyHeaderInfo = new ReplyHeaderInfo();
+                replyHeaderInfo.setContent(result.getComment().getContent());
+                replyHeaderInfo.setCount_comments(result.getComment().getCount_comments());
+                replyHeaderInfo.setCount_likes(result.getComment().getCount_likes());
+                if (result.getComment().getPics() != null && result.getComment().getPics().size() > 0)
+                    replyHeaderInfo.setPic(result.getComment().getPics().get(0));
+                else
+                    replyHeaderInfo.setPic("");
+                replyHeaderInfo.setIs_like(result.getComment().getIs_like() != 0 ? true : false);
+                List<ReplyLists> reply_lists = result.getReply_lists();
+                if (reply_lists == null)
+                    reply_lists = new ArrayList<ReplyLists>();
+                reply_lists.add(0, new ReplyLists());
+                mReplyListsAdapter = new ReplyListsAdapter(mContext, reply_lists, replyHeaderInfo);
+                rv_others_comment.setAdapter(mReplyListsAdapter);
 
             }
         });
@@ -159,7 +186,7 @@ public class ArticlesDetailActivity extends PTWDActivity {
 //        ll_praise_count.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                // TODO 点赞
+//                //
 //                netSetParise();
 //            }
 //        });
@@ -219,7 +246,7 @@ public class ArticlesDetailActivity extends PTWDActivity {
     }
 
     /**
-     * 分享  TODO
+     * 分享
      */
     @Override
     public void onRightAction() {
@@ -380,6 +407,19 @@ public class ArticlesDetailActivity extends PTWDActivity {
             }
         });
     }
+
+//    //赞或取消赞时更新此页显示
+//    @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
+//    public void eventClickComment(boolean isCool) {
+//        ll_praise_count.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //
+//                netSetParise();
+//            }
+//        });
+//    }
+
 
 //    private void checkLiked(List<ReplyLists> comments) {
 //        int i = 0;

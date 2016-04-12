@@ -12,7 +12,7 @@ import com.sunnybear.library.model.http.request.RequestMethod;
 public class CompanionApi {
     private static final String REQUEST_CAPTCHA_TOKEN = "captcha_token";//扫描受控设备二维码获取的参数
     private static final String REQUEST_PRODUCT_ID = "product_id";//游戏应用产品ID
-    private static final String REQUEST_PAGES = "pages";//页码，没传默认为第一页
+    private static final String REQUEST_PAGE = "page";//页码，没传默认为第一页
     private static final String REQUEST_ARTICLE_ID = "article_id";//文章id
     private static final String REQUEST_CID = "cid";//如果cid＝0 操作文章  如果cid != 0, 操作用户to_uid
     private static final String REQUEST_TO_UID = "to_uid";//操作用户id
@@ -149,7 +149,7 @@ public class CompanionApi {
     public static Request getArticleComments(String article_id, int pages) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_ARTICLE_ID, article_id)
-                .addParam(REQUEST_PAGES, pages + "")
+                .addParam(REQUEST_PAGE, pages + "")
                 .build(RequestMethod.POST, URL_COMPANY_ARTICLE_COMMENTS);
     }
 
@@ -171,7 +171,8 @@ public class CompanionApi {
                 .addParam(REQUEST_COMMENT_WD_MID, wd_mid)
                 .addParam(REQUEST_COMMENT_SID, sid)
                 .addParam(REQUEST_COMMENT_PCID, pcid)
-                .addParam(REQUEST_COMMENT_SN, page)
+                .addParam(REQUEST_PAGE, page)
+                .addParam(REQUEST_COMMENT_SN,"")
                 .build(RequestMethod.POST, URL_COMPANY_ARTICLE_COMMENT_URL);
     }
 
@@ -250,7 +251,7 @@ public class CompanionApi {
     private static final String REQUEST_COMMENT_SID = "sid";//服务号唯一service_id
     private static final String REQUEST_COMMENT_PCID = "pcid";//一级评论内的comment_id
     private static final String REQUEST_COMMENT_PAGE = "page";//页数
-    private static final String REQUEST_COMMENT_SN = "2312fdsfdsa23532fdfdsf";//
+    private static final String REQUEST_COMMENT_SN = "sn";//
 
     /**
      * 二级回复评论点赞

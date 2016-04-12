@@ -8,12 +8,14 @@ public class ReplyHeaderInfo {
     private String content ;
     private int count_comments ;
     private int count_likes;
+    private boolean is_like;
 
-    public ReplyHeaderInfo(String content, int count_comments, int count_likes, String pic) {
-        this.content = content;
-        this.count_comments = count_comments;
-        this.count_likes = count_likes;
-        this.pic = pic;
+    public boolean getIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(boolean is_like) {
+        this.is_like = is_like;
     }
 
     public String getPic() {
