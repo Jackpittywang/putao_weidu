@@ -24,14 +24,12 @@ import butterknife.Bind;
  * Created by Administrator on 2016/1/13.
  */
 public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateHolder> {
-    private Context mContext;
     public final static String COOL = "cool";
     public final static String NOT_COOL = "not_cool";
     public final static String CREAT_COMMENT = "creat_comment";
 
     public CreateAdapter(Context context, List<Create> creates) {
         super(context, creates);
-        mContext = context;
     }
 
     @Override
@@ -88,6 +86,7 @@ public class CreateAdapter extends LoadMoreAdapter<Create, CreateAdapter.CreateH
                 holder.tv_count_cool.setTextColor(0xff959595);
                 holder.sb_not_cool_icon.setState(true);
                 holder.sb_cool_icon.setState(false);
+                EventBusHelper.post(position,COOL);
                 break;
         }
 /*        holder.ll_cool.setOnClickListener(new View.OnClickListener() {

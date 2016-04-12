@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_comment_second"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,11 +24,18 @@
             android:layout_centerInParent="true">
 
             <!--作品用户头像-->
+            <!--<com.sunnybear.library.view.image.ImageDraweeView-->
+                <!--android:id="@+id/iv_author_icon"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/ic_launcher" />-->
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/iv_author_icon"
+                style="@style/image_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_launcher" />
+                android:layout_marginLeft="8dp"
+                auto:default_drawable="@drawable/img_head_default"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -131,7 +139,8 @@
                     android:visibility="visible"
                     auto:divider_width="5dp"
                     auto:has_rank_divider="true"
-                    auto:layout_mode="horizontal" />
+                    auto:layout_mode="horizontal"
+                    />
 
                 <!--点赞的数量-->
                 <LinearLayout
@@ -163,6 +172,7 @@
                             android:layout_height="2sp" />
 
                         <TextView
+                            android:id="@+id/tv_text_praise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="赞"
@@ -202,7 +212,8 @@
 
             <View style="@style/line_horizontal" />
 
-            <com.sunnybear.library.view.recycler.BasicRecyclerView
+
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
                 android:id="@+id/rv_others_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

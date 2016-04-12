@@ -12,6 +12,8 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.jpush.JPushReceiver;
+import com.putao.wd.pt_companion.ArticleDetailsActivity;
+import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_me.order.OrderDetailActivity;
 import com.putao.wd.pt_me.service.ServiceDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;

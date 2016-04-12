@@ -2,11 +2,13 @@ package com.putao.wd.pt_me.message;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
+import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_me.message.adapter.PraiseAdapter;
 import com.putao.wd.model.Praise;
 import com.putao.wd.model.PraiseDetail;
@@ -35,6 +37,11 @@ public class PraiseFragment extends BasicFragment {
     @Bind(R.id.tv_message_empty)
     TextView tv_message_empty;
 
+
+
+
+
+
     private PraiseAdapter adapter;
 
     //标志位，标志是否已经初始化完成
@@ -56,6 +63,8 @@ public class PraiseFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+
+
 
         Logger.d("MessageCenterActivity", "PraiseFragment启动");
         tv_message_empty.setText("还没有赞");
