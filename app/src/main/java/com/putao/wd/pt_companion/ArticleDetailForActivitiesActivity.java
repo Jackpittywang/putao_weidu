@@ -75,6 +75,9 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     private boolean is_Like;//是否赞过
     private Property property;
     private String article_id, service_id;//文章id,服务号id
+    private String title;
+    private String sub_title;
+    private String cover_pic;
 
 
     @Override
@@ -86,30 +89,21 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
-        link_url = messageList.getContent_lists().get(0).getLink_url();
-        article_id = messageList.getContent_lists().get(0).getArticle_id();
         service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+        final ServiceMessageContent content_list = messageList.getContent_lists().get(0);
+        title = content_list.getTitle();
+        sub_title = content_list.getSub_title();
+        cover_pic = content_list.getCover_pic();
+        link_url = content_list.getLink_url();
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
-/*        mRvLayoutParams = rv_content.getLayoutParams();
-        mArtivleDetailActsAdapter = new ArticleDetailForActivitiesAdapter(mContext, null);
-        rv_content.setAdapter(mArtivleDetailActsAdapter);*/
+        setMainTitle(sub_title);
         initData();
-        /**
-         *  查询当前文章是否可以被评论、点赞数、评论数
-         * */
         getArticleProperty(link_url);
         addListener();
     }
 
     private void addListener() {
-        /*wv_load.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                sv_load.scrollTo(0, 0);
-            }
-        });*/
         wv_load.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
@@ -126,11 +120,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
             }
         });
 
-        final ServiceMessageContent content_list = messageList.getContent_lists().get(0);
-        final String title = content_list.getTitle();
-        final String sub_title = content_list.getSub_title();
-        final String cover_pic = content_list.getCover_pic();
-        final String link_url = content_list.getLink_url();
+
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
