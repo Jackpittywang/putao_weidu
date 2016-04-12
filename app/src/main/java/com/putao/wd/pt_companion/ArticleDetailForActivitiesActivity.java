@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -158,22 +159,23 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
 
 
             @Override
-            public void onCollection(TextView textView) {
+            public void onCollection(TextView textView, ImageView imageView) {
                 if (!property.is_collect())
-                    addCollect(textView);
+                    addCollect(textView, imageView);
                 else
-                    cancelCollection(textView);
+                    cancelCollection(textView, imageView);
 
             }
         });
     }
 
-    private void addCollect(final TextView textView) {
+    private void addCollect(final TextView textView, final ImageView imageView) {
         networkRequest(CompanionApi.addCollects(article_id, link_url), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "收藏成功");
                 property.setIs_collect(true);
+                imageView.setImageResource(R.drawable.icon_40_14);
                 textView.setText("已收藏");
                 loading.dismiss();
             }
@@ -183,12 +185,13 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     /**
      * 取消收藏
      */
-    private void cancelCollection(final TextView textView) {
+    private void cancelCollection(final TextView textView, final ImageView imageView) {
         networkRequest(CompanionApi.cancelCollects(type, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
                 ToastUtils.showToastShort(mContext, "取消收藏");
                 property.setIs_collect(false);
+                imageView.setImageResource(R.drawable.icon_40_13);
                 textView.setText("收藏");
                 loading.dismiss();
             }

@@ -24,6 +24,7 @@ public class CompanionApi {
     private static final String REQUEST_RWD_MID = "wd_mid";//点赞文章ID
     private static final String SERVICE_ID = "sid"; //服务号唯一service_id
     private static final String REQUEST_TYPE = "type";
+    private static final String REQUEST_LINK_URL = "link_url";
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
@@ -434,12 +435,12 @@ public class CompanionApi {
      * 添加收藏
      *
      * @param article_id 文章id
-     * @param link_url 文章url
+     * @param link_url   文章url
      */
-    public static Request addCollects(String article_id,String link_url) {
+    public static Request addCollects(String article_id, String link_url) {
         return PTWDRequestHelper.start()
-                .addParam(REQUEST_SERVICE_ID, article_id)
-                .addParam(REQUEST_SERVICE_ID, link_url)
+                .addParam(REQUEST_ARTICLE_ID, article_id)
+                .addParam(REQUEST_LINK_URL, link_url)
                 .build(RequestMethod.POST, URL_USER_COLLECTS_ADD);
     }
 }

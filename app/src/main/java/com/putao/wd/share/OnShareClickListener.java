@@ -1,5 +1,6 @@
 package com.putao.wd.share;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -18,7 +19,7 @@ public abstract class OnShareClickListener {
 
     public abstract void onSinaWeibo();
 
-    public void onCollection(TextView textView) {
+    public void onCollection(TextView textView,ImageView imageView) {
 
     }
 
