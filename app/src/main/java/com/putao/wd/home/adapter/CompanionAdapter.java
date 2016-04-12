@@ -43,7 +43,7 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         holder.iv_icon.setImageURL(companion.getService_icon());
         holder.tv_title.setText(companion.getService_name());
         holder.tv_intro.setText(companion.getService_description());
-        if (0 == companion.getIs_relation()) {
+        if (1 == companion.getIs_relation()) {
             holder.tv_time.setText(DateUtils.timeCalculate(companion.getTime() * 1000L));
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));

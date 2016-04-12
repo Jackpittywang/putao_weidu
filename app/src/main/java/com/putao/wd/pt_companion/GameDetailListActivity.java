@@ -2,6 +2,7 @@ package com.putao.wd.pt_companion;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,6 +64,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private ArrayList<String> list = new ArrayList<>();
     private ArrayList<ServiceSendData> mServiceSendData;
     private Companion mCompanion;
+    private String mServiceId;
     private ArrayList<ServiceMessageList> lists;
 
 
@@ -75,7 +77,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         mCompanion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-        setMainTitle(mCompanion.getService_name());
+        if (null != mCompanion) {
+            setMainTitle(mCompanion.getService_name());
+            mServiceId = mCompanion.getService_id();
+        } else {
+            mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
+            setMainTitleFromNetwork();
+        }
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         lists = new ArrayList<>();
@@ -84,12 +92,30 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         addListener();
     }
 
+    private void setMainTitleFromNetwork() {
+        networkRequest(CompanionApi.getServiceInfo(mServiceId),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        JSONObject jsonObject = JSON.parseObject(result);
+                        setMainTitle(jsonObject.getString("service_name"));
+                        loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
+                    }
+                }, false);
+    }
+
     /**
      * 下拉刷新 以及 最初的初始化
      */
     private void initData() {
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles(mCompanion.getService_id());
+        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles(mServiceId);
         if (null != downloadArticles) {
             for (CompanionDB companionDB : downloadArticles) {
                 ServiceMessageList serviceMessageList = new ServiceMessageList();
@@ -102,33 +128,36 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
         mPage = 1;
+        if (null == mCompanion)
+            return;
         ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
-        networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), mCompanion.getService_id()),
-                new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
-                    @Override
-                    public void onSuccess(String url, ServiceMessage result) {
-                        isLoadMore = false;
-                        lists = result.getLists();
-                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                        for (ServiceMessageList serviceMessageList : lists) {
-                            dataBaseManager.updataDownloadFinish(mCompanion.getService_id(), serviceMessageList);
+        if (null != serviceSendDatas && serviceSendDatas.size() > 0)
+            networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), mServiceId),
+                    new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+                        @Override
+                        public void onSuccess(String url, ServiceMessage result) {
+                            isLoadMore = false;
+                            lists = result.getLists();
+                            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                            for (ServiceMessageList serviceMessageList : lists) {
+                                dataBaseManager.updataDownloadFinish(mServiceId, serviceMessageList);
+                            }
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                            mCompanion.setNotDownloadIds(null);
+                            lists = setIsSameDate(lists);
+                            mGameDetailAdapter.addAll(0, lists);
+                            ptl_refresh.refreshComplete();
+                            checkLoadMoreComplete(lists);
+                            loading.dismiss();
                         }
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        mCompanion.setNotDownloadIds(null);
-                        lists = setIsSameDate(lists);
-                        mGameDetailAdapter.addAll(0, lists);
-                        ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(lists);
-                        loading.dismiss();
-                    }
 
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        super.onFailure(url, statusCode, msg);
-                        ptl_refresh.refreshComplete();
-                    }
-                }, false);
+                        @Override
+                        public void onFailure(String url, int statusCode, String msg) {
+                            super.onFailure(url, statusCode, msg);
+                            ptl_refresh.refreshComplete();
+                        }
+                    }, false);
     }
 
 
@@ -204,7 +233,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
-                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });
@@ -238,14 +267,14 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     public void onRightAction() {
         super.onRightAction();
         Bundle bundle = new Bundle();
-        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
+        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
         startActivity(OfficialAccountsActivity.class);
     }
 
 
     private void initBottomMenu() {
         final TextView[] menuViews = {tv_menu_first, tv_menu_second, tv_menu_third};
-        networkRequest(CompanionApi.getServicemenu(mCompanion.getService_id()),
+        networkRequest(CompanionApi.getServicemenu(mServiceId),
                 new SimpleFastJsonCallback<ArrayList<ServiceMenu>>(ServiceMenu.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ServiceMenu> result) {

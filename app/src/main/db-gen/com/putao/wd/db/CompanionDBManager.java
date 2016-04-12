@@ -96,4 +96,11 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
         Random random = new Random();
         insert(new CompanionDB(id, "article", "", "", 0 + "", service_id));
     }
+
+    /**
+     * 插入已经下载的文章
+     */
+    public void insertFinishDownload(String service_id, String id, String release_time, String content_lists) {
+        insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + ""));
+    }
 }
