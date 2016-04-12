@@ -45,7 +45,8 @@
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         auto:refresh_layout="@layout/sky_wheel_refresh_header"
         auto:refresh_layout_height="120">
 
@@ -56,4 +57,40 @@
             android:background="@color/color_EBEBEB" />
 
     </com.sunnybear.library.view.PullToRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_menus"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_menu_first"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:textSize="@dimen/text_size_14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_menu_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:textSize="@dimen/text_size_14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_menu_third"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:textSize="@dimen/text_size_14sp" />
+    </LinearLayout>
 </LinearLayout>
