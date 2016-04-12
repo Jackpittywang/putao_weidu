@@ -1,7 +1,10 @@
 package com.putao.wd.util;
 
+import android.net.Uri;
+
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
+import com.sunnybear.library.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +72,20 @@ public class ScanUrlParseUtils {
             params.put(ps[0], ps[1]);
         }
         return params;
+    }
+
+    /**
+     * 从url里面获取某个参数
+     *
+     * @param url
+     * @param par
+     * @return
+     */
+    public static String getSingleParams(String url, String par) {
+        if (StringUtils.isEmpty(url) || StringUtils.isEmpty(par)) return "";
+        String value = Uri.parse(url).getQueryParameter(par);
+        if (value == null) value = "";
+        return value;
     }
 
     /**
