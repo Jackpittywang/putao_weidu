@@ -90,23 +90,25 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         ll_empty.setOnClickListener(this);
         ptl_refresh.setOnRefreshListener(this);
         rv_collection.setOnLoadMoreListener(this);
-        rv_collection.setOnItemLongClickListener(new OnItemLongClickListener() {
+        rv_collection.setOnItemLongClickListener(new OnItemLongClickListener<Collection>() {
+
             @Override
-            public void onItemLongClick(Serializable serializable, final int position) {
+            public void onItemLongClick(final Collection collection, final int position) {
                 mDeleteDialog = new AlertDialog.Builder(mContext)
 //                        .setTitle("删除收藏数据")
                         .setMessage("确定删除所选的收藏项？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                networkRequest(CompanionApi.cancelCollects(mCollection.get(position).getType() + "", mCollection.get(position).getId() + ""), new SimpleFastJsonCallback<String>(String.class, loading) {
+                                networkRequest(CompanionApi.cancelCollects(collection.getType() + "", collection.getId() + ""), new SimpleFastJsonCallback<String>(String.class, loading) {
                                     @Override
                                     public void onSuccess(String url, String result) {
+                                        adapter.delete(collection);
                                         if (adapter.getItemCount() == 0) {
+                                            isCollection = true;
                                             ll_empty.setVisibility(View.VISIBLE);
                                         }
                                         initData();
-                                        ToastUtils.showToastShort(mContext, "取消收藏");
                                         loading.dismiss();
                                     }
                                 });
