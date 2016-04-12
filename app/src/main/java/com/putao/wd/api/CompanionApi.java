@@ -373,5 +373,20 @@ public class CompanionApi {
                 .build(RequestMethod.POST, URL_COMPANY_SERVICE_BIND);
     }
 
+    /**
+     * v1.3
+     * 菜单列表
+     */
+    private static final String URL_SERVICE_MENNU = BASE_URL + "/service/menu";
 
+    /**
+     * 菜单列表
+     *
+     * @param service_id 服务号唯一id
+     */
+    public static Request getServicemenu(String service_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_SERVICE_MENNU);
+    }
 }
