@@ -97,11 +97,16 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        id = args.getInt(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+        id = args.getInt(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         final ServiceMessageContent content_list;
         if (0 != id) {
             CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
             CompanionDB companInfoById = dataBaseManager.getCompanInfoById(id + "");
+            if (null == companInfoById) {
+                ToastUtils.showToastShort(mContext, "收藏文章不存在");
+                finish();
+                return;
+            }
             List<ServiceMessageContent> serviceMessageContents = JSONArray.parseArray(companInfoById.getContent_lists(), ServiceMessageContent.class);
             content_list = serviceMessageContents.get(0);
         } else {
