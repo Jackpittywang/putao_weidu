@@ -85,8 +85,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         });
         vp_content.setOffscreenPageLimit(4);
         Boolean is_device_bind = PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false);
-        tb_index_tab.setTabItemSelected(is_device_bind ? R.id.ti_index_companion : R.id.ti_index_discovery);
-        vp_content.setCurrentItem(is_device_bind ? 0 : 1);
+        tb_index_tab.setTabItemSelected(is_device_bind && AccountHelper.isLogin() ? R.id.ti_index_companion : R.id.ti_index_discovery);
+        vp_content.setCurrentItem(is_device_bind && AccountHelper.isLogin() ? 0 : 1);
         //红点显示
         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid()))) {
             ti_index_companion.show(-1);

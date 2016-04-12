@@ -149,11 +149,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
             }
 
             @Override
-            public void onCollection() {//收藏
-                cancelCollection(type, article_id);
-            }
-
-            @Override
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mContext
                         .getSystemService(Context.CLIPBOARD_SERVICE);
@@ -161,6 +156,42 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
                 ToastUtils.showToastShort(mContext, "复制成功");
             }
 
+
+            @Override
+            public void onCollection(TextView textView) {
+                if (!property.is_collect())
+                    addCollect(textView);
+                else
+                    cancelCollection(textView);
+
+            }
+        });
+    }
+
+    private void addCollect(final TextView textView) {
+        networkRequest(CompanionApi.addCollects(article_id, link_url), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "收藏成功");
+                property.setIs_collect(true);
+                textView.setText("已收藏");
+                loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void cancelCollection(final TextView textView) {
+        networkRequest(CompanionApi.cancelCollects(type, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "取消收藏");
+                property.setIs_collect(false);
+                textView.setText("收藏");
+                loading.dismiss();
+            }
         });
     }
 
@@ -201,18 +232,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         });
     }
 
-    /**
-     * 取消收藏
-     */
-    private void cancelCollection(String type, String article_id) {
-        networkRequest(CompanionApi.cancelCollects(type, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
-            @Override
-            public void onSuccess(String url, String result) {
-                ToastUtils.showToastShort(mContext, "取消收藏");
-                loading.dismiss();
-            }
-        });
-    }
 
     /**
      * 重新设置recycleview高度

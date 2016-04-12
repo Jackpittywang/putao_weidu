@@ -11,6 +11,7 @@ public class Property implements Serializable {
     private int comments_count;//评论数
     private boolean is_comment;//是否可评论
     private boolean is_like;//当前用户是否点过赞
+    private boolean is_collect;//当前用户是否收藏
 
     public int getLike_count() {
         return like_count;
@@ -51,6 +52,14 @@ public class Property implements Serializable {
 
     public void setIs_pic(boolean is_pic) {
         this.is_pic = is_pic;
+    }
+
+    public boolean is_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(boolean is_collect) {
+        this.is_collect = is_collect;
     }
 
     @Override

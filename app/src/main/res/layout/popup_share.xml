@@ -77,6 +77,7 @@
                         android:src="@drawable/icon_40_13" />
 
                     <TextView
+                        android:id="@+id/tv_collection"
                         style="@style/style_share_text"
                         android:text="@string/share_collection" />
                 </LinearLayout>

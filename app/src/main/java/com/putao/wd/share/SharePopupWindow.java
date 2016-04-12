@@ -18,6 +18,7 @@ import butterknife.OnClick;
 public class SharePopupWindow extends BasicPopupWindow implements View.OnClickListener {
     private boolean isCopy = true;
     private OnShareClickListener mOnShareClickListener;
+    private TextView tv_collection;
 
     public void setOnShareClickListener(OnShareClickListener onShareClickListener) {
         setOnShareClickListener(true, onShareClickListener);
@@ -29,7 +30,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_second);
         TextView tv_qq_zone = (TextView) mRootView.findViewById(R.id.tv_qq_zone);
         ImageView iv_qq_zone = (ImageView) mRootView.findViewById(R.id.iv_qq_zone);
-        ImageView iv_collection = (ImageView) mRootView.findViewById(R.id.iv_collection);
+        tv_collection = (TextView) mRootView.findViewById(R.id.tv_collection);
         if (!isCopy) {
             //复制
             ll_second.setVisibility(View.GONE);
@@ -76,7 +77,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     mOnShareClickListener.onWechatFriend();
                     break;
                 case R.id.ll_collection://收藏
-                    mOnShareClickListener.onCollection();
+                    mOnShareClickListener.onCollection(tv_collection);
                     break;
                 case R.id.ll_qq_friend://QQ好友
                     mOnShareClickListener.onQQFriend();

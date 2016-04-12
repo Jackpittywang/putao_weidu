@@ -423,4 +423,23 @@ public class CompanionApi {
                 .addParam(REQUEST_ARTICLE_ID, article_id)
                 .build(RequestMethod.POST, URL_COMPANY_CANCEL_COLLECTION);
     }
+
+    /**
+     * v1.3
+     * 添加收藏
+     */
+    private static final String URL_USER_COLLECTS_ADD = BASE_URL + "/user/collects/add";
+
+    /**
+     * 添加收藏
+     *
+     * @param article_id 文章id
+     * @param link_url 文章url
+     */
+    public static Request addCollects(String article_id,String link_url) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_SERVICE_ID, article_id)
+                .addParam(REQUEST_SERVICE_ID, link_url)
+                .build(RequestMethod.POST, URL_USER_COLLECTS_ADD);
+    }
 }
