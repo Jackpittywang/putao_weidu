@@ -92,7 +92,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
      * @return
      */
     public static String getInAppUrl(String url) {
-        if (url.contains("inapp")) return url;
+        if (url.contains("inapp=")) return url;
         if (url.contains("?")) url = url + "&inapp=1";
         else url = url + "?inapp=1";
         return url;
