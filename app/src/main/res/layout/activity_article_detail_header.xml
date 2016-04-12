@@ -9,41 +9,21 @@
     <View style="@style/line_horizontal" />
 
     <!--顶部图片区域-->
-    <RelativeLayout
-        android:id="@+id/layout_articlesdetail_header"
+
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_articlesdetail_header"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-        <com.sunnybear.library.view.image.ImageDraweeView
-            android:id="@+id/iv_articlesdetail_header"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_launcher" />
-
-        <TextView
-            android:id="@+id/tv_articlesdetail_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#985ec9"
-            android:padding="5dp"
-            android:text="体验"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:visibility="gone" />
-    </RelativeLayout>
+        android:layout_height="200dp"
+        android:background="@drawable/ic_launcher" />
 
     <!--用户输入的活动内容-->
-    <TextView
+    <com.sunnybear.library.view.emoji.EmojiTextView
         android:id="@+id/tv_articlesdetail_resume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="这里显示的是用户参加这个活动输入的内容可以行显示"
-        android:textSize="@dimen/text_size_16sp" />
+        android:text="这里显示的是用户参加这个活动输入的内容可以行显示" />
 
     <View style="@style/line_horizontal" />
 
@@ -57,8 +37,7 @@
     <RelativeLayout
         android:id="@+id/ll_join_list"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:visibility="invisible">
+        android:layout_height="60dp">
 
         <!--参与人员的头像-->
         <com.sunnybear.library.view.recycler.BasicRecyclerView
@@ -74,6 +53,12 @@
             auto:divider_width="5dp"
             auto:has_rank_divider="true"
             auto:layout_mode="horizontal" />
+
+        <!--<ScrollView-->
+            <!--android:id="@+id/sl_articlesdetail_icon"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--></ScrollView>-->
 
         <!--点赞的数量-->
         <LinearLayout

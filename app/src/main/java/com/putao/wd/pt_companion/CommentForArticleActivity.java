@@ -404,6 +404,18 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         }
     }
 
+    @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
+    public void eventClickComment(int currPosition) {
+        mPosition = currPosition;
+        //
+        ArticleDetailComment comment = adapter.getItem(currPosition);
+        Intent intent = new Intent(mContext, ArticlesDetailActivity.class);
+        intent.putExtra("wd_mid", wd_mid);
+        intent.putExtra("sid", sid);
+        intent.putExtra("pcid", comment.getUid());
+        startActivity(intent);
+    }
+
     private void reply() {
         ArticleDetailComment comment = adapter.getItem(mPosition);
         String username = comment.getUid() + ": ";

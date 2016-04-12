@@ -3,14 +3,17 @@ package com.putao.wd.pt_companion.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -62,9 +65,57 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
     public void onBindItem(final BasicViewHolder basicHolder, final ReplyLists commentReply, final int index) {
         if (index == 0) {
             HeaderHolder holder = (HeaderHolder) basicHolder;
-            holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
+            if (!StringUtils.isEmpty(headerInfo.getPic()))
+                holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
+            else
+                holder.iv_articlesdetail_header.setVisibility(View.GONE);
             holder.tv_articlesdetail_resume.setText(headerInfo.getContent());
-            holder.tv_amount_comment.setText(headerInfo.getCommentCount() + "   条评论");
+            holder.tv_amount_comment.setText(headerInfo.getCount_comments() + "   条评论");
+            if (headerInfo.getCount_comments() != 0) {
+//                holder.ll_praise_count.setVisibility(View.VISIBLE);
+//                holder.tv_praise_count.setText(headerInfo.getCount_likes());
+//
+//
+//                holder.ll_praise_count.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (!headerInfo.getIs_like()) {
+//                            //使用EventBus提交点赞
+//                            EventBusHelper.post(position, EVENT_COMMIT_COOL);
+//                            holder.sb_cool_icon.setState(true);
+//                            comment.setIs_like(true);
+//                            holder.tv_count_cool.setText(comment.getCount_likes() + 1 + "");
+//                        } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
+//                    }
+//                });
+//                holder.sb_cool_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
+//                    @Override
+//                    public void onSwitchClick(View v, boolean isSelect) {
+//                        if (isSelect) {
+//                            //使用EventBus提交点赞
+//                            EventBusHelper.post(position, EVENT_COMMIT_COOL);
+//                        }
+//                    }
+//                });
+
+
+//                holder.ll_praise_count.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (!headerInfo.getIs_like()) {
+//                            //使用EventBus提交点赞
+//                            EventBusHelper.post(position, EVENT_COMMIT_COOL);
+//                            holder.sb_cool_icon.setState(true);
+//                            comment.setIs_like(true);
+//                            holder.tv_count_cool.setText(comment.getCount_likes() + 1 + "");
+//                        } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
+//                    }
+//                });
+
+            } else {
+                holder.ll_praise_count.setVisibility(View.GONE);
+            }
+
         } else {
             int position = index;
             ReplyListsHolder holder = (ReplyListsHolder) basicHolder;
@@ -88,6 +139,8 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
             holder.sb_cool_icon.setClickable(false);
             holder.rl_cool.setVisibility(View.GONE);
             holder.tv_count_comment.setVisibility(View.GONE);
+
+
         }
     }
 
@@ -119,6 +172,7 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         @Bind(R.id.rl_cool)
         RelativeLayout rl_cool;
 
+
         public ReplyListsHolder(View itemView) {
             super(itemView);
         }
@@ -132,6 +186,10 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         TextView tv_articlesdetail_resume;
         @Bind(R.id.tv_amount_comment)
         TextView tv_amount_comment;
+        @Bind(R.id.tv_praise_count)
+        TextView tv_praise_count;
+        @Bind(R.id.ll_praise_count)
+        LinearLayout ll_praise_count;
 
         public HeaderHolder(View itemView) {
             super(itemView);
