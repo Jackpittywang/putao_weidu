@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.start.putaozi.CommonQuestionActivity;
@@ -94,6 +95,8 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
         if (url.contains("inapp=")) return url;
         if (url.contains("?")) url = url + "&inapp=1";
         else url = url + "?inapp=1";
+        url = url + "&token=" + AccountHelper.getCurrentUid();
+        url = url + "&uid=" + AccountHelper.getCurrentToken();
         return url;
     }
 
