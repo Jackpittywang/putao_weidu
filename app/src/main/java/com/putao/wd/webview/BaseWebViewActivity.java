@@ -47,6 +47,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
         setMainTitle(title);
         String url = args.getString(URL);
         wv_content.setOnWebViewLoadUrlCallback(this);
+        url = getInAppUrl(url);
         wv_content.loadUrl(url);
 
         wv_content.setWebChromeClient(new WebChromeClient() {
@@ -91,6 +92,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
      * @return
      */
     public static String getInAppUrl(String url) {
+        if (url.contains("inapp")) return url;
         if (url.contains("?")) url = url + "&inapp=1";
         else url = url + "?inapp=1";
         return url;
