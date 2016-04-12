@@ -2,6 +2,7 @@ package com.putao.wd.pt_me.message;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.api.StartApi;
 import com.putao.wd.model.Praise;
+import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.pt_me.message.adapter.NotifyAdapter;
 import com.putao.wd.model.Notify;
@@ -39,6 +41,10 @@ public class NotifyFragment extends BasicFragment {
     @Bind(R.id.tv_message_empty)
     TextView tv_message_empty;
 
+
+    @Bind(R.id.click)
+    Button click;
+
     private NotifyAdapter adapter;
 
     private boolean isPrepared;
@@ -63,6 +69,25 @@ public class NotifyFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+
+
+
+
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(ArticlesDetailActivity.class);
+
+            }
+        });
+
+
+
+
+
+
+
         Logger.d("MessageCenterActivity", "NotifyFragment启动");
         tv_message_empty.setText("还没有消息通知");
         adapter = new NotifyAdapter(mActivity, null);

@@ -413,6 +413,10 @@
         <activity
             android:name=".pt_companion.ArticleDetailForActivitiesActivity"
             android:screenOrientation="portrait" />
+        <!--评论详情页-->
+        <activity
+            android:name=".pt_companion.ArticlesDetailActivity"
+            android:screenOrientation="portrait" />
         <!--相册-->
         <activity
             android:name=".album.activity.PhotoAlbumActivity"
