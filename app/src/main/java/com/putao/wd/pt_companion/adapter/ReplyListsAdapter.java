@@ -17,6 +17,7 @@ import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
@@ -26,7 +27,9 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/4/11.
  */
-public class ReplyListsAdapter extends LoadMoreAdapter<ReplyLists, ReplyListsAdapter.ReplyListsHolder>{
+public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder> {
+    private final int VIEW_HEADER = 0xFF;
+    private final int VIEW_ITEM = 0xFE;
 
     private Context mContext;
 
@@ -37,43 +40,55 @@ public class ReplyListsAdapter extends LoadMoreAdapter<ReplyLists, ReplyListsAda
     }
 
     @Override
+    public int getItemCount() {
+        return super.getItemCount() + 1;
+    }
+
+    @Override
     public int getLayoutId(int viewType) {
         return R.layout.activity_comment_item;
     }
 
     @Override
-    public ReplyListsHolder getViewHolder(View itemView, int viewType) {
-        return new ReplyListsHolder(itemView);
+    public BasicViewHolder getViewHolder(View itemView, int viewType) {
+        if (viewType == VIEW_HEADER)
+            return new HeaderHolder(itemView);
+        else
+            return new ReplyListsHolder(itemView);
     }
 
     @Override
-    public void onBindItem(final ReplyListsHolder holder, final ReplyLists commentReply, final int position) {
-        if (!StringUtils.isEmpty(commentReply.getHead_img()))
-            holder.iv_comment_icon.setImageURL(commentReply.getHead_img());
-        else {
-            holder.iv_comment_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
-        }
+    public void onBindItem(final BasicViewHolder basicHolder, final ReplyLists commentReply, final int position) {
+        if (position == 0) {
+            HeaderHolder holder = (HeaderHolder) basicHolder;
 
-        if (!StringUtils.isEmpty(commentReply.getNick_name()))
-            holder.tv_username.setText(commentReply.getNick_name());
+        } else {
+            ReplyListsHolder holder = (ReplyListsHolder) basicHolder;
+            if (!StringUtils.isEmpty(commentReply.getHead_img()))
+                holder.iv_comment_icon.setImageURL(commentReply.getHead_img());
+            else {
+                holder.iv_comment_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
+            }
 
-        if (StringUtils.isEmpty(commentReply.getUid()))
-            holder.tv_username.setText(commentReply.getUid());
+            if (!StringUtils.isEmpty(commentReply.getNick_name()))
+                holder.tv_username.setText(commentReply.getNick_name());
 
-        String create_time = DateUtils.timeCalculate(Integer.valueOf(commentReply.getRelease_time()));
-        holder.tv_comment_time.setText(create_time);
+            if (StringUtils.isEmpty(commentReply.getUid()))
+                holder.tv_username.setText(commentReply.getUid());
 
-       // if (0 != commentReply.getIs_essence()) {
-        //    holder.tv_comment_content.setText("回复 " + /*commentReply.getReply().getUser_name() +*/ ": " + commentReply.getContent());
-     //   } else {
+            String create_time = DateUtils.timeCalculate(Integer.valueOf(commentReply.getRelease_time()));
+            holder.tv_comment_time.setText(create_time);
+
+            // if (0 != commentReply.getIs_essence()) {
+            //    holder.tv_comment_content.setText("回复 " + /*commentReply.getReply().getUser_name() +*/ ": " + commentReply.getContent());
+            //   } else {
             holder.tv_comment_content.setText(commentReply.getContent());
-       // }
+            // }
 
 
-
-        holder.sb_cool_icon.setClickable(false);
-        holder.rl_cool.setVisibility(View.GONE);
-        holder.tv_count_comment.setVisibility(View.GONE);
+            holder.sb_cool_icon.setClickable(false);
+            holder.rl_cool.setVisibility(View.GONE);
+            holder.tv_count_comment.setVisibility(View.GONE);
 
 //        holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -97,9 +112,19 @@ public class ReplyListsAdapter extends LoadMoreAdapter<ReplyLists, ReplyListsAda
 //            }
 //        });
 
+        }
     }
 
-    static class ReplyListsHolder extends BasicViewHolder{
+    @Override
+    public int getItemViewType(int position) {
+        //头部
+        if (position == 0)
+            return VIEW_HEADER;
+        else
+            return VIEW_ITEM;
+    }
+
+    static class ReplyListsHolder extends BasicViewHolder {
 
         @Bind(R.id.iv_comment_icon)
         ImageDraweeView iv_comment_icon;
@@ -122,5 +147,14 @@ public class ReplyListsAdapter extends LoadMoreAdapter<ReplyLists, ReplyListsAda
             super(itemView);
         }
     }
+
+    static class HeaderHolder extends BasicViewHolder {
+
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
 
 }
