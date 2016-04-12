@@ -118,8 +118,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onItemClick(Companion companion, int position) {
         Bundle bundle = new Bundle();
+//        companion.setNotDownloadIds();
         mCompanionAdapter.notifyItemChanged(position);
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, companion);
         startActivity(GameDetailListActivity.class, bundle);
     }
 
@@ -139,11 +141,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         startActivity(CaptureActivity.class);
     }
 
-    @Subcriber(tag = RedDotReceiver.APPPRODUCT_ID)
-    private void refreshCompanion(String refresh) {
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void refresh_companion() {
         checkDevice();
     }
-
 
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
     private void setCompanionDot(JSONArray accompanyNumber) {

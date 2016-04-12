@@ -25,7 +25,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
      */
     public static class Properties {
         public final static Property id = new Property(0, String.class, "id", true, "ID");
-        public final static Property service_id = new Property(1, String.class, "service_id", true, "SERVICE_ID");
+        public final static Property service_id = new Property(1, String.class, "service_id", false, "SERVICE_ID");
         public final static Property type = new Property(2, String.class, "type", false, "TYPE");
         public final static Property release_time = new Property(3, String.class, "release_time", false, "RELEASE_TIME");
         public final static Property content_lists = new Property(4, String.class, "content_lists", false, "CONTENT_LISTS");
@@ -69,7 +69,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
      */
     @Override
     public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1);
+        return cursor.isNull(offset) ? null : cursor.getString(offset);
     }
 
     /**

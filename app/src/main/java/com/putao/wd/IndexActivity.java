@@ -10,7 +10,9 @@ import android.view.KeyEvent;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.entity.CompanionDB;
@@ -22,6 +24,8 @@ import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
@@ -80,11 +84,14 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             }
         });
         vp_content.setOffscreenPageLimit(4);
-        vp_content.setCurrentItem(GlobalApplication.isBindDevice ? 0 : 1);
+        tb_index_tab.setTabItemSelected(PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false) ? R.id.ti_index_companion : R.id.ti_index_create);
         //红点显示
         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid()))) {
             ti_index_companion.show(-1);
         }
+        if (null != AccountHelper.getCurrentUid())
+            checkInquiryBind(AccountHelper.getCurrentUid());
+
     }
 
 
@@ -142,6 +149,11 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         mDiskFileCacheHelper.remove(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid());
     }
 
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void refresh_companion() {
+        checkInquiryBind(AccountHelper.getCurrentUid());
+    }
+
 
     //-------------------------------以下是红点信息缓存-------------------------//
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
@@ -180,4 +192,24 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         redDotMap.put(appproduct_id, appproduct_id);
         mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), redDotMap);
     }*/
+
+    /**
+     * 是不是绑定过设备
+     *
+     * @param currentUid uid
+     */
+    private void checkInquiryBind(String currentUid) {
+        networkRequest(UserApi.checkInquiryBind(currentUid),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, true);
+                    }
+
+                    @Override
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+                    }
+                }, false);
+    }
 }
