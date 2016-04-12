@@ -50,8 +50,10 @@ public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameD
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            holder.tv_time.setVisibility(View.VISIBLE);
             holder.tv_time.setText("───  " + date + "  ───");
-        }
+        } else
+            holder.tv_time.setVisibility(View.GONE);
     }
 
     static class GameDetailHolder extends BasicViewHolder {
