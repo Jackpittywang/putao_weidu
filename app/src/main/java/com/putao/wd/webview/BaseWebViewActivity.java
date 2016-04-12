@@ -84,4 +84,17 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
         super.onLeftAction();
     }
 
+
+    /**
+     * 把app里面的url加上inapp标志，网页端会通过此标志来判断是否是app里面调用
+     *
+     * @param url
+     * @return
+     */
+    public static String getInAppUrl(String url) {
+        if (url.contains("?")) url = url + "&inapp=1";
+        else url = url + "?inapp=1";
+        return url;
+    }
+
 }
