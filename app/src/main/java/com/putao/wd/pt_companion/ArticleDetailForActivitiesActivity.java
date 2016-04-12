@@ -74,7 +74,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     private SharePopupWindow mSharePopupWindow;
     private boolean is_Like;//是否赞过
     private Property property;
-    private String article_id, service_id;//文章id,服务号id
+    private String article_id, service_id, type;//文章id,服务号id
     private String title;
     private String sub_title;
     private String cover_pic;
@@ -96,6 +96,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         cover_pic = content_list.getCover_pic();
         link_url = content_list.getLink_url();
         article_id = content_list.getArticle_id();
+        type = messageList.getType();
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
         setMainTitle(sub_title);
@@ -148,12 +149,18 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
             }
 
             @Override
+            public void onCollection() {//收藏
+                cancelCollection(type, article_id);
+            }
+
+            @Override
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) mContext
                         .getSystemService(Context.CLIPBOARD_SERVICE);
                 copy.setText(link_url);
                 ToastUtils.showToastShort(mContext, "复制成功");
             }
+
         });
     }
 
@@ -190,6 +197,19 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
                     tv_count_cool.setText("赞");
                 }
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
+            }
+        });
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void cancelCollection(String type, String article_id) {
+        networkRequest(CompanionApi.cancelCollects(type, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "取消收藏");
+                loading.dismiss();
             }
         });
     }
