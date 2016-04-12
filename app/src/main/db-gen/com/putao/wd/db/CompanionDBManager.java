@@ -94,6 +94,6 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public void insertFixDownload(String service_id, String id) {
         Random random = new Random();
-        insert(new CompanionDB(id, "article", "", "", 0 + "", service_id));
+        insert(new CompanionDB(id, service_id, "article", "", "", 0 + ""));
     }
 }
