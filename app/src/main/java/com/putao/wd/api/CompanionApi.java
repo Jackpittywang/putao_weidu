@@ -21,6 +21,8 @@ public class CompanionApi {
     private static final String REQUEST_SERVICE_ID = "service_id";//服务号id
     private static final String REQUEST_SEND_DATA = "send_data";//接收推送的数据包，转发给纬度服务器
     private static final String REQUEST_URL = "url";
+    private static final String REQUEST_RWD_MID = "wd_mid";//点赞文章ID
+    private static final String SERVICE_ID = "sid"; //服务号唯一service_id
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
@@ -242,5 +244,20 @@ public class CompanionApi {
         return PTWDRequestHelper.find()
                 .addParam(REQUEST_URL, url)
                 .build(RequestMethod.GET, URL_COMPANY_ARTICLE_PROPERTY);
+    }
+
+    /**
+     * 对文章点赞
+     */
+    private static final String URL_COMPANY_FIRST_LIKE = BASE_URL + "/set/first/like";
+
+    /**
+     * 对文章点赞
+     */
+    public static Request addCompanyFirstLike(String article_id, String service_id) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_RWD_MID, article_id)
+                .addParam(SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_COMPANY_FIRST_LIKE);
     }
 }

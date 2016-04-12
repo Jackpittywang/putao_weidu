@@ -31,5 +31,30 @@
             auto:is_start_animator="true" />
 
     </com.sunnybear.library.view.PullToRefreshLayout>
+    <!--没有订单时-->
+    <RelativeLayout
+        android:id="@+id/rl_no_stroe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_EBEBEB">
+
+        <ImageView
+            android:id="@+id/img_no_data"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_me_order_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_no_data"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="还没有相关商品"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_20sp" />
+    </RelativeLayout>
 
 </LinearLayout>

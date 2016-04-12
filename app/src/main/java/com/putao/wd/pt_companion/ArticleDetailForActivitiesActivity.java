@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -15,19 +17,29 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.album.activity.PhotoAlbumActivity;
 import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ArticleDetailActs;
+import com.putao.wd.model.ArticleDetailComment;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.Property;
+import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
 import com.putao.wd.share.SharePopupWindow;
+import com.putao.wd.start.action.ActionsDetailActivity;
+import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.webview.PutaoParse;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
+import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.scroll.NestScrollView;
@@ -42,6 +54,9 @@ import butterknife.OnClick;
  * Created by zhanghao on 2016/4/6.
  */
 public class ArticleDetailForActivitiesActivity extends PTWDActivity implements OnClickListener {
+    public static final String COOL_COUNT = "like_count";
+    private static final String COMMENT_COUNT = "comment_count";
+    public static final String EVENT_COUNT_COOL = "event_count_cool";
 
     @Bind(R.id.wv_load)
     BasicWebView wv_load;
@@ -51,6 +66,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     LinearLayout ll_cool;//点赞数
     @Bind(R.id.tv_count_cool)
     TextView tv_count_cool;
+    @Bind(R.id.sb_cool_icon)
+    SwitchButton sb_cool_icon;
     @Bind(R.id.ll_comment)
     LinearLayout ll_comment;//评论数
     @Bind(R.id.tv_count_comment)
@@ -61,10 +78,14 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     NestScrollView sv_load;
     private ArticleDetailForActivitiesAdapter mArtivleDetailActsAdapter;
     private ArrayList<ArticleDetailActs> objects;
+    private String link_url;
+    ServiceMessageList messageList;
     ViewGroup.LayoutParams mRvLayoutParams;
     private SharePopupWindow mSharePopupWindow;
-    private static final String COOL_COUNT = "like_count";
     private boolean is_Like;//是否赞过
+    private Property property;
+    private String article_id, service_id;//文章id,服务号id
+
 
     @Override
     protected int getLayoutId() {
@@ -74,17 +95,20 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-//        iv_upload_pic.setVisibility(View.VISIBLE);
+        messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
+        link_url = messageList.getContent_lists().get(0).getLink_url();
+        article_id = messageList.getContent_lists().get(0).getArticle_id();
+        service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl("http://wap.baidu.com");
         mRvLayoutParams = rv_content.getLayoutParams();
-//        String cache_count = mDiskFileCacheHelper.getAsString(ArticleDetailForActivitiesActivity.COOL_COUNT + mExploreIndex.getArticle_id());
-//        mExploreIndex.setCount_likes(TextUtils.isEmpty(cache_count) ? mExploreIndex.getCount_likes() : Integer.parseInt(cache_count));
-//        isCool = !TextUtils.isEmpty(AccountHelper.getCurrentUid()) ? mExploreIndex.is_like() : null != mDiskFileCacheHelper.getAsString(ExploreDetailFragment.COOL + mExploreIndex.getArticle_id());
-//        sb_cool_icon.setState(isCool);
         mArtivleDetailActsAdapter = new ArticleDetailForActivitiesAdapter(mContext, null);
         rv_content.setAdapter(mArtivleDetailActsAdapter);
         initData();
+        /**
+         *  查询当前文章是否可以被评论、点赞数、评论数
+         * */
+        getArticleProperty(link_url);
         addListener();
     }
 
@@ -122,11 +146,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         objects.add(new ArticleDetailActs());
         objects.add(new ArticleDetailActs());
         mArtivleDetailActsAdapter.replaceAll(objects);
-
-        /**
-         *  查询当前文章是否可以被评论、点赞数、评论数
-         * */
-        getArticleProperty("");
     }
 
     @Override
@@ -142,16 +161,11 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         networkRequest(CompanionApi.getProperty(url), new SimpleFastJsonCallback<Property>(Property.class, loading) {
             @Override
             public void onSuccess(String url, Property result) {
-                boolean is_like = result.is_like();
-                int comments_count = result.getComments_count();
-                int like_count = result.getLike_count();
-//                if (is_like == 0) {//是否已赞(0：未赞，1：已赞)
-//
-//                } else {
-//
-//                }
-                tv_count_cool.setText(like_count == 0 ? "赞" : like_count + "");
-                tv_count_comment.setText(comments_count == 0 ? "评论" : comments_count + "");
+                property = result;
+                sb_cool_icon.setClickable(false);
+                sb_cool_icon.setState(result.is_like());
+                tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getLike_count() + "");
+                tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
             }
         });
     }
@@ -170,16 +184,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         rv_content.setLayoutParams(mRvLayoutParams);
     }
 
-   /* @OnClick(R.id.iv_upload_pic)
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_upload_pic:
-                startActivity(PhotoAlbumActivity.class);
-                break;
-        }
-    }*/
-
     @Override
     public void onRightAction() {
         super.onRightAction();
@@ -197,8 +201,27 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_cool://赞
+                if (!property.is_like()) {
+                    //使用EventBus提交点赞
+                    networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),
+                            new SimpleFastJsonCallback<String>(String.class, loading) {
+                                @Override
+                                public void onSuccess(String url, String result) {
+                                    mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
+                                    sb_cool_icon.setState(true);
+                                    property.setIs_like(true);
+                                    tv_count_cool.setText(property.getLike_count() + 1 + "");
+                                    EventBusHelper.post("", EVENT_COUNT_COOL);
+                                }
+                            });
+                } else ToastUtils.showToastShort(mContext, "您已经点过赞了");
                 break;
             case R.id.ll_comment://评论
+                Bundle bundle = new Bundle();
+                bundle.putString(CommentForArticleActivity.EVENT_COUNT_ARTICLEID, article_id);
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
+                YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_back);
+                startActivity(CommentForArticleActivity.class, bundle);
                 break;
         }
 

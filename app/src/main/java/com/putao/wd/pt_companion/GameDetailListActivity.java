@@ -17,6 +17,7 @@ import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -44,6 +45,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private int mPage;
     private ArrayList<String> list = new ArrayList<>();
     private List<ServiceSendData> mServiceSendData;
+    private ArrayList<ServiceMessageList> lists;
     private Companion mCompanion;
 
 
@@ -78,7 +80,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
-                        ArrayList<ServiceMessageList> lists = result.getLists();
+                        lists = result.getLists();
                         mCompanion.setNotDownloadIds(null);
                         lists = setIsSameDate(lists);
                         mGameDetailAdapter.addAll(0, lists);
@@ -168,7 +170,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
-                startActivity(ArticleDetailForActivitiesActivity.class);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
+                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });
     }
@@ -200,8 +203,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Override
     public void onRightAction() {
         super.onRightAction();
+        Bundle bundle = new Bundle();
+        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
         startActivity(OfficialAccountsActivity.class);
     }
+
 }
 
 

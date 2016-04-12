@@ -118,7 +118,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                         AccountHelper.setCurrentUid(result.getString("uid"));
                                         AccountHelper.setCurrentToken(result.getString("token"));
                                         new JPushHeaper().setAlias(mContext, result.getString("uid"));
-                                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
                                         //验证登陆后的连接发送
                                         checkLogin(mobile);
                                     }
@@ -166,6 +165,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
                         checkInquiryBind(AccountHelper.getCurrentUid());
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {

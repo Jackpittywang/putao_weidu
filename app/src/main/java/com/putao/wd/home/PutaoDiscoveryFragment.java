@@ -2,6 +2,7 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
@@ -20,11 +21,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016/4/5.
  */
-public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickListener {
+public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickListener, OnClickListener {
 
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
@@ -77,8 +79,15 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
 
                             @Override
                             public void onSuccess(String url, ArrayList<DisCovery> result) {
-                                disCoveries = result;
-                                adapter.replaceAll(result);
+                                if (result != null && result.size() > 0) {
+                                    disCoveries = result;
+                                    rl_no_discovery.setVisibility(View.GONE);
+                                    rv_discovery.setVisibility(View.VISIBLE);
+                                    adapter.replaceAll(result);
+                                } else {
+                                    rl_no_discovery.setVisibility(View.VISIBLE);
+                                    rv_discovery.setVisibility(View.GONE);
+                                }
                                 checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
@@ -86,6 +95,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
             }
         });
         rv_discovery.setOnItemClickListener(this);
+        rl_no_discovery.setOnClickListener(this);
     }
 
     /**
@@ -116,6 +126,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+                        rl_no_discovery.setVisibility(View.VISIBLE);
+                        rv_discovery.setVisibility(View.GONE);
                         ptl_refresh.refreshComplete();
                     }
                 }, 60 * 1000);
@@ -132,5 +144,15 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         Bundle bundle = new Bundle();
         bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, disCoveries.get(position).getVideo_url());
         startActivity(YoukuVideoPlayerActivity.class, bundle);
+    }
+
+    @OnClick({R.id.rl_no_discovery})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_no_discovery:
+                getDisCovery();
+                break;
+        }
     }
 }
