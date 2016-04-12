@@ -326,4 +326,28 @@ public class CompanionApi {
                 .addParam(REQUEST_URL, url)
                 .build(RequestMethod.GET, URL_COMPANY_ARTICLE_PROPERTY);
     }
+
+
+    /**
+     * 绑定服务号参数
+     */
+    private static final String REQUEST_CODE = "code";//用户id
+
+    /**
+     * 绑定服务号
+     */
+    private static final String URL_COMPANY_SERVICE_BIND = BASE_URL + "/service/bind";
+
+    /**
+     * 参与话题/创意收集/运营任务
+     *
+     * @param sId 服务号id
+     * @param code  服务号code
+     */
+    public static Request bindService(String sId, String code) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_SERVICE_ID, sId)
+                .addParam(REQUEST_CODE, code)
+                .build(RequestMethod.POST, URL_COMPANY_SERVICE_BIND);
+    }
 }

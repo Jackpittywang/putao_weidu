@@ -94,5 +94,6 @@ public class ScanUrlParseUtils {
     public static final class Scheme {
         public static final String PUTAO_LOGIN = "ptlogin";
         public static final String PUTAO_DEVICE = "ptdevicecontrol";
+        public static final String HTTP = "http";
     }
 }
