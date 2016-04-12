@@ -5,19 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <View style="@style/line_horizontal" />
-
-    <!--顶部图片区域-->
-
 
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_articlesdetail_header"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:background="@drawable/ic_launcher" />
 
-    <!--用户输入的活动内容-->
     <com.sunnybear.library.view.emoji.EmojiTextView
         android:id="@+id/tv_articlesdetail_resume"
         android:layout_width="match_parent"
@@ -31,73 +26,65 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/color_EBEBEB" />
+        android:background="@color/divider_color" />
 
     <!--参与点赞信息-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ll_join_list"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <!--参与人员的头像-->
+        <ImageView
+            android:id="@+id/ivPraise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_30_13" />
+
         <com.sunnybear.library.view.recycler.BasicRecyclerView
             android:id="@+id/rv_articlesdetail_applyusers"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/distance_8dp"
-            android:layout_marginLeft="@dimen/distance_5dp"
             android:layout_marginRight="@dimen/distance_8dp"
-            android:layout_marginTop="@dimen/distance_8dp"
+            android:layout_weight="1"
             android:visibility="visible"
             auto:divider_width="5dp"
             auto:has_rank_divider="true"
             auto:layout_mode="horizontal" />
-
-        <!--<ScrollView-->
-            <!--android:id="@+id/sl_articlesdetail_icon"-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--></ScrollView>-->
-
         <!--点赞的数量-->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:gravity="left">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:id="@+id/ll_praise_count"
+            <TextView
+                android:id="@+id/tv_praise_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_centerHorizontal="true"
+                android:padding="2dp"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_14sp" />
 
-                <TextView
-                    android:id="@+id/tv_praise_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="666"
-                    android:textColor="@color/text_color_646464"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2sp" />
-
-                <TextView
-                    android:id="@+id/tv_text_praise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赞"
-                    android:textColor="@color/text_color_646464"
-                    android:textSize="@dimen/text_size_10sp" />
-            </LinearLayout>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_text_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_praise_count"
+                android:layout_centerHorizontal="true"
+                android:text="赞"
+                android:textColor="@color/text_color_646464"
+                android:textSize="@dimen/text_size_10sp" />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/iv_icon_arrow"
@@ -108,14 +95,14 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/btn_arrow"
             android:visibility="gone" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <View style="@style/line_horizontal" />
     <!--间隔区-->
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/color_EBEBEB" />
+        android:background="@color/divider_color" />
 
     <View style="@style/line_horizontal" />
 
@@ -125,9 +112,8 @@
         android:layout_height="wrap_content"
         android:maxLength="15"
         android:padding="10dp"
-        android:text="2  条评论"
+        android:text="0  条评论"
         android:textSize="@dimen/text_size_16sp" />
 
     <View style="@style/line_horizontal" />
-
 </LinearLayout>

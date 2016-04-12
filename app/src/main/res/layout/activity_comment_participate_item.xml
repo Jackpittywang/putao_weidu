@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_comment_particpate"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_user_icon"
         style="@style/image_circle"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
-        auto:placeholderImage="@drawable/icon_20_17"
-        android:background="@drawable/ic_launcher"/>
+        android:layout_marginLeft="8dp"
+        auto:default_drawable="@drawable/img_head_default" />
 </RelativeLayout>

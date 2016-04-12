@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_comment_second"
     android:layout_width="match_parent"
@@ -57,17 +57,16 @@
     <com.sunnybear.library.view.recycler.BasicRecyclerView
         android:id="@+id/rv_others_comment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_below="@+id/rl_navigation_bar"
         android:layout_centerVertical="true"
+        android:layout_weight="1"
         android:visibility="visible"
         auto:divider_width="5dp"
         auto:has_rank_divider="true"
         auto:layout_mode="vertical" />
 
-
     <include
         android:id="@+id/ll_comment_edit"
         layout="@layout/base_comment" />
-
-</RelativeLayout>
+</LinearLayout>
