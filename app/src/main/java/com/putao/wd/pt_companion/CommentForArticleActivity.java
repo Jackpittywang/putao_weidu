@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -35,16 +34,12 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.ArticleDetailComment;
 import com.putao.wd.model.ArticleDetailCommentList;
-import com.putao.wd.model.Comment;
-import com.putao.wd.model.CommentList;
 import com.putao.wd.pt_companion.adapter.ArticleCommentAdapter;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
-import com.putao.wd.user.LoginActivity;
 import com.putao.wd.util.BottomPanelUtil;
-import com.sunnybear.library.controller.NetworkLogActivty;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.UploadFileTask;
@@ -62,9 +57,9 @@ import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,10 +129,15 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         wd_mid = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
         mSuperPosition = args.getInt(POSITION);
 
-        //TODO
-        wd_mid = "117";
-        sid = "6000";
-        //测试数据
+
+        Bundle data = getIntent().getExtras();
+        if (data.containsKey(EVENT_COUNT_ARTICLEID)) {
+            wd_mid = data.getString(EVENT_COUNT_ARTICLEID);
+        }
+        if (data.containsKey(AccountConstants.Bundle.BUNDLE_SERVICE_ID)) {
+            sid = data.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+        }
+        
         refreshView();
         refreshCommentList();
         addListener();
@@ -218,6 +218,20 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         rv_content.setOnItemClickListener(new OnItemClickListener<ArticleDetailComment>() {
             @Override
             public void onItemClick(ArticleDetailComment comment, int position) {
+                mPosition = position;
+                //TODO
+                Intent intent = new Intent(mContext, ArticlesDetailActivity.class);
+                intent.putExtra("wd_mid", wd_mid);
+                intent.putExtra("sid", sid);
+                intent.putExtra("pcid", comment.getComment_id());
+                startActivity(intent);
+
+            }
+        });
+
+        rv_content.setOnItemLongClickListener(new OnItemLongClickListener<ArticleDetailComment>() {
+            @Override
+            public void onItemLongClick(ArticleDetailComment comment, int position) {
                 mPosition = adapter.getItems().indexOf(comment);
                 if (AccountHelper.getCurrentUid().equals(comment.getUid())) {
                     mSelectPopupWindow.tv_first.setText("删除");
@@ -230,9 +244,9 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 isShowEmoji = false;//关闭表情包
                 vp_emojis.setVisibility(View.GONE);
                 KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
-
             }
         });
+
         et_msg.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -388,18 +402,6 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 comments.get(i).setIs_like(true);
             i++;
         }
-    }
-
-    @Subcriber(tag = CommentAdapter.EVENT_COMMENT_EDIT)
-    public void eventClickComment(int currPosition) {
-        mPosition = currPosition;
-        //TODO
-        ArticleDetailComment comment = adapter.getItem(currPosition);
-        Intent intent = new Intent(mContext, ArticlesDetailActivity.class);
-        intent.putExtra("wd_mid", wd_mid);
-        intent.putExtra("sid", sid);
-        intent.putExtra("pcid", comment.getUid());
-        startActivity(intent);
     }
 
     private void reply() {

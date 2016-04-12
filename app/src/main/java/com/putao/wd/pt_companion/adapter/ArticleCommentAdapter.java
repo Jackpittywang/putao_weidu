@@ -77,13 +77,6 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
 
         holder.tv_count_comment.setText(comment.getComment_count() == 0 ? "评论" : comment.getComment_count() + "");
 
-        holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //使用EventBus控制表情栏弹出
-                EventBusHelper.post(position, EVENT_COMMENT_EDIT);
-            }
-        });
         holder.rl_cool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,11 +99,11 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
             }
         });
 
-//        if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
-//            holder.iv_comment_pic.setImageURL(comment.getPics().get(0));
-//            holder.iv_comment_pic.setVisibility(View.VISIBLE);
-//        } else
-//            holder.iv_comment_pic.setVisibility(View.GONE);
+        if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
+            holder.iv_comment_pic.setImageURL(comment.getPics().get(0));
+            holder.iv_comment_pic.setVisibility(View.VISIBLE);
+        } else
+            holder.iv_comment_pic.setVisibility(View.GONE);
     }
 
     static class CommentViewHolder extends BasicViewHolder {
