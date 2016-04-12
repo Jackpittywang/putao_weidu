@@ -1,68 +1,36 @@
 package com.putao.wd.pt_companion;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.ClipboardManager;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.ActionDetail;
-import com.putao.wd.model.ArticleDetail;
-import com.putao.wd.model.ArticleDetailComment;
-import com.putao.wd.model.Comment;
-import com.putao.wd.model.CommentReply;
 import com.putao.wd.model.CompanionCommentDetail;
-import com.putao.wd.model.RegUser;
 import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
 import com.putao.wd.pt_companion.adapter.CommentReplyAdapter;
 import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
-import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
-import com.putao.wd.share.ShareTools;
-import com.putao.wd.start.comment.CommentActivity;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.KeyboardUtils;
-import com.sunnybear.library.util.ListUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.BasicWebView;
-import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
-import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-import com.sunnybear.library.view.select.TitleBar;
-import com.sunnybear.library.view.select.TitleItem;
-import com.sunnybear.library.view.sticky.StickyHeaderLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016/4/11.
@@ -203,6 +171,39 @@ public class ArticlesDetailActivity extends PTWDActivity {
     }
 
     private void addListener() {
+       /* mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+            @Override
+            public void onWechat() {
+                ShareTools.wechatWebShare(mContext, true, title, sub_title, cover_pic, link_url);
+            }
+
+            @Override
+            public void onWechatFriend() {
+                ShareTools.wechatWebShare(mContext, false, title, sub_title, cover_pic, link_url);
+            }
+
+            @Override
+            public void onQQFriend() {
+                ShareTools.OnQQZShare(mContext, true, title, sub_title, cover_pic, link_url);
+            }
+
+            @Override
+            public void onQQZone() {
+                ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
+            }
+
+            public void onSinaWeibo() {
+                ShareTools.OnWeiboShare(mContext, title, sub_title, link_url);
+            }
+
+            @Override
+            public void onCopyUrl() {
+                ClipboardManager copy = (ClipboardManager) mContext
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText(link_url);
+                ToastUtils.showToastShort(mContext, "复制成功");
+            }
+        });*/
     }
 
     private void netSetParise() {
@@ -274,4 +275,5 @@ public class ArticlesDetailActivity extends PTWDActivity {
     public void eventClickCool(final String str) {
 
     }
+
 }

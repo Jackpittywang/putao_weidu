@@ -20,9 +20,12 @@ import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.GameDetailListActivity;
+import com.putao.wd.pt_me.setting.SettingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -61,7 +64,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void checkDevice() {
-        if (/*GlobalApplication.isBindDevice*/true) {
+        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false) && null != AccountHelper.getCurrentUid()) {
             ll_companion_empty.setVisibility(View.GONE);
             navigation_bar.setVisibility(View.VISIBLE);
             ptl_refresh.setVisibility(View.VISIBLE);
@@ -130,7 +133,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_relevance_device:
-                startActivity(CaptureActivity.class);
+                if (null == AccountHelper.getCurrentUid()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
+                    startActivity(LoginActivity.class, bundle);
+                } else
+                    startActivity(CaptureActivity.class);
                 break;
         }
     }
