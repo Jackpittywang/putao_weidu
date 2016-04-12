@@ -25,6 +25,7 @@ import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -266,7 +267,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             @Override
             public void onClick(View v) {
                 ServiceMenu menu = (ServiceMenu) v.getTag();
-                if (ServiceMenu.TYPE_VIEW.equals(menu.getType())) {
+                if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
                     //跳转web
                     Intent intent = new Intent(mContext, BaseWebViewActivity.class);
                     intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
