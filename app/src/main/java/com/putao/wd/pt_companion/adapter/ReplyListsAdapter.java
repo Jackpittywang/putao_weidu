@@ -15,6 +15,7 @@ import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,7 +42,11 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.activity_comment_item;
+        if (viewType == VIEW_HEADER)
+            return R.layout.activity_comment_item;
+        else
+            return R.layout.activity_comment_item;
+
     }
 
     @Override

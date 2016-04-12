@@ -199,6 +199,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
             case R.id.ll_cool://赞
                 break;
             case R.id.ll_comment://评论
+                startActivity(CommentForArticleActivity.class);
                 break;
         }
 

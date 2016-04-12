@@ -41,10 +41,6 @@ public class NotifyFragment extends BasicFragment {
     @Bind(R.id.tv_message_empty)
     TextView tv_message_empty;
 
-
-    @Bind(R.id.click)
-    Button click;
-
     private NotifyAdapter adapter;
 
     private boolean isPrepared;
@@ -69,25 +65,6 @@ public class NotifyFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
-
-
-
-
-        click.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(ArticlesDetailActivity.class);
-
-            }
-        });
-
-
-
-
-
-
-
         Logger.d("MessageCenterActivity", "NotifyFragment启动");
         tv_message_empty.setText("还没有消息通知");
         adapter = new NotifyAdapter(mActivity, null);

@@ -17,12 +17,6 @@
         android:visibility="gone"
         auto:has_row_divider="true" />-->
 
-    <Button
-        android:id="@+id/click"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="cheshi"/>
-
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
