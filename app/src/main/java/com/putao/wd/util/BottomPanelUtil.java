@@ -80,7 +80,7 @@ public class BottomPanelUtil {
                     bottomPopupWindow.dismiss();
                 }
                 handler.sendEmptyMessage(100);
-                cancleCallback.doFunction();
+                if(cancleCallback!=null) cancleCallback.doFunction();
             }
         });
 
@@ -91,7 +91,7 @@ public class BottomPanelUtil {
                     bottomPopupWindow.dismiss();
                 }
                 handler.sendEmptyMessage(100);
-                cancleCallback.doFunction();
+                if(cancleCallback!=null) cancleCallback.doFunction();
             }
         });
         for (int i = 0; i < functionNames.length; i++) {

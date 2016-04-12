@@ -137,7 +137,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         if (data.containsKey(AccountConstants.Bundle.BUNDLE_SERVICE_ID)) {
             sid = data.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
         }
-        
+
         refreshView();
         refreshCommentList();
         addListener();
@@ -293,7 +293,6 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                         startActivity(intent);
                     }
                 }}, null);
-
                 break;
         }
     }
