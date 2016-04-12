@@ -12,7 +12,7 @@ public class Companion implements Serializable {
     private String service_icon;//游戏ICON
     private String service_name;//
     private String service_description;//游戏介绍
-    private int time;//更新时间
+    private int relation_time;//更新时间
     private int is_relation;//订阅状态，0未订阅，1已订阅
     private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
 
@@ -48,12 +48,12 @@ public class Companion implements Serializable {
         this.service_description = service_description;
     }
 
-    public int getTime() {
-        return time;
+    public int getRelation_time() {
+        return relation_time;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setRelation_time(int relation_time) {
+        this.relation_time = relation_time;
     }
 
     public int getIs_relation() {
