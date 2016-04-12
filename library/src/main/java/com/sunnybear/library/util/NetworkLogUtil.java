@@ -62,6 +62,7 @@ public class NetworkLogUtil {
             bodyStr = "请求  参数: " + bodyStr;
             requestSB.append(bodyStr + "\n");
         }
+        Log.e("NetWork", "networkRequest: " + requestSB.toString());
         networkLog.insert(0, requestSB.toString());
     }
 
@@ -94,6 +95,7 @@ public class NetworkLogUtil {
             responseSB.append("响应  数据: " + result + "\n");
         }
         responseSB.append("-----------------------------------" + "\n\n");
+        Log.e("NetWork", "networkRequest: " + responseSB.toString());
         networkLog.insert(0, responseSB.toString());
     }
 
