@@ -33,6 +33,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -118,7 +119,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                         AccountHelper.setCurrentUid(result.getString("uid"));
                                         AccountHelper.setCurrentToken(result.getString("token"));
                                         new JPushHeaper().setAlias(mContext, result.getString("uid"));
-                                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
                                         //验证登陆后的连接发送
                                         checkLogin(mobile);
                                     }
@@ -166,6 +166,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
+                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
                         checkInquiryBind(AccountHelper.getCurrentUid());
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
@@ -193,7 +194,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, true);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         finish();
                     }

@@ -25,7 +25,7 @@
 
         <!--探索-->
         <com.sunnybear.library.view.select.TabItem
-            android:id="@+id/ti_index_explore"
+            android:id="@+id/ti_index_companion"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_p_sel"
@@ -33,7 +33,7 @@
 
         <!--创造-->
         <com.sunnybear.library.view.select.TabItem
-            android:id="@+id/ti_index_create"
+            android:id="@+id/ti_index_discovery"
             style="@style/style_tab_bar"
             auto:active="true"
             auto:activeDrawable="@drawable/tab_bar_c_sel"
@@ -49,7 +49,7 @@
 
         <!--我-->
         <com.sunnybear.library.view.select.TabItem
-            android:id="@+id/ti_index_companion"
+            android:id="@+id/ti_index_me"
             style="@style/style_tab_bar"
             auto:active="false"
             auto:activeDrawable="@drawable/tab_bar_me_sel"

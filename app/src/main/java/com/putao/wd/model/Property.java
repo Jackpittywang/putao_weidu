@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2016/4/12.
  */
 public class Property implements Serializable {
+    private boolean is_pic;//是否评论带图片
     private int like_count;//点赞数
     private int comments_count;//评论数
     private boolean is_comment;//是否可评论
@@ -44,10 +45,19 @@ public class Property implements Serializable {
     }
 
 
+    public boolean is_pic() {
+        return is_pic;
+    }
+
+    public void setIs_pic(boolean is_pic) {
+        this.is_pic = is_pic;
+    }
+
     @Override
     public String toString() {
         return "Property{" +
-                "like_count=" + like_count +
+                "is_pic=" + is_pic +
+                ", like_count=" + like_count +
                 ", comments_count=" + comments_count +
                 ", is_comment=" + is_comment +
                 ", is_like=" + is_like +

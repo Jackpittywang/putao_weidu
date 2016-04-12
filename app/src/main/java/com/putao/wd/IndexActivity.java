@@ -46,14 +46,14 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     UnScrollableViewPager vp_content;
     @Bind(R.id.tb_index_tab)
     TabBar tb_index_tab;
-    @Bind(R.id.ti_index_create)
-    TabItem ti_index_create;
-    @Bind(R.id.ti_index_store)
-    TabItem ti_index_store;
     @Bind(R.id.ti_index_companion)
     TabItem ti_index_companion;
-    @Bind(R.id.ti_index_explore)
-    TabItem ti_index_explore;
+    @Bind(R.id.ti_index_discovery)
+    TabItem ti_index_discovery;
+    @Bind(R.id.ti_index_store)
+    TabItem ti_index_store;
+    @Bind(R.id.ti_index_me)
+    TabItem ti_index_me;
 
     private SparseArray<Fragment> mFragments;
 
@@ -84,10 +84,16 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             }
         });
         vp_content.setOffscreenPageLimit(4);
-        tb_index_tab.setTabItemSelected(PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false) ? R.id.ti_index_companion : R.id.ti_index_create);
+        Boolean is_device_bind = PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false);
+        tb_index_tab.setTabItemSelected(is_device_bind ? R.id.ti_index_companion : R.id.ti_index_discovery);
+        vp_content.setCurrentItem(is_device_bind ? 0 : 1);
         //红点显示
         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid()))) {
             ti_index_companion.show(-1);
+        }
+        //红点显示
+        if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR, false)) {
+            ti_index_companion.hide();
         }
         if (null != AccountHelper.getCurrentUid())
             checkInquiryBind(AccountHelper.getCurrentUid());
@@ -111,7 +117,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
                 vp_content.setCurrentItem(position, false);
-                if (3 == position) ti_index_companion.hide();
+                if (3 == position) ti_index_me.hide();
+                if (0 == position) ti_index_companion.hide();
             }
         });
     }
@@ -159,6 +166,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
     private void setCompanionDot(JSONArray accompanyNumber) {
         ti_index_companion.show(-1);
+        PreferenceUtils.save(RedDotReceiver.COMPANION_TABBAR, true);
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         for (Object object : accompanyNumber) {
             JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
@@ -203,7 +211,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, true);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
                     }
 
                     @Override

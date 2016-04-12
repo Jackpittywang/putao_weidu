@@ -1,8 +1,11 @@
 package com.putao.wd.db;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.CompanionDB;
+import com.putao.wd.model.ServiceMessageList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +62,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public ArrayList<String> getNotDownloadIds(String serviceId) {
         ArrayList<String> notDownloadIds = new ArrayList<>();
-        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId)).listLazy();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId)).list();
         for (CompanionDB companionDB : companionDBs) {
             notDownloadIds.add(companionDB.getId());
         }
@@ -76,14 +79,18 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     /**
      * 设置文章的下载状态
      */
-    public void setDownloadFinish(String id) {
-        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id)).unique();
+    public void updataDownloadFinish(String service_id, ServiceMessageList serviceMessageList) {
+        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(serviceMessageList.getId())).unique();
+        unique.setContent_lists(JSON.toJSONString(serviceMessageList.getContent_lists()));
         unique.setIsDownload("1");
+        unique.setType(serviceMessageList.getType());
+        unique.setRelease_time(serviceMessageList.getRelease_time() + "");
+        unique.setService_id(service_id);
         update(unique);
     }
 
     /**
-     * 设置文章的下载状态
+     * 插入没有带下载的文章
      */
     public void insertFixDownload(String service_id, String id) {
         Random random = new Random();
