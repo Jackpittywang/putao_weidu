@@ -26,6 +26,7 @@ import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;

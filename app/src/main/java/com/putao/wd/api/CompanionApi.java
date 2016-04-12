@@ -348,7 +348,7 @@ public class CompanionApi {
     public static Request getProperty(String url) {
         return PTWDRequestHelper.find()
                 .addParam(REQUEST_URL, url)
-                .build(RequestMethod.GET, URL_COMPANY_ARTICLE_PROPERTY);
+                .build(RequestMethod.POST, URL_COMPANY_ARTICLE_PROPERTY);
     }
 
     /**

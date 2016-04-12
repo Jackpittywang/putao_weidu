@@ -95,6 +95,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         sub_title = content_list.getSub_title();
         cover_pic = content_list.getCover_pic();
         link_url = content_list.getLink_url();
+        article_id = content_list.getArticle_id();
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
         setMainTitle(sub_title);
@@ -183,7 +184,11 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
                 property = result;
                 sb_cool_icon.setClickable(false);
                 sb_cool_icon.setState(result.is_like());
-                tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getLike_count() + "");
+                if (result.getLike_count() != 0) {
+                    tv_count_cool.setText(result.getLike_count() + "");
+                } else {
+                    tv_count_cool.setText("赞");
+                }
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
             }
         });
@@ -215,24 +220,28 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
 //        iv_upload_pic.setImageURL(Uri.parse("file://" + uri).toString());
     }
 
-    @OnClick({R.id.ll_cool, R.id.ll_comment})
+    @OnClick({R.id.ll_cool, R.id.ll_comment, R.id.sb_cool_icon})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_cool://赞
                 if (!property.is_like()) {
+                    sb_cool_icon.setState(true);
+                    property.setIs_like(true);
+                    property.setLike_count(property.getLike_count() + 1);
+                    ll_cool.setClickable(false);
+                    tv_count_cool.setText(property.getLike_count() + "");
+                    mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
                     //使用EventBus提交点赞
                     networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),
                             new SimpleFastJsonCallback<String>(String.class, loading) {
                                 @Override
                                 public void onSuccess(String url, String result) {
-                                    mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
-                                    sb_cool_icon.setState(true);
-                                    property.setIs_like(true);
-                                    tv_count_cool.setText(property.getLike_count() + 1 + "");
-                                    EventBusHelper.post("", EVENT_COUNT_COOL);
+                                    EventBusHelper.post(true, EVENT_COUNT_COOL);
+                                    loading.dismiss();
                                 }
                             });
+
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了");
                 break;
             case R.id.ll_comment://评论
@@ -241,6 +250,17 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
                 YouMengHelper.onEvent(mContext, YouMengHelper.AccompanyHome_app_detail_back);
                 startActivity(CommentForArticleActivity.class, bundle);
+                break;
+            case R.id.sb_cool_icon:
+                //使用EventBus提交点赞
+                networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
+                                EventBusHelper.post(true, EVENT_COUNT_COOL);
+                            }
+                        });
                 break;
         }
 
