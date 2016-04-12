@@ -23,6 +23,8 @@ public class CompanionApi {
     private static final String REQUEST_URL = "url";
     private static final String REQUEST_RWD_MID = "wd_mid";//点赞文章ID
     private static final String SERVICE_ID = "sid"; //服务号唯一service_id
+    private static final String REQUEST_TYPE = "type";
+    private static final String REQUEST_LINK_URL = "link_url";
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
@@ -172,7 +174,7 @@ public class CompanionApi {
                 .addParam(REQUEST_COMMENT_SID, sid)
                 .addParam(REQUEST_COMMENT_PCID, pcid)
                 .addParam(REQUEST_PAGE, page)
-                .addParam(REQUEST_COMMENT_SN,"")
+                .addParam(REQUEST_COMMENT_SN, "")
                 .build(RequestMethod.POST, URL_COMPANY_ARTICLE_COMMENT_URL);
     }
 
@@ -405,5 +407,40 @@ public class CompanionApi {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_SERVICE_MENNU);
+    }
+
+    /**
+     * 取消收藏
+     */
+    private static final String URL_COMPANY_CANCEL_COLLECTION = BASE_URL + "/user/collects/del";
+
+
+    /**
+     * 取消收藏
+     */
+    public static Request cancelCollects(String type, String article_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_TYPE, type)
+                .addParam(REQUEST_ARTICLE_ID, article_id)
+                .build(RequestMethod.POST, URL_COMPANY_CANCEL_COLLECTION);
+    }
+
+    /**
+     * v1.3
+     * 添加收藏
+     */
+    private static final String URL_USER_COLLECTS_ADD = BASE_URL + "/user/collects/add";
+
+    /**
+     * 添加收藏
+     *
+     * @param article_id 文章id
+     * @param link_url   文章url
+     */
+    public static Request addCollects(String article_id, String link_url) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_ARTICLE_ID, article_id)
+                .addParam(REQUEST_LINK_URL, link_url)
+                .build(RequestMethod.POST, URL_USER_COLLECTS_ADD);
     }
 }

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ import butterknife.OnClick;
  */
 public class ArticleDetailForActivitiesActivity extends PTWDActivity implements OnClickListener {
     public static final String COOL_COUNT = "like_count";
-    private static final String COMMENT_COUNT = "comment_count";
+    public static final String COLLECTION_ID = "collection_id";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
     @Bind(R.id.wv_load)
@@ -74,7 +75,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     private SharePopupWindow mSharePopupWindow;
     private boolean is_Like;//是否赞过
     private Property property;
-    private String article_id, service_id;//文章id,服务号id
+    private String article_id, service_id, type;//文章id,服务号id
     private String title;
     private String sub_title;
     private String cover_pic;
@@ -96,6 +97,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         cover_pic = content_list.getCover_pic();
         link_url = content_list.getLink_url();
         article_id = content_list.getArticle_id();
+        type = messageList.getType();
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
         setMainTitle(sub_title);
@@ -154,6 +156,45 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
                 copy.setText(link_url);
                 ToastUtils.showToastShort(mContext, "复制成功");
             }
+
+
+            @Override
+            public void onCollection(TextView textView, ImageView imageView) {
+                if (!property.is_collect())
+                    addCollect(textView, imageView);
+                else
+                    cancelCollection(textView, imageView);
+
+            }
+        });
+    }
+
+    private void addCollect(final TextView textView, final ImageView imageView) {
+        networkRequest(CompanionApi.addCollects(article_id, link_url), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "收藏成功");
+                property.setIs_collect(true);
+                imageView.setImageResource(R.drawable.icon_40_14);
+                textView.setText("已收藏");
+                loading.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void cancelCollection(final TextView textView, final ImageView imageView) {
+        networkRequest(CompanionApi.cancelCollects(null, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                ToastUtils.showToastShort(mContext, "取消收藏");
+                property.setIs_collect(false);
+                imageView.setImageResource(R.drawable.icon_40_13);
+                textView.setText("收藏");
+                loading.dismiss();
+            }
         });
     }
 
@@ -193,6 +234,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
             }
         });
     }
+
 
     /**
      * 重新设置recycleview高度

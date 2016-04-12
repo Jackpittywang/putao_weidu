@@ -5,14 +5,18 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CollectionApi;
+import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Collection;
+import com.putao.wd.pt_companion.ArticleDetailForActivitiesActivity;
 import com.putao.wd.pt_companion.GameDetailActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -66,10 +70,10 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             mCollection = result;
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
-                            ptl_refresh.setVisibility(View.VISIBLE);
+                            rv_collection.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
                         } else {
-                            ptl_refresh.setVisibility(View.GONE);
+                            rv_collection.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
                         checkLoadMoreComplete(result);
@@ -87,21 +91,25 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         rv_collection.setOnLoadMoreListener(this);
         rv_collection.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(Serializable serializable, int position) {
+            public void onItemLongClick(Serializable serializable, final int position) {
                 mDeleteDialog = new AlertDialog.Builder(mContext)
 //                        .setTitle("删除收藏数据")
                         .setMessage("确定删除所选的收藏项？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                networkRequest(CreateApi.setCreateAction(mCollection.getId(), 3),
-//                                        new SimpleFastJsonCallback<String>(String.class, loading) {
-//                                            @Override
-//                                            public void onSuccess(String url, String result) {
-//                                                mCreate.setFollow_status(1);
-////                                                adapter.replaceAll();
-//                                            }
-//                                        });
+                                networkRequest(CompanionApi.cancelCollects(mCollection.get(position).getType() + "", mCollection.get(position).getId() + ""), new SimpleFastJsonCallback<String>(String.class, loading) {
+                                    @Override
+                                    public void onSuccess(String url, String result) {
+                                        if (adapter.getItemCount() == 0) {
+                                            ll_empty.setVisibility(View.VISIBLE);
+                                        }
+                                        initData();
+                                        ToastUtils.showToastShort(mContext, "取消收藏");
+                                        loading.dismiss();
+                                    }
+                                });
+
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -150,9 +158,9 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     @Override
     public void onItemClick(Collection collection, int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt(GameDetailActivity.POSITION, mCollection.get(position).getId());
+        bundle.putInt(ArticleDetailForActivitiesActivity.COLLECTION_ID, mCollection.get(position).getId());
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
-        startActivity(GameDetailActivity.class, bundle);
+        startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }
 
     @Override

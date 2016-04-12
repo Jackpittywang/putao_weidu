@@ -2,7 +2,6 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -16,11 +15,9 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.CompanionDBManager;
-import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.GameDetailListActivity;
-import com.putao.wd.pt_me.setting.SettingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -31,8 +28,6 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -64,7 +59,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void checkDevice() {
-        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false) && null != AccountHelper.getCurrentUid()) {
+        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false) && AccountHelper.isLogin()) {
             ll_companion_empty.setVisibility(View.GONE);
             navigation_bar.setVisibility(View.VISIBLE);
             ptl_refresh.setVisibility(View.VISIBLE);
@@ -120,12 +115,14 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
     @Override
     public void onItemClick(Companion companion, int position) {
-        Bundle bundle = new Bundle();
-//        companion.setNotDownloadIds();
-        mCompanionAdapter.notifyItemChanged(position);
-        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
-        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, companion);
-        startActivity(GameDetailListActivity.class, bundle);
+        if (1 == companion.getIs_relation()) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, companion);
+            startActivity(GameDetailListActivity.class, bundle);
+        } else {
+            startActivity(CaptureActivity.class);
+        }
     }
 
     @OnClick(R.id.btn_relevance_device)
@@ -133,7 +130,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_relevance_device:
-                if (null == AccountHelper.getCurrentUid()) {
+                if (AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
                     startActivity(LoginActivity.class, bundle);
