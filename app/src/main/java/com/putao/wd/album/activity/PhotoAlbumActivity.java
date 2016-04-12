@@ -27,6 +27,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.LoadingHUD;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -136,7 +137,6 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
                 hideFolderSelect();
             }
         });
-
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, DensityUtil.getDeviceHeight(mContext));
         rcFolderList.setLayoutParams(params);
 //        rcFolderList.animate().translationY(-DensityUtil.getDeviceHeight(mContext)).setDuration(0).start();
@@ -176,9 +176,20 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
 //        rcFolderList.animate().translationY(DensityUtil.getDeviceHeight(mContext)).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(0).start();
     }
 
+    LoadingHUD dialog;
+
     private void executeAllImage() {
+
+
         new AsyncTask<Void, Void, Void>() {
             private List<ImageInfo> defaultImags = new ArrayList<>();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dialog = LoadingHUD.getInstance(mContext);
+                dialog.show();
+            }
 
             @Override
             protected Void doInBackground(Void... params) {
@@ -232,6 +243,7 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
                 currentImages.clear();
                 currentImages.addAll(defaultImags);
                 adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
         }.execute();
     }

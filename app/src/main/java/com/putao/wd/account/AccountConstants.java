@@ -87,5 +87,6 @@ public final class AccountConstants {
         public static final String BUNDLE_COMPANION_NOT_DOWNLOAD = "bundle_companion_not_download";
         public static final String BUNDLE_COMPANION_SERVICE_MESSAGE_LIST = "bundle_companion_service_message_list";
         public static final String BUNDLE_COMPANION_BIND_SERVICE = "bundle_companion_bind_service";
+        public static final String BUNDLE_COMPANION_COLLECTION = "bundle_companion_collection";
     }
 }

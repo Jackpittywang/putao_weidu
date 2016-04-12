@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CollectionApi;
 import com.putao.wd.api.CompanionApi;
@@ -158,7 +159,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     @Override
     public void onItemClick(Collection collection, int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt(ArticleDetailForActivitiesActivity.COLLECTION_ID, mCollection.get(position).getId());
+        bundle.putInt(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, mCollection.get(position).getId());
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
         startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }
