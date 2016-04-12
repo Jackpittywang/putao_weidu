@@ -2,6 +2,7 @@ package com.putao.wd.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhanghao on 2015/12/8.
@@ -11,7 +12,7 @@ public class ServiceMessageList implements Serializable {
     private String type;
     private int release_time;
     private boolean isShowData;
-    private ArrayList<ServiceMessageContent> content_lists;
+    private List<ServiceMessageContent> content_lists;
 
     public String getId() {
         return id;
@@ -37,11 +38,11 @@ public class ServiceMessageList implements Serializable {
         this.release_time = release_time;
     }
 
-    public ArrayList<ServiceMessageContent> getContent_lists() {
+    public List<ServiceMessageContent> getContent_lists() {
         return content_lists;
     }
 
-    public void setContent_lists(ArrayList<ServiceMessageContent> content_lists) {
+    public void setContent_lists(List<ServiceMessageContent> content_lists) {
         this.content_lists = content_lists;
     }
 

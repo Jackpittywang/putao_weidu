@@ -19,11 +19,14 @@ import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.ServiceMenu;
 import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -58,8 +61,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private int mPosition;
     private int mPage;
     private ArrayList<String> list = new ArrayList<>();
-    private List<ServiceSendData> mServiceSendData;
+    private ArrayList<ServiceSendData> mServiceSendData;
     private Companion mCompanion;
+    private ArrayList<ServiceMessageList> lists;
 
 
     @Override
@@ -74,6 +78,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         setMainTitle(mCompanion.getService_name());
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
+        lists = new ArrayList<>();
         initData();
         initBottomMenu();
         addListener();
@@ -84,8 +89,18 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
      */
     private void initData() {
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles();
-        mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
+        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles(mCompanion.getService_id());
+        if (null != downloadArticles) {
+            for (CompanionDB companionDB : downloadArticles) {
+                ServiceMessageList serviceMessageList = new ServiceMessageList();
+                serviceMessageList.setType(companionDB.getType());
+                serviceMessageList.setIsShowData(true);
+                serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
+                lists.add(serviceMessageList);
+            }
+            mGameDetailAdapter.replaceAll(setIsSameDate(lists));
+//            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
+        }
         mPage = 1;
         ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
@@ -94,7 +109,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
-                        ArrayList<ServiceMessageList> lists = result.getLists();
+                        lists = result.getLists();
+                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                        for (ServiceMessageList serviceMessageList : lists) {
+                            dataBaseManager.updataDownloadFinish(mCompanion.getService_id(), serviceMessageList);
+                        }
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         mCompanion.setNotDownloadIds(null);
                         lists = setIsSameDate(lists);
                         mGameDetailAdapter.addAll(0, lists);
@@ -184,7 +204,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
-                startActivity(ArticleDetailForActivitiesActivity.class);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
+                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });
     }
@@ -216,6 +237,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Override
     public void onRightAction() {
         super.onRightAction();
+        Bundle bundle = new Bundle();
+        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
         startActivity(OfficialAccountsActivity.class);
     }
 
@@ -256,7 +279,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             @Override
             public void onClick(View v) {
                 ServiceMenu menu = (ServiceMenu) v.getTag();
-                if (ServiceMenu.TYPE_VIEW.equals(menu.getType())) {
+                if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
                     //跳转web
                     Intent intent = new Intent(mContext, BaseWebViewActivity.class);
                     intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
