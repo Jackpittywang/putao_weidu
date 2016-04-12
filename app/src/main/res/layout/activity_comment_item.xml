@@ -91,6 +91,7 @@
                         android:layout_toRightOf="@+id/sb_cool_icon"
                         android:paddingLeft="4dp"
                         android:text="赞"
+                        android:hint="赞"
                         android:textColor="@color/text_color_gray"
                         android:textSize="@dimen/text_size_14sp" />
 
@@ -113,6 +114,7 @@
                     android:drawableLeft="@drawable/btn_comment"
                     android:drawablePadding="4dp"
                     android:text="评论"
+                    android:hint="评论"
                     android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/text_size_14sp" />
 
