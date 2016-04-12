@@ -176,11 +176,11 @@ public class PutaoStoreFragment extends PTWDFragment {
                         YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
                         bundle.putSerializable("status", status);
-                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "");
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "product_num");
                         startActivity(ProductDetailV2Activity.class, bundle);
                     } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
                         YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
-                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "");
+                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "product_num");
                         bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
                         startActivity(ProductDetailActivity.class, bundle);
                     }

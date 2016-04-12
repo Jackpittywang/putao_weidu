@@ -136,11 +136,11 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 getProduct(storeProduct.getProduct_id());
             }
         } else if (is_remind) {
-            if (product_num.equals("diary")) {
-                product_id = args.getString(DiaryActivity.BUNDLE_PRODUCT_ID);
-            } else {
-                product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
-            }
+//            if (product_num.equals("diary")) {
+//                product_id = args.getString(DiaryActivity.BUNDLE_PRODUCT_ID);
+//            } else {
+            product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
+//            }
             wv_content.loadUrl(PTWDRequestHelper.store()
                     .addParam("pid", product_id)
                     .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
@@ -174,7 +174,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             @Override
             public void onWechat() {
-                if (product_num.equals("diary")) {
+                if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
@@ -183,7 +183,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
 
             @Override
             public void onWechatFriend() {
-                if (product_num.equals("diary")) {
+                if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
@@ -192,7 +192,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
 
             @Override
             public void onQQFriend() {
-                if (product_num.equals("diary")) {
+                if (!product_num.equals("product_num")) {
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
@@ -201,7 +201,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
 
             @Override
             public void onQQZone() {
-                if (product_num.equals("diary")) {
+                if (!product_num.equals("product_num")) {
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
@@ -209,7 +209,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
             }
 
             public void onSinaWeibo() {
-                if (product_num.equals("diary")) {
+                if (!product_num.equals("product_num")) {
                     ShareTools.OnWeiboShare(ProductDetailV2Activity.this, title, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     ShareTools.OnWeiboShare(ProductDetailV2Activity.this, storeProduct.getTitle(), storeProduct.getImage(), storeProduct.getMobile_url());
@@ -220,7 +220,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
             public void onCopyUrl() {
                 ClipboardManager copy = (ClipboardManager) ProductDetailV2Activity.this
                         .getSystemService(Context.CLIPBOARD_SERVICE);
-                if (product_num.equals("diary")) {
+                if (!product_num.equals("product_num")) {
                     copy.setText(shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
                     copy.setText(storeProduct.getMobile_url());

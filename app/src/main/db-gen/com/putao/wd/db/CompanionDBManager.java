@@ -54,6 +54,18 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     }
 
     /**
+     * 获取没有还没有获取到数据的推送id
+     */
+    public ArrayList<String> getNotDownloadIds(String serviceId) {
+        ArrayList<String> notDownloadIds = new ArrayList<>();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"),CompanionDBDao.Properties.service_id.eq(serviceId)).listLazy();
+        for (CompanionDB companionDB : companionDBs) {
+            notDownloadIds.add(companionDB.getId());
+        }
+        return notDownloadIds;
+    }
+
+    /**
      * 获取已经下载的文章列表
      */
     public List<CompanionDB> getDownloadArticles() {
@@ -67,5 +79,12 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
         CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id)).unique();
         unique.setIsDownload("1");
         update(unique);
+    }
+
+    /**
+     * 设置文章的下载状态
+     */
+    public void insertFixDownload(String service_id, String id) {
+        insert(new CompanionDB(id, "article", System.currentTimeMillis() + "", "", 0 + "", service_id));
     }
 }

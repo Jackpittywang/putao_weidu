@@ -69,6 +69,7 @@ public final class AccountConstants {
         public static final String check_nick_name_error_length_msg = "昵称长度必须大于4位且小于24位";
         public static final String check_nick_name_error_format_msg = "昵称仅支持中英文和数字";
     }
+
     /**
      * EventBus常量
      */
@@ -83,5 +84,7 @@ public final class AccountConstants {
     public static final class Bundle {
         public static final String BUNDLE_SERVICE_ID = "bundle_service_id";
         public static final String BUNDLE_COMPANION = "bundle_companion";
+        public static final String BUNDLE_COMPANION_NOT_DOWNLOAD = "bundle_companion_not_download";
+        public static final String BUNDLE_COMPANION_SERVICE_MESSAGE_LIST = "bundle_companion_service_message_list";
     }
 }

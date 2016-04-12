@@ -1,6 +1,7 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -13,7 +14,7 @@ public class Companion implements Serializable {
     private String service_description;//游戏介绍
     private int time;//更新时间
     private int is_relation;//订阅状态，0未订阅，1已订阅
-    private int num = new Random().nextInt(200) + 1;//数字显示
+    private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
 
     public String getService_id() {
         return service_id;
@@ -63,11 +64,11 @@ public class Companion implements Serializable {
         this.is_relation = is_relation;
     }
 
-    public int getNum() {
-        return num;
+    public ArrayList<String> getNotDownloadIds() {
+        return notDownloadIds;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setNotDownloadIds(ArrayList<String> notDownloadIds) {
+        this.notDownloadIds = notDownloadIds;
     }
 }

@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
@@ -12,6 +15,8 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDFragment;
+import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.GameDetailListActivity;
@@ -24,6 +29,7 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -32,7 +38,7 @@ import butterknife.OnClick;
  * 陪伴
  * Created by zhanghao on 2016/04/05.
  */
-public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickListener<Companion>, View.OnClickListener {
+public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> implements OnItemClickListener<Companion>, View.OnClickListener {
     private CompanionAdapter mCompanionAdapter;
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
@@ -40,6 +46,8 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.ll_companion_empty)
     LinearLayout ll_companion_empty;
+
+    private ArrayList<Companion> mCompanion;
 
     @Override
     protected int getLayoutId() {
@@ -74,6 +82,12 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
                 new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Companion> result) {
+                        mCompanion = result;
+                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                        for (Companion companion : result) {
+                            ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
+                            companion.setNotDownloadIds(notDownloadIds);
+                        }
                         mCompanionAdapter.replaceAll(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
@@ -104,7 +118,6 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
     @Override
     public void onItemClick(Companion companion, int position) {
         Bundle bundle = new Bundle();
-        companion.setNum(0);
         mCompanionAdapter.notifyItemChanged(position);
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
         startActivity(GameDetailListActivity.class, bundle);
@@ -131,6 +144,24 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
         checkDevice();
     }
 
+
+    @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
+    private void setCompanionDot(JSONArray accompanyNumber) {
+        for (Object object : accompanyNumber) {
+            JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
+            String service_id = jsonObject.getString(RedDotReceiver.SERVICE_ID);
+            String id = jsonObject.getString(RedDotReceiver.ID);
+            for (Companion companion : mCompanion) {
+                if (service_id == companion.getService_id()) {
+                    ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
+                    notDownloadIds.add(id);
+                    companion.setNotDownloadIds(notDownloadIds);
+                    mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
+                }
+            }
+        }
+
+    }
 }
 
 

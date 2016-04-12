@@ -36,9 +36,10 @@
             <ImageView
                 android:id="@+id/shopping_share"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/shopping_relative_car"
+                android:paddingLeft="@dimen/text_size_20sp"
                 android:src="@drawable/share_selector"
                 android:visibility="visible" />
 

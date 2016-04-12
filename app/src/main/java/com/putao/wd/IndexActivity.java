@@ -7,8 +7,13 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.db.DistrictDBManager;
+import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;
@@ -30,7 +35,7 @@ import butterknife.Bind;
  * 新首页
  * Created by guchenkai on 2016/1/13.
  */
-public class IndexActivity extends BasicFragmentActivity {
+public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     public static boolean isNotRefreshUserInfo = false;
     public final static String PAY_ALL = "pay_all";
     @Bind(R.id.vp_content)
@@ -142,6 +147,11 @@ public class IndexActivity extends BasicFragmentActivity {
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
     private void setCompanionDot(JSONArray accompanyNumber) {
         ti_index_companion.show(-1);
+        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+        for (Object object : accompanyNumber) {
+            JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
+            dataBaseManager.insertFixDownload(jsonObject.getString(RedDotReceiver.SERVICE_ID), jsonObject.getString(RedDotReceiver.ID));
+        }
 //        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), me_tabbar);
     }
 

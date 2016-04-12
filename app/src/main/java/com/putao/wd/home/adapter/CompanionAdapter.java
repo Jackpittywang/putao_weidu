@@ -52,11 +52,12 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_main_color_nor));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
         }
-        if (0 == companion.getNum())
+        int size = companion.getNotDownloadIds().size();
+        if (0 == size)
             holder.tv_number.setVisibility(View.GONE);
         else {
             holder.tv_number.setVisibility(View.VISIBLE);
-            holder.tv_number.setText(companion.getNum() > 99 ? 99 + "" : companion.getNum() + "");
+            holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
         }
     }
 
