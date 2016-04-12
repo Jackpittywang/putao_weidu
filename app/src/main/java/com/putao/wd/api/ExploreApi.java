@@ -324,6 +324,28 @@ public class ExploreApi {
      * version 1.3
      * 添加评论
      */
+    public static final String URL_COMMENT_COMMENT_ADD = BASE_URL + "/set/second/comment";
+
+    /**
+     * version 1.3
+     * 添加评论
+     *
+     * @param article_id 首页文章id
+     * @param content    首页评论内容
+     */
+    public static Request addSecondComment(String article_id, String content, String sid, String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(CONTENT, content)
+                .addParam(WD_MID, article_id)
+                .addParam(SERVICE_ID, sid)
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_COMMENT_ADD);
+    }
+
+    /**
+     * version 1.3
+     * 添加评论
+     */
     public static final String URL_COMMENT_ADD = BASE_URL + "article/comment/add";
 
     /**

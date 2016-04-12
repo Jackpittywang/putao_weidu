@@ -57,14 +57,13 @@
     <com.sunnybear.library.view.recycler.BasicRecyclerView
         android:id="@+id/rv_others_comment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rl_navigation_bar"
         android:layout_centerVertical="true"
         android:layout_weight="1"
         android:background="@color/white"
         android:visibility="visible"
         auto:divider_width="5dp"
-        auto:has_rank_divider="true"
         auto:layout_mode="vertical" />
 
     <include
