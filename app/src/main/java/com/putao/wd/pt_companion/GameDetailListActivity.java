@@ -57,6 +57,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     TextView tv_menu_second;
     @Bind(R.id.tv_menu_third)
     TextView tv_menu_third;
+    @Bind(R.id.vLineLeft)
+    View vLineLeft;
+    @Bind(R.id.vLineRight)
+    View vLineRight;
 
     private boolean isLoadMore = false;
     private GameDetailAdapter mGameDetailAdapter;
@@ -283,7 +287,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                             ll_bottom_menus.setVisibility(View.VISIBLE);
 
                             tv_menu_first.setVisibility(View.GONE);
+                            vLineLeft.setVisibility(View.GONE);
                             tv_menu_second.setVisibility(View.GONE);
+                            vLineRight.setVisibility(View.GONE);
                             tv_menu_third.setVisibility(View.GONE);
                             for (int i = 0; i < result.size(); i++) {
                                 ServiceMenu menu = result.get(i);
@@ -292,6 +298,15 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                                 menuViews[i].setVisibility(View.VISIBLE);
                                 addMenuListener(menuViews[i]);
                             }
+
+                            if (result.size() == 2) {
+                                vLineLeft.setVisibility(View.VISIBLE);
+                            } else if (result.size() == 3) {
+                                vLineLeft.setVisibility(View.VISIBLE);
+                                vLineRight.setVisibility(View.VISIBLE);
+                            }
+
+
                         } else {
                             ll_bottom_menus.setVisibility(View.GONE);
                         }
