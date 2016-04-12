@@ -157,7 +157,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
-    private void refresh_companion() {
+    private void refresh_companion(String str) {
         checkInquiryBind(AccountHelper.getCurrentUid());
     }
 

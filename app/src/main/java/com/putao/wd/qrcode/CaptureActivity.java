@@ -14,17 +14,25 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dtr.zbar.build.ZBarDecoder;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.AttentionSuccessActivity;
+import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -41,7 +49,7 @@ import butterknife.OnClick;
  * 二维码识别
  * Created by riven_chris on 2015/11/4.
  */
-public class CaptureActivity extends PTWDActivity implements View.OnClickListener {
+public class CaptureActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     private CameraPreview mPreview;
     private Camera mCamera;
     private Handler autoFocusHandler;
@@ -266,6 +274,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
      */
     private void processor(String result) {
         Logger.d(result);
+        result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
         String scheme = null;
         try {
             scheme = ScanUrlParseUtils.getScheme(result);
@@ -346,7 +355,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                 // result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
 
                 // 从url里面获取serverId和code
-                String serverId = ScanUrlParseUtils.getSingleParams(result, "s");
+                final String serverId = ScanUrlParseUtils.getSingleParams(result, "s");
                 String code = ScanUrlParseUtils.getSingleParams(result, "code");
                 if (StringUtils.isEmpty(serverId) || StringUtils.isEmpty(code)) {
                     ToastUtils.showToastLong(mContext, "异常二维码");
@@ -361,10 +370,17 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                         int http_code = result.getInteger("http_code");
                         if (http_code == 200) {
                             ToastUtils.showToastLong(mContext, "添加成功");
+                            JSONObject data = result.getJSONObject("data");
+                            ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
+                            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                            for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                                dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                            }
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             // 跳到订阅号列表页面
-
-
-
+                            Bundle bundle = new Bundle();
+                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
+                            startActivity(GameDetailListActivity.class, bundle);
                         } else if (http_code == 4201)
                             ToastUtils.showToastLong(mContext, "重复绑定");
                         else if (http_code == 4200)

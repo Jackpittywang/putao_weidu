@@ -60,8 +60,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
 
     @Bind(R.id.wv_load)
     BasicWebView wv_load;
-    @Bind(R.id.rv_content)
-    LoadMoreRecyclerView rv_content;
+/*    @Bind(R.id.rv_content)
+    LoadMoreRecyclerView rv_content;*/
     @Bind(R.id.ll_cool)
     LinearLayout ll_cool;//点赞数
     @Bind(R.id.tv_count_cool)
@@ -74,9 +74,9 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     TextView tv_count_comment;
     /* @Bind(R.id.iv_upload_pic)
      ImageDraweeView iv_upload_pic;*/
-    @Bind(R.id.sv_load)
-    NestScrollView sv_load;
-    private ArticleDetailForActivitiesAdapter mArtivleDetailActsAdapter;
+  /*  @Bind(R.id.sv_load)
+    NestScrollView sv_load;*/
+//    private ArticleDetailForActivitiesAdapter mArtivleDetailActsAdapter;
     private ArrayList<ArticleDetailActs> objects;
     private String link_url;
     ServiceMessageList messageList;
@@ -101,9 +101,9 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl("http://wap.baidu.com");
-        mRvLayoutParams = rv_content.getLayoutParams();
+/*        mRvLayoutParams = rv_content.getLayoutParams();
         mArtivleDetailActsAdapter = new ArticleDetailForActivitiesAdapter(mContext, null);
-        rv_content.setAdapter(mArtivleDetailActsAdapter);
+        rv_content.setAdapter(mArtivleDetailActsAdapter);*/
         initData();
         /**
          *  查询当前文章是否可以被评论、点赞数、评论数
@@ -113,13 +113,13 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     }
 
     private void addListener() {
-        wv_load.setWebViewClient(new WebViewClient() {
+        /*wv_load.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 sv_load.scrollTo(0, 0);
             }
-        });
+        });*/
         wv_load.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
@@ -145,7 +145,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         objects.add(new ArticleDetailActs());
         objects.add(new ArticleDetailActs());
         objects.add(new ArticleDetailActs());
-        mArtivleDetailActsAdapter.replaceAll(objects);
+//        mArtivleDetailActsAdapter.replaceAll(objects);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
         for (ArticleDetailActs act : objects) {
             mRvLayoutParams.height += act.getHeight();
         }
-        rv_content.setLayoutParams(mRvLayoutParams);
+//        rv_content.setLayoutParams(mRvLayoutParams);
     }
 
     @Override

@@ -16,64 +16,28 @@
         auto:nav_right_icon="@drawable/btn_20_more_p_nor"
         auto:nav_right_title_color="@drawable/text_select" />
 
-    <com.sunnybear.library.view.scroll.NestScrollView
-        android:id="@+id/sv_load"
+    <!-- <com.sunnybear.library.view.scroll.NestScrollView
+         android:id="@+id/sv_load"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_above="@+id/ll_bottom"
+         android:layout_below="@+id/navigation_bar"
+         android:fillViewport="true">
+
+         <LinearLayout
+             android:id="@+id/rl_load"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:fillViewport="true"
+             android:orientation="vertical">
+ -->
+    <com.sunnybear.library.view.BasicWebView
+        android:id="@+id/wv_load"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/navigation_bar"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:id="@+id/rl_load"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:orientation="vertical">
-
-            <com.sunnybear.library.view.BasicWebView
-                android:id="@+id/wv_load"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/navigation_bar" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="热门评论"
-                android:textColor="@color/text_color_gray" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/divider_color" />
-
-            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                auto:is_inner="true" />
-
-            <!--<View
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:background="@color/color_EBEBEB" />-->
-
-        </LinearLayout>
-    </com.sunnybear.library.view.scroll.NestScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_above="@+id/ll_bottom"
-        android:background="@color/divider_color" />
-    <!--底部按钮-->
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
@@ -141,5 +105,111 @@
 
         </LinearLayout>
 
+        <!--
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="热门评论"
+                        android:textColor="@color/text_color_gray" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/divider_color" />
+
+                    <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                        android:id="@+id/rv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        auto:is_inner="true" />
+
+                    &lt;!&ndash;<View
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/color_EBEBEB" />&ndash;&gt;
+
+                </LinearLayout>
+            </com.sunnybear.library.view.scroll.NestScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_above="@+id/ll_bottom"
+                android:background="@color/divider_color" />
+            &lt;!&ndash;底部按钮&ndash;&gt;
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:gravity="center"
+                android:weightSum="2">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_cool"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.sunnybear.library.view.SwitchButton
+                        android:id="@+id/sb_cool_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        auto:isSelect="false"
+                        auto:norDrawable="@drawable/btn_support_nor"
+                        auto:selDrawable="@drawable/btn_support_sel" />
+
+                    <TextView
+                        android:id="@+id/tv_count_cool"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:text="赞"
+                        android:textColor="@color/text_color_646464"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="22dp"
+                    android:background="@color/divider_color" />
+
+                <LinearLayout
+                    android:id="@+id/ll_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/btn_comment" />
+
+                    <TextView
+                        android:id="@+id/tv_count_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:text="评论"
+                        android:textColor="@color/text_color_646464"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>-->
     </LinearLayout>
 </RelativeLayout>

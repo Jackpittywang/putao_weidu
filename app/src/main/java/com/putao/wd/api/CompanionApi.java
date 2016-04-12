@@ -109,6 +109,22 @@ public class CompanionApi {
     }
 
     /**
+     * 公众号首页消息获取
+     */
+    private static final String URL_SERVICE_INFO = BASE_URL + "/service/info";
+
+    /**
+     * 公众号首页消息获取
+     *
+     * @param service_id 服务号唯一id
+     */
+    public static Request getServiceInfo(String service_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_SERVICE_INFO);
+    }
+
+    /**
      * 文章详情
      *
      * @param article_id 文章id

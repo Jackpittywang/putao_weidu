@@ -40,6 +40,7 @@ public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameD
     @Override
     public void onBindItem(final GameDetailAdapter.GameDetailHolder holder, final ServiceMessageList serviceMessageList, final int position) {
         ServiceMessageContent serviceMessageContent = serviceMessageList.getContent_lists().get(0);
+        holder.iv_sign.setClickable(false);
         holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
         holder.tv_title.setText(serviceMessageContent.getTitle());
         holder.tv_content.setText(serviceMessageContent.getSub_title());
