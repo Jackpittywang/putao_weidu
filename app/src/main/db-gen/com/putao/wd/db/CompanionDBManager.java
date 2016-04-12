@@ -72,8 +72,8 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     /**
      * 获取已经下载的文章列表
      */
-    public List<CompanionDB> getDownloadArticles() {
-        return getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("1")).build().list();
+    public List<CompanionDB> getDownloadArticles(String service_id) {
+        return getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("1")).build().list();
     }
 
     /**

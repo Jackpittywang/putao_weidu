@@ -14,6 +14,7 @@ import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
@@ -44,8 +45,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private int mPosition;
     private int mPage;
     private ArrayList<String> list = new ArrayList<>();
-    private List<ServiceSendData> mServiceSendData;
+    private ArrayList<ServiceSendData> mServiceSendData;
     private Companion mCompanion;
+    private ArrayList<ServiceMessageList> lists;
 
 
     @Override
@@ -60,6 +62,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         setMainTitle(mCompanion.getService_name());
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
+        lists = new ArrayList<>();
         initData();
         addListener();
     }
@@ -69,9 +72,18 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
      */
     private void initData() {
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles();
-        if (null != downloadArticles)
-            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
+        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles(mCompanion.getService_id());
+        if (null != downloadArticles) {
+            for (CompanionDB companionDB : downloadArticles) {
+                ServiceMessageList serviceMessageList = new ServiceMessageList();
+                serviceMessageList.setType(companionDB.getType());
+                serviceMessageList.setIsShowData(true);
+                serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
+                lists.add(serviceMessageList);
+            }
+            mGameDetailAdapter.replaceAll(setIsSameDate(lists));
+//            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
+        }
         mPage = 1;
         ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
@@ -80,7 +92,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
-                        ArrayList<ServiceMessageList> lists = result.getLists();
+                        lists = result.getLists();
                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                         for (ServiceMessageList serviceMessageList : lists) {
                             dataBaseManager.updataDownloadFinish(mCompanion.getService_id(), serviceMessageList);
