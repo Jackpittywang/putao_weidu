@@ -12,13 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.db.DataBaseManager;
+import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.ArticleDetailActs;
 import com.putao.wd.model.Property;
 import com.putao.wd.model.ServiceMessageContent;
@@ -35,6 +41,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +51,7 @@ import butterknife.OnClick;
 /**
  * Created by zhanghao on 2016/4/6.
  */
-public class ArticleDetailForActivitiesActivity extends PTWDActivity implements OnClickListener {
+public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
     public static final String COOL_COUNT = "like_count";
     public static final String COLLECTION_ID = "collection_id";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
@@ -79,6 +86,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     private String title;
     private String sub_title;
     private String cover_pic;
+    private int id;
 
 
     @Override
@@ -89,9 +97,18 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity implements 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
+        id = args.getInt(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+        final ServiceMessageContent content_list;
+        if (0 != id) {
+            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+            CompanionDB companInfoById = dataBaseManager.getCompanInfoById(id + "");
+            List<ServiceMessageContent> serviceMessageContents = JSONArray.parseArray(companInfoById.getContent_lists(), ServiceMessageContent.class);
+            content_list = serviceMessageContents.get(0);
+        } else {
+            messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
+            content_list = messageList.getContent_lists().get(0);
+        }
         service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
-        final ServiceMessageContent content_list = messageList.getContent_lists().get(0);
         title = content_list.getTitle();
         sub_title = content_list.getSub_title();
         cover_pic = content_list.getCover_pic();
