@@ -9,50 +9,46 @@ import java.util.List;
  */
 public class CompanionCommentDetail implements Serializable{
 
-    private int is_comment  ;
-    private int is_pic  ;
-    private int is_becommented  ;
+    private boolean is_comment  ;
+    private boolean is_pic  ;
+    private boolean is_becommented  ;
     private CommentReply comment;
     public List<ReplyLists> reply_lists;
-
     public CommentReply getComment() {
         return comment;
     }
-
     public void setComment(CommentReply comment) {
         this.comment = comment;
     }
-
-    public int getIs_becommented() {
-        return is_becommented;
-    }
-
-    public void setIs_becommented(int is_becommented) {
-        this.is_becommented = is_becommented;
-    }
-
-    public int getIs_comment() {
-        return is_comment;
-    }
-
-    public void setIs_comment(int is_comment) {
-        this.is_comment = is_comment;
-    }
-
-    public int getIs_pic() {
-        return is_pic;
-    }
-
-    public void setIs_pic(int is_pic) {
-        this.is_pic = is_pic;
-    }
-
     public List<ReplyLists> getReply_lists() {
         return reply_lists;
     }
-
     public void setReply_lists(List<ReplyLists> reply_lists) {
         this.reply_lists = reply_lists;
+    }
+
+    public boolean is_becommented() {
+        return is_becommented;
+    }
+
+    public void setIs_becommented(boolean is_becommented) {
+        this.is_becommented = is_becommented;
+    }
+
+    public boolean is_comment() {
+        return is_comment;
+    }
+
+    public void setIs_comment(boolean is_comment) {
+        this.is_comment = is_comment;
+    }
+
+    public boolean is_pic() {
+        return is_pic;
+    }
+
+    public void setIs_pic(boolean is_pic) {
+        this.is_pic = is_pic;
     }
 
     @Override
