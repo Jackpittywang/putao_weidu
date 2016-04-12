@@ -1,6 +1,10 @@
 package com.putao.wd.pt_companion;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -13,17 +17,17 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.ServiceMenu;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,16 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
+
+    @Bind(R.id.ll_bottom_menus)
+    LinearLayout ll_bottom_menus;
+    @Bind(R.id.tv_menu_first)
+    TextView tv_menu_first;
+    @Bind(R.id.tv_menu_second)
+    TextView tv_menu_second;
+    @Bind(R.id.tv_menu_third)
+    TextView tv_menu_third;
+
     private boolean isLoadMore = false;
     private GameDetailAdapter mGameDetailAdapter;
     private int mPosition;
@@ -61,6 +75,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         initData();
+        initBottomMenu();
         addListener();
     }
 
@@ -70,8 +85,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private void initData() {
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles();
-        if (null != downloadArticles)
-            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
+        mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
         mPage = 1;
         ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
@@ -81,11 +95,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
                         ArrayList<ServiceMessageList> lists = result.getLists();
-                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                        for (ServiceMessageList serviceMessageList : lists) {
-                            dataBaseManager.updataDownloadFinish(mCompanion.getService_id(), serviceMessageList);
-                        }
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         mCompanion.setNotDownloadIds(null);
                         lists = setIsSameDate(lists);
                         mGameDetailAdapter.addAll(0, lists);
@@ -175,8 +184,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
-                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
-                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
+                startActivity(ArticleDetailForActivitiesActivity.class);
             }
         });
     }
@@ -208,11 +216,58 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Override
     public void onRightAction() {
         super.onRightAction();
-        Bundle bundle = new Bundle();
-        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mCompanion.getService_id());
         startActivity(OfficialAccountsActivity.class);
     }
 
+
+    private void initBottomMenu() {
+        final TextView[] menuViews = {tv_menu_first, tv_menu_second, tv_menu_third};
+        networkRequest(CompanionApi.getServicemenu(mCompanion.getService_id()),
+                new SimpleFastJsonCallback<ArrayList<ServiceMenu>>(ServiceMenu.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<ServiceMenu> result) {
+                        if (result != null && result.size() > 0) {
+                            ll_bottom_menus.setVisibility(View.VISIBLE);
+
+                            tv_menu_first.setVisibility(View.GONE);
+                            tv_menu_second.setVisibility(View.GONE);
+                            tv_menu_third.setVisibility(View.GONE);
+                            for (int i = 0; i < result.size(); i++) {
+                                ServiceMenu menu = result.get(i);
+                                menuViews[i].setText(menu.getName() + "");
+                                menuViews[i].setTag(menu);
+                                menuViews[i].setVisibility(View.VISIBLE);
+                                addMenuListener(menuViews[i]);
+                            }
+                        } else {
+                            ll_bottom_menus.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+
+                    }
+                }, false);
+    }
+
+    private void addMenuListener(TextView menuView) {
+        menuView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServiceMenu menu = (ServiceMenu) v.getTag();
+                if (ServiceMenu.TYPE_VIEW.equals(menu.getType())) {
+                    //跳转web
+                    Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                    intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
+                    intent.putExtra(BaseWebViewActivity.URL, menu.getUrl());
+                    startActivity(intent);
+                } else if (ServiceMenu.TYPE_CLICK.equals(menu.getType())) {
+                    //TODO
+                }
+            }
+        });
+    }
 }
 
 
