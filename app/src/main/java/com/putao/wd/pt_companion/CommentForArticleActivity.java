@@ -52,7 +52,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/4/11.
  */
-public class CommentForActivitiesActivity extends PTWDActivity implements View.OnClickListener {
+public class CommentForArticleActivity extends PTWDActivity implements View.OnClickListener {
     public static final String EVENT_COUNT_COMMENT = "event_count_comment";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
     public static final String EVENT_ADD_CREAT_COMMENT = "event_add_creat_comment";

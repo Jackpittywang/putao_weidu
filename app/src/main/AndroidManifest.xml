@@ -379,7 +379,7 @@
             android:screenOrientation="portrait" />
         <!-- 文章评论页-->
         <activity
-            android:name=".pt_companion.CommentForActivitiesActivity"
+            android:name=".pt_companion.CommentForArticleActivity"
             android:screenOrientation="portrait" />
         <!-- 葡萄公众号账号-->
         <activity
