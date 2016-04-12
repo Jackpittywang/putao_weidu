@@ -21,6 +21,7 @@ import com.squareup.okhttp.Request;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import org.w3c.dom.Text;
@@ -120,7 +121,7 @@ public class OfficialAccountsActivity extends PTWDActivity {
                     @Override
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
-                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, is_relation);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
                         if (!is_relation) {//未关联
                         } else {//已关联
                         }
