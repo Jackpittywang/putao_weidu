@@ -275,11 +275,11 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_IS_DETAIL, true);
                         bundle.putSerializable("status", status);
-                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "");
+                        bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "order");
                         startActivity(ProductDetailV2Activity.class, bundle);
                     } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
                         YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_mall_detail);
-                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "");
+                        bundle.putSerializable(ProductDetailActivity.BUNDLE_PRODUCT_NUM, "order");
                         bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
                         startActivity(ProductDetailActivity.class, bundle);
                     }

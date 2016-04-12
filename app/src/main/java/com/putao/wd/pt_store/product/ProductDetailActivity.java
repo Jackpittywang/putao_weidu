@@ -172,12 +172,6 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
                 finish();
                 break;
-//            case R.id.shopping_car_buy://立即购买
-//                Bundle bundle = new Bundle();
-//                bundle.putString(PRODUCT_ID, storeProduct.getId());
-//                bundle.putInt("product_count", 1);
-//                startActivity(WriteOrderActivity.class, bundle);
-//                break;
             case R.id.shopping_relative_car://点击进入购物车
                 YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
                 startActivity(ShoppingCarActivity.class);
@@ -193,7 +187,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
      * 商品详情
      */
     private void getProductDetail(final String product_id) {
-        networkRequest(StoreApi.getProductDetailPager(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
+        networkRequest(StoreApi.getProductDetail(product_id), new SimpleFastJsonCallback<ProductDetail>(ProductDetail.class, loading) {
             @Override
             public void onSuccess(String url, ProductDetail result) {
                 loadHtml(product_id, "0");

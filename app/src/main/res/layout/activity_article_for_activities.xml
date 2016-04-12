@@ -44,7 +44,7 @@
                 android:layout_marginRight="15dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="热门参与"
+                android:text="热门评论"
                 android:textColor="@color/text_color_gray" />
 
 
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
-                android:text="参与"
+                android:text="评论"
                 android:textColor="@color/text_color_646464"
                 android:textSize="@dimen/text_size_14sp" />
 
