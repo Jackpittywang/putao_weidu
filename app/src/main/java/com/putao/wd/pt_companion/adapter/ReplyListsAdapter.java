@@ -92,7 +92,7 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
             holder.ivPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (headerInfo.getIs_like())
+                    if (!headerInfo.getIs_like())
                         EventBusHelper.post("", EVENT_COMMIT_COOL);
                 }
             });

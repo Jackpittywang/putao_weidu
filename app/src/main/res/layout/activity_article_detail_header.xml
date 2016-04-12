@@ -26,7 +26,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/divider_color" />
+        android:background="@color/color_EBEBEB" />
 
     <!--参与点赞信息-->
     <LinearLayout
@@ -103,7 +103,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/divider_color" />
+        android:background="@color/color_EBEBEB" />
 
     <View style="@style/line_horizontal" />
 

@@ -3,6 +3,7 @@ package com.putao.wd.pt_companion;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,25 +18,32 @@ import com.putao.wd.model.ReplyLists;
 import com.putao.wd.pt_companion.adapter.CommentReplyAdapter;
 import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
 import com.putao.wd.share.SharePopupWindow;
-import com.putao.wd.start.comment.adapter.CommentAdapter;
+import com.putao.wd.start.comment.EmojiFragment;
+import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016/4/11.
  */
-public class ArticlesDetailActivity extends PTWDActivity {
+public class ArticlesDetailActivity extends PTWDActivity implements View.OnClickListener {
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
     private String action_id = "1";
@@ -63,10 +71,12 @@ public class ArticlesDetailActivity extends PTWDActivity {
     ViewPager vp_emojis;
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
+    @Bind(R.id.tv_send)
+    TextView tv_send;
 
     private String mWd_mid;
     private String mSid;
-    private String mPcid;
+    private String mComment_id;
     private int mPage = 1;
 
 
@@ -83,6 +93,9 @@ public class ArticlesDetailActivity extends PTWDActivity {
     private boolean is_pic = false;// 是否可以发表图片
     private boolean is_comment = false;// 是否可以评论
     private boolean is_becommented = false;//是否可以对评论进行回复
+
+    private Map<String, String> emojiMap;
+    private List<Emoji> emojis;
 
     @Override
     protected int getLayoutId() {
@@ -103,12 +116,21 @@ public class ArticlesDetailActivity extends PTWDActivity {
             mSid = data.getString("sid");
         }
         if (data != null && data.containsKey("pcid")) {
-            mPcid = data.getString("pcid");
+            mComment_id = data.getString("pcid");
         }
-        if (StringUtils.isEmpty(mWd_mid) || StringUtils.isEmpty(mSid) || StringUtils.isEmpty(mPcid)) {
+        if (StringUtils.isEmpty(mWd_mid) || StringUtils.isEmpty(mSid) || StringUtils.isEmpty(mComment_id)) {
             finish();
             return;
         }
+
+        emojiMap = mApp.getEmojis();
+        emojis = new ArrayList<>();
+        if (emojiMap == null)
+            emojiMap = new HashMap<>();
+        for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
+            emojis.add(new Emoji(entry.getKey(), entry.getValue()));
+        }
+        vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
 
         getNewCommentData();
         addListener();
@@ -116,7 +138,7 @@ public class ArticlesDetailActivity extends PTWDActivity {
 
     private void getNewCommentData() {
         //
-        networkRequest(CompanionApi.getCompanyArticleComment(mWd_mid, mSid, mPcid, String.valueOf(mPage)), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
+        networkRequest(CompanionApi.getCompanyArticleComment(mWd_mid, mSid, mComment_id, String.valueOf(mPage)), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
             @Override
             public void onSuccess(String url, CompanionCommentDetail result) {
                 is_pic = result.is_pic();
@@ -171,49 +193,50 @@ public class ArticlesDetailActivity extends PTWDActivity {
     }
 
     private void addListener() {
-       /* mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+        et_msg.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onWechat() {
-                ShareTools.wechatWebShare(mContext, true, title, sub_title, cover_pic, link_url);
-            }
-
-            @Override
-            public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, false, title, sub_title, cover_pic, link_url);
-            }
-
-            @Override
-            public void onQQFriend() {
-                ShareTools.OnQQZShare(mContext, true, title, sub_title, cover_pic, link_url);
-            }
-
-            @Override
-            public void onQQZone() {
-                ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
-            }
-
-            public void onSinaWeibo() {
-                ShareTools.OnWeiboShare(mContext, title, sub_title, link_url);
-            }
-
-            @Override
-            public void onCopyUrl() {
-                ClipboardManager copy = (ClipboardManager) mContext
-                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText(link_url);
-                ToastUtils.showToastShort(mContext, "复制成功");
-            }
-        });*/
-    }
-
-    private void netSetParise() {
-        networkRequest(CompanionApi.addCommentPraise(mWd_mid, mSid, mPcid), new SimpleFastJsonCallback<String>(String.class, loading) {
-
-            @Override
-            public void onSuccess(String url, String result) {
-                getNewCommentData();
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght > et_msg.length()) {
+                    et_msg.setText("");
+                    isReply = false;
+                    mMinLenght = 0;
+                    return true;
+                }
+                return false;
             }
         });
+        tv_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = et_msg.getText().toString();
+                if (msg.trim().isEmpty()) {
+                    ToastUtils.showToastShort(mContext, "评论不能为空");
+                    return;
+                }
+                networkRequest(ExploreApi.addSecondComment(mWd_mid, msg, mSid, mComment_id),
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                resetMsg();
+                                Logger.i("评论与回复提交成功");
+                                getNewCommentData();
+                            }
+
+                            @Override
+                            public void onFailure(String url, int statusCode, String msg) {
+                                super.onFailure(url, statusCode, msg);
+                                ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
+                            }
+                        });
+            }
+        });
+    }
+
+    private void resetMsg() {
+        isReply = false;
+        et_msg.setText("");
+        mMinLenght = 0;
+        vp_emojis.setVisibility(View.GONE);
     }
 
 
@@ -271,9 +294,56 @@ public class ArticlesDetailActivity extends PTWDActivity {
 
 
     //点赞提交
-    @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
+    @Subcriber(tag = ReplyListsAdapter.EVENT_COMMIT_COOL)
     public void eventClickCool(final String str) {
+        networkRequest(CompanionApi.addCommentPraise(mWd_mid, mSid, mComment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+            @Override
+            public void onSuccess(String url, String result) {
+                getNewCommentData();
+            }
+        });
+    }
 
+//    //点赞提交
+//    @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
+//    public void eventClickCool(final int currPosition) {
+//        final ArticleDetailComment comment = adapter.getItem(currPosition);
+//        networkRequest(ExploreApi.addArticleLike(wd_mid, comment.getComment_id(), sid),
+//                new SimpleFastJsonCallback<String>(String.class, loading) {
+//                    @Override
+//                    public void onSuccess(String url, String result) {
+////                        adapter.notifyItemChanged(currPosition);
+//                        mDiskFileCacheHelper.put(COOL + comment.getComment_id(), "true");
+//                        EventBusHelper.post(true, EVENT_COUNT_COOL);
+//                    }
+//                });
+//    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
+    public void eventClickEmoji(Emoji emoji) {
+        et_msg.append(emoji.getName());
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
+    public void eventDeleteEmoji(Emoji emoji) {
+        et_msg.delete();
+    }
+
+    @OnClick({R.id.tv_emojis, R.id.et_msg})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_emojis://点击表情栏
+                KeyboardUtils.closeKeyboard(mContext, et_msg);
+                isShowEmoji = isShowEmoji ? false : true;
+                vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
+                break;
+            case R.id.et_msg://点击文本输入框
+                isShowEmoji = false;
+                vp_emojis.setVisibility(View.GONE);
+                break;
+
+        }
     }
 
 }
