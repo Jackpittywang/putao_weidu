@@ -24,6 +24,7 @@ import com.putao.wd.api.StartApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ActionDetail;
 import com.putao.wd.model.ArticleDetail;
+import com.putao.wd.model.ArticleDetailComment;
 import com.putao.wd.model.Comment;
 import com.putao.wd.model.CommentReply;
 import com.putao.wd.model.CompanionCommentDetail;
@@ -75,7 +76,7 @@ public class ArticlesDetailActivity extends PTWDActivity {
     private boolean isNoMore;
 
     @Bind(R.id.rl_comment_second)
-    RelativeLayout rl_comment_second;
+    LinearLayout rl_comment_second;
     @Bind(R.id.iv_author_icon)
     ImageDraweeView iv_author_icon;
     @Bind(R.id.tv_author_name)
@@ -86,11 +87,14 @@ public class ArticlesDetailActivity extends PTWDActivity {
     @Bind(R.id.rv_others_comment)
     BasicRecyclerView rv_others_comment;
 
-
-    @Bind(R.id.et_msg)
-    EmojiEditText et_msg;
+    @Bind(R.id.ll_comment_edit)
+    LinearLayout ll_comment_edit;
+    @Bind(R.id.iv_upload_pic)
+    ImageDraweeView iv_upload_pic;
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
+    @Bind(R.id.et_msg)
+    EmojiEditText et_msg;
 
     private String mWd_mid;
     private String mSid;
@@ -107,6 +111,10 @@ public class ArticlesDetailActivity extends PTWDActivity {
     private int mMinLenght;
     private boolean isReply;
     private SharePopupWindow mSharePopupWindow;//分享弹框
+
+    private boolean is_pic = false;// 是否可以发表图片
+    private boolean is_comment = false;// 是否可以评论
+    private boolean is_becommented = false;//是否可以对评论进行回复
 
     @Override
     protected int getLayoutId() {
@@ -143,28 +151,29 @@ public class ArticlesDetailActivity extends PTWDActivity {
         networkRequest(CompanionApi.getCompanyArticleComment(mWd_mid, mSid, mPcid, String.valueOf(mPage)), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
             @Override
             public void onSuccess(String url, CompanionCommentDetail result) {
+                is_pic = result.is_pic();
+                is_comment = result.is_comment();
+                is_becommented = result.is_becommented();
+                refreshView();
+
                 iv_author_icon.setImageURL(result.getComment().getHead_img());
                 tv_author_name.setText(result.getComment().getNick_name());
                 tv_author_time.setText(DateUtils.secondToDate(Integer.valueOf(result.getComment().getRelease_time()), "yyyy/MM/dd HH:mm"));
-//                tv_praise_count.setVisibility(result.getComment().getCount_likes() != 0 ? View.VISIBLE : View.GONE);
-//                if (result.getComment().getCount_likes() != 0)
-//                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
 
                 //设置布局管理器
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ArticlesDetailActivity.this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 mCommentReplyAdapter = new CommentReplyAdapter(mContext, result.getComment().getLike_lists());
-//                rv_articlesdetail_applyusers.setAdapter(mCommentReplyAdapter);
-//                rv_articlesdetail_applyusers.setLayoutManager(linearLayoutManager);
-
-//                ll_praise_count.setVisibility(result.getComment().getIs_like() == 0 ? View.GONE : View.VISIBLE);
-//                if (result.getComment().getIs_like() != 0)
-//                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
 
                 ReplyHeaderInfo replyHeaderInfo = new ReplyHeaderInfo();
                 replyHeaderInfo.setContent(result.getComment().getContent());
                 replyHeaderInfo.setCount_comments(result.getComment().getCount_comments());
                 replyHeaderInfo.setCount_likes(result.getComment().getCount_likes());
+                if (result.getComment().getLike_lists() != null && result.getComment().getLike_lists().size() > 0) {
+                    replyHeaderInfo.setLikes_icon(result.getComment().getLike_lists());
+                } else {
+                    replyHeaderInfo.setLikes_icon(null);
+                }
                 if (result.getComment().getPics() != null && result.getComment().getPics().size() > 0)
                     replyHeaderInfo.setPic(result.getComment().getPics().get(0));
                 else
@@ -181,19 +190,23 @@ public class ArticlesDetailActivity extends PTWDActivity {
         });
     }
 
-    private void addListener() {
+    private void refreshView() {
+        if (is_comment)
+            ll_comment_edit.setVisibility(View.VISIBLE);
+        else
+            ll_comment_edit.setVisibility(View.GONE);
+        if (is_pic)
+            iv_upload_pic.setVisibility(View.VISIBLE);
+        else
+            iv_upload_pic.setVisibility(View.GONE);
+        if (is_becommented) ;
+    }
 
-//        ll_praise_count.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //
-//                netSetParise();
-//            }
-//        });
+    private void addListener() {
     }
 
     private void netSetParise() {
-        networkRequest(CompanionApi.addCommentPraise("117", "6000", "1"), new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(CompanionApi.addCommentPraise(mWd_mid, mSid, mPcid), new SimpleFastJsonCallback<String>(String.class, loading) {
 
             @Override
             public void onSuccess(String url, String result) {
@@ -202,37 +215,6 @@ public class ArticlesDetailActivity extends PTWDActivity {
         });
     }
 
-//    /**
-//     * 添加监听器
-//     */
-//    private void addListener() {
-//
-//        rv_others_comment.setOnItemClickListener(new OnItemClickListener<CommentReply>() {
-//            @Override
-//            public void onItemClick(CommentReply commentReply, int position) {
-//                mPosition = mReplyListsAdapter.getItems().indexOf(commentReply);
-//
-//
-//                mSelectPopupWindow.show(rl_main);
-//                isShowEmoji = false;//关闭表情包
-//                vp_emojis.setVisibility(View.GONE);
-//                KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
-//            }
-//        });
-//
-//        et_msg.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght > et_msg.length()) {
-//                    et_msg.setText("");
-//                    isReply = false;
-//                    mMinLenght = 0;
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//    }
 
     @Override
     protected String[] getRequestUrls() {
@@ -255,125 +237,6 @@ public class ArticlesDetailActivity extends PTWDActivity {
             mSharePopupWindow.show(rl_comment_second);
     }
 
-    //    private void reply() {
-//        CommentReply comment = mReplyListsAdapter.getItem(mPosition);
-//        String username = comment.getNick_name() + ": ";
-//        SpannableString ss = new SpannableString("回复 " + username);
-//        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_color_gray)), 0, username.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        mMinLenght = ss.length();
-//        et_msg.setText(ss);
-//        et_msg.setSelection(mMinLenght);
-//        et_msg.setFocusableInTouchMode(true);
-//        et_msg.requestFocus();
-//        InputMethodManager inputManager =
-//                (InputMethodManager) et_msg.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//        inputManager.showSoftInput(et_msg, 0);
-//        isReply = true;
-//    }
-
-
-//    @OnClick({R.id.tv_emojis, R.id.tv_send, R.id.et_msg})
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.tv_emojis://点击表情栏
-//                KeyboardUtils.closeKeyboard(mContext, et_msg);
-//                isShowEmoji = isShowEmoji ? false : true;
-//                vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
-//                break;
-//            case R.id.tv_send://点击发送
-//                if (isReply) {
-//                    ReplyLists comment = mReplyListsAdapter.getItem(mPosition);
-//                    String msg = et_msg.getText().toString();
-//                    msg = msg.substring(msg.lastIndexOf(":") + 2);
-//                    if (msg.trim().isEmpty()) {
-//                        ToastUtils.showToastShort(mContext, "评论不能为空");
-//                        return;
-//                    }
-//
-//
-//                    networkRequest(ExploreApi.addComment(msg, action_id, comment.getComment_id()),
-//                            new SimpleFastJsonCallback<String>(String.class, loading) {
-//                                @Override
-//                                public void onSuccess(String url, String result) {
-//                                    Logger.i("评论与回复提交成功");
-//                                    resetMsg();
-//                                    refreshCommentList();
-//                                    EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
-//                                }
-//
-//                                @Override
-//                                public void onFailure(String url, int statusCode, String msg) {
-//                                    super.onFailure(url, statusCode, msg);
-//                                    ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
-//                                }
-//                            });
-//                } else {
-//                    String msg = et_msg.getText().toString();
-//                    if (msg.trim().isEmpty()) {
-//                        ToastUtils.showToastShort(mContext, "评论不能为空");
-//                        return;
-//                    }
-//                    networkRequest(ExploreApi.addComment(msg, action_id),
-//                            new SimpleFastJsonCallback<String>(String.class, loading) {
-//                                @Override
-//                                public void onSuccess(String url, String result) {
-//                                    Logger.i("评论与回复提交成功");
-//                                    resetMsg();
-//                                    refreshCommentList();
-//                                    EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
-//                                }
-//
-//                                @Override
-//                                public void onFailure(String url, int statusCode, String msg) {
-//                                    super.onFailure(url, statusCode, msg);
-//                                    ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
-//                                }
-//                            });
-//                }
-//                break;
-//            case R.id.et_msg://点击文本输入框
-//                isShowEmoji = false;
-//                vp_emojis.setVisibility(View.GONE);
-//                break;
-//        }
-//    }
-//
-//    private void resetMsg() {
-//        isReply = false;
-//        et_msg.setText("");
-//        mMinLenght = 0;
-//        vp_emojis.setVisibility(View.GONE);
-//    }
-
-
-//    /**
-//     * 刷新评论列表
-//     */
-//    private void refreshCommentList() {
-//        page = 1;
-//        rv_others_comment.reset();
-//        networkRequest(ExploreApi.getCommentList(String.valueOf(page), action_id), new SimpleFastJsonCallback<ArrayList<ReplyLists>>(ReplyLists.class, loading) {
-//            @Override
-//            public void onSuccess(String url, ArrayList<ReplyLists> result) {
-//                if (result != null) {// result.getTotal_page() == 1 || result.getCurrent_page() != result.getTotal_page()
-//
-//                    if (result != null && result.size() > 0) {
-//                        checkLiked(result);
-//                        rv_others_comment.replaceAll(result);
-//                    } else adapter.clear();
-//                    hasComment = true;
-//                    rv_others_comment.loadMoreComplete();
-//                    page++;
-//                } else {
-//                    rv_content.noMoreLoading();
-//                    hasComment = false;
-//                }
-//                loading.dismiss();
-//            }
-//        });
-//    }
-
     /**
      * 重置
      */
@@ -392,15 +255,12 @@ public class ArticlesDetailActivity extends PTWDActivity {
                 Logger.i(url);
                 List<ReplyLists> comments = result;
                 if (comments != null && comments.size() > 0) {
-//                    checkLiked(comments);
                     mReplyListsAdapter.addAll(comments);
                 }
                 if (result != null) { //result.getCurrent_page() != result.getTotal_page()
                     hasComment = true;
-//                    rv_others_comment.loadMoreComplete();
                     page++;
                 } else {
-                    //         rv_content.noMoreLoading();
                     hasComment = false;
                 }
                 loading.dismiss();
@@ -408,25 +268,10 @@ public class ArticlesDetailActivity extends PTWDActivity {
         });
     }
 
-//    //赞或取消赞时更新此页显示
-//    @Subcriber(tag = CommentActivity.EVENT_COUNT_COOL)
-//    public void eventClickComment(boolean isCool) {
-//        ll_praise_count.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //
-//                netSetParise();
-//            }
-//        });
-//    }
 
+    //点赞提交
+    @Subcriber(tag = CommentAdapter.EVENT_COMMIT_COOL)
+    public void eventClickCool(final String str) {
 
-//    private void checkLiked(List<ReplyLists> comments) {
-//        int i = 0;
-//        for (ReplyLists comment : comments) {
-//            if (Boolean.parseBoolean(mDiskFileCacheHelper.getAsString(COOL + comment.getComment_id())))
-//                comments.get(i).setIs_like(true);
-//            i++;
-//        }
-//    }
+    }
 }

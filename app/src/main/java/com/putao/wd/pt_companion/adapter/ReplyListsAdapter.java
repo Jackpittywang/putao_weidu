@@ -2,7 +2,9 @@ package com.putao.wd.pt_companion.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,10 +15,10 @@ import com.putao.wd.model.ReplyLists;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 
@@ -28,10 +30,12 @@ import butterknife.Bind;
  * Created by Administrator on 2016/4/11.
  */
 public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder> {
+    public static final String EVENT_COMMIT_COOL = "event_commit_cool";
     private final int VIEW_HEADER = 0xFF;
     private final int VIEW_ITEM = 0xFE;
     private Context mContext;
     private ReplyHeaderInfo headerInfo;
+    CommentReplyAdapter mCommentReplyAdapter;
 
     public ReplyListsAdapter(Context context, List<ReplyLists> commentRepliesm, ReplyHeaderInfo headerInfo) {
         super(context, commentRepliesm);
@@ -71,51 +75,27 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
                 holder.iv_articlesdetail_header.setVisibility(View.GONE);
             holder.tv_articlesdetail_resume.setText(headerInfo.getContent());
             holder.tv_amount_comment.setText(headerInfo.getCount_comments() + "   条评论");
-            if (headerInfo.getCount_comments() != 0) {
-//                holder.ll_praise_count.setVisibility(View.VISIBLE);
-//                holder.tv_praise_count.setText(headerInfo.getCount_likes());
-//
-//
-//                holder.ll_praise_count.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (!headerInfo.getIs_like()) {
-//                            //使用EventBus提交点赞
-//                            EventBusHelper.post(position, EVENT_COMMIT_COOL);
-//                            holder.sb_cool_icon.setState(true);
-//                            comment.setIs_like(true);
-//                            holder.tv_count_cool.setText(comment.getCount_likes() + 1 + "");
-//                        } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
-//                    }
-//                });
-//                holder.sb_cool_icon.setOnSwitchClickListener(new SwitchButton.OnSwitchClickListener() {
-//                    @Override
-//                    public void onSwitchClick(View v, boolean isSelect) {
-//                        if (isSelect) {
-//                            //使用EventBus提交点赞
-//                            EventBusHelper.post(position, EVENT_COMMIT_COOL);
-//                        }
-//                    }
-//                });
-
-
-//                holder.ll_praise_count.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (!headerInfo.getIs_like()) {
-//                            //使用EventBus提交点赞
-//                            EventBusHelper.post(position, EVENT_COMMIT_COOL);
-//                            holder.sb_cool_icon.setState(true);
-//                            comment.setIs_like(true);
-//                            holder.tv_count_cool.setText(comment.getCount_likes() + 1 + "");
-//                        } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
-//                    }
-//                });
-
-            } else {
-                holder.ll_praise_count.setVisibility(View.GONE);
+            holder.tv_praise_count.setText(headerInfo.getCount_likes() + "");
+            if (headerInfo.getCount_likes() != 0) {
+                //设置布局管理器
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                mCommentReplyAdapter = new CommentReplyAdapter(mContext, headerInfo.getLikes_icon());
+                holder.rv_articlesdetail_applyusers.setAdapter(mCommentReplyAdapter);
+                holder.rv_articlesdetail_applyusers.setLayoutManager(linearLayoutManager);
             }
+            if (headerInfo.getIs_like())
+                holder.ivPraise.setImageResource(R.drawable.icon_30_17);
+            else
+                holder.ivPraise.setImageResource(R.drawable.icon_30_13);
 
+            holder.ivPraise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (headerInfo.getIs_like())
+                        EventBusHelper.post("", EVENT_COMMIT_COOL);
+                }
+            });
         } else {
             int position = index;
             ReplyListsHolder holder = (ReplyListsHolder) basicHolder;
@@ -124,7 +104,6 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
             else {
                 holder.iv_comment_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_default).toString());
             }
-
             if (!StringUtils.isEmpty(commentReply.getNick_name()))
                 holder.tv_username.setText(commentReply.getNick_name());
 
@@ -188,8 +167,10 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         TextView tv_amount_comment;
         @Bind(R.id.tv_praise_count)
         TextView tv_praise_count;
-        @Bind(R.id.ll_praise_count)
-        LinearLayout ll_praise_count;
+        @Bind(R.id.rv_articlesdetail_applyusers)
+        BasicRecyclerView rv_articlesdetail_applyusers;
+        @Bind(R.id.ivPraise)
+        ImageView ivPraise;
 
         public HeaderHolder(View itemView) {
             super(itemView);

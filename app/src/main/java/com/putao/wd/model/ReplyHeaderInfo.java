@@ -1,5 +1,7 @@
 package com.putao.wd.model;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/4/12.
  */
@@ -9,6 +11,15 @@ public class ReplyHeaderInfo {
     private int count_comments ;
     private int count_likes;
     private boolean is_like;
+    private List<String> likes_icon;
+
+    public List<String> getLikes_icon() {
+        return likes_icon;
+    }
+
+    public void setLikes_icon(List<String> likes_icon) {
+        this.likes_icon = likes_icon;
+    }
 
     public boolean getIs_like() {
         return is_like;
