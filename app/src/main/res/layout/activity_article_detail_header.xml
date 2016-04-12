@@ -33,6 +33,7 @@
         android:id="@+id/ll_join_list"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -110,6 +111,7 @@
         android:id="@+id/tv_amount_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:maxLength="15"
         android:padding="10dp"
         android:text="0  条评论"
