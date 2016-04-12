@@ -33,6 +33,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -193,7 +194,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, true);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         finish();
                     }

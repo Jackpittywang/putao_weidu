@@ -138,6 +138,28 @@ public class CompanionApi {
     }
 
     /**
+     * 文章详情评论
+     */
+    private static final String URL_COMPANY_ARTICLE_COMMENT_URL = BASE_URL + "/second/comment";
+
+    /**
+     * 文章详情评论
+     *
+     * @param wd_mid
+     * @param sid
+     * @param pcid
+     * @return
+     */
+    public static Request getCompanyArticleComment(String wd_mid, String sid, String pcid, String page) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_COMMENT_WD_MID, wd_mid)
+                .addParam(REQUEST_COMMENT_SID, sid)
+                .addParam(REQUEST_COMMENT_PCID, pcid)
+                .addParam(REQUEST_COMMENT_SN, page)
+                .build(RequestMethod.POST, URL_COMPANY_ARTICLE_COMMENT_URL);
+    }
+
+    /**
      * 发布评论
      */
     private static final String URL_COMPANY_ARTICLE_ADDCOMMENT = BASE_URL + "/company/article/addcomment";
@@ -178,7 +200,6 @@ public class CompanionApi {
     }
 
 
-
     /**
      * 二级回复评论 参数
      */
@@ -204,8 +225,6 @@ public class CompanionApi {
     }
 
 
-
-
     /**
      * 二级回复评论点赞 参数
      */
@@ -219,12 +238,13 @@ public class CompanionApi {
 
     /**
      * 二级回复评论点赞
+     *
      * @param wd_mid
      * @param sid
      * @param comment_id
      * @return
      */
-    public static Request addCommentPraise(String wd_mid,String sid,String comment_id) {
+    public static Request addCommentPraise(String wd_mid, String sid, String comment_id) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_COMMENT_WD_MID, wd_mid)
                 .addParam(REQUEST_COMMENT_SID, sid)
@@ -343,8 +363,8 @@ public class CompanionApi {
     /**
      * 参与话题/创意收集/运营任务
      *
-     * @param sId 服务号id
-     * @param code  服务号code
+     * @param sId  服务号id
+     * @param code 服务号code
      */
     public static Request bindService(String sId, String code) {
         return PTWDRequestHelper.start()
@@ -352,7 +372,6 @@ public class CompanionApi {
                 .addParam(REQUEST_CODE, code)
                 .build(RequestMethod.POST, URL_COMPANY_SERVICE_BIND);
     }
-
 
 
 }

@@ -51,40 +51,45 @@ public class RedDotReceiver extends PTMessageReceiver {
     }
 
     private void setResult(String result) {
-        JSONObject object = JSONObject.parseObject(result);
-        JSONObject messageCenter = object.getJSONObject(MESSAGECENTER);
-        if (null != messageCenter) {
-            String reply = messageCenter.getString(REPLY);
-            String praise = messageCenter.getString(PRAISE);
-            String remind = messageCenter.getString(REMIND);
-            String notice = messageCenter.getString(NOTICE);
-            //主页"我"位置红点
-            EventBusHelper.post(ME_TABBAR, ME_TABBAR);
-            //"我"位置"消息中心"红点
-            EventBusHelper.post(ME_MESSAGECENTER, ME_MESSAGECENTER);
-            //消息中心通知红点
-            if (TextUtils.isEmpty(reply)) {
-                EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
+        Pattern p1 = Pattern.compile("\\{(.+?)\\]\\}");
+      Matcher m1 = p1.matcher(result);
+        if (/*m1.find()*/true) {
+            JSONObject object = JSONObject.parseObject(m1.group(0));
+            JSONObject messageCenter = object.getJSONObject(MESSAGECENTER);
+            if (null != messageCenter) {
+                String reply = messageCenter.getString(REPLY);
+                String praise = messageCenter.getString(PRAISE);
+                String remind = messageCenter.getString(REMIND);
+                String notice = messageCenter.getString(NOTICE);
+                //主页"我"位置红点
+                EventBusHelper.post(ME_TABBAR, ME_TABBAR);
+                //"我"位置"消息中心"红点
+                EventBusHelper.post(ME_MESSAGECENTER, ME_MESSAGECENTER);
+                //消息中心通知红点
+                if (TextUtils.isEmpty(reply)) {
+                    EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
+                }
+                //消息中心回复红点
+                if (TextUtils.isEmpty(praise)) {
+                    EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
+                }
+                //消息中心赞红点
+                if (TextUtils.isEmpty(remind)) {
+                    EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
+                }
+                //消息中心提醒红点
+                if (TextUtils.isEmpty(notice)) {
+                    EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
+                }
             }
-            //消息中心回复红点
-            if (TextUtils.isEmpty(praise)) {
-                EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
-            }
-            //消息中心赞红点
-            if (TextUtils.isEmpty(remind)) {
-                EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
-            }
-            //消息中心提醒红点
-            if (TextUtils.isEmpty(notice)) {
-                EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
-            }
-        }
-        JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
-        //陪伴位置提醒红点
-        if (null != accompanyNumber) {
-            EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
-        }
 
+            JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
+            //陪伴位置提醒红点
+            if (null != accompanyNumber) {
+                EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
+            }
+        }
+    }
        /* Pattern p1 = Pattern.compile("\"location_dot\":([^}]*)");
         Matcher m1 = p1.matcher(result);
         String group;
@@ -125,6 +130,5 @@ public class RedDotReceiver extends PTMessageReceiver {
             if (!TextUtils.isEmpty(appproduct_id)) {
                 EventBusHelper.post(appproduct_id, APPPRODUCT_ID);
             }*/
-    }
 //        return result;
 }

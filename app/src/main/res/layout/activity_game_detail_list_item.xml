@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@color/color_EBEBEB"
+            android:clickable="false"
             android:src="@drawable/img_head_default"
             auto:aspect_ratio="2"
             auto:default_drawable="@drawable/img_wt_03" />

@@ -17,7 +17,7 @@ import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
-import com.sunnybear.library.controller.eventbus.Subcriber;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -45,7 +45,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private int mPage;
     private ArrayList<String> list = new ArrayList<>();
     private List<ServiceSendData> mServiceSendData;
-    private ArrayList<ServiceMessageList> lists;
     private Companion mCompanion;
 
 
@@ -71,7 +70,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private void initData() {
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles();
-        mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
+        if (null != downloadArticles)
+            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
         mPage = 1;
         ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
@@ -80,7 +80,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
-                        lists = result.getLists();
+                        ArrayList<ServiceMessageList> lists = result.getLists();
+                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                        for (ServiceMessageList serviceMessageList : lists) {
+                            dataBaseManager.updataDownloadFinish(mCompanion.getService_id(), serviceMessageList);
+                        }
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         mCompanion.setNotDownloadIds(null);
                         lists = setIsSameDate(lists);
                         mGameDetailAdapter.addAll(0, lists);

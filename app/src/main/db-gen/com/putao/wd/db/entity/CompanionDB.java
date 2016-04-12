@@ -16,7 +16,7 @@ public class CompanionDB extends DBEntity {
     private String isDownload;
     private String service_id;
 
-    public CompanionDB(String id, String type, String release_time, String content_lists, String isDownload, String service_id) {
+    public CompanionDB(String id, String service_id, String type, String release_time, String content_lists, String isDownload) {
         this.id = id;
         this.type = type;
         this.release_time = release_time;
