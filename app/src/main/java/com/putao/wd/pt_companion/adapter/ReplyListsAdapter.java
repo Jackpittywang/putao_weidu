@@ -7,19 +7,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.CommentReply;
 import com.putao.wd.model.ReplyLists;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
-import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
-import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
-
 import java.util.List;
 
 import butterknife.Bind;
@@ -79,39 +74,11 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
             String create_time = DateUtils.timeCalculate(Integer.valueOf(commentReply.getRelease_time()));
             holder.tv_comment_time.setText(create_time);
 
-            // if (0 != commentReply.getIs_essence()) {
-            //    holder.tv_comment_content.setText("回复 " + /*commentReply.getReply().getUser_name() +*/ ": " + commentReply.getContent());
-            //   } else {
             holder.tv_comment_content.setText(commentReply.getContent());
-            // }
-
 
             holder.sb_cool_icon.setClickable(false);
             holder.rl_cool.setVisibility(View.GONE);
             holder.tv_count_comment.setVisibility(View.GONE);
-
-//        holder.tv_count_comment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //使用EventBus控制表情栏弹出
-//                EventBusHelper.post(position, EVENT_COMMENT_EDIT);
-//            }
-//        });
-
-//        holder.rl_cool.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (commentReply.getIs_like() == 0) {
-//                    //使用EventBus提交点赞
-//                    EventBusHelper.post(position, EVENT_COMMIT_COOL);
-//                    holder.sb_cool_icon.setState(true);
-//                    commentReply.setIs_like(1);
-//                    commentReply.setCount_likes( commentReply.getCount_likes() == 0 ? 1 : commentReply.getCount_likes() + 1);
-//                    holder.tv_count_cool.setText(commentReply.getCount_likes());
-//                } else ToastUtils.showToastShort(mContext, "您已经点过赞了哦");
-//            }
-//        });
-
         }
     }
 
