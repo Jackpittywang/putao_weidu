@@ -110,11 +110,6 @@ public class CompanionApi {
 
     /**
      * 文章详情
-     */
-    private static final String URL_COMPANY_ARTICLE = BASE_URL + "/company/article";
-
-    /**
-     * 文章详情
      *
      * @param article_id 文章id
      */
@@ -182,6 +177,62 @@ public class CompanionApi {
                 .build(RequestMethod.POST, URL_COMPANY_ARTICLE_LIKE);
     }
 
+
+
+    /**
+     * 二级回复评论 参数
+     */
+    public static final String URL_COMMENT_ADD = BASE_URL + "/set/second/comment";
+    private static final String MESSAGE = "message";//首页评论内容
+    private static final String ARTICLE_ID = "article_id";//首页文章ID
+    private static final String COMMENT_ID = "comment_id";//首页评论ID
+
+
+    /**
+     * 二级回复评论
+     *
+     * @param message    首页评论内容
+     * @param article_id 首页文章id
+     * @param comment_id 首页评论id
+     */
+    public static Request addComment(String message, String article_id, String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(MESSAGE, message)
+                .addParam(ARTICLE_ID, article_id)
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_ADD);
+    }
+
+
+
+
+    /**
+     * 二级回复评论点赞 参数
+     */
+    public static final String URL_COMMENT_PARISE_ADD = BASE_URL + "/set/second/like";
+
+    private static final String REQUEST_COMMENT_WD_MID = "wd_mid";//一级评论的wd_mid
+    private static final String REQUEST_COMMENT_SID = "sid";//服务号唯一service_id
+    private static final String REQUEST_COMMENT_PCID = "pcid";//一级评论内的comment_id
+    private static final String REQUEST_COMMENT_PAGE = "page";//页数
+    private static final String REQUEST_COMMENT_SN = "2312fdsfdsa23532fdfdsf";//
+
+    /**
+     * 二级回复评论点赞
+     * @param wd_mid
+     * @param sid
+     * @param comment_id
+     * @return
+     */
+    public static Request addCommentPraise(String wd_mid,String sid,String comment_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_COMMENT_WD_MID, wd_mid)
+                .addParam(REQUEST_COMMENT_SID, sid)
+                .addParam(COMMENT_ID, comment_id)
+                .build(RequestMethod.POST, URL_COMMENT_PARISE_ADD);
+
+    }
+
     /**
      * 话题/创意收集/运营任务详情
      */
@@ -216,6 +267,23 @@ public class CompanionApi {
                 .addParam(REQUEST_COMMENT, comment)
                 .addParam(REQUEST_PICS, pics)
                 .build(RequestMethod.POST, URL_COMPANY_ACTIVE_ATTEND);
+    }
+
+
+    /**
+     * 文章详情
+     */
+    private static final String URL_COMPANY_ARTICLE = BASE_URL + "/second/comment";
+
+    /**
+     * 文章详情
+     *
+     * @param article_id 文章id
+     */
+    public static Request getCompanyArticleComment(String article_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_ARTICLE_ID, article_id)
+                .build(RequestMethod.POST, URL_COMPANY_ARTICLE);
     }
 
     /**
@@ -260,4 +328,31 @@ public class CompanionApi {
                 .addParam(SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_COMPANY_FIRST_LIKE);
     }
+
+
+    /**
+     * 绑定服务号参数
+     */
+    private static final String REQUEST_CODE = "code";//用户id
+
+    /**
+     * 绑定服务号
+     */
+    private static final String URL_COMPANY_SERVICE_BIND = BASE_URL + "/service/bind";
+
+    /**
+     * 参与话题/创意收集/运营任务
+     *
+     * @param sId 服务号id
+     * @param code  服务号code
+     */
+    public static Request bindService(String sId, String code) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_SERVICE_ID, sId)
+                .addParam(REQUEST_CODE, code)
+                .build(RequestMethod.POST, URL_COMPANY_SERVICE_BIND);
+    }
+
+
+
 }
