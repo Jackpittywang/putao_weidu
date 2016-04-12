@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
+import com.alibaba.fastjson.JSONArray;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
@@ -138,6 +139,12 @@ public class IndexActivity extends BasicFragmentActivity {
 
 
     //-------------------------------以下是红点信息缓存-------------------------//
+    @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
+    private void setCompanionDot(JSONArray accompanyNumber) {
+        ti_index_companion.show(-1);
+//        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), me_tabbar);
+    }
+
     @Subcriber(tag = RedDotReceiver.ME_TABBAR)
     private void setMeDot(String me_tabbar) {
         ti_index_companion.show(-1);
@@ -157,10 +164,10 @@ public class IndexActivity extends BasicFragmentActivity {
         mDiskFileCacheHelper.put(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), redDotMap);
     }
 
-    @Subcriber(tag = RedDotReceiver.APPPRODUCT_ID)
+/*    @Subcriber(tag = RedDotReceiver.APPPRODUCT_ID)
     private void setCompanionDot(String appproduct_id) {
         HashMap<String, String> redDotMap = new HashMap<>();
         redDotMap.put(appproduct_id, appproduct_id);
         mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), redDotMap);
-    }
+    }*/
 }

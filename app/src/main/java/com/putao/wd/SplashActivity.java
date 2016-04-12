@@ -16,6 +16,7 @@ import com.putao.wd.pt_me.order.OrderDetailActivity;
 import com.putao.wd.pt_me.service.ServiceDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.putao.wd.util.DistrictUtils;
+import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.task.SuperTask;
@@ -56,7 +57,9 @@ public class SplashActivity extends BasicFragmentActivity {
                     @Override
                     public ConcurrentHashMap<String, String> onBackground() {
                         try {
-                            FileUtils.unZipInAsset(getApplicationContext(), "patch_10002_10003.zip", "patch", true);
+                            File setFile = new File(BasicApplication.sdCardPath + File.separator + "patch/biaoqing/set.txt");
+                            if (setFile.exists() == false)
+                                FileUtils.unZipInAsset(getApplicationContext(), "patch_10002_10003.zip", "patch", true);
                             DistrictUtils.insertRegion();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -215,7 +218,7 @@ public class SplashActivity extends BasicFragmentActivity {
                         startActivity(IndexActivity.class);
                         finish();
                     }
-                });
+                }, false);
     }
 
     private void checkNotify() {

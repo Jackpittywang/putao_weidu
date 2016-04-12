@@ -7,7 +7,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.Companion;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
@@ -47,8 +47,8 @@ public class GameDetailListActivity extends PTWDActivity {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        String service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
-
+        Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+        setMainTitle(companion.getService_name());
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         initData();
@@ -64,12 +64,12 @@ public class GameDetailListActivity extends PTWDActivity {
         serviceSendDatas.add(new ServiceSendData("124"));
         serviceSendDatas.add(new ServiceSendData("125"));
         networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID)),
-                new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+                new SimpleFastJsonCallback<ArrayList<ServiceMessageList>>(ServiceMessageList.class, loading) {
                     @Override
-                    public void onSuccess(String url, ServiceMessage result) {
+                    public void onSuccess(String url, ArrayList<ServiceMessageList> result) {
                         isLoadMore = false;
-                        ArrayList<ServiceMessageList> newResult = setIsSameDate(result.getLists());
-                        mGameDetailAdapter.replaceAll(result.getLists());
+                        ArrayList<ServiceMessageList> newResult = setIsSameDate(result);
+                        mGameDetailAdapter.replaceAll(result);
                         ptl_refresh.refreshComplete();
                         checkLoadMoreComplete(newResult);
                         loading.dismiss();

@@ -5,11 +5,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
+import java.text.ParseException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -18,6 +21,7 @@ import butterknife.Bind;
  * Created by Administrator on 2016/1/13.
  */
 public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameDetailAdapter.GameDetailHolder> {
+
 
     public GameDetailAdapter(Context context, List<ServiceMessageList> serviceMessageList) {
         super(context, serviceMessageList);
@@ -35,7 +39,21 @@ public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameD
 
     @Override
     public void onBindItem(final GameDetailAdapter.GameDetailHolder holder, final ServiceMessageList serviceMessageList, final int position) {
-
+        ServiceMessageContent serviceMessageContent = serviceMessageList.getContent_lists().get(0);
+        holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
+        holder.tv_title.setText(serviceMessageContent.getTitle());
+        holder.tv_content.setText(serviceMessageContent.getSub_title());
+        String date = "";
+        if (serviceMessageList.isShowData()) {
+            try {
+                date = DateUtils.getSecondsToDate(serviceMessageList.getRelease_time());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            holder.tv_time.setVisibility(View.VISIBLE);
+            holder.tv_time.setText("───  " + date + "  ───");
+        } else
+            holder.tv_time.setVisibility(View.GONE);
     }
 
     static class GameDetailHolder extends BasicViewHolder {

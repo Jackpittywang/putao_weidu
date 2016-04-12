@@ -95,14 +95,14 @@ public class CompanionApi {
     /**
      * 公众号首页消息获取
      *
-     * @param send_data 接收推送的数据包，转发给纬度服务器
+     * @param send_data  接收推送的数据包，转发给纬度服务器
      * @param service_id 服务号唯一id
      */
     public static Request getServiceLists(String send_data, String service_id) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_SEND_DATA, send_data)
                 .addParam(REQUEST_SERVICE_ID, service_id)
-                .build(RequestMethod.POST, URL_COMPANY_SERVICE_MENUS);
+                .build(RequestMethod.POST, URL_SERVICE_MESSAGE_LISTS);
     }
 
     /**
@@ -215,4 +215,17 @@ public class CompanionApi {
                 .build(RequestMethod.POST, URL_COMPANY_ACTIVE_ATTEND);
     }
 
+    /**
+     * 取消绑定服务号
+     */
+    private static final String URL_COMPANY_SERVICE_BINDDEL = BASE_URL + "/service/bindDel";
+
+    /**
+     * 取消绑定服务号
+     */
+    public static Request cancelService(String service_id) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .build(RequestMethod.GET, URL_COMPANY_SERVICE_BINDDEL);
+    }
 }
