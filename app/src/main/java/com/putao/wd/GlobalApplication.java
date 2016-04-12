@@ -124,6 +124,10 @@ public class GlobalApplication extends BasicApplication {
                 new JPushHeaper().setAlias(GlobalApplication.this, AccountHelper.getCurrentUid());
             }
         }, 3000);
+
+        CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
+        dataBaseManager.insertFixDownload("6000", "124");
+        dataBaseManager.insertFixDownload("6000", "125");
     }
 
     /**

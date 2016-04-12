@@ -2,12 +2,18 @@ package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
@@ -27,7 +33,7 @@ import butterknife.Bind;
  * 游戏详情页
  * Created by zhanghao on 2016/04/05.
  */
-public class GameDetailListActivity extends PTWDActivity {
+public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ptl_refresh)
@@ -37,6 +43,8 @@ public class GameDetailListActivity extends PTWDActivity {
     private int mPosition;
     private int mPage;
     private ArrayList<String> list = new ArrayList<>();
+    private List<ServiceSendData> mServiceSendData;
+    private Companion mCompanion;
 
 
     @Override
@@ -47,8 +55,8 @@ public class GameDetailListActivity extends PTWDActivity {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-        setMainTitle(companion.getService_name());
+        mCompanion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+        setMainTitle(mCompanion.getService_name());
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         initData();
@@ -59,19 +67,23 @@ public class GameDetailListActivity extends PTWDActivity {
      * 下拉刷新 以及 最初的初始化
      */
     private void initData() {
+        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles();
+        mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSON.toJSONString(downloadArticles), ServiceMessageList.class));
         mPage = 1;
-        List<ServiceSendData> serviceSendDatas = new ArrayList<>();
-        serviceSendDatas.add(new ServiceSendData("124"));
-        serviceSendDatas.add(new ServiceSendData("125"));
-        networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID)),
-                new SimpleFastJsonCallback<ArrayList<ServiceMessageList>>(ServiceMessageList.class, loading) {
+        ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
+        List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
+        networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), mCompanion.getService_id()),
+                new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<ServiceMessageList> result) {
+                    public void onSuccess(String url, ServiceMessage result) {
                         isLoadMore = false;
-                        ArrayList<ServiceMessageList> newResult = setIsSameDate(result);
-                        mGameDetailAdapter.replaceAll(result);
+                        ArrayList<ServiceMessageList> lists = result.getLists();
+                        mCompanion.setNotDownloadIds(null);
+                        lists = setIsSameDate(lists);
+                        mGameDetailAdapter.addAll(0, lists);
                         ptl_refresh.refreshComplete();
-                        checkLoadMoreComplete(newResult);
+                        checkLoadMoreComplete(lists);
                         loading.dismiss();
                     }
 
@@ -81,6 +93,17 @@ public class GameDetailListActivity extends PTWDActivity {
                         ptl_refresh.refreshComplete();
                     }
                 }, false);
+    }
+
+
+    private List<ServiceSendData> listToServiceListData(ArrayList<String> notDownloadIds) {
+        if (null == mServiceSendData)
+            mServiceSendData = new ArrayList<ServiceSendData>();
+        if (null != notDownloadIds)
+            for (String str : notDownloadIds) {
+                mServiceSendData.add(new ServiceSendData(str));
+            }
+        return mServiceSendData;
     }
 
     /**
@@ -140,9 +163,11 @@ public class GameDetailListActivity extends PTWDActivity {
                 rv_content.noMoreLoading();
             }
         });
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
+        rv_content.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
+            public void onItemClick(ServiceMessageList serviceMessageList, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 startActivity(ArticleDetailForActivitiesActivity.class);
             }
         });

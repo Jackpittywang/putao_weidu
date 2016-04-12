@@ -221,6 +221,12 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         notifyItemRangeInserted(indexStart, items.size());
     }
 
+    public void addAll(int position, List<Item> items) {
+        int indexStart = mItems.size();
+        mItems.addAll(position, items);
+        notifyItemRangeInserted(position, items.size());
+    }
+
     public void replace(Item oldItem, Item newItem) {
         int index = mItems.indexOf(oldItem);
         replace(index, newItem);
