@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/ll_comment_edit"
+        layout="@layout/base_comment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_comment_edit"
+        android:orientation="vertical">
+
+        <!--标题栏-->
+        <com.sunnybear.library.view.NavigationBar
+            style="@style/style_navigation_bar"
+            auto:nav_has_divider="true"
+            auto:nav_left_icon="@drawable/back_selector"
+            auto:nav_main_title="评论" />
+
+        <!--下拉刷新-->
+        <com.sunnybear.library.view.PullToRefreshLayout
+            android:id="@+id/ptl_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_comment_edit"
+            android:layout_below="@id/navigation_bar"
+            auto:refresh_layout="@layout/sky_wheel_refresh_header"
+            auto:refresh_layout_height="120">
+
+            <!--列表-->
+            <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                auto:divider_color="@color/divider_color"
+                auto:divider_height="1px"
+                auto:has_row_divider="true" />
+
+        </com.sunnybear.library.view.PullToRefreshLayout>
+    </LinearLayout>
+</RelativeLayout>
