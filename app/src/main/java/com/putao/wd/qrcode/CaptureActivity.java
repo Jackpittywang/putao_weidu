@@ -3,6 +3,7 @@ package com.putao.wd.qrcode;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -16,6 +17,8 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSONObject;
 import com.dtr.zbar.build.ZBarDecoder;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
+import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
@@ -23,7 +26,9 @@ import com.putao.wd.pt_companion.AttentionSuccessActivity;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.bubble.TooltipView;
 
@@ -112,6 +117,7 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
         addNavigation();
         setMainTitleColor(Color.WHITE);
         initViews();
+
 //        initAnimation();
 //        scan_line.startAnimation(animation);
     }
@@ -297,10 +303,12 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
+                        finish();
                     }
                 });
                 break;
             case ScanUrlParseUtils.Scheme.PUTAO_DEVICE:// 扫描添加设备
+                //
                 String deviceUrl = ScanUrlParseUtils.getDeviceRequestUrl(result);
                 Logger.d("proUrl:" + deviceUrl);
                 networkRequest(ExploreApi.addDevice(deviceUrl), new JSONObjectCallback() {
@@ -334,10 +342,99 @@ public class CaptureActivity extends PTWDActivity implements View.OnClickListene
                     }
                 });
                 break;
+            case ScanUrlParseUtils.Scheme.HTTP:
+                // result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
+
+                // 从url里面获取serverId和code
+                String serverId = ScanUrlParseUtils.getSingleParams(result, "s");
+                String code = ScanUrlParseUtils.getSingleParams(result, "code");
+                if (StringUtils.isEmpty(serverId) || StringUtils.isEmpty(code)) {
+                    ToastUtils.showToastLong(mContext, "异常二维码");
+                    finish();
+                    return;
+                }
+
+                networkRequest(CompanionApi.bindService(serverId, code), new JSONObjectCallback() {
+                    @Override
+                    public void onSuccess(String url, JSONObject result) {
+                        Logger.d(result.toString());
+                        int http_code = result.getInteger("http_code");
+                        if (http_code == 200) {
+                            ToastUtils.showToastLong(mContext, "添加成功");
+                            // 跳到订阅号列表页面
+
+
+
+                        } else if (http_code == 4201)
+                            ToastUtils.showToastLong(mContext, "重复绑定");
+                        else if (http_code == 4200)
+                            ToastUtils.showToastLong(mContext, "二维码已过期");
+                        else {
+                            String msg = result.getString("msg");
+                            if (msg != null)
+                                ToastUtils.showToastLong(mContext, result.getString("msg"));
+                            else ToastUtils.showToastLong(mContext, "绑定失败");
+                        }
+                        loading.dismiss();
+                        finish();
+                    }
+
+                    @Override
+                    public void onCacheSuccess(String url, JSONObject result) {
+
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        loading.dismiss();
+                        ToastUtils.showToastShort(mContext, msg);
+                        finish();
+                    }
+                });
+                break;
             default:
                 ToastUtils.showToastShort(mContext, "请扫描葡萄产品的二维码");
                 finish();
                 return;
         }
     }
+
+//    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
+//    private BarCodeData getBarCodeDataFromUrl(String url) {
+//        BarCodeData data = new BarCodeData();
+//        if (StringUtils.isEmpty(url)) return data;
+//        String value = Uri.parse(url).getQueryParameter("s");
+//        if (value == null) value = "";
+//        data.setsId(value);
+//        value = Uri.parse(url).getQueryParameter("code");
+//        if (value == null) value = "";
+//        data.setCode(value);
+//        return data;
+//    }
+//
+//    /**
+//     * 扫描二维码获得的数据
+//     */
+//    public class BarCodeData {
+//        // server id
+//        private String sId = "";
+//        // code
+//        private String code = "";
+//
+//        public String getsId() {
+//            return sId;
+//        }
+//
+//        public void setsId(String sId) {
+//            this.sId = sId;
+//        }
+//
+//        public String getCode() {
+//            return code;
+//        }
+//
+//        public void setCode(String code) {
+//            this.code = code;
+//        }
+//    }
 }

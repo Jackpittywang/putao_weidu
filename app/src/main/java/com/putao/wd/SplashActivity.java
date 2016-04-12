@@ -12,6 +12,8 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.jpush.JPushReceiver;
+import com.putao.wd.pt_companion.ArticleDetailsActivity;
+import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_me.order.OrderDetailActivity;
 import com.putao.wd.pt_me.service.ServiceDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
@@ -76,10 +78,8 @@ public class SplashActivity extends BasicFragmentActivity {
                         if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                             startActivity(GuidanceActivity.class);
                         else {
-                            if (TextUtils.isEmpty(AccountHelper.getCurrentUid()))
-                                finish();
-                            else
-                                checkInquiryBind(AccountHelper.getCurrentUid());
+                            checkNotify();
+                            startActivity(IndexActivity.class);
                         }
                     }
                 }).execute();
@@ -198,28 +198,6 @@ public class SplashActivity extends BasicFragmentActivity {
 //                }
 //        );
 
-    /**
-     * 是不是绑定过设备
-     *
-     * @param currentUid uid
-     */
-    private void checkInquiryBind(String currentUid) {
-        networkRequest(UserApi.checkInquiryBind(currentUid),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        GlobalApplication.isBindDevice = com.alibaba.fastjson.JSONObject.parseObject(result).getBoolean("is_relation");
-                    }
-
-                    @Override
-                    public void onFinish(String url, boolean isSuccess, String msg) {
-                        super.onFinish(url, isSuccess, msg);
-                        checkNotify();
-                        startActivity(IndexActivity.class);
-                        finish();
-                    }
-                }, false);
-    }
 
     private void checkNotify() {
         if (null != args) {

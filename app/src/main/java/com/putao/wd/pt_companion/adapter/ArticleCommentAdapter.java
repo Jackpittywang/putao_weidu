@@ -105,6 +105,12 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
                 }
             }
         });
+
+//        if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
+//            holder.iv_comment_pic.setImageURL(comment.getPics().get(0));
+//            holder.iv_comment_pic.setVisibility(View.VISIBLE);
+//        } else
+//            holder.iv_comment_pic.setVisibility(View.GONE);
     }
 
     static class CommentViewHolder extends BasicViewHolder {
@@ -124,6 +130,8 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
         TextView tv_count_comment;
         @Bind(R.id.rl_cool)
         RelativeLayout rl_cool;
+        @Bind(R.id.iv_comment_pic)
+        ImageDraweeView iv_comment_pic;
 
         public CommentViewHolder(View itemView) {
             super(itemView);

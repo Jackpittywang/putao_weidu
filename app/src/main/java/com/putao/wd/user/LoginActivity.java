@@ -193,7 +193,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        GlobalApplication.isBindDevice = JSONObject.parseObject(result).getBoolean("is_relation");
+                        mDiskFileCacheHelper.put(GlobalApplication.IS_DEVICE_BIND, true);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         finish();
                     }
