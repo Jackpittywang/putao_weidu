@@ -304,20 +304,6 @@ public class ExploreApi {
     public static final String URL_ARTICLE_COMMENT_ADD = BASE_URL + "/set/first/comment";
 
     /**
-     * 添加评论
-     *
-     * @param article_id 首页文章id
-     * @param content    首页评论内容
-     */
-    public static Request addArticleComment(String article_id, String content, String sid) {
-        return PTWDRequestHelper.start()
-                .addParam(CONTENT, content)
-                .addParam(WD_MID, article_id)
-                .addParam(SERVICE_ID, sid)
-                .build(RequestMethod.POST, URL_ARTICLE_COMMENT_ADD);
-    }
-
-    /**
      * version 1.3
      * 添加评论
      *
@@ -329,7 +315,7 @@ public class ExploreApi {
                 .addParam(CONTENT, content)
                 .addParam(WD_MID, article_id)
                 .addParam(SERVICE_ID, sid)
-                .addParam(PICTURES, sid)
+                .addParam(PICTURES, pics)
                 .build(RequestMethod.POST, URL_ARTICLE_COMMENT_ADD);
     }
 
