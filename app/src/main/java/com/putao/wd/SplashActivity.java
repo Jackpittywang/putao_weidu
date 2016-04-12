@@ -215,7 +215,7 @@ public class SplashActivity extends BasicFragmentActivity {
                         startActivity(IndexActivity.class);
                         finish();
                     }
-                });
+                }, false);
     }
 
     private void checkNotify() {
