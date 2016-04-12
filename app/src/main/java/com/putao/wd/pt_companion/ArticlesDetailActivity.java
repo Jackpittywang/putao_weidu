@@ -28,6 +28,7 @@ import com.putao.wd.model.Comment;
 import com.putao.wd.model.CommentReply;
 import com.putao.wd.model.CompanionCommentDetail;
 import com.putao.wd.model.RegUser;
+import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
 import com.putao.wd.pt_companion.adapter.CommentReplyAdapter;
 import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
@@ -70,35 +71,21 @@ public class ArticlesDetailActivity extends PTWDActivity {
     private boolean hasComment;
     private boolean isNoMore;
 
-
+    @Bind(R.id.rl_comment_second)
+    RelativeLayout rl_comment_second;
     @Bind(R.id.iv_author_icon)
     ImageDraweeView iv_author_icon;
     @Bind(R.id.tv_author_name)
     TextView tv_author_name;
     @Bind(R.id.tv_author_time)
     TextView tv_author_time;
-    @Bind(R.id.sticky_layout)
-    StickyHeaderLayout sticky_layout;
-    @Bind(R.id.iv_articlesdetail_header)
-    ImageDraweeView iv_articlesdetail_header;
-    @Bind(R.id.tv_articlesdetail_resume)
-    TextView tv_articlesdetail_resume;
-    @Bind(R.id.rv_articlesdetail_applyusers)
-    BasicRecyclerView rv_articlesdetail_applyusers;
-    @Bind(R.id.ll_praise_count)
-    LinearLayout ll_praise_count;
-    @Bind(R.id.tv_praise_count)
-    TextView tv_praise_count;
-    @Bind(R.id.tv_amount_comment)
-    TextView tv_amount_comment;
+
     @Bind(R.id.rv_others_comment)
-    LoadMoreRecyclerView rv_others_comment;
-    @Bind(R.id.rl_comment_second)
-    RelativeLayout rl_comment_second;
+    BasicRecyclerView rv_others_comment;
+
 
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
-
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
 
@@ -128,7 +115,7 @@ public class ArticlesDetailActivity extends PTWDActivity {
         addListener();
     }
 
-    private void getNewCommentData(){
+    private void getNewCommentData() {
         //  TODO 文章id
         networkRequest(CompanionApi.getCompanyArticleComment("117", "6000", "1", "1"), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
             @Override
@@ -137,30 +124,28 @@ public class ArticlesDetailActivity extends PTWDActivity {
                 tv_author_name.setText(result.getComment().getNick_name());
 
 
-
                 tv_author_time.setText(result.getComment().getRelease_time());
-                iv_articlesdetail_header.setImageURL(result.getComment().getPics().get(0));
-                tv_articlesdetail_resume.setText(result.getComment().getContent());
 
-                tv_praise_count.setVisibility(result.getComment().getCount_likes() != 0 ? View.VISIBLE : View.GONE);
-                if (result.getComment().getCount_likes() != 0)
-                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
+
+//                tv_praise_count.setVisibility(result.getComment().getCount_likes() != 0 ? View.VISIBLE : View.GONE);
+//                if (result.getComment().getCount_likes() != 0)
+//                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
 
 
                 //设置布局管理器
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ArticlesDetailActivity.this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 mCommentReplyAdapter = new CommentReplyAdapter(mContext, result.getComment().getLike_lists());
-                rv_articlesdetail_applyusers.setAdapter(mCommentReplyAdapter);
-                rv_articlesdetail_applyusers.setLayoutManager(linearLayoutManager);
+//                rv_articlesdetail_applyusers.setAdapter(mCommentReplyAdapter);
+//                rv_articlesdetail_applyusers.setLayoutManager(linearLayoutManager);
 
 
 //                ll_praise_count.setVisibility(result.getComment().getIs_like() == 0 ? View.GONE : View.VISIBLE);
 //                if (result.getComment().getIs_like() != 0)
 //                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
-                tv_amount_comment.setText(result.getComment().getCount_comments() + "   条评论");
 
-                mReplyListsAdapter = new ReplyListsAdapter(mContext, result.getReply_lists());
+
+                mReplyListsAdapter = new ReplyListsAdapter(mContext, result.getReply_lists(), new ReplyHeaderInfo());
                 rv_others_comment.setAdapter(mReplyListsAdapter); // TODO
 
 
@@ -170,17 +155,17 @@ public class ArticlesDetailActivity extends PTWDActivity {
 
     private void addListener() {
 
-        ll_praise_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO 点赞
-                netSetParise();
-            }
-        });
+//        ll_praise_count.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO 点赞
+//                netSetParise();
+//            }
+//        });
     }
 
-    private void netSetParise(){
-        networkRequest(CompanionApi.addCommentPraise("117", "6000", "1"),new SimpleFastJsonCallback<String>(String.class, loading){
+    private void netSetParise() {
+        networkRequest(CompanionApi.addCommentPraise("117", "6000", "1"), new SimpleFastJsonCallback<String>(String.class, loading) {
 
             @Override
             public void onSuccess(String url, String result) {
@@ -257,7 +242,6 @@ public class ArticlesDetailActivity extends PTWDActivity {
 //        inputManager.showSoftInput(et_msg, 0);
 //        isReply = true;
 //    }
-
 
 
 //    @OnClick({R.id.tv_emojis, R.id.tv_send, R.id.et_msg})
@@ -385,7 +369,7 @@ public class ArticlesDetailActivity extends PTWDActivity {
                 }
                 if (result != null) { //result.getCurrent_page() != result.getTotal_page()
                     hasComment = true;
-                    rv_others_comment.loadMoreComplete();
+//                    rv_others_comment.loadMoreComplete();
                     page++;
                 } else {
                     //         rv_content.noMoreLoading();

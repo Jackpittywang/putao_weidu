@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.StringUtils;
@@ -26,24 +27,24 @@ import butterknife.Bind;
 public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder> {
     private final int VIEW_HEADER = 0xFF;
     private final int VIEW_ITEM = 0xFE;
-
     private Context mContext;
+    private ReplyHeaderInfo headerInfo;
 
-
-    public ReplyListsAdapter(Context context, List<ReplyLists> commentReplies) {
-        super(context, commentReplies);
+    public ReplyListsAdapter(Context context, List<ReplyLists> commentRepliesm, ReplyHeaderInfo headerInfo) {
+        super(context, commentRepliesm);
+        this.headerInfo = headerInfo;
         this.mContext = context;
     }
 
     @Override
     public int getItemCount() {
-        return super.getItemCount() + 1;
+        return super.getItemCount();
     }
 
     @Override
     public int getLayoutId(int viewType) {
         if (viewType == VIEW_HEADER)
-            return R.layout.activity_comment_item;
+            return R.layout.activity_article_detail_header;
         else
             return R.layout.activity_comment_item;
 
@@ -58,11 +59,14 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
     }
 
     @Override
-    public void onBindItem(final BasicViewHolder basicHolder, final ReplyLists commentReply, final int position) {
-        if (position == 0) {
+    public void onBindItem(final BasicViewHolder basicHolder, final ReplyLists commentReply, final int index) {
+        if (index == 0) {
             HeaderHolder holder = (HeaderHolder) basicHolder;
-
+            holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
+            holder.tv_articlesdetail_resume.setText(headerInfo.getContent());
+            holder.tv_amount_comment.setText(headerInfo.getCommentCount() + "   条评论");
         } else {
+            int position = index;
             ReplyListsHolder holder = (ReplyListsHolder) basicHolder;
             if (!StringUtils.isEmpty(commentReply.getHead_img()))
                 holder.iv_comment_icon.setImageURL(commentReply.getHead_img());
@@ -122,11 +126,16 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
 
     static class HeaderHolder extends BasicViewHolder {
 
+        @Bind(R.id.iv_articlesdetail_header)
+        ImageDraweeView iv_articlesdetail_header;
+        @Bind(R.id.tv_articlesdetail_resume)
+        TextView tv_articlesdetail_resume;
+        @Bind(R.id.tv_amount_comment)
+        TextView tv_amount_comment;
 
         public HeaderHolder(View itemView) {
             super(itemView);
         }
     }
-
 
 }
