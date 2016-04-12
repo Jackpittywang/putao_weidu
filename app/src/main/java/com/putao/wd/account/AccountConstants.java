@@ -82,5 +82,6 @@ public final class AccountConstants {
      */
     public static final class Bundle {
         public static final String BUNDLE_SERVICE_ID = "bundle_service_id";
+        public static final String BUNDLE_COMPANION = "bundle_companion";
     }
 }

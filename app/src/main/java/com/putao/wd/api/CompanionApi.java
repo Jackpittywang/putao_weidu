@@ -102,7 +102,7 @@ public class CompanionApi {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_SEND_DATA, send_data)
                 .addParam(REQUEST_SERVICE_ID, service_id)
-                .build(RequestMethod.POST, URL_COMPANY_SERVICE_MENUS);
+                .build(RequestMethod.POST, URL_SERVICE_MESSAGE_LISTS);
     }
 
     /**

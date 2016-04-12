@@ -10,7 +10,6 @@
         android:background="@color/white"
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="葡萄活动"
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_icon="@drawable/btn_20_more_p_nor" />
 

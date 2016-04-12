@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.tcp.PTMessageReceiver;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -17,13 +18,23 @@ import java.util.regex.Pattern;
  */
 public class RedDotReceiver extends PTMessageReceiver {
     public static final String ME_TABBAR = "me_tabbar";
+    public static final String COMPANION_TABBAR = "companion_tabbar";
     public static final String ME_MESSAGECENTER = "me_messageCenter";
-    public static final String MESSAGECENTER = "messagecenter";
     public static final String MESSAGECENTER_NOTICE = "messageCenter_notice";
     public static final String MESSAGECENTER_REPLY = "messageCenter_reply";
     public static final String MESSAGECENTER_PRAISE = "messageCenter_praise";
     public static final String MESSAGECENTER_REMIND = "messageCenter_remind";
     public static final String APPPRODUCT_ID = "appProduct_id";
+
+    public static final String MESSAGECENTER = "messageCenter";
+    public static final String REPLY = "reply";
+    public static final String PRAISE = "praise";
+    public static final String REMIND = "remind";
+    public static final String NOTICE = "notice";
+    public static final String ACCOMPANYNUMBER = "accompanyNumber";
+    public static final String SERVICE_ID = "service_id";
+    public static final String ID = "id";
+    public static final String TYPE = "type";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -39,16 +50,42 @@ public class RedDotReceiver extends PTMessageReceiver {
 
     }
 
+    private void setResult(String result) {
+        JSONObject object = JSONObject.parseObject(result);
+        JSONObject messageCenter = object.getJSONObject(MESSAGECENTER);
+        if (null != messageCenter) {
+            String reply = messageCenter.getString(REPLY);
+            String praise = messageCenter.getString(PRAISE);
+            String remind = messageCenter.getString(REMIND);
+            String notice = messageCenter.getString(NOTICE);
+            //主页"我"位置红点
+            EventBusHelper.post(ME_TABBAR, ME_TABBAR);
+            //"我"位置"消息中心"红点
+            EventBusHelper.post(ME_MESSAGECENTER, ME_MESSAGECENTER);
+            //消息中心通知红点
+            if (TextUtils.isEmpty(reply)) {
+                EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
+            }
+            //消息中心回复红点
+            if (TextUtils.isEmpty(praise)) {
+                EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
+            }
+            //消息中心赞红点
+            if (TextUtils.isEmpty(remind)) {
+                EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
+            }
+            //消息中心提醒红点
+            if (TextUtils.isEmpty(notice)) {
+                EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
+            }
+        }
+        JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
+        //陪伴位置提醒红点
+        if (null != accompanyNumber) {
+            EventBusHelper.post(accompanyNumber, ME_TABBAR);
+        }
 
-    private int me = 0;
-    private int messagecenter = 0;
-    private int notice = 0;
-    private int reply = 0;
-    private int praise = 0;
-    private int remind = 0;
-
-    private String setResult(String result) {
-        Pattern p1 = Pattern.compile("\"location_dot\":([^}]*)");
+       /* Pattern p1 = Pattern.compile("\"location_dot\":([^}]*)");
         Matcher m1 = p1.matcher(result);
         String group;
         while (m1.find()) {
@@ -87,8 +124,7 @@ public class RedDotReceiver extends PTMessageReceiver {
             String appproduct_id = jsonObject.getString(APPPRODUCT_ID);
             if (!TextUtils.isEmpty(appproduct_id)) {
                 EventBusHelper.post(appproduct_id, APPPRODUCT_ID);
-            }
-        }
-        return result;
+            }*/
     }
+//        return result;
 }

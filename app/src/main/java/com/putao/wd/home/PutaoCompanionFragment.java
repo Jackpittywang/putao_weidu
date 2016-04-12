@@ -106,7 +106,7 @@ public class PutaoCompanionFragment extends PTWDFragment implements OnItemClickL
         Bundle bundle = new Bundle();
         companion.setNum(0);
         mCompanionAdapter.notifyItemChanged(position);
-        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, companion.getService_id());
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
         startActivity(GameDetailListActivity.class, bundle);
     }
 
