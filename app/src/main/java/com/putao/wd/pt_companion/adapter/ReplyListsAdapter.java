@@ -3,6 +3,7 @@ package com.putao.wd.pt_companion.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,14 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
             HeaderHolder holder = (HeaderHolder) basicHolder;
             holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
             holder.tv_articlesdetail_resume.setText(headerInfo.getContent());
-            holder.tv_amount_comment.setText(headerInfo.getCommentCount() + "   条评论");
+            holder.tv_amount_comment.setText(headerInfo.getCount_comments() + "   条评论");
+            if(headerInfo.getCount_comments() != 0){
+                holder.ll_praise_count.setVisibility(View.VISIBLE);
+                holder.tv_praise_count.setText(headerInfo.getCount_likes());
+            }else{
+                holder.ll_praise_count.setVisibility(View.GONE);
+            }
+
         } else {
             int position = index;
             ReplyListsHolder holder = (ReplyListsHolder) basicHolder;
@@ -119,6 +127,7 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         @Bind(R.id.rl_cool)
         RelativeLayout rl_cool;
 
+
         public ReplyListsHolder(View itemView) {
             super(itemView);
         }
@@ -132,6 +141,10 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         TextView tv_articlesdetail_resume;
         @Bind(R.id.tv_amount_comment)
         TextView tv_amount_comment;
+        @Bind(R.id.tv_praise_count)
+        TextView tv_praise_count;
+        @Bind(R.id.ll_praise_count)
+        LinearLayout ll_praise_count;
 
         public HeaderHolder(View itemView) {
             super(itemView);

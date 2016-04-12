@@ -145,7 +145,8 @@ public class ArticlesDetailActivity extends PTWDActivity {
 //                    tv_praise_count.setText(String.valueOf(result.getComment().getCount_likes()));
 
 
-                mReplyListsAdapter = new ReplyListsAdapter(mContext, result.getReply_lists(), new ReplyHeaderInfo());
+                CommentReply comment = result.getComment();
+                mReplyListsAdapter = new ReplyListsAdapter(mContext, result.getReply_lists(), new ReplyHeaderInfo(result.getComment().getContent(),result.getComment().getCount_comments(),result.getComment().getCount_likes(),result.getComment().getPics().get(0)));
                 rv_others_comment.setAdapter(mReplyListsAdapter); // TODO
 
 

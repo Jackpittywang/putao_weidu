@@ -4,9 +4,17 @@ package com.putao.wd.model;
  * Created by Administrator on 2016/4/12.
  */
 public class ReplyHeaderInfo {
-    private String pic = "http://p3.image.hiapk.com/uploads/allimg/140827/161A2K00-6.jpg";
-    private String content = "hehlhklkl";
-    private int commentCount = 1;
+    private String pic ;
+    private String content ;
+    private int count_comments ;
+    private int count_likes;
+
+    public ReplyHeaderInfo(String content, int count_comments, int count_likes, String pic) {
+        this.content = content;
+        this.count_comments = count_comments;
+        this.count_likes = count_likes;
+        this.pic = pic;
+    }
 
     public String getPic() {
         return pic;
@@ -24,11 +32,19 @@ public class ReplyHeaderInfo {
         this.content = content;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public int getCount_comments() {
+        return count_comments;
     }
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
+    public void setCount_comments(int count_comments) {
+        this.count_comments = count_comments;
+    }
+
+    public int getCount_likes() {
+        return count_likes;
+    }
+
+    public void setCount_likes(int count_likes) {
+        this.count_likes = count_likes;
     }
 }
