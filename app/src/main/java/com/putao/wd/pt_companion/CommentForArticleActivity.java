@@ -2,8 +2,13 @@ package com.putao.wd.pt_companion;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -14,9 +19,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.album.activity.PhotoAlbumActivity;
+import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.ExploreApi;
+import com.putao.wd.api.UploadApi;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.ArticleDetailComment;
@@ -28,19 +42,29 @@ import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
+import com.putao.wd.user.LoginActivity;
+import com.putao.wd.util.BottomPanelUtil;
 import com.sunnybear.library.controller.NetworkLogActivty;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
+import com.sunnybear.library.model.http.UploadFileTask;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.FileUtils;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +90,9 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ll_comment_edit)
     LinearLayout ll_comment_edit;
+
+    @Bind(R.id.iv_upload_pic)
+    ImageDraweeView iv_upload_pic;
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
     @Bind(R.id.et_msg)
@@ -87,6 +114,10 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     public final static String COOL = "CommentCool";//是否赞过
     public final static String POSITION = "position";
 
+    private boolean is_pic = false;// 是否可以发表图片
+    private boolean is_comment = false;// 是否可以评论
+    private boolean is_becommented = false;//是否可以对评论进行回复
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_comment_for_activities;
@@ -105,7 +136,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         wd_mid = "117";
         sid = "6000";
         //测试数据
-
+        refreshView();
         refreshCommentList();
         addListener();
         emojiMap = mApp.getEmojis();
@@ -214,7 +245,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         });
     }
 
-    @OnClick({R.id.tv_emojis, R.id.tv_send, R.id.et_msg})
+    @OnClick({R.id.tv_emojis, R.id.tv_send, R.id.et_msg, R.id.iv_upload_pic})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -224,32 +255,45 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
             case R.id.tv_send://点击发送
-                String msg = et_msg.getText().toString();
-                if (msg.trim().isEmpty()) {
-                    ToastUtils.showToastShort(mContext, "评论不能为空");
-                    return;
-                }
-                networkRequest(ExploreApi.addArticleComment(wd_mid, msg, sid),
-                        new SimpleFastJsonCallback<String>(String.class, loading) {
-                            @Override
-                            public void onSuccess(String url, String result) {
-                                Logger.i("评论与回复提交成功");
-                                resetMsg();
-                                refreshCommentList();
-                                EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
-                            }
-
-                            @Override
-                            public void onFailure(String url, int statusCode, String msg) {
-                                super.onFailure(url, statusCode, msg);
-                                ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
-                            }
-                        });
+                sendComment(false);
                 break;
             case R.id.et_msg://点击文本输入框
                 isShowEmoji = false;
                 vp_emojis.setVisibility(View.GONE);
                 break;
+            case R.id.iv_upload_pic:
+                //选择图片
+                BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"拍照", "从手机相册选择"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
+                    @Override
+                    public void doFunction() {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 0x900);
+                    }
+                }, new BottomPanelUtil.FunctionPanelCallBack() {
+                    @Override
+                    public void doFunction() {
+                        Intent intent = new Intent(mContext, PhotoAlbumActivity.class);
+                        intent.putExtra("MAX_COUNT", 1);
+                        startActivity(intent);
+                    }
+                }}, null);
+
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 0x900) {
+            Bitmap bitmap = null;
+            Bundle bundle = data.getExtras();
+            bitmap = (Bitmap) bundle.get("data");
+            iv_upload_pic.setDefaultImage(bitmap);
+            String filePath = GlobalApplication.sdCardPath + File.separator + "upload.jpg";
+            ImageUtils.bitmapOutSdCard(bitmap, filePath);
+            uploadFilePath = filePath;
+            iv_upload_pic.setImageURI(Uri.parse("file://putao/" + filePath));
         }
     }
 
@@ -258,6 +302,19 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         et_msg.setText("");
         mMinLenght = 0;
         vp_emojis.setVisibility(View.GONE);
+    }
+
+
+    private void refreshView() {
+        if (is_comment)
+            ll_comment_edit.setVisibility(View.VISIBLE);
+        else
+            ll_comment_edit.setVisibility(View.GONE);
+        if (is_pic)
+            iv_upload_pic.setVisibility(View.VISIBLE);
+        else
+            iv_upload_pic.setVisibility(View.GONE);
+        if (is_becommented) ;
     }
 
     /**
@@ -270,6 +327,11 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                     @Override
                     public void onSuccess(String url, ArticleDetailCommentList result) {
                         if (result != null) {
+                            is_pic = result.is_pic();
+                            is_comment = result.is_comment();
+                            is_becommented = result.is_becommented();
+                            refreshView();
+
                             List<ArticleDetailComment> comments = result.getComment_lists();
                             if (comments != null && comments.size() > 0) {
                                 checkLiked(comments);
@@ -377,6 +439,165 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
     public void eventDeleteEmoji(Emoji emoji) {
         et_msg.delete();
+    }
+
+    //图片选择后的处理
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
+    public void eventSelectPic(List<ImageInfo> selectPhotos) {
+        if (selectPhotos != null && selectPhotos.size() > 0 && selectPhotos.get(0) != null) {
+            String picStr = selectPhotos.get(0)._DATA;
+            if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
+                iv_upload_pic.setImageURI(Uri.parse("file://putao/" + selectPhotos.get(0).THUMB_DATA));
+            else
+                iv_upload_pic.setImageURI(Uri.parse("file://putao/" + selectPhotos.get(0)._DATA));
+
+            if (!StringUtils.isEmpty(picStr)) {
+                hasPic = true;
+                uploadFilePath = picStr;
+            } else {
+                hasPic = false;
+                uploadFilePath = "";
+            }
+        }
+
+    }
+
+    //=====================图片上传相关===========================
+    private String uploadFilePath;
+    private boolean hasPic = false;//评论是否带图片
+    private String uploadToken;//上传token
+    private File uploadFile;//上传文件
+    private String sha1;//上传文件sha1
+
+    /**
+     * 校检sha1
+     *
+     * @param uploadFilePath 上传文件路径
+     */
+    private void checkSha1(String uploadFilePath) {
+        uploadFile = new File(uploadFilePath);
+        sha1 = FileUtils.getSHA1ByFile(uploadFile);
+        networkRequest(UploadApi.checkSha1(sha1), new JSONObjectCallback() {
+            @Override
+            public void onSuccess(String url, JSONObject result) {
+                String hash = result.getString("hash");
+                if (StringUtils.isEmpty(hash))
+                    getUploadToken();
+                else
+                    upload("jpg", hash, hash);
+            }
+
+            @Override
+            public void onCacheSuccess(String url, JSONObject result) {
+
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+
+            }
+        });
+    }
+
+    /**
+     * 获得上传参数
+     */
+    private void getUploadToken() {
+        networkRequest(UserApi.getUploadToken(), new SimpleFastJsonCallback<String>(String.class, null) {
+            @Override
+            public void onSuccess(String url, String result) {
+                JSONObject jsonObject = JSON.parseObject(result);
+                uploadToken = jsonObject.getString("uploadToken");
+                Logger.d(uploadToken);
+                uploadFile();
+            }
+        });
+    }
+
+
+    /**
+     * 上传文件
+     */
+    private void uploadFile() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadFileTask.UploadCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        Logger.d(result.toJSONString());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ext", result.getString("ext"));
+                        bundle.putString("filename", result.getString("filename"));
+                        bundle.putString("hash", result.getString("hash"));
+                        //上传PHP服务器
+                        mHandler.sendMessage(Message.obtain(mHandler, 0x01, bundle));
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = (Bundle) msg.obj;
+            //上传PHP服务器
+            upload(bundle.getString("ext"), bundle.getString("filename"), bundle.getString("hash"));
+        }
+    };
+
+    /**
+     * 上传PHP服务器
+     */
+    private void upload(String ext, String filename, String filehash) {
+        networkRequest(UserApi.userEdit(ext, filename, filehash),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.i("评论图片已上传");
+                        sendCommentMsg(sha1);
+                    }
+                });
+    }
+
+    private void sendComment(boolean hasPic) {
+        if (hasPic)
+            checkSha1(uploadFilePath);
+        else
+            sendCommentMsg(null);
+    }
+
+
+    private void sendCommentMsg(@Nullable String picName) {
+        String msg = et_msg.getText().toString();
+        if (msg.trim().isEmpty()) {
+            ToastUtils.showToastShort(mContext, "评论不能为空");
+            return;
+        }
+        String pics = "";
+        if (picName != null)
+            pics = picName;
+
+        networkRequest(ExploreApi.addArticleComment(wd_mid, msg, sid, pics),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Logger.i("评论与回复提交成功");
+                        resetMsg();
+                        refreshCommentList();
+                        EventBusHelper.post(mSuperPosition, EVENT_ADD_CREAT_COMMENT);
+
+                        hasPic = false;
+                        iv_upload_pic.setDefaultImage(R.drawable.btn_30_p_selector);
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastShort(mContext, "评论发送失败，请检查您的网络");
+                    }
+                });
     }
 
 }
