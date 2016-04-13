@@ -90,10 +90,12 @@
                     android:visibility="visible">
 
                     <ImageView
+                        android:id="@+id/iv_qq"
                         style="@style/style_share_icon"
                         android:src="@drawable/icon_40_03" />
 
                     <TextView
+                        android:id="@+id/tv_qq"
                         style="@style/style_share_text"
                         android:text="@string/qq" />
                 </LinearLayout>
@@ -153,6 +155,11 @@
                 <LinearLayout
                     style="@style/style_share_button"
                     android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_share"
+                    style="@style/style_share_button"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!--间隔线-->

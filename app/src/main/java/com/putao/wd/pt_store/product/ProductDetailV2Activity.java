@@ -171,7 +171,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
     }
 
     private void addListener() {
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
                 if (!product_num.equals("product_num")) {

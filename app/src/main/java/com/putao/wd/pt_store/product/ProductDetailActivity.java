@@ -123,7 +123,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     }
 
     private void addListener() {
-        mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
+        mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
             @Override
             public void onWechat() {
                 ShareTools.wechatWebShare(ProductDetailActivity.this, true, title, subtitle, imageUrl, shareUrl);
