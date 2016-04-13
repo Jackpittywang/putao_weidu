@@ -129,7 +129,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_relevance_device:
-                if (AccountHelper.isLogin()) {
+                if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
                     startActivity(LoginActivity.class, bundle);
