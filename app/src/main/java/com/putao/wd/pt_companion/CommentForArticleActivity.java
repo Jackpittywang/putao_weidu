@@ -278,21 +278,48 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 vp_emojis.setVisibility(View.GONE);
                 break;
             case R.id.iv_upload_pic:
-                //选择图片
-                BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"拍照", "从手机相册选择"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
-                    @Override
-                    public void doFunction() {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 0x900);
-                    }
-                }, new BottomPanelUtil.FunctionPanelCallBack() {
-                    @Override
-                    public void doFunction() {
-                        Intent intent = new Intent(mContext, PhotoAlbumActivity.class);
-                        intent.putExtra("MAX_COUNT", 1);
-                        startActivity(intent);
-                    }
-                }}, null);
+                if (!hasPic) {
+                    //选择图片
+                    BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"相机", "从手机相册选择"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
+                        @Override
+                        public void doFunction() {
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, 0x900);
+                        }
+                    }, new BottomPanelUtil.FunctionPanelCallBack() {
+                        @Override
+                        public void doFunction() {
+                            Intent intent = new Intent(mContext, PhotoAlbumActivity.class);
+                            intent.putExtra("MAX_COUNT", 1);
+                            startActivity(intent);
+                        }
+                    }}, null);
+                } else {
+                    //选择图片
+                    BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"重新拍照", "重新选取", "删除"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
+                        @Override
+                        public void doFunction() {
+                            bitmap = null;
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, 0x900);
+                        }
+                    }, new BottomPanelUtil.FunctionPanelCallBack() {
+                        @Override
+                        public void doFunction() {
+                            Intent intent = new Intent(mContext, PhotoAlbumActivity.class);
+                            intent.putExtra("MAX_COUNT", 1);
+                            startActivity(intent);
+                        }
+                    }, new BottomPanelUtil.FunctionPanelCallBack() {
+                        @Override
+                        public void doFunction() {
+                            bitmap = null;
+                            iv_upload_pic.setDefaultImage(R.drawable.btn_30_p_selector);
+//                            iv_upload_pic.setImageURL(Uri.parse("res://putao/" + R.drawable.btn_30_p_selector).toString());
+                            hasPic = false;
+                        }
+                    }}, null);
+                }
                 break;
         }
     }
@@ -301,7 +328,6 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 0x900) {
-            Bitmap bitmap = null;
             Bundle bundle = data.getExtras();
             bitmap = (Bitmap) bundle.get("data");
             iv_upload_pic.setDefaultImage(bitmap);
@@ -484,6 +510,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     private String uploadToken;//上传token
     private File uploadFile;//上传文件
     private String sha1;//上传文件sha1
+    private Bitmap bitmap;//bitmap
 
     /**
      * 校检sha1

@@ -41,6 +41,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
@@ -168,10 +169,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         btn_after_sale.hide();
     }
 
-    private String setSmallImageUrl(String str) {
-        return str.substring(0, str.length() - 4) + "_120x120" + str.substring(str.length() - 4);
-    }
-
     /**
      * 获取用户信息
      */
@@ -192,7 +189,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             return;
                         }
                         mImg = result.getHead_img();
-                        iv_user_icon.setImageURL(setSmallImageUrl(result.getHead_img()), true);
+                        iv_user_icon.setImageURL(ImageUtils.getImageSizeUrl(result.getHead_img(), ImageUtils.ImageSizeURL.SIZE_120x120), true);
                         if (TextUtils.isEmpty(mImg)) {
                             setDefaultBlur();
                             return;
@@ -278,7 +275,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         tv_user_nickname.setText("葡星人");
     }
 
-    @OnClick({R.id.iv_setting,R.id.iv_capture, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
+    @OnClick({R.id.iv_setting, R.id.iv_capture, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
             , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale, R.id.si_participation, R.id.si_collection})
     @Override
     public void onClick(View v) {
@@ -289,7 +286,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         }
         switch (v.getId()) {
             case R.id.iv_capture://扫一扫
-                YouMengHelper.onEvent(mActivity,YouMengHelper.UserHome_cell_item,"扫一扫");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "扫一扫");
                 startActivity(CaptureActivity.class);
                 break;
             case R.id.iv_setting:

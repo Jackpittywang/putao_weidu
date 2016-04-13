@@ -223,6 +223,11 @@
                     auto:setting_indicator_color="@color/text_main_color_nor"
                     auto:setting_text="@string/message" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_color" />
+
                 <com.sunnybear.library.view.SettingItem
                     android:id="@+id/si_question"
                     style="@style/style_setting"
@@ -242,6 +247,7 @@
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:src="@drawable/btn_20_scan_w_selector" />
+
     <ImageView
         android:id="@+id/iv_setting"
         android:layout_width="32dp"

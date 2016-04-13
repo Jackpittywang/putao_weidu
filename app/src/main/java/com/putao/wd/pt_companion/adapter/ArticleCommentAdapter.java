@@ -64,7 +64,7 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
             holder.tv_username.setText(comment.getNick_name());
 
         if (!StringUtils.isEmpty(comment.getRelease_time()))
-            holder.tv_comment_time.setText(DateUtils.timeCalculate(Long.parseLong(comment.getRelease_time())));
+            holder.tv_comment_time.setText(DateUtils.timeCalculate(Integer.parseInt(comment.getRelease_time())));
 
         if (comment.getCount_likes() != 0) {
             holder.tv_count_cool.setText(comment.getCount_likes() + "");

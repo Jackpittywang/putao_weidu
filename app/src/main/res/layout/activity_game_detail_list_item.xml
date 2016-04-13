@@ -33,6 +33,7 @@
             android:layout_margin="10dp"
             android:background="@color/color_EBEBEB"
             android:clickable="false"
+            auto:placeholderImage="@drawable/img_image_default_m"
             auto:aspect_ratio="2" />
         <!--活动状态-->
         <TextView

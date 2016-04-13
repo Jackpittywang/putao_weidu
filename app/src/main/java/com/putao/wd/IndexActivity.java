@@ -177,7 +177,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
     @Subcriber(tag = RedDotReceiver.ME_TABBAR)
     private void setMeDot(String me_tabbar) {
-        ti_index_companion.show(-1);
+        ti_index_me.show(-1);
         mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), me_tabbar);
     }
 
