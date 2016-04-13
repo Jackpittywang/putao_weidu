@@ -110,7 +110,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
 
     public void setCollectState(boolean isCollect) {
         if (isCollect) {
-            tv_collection.setText("已收藏");
+            tv_collection.setText("取消收藏");
             iv_collection.setImageResource(R.drawable.icon_40_14);
 
         } else {
