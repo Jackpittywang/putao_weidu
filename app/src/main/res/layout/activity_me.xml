@@ -235,6 +235,14 @@
     </com.sunnybear.library.view.scroll.SupportScrollView>
 
     <ImageView
+        android:id="@+id/iv_capture"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:src="@drawable/btn_20_scan_w_selector" />
+    <ImageView
         android:id="@+id/iv_setting"
         android:layout_width="32dp"
         android:layout_height="32dp"
