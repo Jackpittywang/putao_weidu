@@ -336,7 +336,7 @@ public class CompanionApi {
     public static Request cancelService(String service_id) {
         return PTWDRequestHelper.find()
                 .addParam(REQUEST_SERVICE_ID, service_id)
-                .build(RequestMethod.GET, URL_COMPANY_SERVICE_BINDDEL);
+                .build(RequestMethod.POST, URL_COMPANY_SERVICE_BINDDEL);
     }
 
     /**

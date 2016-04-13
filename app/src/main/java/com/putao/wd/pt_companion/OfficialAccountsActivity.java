@@ -20,9 +20,11 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Companion;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.PreferenceUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
 import org.w3c.dom.Text;
@@ -111,10 +113,28 @@ public class OfficialAccountsActivity extends PTWDActivity {
      * 取消绑定服务号
      */
     private void cancelServicce(String service_id) {
-        networkRequest(CompanionApi.cancelService(service_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+        networkRequest(CompanionApi.cancelService(service_id), new JSONObjectCallback() {
             @Override
-            public void onSuccess(String url, String result) {
-                checkInquiryBind(AccountHelper.getCurrentUid());
+            public void onSuccess(String url, JSONObject result) {
+                int http_code = result.getInteger("http_code");
+                String msg = result.getString("msg");
+                if (http_code != 200) {
+                    ToastUtils.showToastShort(mContext, msg);
+                    mDialog.dismiss();
+                    loading.dismiss();
+                } else {
+                    checkInquiryBind(AccountHelper.getCurrentUid());
+                }
+            }
+
+            @Override
+            public void onCacheSuccess(String url, JSONObject result) {
+
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+
             }
         });
     }
