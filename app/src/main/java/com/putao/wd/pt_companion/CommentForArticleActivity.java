@@ -558,7 +558,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         public void handleMessage(Message msg) {
             Bundle bundle = (Bundle) msg.obj;
             //发送评论
-            sendCommentMsg(bundle.getString("filename") + "." + bundle.getString("filename"));
+            sendCommentMsg(bundle.getString("filename") + "." + bundle.getString("ext"));
         }
     };
 
