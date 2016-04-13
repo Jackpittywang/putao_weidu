@@ -234,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/distance_8dp"
-                android:text="还没有绑定设备" />
+                android:text="还没有关联设备" />
 
         </LinearLayout>
 

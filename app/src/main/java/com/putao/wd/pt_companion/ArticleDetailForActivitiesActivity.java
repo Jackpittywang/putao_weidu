@@ -317,13 +317,13 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
             case R.id.sb_cool_icon:
                 //使用EventBus提交点赞
                 networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),
-                        new SimpleFastJsonCallback<String>(String.class, loading) {
-                            @Override
-                            public void onSuccess(String url, String result) {
-                                mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
-                                EventBusHelper.post(true, EVENT_COUNT_COOL);
-                            }
-                        });
+                    new SimpleFastJsonCallback<String>(String.class, loading) {
+                        @Override
+                        public void onSuccess(String url, String result) {
+                            mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
+                            EventBusHelper.post(true, EVENT_COUNT_COOL);
+                        }
+                    });
                 break;
         }
 
