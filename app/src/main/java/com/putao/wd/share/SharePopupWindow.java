@@ -29,22 +29,38 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         this.isCopy = isCopy;
         mOnShareClickListener = onShareClickListener;
         LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_second);
+        LinearLayout ll_qq_zone = (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
+        LinearLayout ll_share = (LinearLayout) mRootView.findViewById(R.id.ll_share);
         TextView tv_qq_zone = (TextView) mRootView.findViewById(R.id.tv_qq_zone);
         ImageView iv_qq_zone = (ImageView) mRootView.findViewById(R.id.iv_qq_zone);
+        TextView tv_qq = (TextView) mRootView.findViewById(R.id.tv_qq);
+        ImageView iv_qq = (ImageView) mRootView.findViewById(R.id.iv_qq);
         tv_collection = (TextView) mRootView.findViewById(R.id.tv_collection);
         iv_collection = (ImageView) mRootView.findViewById(R.id.iv_collection);
         if (!isCopy) {
-            //复制
-            ll_second.setVisibility(View.GONE);
-            //QQ空间
-            tv_qq_zone.setText("新浪微博");
-            iv_qq_zone.setImageResource(R.drawable.icon_40_05);
+            ll_qq_zone.setVisibility(View.GONE);
+            ll_share.setVisibility(View.INVISIBLE);
+            iv_collection.setImageResource(R.drawable.icon_40_03);
+            tv_collection.setText("QQ好友");
+            iv_qq.setImageResource(R.drawable.icon_40_04);
+            tv_qq.setText("QQ空间");
+//            //复制
+//            ll_second.setVisibility(View.GONE);
+//            //QQ空间
+//            tv_qq_zone.setText("新浪微博");
+//            iv_qq_zone.setImageResource(R.drawable.icon_40_05);
         } else {
             //复制
-            ll_second.setVisibility(View.VISIBLE);
-            //QQ空间
-            tv_qq_zone.setText("QQ空间");
-            iv_qq_zone.setImageResource(R.drawable.icon_40_04);
+//            ll_second.setVisibility(View.VISIBLE);
+//            //QQ空间
+//            tv_qq_zone.setText("QQ空间");
+//            iv_qq_zone.setImageResource(R.drawable.icon_40_04);
+            ll_qq_zone.setVisibility(View.VISIBLE);
+            ll_share.setVisibility(View.GONE);
+            tv_collection.setText("收藏");
+            iv_collection.setImageResource(R.drawable.icon_40_13);
+            iv_qq.setImageResource(R.drawable.icon_40_03);
+            tv_qq.setText("QQ好友");
         }
     }
 
@@ -79,10 +95,17 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     mOnShareClickListener.onWechatFriend();
                     break;
                 case R.id.ll_collection://收藏
-                    mOnShareClickListener.onCollection();
+                    if (isCopy) {
+                        mOnShareClickListener.onCollection();
+                    } else {
+                        mOnShareClickListener.onQQFriend();
+                    }
                     break;
                 case R.id.ll_qq_friend://QQ好友
-                    mOnShareClickListener.onQQFriend();
+                    if (isCopy)
+                        mOnShareClickListener.onQQFriend();
+                    else
+                        mOnShareClickListener.onQQZone();
                     break;
                 case R.id.ll_qq_zone://QQ空间
                     if (isCopy) {
