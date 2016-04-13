@@ -157,7 +157,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             String service_id = jsonObject.getString(RedDotReceiver.SERVICE_ID);
             String id = jsonObject.getString(RedDotReceiver.ID);
             for (Companion companion : mCompanion) {
-                if (service_id == companion.getService_id()) {
+                if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
                     notDownloadIds.add(id);
                     companion.setNotDownloadIds(notDownloadIds);

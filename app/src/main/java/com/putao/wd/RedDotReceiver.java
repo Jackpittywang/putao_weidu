@@ -51,9 +51,9 @@ public class RedDotReceiver extends PTMessageReceiver {
     }
 
     private void setResult(String result) {
-        Pattern p1 = Pattern.compile("\\{(.+?)\\]\\}");
-      Matcher m1 = p1.matcher(result);
-        if (/*m1.find()*/true) {
+        Pattern p1 = Pattern.compile("\\{.+?\\]\\}");
+        Matcher m1 = p1.matcher(result);
+        if (m1.find()) {
             JSONObject object = JSONObject.parseObject(m1.group(0));
             JSONObject messageCenter = object.getJSONObject(MESSAGECENTER);
             if (null != messageCenter) {

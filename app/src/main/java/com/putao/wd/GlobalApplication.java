@@ -21,6 +21,7 @@ import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -181,8 +182,8 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected boolean isDebug() {
-        return true;
-//        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+//        return true;
+        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override
