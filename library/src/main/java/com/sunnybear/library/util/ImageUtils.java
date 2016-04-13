@@ -332,4 +332,67 @@ public final class ImageUtils {
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
+
+    public static boolean isImage(String url) {
+        if (StringUtils.isEmpty(url)) return false;
+        if (url.equalsIgnoreCase(".jpg") || url.equalsIgnoreCase(".png") || url.equalsIgnoreCase(".gif") || url.equalsIgnoreCase(".JPEG") || url.equalsIgnoreCase(".bmp"))
+            return true;
+        else return false;
+    }
+
+    public static String getImageSizeUrl(String url, ImageSizeURL type) {
+        if (isImage(url)) return "";
+        else {
+            String[] str = url.split(".");
+            if (str.length == 2) {
+                String font = str[0];
+                String ext = str[1];
+                switch (type) {
+                    case SIZE__1200X400:
+                        font += "__1200X400";
+                        break;
+                    case SIZE_1200x750:
+                        font += "_1200x750";
+                        break;
+                    case SIZE_1200x600:
+                        font += "_1200x600";
+                        break;
+                    case SIZE_240x240:
+                        font += "_240x240";
+                        break;
+                    case SIZE_360x360:
+                        font += "_360x360";
+                        break;
+                    case SIZE_180x180:
+                        font += "_180x180";
+                        break;
+                    case SIZE_1200x1200:
+                        font += "_1200x1200";
+                        break;
+                    case SIZE_120x120:
+                        font += "_120x120";
+                        break;
+                    case SIZE_150x150:
+                        font += "_150x150";
+                        break;
+                    case SIZE_192x192:
+                        font += "_192x192";
+                        break;
+                    case SIZE_96x96:
+                        font += "_96x96";
+                        break;
+                    case SIZE_250x0:
+                        font += "_250x0";
+                        break;
+                }
+                return font + "." + ext;
+            }
+        }
+        return "";
+    }
+
+    public enum ImageSizeURL {
+        SIZE__1200X400, SIZE_1200x750, SIZE_1200x600, SIZE_240x240, SIZE_360x360, SIZE_180x180, SIZE_1200x1200, SIZE_120x120, SIZE_150x150, SIZE_192x192, SIZE_96x96, SIZE_250x0
+    }
+
 }

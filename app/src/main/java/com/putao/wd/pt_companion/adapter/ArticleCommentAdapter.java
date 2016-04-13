@@ -3,6 +3,7 @@ package com.putao.wd.pt_companion.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.putao.wd.model.ArticleDetailComment;
 import com.putao.wd.model.Comment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
@@ -79,7 +81,7 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
             holder.tv_count_comment.setText("评论");
         else
             holder.tv_count_comment.setText(comment.getComment_count() + "");
-        
+
         holder.rl_cool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,10 +105,17 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
         });
 
         if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
-            holder.iv_comment_pic.setImageURL(comment.getPics().get(0));
-            holder.iv_comment_pic.setVisibility(View.VISIBLE);
-        } else
+            String pic = ImageUtils.getImageSizeUrl(comment.getPics().get(0), ImageUtils.ImageSizeURL.SIZE_240x240);
+            System.out.println("------------------" + pic);
+            if (!StringUtils.isEmpty(pic)) {
+                holder.iv_comment_pic.setImageURL(pic);
+                holder.iv_comment_pic.setVisibility(View.VISIBLE);
+            } else {
+                holder.iv_comment_pic.setVisibility(View.GONE);
+            }
+        } else {
             holder.iv_comment_pic.setVisibility(View.GONE);
+        }
     }
 
     static class CommentViewHolder extends BasicViewHolder {

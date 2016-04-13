@@ -14,6 +14,7 @@ import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
@@ -70,9 +71,9 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         if (index == 0) {
             HeaderHolder holder = (HeaderHolder) basicHolder;
             if (!StringUtils.isEmpty(headerInfo.getPic()))
-                holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
+            holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
             else
-                holder.iv_articlesdetail_header.setVisibility(View.GONE);
+            holder.iv_articlesdetail_header.setVisibility(View.GONE);
             holder.tv_articlesdetail_resume.setText(headerInfo.getContent());
             holder.tv_amount_comment.setText(headerInfo.getCount_comments() + "   条评论");
             holder.tv_praise_count.setText(headerInfo.getCount_likes() + "");

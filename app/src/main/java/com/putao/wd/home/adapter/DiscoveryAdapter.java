@@ -53,8 +53,6 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         } else {
             holder.iv_player.setVisibility(View.GONE);
         }
-        holder.tv_style.setText(disCoveries.getTag());
-        holder.tv_time.setText(disCoveries.getTime());
     }
 
     /**
@@ -68,10 +66,6 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         ImageView iv_player;
         @Bind(R.id.tv_title)
         TextView tv_title;
-        @Bind(R.id.tv_style)
-        TextView tv_style;
-        @Bind(R.id.tv_time)
-        TextView tv_time;
 
         public DiscoveryViewHolder(View itemView) {
             super(itemView);
