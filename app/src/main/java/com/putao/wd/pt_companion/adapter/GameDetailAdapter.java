@@ -46,7 +46,7 @@ public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameD
         String date = "";
         if (serviceMessageList.isShowData()) {
             try {
-                date = DateUtils.getSecondsToDate(serviceMessageList.getRelease_time());
+                date = DateUtils.getSecondsToDate(serviceMessageContent.getRelease_time());
             } catch (ParseException e) {
                 e.printStackTrace();
             }

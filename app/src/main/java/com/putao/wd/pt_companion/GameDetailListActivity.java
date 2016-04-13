@@ -124,6 +124,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 serviceMessageList.setType(companionDB.getType());
                 serviceMessageList.setIsShowData(true);
                 serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
+                serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
                 lists.add(serviceMessageList);
             }
             mGameDetailAdapter.replaceAll(setIsSameDate(lists));
@@ -270,7 +271,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         super.onRightAction();
         Bundle bundle = new Bundle();
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, mCompanion);
-        startActivity(OfficialAccountsActivity.class,bundle);
+        startActivity(OfficialAccountsActivity.class, bundle);
     }
 
 
