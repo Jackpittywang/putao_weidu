@@ -358,6 +358,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
      */
     private void toLoginActivity(View v, Bundle bundle) {
         switch (v.getId()) {
+            case R.id.iv_capture:
+                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
+                break;
             case R.id.iv_setting:
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, SettingActivity.class);
                 break;
