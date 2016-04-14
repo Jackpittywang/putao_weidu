@@ -76,21 +76,16 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
         rv_discovery.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                networkRequest(DisCoveryApi.getfindVideo(currentPage),
+                networkRequest(DisCoveryApi.getfindVideo(String.valueOf(currentPage)),
                         new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
 
                             @Override
                             public void onSuccess(String url, ArrayList<DisCovery> result) {
                                 if (result != null && result.size() > 0) {
                                     disCoveries = result;
-                                    rl_no_discovery.setVisibility(View.GONE);
-                                    rv_discovery.setVisibility(View.VISIBLE);
-                                    adapter.replaceAll(result);
-                                    rv_discovery.loadMoreComplete();
-                                } else {
-                                    rl_no_discovery.setVisibility(View.VISIBLE);
-                                    rv_discovery.setVisibility(View.GONE);
+                                    adapter.addAll(result);
                                 }
+                                rv_discovery.loadMoreComplete();
                                 checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
@@ -105,7 +100,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
      */
     private void getDisCovery() {
         currentPage = 1;
-        networkRequestCache(DisCoveryApi.getfindVideo(currentPage),
+        networkRequestCache(DisCoveryApi.getfindVideo(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
 
                     @Override
@@ -113,14 +108,12 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                         cacheData(url, result);
                         if (result != null && result.size() > 0) {
                             disCoveries = result;
-                            cacheData(url, result);
                             rl_no_discovery.setVisibility(View.GONE);
                             rv_discovery.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
                         } else {
                             rl_no_discovery.setVisibility(View.VISIBLE);
-
-                            rv_discovery.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
                         checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
