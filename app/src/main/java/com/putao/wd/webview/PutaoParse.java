@@ -15,7 +15,7 @@ import com.putao.wd.start.browse.PictrueBrowseActivity;
 public class PutaoParse {
     // 开新的webview
     // putao://openWebview/{'title':'xxx', 'url':'xxx'}
-    public static String OPEN_WEBVIEW = "openWebview";
+    public static String OPEN_WEBVIEW = "openWebView";
     // 打开画廊显示一组图片
     // putao://viewPic/{'title':'xxx','clickIndex':'0','picList':[{'src':'1111.jpg', 'text':'xxxx'},{'src':'222.jpg','text':'xxxx'},{'src':'3333.png', 'text':'xxxx'}}
     public static String VIEW_PIC = "viewPic";

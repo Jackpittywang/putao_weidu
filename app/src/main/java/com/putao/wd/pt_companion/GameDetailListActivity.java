@@ -327,6 +327,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     Intent intent = new Intent(mContext, BaseWebViewActivity.class);
                     intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
                     intent.putExtra(BaseWebViewActivity.URL, menu.getUrl());
+                    intent.putExtra(BaseWebViewActivity.SERVICE_ID, mCompanion.getService_id());
                     startActivity(intent);
                 } else if (ServiceMenu.TYPE_CLICK.equals(menu.getType())) {
                     //TODO

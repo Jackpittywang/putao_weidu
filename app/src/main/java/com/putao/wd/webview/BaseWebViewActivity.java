@@ -1,8 +1,10 @@
 package com.putao.wd.webview;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -13,6 +15,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.start.putaozi.CommonQuestionActivity;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.BasicWebView;
@@ -27,6 +30,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
 
     public static final String URL = "url";
     public static final String TITLE = "title";
+    public static final String SERVICE_ID = "service_id";
 
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
@@ -43,11 +47,32 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         String title = args.getString(TITLE);
+        String serviceId = args.getString(SERVICE_ID);
         if (StringUtils.isEmpty(title)) title = "葡萄纬度";
         setMainTitle(title);
         String url = args.getString(URL);
+//        wv_content.requestFocusFromTouch();
+//        WebSettings setting = wv_content.getSettings();
+//        setting.setJavaScriptEnabled(true);
+//        wv_content.requestFocus();
+//        wv_content.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                    case MotionEvent.ACTION_UP:
+//                        if (!v.hasFocus()) {
+//                            v.requestFocus();
+//                        }
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+
         wv_content.setOnWebViewLoadUrlCallback(this);
-        url = getInAppUrl(url);
+        url = getInAppUrl(url, serviceId);
         wv_content.loadUrl(url);
 
         wv_content.setWebChromeClient(new WebChromeClient() {
@@ -90,13 +115,15 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> impleme
      * @param url
      * @return
      */
-    public static String getInAppUrl(String url) {
+    public static String getInAppUrl(String url, String serviceId) {
         if (StringUtils.isEmpty(url)) return "";
         if (url.contains("inapp=")) return url;
         if (url.contains("?")) url = url + "&inapp=1";
         else url = url + "?inapp=1";
         url = url + "&token=" + AccountHelper.getCurrentUid();
         url = url + "&uid=" + AccountHelper.getCurrentToken();
+        url = url + "&service_id=" + serviceId;
+        url = url + "&device_id=" + AppUtils.getDeviceId(GlobalApplication.getInstance());
         return url;
     }
 
