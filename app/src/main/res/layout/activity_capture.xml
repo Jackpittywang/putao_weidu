@@ -111,7 +111,7 @@
         android:drawableLeft="@drawable/icon_16_05"
         android:drawablePadding="5dp"
         android:padding="8dp"
-        android:text="每个APP产品的二维码都需要关注吗?"
+        android:text="每个APP产品的二维码都需要关联吗?"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_18sp" />
 
