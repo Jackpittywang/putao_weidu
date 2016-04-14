@@ -1,7 +1,9 @@
 package com.putao.wd.pt_companion.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
+import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.ImageUtils;
@@ -71,9 +74,9 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
         if (index == 0) {
             HeaderHolder holder = (HeaderHolder) basicHolder;
             if (!StringUtils.isEmpty(headerInfo.getPic()))
-            holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
+                holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
             else
-            holder.iv_articlesdetail_header.setVisibility(View.GONE);
+                holder.iv_articlesdetail_header.setVisibility(View.GONE);
             holder.tv_articlesdetail_resume.setText(headerInfo.getContent());
             holder.tv_amount_comment.setText(headerInfo.getCount_comments() + "   条评论");
             holder.tv_praise_count.setText(headerInfo.getCount_likes() + "");
@@ -95,6 +98,17 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
                 public void onClick(View v) {
                     if (!headerInfo.getIs_like())
                         EventBusHelper.post("", EVENT_COMMIT_COOL);
+                }
+            });
+            /**
+             * 点击跳转放大图片
+             * */
+            holder.iv_articlesdetail_header.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PictrueBrowseActivity.class);
+                    intent.putExtra(PictrueBrowseActivity.IMAGE_URL, headerInfo.getPic());
+                    mContext.startActivity(intent);
                 }
             });
         } else {
@@ -122,6 +136,8 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
 
 
         }
+
+
     }
 
     @Override
