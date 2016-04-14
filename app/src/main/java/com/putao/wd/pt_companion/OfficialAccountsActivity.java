@@ -154,9 +154,9 @@ public class OfficialAccountsActivity extends PTWDActivity {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         System.out.println("======================" + is_relation);
                         if (!is_relation) {//未关联
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, false);
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false);
                         } else {//已关联
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                         }
                         EventBusHelper.post(EVENT_OFFICIAL_URL, EVENT_OFFICIAL_URL);
                         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);

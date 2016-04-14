@@ -211,7 +211,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                     }
 
                     @Override

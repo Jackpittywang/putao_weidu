@@ -91,7 +91,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                                 checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
-                        });
+                        }, false);
             }
         });
         rv_discovery.setOnItemClickListener(this);
@@ -111,6 +111,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
                         cacheData(url, result);
                         if (result != null && result.size() > 0) {
                             disCoveries = result;
+                            cacheData(url, result);
                             rl_no_discovery.setVisibility(View.GONE);
                             rv_discovery.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);

@@ -144,9 +144,11 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
-                        mCollection = result;
-                        adapter.addAll(result);
-                        checkLoadMoreComplete(result);
+                        if (null != result) {
+                            mCollection = result;
+                            adapter.addAll(result);
+                            checkLoadMoreComplete(result);
+                        }
                         loading.dismiss();
                     }
                 });

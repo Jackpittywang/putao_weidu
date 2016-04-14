@@ -59,7 +59,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void checkDevice() {
-        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND, false) && AccountHelper.isLogin()) {
+        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) && AccountHelper.isLogin()) {
             ll_companion_empty.setVisibility(View.GONE);
             navigation_bar.setVisibility(View.VISIBLE);
             ptl_refresh.setVisibility(View.VISIBLE);
@@ -76,11 +76,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void initData() {
-        networkRequest(CompanionApi.getServiceUserRelation(),
+        networkRequestCache(CompanionApi.getServiceUserRelation(),
                 new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Companion> result) {
                         mCompanion = result;
+                        cacheData(url, result);
                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                         for (Companion companion : result) {
                             ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
@@ -95,7 +96,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                     }
-                }, false);
+                }, 60 * 1000);
     }
 
     @Override

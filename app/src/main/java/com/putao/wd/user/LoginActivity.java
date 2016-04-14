@@ -139,7 +139,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                     @Override
                                     public void onFinish(String url, boolean isSuccess, String msg) {
                                         super.onFinish(url, isSuccess, msg);
-                                        loading.dismiss();
                                         btn_login.setClickable(true);
                                     }
                                 });
@@ -172,7 +171,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
                         }
-                        loading.dismiss();
                     }
 
                     @Override
@@ -194,8 +192,9 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        loading.dismiss();
                         finish();
                     }
                 });
