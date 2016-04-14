@@ -117,6 +117,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                             adapter.replaceAll(result);
                         } else {
                             rl_no_discovery.setVisibility(View.VISIBLE);
+
                             rv_discovery.setVisibility(View.GONE);
                         }
                         checkLoadMoreComplete(result);
@@ -128,7 +129,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         rl_no_discovery.setVisibility(View.VISIBLE);
-                        rv_discovery.setVisibility(View.GONE);
+                        ptl_refresh.setVisibility(View.GONE);
                         ptl_refresh.refreshComplete();
                     }
                 }, 60 * 1000);

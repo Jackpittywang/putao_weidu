@@ -37,7 +37,8 @@
         android:id="@+id/rl_no_discovery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_EBEBEB">
+        android:background="@color/color_EBEBEB"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/img_no_data"
