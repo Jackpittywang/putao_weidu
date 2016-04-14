@@ -70,6 +70,7 @@ public class OfficialAccountsActivity extends PTWDActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+        if(companion == null) return;
         setMainTitle(companion.getService_name());
         tv_official_title.setText(companion.getService_name());
         iv_icon.setImageURL(companion.getService_icon());
