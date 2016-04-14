@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.util.HashMap;
@@ -122,7 +123,7 @@ public class ShareTools {
             params = new WechatFavorite.ShareParams();
         params.title = title;
         params.text = text;
-        params.imageUrl = imageUrl;
+        params.imageUrl = ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
         params.url = url;
         params.setShareType(Platform.SHARE_WEBPAGE);
 
@@ -143,7 +144,7 @@ public class ShareTools {
         QQ.ShareParams params = new QQ.ShareParams();
         params.title = title;
         params.text = text;
-        params.imageUrl = imageUrl;
+        params.imageUrl = ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
         params.titleUrl = url;
         params.setShareType(Platform.SHARE_TEXT);
 

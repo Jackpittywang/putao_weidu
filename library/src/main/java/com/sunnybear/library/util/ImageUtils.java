@@ -349,40 +349,40 @@ public final class ImageUtils {
             String font = url.substring(0, i);
             switch (type) {
                 case SIZE__1200X400:
-                    font += "_1200X400";
+                    font += "_1200x400";
                     break;
                 case SIZE_1200x750:
-                    font += "_1200X750";
+                    font += "_1200x750";
                     break;
                 case SIZE_1200x600:
-                    font += "_1200X600";
+                    font += "_1200x600";
                     break;
                 case SIZE_240x240:
-                    font += "_240X240";
+                    font += "_240x240";
                     break;
                 case SIZE_360x360:
-                    font += "_360X360";
+                    font += "_360x360";
                     break;
                 case SIZE_180x180:
-                    font += "_180X180";
+                    font += "_180x180";
                     break;
                 case SIZE_1200x1200:
-                    font += "_1200X1200";
+                    font += "_1200x1200";
                     break;
                 case SIZE_120x120:
-                    font += "_120X120";
+                    font += "_120x120";
                     break;
                 case SIZE_150x150:
-                    font += "_150X150";
+                    font += "_150x150";
                     break;
                 case SIZE_192x192:
-                    font += "_192X192";
+                    font += "_192x192";
                     break;
                 case SIZE_96x96:
-                    font += "_96X96";
+                    font += "_96x96";
                     break;
                 case SIZE_250x0:
-                    font += "_250X0";
+                    font += "_250x0";
                     break;
             }
             return font + url.substring(i, url.length());
