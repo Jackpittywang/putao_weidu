@@ -103,7 +103,7 @@ public class BottomPanelUtil {
             itemView.setText(functionNames[i]);
             itemView.setGravity(Gravity.CENTER);
             itemView.setTextSize(16);
-            itemView.setTextColor(Color.parseColor("#000000"));
+            itemView.setTextColor(Color.parseColor("#6666CC"));
             final FunctionPanelCallBack callBack = callbacks[i];
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
