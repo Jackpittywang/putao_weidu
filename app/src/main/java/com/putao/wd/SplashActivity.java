@@ -81,6 +81,7 @@ public class SplashActivity extends BasicFragmentActivity {
                             checkNotify();
                             startActivity(IndexActivity.class);
                         }
+                        finish();
                     }
                 }).execute();
 //        else
