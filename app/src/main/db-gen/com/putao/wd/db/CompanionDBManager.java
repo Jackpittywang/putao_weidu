@@ -1,7 +1,6 @@
 package com.putao.wd.db;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.CompanionDB;
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.query.DeleteQuery;
 
 /**
  * 城市操作
@@ -108,6 +108,8 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 删除订阅号的内容
      */
     public void deleteContent() {
-        rawQuery("delete from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '1'");
+        DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("1")).buildDelete();
+        companionDBDeleteQuery.executeDeleteWithoutDetachingEntities();
+//        rawQuery("delete from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '0'");
     }
 }

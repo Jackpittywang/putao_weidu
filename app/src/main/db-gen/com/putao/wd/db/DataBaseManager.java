@@ -237,6 +237,7 @@ public abstract class DataBaseManager<Entity extends DBEntity, Key extends Seria
     public Cursor rawQuery(String sql) {
         Cursor cursor = null;
         try {
+            openWritableDB();
             cursor = daoSession.getDatabase().rawQuery(sql, null);
         } catch (Exception e) {
             e.printStackTrace();
