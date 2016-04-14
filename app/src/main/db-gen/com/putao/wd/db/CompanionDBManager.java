@@ -108,6 +108,6 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 删除订阅号的内容
      */
     public void deleteContent() {
-        rawQuery("delete * from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '1'");
+        rawQuery("delete from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '1'");
     }
 }

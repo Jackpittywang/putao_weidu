@@ -230,11 +230,18 @@ public abstract class DataBaseManager<Entity extends DBEntity, Key extends Seria
 
     /**
      * 传入sql语句直接query
+     *
      * @param sql
      * @return
      */
-    public Cursor rawQuery(String sql){
-       return daoSession.getDatabase().rawQuery(sql, null);
+    public Cursor rawQuery(String sql) {
+        Cursor cursor = null;
+        try {
+            cursor = daoSession.getDatabase().rawQuery(sql, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cursor;
     }
 
     @Override
