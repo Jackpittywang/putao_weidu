@@ -156,6 +156,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             setDefaultBlur();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
             getOrderCount();
+            getUserInfo();
         }
     }
 
