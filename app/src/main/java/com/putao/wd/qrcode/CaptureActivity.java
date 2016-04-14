@@ -72,6 +72,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     private Rect mCropRect = null;
     private boolean barcodeScanned = false;
     private boolean previewing = true;
+    private boolean isRequesting = false;
 
     private Camera.PreviewCallback previewCb = new Camera.PreviewCallback() {
         public void onPreviewFrame(byte[] data, Camera camera) {
@@ -92,11 +93,14 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
             String result = zBarDecoder
                     .decodeCrop(rotatedData, size.width, size.height, mCropRect.left, mCropRect.top, mCropRect.width(), mCropRect.height());
             if (!TextUtils.isEmpty(result)) {
-                previewing = false;
-                mCamera.setPreviewCallback(null);
-                mCamera.stopPreview();
-                processor(result);//处理结果
-                barcodeScanned = true;
+                barcodeScanned = processor(result);//处理结果
+//                if(barcodeScanned) {
+//                    previewing = false;
+//                    mCamera.setPreviewCallback(null);
+//                    mCamera.stopPreview();
+//
+//                }
+                // barcodeScanned = true;
             }
         }
     };
@@ -272,23 +276,25 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
      *
      * @param result 扫描结果
      */
-    private void processor(String result) {
-        Logger.d(result);
+    private boolean processor(String result) {
+        if (isRequesting == true) return false;
+        // Logger.d(result);
 //        result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
         String scheme = null;
         try {
             scheme = ScanUrlParseUtils.getScheme(result);
         } catch (Exception e) {
             e.printStackTrace();
-            ToastUtils.showToastShort(mContext, "请扫描葡萄产品的二维码");
-            finish();
-            return;
+            showErrorInfo();
+            // finish();
+            return false;
         }
-        Logger.d("scheme:" + scheme);
+        // Logger.d("scheme:" + scheme);
         switch (scheme) {
             case ScanUrlParseUtils.Scheme.PUTAO_LOGIN://扫描登录
                 String url = ScanUrlParseUtils.getRequestUrl(result);
                 Logger.d("url:" + url);
+                isRequesting = true;
                 networkRequest(ScanApi.scanLogin(url), new JSONObjectCallback() {
                     @Override
                     public void onSuccess(String url, JSONObject result) {
@@ -300,6 +306,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                         } else {
                             ToastUtils.showToastLong(mContext, "登录失败");
                         }
+                        isRequesting = false;
                         loading.dismiss();
                         finish();
                     }
@@ -313,6 +320,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
                         finish();
+                        isRequesting = false;
                     }
                 });
                 break;
@@ -320,6 +328,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 //
                 String deviceUrl = ScanUrlParseUtils.getDeviceRequestUrl(result);
                 Logger.d("proUrl:" + deviceUrl);
+                isRequesting = true;
                 networkRequest(ExploreApi.addDevice(deviceUrl), new JSONObjectCallback() {
                     @Override
                     public void onSuccess(String url, JSONObject result) {
@@ -335,7 +344,9 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                         else
                             ToastUtils.showToastLong(mContext, "绑定失败");
                         loading.dismiss();
+                        isRequesting = false;
                         finish();
+
                     }
 
                     @Override
@@ -347,6 +358,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
                         ToastUtils.showToastShort(mContext, msg);
+                        isRequesting = false;
                         finish();
                     }
                 });
@@ -358,11 +370,10 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 final String serverId = ScanUrlParseUtils.getSingleParams(result, "s");
                 String code = ScanUrlParseUtils.getSingleParams(result, "code");
                 if (StringUtils.isEmpty(serverId) || StringUtils.isEmpty(code)) {
-                    ToastUtils.showToastLong(mContext, "异常二维码");
-                    finish();
-                    return;
+                    showErrorInfo();
+                    return false;
                 }
-
+                isRequesting = true;
                 networkRequest(CompanionApi.bindService(serverId, code), new JSONObjectCallback() {
                     @Override
                     public void onSuccess(String url, JSONObject result) {
@@ -376,8 +387,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
                                     dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
                                 }
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
 
                             }
 
@@ -386,19 +396,22 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                             Bundle bundle = new Bundle();
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
                             startActivity(GameDetailListActivity.class, bundle);
-                            ToastUtils.showToastLong(mContext, "添加成功");
+                            ToastUtils.showToastShort(mContext, "添加成功");
+
                         } else if (http_code == 4201)
-                            ToastUtils.showToastLong(mContext, "重复绑定");
+                            ToastUtils.showToastShort(mContext, "重复绑定");
                         else if (http_code == 4200)
-                            ToastUtils.showToastLong(mContext, "二维码已过期");
+                            ToastUtils.showToastShort(mContext, "二维码已过期");
                         else {
                             String msg = result.getString("msg");
                             if (msg != null)
-                                ToastUtils.showToastLong(mContext, result.getString("msg"));
-                            else ToastUtils.showToastLong(mContext, "绑定失败");
+                                ToastUtils.showToastShort(mContext, result.getString("msg"));
+                            else ToastUtils.showToastShort(mContext, "绑定失败");
                         }
                         loading.dismiss();
+                        isRequesting = false;
                         finish();
+
                     }
 
                     @Override
@@ -410,15 +423,20 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                     public void onFailure(String url, int statusCode, String msg) {
                         loading.dismiss();
                         ToastUtils.showToastShort(mContext, msg);
-                        finish();
+                        isRequesting = false;
                     }
                 });
                 break;
             default:
-                ToastUtils.showToastShort(mContext, "请扫描葡萄产品的二维码");
-                finish();
-                return;
+                showErrorInfo();
+                return false;
         }
+        return true;
+    }
+
+    private void showErrorInfo(){
+        String scaneErrorInfo = "请扫描葡萄产品的二维码";
+        ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }
 
 //    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
