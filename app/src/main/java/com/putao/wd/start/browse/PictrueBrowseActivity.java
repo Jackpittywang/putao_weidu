@@ -1,5 +1,6 @@
 package com.putao.wd.start.browse;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,29 +9,39 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.model.PicList;
 import com.putao.wd.share.SharePopupWindow;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 /**
  * 图片浏览
  * Created by guchenkai on 2015/12/24.
  */
-public class PictrueBrowseActivity extends PTWDActivity {
+public class PictrueBrowseActivity extends BasicFragmentActivity {
     public static final String IMAGE_URL = "image_url";
 
-    @Bind(R.id.vp_pics)
-    ViewPager vp_pics;
+    //    @Bind(R.id.vp_pics)
+//    ViewPager vp_pics;
+    @Bind(R.id.pv_image)
+    PhotoView pv_image;
+    @Bind(R.id.loading)
+    ProgressBar loading;
 
     private int startNum;
     PicClickResult picClickResult;
@@ -43,73 +54,67 @@ public class PictrueBrowseActivity extends PTWDActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
-        initData();
-        vp_pics.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
-        initView();
-        vp_pics.setPageTransformer(true, new ViewPager.PageTransformer() {
-                    private static final float MIN_SCALE = 0.85f;
-                    private static final float MIN_ALPHA = 0.5f;
-
-                    @Override
-                    public void transformPage(View page, float position) {
-                        int pageWidth = page.getWidth();
-                        int pageHeight = page.getHeight();
-
-                        if (position < -1) {
-                            page.setAlpha(0);
-                        } else if (position <= 1) {
-                            float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
-                            float vertMargin = pageHeight * (1 - scaleFactor) / 2;
-                            float horzMargin = pageWidth * (1 - scaleFactor) / 2;
-                            if (position < 0)
-                                page.setTranslationX(horzMargin - vertMargin / 2);
-                            else
-                                page.setTranslationX(-horzMargin + vertMargin / 2);
-                            page.setScaleX(scaleFactor);
-                            page.setScaleY(scaleFactor);
-                            page.setAlpha(MIN_ALPHA + (scaleFactor - MIN_SCALE)
-                                    / (1 - MIN_SCALE) * (1 - MIN_ALPHA));
-                        } else {
-                            page.setAlpha(0);
-                        }
-                    }
-                }
-        );
-        addListener();
-    }
-
-    private void initView() {
-        setMainTitleColor(Color.WHITE);
-        setMainTitle((startNum + 1) + "/" + mPicList.size());
-        vp_pics.setOffscreenPageLimit(1);
-        vp_pics.setCurrentItem(startNum);
-    }
-
-    private void initData() {
-        picClickResult = (PicClickResult) args.getSerializable(IMAGE_URL);
-        //开始的张数
-        startNum = picClickResult.getClickIndex();
-        mPicList = picClickResult.getPicList();
-    }
-
-    private void addListener() {
-        vp_pics.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                setMainTitle((position + 1) + "/" + mPicList.size());
-            }
+        Bundle bundle = getIntent().getExtras();
+        String mPicUrl = bundle.getString(IMAGE_URL);
+        pv_image.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onViewTap(View view, float v, float v1) {
+                finish();
             }
         });
+        ImageLoader.getInstance().displayImage(String.valueOf(mPicUrl), pv_image, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                super.onLoadingStarted(imageUri, view);
+                loading.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                super.onLoadingFailed(imageUri, view, failReason);
+                loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                loading.setVisibility(View.GONE);
+            }
+        });
+//        initData();
+//        vp_pics.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
+//        initView();
+//        vp_pics.setPageTransformer(true, new ViewPager.PageTransformer() {
+//                    private static final float MIN_SCALE = 0.85f;
+//                    private static final float MIN_ALPHA = 0.5f;
+//
+//                    @Override
+//                    public void transformPage(View page, float position) {
+//                        int pageWidth = page.getWidth();
+//                        int pageHeight = page.getHeight();
+//
+//                        if (position < -1) {
+//                            page.setAlpha(0);
+//                        } else if (position <= 1) {
+//                            float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+//                            float vertMargin = pageHeight * (1 - scaleFactor) / 2;
+//                            float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+//                            if (position < 0)
+//                                page.setTranslationX(horzMargin - vertMargin / 2);
+//                            else
+//                                page.setTranslationX(-horzMargin + vertMargin / 2);
+//                            page.setScaleX(scaleFactor);
+//                            page.setScaleY(scaleFactor);
+//                            page.setAlpha(MIN_ALPHA + (scaleFactor - MIN_SCALE)
+//                                    / (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+//                        } else {
+//                            page.setAlpha(0);
+//                        }
+//                    }
+//                }
+//        );
+//        addListener();
     }
 
     @Override
@@ -117,32 +122,70 @@ public class PictrueBrowseActivity extends PTWDActivity {
         return new String[0];
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ImageLoader.getInstance().clearMemoryCache();
-    }
-
-    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-
-        public MyFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            String imageUrl = mPicList.get(position).getSrc();
-            String isJPG = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
-            Bundle bundle = new Bundle();
-            bundle.putBoolean(PictrueBrowseFragment.IS_GIF, "gif".equals(isJPG));
-            bundle.putString(PictrueBrowseFragment.PIC_URL, imageUrl);
-            return Fragment.instantiate(mContext, PictrueBrowseFragment.class.getName(), bundle);
-        }
-
-        @Override
-        public int getCount() {
-            return mPicList.size();
-        }
-    }
+//    private void initView() {
+//        setMainTitleColor(Color.WHITE);
+//        setMainTitle((startNum + 1) + "/" + mPicList.size());
+//        vp_pics.setOffscreenPageLimit(1);
+//        vp_pics.setCurrentItem(startNum);
+//    }
+//
+//    private void initData() {
+//        picClickResult = (PicClickResult) args.getSerializable(IMAGE_URL);
+//        //开始的张数
+//        startNum = picClickResult.getClickIndex();
+//        mPicList = picClickResult.getPicList();
+//    }
+//
+//    private void addListener() {
+//        vp_pics.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                setMainTitle((position + 1) + "/" + mPicList.size());
+//            }
+//
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//    }
+//
+//    @Override
+//    protected String[] getRequestUrls() {
+//        return new String[0];
+//    }
+//
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        ImageLoader.getInstance().clearMemoryCache();
+//    }
+//
+//    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+//
+//        public MyFragmentPagerAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//            String imageUrl = mPicList.get(position).getSrc();
+//            String isJPG = imageUrl.substring(imageUrl.length() - 3, imageUrl.length());
+//            Bundle bundle = new Bundle();
+//            bundle.putBoolean(PictrueBrowseFragment.IS_GIF, "gif".equals(isJPG));
+//            bundle.putString(PictrueBrowseFragment.PIC_URL, imageUrl);
+//            return Fragment.instantiate(mContext, PictrueBrowseFragment.class.getName(), bundle);
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return mPicList.size();
+//        }
+//    }
 }
