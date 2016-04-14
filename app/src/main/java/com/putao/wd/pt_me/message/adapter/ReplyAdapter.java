@@ -126,7 +126,7 @@ public class ReplyAdapter extends LoadMoreAdapter<Reply, ReplyAdapter.ReplyViewH
         @Bind(R.id.tv_reply_content)
         EmojiTextView tv_reply_content;//回复内容
         @Bind(R.id.tv_replied_content)
-        TextView tv_replied_content;//被回复的内容
+        EmojiTextView tv_replied_content;//被回复的内容
 
         public ReplyViewHolder(View itemView) {
             super(itemView);

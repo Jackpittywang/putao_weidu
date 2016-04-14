@@ -53,7 +53,7 @@
             android:textSize="@dimen/text_size_16sp" />
 
         <!--被回复内容-->
-        <TextView
+        <com.sunnybear.library.view.emoji.EmojiTextView
             android:id="@+id/tv_replied_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
