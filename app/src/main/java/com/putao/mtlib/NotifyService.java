@@ -53,7 +53,7 @@ public class NotifyService extends Service {
 
         mPTSenderManager = PTSenderManager.sharedInstance();
         mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                .setHost(HOST).setPort(PORT).setHeartSecond(1 * 60).build());
+                .setHost(HOST).setPort(PORT).setHeartSecond(1 * 1).build());
         mPTSenderManager.init(getApplicationContext());
         mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
             @Override
@@ -120,7 +120,7 @@ public class NotifyService extends Service {
                             GlobalApplication.isServiceClose = true;
                             Logger.d("---------++++", "停止服务");
                         }
-                    }, 30 * 1000);
+                    }, 60 * 1000);
                     break;
                 case GlobalApplication.Not_Fore_Message:
                     if (null != timer) {

@@ -2,12 +2,12 @@ package com.putao.wd;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.tcp.PTMessageReceiver;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,6 +51,8 @@ public class RedDotReceiver extends PTMessageReceiver {
     }
 
     private void setResult(String result) {
+        result = result.replaceAll("\\{\"messageCenter\":null,\"accompanyNumber\":\\[\\{\"service_id\":\"6000\",\"id\":234,\"type\":\"article\"\\}\\]\\}", "");
+        Logger.d("result-----------------", result);
         Pattern p1 = Pattern.compile(result.endsWith("]}") ? "\\{.+?\\]\\}" : "\\{.+?null\\}");
         Matcher m1 = p1.matcher(result);
         if (m1.find()) {
@@ -86,7 +88,7 @@ public class RedDotReceiver extends PTMessageReceiver {
             JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
             //陪伴位置提醒红点
             if (null != accompanyNumber) {
-                if (result.contains("\"id\":234")) return;
+                //if (result.contains("\"id\":234")) return;
                 EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
             }
         }
