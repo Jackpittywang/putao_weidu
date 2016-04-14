@@ -30,6 +30,7 @@ import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
+import com.putao.wd.util.ScanUrlParseUtils;
 import com.putao.wd.webview.PutaoParse;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -99,13 +100,14 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
         final ServiceMessageContent content_list;
         if (null != collection) {
             String link_url = collection.getLink_url();
-            int sid = link_url.indexOf("sid");
+            /*int sid = link_url.indexOf("sid");
             String substring = link_url.substring(sid);
             int i = substring.indexOf("&");
             if (-1 != i) {
                 service_id = link_url.substring(sid + 4, sid + i);
                 Logger.e(service_id + "");
-            } else service_id = link_url.substring(sid + 4, link_url.length());
+            } else service_id = link_url.substring(sid + 4, link_url.length());*/
+            service_id = ScanUrlParseUtils.getSingleParams(link_url, "sid");
             article_id = collection.getId() + "";
             title = collection.getTitle();
             sub_title = collection.getSubtitle();

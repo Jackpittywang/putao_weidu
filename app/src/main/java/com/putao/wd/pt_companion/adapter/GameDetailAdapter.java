@@ -44,7 +44,7 @@ public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameD
         holder.tv_title.setText(serviceMessageContent.getTitle());
         holder.tv_content.setText(serviceMessageContent.getSub_title());
         String date = "";
-        date = DateUtils.timeCalculate(serviceMessageContent.getRelease_time());
+        date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         holder.tv_time.setVisibility(View.VISIBLE);
         holder.tv_time.setText("───  " + date + "  ───");
         /*if (serviceMessageList.isShowData()) {

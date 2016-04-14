@@ -84,6 +84,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             mServiceId = mCompanion.getService_id();
         } else {
             mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
+            navigation_bar.setRightClickable(false);
             setMainTitleFromNetwork();
         }
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
@@ -101,6 +102,14 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     public void onSuccess(String url, String result) {
                         JSONObject jsonObject = JSON.parseObject(result);
                         setMainTitle(jsonObject.getString("service_name"));
+                        mCompanion = new Companion();
+                        mCompanion.setService_id(jsonObject.getString("service_id"));
+                        mCompanion.setService_name(jsonObject.getString("service_name"));
+                        mCompanion.setService_icon(jsonObject.getString("service_icon"));
+                        mCompanion.setIs_relation(jsonObject.getInteger("is_relation"));
+                        mCompanion.setIs_unbunding(jsonObject.getBoolean("is_unbunding"));
+                        mCompanion.setService_description(jsonObject.getString("service_description"));
+                        navigation_bar.setRightClickable(true);
                         loading.dismiss();
                     }
 

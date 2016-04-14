@@ -134,6 +134,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
             ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
             notDownloadIds.removeAll(notDownloadIds);
+            companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
         } else {
