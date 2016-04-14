@@ -36,7 +36,7 @@ public class StoreAdapter extends LoadMoreAdapter<StoreProduct, StoreAdapter.Sto
 
     @Override
     public void onBindItem(StoreViewHolder holder, StoreProduct product, int position) {
-        holder.iv_product/*.addProcessor(new BlurProcessor(8))*/.setImageURL(product.getIcon());
+        holder.iv_product/*.addProcessor(new BlurProcessor(8))*/.setImageURL(product.getImage());
         holder.tv_title.setText(product.getTitle());
     }
 
