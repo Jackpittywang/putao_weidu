@@ -2,6 +2,7 @@ package com.putao.wd.pt_companion;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
@@ -18,6 +20,7 @@ import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Companion;
+import com.putao.wd.user.LoginActivity;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -35,6 +38,7 @@ import butterknife.Bind;
  * Created by Administrator on 2016/4/9.
  */
 public class OfficialAccountsActivity extends PTWDActivity {
+    public static final String EVENT_OFFICIAL_URL = "event_official_url";
 
     @Bind(R.id.iv_icon)
     ImageDraweeView iv_icon;
@@ -148,11 +152,15 @@ public class OfficialAccountsActivity extends PTWDActivity {
                     @Override
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
-                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
+                        System.out.println("======================" + is_relation);
                         if (!is_relation) {//未关联
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, false);
                         } else {//已关联
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, true);
                         }
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        EventBusHelper.post(EVENT_OFFICIAL_URL, EVENT_OFFICIAL_URL);
+                        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+                        startActivity(IndexActivity.class);
                         finish();
                     }
                 });
