@@ -14,6 +14,7 @@ public class Companion implements Serializable {
     private String service_description;//游戏介绍
     private int relation_time;//更新时间
     private int is_relation;//订阅状态，0未订阅，1已订阅
+    private boolean is_unbunding;//是否可以解绑
     private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
 
     public String getService_id() {
@@ -66,6 +67,14 @@ public class Companion implements Serializable {
 
     public ArrayList<String> getNotDownloadIds() {
         return notDownloadIds;
+    }
+
+    public boolean is_unbunding() {
+        return is_unbunding;
+    }
+
+    public void setIs_unbunding(boolean is_unbunding) {
+        this.is_unbunding = is_unbunding;
     }
 
     public void setNotDownloadIds(ArrayList<String> notDownloadIds) {

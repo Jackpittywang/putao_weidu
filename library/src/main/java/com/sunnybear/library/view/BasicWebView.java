@@ -42,7 +42,7 @@ public class BasicWebView extends WebView {
      */
     private void initView() {
         setWebSettings();
-        setScrollBarStyle(SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
+//        setScrollBarStyle(SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
 
         setWebViewClient(new WebViewClient() {
             @Override
@@ -81,9 +81,9 @@ public class BasicWebView extends WebView {
      * 设置WebSettings
      */
     private void setWebSettings() {
-        WebSettings settings = getSettings();
-        settings.setJavaScriptEnabled(true);//开启对JavaScript的支持
-        settings.setDefaultTextEncodingName("UTF-8");//设置字符编码
+//        WebSettings settings = getSettings();
+//        settings.setJavaScriptEnabled(true);//开启对JavaScript的支持
+//        settings.setDefaultTextEncodingName("UTF-8");//设置字符编码
     }
 
     /**

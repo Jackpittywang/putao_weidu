@@ -142,6 +142,7 @@ public class YoukuVideoPlayerActivity extends BasicFragmentActivity {
     protected void onPause() {
         super.onPause();
         mBasePlayerManager.onPause();
+        finish();
     }
 
     @Override
@@ -211,4 +212,5 @@ public class YoukuVideoPlayerActivity extends BasicFragmentActivity {
     protected String[] getRequestUrls() {
         return new String[0];
     }
+
 }

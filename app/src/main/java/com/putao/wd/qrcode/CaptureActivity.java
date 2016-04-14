@@ -39,6 +39,7 @@ import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.bubble.TooltipView;
@@ -344,8 +345,9 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                         Logger.d(result.toString());
                         int http_code = result.getInteger("http_code");
                         if (http_code == 200) {
-                            ToastUtils.showToastLong(mContext, "添加成功");
-                            startActivity(AttentionSuccessActivity.class);
+                            ToastUtils.showToastLong(mContext, "请更新游戏");
+//                            ToastUtils.showToastLong(mContext, "添加成功");
+//                            startActivity(GameDetailListActivity.class);
                         } else if (http_code == 4201)
                             ToastUtils.showToastLong(mContext, "重复绑定");
                         else if (http_code == 4200)
@@ -404,6 +406,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                             // 跳到订阅号列表页面
                             Bundle bundle = new Bundle();
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
                             ToastUtils.showToastShort(mContext, "添加成功");
 
@@ -418,7 +421,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                             else ToastUtils.showToastShort(mContext, "绑定失败");
                         }
                         loading.dismiss();
-                        isRequesting = false;
+                        // isRequesting = false;
                         finish();
 
                     }
@@ -443,7 +446,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         return true;
     }
 
-    private void showErrorInfo(){
+    private void showErrorInfo() {
         String scaneErrorInfo = "请扫描葡萄产品的二维码";
         ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }

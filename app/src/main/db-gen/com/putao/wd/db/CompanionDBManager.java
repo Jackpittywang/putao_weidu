@@ -62,7 +62,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public ArrayList<String> getNotDownloadIds(String serviceId) {
         ArrayList<String> notDownloadIds = new ArrayList<>();
-        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId)).list();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId)).orderDesc(CompanionDBDao.Properties.release_time).list();
         for (CompanionDB companionDB : companionDBs) {
             notDownloadIds.add(companionDB.getId());
         }
