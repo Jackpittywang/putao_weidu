@@ -465,9 +465,9 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
      * @param callback  请求回调(建议使用SimpleFastJsonCallback)
      * @param pastTimer 过期时间阀值
      */
-    @Deprecated
+//    @Deprecated
     protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
-        String url = request.urlString();
+        /*String url = request.urlString();
         long currentTime = System.currentTimeMillis();//当前时间
         String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
         //获取过期时间
@@ -479,9 +479,72 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         } else {
             mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(pastTime));//存入过期时间
             mOkHttpClient.newCall(request).enqueue(callback);
+        }*/
+        String url = request.urlString();
+        if (url.contains("?"))
+            url = url.substring(0, url.indexOf("?"));
+        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
+        if (cacheData != null)
+            callback.onSuccess(url, cacheData);
+
+        long currentTime = System.currentTimeMillis();//当前时间
+        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
+        //获取过期时间
+        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
+        if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
+            if (cacheData == null) loading.show();
+            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
+            mOkHttpClient.newCall(request).enqueue(callback);
         }
     }
 
+    /**
+     * 网络请求(首先查找文件缓存,如果缓存有就不在进行网络请求)
+     *
+     * @param request  request主体
+     * @param callback 请求回调(建议使用SimpleFastJsonCallback)
+     * @param cacheUrl 缓存键
+     */
+//    @Deprecated
+    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, String cacheUrl, long pastTimer) {
+        String url = request.urlString();
+        if (url.contains("?"))
+            url = url.substring(0, url.indexOf("?"));
+        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(cacheUrl);
+        if (cacheData != null)
+            callback.onSuccess(cacheUrl, cacheData);
+
+        long currentTime = System.currentTimeMillis();//当前时间
+        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
+        //获取过期时间
+        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
+        if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
+            if (cacheData == null) loading.show();
+            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
+            mOkHttpClient.newCall(request).enqueue(callback);
+        }
+    }
+
+
+   /* @Deprecated
+    protected <T extends Serializable> void networkRequestCache(Request request, SimpleFastJsonCallback<T> callback, long pastTimer) {
+        String url = request.urlString();
+        if (url.contains("?"))
+            url = url.substring(0, url.indexOf("?"));
+        T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
+        if (cacheData != null)
+            callback.onSuccess(url, cacheData);
+
+        long currentTime = System.currentTimeMillis();//当前时间
+        String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
+        //获取过期时间
+        long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
+        if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
+            if (cacheData == null) loading.show();
+            mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
+            mOkHttpClient.newCall(request).enqueue(callback);
+        }
+    }*/
 
     @Override
     protected void onStop() {

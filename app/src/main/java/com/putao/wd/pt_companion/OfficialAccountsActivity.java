@@ -76,6 +76,8 @@ public class OfficialAccountsActivity extends PTWDActivity {
         iv_icon.setImageURL(companion.getService_icon());
         tv_recommend.setText(companion.getService_description());
         mServiceId = companion.getService_id();
+        if (companion.is_unbunding())
+            btn_cancel_associate.setVisibility(View.GONE);
         addListener();
     }
 
@@ -153,11 +155,11 @@ public class OfficialAccountsActivity extends PTWDActivity {
                     @Override
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
-                        if (!is_relation) {//未关联
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false);
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
+                       /* if (!is_relation) {//未关联
                         } else {//已关联
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                        }
+                        }*/
                         EventBusHelper.post(EVENT_OFFICIAL_URL, EVENT_OFFICIAL_URL);
                         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
                         startActivity(IndexActivity.class);

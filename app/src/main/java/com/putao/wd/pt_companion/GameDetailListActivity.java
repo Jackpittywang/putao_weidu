@@ -122,12 +122,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             for (CompanionDB companionDB : downloadArticles) {
                 ServiceMessageList serviceMessageList = new ServiceMessageList();
                 serviceMessageList.setType(companionDB.getType());
-                serviceMessageList.setIsShowData(true);
+//                serviceMessageList.setIsShowData(true);
                 serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
                 serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
                 lists.add(serviceMessageList);
             }
-            mGameDetailAdapter.replaceAll(setIsSameDate(lists));
+            mGameDetailAdapter.replaceAll(lists);
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
         mPage = 1;
@@ -135,6 +135,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             return;
         ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
+        mCompanion.setNotDownloadIds(null);
         if (null != serviceSendDatas && serviceSendDatas.size() > 0)
             networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), mServiceId),
                     new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
@@ -147,8 +148,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                                 dataBaseManager.updataDownloadFinish(mServiceId, serviceMessageList);
                             }
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                            mCompanion.setNotDownloadIds(null);
-                            lists = setIsSameDate(lists);
+//                            lists = setIsSameDate(lists);
                             mGameDetailAdapter.addAll(0, lists);
                             ptl_refresh.refreshComplete();
                             checkLoadMoreComplete(lists);
@@ -180,7 +180,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
      * @param result
      * @return
      */
-    private ArrayList<ServiceMessageList> setIsSameDate(ArrayList<ServiceMessageList> result) {
+   /* private ArrayList<ServiceMessageList> setIsSameDate(ArrayList<ServiceMessageList> result) {
 
         // 如果是 下拉刷新或重新进入则将 list（存用户的临时集合） 集合清空
         if (!isLoadMore) {
@@ -198,7 +198,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             }
         }
         return result;
-    }
+    }*/
 
     /**
      * 取将时间装换为天数
@@ -277,13 +277,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
 
     private void initBottomMenu() {
         final TextView[] menuViews = {tv_menu_first, tv_menu_second, tv_menu_third};
-        networkRequest(CompanionApi.getServicemenu(mServiceId),
+        networkRequestCache(CompanionApi.getServicemenu(mServiceId),
                 new SimpleFastJsonCallback<ArrayList<ServiceMenu>>(ServiceMenu.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ServiceMenu> result) {
                         if (result != null && result.size() > 0) {
+                            cacheData(CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, result);
                             ll_bottom_menus.setVisibility(View.VISIBLE);
-
                             tv_menu_first.setVisibility(View.GONE);
                             vLineLeft.setVisibility(View.GONE);
                             tv_menu_second.setVisibility(View.GONE);
@@ -314,7 +314,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     public void onFailure(String url, int statusCode, String msg) {
 
                     }
-                }, false);
+                }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
     }
 
     private void addMenuListener(TextView menuView) {

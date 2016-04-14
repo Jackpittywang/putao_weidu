@@ -95,8 +95,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR, false)) {
             ti_index_companion.hide();
         }
-        if (null != AccountHelper.getCurrentUid())
-            checkInquiryBind(AccountHelper.getCurrentUid());
+//        if (null != AccountHelper.getCurrentUid())
+//            checkInquiryBind(AccountHelper.getCurrentUid());
 
     }
 
@@ -211,7 +211,9 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                        Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
+//                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                     }
 
                     @Override

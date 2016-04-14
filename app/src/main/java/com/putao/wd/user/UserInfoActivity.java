@@ -67,7 +67,7 @@ public class UserInfoActivity extends PTWDActivity {
     @Override
     public void onRightAction() {
         String userInfo = et_intro.getText().toString();
-        if (mUserInfo.equals(userInfo)) {
+        if (mUserInfo.equals(userInfo) || TextUtils.isEmpty(userInfo)) {
             ToastUtils.showToastShort(mContext, "没有更改无需保存");
             return;
         }

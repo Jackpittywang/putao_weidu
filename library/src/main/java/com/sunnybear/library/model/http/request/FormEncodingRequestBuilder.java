@@ -2,6 +2,8 @@ package com.sunnybear.library.model.http.request;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
+import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 
 import java.util.Map;
@@ -23,6 +25,7 @@ public final class FormEncodingRequestBuilder {
         params = new ConcurrentHashMap<>();
 
         builder = new Request.Builder();
+        builder.addHeader("version", AppUtils.getVersionName(BasicApplication.getInstance()));
 //        builder.addHeader("Cache-Control", String.format("max-age=%d", BasicApplication.getMaxAge()));//缓存数据验证是否有效
 //        builder.cacheControl(new CacheControl.Builder().maxAge(BasicApplication.getMaxAge(), TimeUnit.SECONDS).build());
     }
@@ -118,6 +121,7 @@ public final class FormEncodingRequestBuilder {
     public String joinURL(String url) {
         return jointUrl(url, params).toString();
     }
+
     /**
      * 拼接参数
      *

@@ -44,16 +44,12 @@ public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameD
         holder.tv_title.setText(serviceMessageContent.getTitle());
         holder.tv_content.setText(serviceMessageContent.getSub_title());
         String date = "";
-        if (serviceMessageList.isShowData()) {
-            try {
-                date = DateUtils.getSecondsToDate(serviceMessageContent.getRelease_time());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            holder.tv_time.setVisibility(View.VISIBLE);
-            holder.tv_time.setText("───  " + date + "  ───");
+        date = DateUtils.timeCalculate(serviceMessageContent.getRelease_time());
+        holder.tv_time.setVisibility(View.VISIBLE);
+        holder.tv_time.setText("───  " + date + "  ───");
+        /*if (serviceMessageList.isShowData()) {
         } else
-            holder.tv_time.setVisibility(View.GONE);
+            holder.tv_time.setVisibility(View.GONE);*/
     }
 
     static class GameDetailHolder extends BasicViewHolder {

@@ -120,7 +120,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         networkRequest(UserApi.getUserInfo(), new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
             @Override
             public void onSuccess(String url, UserInfo result) {
-                iv_header_icon.setImageURL(result.getHead_img());
+                iv_header_icon.setImageURL(ImageUtils.getImageSizeUrl(result.getHead_img(), ImageUtils.ImageSizeURL.SIZE_120x120));
                 tv_nick_name.setText(result.getNick_name());
                 tv_user_info.setText(result.getProfile().isEmpty() ? "这个用户很懒" : result.getProfile());
 //                AccountHelper.setUserInfo(result);

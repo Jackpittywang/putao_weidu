@@ -192,7 +192,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                        Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         loading.dismiss();
                         finish();
