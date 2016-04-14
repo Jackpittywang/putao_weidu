@@ -12,10 +12,11 @@
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_discovery"
-            style="@style/image_style"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
+            android:background="@drawable/img_image_default_l"
+            android:scaleType="centerInside"
             auto:placeholderImageScaleType="centerCrop" />
 
         <ImageView

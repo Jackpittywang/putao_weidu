@@ -121,7 +121,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
         }
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
-        setMainTitle(sub_title);
+        setMainTitle(title);
         initData();
         getArticleProperty(link_url);
         addListener();
