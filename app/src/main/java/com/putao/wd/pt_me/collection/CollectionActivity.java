@@ -85,6 +85,12 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         );
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initData();
+    }
+
     private void addListenter() {
         rv_collection.setOnItemClickListener(this);
         ll_empty.setOnClickListener(this);

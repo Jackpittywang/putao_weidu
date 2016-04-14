@@ -34,6 +34,7 @@ import com.putao.wd.webview.PutaoParse;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
@@ -101,9 +102,11 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
             int sid = link_url.indexOf("sid");
             String substring = link_url.substring(sid);
             int i = substring.indexOf("&");
-            if (-1 != i)
-                article_id = link_url.substring(sid + 4, i);
-            else article_id = link_url.substring(sid + 4, link_url.length());
+            if (-1 != i) {
+                service_id = link_url.substring(sid + 4, sid + i);
+                Logger.e(service_id + "");
+            } else service_id = link_url.substring(sid + 4, link_url.length());
+            article_id = collection.getId() + "";
             title = collection.getTitle();
             sub_title = collection.getSubtitle();
             cover_pic = collection.getHead_img();
