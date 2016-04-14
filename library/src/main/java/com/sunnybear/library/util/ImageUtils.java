@@ -335,9 +335,11 @@ public final class ImageUtils {
 
     public static boolean isImage(String url) {
         if (StringUtils.isEmpty(url)) return false;
-//        if (url.equalsIgnoreCase(".jpg") || url.equalsIgnoreCase(".png") || url.equalsIgnoreCase(".gif") || url.equalsIgnoreCase(".JPEG") || url.equalsIgnoreCase(".bmp"))
-        return true;
-//        else return false;
+//        String upperUrl = new String();
+        url = url.toUpperCase();
+        if (url.endsWith(".JPG") || url.endsWith(".PNG") || url.endsWith(".GIF") || url.endsWith(".JPEG") || url.endsWith(".BMP"))
+            return true;
+        else return false;
     }
 
     public static String getImageSizeUrl(String url, ImageSizeURL type) {

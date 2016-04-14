@@ -124,9 +124,9 @@ public class GlobalApplication extends BasicApplication {
             }
         }, 3000);
 
-        CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
-        dataBaseManager.insertFixDownload("6000", "124");
-        dataBaseManager.insertFixDownload("6000", "125");
+//        CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
+//        dataBaseManager.insertFixDownload("6000", "124");
+//        dataBaseManager.insertFixDownload("6000", "125");
     }
 
     /**

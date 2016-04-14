@@ -235,6 +235,10 @@
                     android:visibility="gone"
                     auto:setting_icon="@drawable/icon_20_29"
                     auto:setting_text="葡萄籽" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </com.sunnybear.library.view.scroll.SupportScrollView>
