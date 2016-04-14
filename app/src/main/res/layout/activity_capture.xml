@@ -30,6 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="155dp">
 
+
         <ImageView
             android:id="@+id/capture_crop_view"
             android:layout_width="match_parent"
@@ -37,11 +38,14 @@
 
         <ImageView
             android:id="@+id/scan_line"
-            android:layout_width="265dp"
-            android:layout_height="220dp"
-            android:layout_marginTop="35dp"
-            android:src="@drawable/scan_lightline"
-            android:visibility="gone" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-30dp"
+            android:layout_marginLeft="@dimen/distance_5dp"
+            android:layout_marginRight="@dimen/distance_5dp"
+            android:layout_marginTop="45dp"
+            android:src="@drawable/scan_lightline" />
+
     </FrameLayout>
 
     <TextView

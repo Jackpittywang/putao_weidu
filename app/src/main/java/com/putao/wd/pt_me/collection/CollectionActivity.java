@@ -163,7 +163,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     @Override
     public void onItemClick(Collection collection, int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, mCollection.get(position).getId());
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, collection);
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
         startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }

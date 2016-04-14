@@ -12,7 +12,8 @@ public class Collection implements Serializable {
     private String title;
     private String subtitle;
     private String head_img;//封面图
-    private String attend_time;//参与日期 yy/mm/dd 格式
+    private String link_url;
+    private String collect_time;//参与日期 yy/mm/dd 格式
     private Tag tags;
 
     public int getType() {
@@ -56,12 +57,20 @@ public class Collection implements Serializable {
         this.head_img = head_img;
     }
 
-    public String getAttend_time() {
-        return attend_time;
+    public String getLink_url() {
+        return link_url;
     }
 
-    public void setAttend_time(String attend_time) {
-        this.attend_time = attend_time;
+    public void setLink_url(String link_url) {
+        this.link_url = link_url;
+    }
+
+    public String getCollect_time() {
+        return collect_time;
+    }
+
+    public void setCollect_time(String collect_time) {
+        this.collect_time = collect_time;
     }
 
     public Tag getTags() {
@@ -74,13 +83,14 @@ public class Collection implements Serializable {
 
     @Override
     public String toString() {
-        return "Participation{" +
-                "type='" + type + '\'' +
-                ", id='" + id + '\'' +
+        return "Collection{" +
+                "type=" + type +
+                ", id=" + id +
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", head_img='" + head_img + '\'' +
-                ", attend_time='" + attend_time + '\'' +
+                ", link_url='" + link_url + '\'' +
+                ", collect_time='" + collect_time + '\'' +
                 ", tags=" + tags +
                 '}';
     }

@@ -8,12 +8,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
@@ -22,13 +19,13 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.db.CompanionDBManager;
-import com.putao.wd.db.DataBaseManager;
-import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.ArticleDetailActs;
+import com.putao.wd.model.Collection;
 import com.putao.wd.model.Property;
+import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
@@ -40,7 +37,6 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +82,6 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     private String title;
     private String sub_title;
     private String cover_pic;
-    private int id;
 
 
     @Override
@@ -97,29 +92,31 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        id = args.getInt(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
+        Collection collection = (Collection) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         final ServiceMessageContent content_list;
-        if (0 != id) {
-            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-            CompanionDB companInfoById = dataBaseManager.getCompanInfoById(id + "");
-            if (null == companInfoById) {
-                ToastUtils.showToastShort(mContext, "收藏文章不存在");
-                finish();
-                return;
-            }
-            List<ServiceMessageContent> serviceMessageContents = JSONArray.parseArray(companInfoById.getContent_lists(), ServiceMessageContent.class);
-            content_list = serviceMessageContents.get(0);
+        if (null != collection) {
+            String link_url = collection.getLink_url();
+            int sid = link_url.indexOf("sid");
+            String substring = link_url.substring(sid);
+            int i = substring.indexOf("&");
+            if (-1 != i)
+                article_id = link_url.substring(sid + 4, i);
+            else article_id = link_url.substring(sid + 4, link_url.length());
+            title = collection.getTitle();
+            sub_title = collection.getSubtitle();
+            cover_pic = collection.getHead_img();
+            this.link_url = link_url;
         } else {
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
             content_list = messageList.getContent_lists().get(0);
+            service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+            title = content_list.getTitle();
+            sub_title = content_list.getSub_title();
+            cover_pic = content_list.getCover_pic();
+            link_url = content_list.getLink_url();
+            article_id = content_list.getArticle_id();
+            type = messageList.getType();
         }
-        service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
-        title = content_list.getTitle();
-        sub_title = content_list.getSub_title();
-        cover_pic = content_list.getCover_pic();
-        link_url = content_list.getLink_url();
-        article_id = content_list.getArticle_id();
-        type = messageList.getType();
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
         setMainTitle(sub_title);
@@ -317,15 +314,38 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
             case R.id.sb_cool_icon:
                 //使用EventBus提交点赞
                 networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),
-                    new SimpleFastJsonCallback<String>(String.class, loading) {
-                        @Override
-                        public void onSuccess(String url, String result) {
-                            mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
-                            EventBusHelper.post(true, EVENT_COUNT_COOL);
-                        }
-                    });
+                        new SimpleFastJsonCallback<String>(String.class, loading) {
+                            @Override
+                            public void onSuccess(String url, String result) {
+                                mDiskFileCacheHelper.put(COOL_COUNT + article_id, "true");
+                                EventBusHelper.post(true, EVENT_COUNT_COOL);
+                            }
+                        });
                 break;
         }
+
+    }
+
+    private List<ServiceSendData> listToServiceListData(ArrayList<String> notDownloadIds) {
+        ArrayList<ServiceSendData> serviceSendDatas = new ArrayList<>();
+        if (null != notDownloadIds)
+            for (String str : notDownloadIds) {
+                serviceSendDatas.add(new ServiceSendData(str));
+            }
+        if (null != serviceSendDatas && serviceSendDatas.size() > 0)
+            networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), service_id),
+                    new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+                        @Override
+                        public void onSuccess(String url, ServiceMessage result) {
+                            loading.dismiss();
+                        }
+
+                        @Override
+                        public void onFailure(String url, int statusCode, String msg) {
+                            super.onFailure(url, statusCode, msg);
+                        }
+                    }, false);
+        return serviceSendDatas;
 
     }
 }

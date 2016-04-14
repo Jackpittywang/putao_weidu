@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -129,15 +132,21 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         addNavigation();
         setMainTitleColor(Color.WHITE);
         initViews();
-
-//        initAnimation();
-//        scan_line.startAnimation(animation);
+       /* ScaleAnimation animation = new ScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f);
+        animation.setRepeatCount(-1);
+        animation.setRepeatMode(Animation.RESTART);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setDuration(1200);
+        scan_line.startAnimation(animation);*/
+        initAnimation();
+        scan_line.startAnimation(animation);
     }
 
     private void initAnimation() {
-        animation = new TranslateAnimation(0, 0, -scanCropView.getHeight(), scanCropView.getHeight());
-        animation.setDuration(500);
-        animation.setRepeatCount(Integer.MAX_VALUE);
+        int height = DensityUtil.dp2px(mContext, 250);
+        animation = new TranslateAnimation(0, 0, -height, height);
+        animation.setDuration(1200);
+        animation.setRepeatCount(-1);
         animation.setInterpolator(new LinearInterpolator());
     }
 
