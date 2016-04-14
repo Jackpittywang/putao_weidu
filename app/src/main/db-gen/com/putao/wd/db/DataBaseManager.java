@@ -1,5 +1,6 @@
 package com.putao.wd.db;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.support.annotation.NonNull;
@@ -225,6 +226,15 @@ public abstract class DataBaseManager<Entity extends DBEntity, Key extends Seria
             return false;
         }
         return true;
+    }
+
+    /**
+     * 传入sql语句直接query
+     * @param sql
+     * @return
+     */
+    public Cursor rawQuery(String sql){
+       return daoSession.getDatabase().rawQuery(sql, null);
     }
 
     @Override

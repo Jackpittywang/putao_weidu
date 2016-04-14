@@ -103,4 +103,11 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     public void insertFinishDownload(String service_id, String id, String release_time, String content_lists) {
         insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + ""));
     }
+
+    /**
+     * 删除订阅号的内容
+     */
+    public void deleteContent() {
+        rawQuery("delete * from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '1'");
+    }
 }
