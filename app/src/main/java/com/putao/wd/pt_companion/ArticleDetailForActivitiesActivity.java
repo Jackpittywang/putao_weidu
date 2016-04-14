@@ -244,7 +244,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
                 property = result;
                 sb_cool_icon.setClickable(false);
                 sb_cool_icon.setState(result.is_like());
-                tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getComments_count() + "");
+                tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getLike_count() + "");
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
                 ll_comment.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
                 view_apart.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
