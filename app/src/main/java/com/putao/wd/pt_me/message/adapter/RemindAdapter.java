@@ -22,56 +22,11 @@ import butterknife.Bind;
  * 消息中心：“通知”适配器
  * Created by wango on 2015/12/1.
  */
-public class RemindAdapter extends LoadMoreAdapter<Remind, RemindAdapter.RemindViewHolder> {
+public class RemindAdapter extends LoadMoreAdapter<RemindDetail, RemindAdapter.RemindViewHolder> {
 
-//    public final  static  String EVENT_REMIND = "event_remind";
-//    public RemindAdapter(Context context, List<RemindDetail> remindnotifyitems) {
-//        super(context, remindnotifyitems);
-//    }
-//
-//    @Override
-//    public int getLayoutId(int viewType) {
-//        return R.layout.fragment_message_notify_item;
-//    }
-//
-//    @Override
-//    public RemindViewHolder getViewHolder(View itemView, int viewType) {
-//        return new RemindViewHolder(itemView);
-//    }
-//
-//    @Override
-//    public void onBindItem(RemindViewHolder holder, final RemindDetail remindDetail, int position) {
-//        holder.tv_notify_content.setText(remindDetail.getContent());
-//        holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(remindDetail.getCreate_time())));
-//        if (StringUtils.isEmpty(remindDetail.getImg_url()))
-//            holder.iv_action_icon.setVisibility(View.GONE);
-//        else {
-//            holder.iv_action_icon.setVisibility(View.VISIBLE);
-//            holder.iv_action_icon.setImageURL(remindDetail.getImg_url());
-//        }
-//        if (0 == remindDetail.getLocation())
-//            holder.tv_check_detail.setVisibility(View.GONE);
-//        else if (1 == remindDetail.getLocation()) {
-//            holder.tv_check_detail.setVisibility(View.VISIBLE);
-//            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    EventBusHelper.post(remindDetail,EVENT_REMIND);
-//                }
-//            });
-//        } else if (2 == remindDetail.getLocation()) {
-//            holder.tv_check_detail.setVisibility(View.VISIBLE);
-//            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//        }
-//    }
+    public final static String EVENT_REMIND = "event_remind";
 
-    public final  static  String EVENT_REMIND = "event_remind";
-    public RemindAdapter(Context context, List<Remind> remindnotifyitems) {
+    public RemindAdapter(Context context, List<RemindDetail> remindnotifyitems) {
         super(context, remindnotifyitems);
     }
 
@@ -86,30 +41,26 @@ public class RemindAdapter extends LoadMoreAdapter<Remind, RemindAdapter.RemindV
     }
 
     @Override
-    public void onBindItem(RemindViewHolder holder, final Remind remindDetail, int position) {
-        holder.tv_notify_content.setText(remindDetail.getQuestion());
-        holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(remindDetail.getRelease_time())));
-        if (StringUtils.isEmpty(remindDetail.getHead_img()))
+    public void onBindItem(RemindViewHolder holder, final RemindDetail remindDetail, int position) {
+        holder.tv_notify_content.setText(remindDetail.getContent());
+        holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(remindDetail.getCreate_time())));
+        if (StringUtils.isEmpty(remindDetail.getImg_url()))
             holder.iv_action_icon.setVisibility(View.GONE);
         else {
             holder.iv_action_icon.setVisibility(View.VISIBLE);
-            holder.iv_action_icon.setImageURL(remindDetail.getHead_img());
+            holder.iv_action_icon.setImageURL(remindDetail.getImg_url());
         }
-
-
-       // holder.tv_check_detail.setText(remindDetail.getAnswer());
-
-        if (0 == remindDetail.getQuestion_id())
+        if (0 == remindDetail.getLocation())
             holder.tv_check_detail.setVisibility(View.GONE);
-        else if (1 == remindDetail.getQuestion_id()) {
+        else if (1 == remindDetail.getLocation()) {
             holder.tv_check_detail.setVisibility(View.VISIBLE);
             holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBusHelper.post(remindDetail,EVENT_REMIND);
+                    EventBusHelper.post(remindDetail, EVENT_REMIND);
                 }
             });
-        } else if (2 == remindDetail.getQuestion_id()) {
+        } else if (2 == remindDetail.getLocation()) {
             holder.tv_check_detail.setVisibility(View.VISIBLE);
             holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,6 +70,57 @@ public class RemindAdapter extends LoadMoreAdapter<Remind, RemindAdapter.RemindV
             });
         }
     }
+
+//    public final  static  String EVENT_REMIND = "event_remind";
+//    public RemindAdapter(Context context, List<Remind> remindnotifyitems) {
+//        super(context, remindnotifyitems);
+//    }
+//
+//    @Override
+//    public int getLayoutId(int viewType) {
+//        return R.layout.fragment_message_notify_item;
+//    }
+//
+//    @Override
+//    public RemindViewHolder getViewHolder(View itemView, int viewType) {
+//        return new RemindViewHolder(itemView);
+//    }
+//
+//    @Override
+//    public void onBindItem(RemindViewHolder holder, final Remind remindDetail, int position) {
+//        holder.tv_notify_content.setText(remindDetail.getContent());
+//        holder.tv_release_time.setText(DateUtils.timeCalculate(Integer.parseInt(remindDetail.getCreate_time())));
+//        if (StringUtils.isEmpty(remindDetail.getImg_url()))
+//            holder.iv_action_icon.setVisibility(View.GONE);
+//        else {
+//            holder.iv_action_icon.setVisibility(View.VISIBLE);
+//            holder.iv_action_icon.setImageURL(remindDetail.getImg_url());
+//        }
+
+
+    // holder.tv_check_detail.setText(remindDetail.getAnswer());
+
+//        if (0 == remindDetail.get())
+//            holder.tv_check_detail.setVisibility(View.GONE);
+//        else if (1 == remindDetail.getQuestion_id()) {
+//            holder.tv_check_detail.setVisibility(View.VISIBLE);
+//            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    EventBusHelper.post(remindDetail,EVENT_REMIND);
+//                }
+//            });
+//        } else if (2 == remindDetail.getQuestion_id()) {
+//            holder.tv_check_detail.setVisibility(View.VISIBLE);
+//            holder.tv_check_detail.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
+//        }
+//}
+
 
     /**
      *

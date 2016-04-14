@@ -23,6 +23,7 @@
     <string name="default_address">设为默认收货地址</string>
     <string name="delete_address">删除本条地址</string>
     <string name="aboutus">关于我们</string>
+    <string name="clear">清除缓存</string>
     <string name="modifypassword">修改登录密码</string>
     <string name="setting">设置</string>
     <string name="exitaccout">退出当前账户</string>

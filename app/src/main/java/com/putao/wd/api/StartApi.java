@@ -392,7 +392,7 @@ public class StartApi {
     /**
      * 提醒列表
      */
-    public static final String URL_REMIND_LIST = BASE_WEIDU_URL + "user/answers";
+    public static final String URL_REMIND_LIST = BASE_WEIDU_URL + "message/remind";
 
     /**
      * 提醒列表

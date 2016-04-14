@@ -15,7 +15,7 @@
     <View
         android:layout_width="wrap_content"
         android:layout_height="1px"
-        android:background="@color/color_C2C2C2"/>
+        android:background="@color/color_C2C2C2" />
 
     <View
         android:layout_width="match_parent"
@@ -29,6 +29,13 @@
         android:layout_height="48dp"
         auto:setting_divider_color="@color/divider_color"
         auto:setting_text="@string/modifypassword" />
+
+    <com.sunnybear.library.view.SettingItem
+        android:id="@+id/si_clear"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        auto:setting_divider_color="@color/divider_color"
+        auto:setting_text="@string/clear" />
 
     <com.sunnybear.library.view.SettingItem
         android:id="@+id/si_about_us"

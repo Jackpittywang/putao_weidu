@@ -9,9 +9,11 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.pt_me.address.AboutUsActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.ToastUtils;
 
 
 import butterknife.OnClick;
@@ -38,7 +40,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
         return new String[0];
     }
 
-    @OnClick({R.id.si_about_us, R.id.si_modify_password, R.id.tv_exit})
+    @OnClick({R.id.si_about_us, R.id.si_modify_password, R.id.tv_exit, R.id.si_clear})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -57,6 +59,11 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 new JPushHeaper().setAlias(mContext, "");
                 mContext.sendBroadcast(new Intent(GlobalApplication.Fore_Message));
                 finish();
+                break;
+            case R.id.si_clear:
+                CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                dataBaseManager.deleteContent();
+                ToastUtils.showToastShort(mContext, "清除成功");
                 break;
         }
     }

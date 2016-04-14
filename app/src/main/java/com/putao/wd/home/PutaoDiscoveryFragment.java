@@ -135,7 +135,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
     }
 
     private void checkLoadMoreComplete(ArrayList<DisCovery> result) {
-        if (result.size() < 5)
+        if (result == null)
             rv_discovery.noMoreLoading();
         else currentPage++;
     }

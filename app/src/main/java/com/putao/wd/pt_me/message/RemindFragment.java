@@ -101,23 +101,24 @@ public class RemindFragment extends BasicFragment {
         loading.show();
         mPage = 1;
         networkRequest(StartApi.getRemindList(String.valueOf(currentPage)),
-                new SimpleFastJsonCallback<ArrayList<Remind>>(Remind.class, loading) {
+                new SimpleFastJsonCallback<Remind>(Remind.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<Remind> result) {
-                        if (result != null && result.size() > 0) {
+                    public void onSuccess(String url, Remind result) {
+                        List<RemindDetail> details = result.getList();
+                        if (details != null && details.size() > 0) {
                             rv_content.setVisibility(View.VISIBLE);
                             rl_no_message.setVisibility(View.GONE);
-                            adapter.replaceAll(result);
+                            adapter.replaceAll(details);
                         } else {
                             ptl_refresh.setVisibility(View.GONE);
                             rl_no_message.setVisibility(View.VISIBLE);
                         }
-//                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
-//                            currentPage++;
-//                            rv_content.loadMoreComplete();
-//                        } else rv_content.noMoreLoading();
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
+                            currentPage++;
+                            rv_content.loadMoreComplete();
+                        } else rv_content.noMoreLoading();
 
-                        checkLoadMoreComplete(result);
+//                        checkLoadMoreComplete(result);
                         loading.dismiss();
 
                         ptl_refresh.refreshComplete();
@@ -130,18 +131,19 @@ public class RemindFragment extends BasicFragment {
      */
     private void getRemindMore() {
         networkRequest(StartApi.getRemindList(String.valueOf(mPage)),
-                new SimpleFastJsonCallback<ArrayList<Remind>>(Remind.class, loading) {
+                new SimpleFastJsonCallback<Remind>(Remind.class, loading) {
                     @Override
-                    public void onSuccess(String url, ArrayList<Remind> result) {
-                        if (result != null && result.size() > 0) {
-                            adapter.addAll(result);
+                    public void onSuccess(String url, Remind result) {
+                        List<RemindDetail> details = result.getList();
+                        if (details != null && details.size() > 0) {
+                            adapter.addAll(details);
                         }
                         rv_content.loadMoreComplete();
-//                        if (result != null) {
-//                            currentPage++;
-//                            rv_content.loadMoreComplete();
-//                        } else rv_content.noMoreLoading();
-                        checkLoadMoreComplete(result);
+                        if (result != null) {
+                            currentPage++;
+                            rv_content.loadMoreComplete();
+                        } else rv_content.noMoreLoading();
+//                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
