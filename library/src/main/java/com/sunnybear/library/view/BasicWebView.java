@@ -81,9 +81,9 @@ public class BasicWebView extends WebView {
      * 设置WebSettings
      */
     private void setWebSettings() {
-//        WebSettings settings = getSettings();
-//        settings.setJavaScriptEnabled(true);//开启对JavaScript的支持
-//        settings.setDefaultTextEncodingName("UTF-8");//设置字符编码
+        WebSettings settings = getSettings();
+        settings.setJavaScriptEnabled(true);//开启对JavaScript的支持
+        settings.setDefaultTextEncodingName("UTF-8");//设置字符编码
     }
 
     /**
