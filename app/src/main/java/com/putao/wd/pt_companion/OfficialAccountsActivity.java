@@ -70,7 +70,7 @@ public class OfficialAccountsActivity extends PTWDActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-        if(companion == null) return;
+        if (companion == null) return;
         setMainTitle(companion.getService_name());
         tv_official_title.setText(companion.getService_name());
         iv_icon.setImageURL(companion.getService_icon());
@@ -153,7 +153,6 @@ public class OfficialAccountsActivity extends PTWDActivity {
                     @Override
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
-                        System.out.println("======================" + is_relation);
                         if (!is_relation) {//未关联
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND, false);
                         } else {//已关联

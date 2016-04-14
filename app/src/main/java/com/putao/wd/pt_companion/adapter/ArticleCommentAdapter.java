@@ -106,8 +106,7 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
 
         if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
             String pic = ImageUtils.getImageSizeUrl(comment.getPics().get(0), ImageUtils.ImageSizeURL.SIZE_240x240);
-            System.out.println("------------------" + pic);
-            if (!StringUtils.isEmpty(pic)) {
+            if (ImageUtils.isImage(pic) && !StringUtils.isEmpty(pic)) {
                 holder.iv_comment_pic.setImageURL(pic);
                 holder.iv_comment_pic.setVisibility(View.VISIBLE);
             } else {
