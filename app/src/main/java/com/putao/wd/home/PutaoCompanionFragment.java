@@ -98,6 +98,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 }, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkDevice();
+    }
+
     private void addListener() {
         mCompanionAdapter.setOnItemClickListener(this);
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
