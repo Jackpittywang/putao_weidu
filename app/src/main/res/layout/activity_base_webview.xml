@@ -21,7 +21,7 @@
         android:progressBackgroundTint="#00000000"
         android:progressTint="@color/text_main_color_sel" />
 
-    <com.sunnybear.library.view.BasicWebView
+    <WebView
         android:id="@+id/wv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

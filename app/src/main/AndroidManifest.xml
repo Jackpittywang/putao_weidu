@@ -372,6 +372,7 @@
 
         <activity
             android:name=".webview.BaseWebViewActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <!-- 文章详情页-->
         <activity
