@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickListener, OnClickListener {
+public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListener {
 
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
@@ -79,22 +79,15 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
 
                             @Override
                             public void onSuccess(String url, ArrayList<DisCovery> result) {
-                                if (result != null && result.size() > 0) {
-                                    disCoveries = result;
-                                    rl_no_discovery.setVisibility(View.GONE);
-                                    rv_discovery.setVisibility(View.VISIBLE);
-                                    adapter.replaceAll(result);
-                                } else {
-                                    rl_no_discovery.setVisibility(View.VISIBLE);
-                                    rv_discovery.setVisibility(View.GONE);
-                                }
+                                disCoveries = result;
+                                adapter.replaceAll(result);
+                                rv_discovery.loadMoreComplete();
                                 checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
                         }, false);
             }
         });
-        rv_discovery.setOnItemClickListener(this);
         rl_no_discovery.setOnClickListener(this);
     }
 
@@ -138,13 +131,6 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnItemClickL
         if (result == null)
             rv_discovery.noMoreLoading();
         else currentPage++;
-    }
-
-    @Override
-    public void onItemClick(Serializable serializable, int position) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, disCoveries.get(position).getVideo_url());
-        startActivity(YoukuVideoPlayerActivity.class, bundle);
     }
 
     @OnClick({R.id.rl_no_discovery})

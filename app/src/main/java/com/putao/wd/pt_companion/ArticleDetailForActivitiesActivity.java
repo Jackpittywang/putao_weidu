@@ -242,11 +242,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
                 property = result;
                 sb_cool_icon.setClickable(false);
                 sb_cool_icon.setState(result.is_like());
-                if (result.getLike_count() != 0) {
-                    tv_count_cool.setText(result.getLike_count() + "");
-                } else {
-                    tv_count_cool.setText("赞");
-                }
+                tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getComments_count() + "");
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
                 mSharePopupWindow.setCollectState(result.is_collect());
             }

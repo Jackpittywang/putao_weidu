@@ -45,7 +45,7 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
     }
 
     @Override
-    public void onBindItem(final DiscoveryViewHolder holder, DisCovery disCoveries, int position) {
+    public void onBindItem(final DiscoveryViewHolder holder, final DisCovery disCoveries, final int position) {
         holder.tv_title.setText(disCoveries.getTitle());
         if (!disCoveries.getVideo_img().equals("")) {
             holder.iv_player.setVisibility(View.VISIBLE);
@@ -53,6 +53,15 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         } else {
             holder.iv_player.setVisibility(View.GONE);
         }
+
+        holder.iv_player.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, disCoveries.getVideo_url());
+                context.startActivity(YoukuVideoPlayerActivity.class, bundle);
+            }
+        });
     }
 
     /**
