@@ -66,6 +66,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     LinearLayout ll_comment;//评论数
     @Bind(R.id.tv_count_comment)
     TextView tv_count_comment;
+    @Bind(R.id.view_apart)
+    View view_apart;
     /* @Bind(R.id.iv_upload_pic)
      ImageDraweeView iv_upload_pic;*/
   /*  @Bind(R.id.sv_load)
@@ -244,6 +246,9 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
                 sb_cool_icon.setState(result.is_like());
                 tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getComments_count() + "");
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
+                ll_comment.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
+                view_apart.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
+
                 mSharePopupWindow.setCollectState(result.is_collect());
             }
         });

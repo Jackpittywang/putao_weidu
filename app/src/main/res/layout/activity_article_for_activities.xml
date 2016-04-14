@@ -81,6 +81,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/view_apart"
             android:layout_width="1dp"
             android:layout_height="22dp"
             android:background="@color/divider_color" />
