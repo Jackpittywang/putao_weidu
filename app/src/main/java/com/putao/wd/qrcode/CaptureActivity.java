@@ -63,8 +63,8 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     @Bind(R.id.scan_line)
     ImageView scan_line;
 
-    @Bind(R.id.ttv_question_1)
-    TooltipView ttv_question_1;
+    //    @Bind(R.id.ttv_question_1)
+//    TooltipView ttv_question_1;
     @Bind(R.id.ttv_question_2)
     TooltipView ttv_question_2;
 
@@ -151,20 +151,21 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         return new String[0];
     }
 
-    @OnClick({R.id.tv_question_1, R.id.tv_question_2, R.id.capture_container})
+    @OnClick({R.id.tv_question_2, R.id.capture_container})
+//    R.id.tv_question_1,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_question_1:
-                ttv_question_1.setVisibility(ttv_question_1.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                ttv_question_2.setVisibility(View.GONE);
-                break;
+//            case R.id.tv_question_1:
+//                ttv_question_1.setVisibility(ttv_question_1.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+//                ttv_question_2.setVisibility(View.GONE);
+//                break;
             case R.id.tv_question_2:
                 ttv_question_2.setVisibility(ttv_question_2.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                ttv_question_1.setVisibility(View.GONE);
+//                ttv_question_1.setVisibility(View.GONE);
                 break;
             case R.id.capture_container:
-                ttv_question_1.setVisibility(View.GONE);
+//                ttv_question_1.setVisibility(View.GONE);
                 ttv_question_2.setVisibility(View.GONE);
                 break;
         }
