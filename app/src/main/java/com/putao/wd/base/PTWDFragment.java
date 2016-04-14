@@ -78,7 +78,8 @@ public abstract class PTWDFragment<App extends BasicApplication> extends BasicFr
 
     @Override
     public void onLeftAction() {
-        onBackPressed();
+//        onBackPressed();
+        mActivity.finish();
     }
 
     @Override

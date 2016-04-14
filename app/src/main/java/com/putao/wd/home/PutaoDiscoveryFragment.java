@@ -46,6 +46,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
 
     @Override
     public void onViewCreatedFinish(Bundle saveInstanceState) {
+        navigation_bar.setLeftClickable(false);
+        navigation_bar.getLeftView().setVisibility(View.GONE);
         adapter = new DiscoveryAdapter(mActivity, null);
         adapter.setAnimations(new ScaleInAnimation(1.0F));
         rv_discovery.setAdapter(adapter);

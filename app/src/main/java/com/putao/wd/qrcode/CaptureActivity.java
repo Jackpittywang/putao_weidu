@@ -3,14 +3,11 @@ package com.putao.wd.qrcode;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,13 +27,11 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
-import com.putao.wd.pt_companion.AttentionSuccessActivity;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -450,6 +445,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         String scaneErrorInfo = "请扫描葡萄产品的二维码";
         ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }
+
 
 //    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
 //    private BarCodeData getBarCodeDataFromUrl(String url) {

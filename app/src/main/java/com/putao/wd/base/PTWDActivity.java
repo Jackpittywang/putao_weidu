@@ -1,8 +1,11 @@
 package com.putao.wd.base;
 
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.sunnybear.library.BasicApplication;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.NavigationBar;
 
 import butterknife.Bind;
@@ -96,7 +99,8 @@ public abstract class PTWDActivity<App extends BasicApplication> extends BasicFr
 
     @Override
     public void onLeftAction() {
-        onBackPressed();
+//        onBackPressed();
+        finish();
     }
 
     @Override

@@ -51,6 +51,8 @@ public class PutaoStoreFragment extends PTWDFragment {
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         Logger.d("PutaoStoreFragment启动");
+        navigation_bar.setLeftClickable(false);
+        navigation_bar.getLeftView().setVisibility(View.GONE);
         adapter = new StoreAdapter(mActivity, null);
         adapter.setAnimations(new ScaleInAnimation(1.0F));
         rv_content.setAdapter(adapter);

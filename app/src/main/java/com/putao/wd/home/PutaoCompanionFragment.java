@@ -2,13 +2,13 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountConstants;
@@ -21,6 +21,7 @@ import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -57,12 +58,14 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        navigation_bar.setLeftClickable(false);
+        navigation_bar.getLeftView().setVisibility(View.GONE);
         checkDevice();
     }
 
     private void checkDevice() {
-        Logger.d("IS_DEVICE_BIND",PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false)+"");
-        Logger.d("AccountHelper.isLogin()",AccountHelper.isLogin()+"");
+        Logger.d("IS_DEVICE_BIND", PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) + "");
+        Logger.d("AccountHelper.isLogin()", AccountHelper.isLogin() + "");
         if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) && AccountHelper.isLogin()) {
             rl_companion_empty.setVisibility(View.GONE);
             navigation_bar.setVisibility(View.VISIBLE);
@@ -177,6 +180,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             }
         }
 
+    }
+
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }
 }
 
