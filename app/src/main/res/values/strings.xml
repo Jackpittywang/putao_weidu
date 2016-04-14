@@ -68,8 +68,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_message_center_activity_test">MessageCenterActivityTest</string>
 
-    <string name="question_1">打开葡萄科技产品任一款产品,点击\"帮助\"找到\"葡萄纬度\"入口,点击后获取关注二维码。</string>
-    <string name="question_2">同一台iPad设备使用葡萄科技系列产品,只需要扫描一次二维码即可全部关注,无需逐个扫描关注。</string>
+    <string name="question_1">打开葡萄科技产品任一款产品,点击\"帮助\"找到\"葡萄纬度\"入口,点击后获取关联二维码。</string>
+    <string name="question_2">即使在同一台iPad设备上安装了多个葡萄科技系列产品，也均需逐个扫描进行关联。</string>
 
     <string name="umeng_common_action_info_exist">正在下载中.</string>
     <string name="umeng_common_info_interrupt">下载出错啦，请检查网络后继续。</string>
