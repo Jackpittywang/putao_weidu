@@ -204,6 +204,15 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     }
 
     /**
+     * 再次进入刷新数据
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refreshCommentList();
+    }
+
+    /**
      * 添加监听器
      */
     private void addListener() {

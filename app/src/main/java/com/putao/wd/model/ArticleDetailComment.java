@@ -93,11 +93,11 @@ public class ArticleDetailComment implements Serializable {
         this.count_likes = count_likes;
     }
 
-    public int getComment_count() {
+    public int getCount_comments() {
         return count_comments;
     }
 
-    public void setComment_count(int count_comments) {
+    public void setCount_comments(int count_comments) {
         this.count_comments = count_comments;
     }
 

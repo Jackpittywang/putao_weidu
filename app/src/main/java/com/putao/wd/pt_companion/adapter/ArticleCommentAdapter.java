@@ -77,10 +77,11 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
         holder.sb_cool_icon.setClickable(false);
         holder.sb_cool_icon.setState(comment.is_like());
 
-        if (comment.getComment_count() == 0)
+
+        if (comment.getCount_comments() == 0)
             holder.tv_count_comment.setText("评论");
         else
-            holder.tv_count_comment.setText(comment.getComment_count() + "");
+            holder.tv_count_comment.setText(comment.getCount_comments() + "");
 
         holder.rl_cool.setOnClickListener(new View.OnClickListener() {
             @Override
