@@ -48,7 +48,7 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));
         } else {
-            holder.tv_time.setText("未绑定");
+            holder.tv_time.setText("未关联");
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_main_color_nor));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
         }
