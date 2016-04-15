@@ -113,14 +113,14 @@ public class NotifyFragment extends BasicFragment {
                             rl_no_message.setVisibility(View.VISIBLE);
                             ptl_refresh.setVisibility(View.GONE);
                         }
-//                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
-//                            mPage++;
-//                            rv_content.loadMoreComplete();
-//                        } else rv_content.noMoreLoading();
-                        rv_content.loadMoreComplete();
-                        checkLoadMoreComplete(result);
-                        loading.dismiss();
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
+                            mPage++;
+                            rv_content.loadMoreComplete();
+                        } else rv_content.noMoreLoading();
+//                        rv_content.loadMoreComplete();
+//                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
+                        loading.dismiss();
                     }
                 });
     }
@@ -137,12 +137,12 @@ public class NotifyFragment extends BasicFragment {
                         if (details != null && details.size() > 0) {
                             adapter.addAll(details);
                         }
-//                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
-//                            mPage++;
-//                            rv_content.loadMoreComplete();
-//                        } else rv_content.noMoreLoading();
-                        rv_content.loadMoreComplete();
-                        checkLoadMoreComplete(result);
+                        if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {//result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0
+                            mPage++;
+                            rv_content.loadMoreComplete();
+                        } else rv_content.noMoreLoading();
+//                        rv_content.loadMoreComplete();
+//                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
