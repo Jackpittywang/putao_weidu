@@ -8,7 +8,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -70,6 +73,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     TextView tv_count_comment;
     @Bind(R.id.view_apart)
     View view_apart;
+    @Bind(R.id.pb_webview)
+    ProgressBar pb_webview;
     /* @Bind(R.id.iv_upload_pic)
      ImageDraweeView iv_upload_pic;*/
   /*  @Bind(R.id.sv_load)
@@ -126,6 +131,15 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
         }
         mSharePopupWindow = new SharePopupWindow(mContext);
         wv_load.loadUrl(link_url);
+        wv_load.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                pb_webview.setProgress(newProgress);
+                if (newProgress >= 100)
+                    pb_webview.setVisibility(View.GONE);
+            }
+        });
         setMainTitle(title);
         initData();
         getArticleProperty(link_url);
