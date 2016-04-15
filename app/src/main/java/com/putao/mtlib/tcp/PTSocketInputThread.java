@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.putao.mtlib.jni.MsgpackJNI;
+import com.putao.mtlib.model.CS_CONNECT;
+import com.putao.mtlib.model.CS_NOTICEACK;
 import com.putao.mtlib.model.MessagePackData;
+import com.putao.mtlib.util.MsgPackUtil;
 import com.putao.mtlib.util.PTLoger;
+import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
 
 import java.io.IOException;
@@ -111,8 +115,9 @@ public class PTSocketInputThread extends Thread {
                 redActionBundle.putString(PTMessageReceiver.KeyMessage, msgData.getMsg());
                 intent.putExtras(redActionBundle);
                 mContext.sendBroadcast(intent);
-                PTSenderManager.sharedInstance().sendMsg(PTMessageUtil.getMesageByteArray(PTMessageType.CS_NOTICEACK, null),
-                        null);
+               /* PTSenderManager.sharedInstance().sendMsg(PTMessageUtil.getMesageByteArray(PTMessageType.CS_NOTICEACK, null),
+                        null);*/
+                sendConnectValidate(msgData.getMsgId());
                 break;
         }
 
@@ -121,6 +126,15 @@ public class PTSocketInputThread extends Thread {
             if (mOnSocketResponseListener != null)
                 mOnSocketResponseListener.onResponse(receiveMsg);
         }
+    }
+
+    /**
+     * 发送连接验证
+     */
+    public void sendConnectValidate(int msgId) {
+        CS_NOTICEACK connect = new CS_NOTICEACK();
+        connect.setMsgId(msgId);
+        PTSenderManager.sharedInstance().sendMsg(MsgPackUtil.Pack(connect, PTMessageType.CS_NOTICEACK));
     }
 
     /**

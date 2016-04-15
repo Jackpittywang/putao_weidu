@@ -12,6 +12,7 @@ import java.util.Random;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.query.DeleteQuery;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * 城市操作
@@ -102,6 +103,14 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public void insertFinishDownload(String service_id, String id, String release_time, String content_lists) {
         insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + ""));
+    }
+
+    /**
+     * 或许服务号最新文章时间
+     */
+    public String getNearestTime(String service_id) {
+        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
+        return list.get(0).getRelease_time();
     }
 
     /**

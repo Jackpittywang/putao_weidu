@@ -27,7 +27,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         public final static Property id = new Property(0, String.class, "id", true, "ID");
         public final static Property service_id = new Property(1, String.class, "service_id", false, "SERVICE_ID");
         public final static Property type = new Property(2, String.class, "type", false, "TYPE");
-        public final static Property release_time = new Property(3, String.class, "release_time", false, "RELEASE_TIME");
+        public final static Property release_time = new Property(3, Integer.class, "release_time", false, "RELEASE_TIME");
         public final static Property content_lists = new Property(4, String.class, "content_lists", false, "CONTENT_LISTS");
         public final static Property is_download = new Property(5, String.class, "is_download", false, "IS_DOWNLOAD");
     }

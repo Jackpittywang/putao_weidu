@@ -1,5 +1,6 @@
 package com.putao.wd.qrcode;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -7,7 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -135,15 +136,24 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         animation.setDuration(1200);
         scan_line.startAnimation(animation);*/
         initAnimation();
-        scan_line.startAnimation(animation);
+//        scan_line.startAnimation(animation);
     }
 
     private void initAnimation() {
-        int height = DensityUtil.dp2px(mContext, 250);
-        animation = new TranslateAnimation(0, 0, -height, height);
+        int height = DensityUtil.dp2px(mContext, 280);
+     /*   animation = new TranslateAnimation(0, 0, -height, height);
         animation.setDuration(1200);
         animation.setRepeatCount(-1);
-        animation.setInterpolator(new LinearInterpolator());
+        animation.setInterpolator(new LinearInterpolator());*/
+        ObjectAnimator rotationX = ObjectAnimator
+                .ofFloat(scan_line, "translationY", 0.0F, height);
+        rotationX.setRepeatCount(-1);
+        rotationX.setRepeatMode(Animation.RESTART);
+        rotationX.setDuration(1200);
+        rotationX.start();
+//        scan_line.animate().translationX(1.0f).
+//                .start();
+
     }
 
     @Override

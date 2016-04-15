@@ -16,6 +16,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.pt_companion.GameDetailListActivity;
@@ -31,6 +32,7 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -92,6 +94,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                         for (Companion companion : result) {
                             ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
+                            companion.setRelation_time(Integer.parseInt(dataBaseManager.getNearestTime(companion.getService_id())));
                             companion.setNotDownloadIds(notDownloadIds);
                         }
                         mCompanionAdapter.replaceAll(result);
