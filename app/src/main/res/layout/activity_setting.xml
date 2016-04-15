@@ -35,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         auto:setting_divider_color="@color/divider_color"
+        android:visibility="gone"
         auto:setting_text="@string/clear" />
 
     <com.sunnybear.library.view.SettingItem

@@ -287,6 +287,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 vp_emojis.setVisibility(View.GONE);
                 break;
             case R.id.iv_upload_pic:
+                KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
                 if (!hasPic) {
                     //选择图片
                     BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"相机", "从手机相册选择"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
