@@ -14,6 +14,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.StringUtils;
 
@@ -144,10 +145,11 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
         if (url.contains("inapp=")) return url;
         if (url.contains("?")) url = url + "&inapp=1";
         else url = url + "?inapp=1";
-        url = url + "&token=" + AccountHelper.getCurrentUid();
-        url = url + "&uid=" + AccountHelper.getCurrentToken();
+        url = url + "&token=" + AccountHelper.getCurrentToken();
+        url = url + "&uid=" + AccountHelper.getCurrentUid();
         url = url + "&service_id=" + serviceId;
         url = url + "&device_id=" + AppUtils.getDeviceId(GlobalApplication.getInstance());
+        url = url + "&appid=" + BasicApplication.app_id;
         return url;
     }
 
