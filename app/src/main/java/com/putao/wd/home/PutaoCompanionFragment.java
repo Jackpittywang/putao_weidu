@@ -95,7 +95,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         for (Companion companion : result) {
                             ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
                             try {
-                                companion.setRelation_time(Integer.parseInt(dataBaseManager.getNearestTime(companion.getService_id())));
+                                int time = Integer.parseInt(dataBaseManager.getNearestTime(companion.getService_id()));
+                                if (time > 0) {
+                                    companion.setRelation_time(time);
+                                }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
