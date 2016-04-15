@@ -114,6 +114,15 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
         return list.get(0).getRelease_time();
     }
 
+
+    /**
+     * 或许服务号最新文章时间
+     */
+    public CompanionDB getNearestItem(String service_id) {
+        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
+        if(list == null || list.size() == 0) return null;
+        return list.get(0);
+    }
     /**
      * 删除订阅号的内容
      */

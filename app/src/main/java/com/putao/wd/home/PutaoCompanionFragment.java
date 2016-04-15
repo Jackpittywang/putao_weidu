@@ -20,6 +20,7 @@ import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.qrcode.CaptureActivity;
@@ -103,14 +104,29 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             }
                             ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
                             try {
-                                int time = Integer.parseInt(dataBaseManager.getNearestTime(companion.getService_id()));
-                                if (time > 0) {
-                                    companion.setRelation_time(time);
+                                CompanionDB companionDB = dataBaseManager.getNearestItem(companion.getService_id());
+                                if (companionDB != null){
+                                    int time = Integer.parseInt(companionDB.getRelease_time());
+                                    if (time > 0) {
+                                        companion.setRelation_time(time);
+                                    }
+
+
+
+                                        /*ServiceMessageList serviceMessageList = new ServiceMessageList();
+                                        serviceMessageList.setType(companionDB.getType());
+//                serviceMessageList.setIsShowData(true);
+                                        serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
+                                        serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
+                                        lists.add(serviceMessageList);*/
+
+
                                 }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
-                            if(notDownloadIds.size()>0) companion.setIsShowRed(true);
+//                            companion.setService_description();
+                            if (notDownloadIds.size() > 0) companion.setIsShowRed(true);
                             companion.setNotDownloadIds(notDownloadIds);
                         }
                         mCompanionAdapter.replaceAll(result);
