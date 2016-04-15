@@ -110,6 +110,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
+                            if(notDownloadIds.size()>0) companion.setIsShowRed(true);
                             companion.setNotDownloadIds(notDownloadIds);
                         }
                         mCompanionAdapter.replaceAll(result);
@@ -127,7 +128,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onStart() {
         super.onStart();
-        checkDevice();
+       // checkDevice();
     }
 
     private void addListener() {
@@ -154,6 +155,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             notDownloadIds.removeAll(notDownloadIds);
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
+            companion.setIsShowRed(false);
+            mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
         } else {
             startActivity(CaptureActivity.class);
@@ -196,6 +199,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
                     notDownloadIds.add(id);
+                    companion.setIsShowRed(true);
                     companion.setNotDownloadIds(notDownloadIds);
                     mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
                 }

@@ -27,7 +27,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +42,7 @@ import butterknife.Bind;
  */
 public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Bind(R.id.rv_content)
-    LoadMoreRecyclerView rv_content;
+    BasicRecyclerView rv_content;
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
 
@@ -137,6 +137,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 lists.add(serviceMessageList);
             }
             mGameDetailAdapter.replaceAll(lists);
+            rv_content.scrollToPosition(lists.size()-1);
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
 //        mPage = 1;
@@ -159,6 +160,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
 //                            lists = setIsSameDate(lists);
                             mGameDetailAdapter.addAll(lists);
+                            rv_content.scrollToPosition(lists.size()-1);
                             ptl_refresh.refreshComplete();
 //                            checkLoadMoreComplete(lists);
                             loading.dismiss();
@@ -220,10 +222,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     }
 
     private void checkLoadMoreComplete(ArrayList<ServiceMessageList> result) {
-        if (null == result)
+       /* if (null == result)
             rv_content.noMoreLoading();
         else
-            mPage++;
+            mPage++;*/
     }
 
     private void addListener() {
@@ -233,13 +235,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 ptl_refresh.refreshComplete();
             }
         });
-        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        /*rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 rv_content.loadMoreComplete();
                 rv_content.noMoreLoading();
             }
-        });
+        });*/
         rv_content.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {
             @Override
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
