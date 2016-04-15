@@ -39,8 +39,8 @@ public class ExploreApi {
     private static final String REQUEST_MASTER_DEVICE_NAME = "master_device_name";//控制设备名称
     private static final String STATUS = "status";//控制设备名称
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
-    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//基础url
+    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;

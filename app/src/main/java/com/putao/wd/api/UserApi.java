@@ -36,8 +36,8 @@ public class UserApi {
 
     private static final String REQUEST_NICKNAME = "nickName";
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
-    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-event-dev.putao.com/";//活动,消息,提问使用的地址
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//基础url
+    private static final String BASE_ACTION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//活动,消息,提问使用的地址
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;
