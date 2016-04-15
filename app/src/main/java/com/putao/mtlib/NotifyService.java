@@ -53,15 +53,16 @@ public class NotifyService extends Service {
 
         mPTSenderManager = PTSenderManager.sharedInstance();
         mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                .setHost(HOST).setPort(PORT).setHeartSecond(1 * 1).build());
+                .setHost(HOST).setPort(PORT).setHeartSecond(1 * 60).build());
         mPTSenderManager.init(getApplicationContext());
         mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
             @Override
             public void onResponse(PTRecMessage response) {
-                Logger.d("-------------------++++++++++++++++++", response.getMessage());
+                Logger.d("红点-----------Message", response.getMessage());
+                Logger.d("红点-----------Type", response.getType() + "");
                 switch (response.getType()) {
                     case 2:
-                        Logger.d(mThreadName, "连接成功");
+                        Logger.d("红点-----------", "连接成功");
                         break;
                    /* case 3:
                         String message = response.getMessage();
@@ -118,7 +119,7 @@ public class NotifyService extends Service {
                         public void run() {
                             stopSelf();
                             GlobalApplication.isServiceClose = true;
-                            Logger.d("---------++++", "停止服务");
+                            Logger.d("红点-----------", "停止服务");
                         }
                     }, 60 * 1000);
                     break;

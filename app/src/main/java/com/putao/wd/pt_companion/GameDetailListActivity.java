@@ -139,10 +139,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
             mGameDetailAdapter.replaceAll(lists);
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
-        mPage = 1;
+//        mPage = 1;
         if (null == mCompanion)
             return;
-        ArrayList<String> notDownloadIds = mCompanion.getNotDownloadIds();
+        ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(mServiceId);
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
         mCompanion.setNotDownloadIds(null);
         if (null != serviceSendDatas && serviceSendDatas.size() > 0)
@@ -158,9 +158,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                             }
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
 //                            lists = setIsSameDate(lists);
-                            mGameDetailAdapter.addAll(0, lists);
+                            mGameDetailAdapter.addAll(lists);
                             ptl_refresh.refreshComplete();
-                            checkLoadMoreComplete(lists);
+//                            checkLoadMoreComplete(lists);
                             loading.dismiss();
                         }
 
