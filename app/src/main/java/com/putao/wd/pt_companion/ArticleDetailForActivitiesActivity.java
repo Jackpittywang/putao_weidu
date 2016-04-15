@@ -34,6 +34,7 @@ import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.util.ScanUrlParseUtils;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.putao.wd.webview.PutaoParse;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -130,6 +131,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
             type = messageList.getType();
         }
         mSharePopupWindow = new SharePopupWindow(mContext);
+        link_url = BaseWebViewActivity.getInAppUrl(link_url, "0");
         wv_load.loadUrl(link_url);
         wv_load.setWebChromeClient(new WebChromeClient() {
             @Override
