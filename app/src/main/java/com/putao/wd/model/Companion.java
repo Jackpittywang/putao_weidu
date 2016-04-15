@@ -15,6 +15,8 @@ public class Companion implements Serializable {
     private int relation_time;//更新时间
     private int is_relation;//订阅状态，0未订阅，1已订阅
     private boolean is_unbunding;//是否可以解绑
+    private int sort;//
+    private ServiceMessage auto_reply;//
     private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
 
     public String getService_id() {
@@ -80,4 +82,12 @@ public class Companion implements Serializable {
     public void setNotDownloadIds(ArrayList<String> notDownloadIds) {
         this.notDownloadIds = notDownloadIds;
     }
+    public ServiceMessage getAuto_reply() {
+        return auto_reply;
+    }
+
+    public void setAuto_reply(ServiceMessage auto_reply) {
+        this.auto_reply = auto_reply;
+    }
+
 }

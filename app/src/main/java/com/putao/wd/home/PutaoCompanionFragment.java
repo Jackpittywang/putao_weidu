@@ -19,6 +19,8 @@ import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
@@ -93,6 +95,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         cacheData(url, result);
                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                         for (Companion companion : result) {
+                            ServiceMessage serviceMessage = companion.getAuto_reply();
+                            if (null != serviceMessage && null != serviceMessage.getLists()) {
+                                for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                                    dataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                                }
+                            }
                             ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
                             try {
                                 int time = Integer.parseInt(dataBaseManager.getNearestTime(companion.getService_id()));
