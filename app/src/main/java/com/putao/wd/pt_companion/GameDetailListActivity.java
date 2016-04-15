@@ -160,7 +160,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
 //                            lists = setIsSameDate(lists);
                             mGameDetailAdapter.addAll(lists);
-                            rv_content.scrollToPosition(lists.size()-1);
+                            rv_content.scrollToPosition(mGameDetailAdapter.getItemCount()- 1);
                             ptl_refresh.refreshComplete();
 //                            checkLoadMoreComplete(lists);
                             loading.dismiss();

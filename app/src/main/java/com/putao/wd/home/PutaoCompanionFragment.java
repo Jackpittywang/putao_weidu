@@ -110,17 +110,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                     if (time > 0) {
                                         companion.setRelation_time(time);
                                     }
-
-
-
-                                        /*ServiceMessageList serviceMessageList = new ServiceMessageList();
-                                        serviceMessageList.setType(companionDB.getType());
-//                serviceMessageList.setIsShowData(true);
-                                        serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
-                                        serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
-                                        lists.add(serviceMessageList);*/
-
-
+                                    List<ServiceMessageContent> content_lists= JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
+                                    if (null!=content_lists&&content_lists.size()>=0)
+                                    companion.setService_description(content_lists.get(0).getSub_title());
                                 }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();

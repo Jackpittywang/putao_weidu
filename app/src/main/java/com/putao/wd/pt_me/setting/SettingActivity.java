@@ -7,6 +7,7 @@ import android.view.View;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
@@ -57,6 +58,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
                 IndexActivity.isNotRefreshUserInfo = false;
                 new JPushHeaper().setAlias(mContext, "");
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                 mContext.sendBroadcast(new Intent(GlobalApplication.Fore_Message));
                 finish();
                 break;
