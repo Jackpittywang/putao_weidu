@@ -74,7 +74,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 获取已经下载的文章列表
      */
     public List<CompanionDB> getDownloadArticles(String service_id) {
-        return getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("1")).build().list();
+        return getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("1")).orderAsc(CompanionDBDao.Properties.release_time).build().list();
     }
 
     /**
@@ -110,9 +110,19 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public String getNearestTime(String service_id) {
         List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
+        if(list == null || list.size() == 0) return "0";
         return list.get(0).getRelease_time();
     }
 
+
+    /**
+     * 或许服务号最新文章时间
+     */
+    public CompanionDB getNearestItem(String service_id) {
+        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
+        if(list == null || list.size() == 0) return null;
+        return list.get(0);
+    }
     /**
      * 删除订阅号的内容
      */

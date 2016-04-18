@@ -2,6 +2,7 @@ package com.putao.wd.home.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -53,8 +54,9 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
         }
         int size = companion.getNotDownloadIds().size();
-        if (0 == size)
+        if (0 == size || companion.isShowRed() == false) {
             holder.tv_number.setVisibility(View.GONE);
+        }
         else {
             holder.tv_number.setVisibility(View.VISIBLE);
             holder.tv_number.setText(size > 99 ? 99 + "" : size + "");

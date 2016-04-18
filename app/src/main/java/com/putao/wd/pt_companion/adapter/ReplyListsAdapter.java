@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
+import com.putao.wd.model.PicClickResult;
+import com.putao.wd.model.PicList;
 import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
@@ -26,6 +29,7 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -106,9 +110,22 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
             holder.iv_articlesdetail_header.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, PictrueBrowseActivity.class);
-                    intent.putExtra(PictrueBrowseActivity.IMAGE_URL, headerInfo.getPic());
-                    mContext.startActivity(intent);
+
+                   // {"index":0,"title":"图片预览","clickIndex":0,"picList":[{"text":"图片","src":"http://weidu.file.dev.putaocloud.com/file/e1b2f333cc844d33a0102d9eef400ec9e7321509.jpg"}]}
+                    PicClickResult picClickResult = new PicClickResult();
+                    picClickResult.setClickIndex(0);
+                    ArrayList<PicList> picLists = new ArrayList<PicList>();
+                    PicList picList = new PicList();
+                    picList.setSrc(headerInfo.getPic());
+                    picLists.add(picList);
+                    picClickResult.setPicList(picLists);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(PictrueBrowseActivity.IMAGE_URL, picClickResult);
+                    Intent intent = new Intent(context, PictrueBrowseActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+
                 }
             });
         } else {

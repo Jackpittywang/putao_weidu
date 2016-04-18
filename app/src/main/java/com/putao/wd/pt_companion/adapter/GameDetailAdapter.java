@@ -10,6 +10,7 @@ import com.putao.wd.model.ServiceMessageList;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
+import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.text.ParseException;
@@ -20,7 +21,7 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/1/13.
  */
-public class GameDetailAdapter extends LoadMoreAdapter<ServiceMessageList, GameDetailAdapter.GameDetailHolder> {
+public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, GameDetailAdapter.GameDetailHolder> {
 
 
     public GameDetailAdapter(Context context, List<ServiceMessageList> serviceMessageList) {

@@ -19,6 +19,9 @@ import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageContent;
+import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
@@ -93,12 +96,29 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         cacheData(url, result);
                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                         for (Companion companion : result) {
+                            ServiceMessage serviceMessage = companion.getAuto_reply();
+                            if (null != serviceMessage && null != serviceMessage.getLists()) {
+                                for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                                    dataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                                }
+                            }
                             ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
                             try {
-                                companion.setRelation_time(Integer.parseInt(dataBaseManager.getNearestTime(companion.getService_id())));
+                                CompanionDB companionDB = dataBaseManager.getNearestItem(companion.getService_id());
+                                if (companionDB != null){
+                                    int time = Integer.parseInt(companionDB.getRelease_time());
+                                    if (time > 0) {
+                                        companion.setRelation_time(time);
+                                    }
+                                    List<ServiceMessageContent> content_lists= JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
+                                    if (null!=content_lists&&content_lists.size()>=0)
+                                    companion.setService_description(content_lists.get(0).getSub_title());
+                                }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
+//                            companion.setService_description();
+                            if (notDownloadIds.size() > 0) companion.setIsShowRed(true);
                             companion.setNotDownloadIds(notDownloadIds);
                         }
                         mCompanionAdapter.replaceAll(result);
@@ -116,7 +136,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onStart() {
         super.onStart();
-        checkDevice();
+       // checkDevice();
     }
 
     private void addListener() {
@@ -143,6 +163,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             notDownloadIds.removeAll(notDownloadIds);
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
+            companion.setIsShowRed(false);
+            mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
         } else {
             startActivity(CaptureActivity.class);
@@ -185,6 +207,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
                     notDownloadIds.add(id);
+                    companion.setIsShowRed(true);
                     companion.setNotDownloadIds(notDownloadIds);
                     mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
                 }
