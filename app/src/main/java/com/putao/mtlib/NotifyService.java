@@ -1,7 +1,6 @@
 package com.putao.mtlib;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,9 +8,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.putao.mtlib.model.CS_CONNECT;
 import com.putao.mtlib.tcp.OnReceiveMessageListener;
 import com.putao.mtlib.tcp.PTMessageConfig;
@@ -23,9 +20,6 @@ import com.putao.mtlib.util.MsgPackUtil;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * 通知服务
@@ -53,16 +47,16 @@ public class NotifyService extends Service {
 
         mPTSenderManager = PTSenderManager.sharedInstance();
         mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                .setHost(HOST).setPort(PORT).setHeartSecond(1 * 60).build());
+                .setHost(HOST).setPort(PORT).setHeartSecond(20 * 60).build());
         mPTSenderManager.init(getApplicationContext());
         mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
             @Override
             public void onResponse(PTRecMessage response) {
-                Logger.d("红点-----------Message", response.getMessage());
-                Logger.d("红点-----------Type", response.getType() + "");
+                Logger.d("ptl-----------Message", response.getMessage());
+                Logger.d("ptl-----------Type", response.getType() + "");
                 switch (response.getType()) {
                     case 2:
-                        Logger.d("红点-----------", "连接成功");
+                        Logger.d("ptl-----------", "连接成功");
                         break;
                    /* case 3:
                         String message = response.getMessage();
@@ -73,10 +67,7 @@ public class NotifyService extends Service {
             }
         });
         sendConnectValidate();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(GlobalApplication.Fore_Message);
-        intentFilter.addAction(GlobalApplication.Not_Fore_Message);
-        mContext.getApplicationContext().registerReceiver(new HomeBroadcastReceiver(), intentFilter);
+
     }
 
     /**
@@ -101,35 +92,4 @@ public class NotifyService extends Service {
         return null;
     }
 
-    /**
-     * 监听程序已经在后台
-     */
-    private class HomeBroadcastReceiver extends BroadcastReceiver {
-        Timer timer;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            switch (intent.getAction()) {
-                case GlobalApplication.Fore_Message:
-                    if (null == timer)
-                        timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            stopSelf();
-                            GlobalApplication.isServiceClose = true;
-                            Logger.d("红点-----------", "停止服务");
-                        }
-                    }, 60 * 1000);
-                    break;
-                case GlobalApplication.Not_Fore_Message:
-                    if (null != timer) {
-                        timer.cancel();
-                        timer = null;
-                    }
-                    break;
-            }
-        }
-    }
 }

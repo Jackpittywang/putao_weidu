@@ -459,4 +459,20 @@ public class CompanionApi {
                 .addParam(REQUST_OPEN_ID, open_id)
                 .build(RequestMethod.POST, URL_COMMPAIN_MESSAGE_PUBLIC);
     }
+
+    /**
+     * 获取公众号公有消息列表
+     */
+    private static final String URL_GET_PUBLIC_MESSAGE = BASE_URL + "/service/message/public";
+
+    /**
+     * 获取公众号公有消息列表
+     *
+     * @param service_id 服务号唯一id
+     */
+    public static Request getPublicMessage(String service_id/*, String open_id*/) {
+        return PTWDRequestHelper.start()
+                .addParam(SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_GET_PUBLIC_MESSAGE);
+    }
 }

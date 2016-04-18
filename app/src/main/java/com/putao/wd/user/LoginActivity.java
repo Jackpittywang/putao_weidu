@@ -165,7 +165,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onSuccess(String url, UserInfo result) {
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-                        mContext.sendBroadcast(new Intent(GlobalApplication.Not_Fore_Message));
+                        mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                         checkInquiryBind(AccountHelper.getCurrentUid());
                         startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
