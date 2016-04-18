@@ -42,7 +42,7 @@
         android:progressTint="@color/text_main_color_sel" />
 
     <com.sunnybear.library.view.BasicWebView
-        android:id="@+id/wv_load"
+        android:id="@+id/wv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/v_line_horizontal"

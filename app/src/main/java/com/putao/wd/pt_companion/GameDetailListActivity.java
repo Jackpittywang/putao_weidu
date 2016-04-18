@@ -137,7 +137,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 lists.add(serviceMessageList);
             }
             mGameDetailAdapter.replaceAll(lists);
-            rv_content.scrollToPosition(lists.size()-1);
+            rv_content.scrollToPosition(lists.size() - 1);
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
 //        mPage = 1;
@@ -160,7 +160,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
 //                            lists = setIsSameDate(lists);
                             mGameDetailAdapter.addAll(lists);
-                            rv_content.scrollToPosition(mGameDetailAdapter.getItemCount()- 1);
+                            rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
                             ptl_refresh.refreshComplete();
 //                            checkLoadMoreComplete(lists);
                             loading.dismiss();
@@ -248,6 +248,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
+                bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });

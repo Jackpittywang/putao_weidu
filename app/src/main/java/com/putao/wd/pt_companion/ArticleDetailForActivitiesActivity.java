@@ -53,13 +53,13 @@ import butterknife.OnClick;
 /**
  * Created by zhanghao on 2016/4/6.
  */
-public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
+public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity implements OnClickListener {
     public static final String COOL_COUNT = "like_count";
     public static final String COLLECTION_ID = "collection_id";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
-    @Bind(R.id.wv_load)
-    BasicWebView wv_load;
+    /*@Bind(R.id.wv_load)
+    BasicWebView wv_load;*/
     /*    @Bind(R.id.rv_content)
         LoadMoreRecyclerView rv_content;*/
     @Bind(R.id.ll_cool)
@@ -101,7 +101,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
+        super.onViewCreatedFinish(saveInstanceState);
         Collection collection = (Collection) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         final ServiceMessageContent content_list;
         if (null != collection) {
@@ -117,7 +117,8 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
             article_id = collection.getId() + "";
             title = collection.getTitle();
             sub_title = collection.getSubtitle();
-            cover_pic = collection.getHead_img();
+//            cover_pic = collection.getHead_img();
+            cover_pic = sharePicFromPage;
             this.link_url = link_url;
         } else {
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
@@ -132,7 +133,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
         }
         mSharePopupWindow = new SharePopupWindow(mContext);
         link_url = BaseWebViewActivity.getInAppUrl(link_url, "0");
-        wv_load.loadUrl(link_url);
+        /*wv_load.loadUrl(link_url);
         wv_load.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -141,7 +142,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
                 if (newProgress >= 100)
                     pb_webview.setVisibility(View.GONE);
             }
-        });
+        });*/
         setMainTitle(title);
         initData();
         getArticleProperty(link_url);
@@ -149,7 +150,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
     }
 
     private void addListener() {
-        wv_load.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
+       /* wv_load.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {
                 if (PutaoParse.PAGE_SETTING.equals(scheme)) {
@@ -163,7 +164,7 @@ public class ArticleDetailForActivitiesActivity extends PTWDActivity<GlobalAppli
             public void onWebPageLoaderFinish(String url) {
 
             }
-        });
+        });*/
 
 
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
