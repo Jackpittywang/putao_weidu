@@ -48,6 +48,8 @@ public class OfficialAccountsActivity extends PTWDActivity {
     TextView tv_recommend;
     @Bind(R.id.btn_cancel_associate)
     Button btn_cancel_associate;
+    @Bind(R.id.btn_look_history)
+    Button btn_look_history;
 
 
 //    @Bind(R.id.no_cancel)
@@ -86,6 +88,15 @@ public class OfficialAccountsActivity extends PTWDActivity {
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+        //查看历史文章
+        btn_look_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
+                startActivity(LookHistoryActivity.class, bundle);
             }
         });
     }
