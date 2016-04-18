@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Collection;
@@ -14,7 +15,9 @@ import com.putao.wd.pt_companion.adapter.LookHistoryAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -62,6 +65,15 @@ public class LookHistoryActivity extends PTWDActivity {
             @Override
             public void onLoadMore() {
                 loadMoreData();
+            }
+        });
+        rv_lookHistory.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {
+            @Override
+            public void onItemClick(ServiceMessageList serviceMessageList, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
+                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });
     }
