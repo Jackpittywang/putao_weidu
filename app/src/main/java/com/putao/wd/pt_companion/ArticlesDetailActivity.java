@@ -1,17 +1,26 @@
 package com.putao.wd.pt_companion;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.SelectPopupWindow;
+import com.putao.wd.model.ArticleDetailComment;
 import com.putao.wd.model.CompanionCommentDetail;
 import com.putao.wd.model.ReplyHeaderInfo;
 import com.putao.wd.model.ReplyLists;
@@ -20,6 +29,7 @@ import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
@@ -31,6 +41,7 @@ import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
+import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +56,9 @@ import butterknife.OnClick;
  */
 public class ArticlesDetailActivity extends PTWDActivity implements View.OnClickListener {
     public static final String EVENT_COUNT_COOL = "event_count_cool";
+    public static final String EVENT_DELETE_CREATE_COMMENT = "event_delete_create_comment";
+    private int mSuperPosition;
+    public final static String POSITION = "position";
 
     private String action_id = "1";
     private int page = 1;
@@ -90,6 +104,8 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
     private boolean isReply;
     private SharePopupWindow mSharePopupWindow;//分享弹框
 
+    private SelectPopupWindow mSelectPopupWindow;
+
     private boolean is_pic = false;// 是否可以发表图片
     private boolean is_comment = false;// 是否可以评论
     private boolean is_becommented = false;//是否可以对评论进行回复
@@ -107,6 +123,8 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
         addNavigation();
         mSharePopupWindow = new SharePopupWindow(mContext);
         mMinLenght = 0;
+        mSuperPosition = args.getInt(POSITION);
+
 
         Bundle data = getIntent().getExtras();
         if (data != null && data.containsKey("wd_mid")) {
@@ -123,6 +141,42 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
             return;
         }
 
+        mSelectPopupWindow = new SelectPopupWindow(mContext) {
+            @Override
+            public void onFirstClick(View v) {
+                final ReplyLists item = mReplyListsAdapter.getItem(mPosition);
+                if (AccountHelper.getCurrentUid().equals(item.getUid())) {
+                    //删除评论
+                    String comment_id = item.getComment_id();
+                    networkRequest(ExploreApi.deleteArticleComment(comment_id), new SimpleFastJsonCallback<String>(String.class, loading) {
+
+                        @Override
+                        public void onSuccess(String url, String result) {
+//                            adapter.delete(item);
+                            getNewCommentData();
+                            EventBusHelper.post(mSuperPosition, EVENT_DELETE_CREATE_COMMENT);
+                        }
+                    });
+                } else {
+                    ToastUtils.showToastShort(mContext, "感谢您的举报，我们会尽快处理");
+                }
+            }
+
+            @Override
+            public void onSecondClick(View v) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        reply();
+//                    }
+//                }, 200);
+            }
+        };
+
+        mSelectPopupWindow.tv_second.setVisibility(View.GONE);
+        mSelectPopupWindow.tv_second.setText("回复");
+
+
         emojiMap = mApp.getEmojis();
         emojis = new ArrayList<>();
         if (emojiMap == null)
@@ -133,9 +187,10 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
         vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
 
         getNewCommentData();
-        addListener();
+
     }
 
+    // 初始化及刷新界面
     private void getNewCommentData() {
         //
         networkRequest(CompanionApi.getCompanyArticleComment(mWd_mid, mSid, mComment_id, String.valueOf(mPage)), new SimpleFastJsonCallback<CompanionCommentDetail>(CompanionCommentDetail.class, loading) {
@@ -175,7 +230,7 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
                 reply_lists.add(0, new ReplyLists());
                 mReplyListsAdapter = new ReplyListsAdapter(mContext, reply_lists, replyHeaderInfo);
                 rv_others_comment.setAdapter(mReplyListsAdapter);
-
+                addListener();
             }
         });
     }
@@ -230,6 +285,47 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
                         });
             }
         });
+
+
+        rv_others_comment.setOnItemLongClickListener(new OnItemLongClickListener<ReplyLists>() {
+
+            @Override
+            public void onItemLongClick(ReplyLists replyLists, int position) {
+                if (position == 0) {
+                    return;
+                }
+
+                mPosition = mReplyListsAdapter.getItems().indexOf(replyLists);
+                if (AccountHelper.getCurrentUid().equals(replyLists.getUid())) {
+                    mSelectPopupWindow.tv_first.setText("删除");
+                    mSelectPopupWindow.tv_first.setTextColor(0xff6666CC);
+                } else {
+                    mSelectPopupWindow.tv_first.setText("举报");
+                    mSelectPopupWindow.tv_first.setTextColor(0xffcc0000);
+                }
+                mSelectPopupWindow.show(rl_comment_second);
+                isShowEmoji = false;//关闭表情包
+                vp_emojis.setVisibility(View.GONE);
+                KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
+            }
+        });
+//        rv_others_comment.setOnItemLongClickListener(new OnItemLongClickListener<ArticleDetailComment>() {
+//            @Override
+//            public void onItemLongClick(ArticleDetailComment comment, int position) {
+//                mPosition = mReplyListsAdapter.getItems().indexOf(comment);
+//                if (AccountHelper.getCurrentUid().equals(comment.getUid())) {
+//                    mSelectPopupWindow.tv_first.setText("删除");
+//                    mSelectPopupWindow.tv_first.setTextColor(0xff6666CC);
+//                } else {
+//                    mSelectPopupWindow.tv_first.setText("举报");
+//                    mSelectPopupWindow.tv_first.setTextColor(0xffcc0000);
+//                }
+//                mSelectPopupWindow.show(rl_comment_second);
+//                isShowEmoji = false;//关闭表情包
+//                vp_emojis.setVisibility(View.GONE);
+//                KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
+//            }
+//        });
     }
 
     private void resetMsg() {

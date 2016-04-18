@@ -638,5 +638,4 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                     }
                 });
     }
-
 }
