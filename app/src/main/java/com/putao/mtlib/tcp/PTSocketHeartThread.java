@@ -50,9 +50,10 @@ class PTSocketHeartThread extends Thread {
                 PTLoger.d("SocketConnect--is---------true/");
                 PTSenderManager.sharedInstance().sendMsg(PingBytes, null);
                 canConnectToServer = true;
+            }else{
+                PTLoger.d("SocketConnect--is---------false/");
             }
             if (canConnectToServer == false) {
-                PTLoger.d("SocketConnect--is---------false/");
                 reConnect();
             }
             try {

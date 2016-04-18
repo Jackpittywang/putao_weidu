@@ -470,7 +470,7 @@ public class CompanionApi {
      *
      * @param service_id 服务号唯一id
      */
-   public static Request getPublicMessage(String service_id*//*, String open_id*//*) {
+    public static Request getPublicMessage(String service_id/*, String open_id*/) {
         return PTWDRequestHelper.start()
                 .addParam(SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_GET_PUBLIC_MESSAGE);
