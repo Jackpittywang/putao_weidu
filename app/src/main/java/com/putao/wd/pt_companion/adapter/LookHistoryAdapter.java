@@ -10,7 +10,6 @@ import com.putao.wd.model.ServiceMessageList;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
-import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
 import java.util.List;
@@ -20,11 +19,11 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/4/18.
  */
-public class LookHisotryAdapter extends LoadMoreAdapter<ServiceMessageList, LookHisotryAdapter.HistoryDetailHolder> {
+public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, LookHistoryAdapter.LookViewHolder> {
 
 
-    public LookHisotryAdapter(Context context, List<ServiceMessageList> serviceMessageList) {
-        super(context, serviceMessageList);
+    public LookHistoryAdapter(Context context, List<ServiceMessageList> serviceMessageLists) {
+        super(context, serviceMessageLists);
     }
 
     @Override
@@ -33,12 +32,12 @@ public class LookHisotryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
     }
 
     @Override
-    public LookHisotryAdapter.HistoryDetailHolder getViewHolder(View itemView, int viewType) {
-        return new HistoryDetailHolder(itemView);
+    public LookViewHolder getViewHolder(View itemView, int viewType) {
+        return new LookViewHolder(itemView);
     }
 
     @Override
-    public void onBindItem(final LookHisotryAdapter.HistoryDetailHolder holder, final ServiceMessageList serviceMessageList, final int position) {
+    public void onBindItem(LookViewHolder holder, ServiceMessageList serviceMessageList, int position) {
         ServiceMessageContent serviceMessageContent = serviceMessageList.getContent_lists().get(0);
         holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
         holder.tv_title.setText(serviceMessageContent.getTitle());
@@ -47,12 +46,9 @@ public class LookHisotryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
         date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         holder.tv_time.setVisibility(View.VISIBLE);
         holder.tv_time.setText("───  " + date + "  ───");
-        /*if (serviceMessageList.isShowData()) {
-        } else
-            holder.tv_time.setVisibility(View.GONE);*/
     }
 
-    static class HistoryDetailHolder extends BasicViewHolder {
+    static class LookViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_sign)
         ImageDraweeView iv_sign;
         @Bind(R.id.tv_title)
@@ -62,7 +58,7 @@ public class LookHisotryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
         @Bind(R.id.tv_time)
         TextView tv_time;
 
-        public HistoryDetailHolder(View itemView) {
+        public LookViewHolder(View itemView) {
             super(itemView);
         }
     }

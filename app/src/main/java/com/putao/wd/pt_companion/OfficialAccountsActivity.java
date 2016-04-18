@@ -1,12 +1,9 @@
 package com.putao.wd.pt_companion;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,16 +18,12 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Companion;
 import com.putao.wd.user.LoginActivity;
-import com.squareup.okhttp.Request;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
-import org.w3c.dom.Text;
 
 import butterknife.Bind;
 

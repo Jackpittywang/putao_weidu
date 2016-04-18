@@ -453,10 +453,11 @@ public class CompanionApi {
     /**
      * 查看历史文章信息
      */
-    public static Request lookHistoryData(String service_id, String open_id) {
+    public static Request lookHistoryData(String service_id, String open_id, String page) {
         return PTWDRequestHelper.find()
                 .addParam(REQUEST_SERVICE_ID, service_id)
                 .addParam(REQUST_OPEN_ID, open_id)
+                .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.POST, URL_COMMPAIN_MESSAGE_PUBLIC);
     }
 
