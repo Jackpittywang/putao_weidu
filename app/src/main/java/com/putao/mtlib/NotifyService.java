@@ -47,7 +47,7 @@ public class NotifyService extends Service {
 
         mPTSenderManager = PTSenderManager.sharedInstance();
         mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                .setHost(HOST).setPort(PORT).setHeartSecond(20 * 60).build());
+                .setHost(HOST).setPort(PORT).setHeartSecond(1 * 30).build());
         mPTSenderManager.init(getApplicationContext());
         mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
             @Override
@@ -85,6 +85,11 @@ public class NotifyService extends Service {
         return MD5Util.getMD5Str(deviceid + appid + secret).toUpperCase();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPTSenderManager.stopThreads();
+    }
 
     @Nullable
     @Override

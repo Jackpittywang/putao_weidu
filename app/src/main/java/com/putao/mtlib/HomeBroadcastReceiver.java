@@ -52,7 +52,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                         GlobalApplication.isServiceClose = true;
 //                        stopSelf();
                     }
-                }, 10 * 1000);
+                }, 300 * 1000);
                 break;
         }
     }

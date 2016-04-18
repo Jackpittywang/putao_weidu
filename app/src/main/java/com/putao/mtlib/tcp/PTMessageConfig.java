@@ -9,7 +9,7 @@ public class PTMessageConfig {
 
     private String SOCKET_SERVER;
     private int SOCKET_PORT;
-    private int SOCKET_HEART_SECOND = 20;
+    private int SOCKET_HEART_SECOND = 30;
 
     public final static int SOCKET_TIMOUT = 60 * 1000;
 
