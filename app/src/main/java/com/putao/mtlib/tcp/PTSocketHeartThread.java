@@ -42,9 +42,8 @@ class PTSocketHeartThread extends Thread {
         return PTTCPClient.instance().reConnect();
     }
 
-
     public void run() {
-        isStop = false;
+//        isStop = false;
         while (!isStop) {
             boolean canConnectToServer = false;
             if (PTTCPClient.instance().isConnect()) {
