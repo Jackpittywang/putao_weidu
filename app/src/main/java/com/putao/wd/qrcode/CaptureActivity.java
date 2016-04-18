@@ -140,7 +140,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     }
 
     private void initAnimation() {
-        int height = DensityUtil.dp2px(mContext, 130);
+        int height = DensityUtil.dp2px(mContext, 125);
      /*   animation = new TranslateAnimation(0, 0, -height, height);
         animation.setDuration(1200);
         animation.setRepeatCount(-1);
@@ -149,7 +149,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 .ofFloat(scan_line, "translationY", -height, height);
         rotationX.setRepeatCount(-1);
         rotationX.setRepeatMode(Animation.RESTART);
-        rotationX.setDuration(1000);
+        rotationX.setDuration(2000);
         rotationX.start();
 //        scan_line.animate().translationX(1.0f).
 //                .start();

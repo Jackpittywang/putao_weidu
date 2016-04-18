@@ -59,7 +59,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 IndexActivity.isNotRefreshUserInfo = false;
                 new JPushHeaper().setAlias(mContext, "");
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                mContext.sendBroadcast(new Intent(GlobalApplication.Fore_Message));
+                mContext.sendBroadcast(new Intent(GlobalApplication.OUT_FORE_MESSAGE));
                 finish();
                 break;
             case R.id.si_clear:

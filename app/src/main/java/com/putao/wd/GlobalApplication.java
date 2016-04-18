@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.putao.mtlib.HomeBroadcastReceiver;
 import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
@@ -41,6 +42,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
     public static boolean isServiceClose;
+    public static Intent redServiceIntent;
 
     private DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
@@ -108,9 +110,9 @@ public class GlobalApplication extends BasicApplication {
         //启动推送
         startRedDotService();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.putao.isNotFore.message");
-        registerReceiver(new HomeBroadcastReceiver(), intentFilter);
-        // Initialize ImageLoader with configuration.
+        intentFilter.addAction(IN_FORE_MESSAGE);
+        intentFilter.addAction(OUT_FORE_MESSAGE);
+        getApplicationContext().registerReceiver(HomeBroadcastReceiver.getInstance(), intentFilter);
         ImageLoaderUtil.initImageLoader(this);
 
 
@@ -149,9 +151,10 @@ public class GlobalApplication extends BasicApplication {
      */
     private void startRedDotService() {
         if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
-        Intent intent = new Intent(ACTION_PUSH_SERVICE);
-        intent.setPackage("com.putao.wd");
-        startService(intent);
+        redServiceIntent = new Intent(ACTION_PUSH_SERVICE);
+        redServiceIntent.setPackage("com.putao.wd");
+        startService(redServiceIntent);
+        isServiceClose = true;
     }
 
     /**
@@ -231,9 +234,9 @@ public class GlobalApplication extends BasicApplication {
         ActivityManager.getInstance().killProcess(getApplicationContext());
     }
 
-    /**
+/*    *//**
      * 监听程序已经在后台
-     */
+     *//*
     private class HomeBroadcastReceiver extends BroadcastReceiver {
 
         @Override
@@ -243,15 +246,15 @@ public class GlobalApplication extends BasicApplication {
                 isServiceClose = false;
             }
         }
-    }
+    }*/
 
 
     /**
      * 有此至下为常量定义
      */
     public static final String MAP_EMOJI = "map_emoji";
-    public static final String Fore_Message = "com.putao.isFore.message";
-    public static final String Not_Fore_Message = "com.putao.isNotFore.message";
+    public static final String IN_FORE_MESSAGE = "com.putao.inFore.message";
+    public static final String OUT_FORE_MESSAGE = "com.putao.outFore.message";
     public static final String IS_DEVICE_BIND = "is_device_bind";
     //===================preference key===========================
     public static final String PREFERENCE_KEY_UID = "uid";
