@@ -83,7 +83,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                             rv_content.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_stroe.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0)
                             rv_content.loadMoreComplete();
@@ -97,7 +97,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                         super.onFailure(url, statusCode, msg);
                         ptl_refresh.refreshComplete();
                         rl_no_stroe.setVisibility(View.VISIBLE);
-                        rv_content.setVisibility(View.GONE);
+                        ptl_refresh.setVisibility(View.GONE);
                     }
                 }, 60 * 1000);
     }
@@ -118,7 +118,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                             rv_content.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_stroe.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
                         if (result.getCurrent_page() != result.getTotal_page() && result.getTotal_page() != 0) {
                             currentPage++;

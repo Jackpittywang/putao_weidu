@@ -83,4 +83,19 @@
         android:layout_height="0.5dp"
         android:background="@color/divider_color" />
 
+    <Button
+        android:id="@+id/btn_look_history"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        android:text="查看历史文章"
+        android:textColor="@color/text_color_red"
+        android:textSize="@dimen/text_size_16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider_color" />
+
 </LinearLayout>

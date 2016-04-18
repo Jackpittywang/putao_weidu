@@ -25,6 +25,7 @@ public class CompanionApi {
     private static final String SERVICE_ID = "sid"; //服务号唯一service_id
     private static final String REQUEST_TYPE = "type";
     private static final String REQUEST_LINK_URL = "link_url";
+    private static final String REQUST_OPEN_ID = "open_id";//用户与公众号的唯一ID
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-wd.putao.com";//基础url
@@ -445,18 +446,33 @@ public class CompanionApi {
     }
 
     /**
+     * 查看历史文章信息
+     */
+    private static final String URL_COMMPAIN_MESSAGE_PUBLIC = BASE_URL + "/service/message/public";
+
+    /**
+     * 查看历史文章信息
+     */
+    public static Request lookHistoryData(String service_id, String open_id) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .addParam(REQUST_OPEN_ID, open_id)
+                .build(RequestMethod.POST, URL_COMMPAIN_MESSAGE_PUBLIC);
+    }
+
+    /**
      * 获取公众号公有消息列表
      */
-//    private static final String URL_GET_PUBLIC_MESSAGE = BASE_URL + "/service/message/public";
+    private static final String URL_GET_PUBLIC_MESSAGE = BASE_URL + "/service/message/public";
 
     /**
      * 获取公众号公有消息列表
      *
      * @param service_id 服务号唯一id
      */
-   /* public static Request getPublicMessage(String service_id*//*, String open_id*//*) {
+   public static Request getPublicMessage(String service_id*//*, String open_id*//*) {
         return PTWDRequestHelper.start()
                 .addParam(SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_GET_PUBLIC_MESSAGE);
-    }*/
+    }
 }

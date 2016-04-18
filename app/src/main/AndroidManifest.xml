@@ -372,8 +372,8 @@
 
         <activity
             android:name=".webview.BaseWebViewActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <!-- 文章详情页-->
         <activity
             android:name=".pt_companion.ArticleDetailsActivity"
@@ -385,6 +385,10 @@
         <!-- 葡萄公众号账号-->
         <activity
             android:name=".pt_companion.OfficialAccountsActivity"
+            android:screenOrientation="portrait" />
+        <!--葡萄公众帐号的查看历史文章列表-->
+        <activity
+            android:name=".pt_companion.LookHistoryActivity"
             android:screenOrientation="portrait" />
         <!-- 话题 \创意\运营详情页-->
         <activity
