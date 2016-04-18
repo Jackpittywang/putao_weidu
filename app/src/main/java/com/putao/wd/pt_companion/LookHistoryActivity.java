@@ -8,12 +8,10 @@ import com.putao.wd.R;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.ServiceMessage;
-import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
-import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
+import com.putao.wd.pt_companion.adapter.LookHisotryAdapter;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/4/18.
  */
-public class LookHistoryActivity extends PTWDActivity {
+public class LookHistoryActivity extends PTWDActivity implements LoadMoreRecyclerView.OnLoadMoreListener {
     public static final String HISTORY_SERVICE_ID = "history_service_id";
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
@@ -33,9 +31,9 @@ public class LookHistoryActivity extends PTWDActivity {
     @Bind(R.id.rl_no_history)
     RelativeLayout rl_no_history;
 
-    List<ServiceMessageList> contents;
+    ArrayList<ServiceMessageList> contents;
     private String service_id;
-    GameDetailAdapter adapter;
+    LookHisotryAdapter adapter;
     int currentPage = 1;
 
     @Override
@@ -46,11 +44,12 @@ public class LookHistoryActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         service_id = args.getString(HISTORY_SERVICE_ID);
-        adapter = new GameDetailAdapter(this, null);
+        adapter = new LookHisotryAdapter(this, null);
         rv_lookHistory.setAdapter(adapter);
         addListener();
         lookHistoryData(service_id);
     }
+
 
     @Override
     protected String[] getRequestUrls() {
@@ -58,12 +57,7 @@ public class LookHistoryActivity extends PTWDActivity {
     }
 
     public void addListener() {
-        rv_lookHistory.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                loadMoreHistory(service_id);
-            }
-        });
+        rv_lookHistory.setOnLoadMoreListener(this);
     }
 
     /**
@@ -135,5 +129,10 @@ public class LookHistoryActivity extends PTWDActivity {
                 ptl_refresh.refreshComplete();
             }
         });
+    }
+
+    @Override
+    public void onLoadMore() {
+        loadMoreHistory(service_id);
     }
 }
