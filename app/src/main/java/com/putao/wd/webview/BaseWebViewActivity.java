@@ -32,6 +32,10 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
     public static final String TITLE = "title";
     public static final String SERVICE_ID = "service_id";
 
+    public static String titleFromPage = "";
+    public static String descriptionFromPage = "";
+    public static String sharePicFromPage = "";
+
     @Bind(R.id.wv_content)
     WebView wv_content;
 
@@ -108,7 +112,12 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                     case ProtocolHeader.PROTOCOL_HEADER_PUTAO:
                         String scheme = getScheme(url);
                         String content = getContentUrl(url);
-                        PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
+                        if (PutaoParse.PAGE_SETTING.equals(scheme)) {
+                            titleFromPage = JSON.parseObject(content).getString("article_title");
+                            descriptionFromPage = JSON.parseObject(content).getString("description");
+                            sharePicFromPage = JSON.parseObject(content).getString("share_pic");
+                        } else
+                            PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
                         return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);
