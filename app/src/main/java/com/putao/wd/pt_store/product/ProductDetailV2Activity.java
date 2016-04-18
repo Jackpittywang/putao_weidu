@@ -35,6 +35,7 @@ import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
@@ -177,7 +178,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), imageUrl, storeProduct.getMobile_url());
                 }
             }
 
@@ -243,6 +244,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 subtitle = result.getSubtitle();
                 shareUrl = result.getShare();
                 imageUrl = result.getPictures().get(0);
+                imageUrl = ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_96x96);
                 tv_product_price.setText(result.getPrice());
                 mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, null == result.getId() ? product_id : result.getId(), result.getTitle(), result.getSubtitle());
                 loading.dismiss();

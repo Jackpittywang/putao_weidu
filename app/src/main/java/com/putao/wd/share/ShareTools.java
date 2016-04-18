@@ -123,7 +123,8 @@ public class ShareTools {
             params = new WechatFavorite.ShareParams();
         params.title = title;
         params.text = text;
-        params.imageUrl = ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
+
+        params.imageUrl = imageUrl;
         params.url = url;
         params.setShareType(Platform.SHARE_WEBPAGE);
 

@@ -30,6 +30,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
@@ -195,6 +196,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 subtitle = result.getSubtitle();
                 shareUrl = result.getShare();
                 imageUrl = result.getPictures().get(0);
+                imageUrl = ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_96x96);
                 tv_product_title.setText(result.getTitle());
                 tv_product_intro.setText(result.getSubtitle());
                 tv_product_price.setText(result.getPrice());
