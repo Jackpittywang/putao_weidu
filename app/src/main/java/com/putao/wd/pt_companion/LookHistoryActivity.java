@@ -46,7 +46,7 @@ public class LookHistoryActivity extends PTWDActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         service_id = args.getString(HISTORY_SERVICE_ID);
-        adapter = new LookHistoryAdapter(this, null);
+        adapter = new LookHistoryAdapter(mContext, null);
         rv_lookHistory.setAdapter(adapter);
         lookHistoryData();
         addListener();
@@ -61,7 +61,7 @@ public class LookHistoryActivity extends PTWDActivity {
         rv_lookHistory.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                loaadMoreData();
+                loadMoreData();
             }
         });
     }
@@ -74,14 +74,15 @@ public class LookHistoryActivity extends PTWDActivity {
         networkRequest(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
+                cacheData(url, result);
                 if (result != null && result.getLists().size() > 0) {
                     messageLists = result.getLists();
                     adapter.replaceAll(messageLists);
                     rv_lookHistory.setVisibility(View.VISIBLE);
                     rl_no_history.setVisibility(View.GONE);
                 } else {
-                    rv_lookHistory.setVisibility(View.GONE);
                     rl_no_history.setVisibility(View.VISIBLE);
+                    ptl_refresh.setVisibility(View.GONE);
                 }
                 ptl_refresh.refreshComplete();
                 checkLoadMoreComplete(messageLists);
@@ -99,20 +100,16 @@ public class LookHistoryActivity extends PTWDActivity {
     /**
      * 上拉加载更多
      */
-    private void loaadMoreData() {
+    private void loadMoreData() {
         networkRequest(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
+                cacheData(url, result);
                 if (result != null && result.getLists().size() > 0) {
                     messageLists = result.getLists();
                     adapter.addAll(messageLists);
-                    rv_lookHistory.setVisibility(View.VISIBLE);
-                    rl_no_history.setVisibility(View.GONE);
-                } else {
-                    rv_lookHistory.setVisibility(View.GONE);
-                    rl_no_history.setVisibility(View.VISIBLE);
                 }
-                ptl_refresh.refreshComplete();
+                rv_lookHistory.loadMoreComplete();
                 checkLoadMoreComplete(messageLists);
                 loading.dismiss();
             }

@@ -27,8 +27,7 @@
             auto:divider_color="@color/white"
             auto:divider_height="2dp"
             auto:duration_animator="500"
-            auto:has_row_divider="true"
-            auto:is_start_animator="true" />
+            auto:has_row_divider="true" />
     </com.sunnybear.library.view.PullToRefreshLayout>
     <!--没有陪伴数据时-->
     <RelativeLayout
