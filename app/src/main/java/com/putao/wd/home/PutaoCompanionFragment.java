@@ -134,7 +134,6 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_commpain.setVisibility(View.VISIBLE);
                             ptl_refresh.setVisibility(View.GONE);
@@ -147,7 +146,6 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         rl_no_commpain_failure.setVisibility(View.VISIBLE);
-                        rl_no_commpain.setVisibility(View.GONE);
                         ptl_refresh.setVisibility(View.GONE);
                         ptl_refresh.refreshComplete();
                     }
@@ -157,7 +155,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onStart() {
         super.onStart();
-        // checkDevice();
+         checkDevice();
     }
 
     private void addListener() {

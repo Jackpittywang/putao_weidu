@@ -87,7 +87,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                         if (products != null && products.size() > 0) {
                             adapter.replaceAll(products);
                             rl_no_stroe.setVisibility(View.GONE);
-                            rv_content.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_stroe.setVisibility(View.VISIBLE);
                             ptl_refresh.setVisibility(View.GONE);
@@ -102,10 +102,9 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        ptl_refresh.refreshComplete();
-                        rl_no_stroe.setVisibility(View.GONE);
                         rl_no_store_failure.setVisibility(View.VISIBLE);
                         ptl_refresh.setVisibility(View.GONE);
+                        ptl_refresh.refreshComplete();
                     }
                 }, 60 * 1000);
     }
