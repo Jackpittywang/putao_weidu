@@ -9,6 +9,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.controller.NetworkLogActivty;
+import com.sunnybear.library.util.AppUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +23,10 @@ import butterknife.Bind;
 public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
     @Bind(R.id.tvLog)
     TextView tvLog;
+    @Bind(R.id.tv_build_code)
+    TextView tv_build_code;
+
+    private static String BUILD = "build  ";
     private int count = 0;
 
     @Override
@@ -32,6 +37,7 @@ public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        tv_build_code.setText(BUILD + AppUtils.getVersionCode(mContext));
         tvLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

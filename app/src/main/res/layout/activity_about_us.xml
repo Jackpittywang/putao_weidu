@@ -71,5 +71,16 @@
             android:layout_marginBottom="50dp"
             android:text="2016 Putao.com"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_build_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="build 5"
+            android:textSize="@dimen/text_size_1" />
     </RelativeLayout>
 </LinearLayout>
