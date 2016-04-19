@@ -56,8 +56,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="陪孩子一起学数学"
+            android:text="陪孩子一起学数学陪孩子一起学数学陪孩子一起学数学陪孩子一起学数学陪孩子一起学数学陪孩子一起学数学陪孩子一起学数学陪孩子一起学数学"
+            android:lineSpacingExtra="6dp"
             android:maxLines="2"
             android:textColor="@color/color_313131"
             android:textSize="@dimen/text_size_16sp" />
