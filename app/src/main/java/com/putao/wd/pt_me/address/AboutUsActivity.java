@@ -25,6 +25,8 @@ public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements 
     TextView tvLog;
     @Bind(R.id.tv_build_code)
     TextView tv_build_code;
+    @Bind(R.id.tv_net)
+    TextView tv_net;
 
     private static String BUILD = "build  ";
     private int count = 0;
@@ -38,6 +40,15 @@ public class AboutUsActivity extends PTWDActivity<GlobalApplication> implements 
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         tv_build_code.setText(BUILD + AppUtils.getVersionCode(mContext));
+
+        //设置是否为内外网
+        if (GlobalApplication.isDebug) {
+            tv_net.setVisibility(View.VISIBLE);
+            tv_net.setText("  内");
+        } else {
+            tv_net.setVisibility(View.GONE);
+        }
+
         tvLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
