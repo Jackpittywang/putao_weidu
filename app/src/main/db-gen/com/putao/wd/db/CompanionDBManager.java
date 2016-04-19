@@ -1,6 +1,8 @@
 package com.putao.wd.db;
 
 import com.alibaba.fastjson.JSON;
+import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.CompanionDB;
@@ -43,7 +45,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * @return 城市名列表
      */
     public CompanionDB getCompanInfoById(String id) {
-        return getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id)).unique();
+        return getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).unique();
     }
 
     /**
@@ -51,7 +53,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public List<String> getNotDownloadIds() {
         List<String> notDownloadIds = new ArrayList<>();
-        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0")).listLazy();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).listLazy();
         for (CompanionDB companionDB : companionDBs) {
             notDownloadIds.add(companionDB.getId());
         }
@@ -63,7 +65,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      */
     public ArrayList<String> getNotDownloadIds(String serviceId) {
         ArrayList<String> notDownloadIds = new ArrayList<>();
-        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId)).orderDesc(CompanionDBDao.Properties.release_time).list();
+        List<CompanionDB> companionDBs = getQueryBuilder().where(CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.service_id.eq(serviceId), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).orderDesc(CompanionDBDao.Properties.release_time).list();
         for (CompanionDB companionDB : companionDBs) {
             notDownloadIds.add(companionDB.getId());
         }
@@ -74,14 +76,14 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 获取已经下载的文章列表
      */
     public List<CompanionDB> getDownloadArticles(String service_id) {
-        return getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("1")).orderAsc(CompanionDBDao.Properties.release_time).build().list();
+        return getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("1"), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).orderAsc(CompanionDBDao.Properties.release_time).build().list();
     }
 
     /**
      * 设置文章的下载状态
      */
     public void updataDownloadFinish(String service_id, ServiceMessageList serviceMessageList) {
-        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(serviceMessageList.getId())).unique();
+        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(serviceMessageList.getId()), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).unique();
         unique.setContent_lists(JSON.toJSONString(serviceMessageList.getContent_lists()));
         unique.setIsDownload("1");
         unique.setType(serviceMessageList.getType());
@@ -94,22 +96,21 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 插入没有带下载的文章
      */
     public void insertFixDownload(String service_id, String id) {
-        Random random = new Random();
-        insert(new CompanionDB(id, service_id, "article", "", "", 0 + ""));
+        insert(new CompanionDB(id, service_id, "article", "", "", 0 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid()));
     }
 
     /**
      * 插入已经下载的文章
      */
     public void insertFinishDownload(String service_id, String id, String release_time, String content_lists) {
-        insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + ""));
+        insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid()));
     }
 
     /**
      * 或许服务号最新文章时间
      */
     public String getNearestTime(String service_id) {
-        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
+        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
         if (list == null || list.size() == 0) return "0";
         return list.get(0).getRelease_time();
     }
@@ -119,7 +120,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 或许服务号最新文章时间
      */
     public CompanionDB getNearestItem(String service_id) {
-        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
+        List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
         if (list == null || list.size() == 0) return null;
         return list.get(0);
     }
@@ -128,7 +129,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 删除订阅号的内容
      */
     public void deleteContent(String service_id) {
-        DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id)).buildDelete();
+        DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).buildDelete();
         companionDBDeleteQuery.executeDeleteWithoutDetachingEntities();
 //        rawQuery("delete from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '0'");
     }

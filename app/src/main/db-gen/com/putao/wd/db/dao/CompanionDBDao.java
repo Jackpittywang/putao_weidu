@@ -30,6 +30,8 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         public final static Property release_time = new Property(3, Integer.class, "release_time", false, "RELEASE_TIME");
         public final static Property content_lists = new Property(4, String.class, "content_lists", false, "CONTENT_LISTS");
         public final static Property is_download = new Property(5, String.class, "is_download", false, "IS_DOWNLOAD");
+        public final static Property uid = new Property(6, String.class, "uid", false, "UID");
+        public final static Property key = new Property(7, String.class, "key", false, "KEY");
     }
 
 
@@ -47,12 +49,14 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         String str = "CREATE TABLE " + constraint + "\"" + TABLENAME + "\"" + " (" +
-                "\"" + Properties.id.columnName + "\"" + " TEXT PRIMARY KEY NOT NULL," +
+                "\"" + Properties.id.columnName + "\"" + " TEXT," +
                 "\"" + Properties.service_id.columnName + "\"" + " TEXT NOT NULL," +
                 "\"" + Properties.type.columnName + "\"" + " TEXT," +
                 "\"" + Properties.release_time.columnName + "\"" + " TEXT," +
                 "\"" + Properties.content_lists.columnName + "\"" + " TEXT," +
-                "\"" + Properties.is_download.columnName + "\"" + " TEXT)";
+                "\"" + Properties.is_download.columnName + "\"" + " TEXT," +
+                "\"" + Properties.uid.columnName + "\"" + " TEXT," +
+                "\"" + Properties.key.columnName + "\"" + "  TEXT PRIMARY KEY NOT NULL)";
         db.execSQL(str);
     }
 
@@ -69,7 +73,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
      */
     @Override
     public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset) ? null : cursor.getString(offset);
+        return cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7);
     }
 
     /**
@@ -83,7 +87,9 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
                 cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // type
                 cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // release_time
                 cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // content_lists
-                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // is_download
+                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // is_download
+                cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // uid
+                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // key
         );
         return entity;
     }
@@ -99,6 +105,8 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         entity.setRelease_time(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setContent_lists(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setIsDownload(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setUid(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setKey(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
     }
 
     @Override
@@ -131,6 +139,14 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         String is_download = entity.getIsDownload();
         if (release_time != null) {
             stmt.bindString(6, is_download);
+        }
+        String uid = entity.getUid();
+        if (release_time != null) {
+            stmt.bindString(7, uid);
+        }
+        String key = entity.getKey();
+        if (release_time != null) {
+            stmt.bindString(8, key);
         }
     }
 

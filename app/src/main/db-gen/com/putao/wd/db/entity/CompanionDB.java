@@ -15,14 +15,18 @@ public class CompanionDB extends DBEntity {
     private String content_lists;
     private String isDownload;
     private String service_id;
+    private String uid;
+    private String key;
 
-    public CompanionDB(String id, String service_id, String type, String release_time, String content_lists, String isDownload) {
+    public CompanionDB(String id, String service_id, String type, String release_time, String content_lists, String isDownload, String uid, String key) {
         this.id = id;
         this.type = type;
         this.release_time = release_time;
         this.content_lists = content_lists;
         this.isDownload = isDownload;
         this.service_id = service_id;
+        this.uid = uid;
+        this.key = key;
     }
 
     public String getId() {
@@ -71,5 +75,21 @@ public class CompanionDB extends DBEntity {
 
     public void setService_id(String service_id) {
         this.service_id = service_id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
