@@ -12,6 +12,7 @@ import com.putao.wd.model.Collection;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.adapter.LookHistoryAdapter;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -73,6 +74,7 @@ public class LookHistoryActivity extends PTWDActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
+                bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });

@@ -68,28 +68,31 @@
         android:textColor="@color/text_color_gray"
         android:textSize="@dimen/text_size_12sp" />
 
-    <Button
-        android:id="@+id/btn_cancel_associate"
+
+    <TextView
+        android:id="@+id/tv_look_history"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="20dp"
         android:background="#FFFFFF"
-        android:text="取消关联产品"
-        android:textColor="@color/text_color_red"
+        android:gravity="center"
+        android:text="查看历史文章"
         android:textSize="@dimen/text_size_16sp" />
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/divider_color" />
 
-    <Button
-        android:id="@+id/btn_look_history"
+    <TextView
+        android:id="@+id/tv_cancel_associate"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        android:text="查看历史文章"
+        android:gravity="center"
+        android:text="取消关联产品"
         android:textColor="@color/text_color_red"
         android:textSize="@dimen/text_size_16sp" />
 

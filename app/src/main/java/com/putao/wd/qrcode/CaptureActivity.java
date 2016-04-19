@@ -140,7 +140,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     }
 
     private void initAnimation() {
-        int height = DensityUtil.dp2px(mContext, 125);
+        int height = DensityUtil.dp2px(mContext, 150);
      /*   animation = new TranslateAnimation(0, 0, -height, height);
         animation.setDuration(1200);
         animation.setRepeatCount(-1);

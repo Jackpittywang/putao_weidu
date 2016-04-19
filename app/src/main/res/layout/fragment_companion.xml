@@ -33,7 +33,7 @@
             auto:divider_height="0.5dp"
             auto:divider_marginLeft="15dp"
             auto:has_row_divider="true"
-            auto:is_inner="true" />
+            auto:is_inner="false" />
     </com.sunnybear.library.view.PullToRefreshLayout>
 
     <!--没有陪伴数据时-->

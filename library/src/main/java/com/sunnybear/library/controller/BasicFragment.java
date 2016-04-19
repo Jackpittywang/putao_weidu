@@ -117,7 +117,7 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
     @Override
     public void onStart() {
         super.onStart();
-        loading.dismiss();
+//        loading.dismiss();
     }
 
     @Override

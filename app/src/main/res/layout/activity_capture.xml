@@ -10,10 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <FrameLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/scan_bg" />
+        android:src="@drawable/scan_bg"
+        android:scaleType="matrix" />
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -26,9 +27,9 @@
     <!--取景框-->
     <FrameLayout
         android:layout_width="265dp"
-        android:layout_height="237dp"
+        android:layout_height="245dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="168dp">
+        android:layout_marginTop="175dp">
 
 
         <ImageView
@@ -39,7 +40,7 @@
         <ImageView
             android:id="@+id/scan_line"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/scan_lightline"

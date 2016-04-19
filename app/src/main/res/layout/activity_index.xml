@@ -9,7 +9,7 @@
     <View
         android:id="@+id/v_line_horizontal"
         style="@style/line_horizontal"
-        android:layout_above="@+id/tb_tab"
+        android:layout_above="@+id/tb_index_tab"
         android:visibility="invisible" />
 
 
@@ -61,6 +61,6 @@
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50.5dp" />
+        android:layout_above="@+id/v_line_horizontal" />
 
 </RelativeLayout>

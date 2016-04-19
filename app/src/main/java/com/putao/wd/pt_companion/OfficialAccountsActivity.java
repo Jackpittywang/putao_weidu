@@ -40,10 +40,10 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     TextView tv_official_title;
     @Bind(R.id.tv_recommend)
     TextView tv_recommend;
-    @Bind(R.id.btn_cancel_associate)
-    Button btn_cancel_associate;
-    @Bind(R.id.btn_look_history)
-    Button btn_look_history;
+    @Bind(R.id.tv_cancel_associate)
+    TextView tv_cancel_associate;
+    @Bind(R.id.tv_look_history)
+    TextView tv_look_history;
 
 
 //    @Bind(R.id.no_cancel)
@@ -73,19 +73,19 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         tv_recommend.setText(companion.getService_description());
         mServiceId = companion.getService_id();
         if (companion.is_unbunding())
-            btn_cancel_associate.setVisibility(View.GONE);
+            tv_cancel_associate.setVisibility(View.GONE);
         addListener();
     }
 
     private void addListener() {
-        btn_cancel_associate.setOnClickListener(new View.OnClickListener() {
+        tv_cancel_associate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
             }
         });
         //查看历史文章
-        btn_look_history.setOnClickListener(new View.OnClickListener() {
+        tv_look_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -131,9 +131,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 int http_code = result.getInteger("http_code");
                 String msg = result.getString("msg");
                 if (http_code != 200) {
-                    ToastUtils.showToastShort(mContext, msg);
                     mDialog.dismiss();
-                    loading.dismiss();
+                    ToastUtils.showToastShort(mContext, msg);
                 } else {
                     CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                     dataBaseManager.deleteContent(service_id);
@@ -149,6 +148,12 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             @Override
             public void onFailure(String url, int statusCode, String msg) {
 
+            }
+
+            @Override
+            public void onFinish(String url, boolean isSuccess, String msg) {
+                super.onFinish(url, isSuccess, msg);
+                loading.dismiss();
             }
         });
     }

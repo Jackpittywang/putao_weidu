@@ -16,6 +16,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Collection;
 import com.putao.wd.pt_companion.ArticleDetailForActivitiesActivity;
 import com.putao.wd.pt_companion.GameDetailActivity;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -171,6 +172,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         Bundle bundle = new Bundle();
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, collection);
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
+        bundle.putString(BaseWebViewActivity.URL, collection.getLink_url());
         startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }
 
