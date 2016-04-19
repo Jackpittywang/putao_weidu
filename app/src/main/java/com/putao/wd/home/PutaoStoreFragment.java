@@ -2,8 +2,10 @@ package com.putao.wd.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
@@ -17,6 +19,7 @@ import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.animators.ScaleInAnimation;
@@ -38,6 +41,10 @@ public class PutaoStoreFragment extends PTWDFragment {
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.rl_no_stroe)
     RelativeLayout rl_no_stroe;
+    @Bind(R.id.rl_no_store_failure)
+    RelativeLayout rl_no_store_failure;
+    @Bind(R.id.btn_no_data)
+    Button btn_no_data;
 
     private StoreAdapter adapter;
 
@@ -96,7 +103,8 @@ public class PutaoStoreFragment extends PTWDFragment {
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         ptl_refresh.refreshComplete();
-                        rl_no_stroe.setVisibility(View.VISIBLE);
+                        rl_no_stroe.setVisibility(View.GONE);
+                        rl_no_store_failure.setVisibility(View.VISIBLE);
                         ptl_refresh.setVisibility(View.GONE);
                     }
                 }, 60 * 1000);
@@ -115,7 +123,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                         if (products != null && products.size() > 0) {
                             adapter.replaceAll(products);
                             rl_no_stroe.setVisibility(View.GONE);
-                            rv_content.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_stroe.setVisibility(View.VISIBLE);
                             ptl_refresh.setVisibility(View.GONE);
@@ -131,9 +139,10 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastShort(mActivity, msg);
                         ptl_refresh.refreshComplete();
-                        rl_no_stroe.setVisibility(View.VISIBLE);
-                        rv_content.setVisibility(View.GONE);
+                        rl_no_store_failure.setVisibility(View.VISIBLE);
+                        ptl_refresh.setVisibility(View.GONE);
                     }
                 });
     }
@@ -181,6 +190,15 @@ public class PutaoStoreFragment extends PTWDFragment {
             @Override
             public void onClick(View v) {
                 refreshStoreHome();
+            }
+        });
+        btn_no_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetManager.isNetworkAvailable(mActivity))
+                    ToastUtils.showToastShort(mActivity, "获取数据失败");
+                else
+                    getStoreHome();
             }
         });
     }

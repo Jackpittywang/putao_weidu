@@ -134,11 +134,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
-                            rl_no_commpain_failure.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_commpain.setVisibility(View.VISIBLE);
-                            rl_no_commpain_failure.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
                         }
                         ptl_refresh.refreshComplete();

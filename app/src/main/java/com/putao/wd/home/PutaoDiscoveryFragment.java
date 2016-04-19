@@ -125,10 +125,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                             adapter.replaceAll(result);
                             rl_no_discovery.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
-                            rl_no_discovery_failure.setVisibility(View.GONE);
                         } else {
                             rl_no_discovery.setVisibility(View.VISIBLE);
-                            rl_no_discovery_failure.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
                         }
                         checkLoadMoreComplete(result);
