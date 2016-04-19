@@ -164,6 +164,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, UserInfo result) {
+                        AccountHelper.setUserInfo(result);
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
                         mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                         checkInquiryBind(AccountHelper.getCurrentUid());

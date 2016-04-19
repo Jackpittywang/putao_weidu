@@ -18,6 +18,7 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Companion;
 import com.putao.wd.user.LoginActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -160,14 +161,16 @@ public class OfficialAccountsActivity extends PTWDActivity {
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                        /* if (!is_relation) {//未关联
                         } else {//已关联
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                         }*/
-                        EventBusHelper.post(EVENT_OFFICIAL_URL, EVENT_OFFICIAL_URL);
-                        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-                        startActivity(IndexActivity.class);
-                        finish();
+//                        EventBusHelper.post(EVENT_OFFICIAL_URL, EVENT_OFFICIAL_URL);
+//                        EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+                        ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+//                        startActivity(IndexActivity.class);
+//                        finish();
                     }
                 });
     }
