@@ -95,7 +95,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR, false)) {
             ti_index_companion.hide();
         }
-        if (null != AccountHelper.getCurrentUid())
+        if (AccountHelper.isLogin())
             checkInquiryBind(AccountHelper.getCurrentUid());
 
     }

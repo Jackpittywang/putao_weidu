@@ -16,8 +16,8 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.model.Companion;
-import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -31,7 +31,7 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/4/9.
  */
-public class OfficialAccountsActivity extends PTWDActivity {
+public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     public static final String EVENT_OFFICIAL_URL = "event_official_url";
 
     @Bind(R.id.iv_icon)
@@ -124,7 +124,7 @@ public class OfficialAccountsActivity extends PTWDActivity {
     /**
      * 取消绑定服务号
      */
-    private void cancelServicce(String service_id) {
+    private void cancelServicce(final String service_id) {
         networkRequest(CompanionApi.cancelService(service_id), new JSONObjectCallback() {
             @Override
             public void onSuccess(String url, JSONObject result) {
@@ -135,6 +135,8 @@ public class OfficialAccountsActivity extends PTWDActivity {
                     mDialog.dismiss();
                     loading.dismiss();
                 } else {
+                    CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                    dataBaseManager.deleteContent(service_id);
                     checkInquiryBind(AccountHelper.getCurrentUid());
                 }
             }

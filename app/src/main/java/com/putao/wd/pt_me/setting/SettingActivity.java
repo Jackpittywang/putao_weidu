@@ -63,9 +63,9 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 finish();
                 break;
             case R.id.si_clear:
-                CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                dataBaseManager.deleteContent();
-                ToastUtils.showToastShort(mContext, "清除成功");
+//                CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+//                dataBaseManager.deleteContent();
+//                ToastUtils.showToastShort(mContext, "清除成功");
                 break;
         }
     }
