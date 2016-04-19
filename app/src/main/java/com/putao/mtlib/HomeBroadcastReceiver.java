@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.putao.wd.GlobalApplication;
 import com.sunnybear.library.util.Logger;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,7 +27,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-
+        final boolean isServiceStart = isServiceStart(context);
         switch (intent.getAction()) {
             case GlobalApplication.IN_FORE_MESSAGE:
 //                inFore();
@@ -34,7 +35,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                     timer.cancel();
                     timer = null;
                 }
-                if (GlobalApplication.isServiceClose) {
+                if (GlobalApplication.isServiceClose && !isServiceStart) {
                     context.startService(GlobalApplication.redServiceIntent);
                     GlobalApplication.isServiceClose = true;
                 }
@@ -48,13 +49,26 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                     public void run() {
                         GlobalApplication.isServiceClose = true;
                         Logger.d("ptl-----------", "停止服务");
-                        context.stopService(GlobalApplication.redServiceIntent);
-                        GlobalApplication.isServiceClose = true;
+                        if (isServiceStart) {
+                            context.stopService(GlobalApplication.redServiceIntent);
+                            GlobalApplication.isServiceClose = true;
+                        }
 //                        stopSelf();
                     }
-                }, 2 * 60 * 1000);
+                }, 60 * 1000);
                 break;
         }
+    }
+
+    private boolean isServiceStart(Context context) {
+        android.app.ActivityManager systemService = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<android.app.ActivityManager.RunningServiceInfo> runningServices = systemService.getRunningServices(100);
+        for (android.app.ActivityManager.RunningServiceInfo runningServiceInfo : runningServices) {
+            if ("com.putao.mtlib.NotifyService".equals(runningServiceInfo.service.getClassName().toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 //    abstract void inFore();
