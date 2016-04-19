@@ -2,7 +2,9 @@ package com.putao.wd.webview;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +21,8 @@ import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.StringUtils;
 
 import java.net.URLDecoder;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 
@@ -44,8 +48,6 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
 
     public BaseWebViewActivity() {
     }
-
-
 
 
     private void setWebSettings() {
@@ -129,13 +131,10 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
     }
 
 
-
-
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
     }
-
 
 
     @Override
@@ -162,6 +161,29 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
         return url;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (wv_content != null) {
+            wv_content.getSettings().setBuiltInZoomControls(true);
+            wv_content.setVisibility(View.GONE);
+            long delayTime = ViewConfiguration.getZoomControlsTimeout();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            wv_content.destroy();
+                            wv_content = null;
+                        }
+                    });
+                }
+            }, delayTime);
+
+        }
+    }
 
     /**
      * 获得协议头

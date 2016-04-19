@@ -51,8 +51,8 @@ public class RedDotReceiver extends PTMessageReceiver {
     }
 
     private void setResult(String result) {
-        result = result.replaceAll("\\{\"messageCenter\":null,\"accompanyNumber\":\\[\\{\"service_id\":\"6000\",\"id\":234,\"type\":\"article\"\\}\\]\\}", "");
-        Logger.d("result-----------------", result);
+//        result = result.replaceAll("\\{\"messageCenter\":null,\"accompanyNumber\":\\[\\{\"service_id\":\"6000\",\"id\":234,\"type\":\"article\"\\}\\]\\}", "");
+        Logger.d("ptl-----------------", result);
         Pattern p1 = Pattern.compile(result.endsWith("]}") ? "\\{.+?\\]\\}" : "\\{.+?null\\}");
         Matcher m1 = p1.matcher(result);
         if (m1.find()) {
