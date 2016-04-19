@@ -53,11 +53,12 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="陪孩子一起学数学"
+            android:maxLines="2"
             android:textColor="@color/color_313131"
             android:textSize="@dimen/text_size_16sp" />
 
