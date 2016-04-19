@@ -1,7 +1,13 @@
 package com.putao.wd.home;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -34,11 +40,13 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
+import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -61,8 +69,11 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     RelativeLayout rl_no_commpain_failure;
     @Bind(R.id.btn_no_data)
     Button btn_no_data;
+    @Bind(R.id.iv_no_commpain)
+    ImageDraweeView iv_no_commpain;
 
     private ArrayList<Companion> mCompanion;
+    private CountDownTimer mTimer;
 
     @Override
     protected int getLayoutId() {
@@ -75,6 +86,56 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
         checkDevice();
+        final int[] picChangeCount = {0};
+
+//        PropertyValuesHolder showAnim = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
+//        PropertyValuesHolder hindAnim = PropertyValuesHolder.ofFloat("alpha", 1f, 0f);
+//        ObjectAnimator.ofPropertyValuesHolder(showAnim, hindAnim).setDuration(3000).start();
+ /*       final ObjectAnimator showAnim = ObjectAnimator.ofFloat(iv_no_commpain, "alpha", 0, 1f);
+        showAnim.setDuration(2000);
+        final ObjectAnimator hindAnim = ObjectAnimator.ofFloat(iv_no_commpain, "alpha", 1f, 0);
+        hindAnim.setDuration(1000);*/
+        final AnimationSet set = new AnimationSet(true);
+        AlphaAnimation hindAnim = new AlphaAnimation(1f, 0.1f);
+        //hindAnim.setFillAfter(false);
+        hindAnim.setDuration(1000);
+        hindAnim.setStartOffset(1500);
+        AlphaAnimation showAnim = new AlphaAnimation(0.1f, 1f);
+        showAnim.setDuration(1500);
+        //showAnim.setFillAfter(false);
+        set.addAnimation(showAnim);
+        set.addAnimation(hindAnim);
+        set.setDuration(2500);
+        iv_no_commpain.startAnimation(set);
+        mTimer = new CountDownTimer(7200 * 1000, 3500) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                switch (picChangeCount[0] % 4) {
+                    case 0:
+                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_01).toString());
+                        break;
+                    case 1:
+                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_02).toString());
+                        break;
+                    case 2:
+                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_03).toString());
+                        break;
+                    case 3:
+                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_04).toString());
+                        break;
+                }
+                iv_no_commpain.startAnimation(set);
+                picChangeCount[0]++;
+//                picChangeCount;
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        mTimer.start();
     }
 
     private void checkDevice() {
@@ -242,6 +303,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             }
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTimer.cancel();
     }
 
     @Override
