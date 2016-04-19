@@ -137,12 +137,14 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        rl_no_discovery_failure.setVisibility(View.VISIBLE);
-                        rl_no_discovery.setVisibility(View.GONE);
-                        ptl_refresh.setVisibility(View.GONE);
-                        ptl_refresh.refreshComplete();
+                        if (adapter.getItemCount() == 0) {
+                            rl_no_discovery_failure.setVisibility(View.VISIBLE);
+                            rl_no_discovery.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        }
                     }
-                }, 60 * 1000);
+                }, 600 * 1000);
     }
 
     private void checkLoadMoreComplete(ArrayList<DisCovery> result) {

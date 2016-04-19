@@ -102,11 +102,13 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        rl_no_store_failure.setVisibility(View.VISIBLE);
-                        ptl_refresh.setVisibility(View.GONE);
-                        ptl_refresh.refreshComplete();
+                        if (adapter.getItemCount() == 0) {
+                            rl_no_store_failure.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        }
                     }
-                }, 60 * 1000);
+                }, 600 * 1000);
     }
 
     /**
@@ -138,10 +140,11 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        ToastUtils.showToastShort(mActivity, msg);
-                        ptl_refresh.refreshComplete();
-                        rl_no_store_failure.setVisibility(View.VISIBLE);
-                        ptl_refresh.setVisibility(View.GONE);
+                        if (adapter.getItemCount() == 0) {
+                            rl_no_store_failure.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        }
                     }
                 });
     }
