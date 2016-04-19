@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -31,6 +32,7 @@ import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -55,6 +57,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     RelativeLayout rl_companion_empty;
     @Bind(R.id.rl_no_commpain)
     RelativeLayout rl_no_commpain;
+    @Bind(R.id.rl_no_commpain_failure)
+    RelativeLayout rl_no_commpain_failure;
     @Bind(R.id.btn_no_data)
     Button btn_no_data;
 
@@ -129,9 +133,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             }
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.VISIBLE);
+                            rl_no_commpain_failure.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_commpain.setVisibility(View.VISIBLE);
+                            rl_no_commpain_failure.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
                         }
                         ptl_refresh.refreshComplete();
@@ -141,7 +148,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        rl_no_commpain.setVisibility(View.VISIBLE);
+                        rl_no_commpain_failure.setVisibility(View.VISIBLE);
+                        rl_no_commpain.setVisibility(View.GONE);
                         ptl_refresh.setVisibility(View.GONE);
                         ptl_refresh.refreshComplete();
                     }
@@ -200,7 +208,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_no_data:
-                initData();
+                if (NetManager.isNetworkAvailable(mActivity))
+                    ToastUtils.showToastShort(mActivity, "获取数据失败");
+                else
+                    initData();
                 break;
         }
     }

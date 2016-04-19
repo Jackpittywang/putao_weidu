@@ -45,6 +45,33 @@
         android:background="@color/color_EBEBEB"
         android:visibility="gone">
 
+        <ImageView
+            android:id="@+id/img_no_data"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_me_order_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_no_data"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="还没有相关数据"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_20sp" />
+    </RelativeLayout>
+
+    <!--数据加载失败时-->
+    <RelativeLayout
+        android:id="@+id/rl_no_commpain_failure"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_EBEBEB"
+        android:visibility="visible">
+
         <TextView
             android:id="@+id/tv_nodata"
             android:layout_width="wrap_content"
@@ -79,7 +106,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/img_link_bg"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_empty1"
