@@ -17,6 +17,7 @@ import com.putao.wd.model.Collection;
 import com.putao.wd.pt_companion.ArticleDetailForActivitiesActivity;
 import com.putao.wd.pt_companion.GameDetailActivity;
 import com.putao.wd.webview.BaseWebViewActivity;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -87,12 +88,6 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                     }
                 }
         );
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initData();
     }
 
     private void addListenter() {
@@ -189,5 +184,10 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     public void onLeftAction() {
         super.onLeftAction();
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void refreshCollection(String tag) {
+        initData();
     }
 }

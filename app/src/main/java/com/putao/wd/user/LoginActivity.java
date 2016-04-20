@@ -29,6 +29,7 @@ import com.putao.wd.home.PutaoCreatedFragment;
 import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.model.UserInfo;
+import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -70,6 +71,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     ImageDraweeView image_graph_verify;
 
     private int mErrorCount = 0;
+    private boolean bind;
 
     @Override
     protected int getLayoutId() {
@@ -168,7 +170,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
                         mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                         checkInquiryBind(AccountHelper.getCurrentUid());
-                        startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
                         }
@@ -195,6 +196,15 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
+                        bind = args.getBoolean("bind", false);
+                        if (bind) {
+                            if (is_relation)
+                                startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                            else
+                                startActivity(CaptureActivity.class, args);
+                        } else {
+                            startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
+                        }
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         loading.dismiss();
                         finish();
