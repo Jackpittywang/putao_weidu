@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import cn.jpush.a.a.m;
 
 /**
  * 我的收藏
@@ -74,11 +75,13 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             ll_empty.setVisibility(View.GONE);
                             rv_collection.setVisibility(View.VISIBLE);
                             adapter.replaceAll(result);
+                            mPage++;
+                            rv_collection.loadMoreComplete();
                         } else {
+                            rv_collection.noMoreLoading();
                             rv_collection.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
-                        checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
@@ -151,18 +154,19 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
-                        if (null != result) {
+                        if (null != result && result.size() > 0) {
                             mCollection = result;
                             adapter.addAll(result);
-                            checkLoadMoreComplete(result);
                         }
+                        rv_collection.loadMoreComplete();
+                        checkLoadMoreComplete(result);
                         loading.dismiss();
                     }
                 });
     }
 
     private void checkLoadMoreComplete(ArrayList<Collection> result) {
-        if (result.size() < 10)
+        if (result == null)
             rv_collection.noMoreLoading();
         else mPage++;
     }
