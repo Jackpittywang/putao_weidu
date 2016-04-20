@@ -135,7 +135,7 @@
             android:layout_width="320dp"
             android:layout_height="240dp"
             android:layout_below="@+id/tv_empty2"
-            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/img_link_product_01" />
 
         <Button

@@ -146,6 +146,12 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
         setMainTitle(title);
         initData();
         getArticleProperty(link_url);
+        if (link_url.contains("&inapp=1"))
+            link_url = link_url.replaceAll("&inapp=1", "");
+        else if (link_url.contains("inapp=1&"))
+            link_url = link_url.replaceAll("inapp=1&", "");
+        else if (link_url.contains("inapp=1"))
+            link_url = link_url.replaceAll("inapp=1", "");
         addListener();
     }
 

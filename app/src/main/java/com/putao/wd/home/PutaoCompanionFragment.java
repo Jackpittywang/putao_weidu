@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -74,6 +76,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
     private ArrayList<Companion> mCompanion;
     private CountDownTimer mTimer;
+    private int mPicChangeCount;
 
     @Override
     protected int getLayoutId() {
@@ -86,57 +89,11 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
         checkDevice();
-        final int[] picChangeCount = {0};
+        mPicChangeCount = 1;
+        startAnim();
 
-//        PropertyValuesHolder showAnim = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
-//        PropertyValuesHolder hindAnim = PropertyValuesHolder.ofFloat("alpha", 1f, 0f);
-//        ObjectAnimator.ofPropertyValuesHolder(showAnim, hindAnim).setDuration(3000).start();
- /*       final ObjectAnimator showAnim = ObjectAnimator.ofFloat(iv_no_commpain, "alpha", 0, 1f);
-        showAnim.setDuration(2000);
-        final ObjectAnimator hindAnim = ObjectAnimator.ofFloat(iv_no_commpain, "alpha", 1f, 0);
-        hindAnim.setDuration(1000);*/
-        final AnimationSet set = new AnimationSet(true);
-        AlphaAnimation hindAnim = new AlphaAnimation(1f, 0.1f);
-        //hindAnim.setFillAfter(false);
-        hindAnim.setDuration(1000);
-        hindAnim.setStartOffset(1500);
-        AlphaAnimation showAnim = new AlphaAnimation(0.1f, 1f);
-        showAnim.setDuration(1500);
-        //showAnim.setFillAfter(false);
-        set.addAnimation(showAnim);
-        set.addAnimation(hindAnim);
-        set.setDuration(2500);
-        iv_no_commpain.startAnimation(set);
-        mTimer = new CountDownTimer(7200 * 1000, 3500) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                switch (picChangeCount[0] % 4) {
-                    case 0:
-                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_01).toString());
-                        break;
-                    case 1:
-                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_02).toString());
-                        break;
-                    case 2:
-                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_03).toString());
-                        break;
-                    case 3:
-                        iv_no_commpain.setImageURL(Uri.parse("res://putao/" + R.drawable.img_link_product_04).toString());
-                        break;
-                }
-                iv_no_commpain.startAnimation(set);
-                picChangeCount[0]++;
-//                picChangeCount;
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
-        mTimer.start();
     }
+
 
     private void checkDevice() {
         Logger.d("IS_DEVICE_BIND", PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) + "");
@@ -303,6 +260,50 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             }
         }
 
+    }
+
+    private void startAnim() {
+        final AnimationSet set = new AnimationSet(true);
+        AlphaAnimation hindAnim = new AlphaAnimation(1f, 0f);
+        hindAnim.setDuration(1500);
+        hindAnim.setStartOffset(2000);
+        AlphaAnimation showAnim = new AlphaAnimation(0f, 1f);
+        showAnim.setDuration(2000);
+        set.addAnimation(showAnim);
+        set.addAnimation(hindAnim);
+        set.setDuration(3500);
+        iv_no_commpain.startAnimation(set);
+        set.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                switch (mPicChangeCount % 4) {
+                    case 0:
+                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_01);
+                        break;
+                    case 1:
+                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_02);
+                        break;
+                    case 2:
+                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_03);
+                        break;
+                    case 3:
+                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_04);
+                        break;
+                }
+                iv_no_commpain.startAnimation(set);
+                mPicChangeCount++;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     @Override
