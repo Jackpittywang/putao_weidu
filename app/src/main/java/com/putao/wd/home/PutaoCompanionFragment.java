@@ -24,6 +24,7 @@ import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
+import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
@@ -172,12 +173,6 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 }, 600 * 1000);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        checkDevice();
-    }
-
     private void addListener() {
         mCompanionAdapter.setOnItemClickListener(this);
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
@@ -218,7 +213,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             case R.id.btn_relevance_device:
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
+                    bundle.putBoolean("bind", true);
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
                     startActivity(LoginActivity.class, bundle);
                 } else
                     startActivity(CaptureActivity.class);
@@ -317,6 +313,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         super.onLeftAction();
         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }
+
 }
 
 
