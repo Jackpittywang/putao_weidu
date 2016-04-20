@@ -13,6 +13,11 @@ public class DisCovery implements Serializable {
     private String video_url;
     private String tag;
     private String time;
+    private String create_time;
+    private String modified_time;
+    private String sort;
+    private String is_delete;
+
 
     public String getId() {
         return id;
@@ -62,6 +67,38 @@ public class DisCovery implements Serializable {
         this.time = time;
     }
 
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getModified_time() {
+        return modified_time;
+    }
+
+    public void setModified_time(String modified_time) {
+        this.modified_time = modified_time;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getIs_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(String is_delete) {
+        this.is_delete = is_delete;
+    }
+
     @Override
     public String toString() {
         return "DisCovery{" +
@@ -71,6 +108,10 @@ public class DisCovery implements Serializable {
                 ", video_url='" + video_url + '\'' +
                 ", tag='" + tag + '\'' +
                 ", time='" + time + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", modified_time='" + modified_time + '\'' +
+                ", sort='" + sort + '\'' +
+                ", is_delete='" + is_delete + '\'' +
                 '}';
     }
 }
