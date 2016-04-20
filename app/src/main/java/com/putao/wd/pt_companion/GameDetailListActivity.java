@@ -153,14 +153,16 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                         public void onSuccess(String url, ServiceMessage result) {
                             isLoadMore = false;
                             lists = result.getLists();
-                            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                            for (ServiceMessageList serviceMessageList : lists) {
-                                dataBaseManager.updataDownloadFinish(mServiceId, serviceMessageList);
-                            }
-                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                            if (null != lists && lists.size() > 0) {
+                                CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                                for (ServiceMessageList serviceMessageList : lists) {
+                                    dataBaseManager.updataDownloadFinish(serviceMessageList);
+                                }
+                                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
 //                            lists = setIsSameDate(lists);
-                            mGameDetailAdapter.addAll(lists);
-                            rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+                                mGameDetailAdapter.addAll(lists);
+                                rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+                            }
                             ptl_refresh.refreshComplete();
 //                            checkLoadMoreComplete(lists);
                             loading.dismiss();

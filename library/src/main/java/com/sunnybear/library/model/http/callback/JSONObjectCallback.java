@@ -51,6 +51,7 @@ public abstract class JSONObjectCallback extends RequestCallback {
                             onSuccess(url_success, JSON.parseObject(json));
                         } catch (Exception e) {
                             e.printStackTrace();
+                            onFailure(url_success, 0, "");
                         }
                         //请求完成
                         onFinish(url_success, true, "");
@@ -121,7 +122,7 @@ public abstract class JSONObjectCallback extends RequestCallback {
         int statusCode = response.code();
         Logger.d(TAG, "url=" + url + ",状态码=" + statusCode);
 
-        NetworkLogUtil.addLog(response,json);
+        NetworkLogUtil.addLog(response, json);
         if (response.isSuccessful()) {
            /* if (isNetwork)
                 Logger.d(TAG, "网络请求url:" + url + "\n" + "网络请求成功,请求结果=" + JsonUtils.jsonFormatter(json));

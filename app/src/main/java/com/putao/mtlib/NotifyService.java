@@ -26,7 +26,7 @@ import com.sunnybear.library.util.Logger;
  * Created by Administrator on 2015/12/28.
  */
 public class NotifyService extends Service {
-    private static final String HOST = GlobalApplication.isDebug ? "10.1.11.31" : "122.226.100.152";
+    private static final String HOST = GlobalApplication.isDebug ? "10.1.11.31" : "notice.putao.com"/*"122.226.100.152"*/;
     private static final int PORT = GlobalApplication.isDebug ? 8083 : 8040;
     private static final String secret = "499478a81030bb177e578f86410cda8641a22799";
     private static final int appid = 611;

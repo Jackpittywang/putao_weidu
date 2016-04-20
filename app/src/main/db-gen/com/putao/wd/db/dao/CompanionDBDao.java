@@ -133,19 +133,19 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
             stmt.bindString(4, release_time);
         }
         String content_lists = entity.getContent_lists();
-        if (release_time != null) {
+        if (content_lists != null) {
             stmt.bindString(5, content_lists);
         }
         String is_download = entity.getIsDownload();
-        if (release_time != null) {
+        if (is_download != null) {
             stmt.bindString(6, is_download);
         }
         String uid = entity.getUid();
-        if (release_time != null) {
+        if (uid != null) {
             stmt.bindString(7, uid);
         }
         String key = entity.getKey();
-        if (release_time != null) {
+        if (key != null) {
             stmt.bindString(8, key);
         }
     }

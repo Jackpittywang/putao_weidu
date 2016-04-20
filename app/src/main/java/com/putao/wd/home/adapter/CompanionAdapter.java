@@ -54,10 +54,9 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
         }
         int size = companion.getNotDownloadIds().size();
-        if (0 == size || companion.isShowRed() == false) {
+        if (0 == size || !companion.isShowRed()) {
             holder.tv_number.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             holder.tv_number.setVisibility(View.VISIBLE);
             holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
         }

@@ -82,13 +82,14 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     /**
      * 设置文章的下载状态
      */
-    public void updataDownloadFinish(String service_id, ServiceMessageList serviceMessageList) {
-        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(serviceMessageList.getId()), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).unique();
+    public void updataDownloadFinish(ServiceMessageList serviceMessageList) {
+        CompanionDB unique = getQueryBuilder().where(CompanionDBDao.Properties.key.eq(serviceMessageList.getId() + AccountHelper.getCurrentUid())).unique();
         unique.setContent_lists(JSON.toJSONString(serviceMessageList.getContent_lists()));
         unique.setIsDownload("1");
         unique.setType(serviceMessageList.getType());
         unique.setRelease_time(serviceMessageList.getRelease_time() + "");
-        unique.setService_id(service_id);
+//        deleteContent(unique.getService_id());
+//        insertFinishDownload(unique.getService_id(), unique.getId(), unique.getRelease_time(), unique.getContent_lists());
         update(unique);
     }
 

@@ -139,7 +139,8 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        if (adapter.getItemCount() == 0) {
+                        //多了尾布局，因此至少是1
+                        if (adapter.getItemCount() <= 1) {
                             rl_no_discovery_failure.setVisibility(View.VISIBLE);
                             rl_no_discovery.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);

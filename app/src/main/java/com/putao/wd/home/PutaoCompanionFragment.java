@@ -1,15 +1,10 @@
 package com.putao.wd.home;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -48,7 +43,6 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -75,8 +69,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     ImageDraweeView iv_no_commpain;
 
     private ArrayList<Companion> mCompanion;
-    private CountDownTimer mTimer;
     private int mPicChangeCount;
+    private AnimationSet mSet;
 
     @Override
     protected int getLayoutId() {
@@ -163,19 +157,14 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        if (mCompanionAdapter.getItemCount() == 0) {
+                        //多了尾布局，因此至少是1
+                        if (mCompanionAdapter.getItemCount() <= 1) {
                             rl_no_commpain_failure.setVisibility(View.VISIBLE);
                             ptl_refresh.setVisibility(View.GONE);
                             ptl_refresh.refreshComplete();
                         }
                     }
                 }, 600 * 1000);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        checkDevice();
     }
 
     private void addListener() {
@@ -263,17 +252,17 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void startAnim() {
-        final AnimationSet set = new AnimationSet(true);
+        mSet = new AnimationSet(true);
         AlphaAnimation hindAnim = new AlphaAnimation(1f, 0f);
         hindAnim.setDuration(1500);
         hindAnim.setStartOffset(2000);
         AlphaAnimation showAnim = new AlphaAnimation(0f, 1f);
         showAnim.setDuration(2000);
-        set.addAnimation(showAnim);
-        set.addAnimation(hindAnim);
-        set.setDuration(3500);
-        iv_no_commpain.startAnimation(set);
-        set.setAnimationListener(new Animation.AnimationListener() {
+        mSet.addAnimation(showAnim);
+        mSet.addAnimation(hindAnim);
+        mSet.setDuration(3500);
+        iv_no_commpain.startAnimation(mSet);
+        mSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -295,7 +284,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         iv_no_commpain.setDefaultImage(R.drawable.img_link_product_04);
                         break;
                 }
-                iv_no_commpain.startAnimation(set);
+                iv_no_commpain.startAnimation(mSet);
                 mPicChangeCount++;
             }
 
@@ -309,7 +298,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mTimer.cancel();
+        mSet.cancel();
     }
 
     @Override
