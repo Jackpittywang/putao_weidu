@@ -3,7 +3,6 @@ package com.putao.mtlib;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -18,12 +17,12 @@ import com.putao.mtlib.tcp.PTRecMessage;
 import com.putao.mtlib.tcp.PTSenderManager;
 import com.putao.mtlib.util.MD5Util;
 import com.putao.mtlib.util.MsgPackUtil;
+import com.putao.mtlib.util.PTLoger;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  * 通知服务
@@ -41,7 +40,9 @@ public class NotifyService extends Service {
     private String mThreadName = NotifyService.class.getSimpleName();
     private PTSenderManager mPTSenderManager;
     private Thread thread;
-    private Handler mThreadHandler = new Handler(){
+    private boolean isAlive = true;
+
+    private Handler mThreadHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -79,22 +80,37 @@ public class NotifyService extends Service {
     public void onCreate() {
         super.onCreate();
         if (!GlobalApplication.isDebug) {
-            thread = new Thread("realhost") {
-                @Override
-                public void run() {
-                    super.run();
-                    InetAddress ip = null;
-                    try {
-                        ip = InetAddress.getByName(HOST);
-                    } catch (UnknownHostException e) {
-                        e.printStackTrace();
+            if (null == thread)
+                thread = new Thread("realhost") {
+                    @Override
+                    public void run() {
+                        super.run();
+                        while (isAlive) {
+                            InetAddress ip = null;
+                            try {
+                                PTLoger.d("尝试获取ip");
+                                ip = InetAddress.getByName(HOST);
+                                if (null != ip) {
+                                    HOST = ip.getHostAddress();
+                                    mThreadHandler.sendEmptyMessage(0);
+                                    PTLoger.d("获取ip成功");
+                                    break;
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Logger.d("获取ip失败----" + e);
+                            }
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                    if (null != ip)
-                        HOST = ip.getHostAddress();
-                    mThreadHandler.sendEmptyMessage(0);
-                }
-            };
+                };
             thread.start();
+        } else {
+            mThreadHandler.sendEmptyMessage(0);
         }
     }
 
@@ -117,6 +133,7 @@ public class NotifyService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mPTSenderManager.stopThreads();
+        isAlive = false;
     }
 
     @Nullable
