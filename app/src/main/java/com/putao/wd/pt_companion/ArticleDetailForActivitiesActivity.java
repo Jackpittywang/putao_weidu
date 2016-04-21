@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
@@ -36,10 +37,13 @@ import com.putao.wd.share.ShareTools;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.putao.wd.webview.PutaoParse;
+import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.BasicWebView;
 import com.sunnybear.library.view.SwitchButton;
@@ -58,8 +62,8 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     public static final String COLLECTION_ID = "collection_id";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
 
-    /*@Bind(R.id.wv_load)
-    BasicWebView wv_load;*/
+    /*@Bind(R.id.wv_content)
+    BasicWebView wv_content;
     /*    @Bind(R.id.rv_content)
         LoadMoreRecyclerView rv_content;*/
     @Bind(R.id.ll_cool)
@@ -86,7 +90,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     ServiceMessageList messageList;
     ViewGroup.LayoutParams mRvLayoutParams;
     private SharePopupWindow mSharePopupWindow;
-    private boolean is_Like;//是否赞过
     private Property property;
     private String article_id, service_id, type;//文章id,服务号id
     private String title;
@@ -113,7 +116,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 service_id = link_url.substring(sid + 4, sid + i);
                 Logger.e(service_id + "");
             } else service_id = link_url.substring(sid + 4, link_url.length());*/
-            service_id = ScanUrlParseUtils.getSingleParams(link_url, "sid");
+            service_id = collection.getService_id();
             article_id = collection.getId() + "";
             title = collection.getTitle();
             sub_title = collection.getSubtitle();
@@ -132,26 +135,27 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             type = messageList.getType();
         }
         mSharePopupWindow = new SharePopupWindow(mContext);
-        link_url = BaseWebViewActivity.getInAppUrl(link_url, "0");
-        /*wv_load.loadUrl(link_url);
-        wv_load.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                pb_webview.setProgress(newProgress);
-                if (newProgress >= 100)
-                    pb_webview.setVisibility(View.GONE);
-            }
-        });*/
+//        link_url = BaseWebViewActivity.getInAppUrl(link_url, "0");
+
+//        wv_content.loadUrl(link_url);
+//        wv_content.setWebChromeClient(new WebChromeClient() {
+//            @Override
+//            public void onProgressChanged(WebView view, int newProgress) {
+//                super.onProgressChanged(view, newProgress);
+//                pb_webview.setProgress(newProgress);
+//                if (newProgress >= 100)
+//                    pb_webview.setVisibility(View.GONE);
+//            }
+//        });
         setMainTitle(title);
         initData();
         getArticleProperty(link_url);
-        if (link_url.contains("&inapp=1"))
-            link_url = link_url.replaceAll("&inapp=1", "");
-        else if (link_url.contains("inapp=1&"))
-            link_url = link_url.replaceAll("inapp=1&", "");
-        else if (link_url.contains("inapp=1"))
-            link_url = link_url.replaceAll("inapp=1", "");
+//        if (link_url.contains("&inapp=1"))
+//            link_url = link_url.replaceAll("&inapp=1", "");
+//        else if (link_url.contains("inapp=1&"))
+//            link_url = link_url.replaceAll("inapp=1&", "");
+//        else if (link_url.contains("inapp=1"))
+//            link_url = link_url.replaceAll("inapp=1", "");
         addListener();
     }
 
@@ -387,5 +391,25 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                     }, false);
         return serviceSendDatas;
 
+    }
+
+    /**
+     * 把app里面的url加上inapp标志，网页端会通过此标志来判断是否是app里面调用
+     *
+     * @param url
+     * @return
+     */
+    public static String getInAppUrl(String url, String serviceId) {
+        if (StringUtils.isEmpty(url)) return "";
+        // 此处如果判断有"inapp=" 不会在添加后面的字段，如果业务需求有变化，需要更改
+        if (url.contains("inapp=")) return url;
+        if (url.contains("?")) url = url + "&inapp=1";
+        else url = url + "?inapp=1";
+        url = url + "&token=" + AccountHelper.getCurrentToken();
+        url = url + "&uid=" + AccountHelper.getCurrentUid();
+        url = url + "&service_id=" + serviceId;
+        url = url + "&device_id=" + AppUtils.getDeviceId(GlobalApplication.getInstance());
+        url = url + "&appid=" + BasicApplication.app_id;
+        return url;
     }
 }
