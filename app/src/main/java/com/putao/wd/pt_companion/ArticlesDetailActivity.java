@@ -275,6 +275,7 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
                                 resetMsg();
                                 Logger.i("评论与回复提交成功");
                                 getNewCommentData();
+                                EventBusHelper.post(mSuperPosition, EVENT_DELETE_CREATE_COMMENT);
                             }
 
                             @Override
