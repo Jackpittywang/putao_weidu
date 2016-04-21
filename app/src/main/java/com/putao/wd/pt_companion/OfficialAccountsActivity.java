@@ -138,6 +138,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     dataBaseManager.deleteContent(service_id);
                     checkInquiryBind(AccountHelper.getCurrentUid());
                 }
+                loading.dismiss();
             }
 
             @Override

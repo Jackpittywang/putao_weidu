@@ -90,7 +90,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
         unique.setRelease_time(serviceMessageList.getRelease_time() + "");
 //        deleteContent(unique.getService_id());
 //        insertFinishDownload(unique.getService_id(), unique.getId(), unique.getRelease_time(), unique.getContent_lists());
-        update(unique);
+        insertOrReplace(unique);
     }
 
     /**

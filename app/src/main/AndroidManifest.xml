@@ -64,17 +64,22 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="PTWeidu" android:host="putaoweidu"/>
+
+                <data
+                    android:host="putaoweidu"
+                    android:scheme="ptweidu" />
             </intent-filter>
+
         </activity>
         <!--android:pathPrefix="/openwith"-->
 
         <!--引导页-->
         <activity
             android:name=".GuidanceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <!--主页-->
         <activity
             android:name=".MainActivity"
