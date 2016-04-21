@@ -76,6 +76,8 @@ public final class AccountConstants {
     public static final class EventBus {
         public static final String EVENT_ALBUM_SELECT = "event_album_select";
         public static final String EVENT_REFRESH_COMPANION = "event_refresh_companion";
+        public static final String EVENT_REFRESH_COMPANION_TAB = "event_refresh_companion_tab";
+        public static final String EVENT_REFRESH_ME_TAB = "event_refresh_me_tab";
     }
 
     /**

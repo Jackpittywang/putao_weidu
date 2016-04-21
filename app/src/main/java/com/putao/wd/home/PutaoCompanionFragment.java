@@ -32,6 +32,7 @@ import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -194,6 +195,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
             companion.setIsShowRed(false);
+            boolean isShowTabDot = false;
+            for (Companion compan : mCompanion) {
+                isShowTabDot = compan.isShowRed() || isShowTabDot;
+                if (isShowTabDot) break;
+            }
+            if (!isShowTabDot)
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
             mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
         } else {

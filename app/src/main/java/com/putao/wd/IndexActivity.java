@@ -201,6 +201,17 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), redDotMap);
     }*/
 
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
+    private void cancleCompanionDot(String tab) {
+        ti_index_companion.hide();
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_ME_TAB)
+    private void cancleMeDot(String tab) {
+        ti_index_me.hide();
+    }
+
     /**
      * 是不是绑定过设备
      *
@@ -213,7 +224,6 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
-//                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                     }
 
                     @Override
@@ -222,4 +232,5 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                     }
                 }, false);
     }
+
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
@@ -393,6 +394,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             case R.id.si_message://消息中心
                 si_message.hide();
                 mDiskFileCacheHelper.remove(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid());
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
