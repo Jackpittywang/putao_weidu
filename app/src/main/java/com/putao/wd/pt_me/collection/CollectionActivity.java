@@ -64,6 +64,12 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         addListenter();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initData();
+    }
+
     private void initData() {
         mPage = 1;
         networkRequest(CollectionApi.getCollection(mPage),

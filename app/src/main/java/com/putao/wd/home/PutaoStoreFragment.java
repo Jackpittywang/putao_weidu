@@ -83,8 +83,8 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onSuccess(String url, StoreProductHome result) {
                         List<StoreProduct> products = result.getData();
-                        cacheData(url, result);
                         if (products != null && products.size() > 0) {
+                            cacheData(url, result);
                             adapter.replaceAll(products);
                             rl_no_stroe.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
@@ -105,6 +105,7 @@ public class PutaoStoreFragment extends PTWDFragment {
                         //多了尾布局，因此至少是1
                         if (adapter.getItemCount() <= 1) {
                             rl_no_store_failure.setVisibility(View.VISIBLE);
+                            rl_no_stroe.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
                             ptl_refresh.refreshComplete();
                         }
@@ -141,8 +142,9 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        if (adapter.getItemCount() == 0) {
+                        if (adapter.getItemCount() <= 1) {
                             rl_no_store_failure.setVisibility(View.VISIBLE);
+                            rl_no_stroe.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
                             ptl_refresh.refreshComplete();
                         }

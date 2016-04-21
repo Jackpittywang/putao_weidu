@@ -48,12 +48,6 @@ public class CollectionAdapter extends LoadMoreAdapter<Collection, CollectionAda
         holder.tv_title.setText(collection.getTitle());
         holder.tv_content.setText(collection.getSubtitle());
         holder.iv_icon.setImageURL(collection.getHead_img());
-        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     static class CollectionViewHodler extends BasicViewHolder {
@@ -64,8 +58,6 @@ public class CollectionAdapter extends LoadMoreAdapter<Collection, CollectionAda
         TextView tv_content;
         @Bind(R.id.iv_icon)
         ImageDraweeView iv_icon;
-        @Bind(R.id.tv_delete)
-        TextView tv_delete;
 
         public CollectionViewHodler(View itemView) {
             super(itemView);
