@@ -3,7 +3,6 @@ package com.putao.wd.webview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
@@ -27,7 +26,7 @@ public class PutaoParse {
     public static String PAGE_SETTING = "pageSetting";
 
     public static boolean parseUrl(Context context, String scheme, JSONObject jsonObj) {
-        Log.i(TAG, "url called:" + jsonObj.toJSONString());
+        // Log.i(TAG, "url called:" + jsonObj.toJSONString());
         try {
             if (OPEN_WEBVIEW.equals(scheme)) {
                 String title = jsonObj.getString("title");
@@ -48,7 +47,7 @@ public class PutaoParse {
                 context.startActivity(intent);
                 return true;
             } else if (PAGE_SETTING.equals(scheme)) {
-
+                //PAGE_SETTING不在此处做处理
                 return true;
 
             } else {
