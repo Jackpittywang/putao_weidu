@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * 修改密码
  * Created by yanghx on 2015/12/18.
  */
-public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
+public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher {
 
     @Bind(R.id.et_pw_old)
     CleanableEditText et_pw_old;
@@ -77,10 +77,11 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher{
         String oldPassword = et_pw_old.getText().toString();
         String newPassword = et_pw_new.getText().toString();
         String repeatPassword = et_pw_repeat.getText().toString();
-        if(! check(newPassword, repeatPassword)) return;
+        if (!check(newPassword, repeatPassword)) return;
         networkRequest(AccountApi.updatePassword(oldPassword, newPassword, repeatPassword), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
+                ToastUtils.showToastShort(mContext, "密码修改成功！");
                 loading.dismiss();
                 finish();
             }

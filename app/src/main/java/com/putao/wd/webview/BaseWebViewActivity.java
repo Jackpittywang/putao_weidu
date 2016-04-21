@@ -77,15 +77,14 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
 
         String title = args.getString(TITLE);
         String serviceId = args.getString(SERVICE_ID);
+        // 添加默认的显示文字
         if (StringUtils.isEmpty(title)) title = "葡萄纬度";
         setMainTitle(title);
         String url = args.getString(URL);
 
         setWebSettings();
 
-        // wv_content.setOnWebViewLoadUrlCallback(this);
         // url = "http://static.uzu.wang/putaowd/pages/support.html";
-        // String url = "http://www.baidu.com";
         url = getInAppUrl(url, serviceId);
         wv_content.loadUrl(url);
 
@@ -112,11 +111,15 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                         view.loadUrl(url);
                         break;
                     case ProtocolHeader.PROTOCOL_HEADER_PUTAO:
+                        // 网页加载完js会通过此方法把 article_title, description, share_pic 传过来
                         String scheme = getScheme(url);
                         String content = getContentUrl(url);
                         if (PutaoParse.PAGE_SETTING.equals(scheme)) {
+                            // 获取文章标题
                             titleFromPage = JSON.parseObject(content).getString("article_title");
+                            // 描述
                             descriptionFromPage = JSON.parseObject(content).getString("description");
+                            // 分享的图片url
                             sharePicFromPage = JSON.parseObject(content).getString("share_pic");
                         } else
                             PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
@@ -150,6 +153,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
      */
     public static String getInAppUrl(String url, String serviceId) {
         if (StringUtils.isEmpty(url)) return "";
+        // 此处如果判断有"inapp=" 不会在添加后面的字段，如果业务需求有变化，需要更改
         if (url.contains("inapp=")) return url;
         if (url.contains("?")) url = url + "&inapp=1";
         else url = url + "?inapp=1";

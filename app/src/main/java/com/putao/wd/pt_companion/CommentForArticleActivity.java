@@ -204,15 +204,6 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     }
 
     /**
-     * 再次进入刷新数据
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        refreshCommentList();
-    }
-
-    /**
      * 添加监听器
      */
     private void addListener() {
@@ -491,6 +482,11 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
     public void eventDeleteEmoji(Emoji emoji) {
         et_msg.delete();
+    }
+
+    @Subcriber(tag = ArticlesDetailActivity.EVENT_DELETE_CREATE_COMMENT)
+    private void removeData(int tag) {
+        refreshCommentList();
     }
 
     //图片选择后的处理

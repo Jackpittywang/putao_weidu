@@ -9,6 +9,8 @@ import java.util.List;
 public class Collection implements Serializable {
     private int type;//文章类型1文章2创意3话题4运营5活动
     private int id;
+    private String service_id;//服务号id
+    private String service_name;//服务号名称
     private String title;
     private String subtitle;
     private String head_img;//封面图
@@ -81,11 +83,29 @@ public class Collection implements Serializable {
         this.tags = tags;
     }
 
+    public String getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(String service_id) {
+        this.service_id = service_id;
+    }
+
+    public String getService_name() {
+        return service_name;
+    }
+
+    public void setService_name(String service_name) {
+        this.service_name = service_name;
+    }
+
     @Override
     public String toString() {
         return "Collection{" +
                 "type=" + type +
                 ", id=" + id +
+                ", service_id='" + service_id + '\'' +
+                ", service_name='" + service_name + '\'' +
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", head_img='" + head_img + '\'' +

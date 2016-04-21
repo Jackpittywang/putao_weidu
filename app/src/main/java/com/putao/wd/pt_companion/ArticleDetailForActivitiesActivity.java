@@ -310,6 +310,16 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 //        iv_upload_pic.setImageURL(Uri.parse("file://" + uri).toString());
     }
 
+    @Subcriber(tag = CommentForArticleActivity.EVENT_ADD_CREAT_COMMENT)
+    private void refrshAddData(int tag) {
+        getArticleProperty(link_url);
+    }
+
+    @Subcriber(tag = CommentForArticleActivity.EVENT_DELETE_CREAT_COMMENT)
+    private void refrshDeleteData(int tag) {
+        getArticleProperty(link_url);
+    }
+
     @OnClick({R.id.ll_cool, R.id.ll_comment, R.id.sb_cool_icon})
     @Override
     public void onClick(View v) {
