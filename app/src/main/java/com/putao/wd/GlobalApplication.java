@@ -17,11 +17,13 @@ import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.DataBaseManager;
 import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
+import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.SDCardUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -125,8 +127,8 @@ public class GlobalApplication extends BasicApplication {
             }
         }, 3000);
 
-//        CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
-//        dataBaseManager.insertFixDownload("6000", "124");
+        /*CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
+        dataBaseManager.insertFixDownload("8003", "343");*/
 //        dataBaseManager.insertFixDownload("6000", "125");
     }
 
@@ -141,7 +143,8 @@ public class GlobalApplication extends BasicApplication {
                 mHelper = new DaoMaster.OpenHelper(getApplicationContext(), "putao-weidu.db", null) {
                     @Override
                     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+                        if (oldVersion < 2)
+                            CompanionDBDao.createTable(db, false);
                     }
                 };
     }
@@ -184,8 +187,8 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected boolean isDebug() {
-        return false;
-//        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+//        return false;
+        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override
