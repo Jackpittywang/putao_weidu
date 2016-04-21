@@ -114,6 +114,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                         @Override
                         public void onError(String error_msg) {
                             ToastUtils.showToastLong(mContext, error_msg);
+                            AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_FORGET);
                         }
                     });
                 }
@@ -177,7 +178,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                         if (mErrorCount >= 2) {
                             mDiskFileCacheHelper.put(FORGET_CODE + mobile, FORGET_CODE);
                         }
-                        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                        AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_FORGET);
                         et_graph_verify.setText("");
                     }
                 });
@@ -217,7 +218,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             @Override
             public void onSuccess(JSONObject result) {//未使用该号码
                 ToastUtils.showToastShort(mContext, "该号码未注册，获取验证码失败");
-                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_FORGET);
                 et_graph_verify.setText("");
                 et_mobile.setText("");
                 tb_get_verify.reset();

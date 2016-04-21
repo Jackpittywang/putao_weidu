@@ -136,6 +136,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                             mDiskFileCacheHelper.put(NEED_CODE + mobile, NEED_CODE);
                                             et_graph_verify.setText("");
                                         }
+
+                                        if(rl_graph_verify.getVisibility() == View.VISIBLE){
+                                            AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                                        }
                                     }
 
                                     @Override

@@ -118,6 +118,9 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                     public void onError(String error_msg) {
                         loading.dismiss();
                         ToastUtils.showToastShort(mContext, error_msg);
+                        if(image_graph_verify.getVisibility() == View.VISIBLE){
+                            AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_REGISTER);
+                        }
                     }
                 });
                 break;
@@ -171,7 +174,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                 if (mErrorCount >= 3) {
                     mDiskFileCacheHelper.put(REGISTER_CODE + value, REGISTER_CODE);
                 }
-                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
+                AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_REGISTER);
                 et_graph_verify.setText("");
             }
         });
