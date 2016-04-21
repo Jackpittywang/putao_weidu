@@ -92,7 +92,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             ti_index_companion.show(-1);
         }
         //红点显示
-        if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR, false)) {
+        if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid(), false)) {
             ti_index_companion.hide();
         }
         if (AccountHelper.isLogin())
@@ -117,8 +117,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
                 vp_content.setCurrentItem(position, false);
-                if (3 == position) ti_index_me.hide();
-                if (0 == position) ti_index_companion.hide();
+                if (3 == position) hideMeRedDot();
+                if (0 == position) hideCompanionRedDot();
             }
         });
     }
@@ -151,9 +151,14 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }
 
-    private void hideRedDot() {
-        ti_index_companion.hide();
+    private void hideMeRedDot() {
+        ti_index_me.hide();
         mDiskFileCacheHelper.remove(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid());
+    }
+
+    private void hideCompanionRedDot() {
+        ti_index_companion.hide();
+        PreferenceUtils.remove(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid());
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
@@ -166,7 +171,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
     private void setCompanionDot(JSONArray accompanyNumber) {
         ti_index_companion.show(-1);
-        PreferenceUtils.save(RedDotReceiver.COMPANION_TABBAR, true);
+        PreferenceUtils.save(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid(), true);
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         for (Object object : accompanyNumber) {
             JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));

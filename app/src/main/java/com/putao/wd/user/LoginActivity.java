@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
@@ -21,30 +19,20 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
-import com.putao.wd.api.StoreApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.base.PTWDRequestHelper;
-import com.putao.wd.home.PutaoCreatedFragment;
-import com.putao.wd.home.PutaoExploreFragment;
 import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
-import java.util.Set;
-
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
 
 /**
  * 登录模块
