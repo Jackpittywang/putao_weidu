@@ -44,7 +44,7 @@
                 android:gravity="center_vertical"
                 android:text="葡萄活动"
                 android:textColor="@color/color_313131"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_18sp" />
 
         </LinearLayout>
 
@@ -66,7 +66,7 @@
         android:paddingTop="20dp"
         android:text="可以陪孩子一起学数学让孩子对数字敏感可以陪孩子一起学可以陪孩子一起学数学让孩子对数字敏感数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行"
         android:textColor="@color/text_color_gray"
-        android:textSize="@dimen/text_size_12sp" />
+        android:textSize="@dimen/text_size_14sp" />
 
 
     <TextView

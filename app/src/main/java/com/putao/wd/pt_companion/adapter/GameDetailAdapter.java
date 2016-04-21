@@ -47,7 +47,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, GameDeta
         String date = "";
         date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         holder.tv_time.setVisibility(View.VISIBLE);
-        holder.tv_time.setText("───  " + date + "  ───");
+        holder.tv_time.setText("───    " + date + "    ───");
         /*if (serviceMessageList.isShowData()) {
         } else
             holder.tv_time.setVisibility(View.GONE);*/
