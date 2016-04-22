@@ -31,13 +31,13 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
         switch (intent.getAction()) {
             case GlobalApplication.IN_FORE_MESSAGE:
 //                inFore();
+                Logger.d("ptl---------------", "应用恢复到前台了");
                 if (null != timer) {
                     timer.cancel();
                     timer = null;
                 }
-                if (GlobalApplication.isServiceClose && !isServiceStart) {
+                if (!isServiceStart) {
                     context.startService(GlobalApplication.redServiceIntent);
-                    GlobalApplication.isServiceClose = true;
                 }
                 break;
             case GlobalApplication.OUT_FORE_MESSAGE:
@@ -47,11 +47,9 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        GlobalApplication.isServiceClose = true;
                         Logger.d("ptl-----------", "停止服务");
                         if (isServiceStart) {
                             context.stopService(GlobalApplication.redServiceIntent);
-                            GlobalApplication.isServiceClose = true;
                         }
 //                        stopSelf();
                     }

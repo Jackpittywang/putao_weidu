@@ -1,5 +1,6 @@
 package com.putao.wd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -75,6 +76,10 @@ public class SplashActivity extends BasicFragmentActivity {
                         Logger.d("表情包设置完成");
                         mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
                         GlobalApplication.setEmojis(result);
+                        if (AccountHelper.isLogin()) {
+                            Intent intent = new Intent(GlobalApplication.IN_FORE_MESSAGE);
+                            sendBroadcast(intent);
+                        }
                         if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                             startActivity(GuidanceActivity.class);
                         else {

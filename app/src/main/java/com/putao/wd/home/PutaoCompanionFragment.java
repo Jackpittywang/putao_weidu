@@ -166,7 +166,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             ptl_refresh.refreshComplete();
                         }
                     }
-                }, 600 * 1000);
+                }, 0);
     }
 
     private void addListener() {

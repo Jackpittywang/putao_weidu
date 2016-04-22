@@ -44,6 +44,7 @@ import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -132,10 +133,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 isScroll = scrollY > 0;
             }
         });
-        //红点显示
-        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid()))) {
-            si_message.show();
-        }
+
         //添加后加载器方法
         iv_user_icon.addProcessor(new ProcessorInterface() {
             @Override
@@ -158,6 +156,13 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
             getOrderCount();
             getUserInfo();
+        } else if (AccountHelper.isLogin()) {
+            boolean[] mRedDots = new boolean[4];
+            //红点显示
+            mRedDots = PreferenceUtils.getValue(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+            for (boolean redDot : mRedDots) {
+                if (redDot) si_message.show();
+            }
         }
     }
 

@@ -6,6 +6,8 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -55,60 +57,74 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     private Camera mCamera;
     private Handler autoFocusHandler;
     private CameraManager mCameraManager;
-
     @Bind(R.id.capture_preview)
     FrameLayout scanPreview;
+
     @Bind(R.id.capture_container)
     RelativeLayout scanContainer;
     @Bind(R.id.capture_crop_view)
     ImageView scanCropView;
     @Bind(R.id.scan_line)
     ImageView scan_line;
-
     //    @Bind(R.id.ttv_question_1)
 //    TooltipView ttv_question_1;
     @Bind(R.id.ttv_question_2)
     TooltipView ttv_question_2;
 
     private Rect mCropRect = null;
+
     private boolean barcodeScanned = false;
     private boolean previewing = true;
     private boolean isRequesting = false;
+    private byte[] mResultByte;
+    private Camera mResultCamera;
+    private String mResult;
 
-    private Camera.PreviewCallback previewCb = new Camera.PreviewCallback() {
-        public void onPreviewFrame(byte[] data, Camera camera) {
-            Camera.Size size = camera.getParameters().getPreviewSize();
-            // 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
-            byte[] rotatedData = new byte[data.length];
-            for (int y = 0; y < size.height; y++) {
-                for (int x = 0; x < size.width; x++)
-                    rotatedData[x * size.height + size.height - y - 1] = data[x + y * size.width];
-            }
-            // 宽高也要调整
-            int tmp = size.width;
-            size.width = size.height;
-            size.height = tmp;
+    private Camera.PreviewCallback previewCb;
+    private Runnable doAutoFocus = new Runnable() {
+        public void run() {
+            if (previewing)
+                mCamera.autoFocus(autoFocusCB);
+        }
+    };
+    private Runnable doResult = new Runnable() {
+        public void run() {
+            Camera.Size size = null;
+            try {
+                size = mCamera.getParameters().getPreviewSize();
+                // 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
+                byte[] rotatedData = new byte[mResultByte.length];
+                for (int y = 0; y < size.height; y++) {
+                    for (int x = 0; x < size.width; x++)
+                        rotatedData[x * size.height + size.height - y - 1] = mResultByte[x + y * size.width];
+                }
+                // 宽高也要调整
+                int tmp = size.width;
+                size.width = size.height;
+                size.height = tmp;
 
-            initCrop();
-            ZBarDecoder zBarDecoder = new ZBarDecoder();
-            String result = zBarDecoder
-                    .decodeCrop(rotatedData, size.width, size.height, mCropRect.left, mCropRect.top, mCropRect.width(), mCropRect.height());
-            if (!TextUtils.isEmpty(result)) {
-                barcodeScanned = processor(result);//处理结果
+                initCrop();
+                ZBarDecoder zBarDecoder = new ZBarDecoder();
+                mResult = zBarDecoder
+                        .decodeCrop(rotatedData, size.width, size.height, mCropRect.left, mCropRect.top, mCropRect.width(), mCropRect.height());
+                if (!TextUtils.isEmpty(mResult)) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            barcodeScanned = processor(mResult);//处理结果
+                        }
+                    });
 //                if(barcodeScanned) {
 //                    previewing = false;
 //                    mCamera.setPreviewCallback(null);
 //                    mCamera.stopPreview();
 //
 //                }
-                // barcodeScanned = true;
+                    // barcodeScanned = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
-    };
-    private Runnable doAutoFocus = new Runnable() {
-        public void run() {
-            if (previewing)
-                mCamera.autoFocus(autoFocusCB);
         }
     };
     // Mimic continuous auto-focusing
@@ -140,7 +156,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 .ofFloat(scan_line, "translationY", -height, height);
         rotationX.setRepeatCount(-1);
         rotationX.setRepeatMode(Animation.RESTART);
-        rotationX.setDuration(2000);
+        rotationX.setDuration(1200);
         rotationX.start();
     }
 
@@ -170,6 +186,19 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     }
 
     private void initViews() {
+        HandlerThread handlerThread = new HandlerThread("calculation");
+        handlerThread.start();
+        Looper looper = handlerThread.getLooper();
+        final Handler handler = new Handler(looper);
+        previewCb = new Camera.PreviewCallback() {
+            public void onPreviewFrame(byte[] data, Camera camera) {
+                mResultCamera = camera;
+                mResultByte = data;
+                handler.post(doResult);
+            }
+        };
+
+
         autoFocusHandler = new Handler();
         mCameraManager = new CameraManager(this);
         try {

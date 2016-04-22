@@ -12,6 +12,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TitleBar;
 import com.sunnybear.library.view.select.TitleItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
@@ -53,6 +54,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         addFragment();
+        mRedDots = new boolean[4];
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -69,18 +71,11 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         //打开预加载 一次就加载所有的fragment
         vp_message.setOffscreenPageLimit(mFragments.size());
         //红点显示
-        mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid());
-        if (null != mRedDotMap) {
-            if (!TextUtils.isEmpty(mRedDotMap.get(RedDotReceiver.MESSAGECENTER_REPLY)))
-                ll_reply.show();
-            if (!TextUtils.isEmpty(mRedDotMap.get(RedDotReceiver.MESSAGECENTER_PRAISE)))
-                ll_cool.show();
-            if (!TextUtils.isEmpty(mRedDotMap.get(RedDotReceiver.MESSAGECENTER_REMIND)))
-                ll_remind.show();
-            if (!TextUtils.isEmpty(mRedDotMap.get(RedDotReceiver.MESSAGECENTER_NOTICE)))
-                ll_notice.show();
-        } else
-            mRedDotMap = new HashMap<>();
+        mRedDots = PreferenceUtils.getValue(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        if (mRedDots[0]) ll_reply.show();
+        if (mRedDots[1]) ll_cool.show();
+        if (mRedDots[2]) ll_remind.show();
+        if (mRedDots[3]) ll_notice.show();
         addListener();
     }
 
@@ -113,27 +108,23 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         switch (item.getId()) {
             case R.id.ll_reply://回复
                 ll_reply.hide();
-                messagecenter = RedDotReceiver.MESSAGECENTER_REPLY;
                 YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_reply);
                 break;
             case R.id.ll_cool://赞
                 ll_cool.hide();
-                messagecenter = RedDotReceiver.MESSAGECENTER_PRAISE;
                 YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_good);
                 break;
             case R.id.ll_remind://提醒
                 ll_remind.hide();
-                messagecenter = RedDotReceiver.MESSAGECENTER_REMIND;
                 YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_remind);
                 break;
             case R.id.ll_notice://通知
                 ll_notice.hide();
-                messagecenter = RedDotReceiver.MESSAGECENTER_NOTICE;
                 YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_infocenter_notice);
                 break;
         }
-        mRedDotMap.remove(messagecenter);
-        mDiskFileCacheHelper.put(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDotMap);
+        mRedDots[position] = false;
+        PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         vp_message.setCurrentItem(position, false);
     }
 
@@ -141,19 +132,22 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     private void setDot(String messagecenter) {
         switch (messagecenter) {
             case RedDotReceiver.MESSAGECENTER_REPLY:
+                mRedDots[0] = true;
                 ll_reply.show();
                 break;
             case RedDotReceiver.MESSAGECENTER_PRAISE:
+                mRedDots[1] = true;
                 ll_cool.show();
                 break;
             case RedDotReceiver.MESSAGECENTER_REMIND:
+                mRedDots[2] = true;
                 ll_remind.show();
                 break;
             case RedDotReceiver.MESSAGECENTER_NOTICE:
+                mRedDots[3] = true;
                 ll_notice.show();
                 break;
         }
-        mRedDotMap.put(messagecenter, messagecenter);
+        PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
     }
-
 }

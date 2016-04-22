@@ -43,7 +43,6 @@ import cn.sharesdk.framework.ShareSDK;
 public class GlobalApplication extends BasicApplication {
     public static final String ACTION_PUSH_SERVICE = "com.putao.wd.PUSH";
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
-    public static boolean isServiceClose;
     public static Intent redServiceIntent;
 
     private DaoMaster.OpenHelper mHelper;
@@ -109,8 +108,8 @@ public class GlobalApplication extends BasicApplication {
         //注册微信支付APPID
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
         msgApi.registerApp(WX_APP_ID);
-        //启动推送
-        startRedDotService();
+        //初始化内部推送
+        initRedDotService();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(IN_FORE_MESSAGE);
         intentFilter.addAction(OUT_FORE_MESSAGE);
@@ -150,14 +149,11 @@ public class GlobalApplication extends BasicApplication {
     }
 
     /**
-     * 启动内部推送
+     * 初始化内部推送
      */
-    private void startRedDotService() {
-        if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
+    private void initRedDotService() {
         redServiceIntent = new Intent(ACTION_PUSH_SERVICE);
         redServiceIntent.setPackage("com.putao.wd");
-        startService(redServiceIntent);
-        isServiceClose = true;
     }
 
     /**
