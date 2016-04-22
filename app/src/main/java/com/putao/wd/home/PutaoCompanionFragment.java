@@ -159,7 +159,6 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        //多了尾布局，因此至少是1
                         if (mCompanionAdapter.getItemCount() <= 1) {
                             rl_no_commpain_failure.setVisibility(View.VISIBLE);
                             ptl_refresh.setVisibility(View.GONE);
