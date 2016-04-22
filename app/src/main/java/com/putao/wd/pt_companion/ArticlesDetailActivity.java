@@ -28,6 +28,7 @@ import com.putao.wd.pt_companion.adapter.CommentReplyAdapter;
 import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.start.comment.EmojiFragment;
+import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -397,6 +398,7 @@ public class ArticlesDetailActivity extends PTWDActivity implements View.OnClick
             @Override
             public void onSuccess(String url, String result) {
                 getNewCommentData();
+                EventBusHelper.post(mSuperPosition, EVENT_COUNT_COOL);
             }
         });
     }

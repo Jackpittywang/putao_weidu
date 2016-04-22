@@ -474,6 +474,12 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 });
     }
 
+    //二级评论页面的点赞提交
+    @Subcriber(tag = ArticlesDetailActivity.EVENT_COUNT_COOL)
+    public void eventCountCool(int superPosition){
+        refreshCommentList();
+    }
+
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
     public void eventClickEmoji(Emoji emoji) {
         et_msg.append(emoji.getName());
