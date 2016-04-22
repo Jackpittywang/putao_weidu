@@ -47,6 +47,7 @@
                         android:layout_height="88dp"
                         android:layout_gravity="center_horizontal"
                         auto:placeholderImage="@drawable/img_head_default"
+                        auto:roundingBorderColor="@color/white"
                         auto:roundingBorderWidth="1dp" />
 
                     <TextView
@@ -235,6 +236,7 @@
                     android:visibility="gone"
                     auto:setting_icon="@drawable/icon_20_29"
                     auto:setting_text="葡萄籽" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
