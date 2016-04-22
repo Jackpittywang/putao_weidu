@@ -97,45 +97,4 @@ public class RedDotReceiver extends PTMessageReceiver {
             }
         }
     }
-       /* Pattern p1 = Pattern.compile("\"location_dot\":([^}]*)");
-        Matcher m1 = p1.matcher(result);
-        String group;
-        while (m1.find()) {
-            group = m1.group(0).substring(15);//截取json字符串
-            JSONObject jsonObject = JSONObject.parseObject(group + "}");
-            //主页"我"位置红点
-            if (me == 0 && jsonObject.getInteger(ME_TABBAR) == 1) {
-                me = 1;
-                EventBusHelper.post(ME_TABBAR, ME_TABBAR);
-            }
-            //"我"位置"消息中心"红点
-            if (messagecenter == 0 && jsonObject.getInteger(ME_MESSAGECENTER) == 1) {
-                messagecenter = 1;
-                EventBusHelper.post(ME_MESSAGECENTER, ME_MESSAGECENTER);
-            }
-            //消息中心通知红点
-            if (notice == 0 && jsonObject.getInteger(MESSAGECENTER_NOTICE) == 1) {
-                notice = 1;
-                EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);
-            }
-            //消息中心回复红点
-            if (reply == 0 && jsonObject.getInteger(MESSAGECENTER_REPLY) == 1) {
-                reply = 1;
-                EventBusHelper.post(MESSAGECENTER_REPLY, MESSAGECENTER);
-            }
-            //消息中心赞红点
-            if (praise == 0 && jsonObject.getInteger(MESSAGECENTER_PRAISE) == 1) {
-                praise = 1;
-                EventBusHelper.post(MESSAGECENTER_PRAISE, MESSAGECENTER);
-            }
-            //消息中心提醒红点
-            if (remind == 0 && jsonObject.getInteger(MESSAGECENTER_REMIND) == 1) {
-                remind = 1;
-                EventBusHelper.post(MESSAGECENTER_REMIND, MESSAGECENTER);
-            }
-            String appproduct_id = jsonObject.getString(APPPRODUCT_ID);
-            if (!TextUtils.isEmpty(appproduct_id)) {
-                EventBusHelper.post(appproduct_id, APPPRODUCT_ID);
-            }*/
-//        return result;
 }

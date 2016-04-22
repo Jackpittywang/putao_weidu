@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.putao.mtlib.jni.MsgpackJNI;
-import com.putao.mtlib.model.CS_CONNECT;
 import com.putao.mtlib.model.CS_NOTICEACK;
 import com.putao.mtlib.model.MessagePackData;
 import com.putao.mtlib.util.MsgPackUtil;
 import com.putao.mtlib.util.PTLoger;
-import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
 
 import java.io.IOException;

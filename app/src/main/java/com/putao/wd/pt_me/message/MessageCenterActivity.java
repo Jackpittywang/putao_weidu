@@ -42,6 +42,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     private FragmentPagerAdapter adapter;
     private SparseArray<Fragment> mFragments;
     private HashMap<String, String> mRedDotMap;
+    private boolean[] mRedDots;
 
     @Override
     protected int getLayoutId() {

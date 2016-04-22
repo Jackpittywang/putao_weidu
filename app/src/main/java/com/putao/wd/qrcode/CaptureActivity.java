@@ -129,31 +129,17 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         addNavigation();
         setMainTitleColor(Color.WHITE);
         initViews();
-       /* ScaleAnimation animation = new ScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f);
-        animation.setRepeatCount(-1);
-        animation.setRepeatMode(Animation.RESTART);
-        animation.setInterpolator(new LinearInterpolator());
-        animation.setDuration(1200);
-        scan_line.startAnimation(animation);*/
         initAnimation();
-//        scan_line.startAnimation(animation);
     }
 
     private void initAnimation() {
         int height = DensityUtil.dp2px(mContext, 150);
-     /*   animation = new TranslateAnimation(0, 0, -height, height);
-        animation.setDuration(1200);
-        animation.setRepeatCount(-1);
-        animation.setInterpolator(new LinearInterpolator());*/
         ObjectAnimator rotationX = ObjectAnimator
                 .ofFloat(scan_line, "translationY", -height, height);
         rotationX.setRepeatCount(-1);
         rotationX.setRepeatMode(Animation.RESTART);
         rotationX.setDuration(2000);
         rotationX.start();
-//        scan_line.animate().translationX(1.0f).
-//                .start();
-
     }
 
     @Override
