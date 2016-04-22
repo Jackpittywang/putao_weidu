@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.pt_me.order.OrderDetailActivity;
@@ -242,6 +243,7 @@ public class PayActivity extends PTWDActivity implements View.OnClickListener {
 
     @Override
     public void onLeftAction() {
+        YouMengHelper.onEvent(mContext, YouMengHelper.Cashier_cancel);
         super.onLeftAction();
 //        startActivity(IndexActivity.class);
         finish();

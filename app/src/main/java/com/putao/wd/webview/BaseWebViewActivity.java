@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
@@ -121,8 +122,12 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                             descriptionFromPage = JSON.parseObject(content).getString("description");
                             // 分享的图片url
                             sharePicFromPage = JSON.parseObject(content).getString("share_pic");
-                        } else
+                        } else {
+                            if(url.contains("issue.html"))
+                                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_should_ask);
+
                             PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
+                        }
                         return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);

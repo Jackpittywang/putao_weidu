@@ -9,6 +9,7 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.jpush.JPushHeaper;
@@ -54,6 +55,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 startActivity(ModifyPasswardActivity.class);
                 break;
             case R.id.tv_exit://退出登录
+                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_setup_logout);
                 AccountHelper.logout();
                 EventBusHelper.post(EVENT_LOGOUT, EVENT_LOGOUT);
                 IndexActivity.isNotRefreshUserInfo = false;

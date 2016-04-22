@@ -111,6 +111,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_collect_delete);
                                 networkRequest(CompanionApi.cancelCollects(collection.getType() + "", collection.getId() + ""), new SimpleFastJsonCallback<String>(String.class, loading) {
                                     @Override
                                     public void onSuccess(String url, String result) {
@@ -177,7 +178,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_detail);
         Bundle bundle = new Bundle();
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, collection);
-        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_detail);
+        YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_collect_detail);
         bundle.putString(BaseWebViewActivity.URL, collection.getLink_url());
         startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }

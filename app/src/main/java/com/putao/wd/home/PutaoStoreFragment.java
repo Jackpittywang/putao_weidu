@@ -187,6 +187,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         rv_content.setOnItemClickListener(new OnItemClickListener<StoreProduct>() {
             @Override
             public void onItemClick(StoreProduct product, int position) {
+                YouMengHelper.onEvent(mActivity, YouMengHelper.MallHome_detail);
                 IsProductDetail(product.getId(), product);
             }
         });
