@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.home.MeFragment;
@@ -114,6 +115,20 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         tb_index_tab.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
+                switch (position) {
+                    case 0:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "陪伴");
+                        break;
+                    case 1:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "发现");
+                        break;
+                    case 2:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "精选");
+                        break;
+                    case 3:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "我");
+                        break;
+                }
                 vp_content.setCurrentItem(position, false);
                 if (3 == position) hideMeRedDot();
                 if (0 == position) hideCompanionRedDot();

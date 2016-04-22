@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
@@ -277,6 +278,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Override
     public void onLeftAction() {
         super.onLeftAction();
+        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_back);
         finish();
     }
 
@@ -308,7 +310,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                                 menuViews[i].setText(menu.getName() + "");
                                 menuViews[i].setTag(menu);
                                 menuViews[i].setVisibility(View.VISIBLE);
-                                addMenuListener(menuViews[i]);
+                                addMenuListener(menuViews[i], i);
                             }
 
                             if (result.size() == 2) {
@@ -331,10 +333,21 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
     }
 
-    private void addMenuListener(TextView menuView) {
+    private void addMenuListener(final TextView menuView, final int position) {
         menuView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                switch (position) {
+                    case 0:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单1");
+                        break;
+                    case 1:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单2");
+                        break;
+                    case 2:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单3");
+                        break;
+                }
                 ServiceMenu menu = (ServiceMenu) v.getTag();
                 if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
                     //跳转web

@@ -16,6 +16,7 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.PTWDRequestHelper;
@@ -103,6 +104,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
             case R.id.btn_next://下一步
                 String password = et_password.getText().toString();
                 String sms_verify = et_sms_verify.getText().toString();
+                YouMengHelper.onEvent(mContext, YouMengHelper.Login_action, "注册新账户");
                 networkRequest(AccountApi.register(phone, password, sms_verify, graph_verify), new AccountCallback(loading) {
                     @Override
                     public void onSuccess(JSONObject result) {
@@ -118,7 +120,7 @@ public class RegisterActivity extends PTWDActivity implements View.OnClickListen
                     public void onError(String error_msg) {
                         loading.dismiss();
                         ToastUtils.showToastShort(mContext, error_msg);
-                        if(image_graph_verify.getVisibility() == View.VISIBLE){
+                        if (image_graph_verify.getVisibility() == View.VISIBLE) {
                             AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_REGISTER);
                         }
                     }

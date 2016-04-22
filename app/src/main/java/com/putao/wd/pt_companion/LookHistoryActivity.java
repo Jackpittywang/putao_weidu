@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Collection;
@@ -71,6 +72,7 @@ public class LookHistoryActivity extends PTWDActivity {
         rv_lookHistory.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {
             @Override
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
+                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_detail);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);

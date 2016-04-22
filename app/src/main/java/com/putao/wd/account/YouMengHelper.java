@@ -129,6 +129,11 @@ public class YouMengHelper {
     public static final String AccompanyHome_scan = "AccompanyHome_scan";
 
     /**
+     * @brief 陪伴页面 启动扫一扫的次数
+     */
+    public static final String Scan_action = "Scan_action";
+
+    /**
      * @brief 陪伴页面 点击管理按钮的次数
      */
     public static final String AccompanyHome_control = "AccompanyHome_control";
@@ -162,6 +167,31 @@ public class YouMengHelper {
      * @brief * 陪伴内容分享页面 陪伴内容分享按钮点击次数 platform = {"新浪微博","微信好友","微信朋友圈","QQ空间","QQ好友"}
      */
     public static final String AccompanyHome_app_detail_share = "AccompanyHome_app_detail_share";
+
+    /**
+     * 葡萄活动“文章详情”点击次数
+     */
+    public static final String Activity_list_detail = "Activity_list_detail";
+
+    /**
+     * 陪伴列表页面 点击菜单次数 menu={“菜单一”、“菜单二”，“菜单三”}
+     */
+    public static final String Activity_list_menu = "Activity_list_menu";
+
+    /**
+     * 陪伴列表页面  点击返回按钮次数
+     */
+    public static final String Activity_list_back = "Activity_list_back";
+
+    /**
+     * 陪伴葡萄活动文章详情页面 点击返回按钮次数
+     */
+    public static final String Activity_detail_back = "Activity_detail_back";
+
+    /**
+     * 陪伴葡萄活动文章详情页面  点击赞、回复的次数
+     */
+    public static final String Activity_detail_action = "Activity_detail_action";
 
 
 /***********************************************************************************/
@@ -244,6 +274,20 @@ public class YouMengHelper {
      * @brief * 葡萄籽页面 葡萄籽条目的点击次数 item = {"我要提问","综合","淘淘向右走","班得瑞的奇幻花园","旋转吧魔方","麦斯丝","Hello编程","哈尼海洋","涂涂世界"}
      */
     public static final String UserHome_qa_item = "UserHome_qa_item";
+
+
+    /*********************************************注册、找回密码**************************************************/
+    /**
+     * 点击注册、找回密码按钮次数
+     */
+    public static final String Login_action = "Login_action";
+
+
+    /*********************************************陪伴、我、精品、发现**************************************************/
+    /**
+     * 点击陪伴、我、精品、发现的按钮次数
+     */
+    public static final String Tabbar_pressed = "Tabbar_pressed";
 
     /**
      * 记录打点数据
