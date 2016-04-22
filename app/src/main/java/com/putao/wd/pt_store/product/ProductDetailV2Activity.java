@@ -290,17 +290,19 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shopping_share://分享
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_share);
                 if (null != mSharePopupWindow)
                     mSharePopupWindow.show(shopping_share);
                 break;
             case R.id.shopping_add_car://加入购物车
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_add);
                 if (null != mShoppingCarPopupWindow)
                     mShoppingCarPopupWindow.getProductSpec();
                 else
                     ToastUtils.showToastShort(mContext, "加入失败");
                 break;
             case R.id.shopping_back://返回
-                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_back);
                 finish();
                 break;
 //            case R.id.shopping_car_buy://立即购买
@@ -310,7 +312,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
 //                startActivity(WriteOrderActivity.class, bundle);
 //                break;
             case R.id.shopping_relative_car://点击进入购物车
-                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_shopper);
                 startActivity(ShoppingCarActivity.class);
                 break;
         }

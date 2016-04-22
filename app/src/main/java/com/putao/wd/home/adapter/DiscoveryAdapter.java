@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.model.DisCovery;
 import com.putao.wd.model.StoreProduct;
 import com.putao.wd.video.YoukuVideoPlayerActivity;
@@ -57,6 +58,7 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         holder.iv_player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YouMengHelper.onEvent(context, YouMengHelper.DiscoverHome_watch);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(YoukuVideoPlayerActivity.BUNDLE_VID, disCoveries.getVideo_url());
                 context.startActivity(YoukuVideoPlayerActivity.class, bundle);

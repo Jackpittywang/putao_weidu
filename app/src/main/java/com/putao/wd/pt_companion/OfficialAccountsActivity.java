@@ -13,6 +13,7 @@ import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
@@ -81,6 +82,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         tv_cancel_associate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
                 showDialog();
             }
         });
