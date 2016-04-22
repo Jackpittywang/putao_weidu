@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.ColorConstant;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Cart;
@@ -372,6 +373,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             case R.id.ll_closing://去结算/删除
                 switch (tv_closing.getText().toString()) {
                     case PAY:
+                        YouMengHelper.onEvent(mContext, YouMengHelper.Shopper_cacul);
                         startActivity(WriteOrderActivity.class, getBundle());
                         break;
                     case DELETE:
@@ -390,9 +392,16 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     }
 
     @Override
+    public void onLeftAction() {
+        YouMengHelper.onEvent(mContext, YouMengHelper.Shopper_back);
+        super.onLeftAction();
+    }
+
+    @Override
     public void onRightAction() {
         Logger.d("点击右上角");
         if (!saveable) {//这里编辑操作的入口
+            YouMengHelper.onEvent(mContext, YouMengHelper.Shopper_edit);
             setTopButtonStyle(SAVE, DELETE, true);
             if (mSelected.size() == 0) {
                 setBottomButtonStyle(true);

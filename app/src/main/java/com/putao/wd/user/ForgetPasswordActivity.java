@@ -16,6 +16,7 @@ import com.putao.wd.account.AccountApi;
 import com.putao.wd.account.AccountCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
@@ -87,6 +88,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
         final String verify = et_graph_verify.getText().toString();
         switch (v.getId()) {
             case R.id.btn_nextstep://下一步
+                YouMengHelper.onEvent(mContext, YouMengHelper.Login_action, "找回密码");
                 if (11 != et_mobile.getText().toString().length() || "" == et_mobile.getText().toString().trim()) {
                     ToastUtils.showToastLong(mContext, "请输入正确手机号码");
                 } else {

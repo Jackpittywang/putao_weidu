@@ -18,6 +18,7 @@ import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDFragment;
@@ -187,6 +188,33 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onItemClick(Companion companion, int position) {
         if (1 == companion.getIs_relation()) {
+            YouMengHelper.onEvent(mActivity, YouMengHelper.Activity_list_detail);
+            switch (position) {
+                case 0:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "葡萄活动");
+                    break;
+                case 1:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "Hello编程");
+                    break;
+                case 2:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "淘淘向右走");
+                    break;
+                case 3:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "旋转吧，魔方");
+                    break;
+                case 4:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "班得瑞的奇幻花园");
+                    break;
+                case 5:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
+                    break;
+                case 6:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
+                    break;
+                case 7:
+                    YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
+                    break;
+            }
             Bundle bundle = new Bundle();
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
            /* ArrayList<String> notDownloadIds = companion.getNotDownloadIds();

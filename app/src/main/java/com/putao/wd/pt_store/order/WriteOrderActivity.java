@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.ColorConstant;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.pt_me.address.AddressListActivity;
@@ -216,6 +217,12 @@ public class WriteOrderActivity extends PTWDActivity implements View.OnClickList
                         });
                 break;
         }
+    }
+
+    @Override
+    public void onLeftAction() {
+        YouMengHelper.onEvent(mContext, YouMengHelper.Order_fillout);
+        super.onLeftAction();
     }
 
     @Subcriber(tag = AddressListActivity.EVENT_SELECT_ADDRESS)

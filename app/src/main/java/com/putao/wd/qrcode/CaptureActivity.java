@@ -21,6 +21,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.ExploreApi;
 import com.putao.wd.api.ScanApi;
@@ -126,6 +127,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+        YouMengHelper.onEvent(mContext, YouMengHelper.Scan_action, "扫一扫");
         addNavigation();
         setMainTitleColor(Color.WHITE);
         initViews();

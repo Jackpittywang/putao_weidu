@@ -39,6 +39,12 @@ public class YouMengHelper {
      */
     public static final String ChoiceHome_detail_share = "ChoiceHome_detail_share";
 
+    /**
+     * 点击查看视频的次数
+     */
+    public static final String DiscoverHome_watch = "DiscoverHome_watch";
+
+
 /***********************************************************************************/
 
 
@@ -116,6 +122,58 @@ public class YouMengHelper {
      */
     public static final String CreatorHome_conceit_detail_back = "CreatorHome_conceit_detail_back";
 
+    /**
+     * 点击进入商品详情页的次数
+     */
+    public static final String MallHome_detail = "MallHome_detail";
+
+    /**
+     * 加入购物车点击次数
+     */
+    public static final String MallHome_detail_add = "MallHome_detail_add";
+
+    /**
+     * 购物车点击次数
+     */
+    public static final String MallHome_detail_shopper = "MallHome_detail_shopper";
+
+    /**
+     * 返回按钮点击次数
+     */
+    public static final String MallHome_detail_back = "MallHome_detail_back";
+
+    /**
+     * 分享按钮点击次数
+     */
+    public static final String MallHome_detail_share = "MallHome_detail_share";
+
+    /**
+     * 点击“返回”按钮次数
+     */
+    public static final String Shopper_back = "Shopper_back";
+
+    /**
+     * 点击“编辑”的次数
+     */
+    public static final String Shopper_edit = "Shopper_edit";
+
+    /**
+     * 点击“去结算”的次数
+     */
+    public static final String Shopper_cacul = "Shopper_cacul";
+
+    /**
+     * 点击“返回”按钮次数
+     */
+    public static final String Order_fillout = "Order_fillout";
+
+    /**
+     * 点击“取消”按钮次数
+     */
+    public static final String Cashier_cancel = "Cashier_cancel";
+
+
+
 
 /***********************************************************************************/
 
@@ -127,6 +185,11 @@ public class YouMengHelper {
      * @brief 陪伴页面 启动扫一扫的次数
      */
     public static final String AccompanyHome_scan = "AccompanyHome_scan";
+
+    /**
+     * @brief 陪伴页面 启动扫一扫的次数
+     */
+    public static final String Scan_action = "Scan_action";
 
     /**
      * @brief 陪伴页面 点击管理按钮的次数
@@ -163,6 +226,45 @@ public class YouMengHelper {
      */
     public static final String AccompanyHome_app_detail_share = "AccompanyHome_app_detail_share";
 
+    /**
+     *  葡萄公众号账号页 订阅号“取消关联”点击次数
+     */
+    public static final String Activity_menu_dessociate = "Activity_menu_dessociate";
+    /**
+     * 葡萄活动“文章详情”点击次数
+     */
+    public static final String Activity_list_detail = "Activity_list_detail";
+
+    /**
+     * 陪伴列表页面 点击菜单次数 menu={“菜单一”、“菜单二”，“菜单三”}
+     */
+    public static final String Activity_list_menu = "Activity_list_menu";
+
+    /**
+     * 陪伴列表页面  点击返回按钮次数
+     */
+    public static final String Activity_list_back = "Activity_list_back";
+
+    /**
+     * 陪伴葡萄活动文章详情页面 点击返回按钮次数
+     */
+    public static final String Activity_detail_back = "Activity_detail_back";
+
+    /**
+     * 陪伴葡萄活动文章详情页面  点击赞、回复的次数
+     */
+    public static final String Activity_detail_action = "Activity_detail_action";
+
+
+    /**TODO
+     * “立即停止孩子游戏”点击次数
+     */
+    public static final String Activity_menu_detail_stop = "Activity_menu_detail_stop";
+
+    /**
+     * “我要提问”点击次数
+     */
+    public static final String Activity_menu_should_ask = "Activity_menu_should_ask";
 
 /***********************************************************************************/
 
@@ -244,6 +346,40 @@ public class YouMengHelper {
      * @brief * 葡萄籽页面 葡萄籽条目的点击次数 item = {"我要提问","综合","淘淘向右走","班得瑞的奇幻花园","旋转吧魔方","麦斯丝","Hello编程","哈尼海洋","涂涂世界"}
      */
     public static final String UserHome_qa_item = "UserHome_qa_item";
+
+
+    /*********************************************注册、找回密码**************************************************/
+    /**
+     * 点击注册、找回密码按钮次数
+     */
+    public static final String Login_action = "Login_action";
+
+
+    /*********************************************陪伴、我、精品、发现**************************************************/
+    /**
+     * 点击陪伴、我、精品、发现的按钮次数
+     */
+    public static final String Tabbar_pressed = "Tabbar_pressed";
+
+    /**TODO
+     * "清除缓存"点击次数
+     */
+    public static final String UserHome_setup_flush = "UserHome_setup_flush";
+
+    /**
+     * "退出登录"点击次数
+     */
+    public static final String UserHome_setup_logout = "UserHome_setup_logout";
+
+    /**
+     * 点击进入收藏文章详情次数
+     */
+    public static final String UserHome_collect_detail = "UserHome_collect_detail";
+
+    /**
+     * "取消收藏"点击次数
+     */
+    public static final String UserHome_collect_delete = "UserHome_collect_delete";
 
     /**
      * 记录打点数据

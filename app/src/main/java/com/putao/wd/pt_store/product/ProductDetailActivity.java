@@ -164,20 +164,22 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shopping_add_car://加入购物车
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_add);
                 if (null != mShoppingCarPopupWindow)
                     mShoppingCarPopupWindow.getProductSpec();
                 else
                     ToastUtils.showToastShort(mContext, "加入失败");
                 break;
             case R.id.shopping_back://返回
-                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_back);
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_back);
                 finish();
                 break;
             case R.id.shopping_relative_car://点击进入购物车
-                YouMengHelper.onEvent(mContext, YouMengHelper.CreatorHome_conceit_detail_cart);
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_shopper);
                 startActivity(ShoppingCarActivity.class);
                 break;
             case R.id.ll_share://非精品的商品的分享
+                YouMengHelper.onEvent(mContext, YouMengHelper.MallHome_detail_share);
                 if (null != mSharePopupWindow)
                     mSharePopupWindow.show(ll_share);
                 break;

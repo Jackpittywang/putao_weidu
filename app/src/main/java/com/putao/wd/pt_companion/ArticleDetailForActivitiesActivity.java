@@ -308,6 +308,13 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
         mSharePopupWindow.show(navigation_bar);
     }
 
+    @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_back);
+        finish();
+    }
+
     @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
     private void setPic(List<ImageInfo> selectPhotos) {
         String uri = !TextUtils.isEmpty(selectPhotos.get(0).THUMB_DATA) ? selectPhotos.get(0).THUMB_DATA : selectPhotos.get(0)._DATA;
@@ -329,6 +336,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_cool://赞
+                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "赞");
                 if (!property.is_like()) {
                     sb_cool_icon.setState(true);
                     property.setIs_like(true);
@@ -349,6 +357,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了");
                 break;
             case R.id.ll_comment://评论
+                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "评论");
                 Bundle bundle = new Bundle();
                 bundle.putString(CommentForArticleActivity.EVENT_COUNT_ARTICLEID, article_id);
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
@@ -393,23 +402,4 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
     }
 
-    /**
-     * 把app里面的url加上inapp标志，网页端会通过此标志来判断是否是app里面调用
-     *
-     * @param url
-     * @return
-     */
-    public static String getInAppUrl(String url, String serviceId) {
-        if (StringUtils.isEmpty(url)) return "";
-        // 此处如果判断有"inapp=" 不会在添加后面的字段，如果业务需求有变化，需要更改
-        if (url.contains("inapp=")) return url;
-        if (url.contains("?")) url = url + "&inapp=1";
-        else url = url + "?inapp=1";
-        url = url + "&token=" + AccountHelper.getCurrentToken();
-        url = url + "&uid=" + AccountHelper.getCurrentUid();
-        url = url + "&service_id=" + serviceId;
-        url = url + "&device_id=" + AppUtils.getDeviceId(GlobalApplication.getInstance());
-        url = url + "&appid=" + BasicApplication.app_id;
-        return url;
-    }
 }
