@@ -9,8 +9,7 @@
     <View
         android:id="@+id/v_line_horizontal"
         style="@style/line_horizontal"
-        android:layout_above="@+id/tb_index_tab"
-        android:visibility="invisible" />
+        android:layout_above="@+id/tb_index_tab" />
 
 
     <!--首页显示标题栏-->
