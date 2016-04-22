@@ -2,6 +2,8 @@ package com.putao.wd.account;
 
 import android.content.Context;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 /**
  * 友盟Api
@@ -247,10 +249,12 @@ public class YouMengHelper {
      * 记录打点数据
      */
     public static void onEvent(Context context, String name, String tag) {
+        MobclickAgent.onEvent(context, name, tag);
 //        YouMengHelper.onEvent(context, name, tag);
     }
 
     public static void onEvent(Context context, String name) {
+        MobclickAgent.onEvent(context, name);
 //        YouMengHelper.onEvent(context, name);
     }
 

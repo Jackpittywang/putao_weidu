@@ -8,8 +8,8 @@ android {
         applicationId "com.putao.wd"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 4
-        versionName "1.2.0"
+        versionCode 5
+        versionName "1.3.0"
         multiDexEnabled true
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
         ndk {
@@ -54,7 +54,7 @@ android {
     //产品渠道配置
     productFlavors {
 //        local_release { versionName = "V" + defaultConfig.versionName }
-        local_debug { versionName = "D" + defaultConfig.versionName }
+//        local_debug { versionName = "D" + defaultConfig.versionName }
         channel_putao { versionName = "V" + defaultConfig.versionName }
 //        channel_baiduzhushou { versionName = "V" + defaultConfig.versionName }
 //        channel_360{ versionName = "V" + defaultConfig.versionName }S
@@ -119,6 +119,11 @@ dependencies {
     androidTestCompile('com.android.support:multidex-instrumentation:1.0.1') {
         exclude group: 'com.android.support', module: 'multidex'
     }
+    compile files('libs/ShareSDK-SinaWeibo-2.7.0.jar')
+    compile files('libs/ShareSDK-Core-2.7.0.jar')
+    compile files('libs/MobTools-2016.0301.1053.jar')
+    compile files('libs/MobCommons-2016.0301.1053.jar')
+    compile files('libs/ShareSDK-QQ-2.7.0.jar')
 }
 //编译结束后删除unaligned包
 android.applicationVariants.all { variant ->

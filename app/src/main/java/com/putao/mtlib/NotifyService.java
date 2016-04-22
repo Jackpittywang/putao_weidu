@@ -98,7 +98,7 @@ public class NotifyService extends Service {
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Logger.d("获取ip失败----" + e);
+                                PTLoger.d("获取ip失败----" + e);
                             }
                             try {
                                 Thread.sleep(3000);

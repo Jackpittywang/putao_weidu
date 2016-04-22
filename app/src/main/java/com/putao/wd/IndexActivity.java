@@ -14,8 +14,6 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.db.CompanionDBManager;
-import com.putao.wd.db.DistrictDBManager;
-import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;

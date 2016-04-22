@@ -6,8 +6,8 @@ import android.content.Intent;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.tcp.PTMessageReceiver;
+import com.putao.mtlib.util.PTLoger;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.util.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,12 +51,23 @@ public class RedDotReceiver extends PTMessageReceiver {
     }
 
     private void setResult(String result) {
-//        result = result.replaceAll("\\{\"messageCenter\":null,\"accompanyNumber\":\\[\\{\"service_id\":\"6000\",\"id\":234,\"type\":\"article\"\\}\\]\\}", "");
-        Logger.d("ptl-----------------", result);
-        Pattern p1 = Pattern.compile(result.endsWith("]}") ? "\\{.+?\\]\\}" : "\\{.+?null\\}");
+        Pattern p1 = Pattern.compile("\\{\"messageCenter\":null.+?\\]\\}");
+        Pattern p2 = Pattern.compile("\\{\"messageCenter\":\\{\".+?null\\}");
         Matcher m1 = p1.matcher(result);
-        if (m1.find()) {
+        Matcher m2 = p2.matcher(result);
+        while (m1.find()) {
+            PTLoger.d(m1.group(0));
             JSONObject object = JSONObject.parseObject(m1.group(0));
+            JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
+            //陪伴位置提醒红点
+            if (null != accompanyNumber) {
+                //if (result.contains("\"id\":234")) return;
+                EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
+            }
+        }
+        while (m2.find()) {
+            PTLoger.d(m2.group(0));
+            JSONObject object = JSONObject.parseObject(m2.group(0));
             JSONObject messageCenter = object.getJSONObject(MESSAGECENTER);
             if (null != messageCenter) {
                 String reply = messageCenter.getString(REPLY);
@@ -83,13 +94,6 @@ public class RedDotReceiver extends PTMessageReceiver {
                 if ("1".equals(reply)) {
                     EventBusHelper.post(MESSAGECENTER_REPLY, MESSAGECENTER);
                 }
-            }
-
-            JSONArray accompanyNumber = object.getJSONArray(ACCOMPANYNUMBER);
-            //陪伴位置提醒红点
-            if (null != accompanyNumber) {
-                //if (result.contains("\"id\":234")) return;
-                EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
             }
         }
     }
