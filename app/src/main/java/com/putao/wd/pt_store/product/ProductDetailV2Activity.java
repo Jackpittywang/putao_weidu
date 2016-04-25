@@ -178,7 +178,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), imageUrl, storeProduct.getMobile_url());
+                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
                 }
             }
 
