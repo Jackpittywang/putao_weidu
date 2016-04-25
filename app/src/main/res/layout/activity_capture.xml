@@ -13,8 +13,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/scan_bg"
-        android:scaleType="matrix" />
+        android:scaleType="matrix"
+        android:src="@drawable/scan_bg" />
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
@@ -62,9 +62,9 @@
         android:id="@+id/ttv_question_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ttv_question_2"
-        android:layout_alignLeft="@+id/ttv_question_2"
-        android:layout_alignRight="@+id/ttv_question_2"
+        android:layout_above="@+id/tv_question_1"
+        android:layout_alignLeft="@+id/tv_question_1"
+        android:layout_alignRight="@+id/tv_question_1"
         android:padding="10dp"
         android:text="@string/question_1"
         android:textColor="@color/text_color"
@@ -74,17 +74,18 @@
         auto:arrowAlignment="start"
         auto:tooltipColor="#ddFFFFFF" />
 
-    <!-- <TextView
-         android:id="@+id/tv_question_1"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/tv_question_2"
-         android:drawableLeft="@drawable/icon_16_05"
-         android:drawablePadding="5dp"
-         android:padding="8dp"
-         android:text="二维码在哪里?"
-         android:textColor="@color/white"
-         android:textSize="@dimen/text_size_18sp" />-->
+    <TextView
+        android:id="@+id/tv_question_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:drawableLeft="@drawable/icon_16_05"
+        android:drawablePadding="5dp"
+        android:padding="8dp"
+        android:text="二维码在哪里?"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
 
     <com.sunnybear.library.view.bubble.TooltipView
         android:id="@+id/ttv_question_2"
@@ -111,7 +112,7 @@
         android:drawableLeft="@drawable/icon_16_05"
         android:drawablePadding="5dp"
         android:padding="8dp"
-        android:text="每个APP产品的二维码都需要关联吗?"
+        android:text="每个APP产品的二维码都需要关注吗?"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_18sp" />
 
