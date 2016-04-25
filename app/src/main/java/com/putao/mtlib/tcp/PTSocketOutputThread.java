@@ -18,6 +18,7 @@ import android.os.Handler;
 public class PTSocketOutputThread extends Thread {
 	private boolean isStart = true;
 	private List<MsgEntity> sendMsgList;
+	public static boolean isConnected = false;
 
 	public PTSocketOutputThread() {
 
