@@ -145,7 +145,8 @@ public class ShareTools {
         QQ.ShareParams params = new QQ.ShareParams();
         params.title = title;
         params.text = text;
-        params.imageUrl = ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
+        params.imageUrl = imageUrl;
+//                ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
         params.titleUrl = url;
         params.setShareType(Platform.SHARE_TEXT);
 
