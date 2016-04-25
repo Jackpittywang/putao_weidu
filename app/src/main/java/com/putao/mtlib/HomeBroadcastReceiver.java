@@ -34,6 +34,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
 //                inFore();
                 Logger.d("ptl---------------", "应用恢复到前台了");
                 if (!AccountHelper.isLogin()) return;
+
                 if (null != timer) {
                     timer.cancel();
                     timer = null;
