@@ -87,16 +87,17 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         Boolean is_device_bind = PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false);
         tb_index_tab.setTabItemSelected(is_device_bind && AccountHelper.isLogin() ? R.id.ti_index_companion : R.id.ti_index_discovery);
         vp_content.setCurrentItem(is_device_bind && AccountHelper.isLogin() ? 0 : 1);
-        //红点显示
-        if (RedDotUtils.showMessageCenterDot()) {
-            ti_index_companion.show(-1);
-        }
-        //红点显示
-        if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid(), false)) {
-            ti_index_companion.hide();
-        }
-        if (AccountHelper.isLogin())
+        if (AccountHelper.isLogin()) {
+            //红点显示
+            if (RedDotUtils.showMessageCenterDot()) {
+                ti_index_me.show(-1);
+            }
+            //红点显示
+            if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid(), false)) {
+                ti_index_companion.hide();
+            }
             checkInquiryBind(AccountHelper.getCurrentUid());
+        }
 
     }
 
