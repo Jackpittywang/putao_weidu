@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
@@ -80,7 +81,7 @@ public class BottomPanelUtil {
                     bottomPopupWindow.dismiss();
                 }
                 handler.sendEmptyMessage(100);
-                if(cancleCallback!=null) cancleCallback.doFunction();
+                if (cancleCallback != null) cancleCallback.doFunction();
             }
         });
 
@@ -91,7 +92,7 @@ public class BottomPanelUtil {
                     bottomPopupWindow.dismiss();
                 }
                 handler.sendEmptyMessage(100);
-                if(cancleCallback!=null) cancleCallback.doFunction();
+                if (cancleCallback != null) cancleCallback.doFunction();
             }
         });
         for (int i = 0; i < functionNames.length; i++) {
@@ -133,6 +134,8 @@ public class BottomPanelUtil {
         bottomPopupWindow = new PopupWindow(functionMain,
                 DensityUtil.getDeviceWidth(context)
                         - (int) DensityUtil.dp2px(context, 16), width);
+        //解决被华为手机虚拟按键遮挡
+        bottomPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         bottomPopupWindow.setAnimationStyle(R.style.bottom_anim_style);
         bottomPopupWindow.setBackgroundDrawable(new ColorDrawable());
         bottomPopupWindow.setFocusable(true);
