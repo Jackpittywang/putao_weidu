@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
             case GlobalApplication.IN_FORE_MESSAGE:
 //                inFore();
                 Logger.d("ptl---------------", "应用恢复到前台了");
+                if (!AccountHelper.isLogin()) return;
                 if (null != timer) {
                     timer.cancel();
                     timer = null;
@@ -64,7 +66,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
 
     private boolean isServiceStart(Context context) {
         android.app.ActivityManager systemService = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<android.app.ActivityManager.RunningServiceInfo> runningServices = systemService.getRunningServices(200);
+        List<android.app.ActivityManager.RunningServiceInfo> runningServices = systemService.getRunningServices(100);
         for (android.app.ActivityManager.RunningServiceInfo runningServiceInfo : runningServices) {
             Logger.d("service-----", runningServiceInfo.service.getClassName().toString());
             if ("com.putao.mtlib.NotifyService".equals(runningServiceInfo.service.getClassName().toString())) {

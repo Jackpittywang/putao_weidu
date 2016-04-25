@@ -1,5 +1,6 @@
 package com.putao.wd.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
@@ -20,8 +22,10 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
+import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.CleanableEditText;
@@ -205,11 +209,27 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
                 EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-                startActivity(IndexActivity.class);
-                finish();
+                mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
+                checkInquiryBind(AccountHelper.getCurrentUid());
                 loading.dismiss();
             }
         });
+    }
+
+    private void checkInquiryBind(String currentUid) {
+        networkRequest(UserApi.checkInquiryBind(currentUid),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        loading.dismiss();
+                        startActivity(IndexActivity.class);
+                    }
+                });
     }
 
     /**
