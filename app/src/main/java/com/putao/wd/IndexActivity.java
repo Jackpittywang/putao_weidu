@@ -131,8 +131,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                         break;
                 }
                 vp_content.setCurrentItem(position, false);
-                if (3 == position) hideMeRedDot();
-                if (0 == position) hideCompanionRedDot();
+//                if (3 == position) hideMeRedDot();
+//                if (0 == position) hideCompanionRedDot();
             }
         });
     }
@@ -142,6 +142,10 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         return new String[0];
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     /**
      * 返回键
@@ -165,15 +169,14 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }
 
-    private void hideMeRedDot() {
+/*    private void hideMeRedDot() {
         ti_index_me.hide();
-        mDiskFileCacheHelper.remove(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid());
     }
 
     private void hideCompanionRedDot() {
         ti_index_companion.hide();
         PreferenceUtils.remove(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid());
-    }
+    }*/
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
     private void refresh_companion(String str) {
@@ -192,11 +195,6 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             dataBaseManager.insertFixDownload(jsonObject.getString(RedDotReceiver.SERVICE_ID), jsonObject.getString(RedDotReceiver.ID));
         }
     }
-    @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
-    private void setMeMessageCenterDot(String me_messagecenter) {
-        mDiskFileCacheHelper.put(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid(), me_messagecenter);
-    }
-
 
     @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
     private void setDot(String messagecenter) {

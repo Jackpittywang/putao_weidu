@@ -38,13 +38,13 @@ import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.start.putaozi.GrapestoneActivity;
 import com.putao.wd.user.CompleteActivity;
 import com.putao.wd.user.LoginActivity;
+import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -157,11 +157,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
             getOrderCount();
             getUserInfo();
         } else if (AccountHelper.isLogin()) {
-            boolean[] mRedDots = new boolean[4];
             //红点显示
-            mRedDots = PreferenceUtils.getValue(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
-            for (boolean redDot : mRedDots) {
-                if (redDot) si_message.show();
+            if (RedDotUtils.showMessageCenterDot()) {
+                si_message.show();
             }
         }
     }
@@ -334,7 +332,6 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 startActivity(CollectionActivity.class);
                 break;
             case R.id.si_message://消息中心
-                si_message.hide();
                 YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "消息中心");
                 startActivity(MessageCenterActivity.class);
                 break;
@@ -398,8 +395,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 break;
             case R.id.si_message://消息中心
                 si_message.hide();
-                mDiskFileCacheHelper.remove(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid());
-                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
+//                mDiskFileCacheHelper.remove(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid());
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MessageCenterActivity.class);
                 break;
             case R.id.btn_pay://待付款
@@ -495,5 +491,10 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
     private void setDot(String me_tabbar) {
         si_message.show();
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_ME_TAB)
+    private void cancleDot(String tab) {
+        si_message.hide();
     }
 }

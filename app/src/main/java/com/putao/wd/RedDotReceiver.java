@@ -73,7 +73,7 @@ public class RedDotReceiver extends PTMessageReceiver {
                 /*//主页"我"位置红点
                 EventBusHelper.post(ME_TABBAR, ME_TABBAR);*/
                 //"我"位置"消息中心"红点
-                EventBusHelper.post(ME_MESSAGECENTER, ME_MESSAGECENTER);
+//                EventBusHelper.post(ME_MESSAGECENTER, ME_MESSAGECENTER);
                 //消息中心通知红点
                 if ("1".equals(notice)) {
                     EventBusHelper.post(MESSAGECENTER_NOTICE, MESSAGECENTER);

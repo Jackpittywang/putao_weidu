@@ -3,14 +3,16 @@ package com.putao.wd.pt_me.message;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.util.RedDotUtils;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TitleBar;
@@ -126,6 +128,9 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         mRedDots[position] = false;
         PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         vp_message.setCurrentItem(position, false);
+        if (RedDotUtils.showMessageCenterDot())
+            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
+
     }
 
     @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
