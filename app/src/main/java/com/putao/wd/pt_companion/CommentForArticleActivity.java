@@ -377,7 +377,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
 
                             List<ArticleDetailComment> comments = result.getComment_lists();
                             if (comments != null && comments.size() > 0) {
-                                checkLiked(comments);
+                        //        checkLiked(comments);
                                 adapter.replaceAll(comments);
                                 hasComment = true;
                                 rv_content.loadMoreComplete();
@@ -408,7 +408,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 Logger.i(url);
                 List<ArticleDetailComment> comments = result.getComment_lists();
                 if (comments != null && comments.size() > 0) {
-                    checkLiked(comments);
+           //         checkLiked(comments);
                     adapter.addAll(comments);
                     hasComment = true;
                     rv_content.loadMoreComplete();
@@ -468,7 +468,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                     @Override
                     public void onSuccess(String url, String result) {
 //                        adapter.notifyItemChanged(currPosition);
-                        mDiskFileCacheHelper.put(COOL + comment.getComment_id(), "true");
+//                        mDiskFileCacheHelper.put(COOL + comment.getComment_id(), "true");
                         EventBusHelper.post(true, EVENT_COUNT_COOL);
                     }
                 });
