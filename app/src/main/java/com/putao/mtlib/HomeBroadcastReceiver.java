@@ -64,8 +64,9 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
 
     private boolean isServiceStart(Context context) {
         android.app.ActivityManager systemService = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<android.app.ActivityManager.RunningServiceInfo> runningServices = systemService.getRunningServices(100);
+        List<android.app.ActivityManager.RunningServiceInfo> runningServices = systemService.getRunningServices(200);
         for (android.app.ActivityManager.RunningServiceInfo runningServiceInfo : runningServices) {
+            Logger.d("service-----", runningServiceInfo.service.getClassName().toString());
             if ("com.putao.mtlib.NotifyService".equals(runningServiceInfo.service.getClassName().toString())) {
                 return true;
             }

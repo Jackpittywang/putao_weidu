@@ -38,7 +38,7 @@ public class MsgPackUtil {
 //						action.getInfo2(), action.getInfo3(), action.getInfo4(), action.getInfo5());
 //			}
 
-        else if(type == PTMessageType.CS_NOTICEACK){
+        else if (type == PTMessageType.CS_NOTICEACK) {
             CS_NOTICEACK item = (CS_NOTICEACK) object;
             body = MsgpackJNI.PackMessageWeiduBack(item.getMsgId());
         }
