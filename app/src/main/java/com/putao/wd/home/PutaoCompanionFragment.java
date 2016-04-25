@@ -228,7 +228,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (isShowTabDot) break;
             }
             if (!isShowTabDot)
-                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB);
             mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
         } else {

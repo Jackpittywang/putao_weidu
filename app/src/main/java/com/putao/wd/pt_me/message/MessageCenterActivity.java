@@ -128,8 +128,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         mRedDots[position] = false;
         PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         vp_message.setCurrentItem(position, false);
-        if (RedDotUtils.showMessageCenterDot())
-            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
+        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
 
     }
 

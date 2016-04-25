@@ -38,6 +38,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 }
                 if (!isServiceStart) {
                     context.startService(GlobalApplication.redServiceIntent);
+                    Logger.d("ptl-----------", "启动服务");
                 }
                 break;
             case GlobalApplication.OUT_FORE_MESSAGE:
@@ -47,13 +48,16 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        Logger.d("ptl-----------", "停止服务");
                         if (isServiceStart) {
                             context.stopService(GlobalApplication.redServiceIntent);
+                            Logger.d("ptl-----------", "停止服务");
                         }
-//                        stopSelf();
                     }
                 }, 60 * 1000);
+                break;
+            case GlobalApplication.OUT_FORE_MESSAGE_SOON:
+                context.stopService(GlobalApplication.redServiceIntent);
+                Logger.d("ptl---------------", "停止服务");
                 break;
         }
     }

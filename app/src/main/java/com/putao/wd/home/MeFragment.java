@@ -156,12 +156,8 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
             getOrderCount();
             getUserInfo();
-        } else if (AccountHelper.isLogin()) {
-            //红点显示
-            if (RedDotUtils.showMessageCenterDot()) {
-                si_message.show();
-            }
         }
+        refreshMeDot("");
     }
 
     /**
@@ -488,13 +484,16 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         return true;
     }
 
-    @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
+    @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
     private void setDot(String me_tabbar) {
         si_message.show();
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_ME_TAB)
-    private void cancleDot(String tab) {
-        si_message.hide();
+    private void refreshMeDot(String tab) {
+        if (RedDotUtils.showMessageCenterDot())
+            si_message.show();
+        else
+            si_message.hide();
     }
 }

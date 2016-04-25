@@ -125,7 +125,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                             et_graph_verify.setText("");
                                         }
 
-                                        if(rl_graph_verify.getVisibility() == View.VISIBLE){
+                                        if (rl_graph_verify.getVisibility() == View.VISIBLE) {
                                             AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
                                         }
                                     }
@@ -161,6 +161,8 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         AccountHelper.setUserInfo(result);
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
                         mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                         checkInquiryBind(AccountHelper.getCurrentUid());
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);

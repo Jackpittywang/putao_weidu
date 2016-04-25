@@ -89,13 +89,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         vp_content.setCurrentItem(is_device_bind && AccountHelper.isLogin() ? 0 : 1);
         if (AccountHelper.isLogin()) {
             //红点显示
-            if (RedDotUtils.showMessageCenterDot()) {
-                ti_index_me.show(-1);
-            }
-            //红点显示
-            if (PreferenceUtils.getValue(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid(), false)) {
-                ti_index_companion.hide();
-            }
+            refreshCompanionDot("");
+            refreshMeDot("");
             checkInquiryBind(AccountHelper.getCurrentUid());
         }
 
@@ -189,12 +184,22 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
     private void setCompanionDot(JSONArray accompanyNumber) {
         ti_index_companion.show(-1);
-        PreferenceUtils.save(RedDotReceiver.COMPANION_TABBAR + AccountHelper.getCurrentUid(), true);
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         for (Object object : accompanyNumber) {
             JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
             dataBaseManager.insertFixDownload(jsonObject.getString(RedDotReceiver.SERVICE_ID), jsonObject.getString(RedDotReceiver.ID));
         }
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
+    private void refreshCompanionDot(String tab) {
+        if (RedDotUtils.getCompanionDot(mApp)) ti_index_companion.show(-1);
+        else ti_index_companion.hide();
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB)
+    private void cancelCompanionDot(String tab) {
+        ti_index_companion.hide();
     }
 
     @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
@@ -203,15 +208,12 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         RedDotUtils.saveMessageCenterDot(messagecenter);
     }
 
-
-    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
-    private void cancleCompanionDot(String tab) {
-        ti_index_companion.hide();
-    }
-
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_ME_TAB)
-    private void cancleMeDot(String tab) {
-        ti_index_me.hide();
+    private void refreshMeDot(String tab) {
+        if (RedDotUtils.showMessageCenterDot())
+            ti_index_me.show(-1);
+        else
+            ti_index_me.hide();
     }
 
     /**

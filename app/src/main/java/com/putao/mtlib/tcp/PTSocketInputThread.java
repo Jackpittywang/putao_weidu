@@ -203,7 +203,7 @@ public class PTSocketInputThread extends Thread {
                         } catch (SocketException e) {
                             PTLoger.e("socket exception");
                             PTTCPClient.instance().setConnectState(false);
-                            PTSocketOutputThread.isConnected = false;
+//                            PTSocketOutputThread.isConnected = false;
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -221,9 +221,9 @@ public class PTSocketInputThread extends Thread {
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-            PTSocketOutputThread.isConnected = false;
+//            PTSocketOutputThread.isConnected = false;
         } catch (ClosedSelectorException e2) {
-            PTSocketOutputThread.isConnected = false;
+//            PTSocketOutputThread.isConnected = false;
         }
     }
 }

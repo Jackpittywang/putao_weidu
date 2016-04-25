@@ -19,6 +19,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 
 import java.net.URLDecoder;
@@ -82,7 +83,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
         if (StringUtils.isEmpty(title)) title = "葡萄纬度";
         setMainTitle(title);
         String url = args.getString(URL);
-
+        Logger.d(url);
         setWebSettings();
 
         // url = "http://static.uzu.wang/putaowd/pages/support.html";
@@ -123,7 +124,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                             // 分享的图片url
                             sharePicFromPage = JSON.parseObject(content).getString("share_pic");
                         } else {
-                            if(url.contains("issue.html"))
+                            if (url.contains("issue.html"))
                                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_should_ask);
 
                             PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
