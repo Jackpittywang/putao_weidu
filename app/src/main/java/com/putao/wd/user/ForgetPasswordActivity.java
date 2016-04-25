@@ -170,7 +170,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 new AccountCallback(loading) {
                     @Override
                     public void onSuccess(JSONObject result) {
-                        ToastUtils.showToastLong(mContext, "验证码发送成功");
+                        ToastUtils.showToastLong(mContext, GlobalApplication.isDebug ? "1234" : "验证码已发送");
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(FORGET_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(FORGET_CODE + mobile);
                         }
