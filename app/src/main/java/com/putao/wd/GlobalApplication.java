@@ -178,7 +178,7 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected String getBuglyKey() {
-        return "900013684";
+        return "900027253";
     }
 
     @Override

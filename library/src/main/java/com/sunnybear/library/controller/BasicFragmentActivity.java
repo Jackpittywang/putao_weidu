@@ -571,9 +571,6 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         super.onResume();
         isResume = true;
         if (isRunningForeground) {
-            Logger.d("ptl---------------ActivityManager", "应用恢复到前台了");
-            /*Intent intent = new Intent("com.putao.mtlib.message");
-            mContext.sendBroadcast(intent);*/
             isRunningForeground = false;
             Intent intent = new Intent("com.putao.inFore.message");
             mContext.sendBroadcast(intent);

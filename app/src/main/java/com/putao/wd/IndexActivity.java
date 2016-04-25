@@ -20,6 +20,7 @@ import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.pt_store.pay.PaySuccessActivity;
+import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -87,7 +88,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         tb_index_tab.setTabItemSelected(is_device_bind && AccountHelper.isLogin() ? R.id.ti_index_companion : R.id.ti_index_discovery);
         vp_content.setCurrentItem(is_device_bind && AccountHelper.isLogin() ? 0 : 1);
         //红点显示
-        if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid()))) {
+        if (RedDotUtils.showMessageCenterDot()) {
             ti_index_companion.show(-1);
         }
         //红点显示
@@ -190,15 +191,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
             dataBaseManager.insertFixDownload(jsonObject.getString(RedDotReceiver.SERVICE_ID), jsonObject.getString(RedDotReceiver.ID));
         }
-//        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), me_tabbar);
     }
-
-    @Subcriber(tag = RedDotReceiver.ME_TABBAR)
-    private void setMeDot(String me_tabbar) {
-        ti_index_me.show(-1);
-        mDiskFileCacheHelper.put(RedDotReceiver.ME_TABBAR + AccountHelper.getCurrentUid(), me_tabbar);
-    }
-
     @Subcriber(tag = RedDotReceiver.ME_MESSAGECENTER)
     private void setMeMessageCenterDot(String me_messagecenter) {
         mDiskFileCacheHelper.put(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid(), me_messagecenter);
@@ -206,18 +199,10 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
 
     @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
-    private void setMessageCenterDot(String messagecenter) {
-        HashMap<String, String> redDotMap = new HashMap<>();
-        redDotMap.put(messagecenter, messagecenter);
-        mDiskFileCacheHelper.put(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), redDotMap);
+    private void setDot(String messagecenter) {
+        ti_index_me.show(-1);
+        RedDotUtils.saveMessageCenterDot(messagecenter);
     }
-
-/*    @Subcriber(tag = RedDotReceiver.APPPRODUCT_ID)
-    private void setCompanionDot(String appproduct_id) {
-        HashMap<String, String> redDotMap = new HashMap<>();
-        redDotMap.put(appproduct_id, appproduct_id);
-        mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), redDotMap);
-    }*/
 
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
