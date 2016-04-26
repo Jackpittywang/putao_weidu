@@ -179,26 +179,26 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
 
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
-            String image = ImageUtils.getImageSizeUrl(cover_pic, ImageUtils.ImageSizeURL.SIZE_120x120);
+//            String image = ImageUtils.getImageSizeUrl(cover_pic, ImageUtils.ImageSizeURL.SIZE_120x120);
 
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(mContext, true, title, sub_title, image, link_url);
+                ShareTools.wechatWebShare(mContext, true, title, sub_title, cover_pic, link_url);
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, false, title, sub_title, image, link_url);
+                ShareTools.wechatWebShare(mContext, false, title, sub_title, cover_pic, link_url);
             }
 
             @Override
             public void onQQFriend() {
-                ShareTools.OnQQZShare(mContext, true, title, sub_title, image, link_url);
+                ShareTools.OnQQZShare(mContext, true, title, sub_title, cover_pic, link_url);
             }
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(mContext, false, title, sub_title, image, link_url);
+                ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
             }
 
             public void onSinaWeibo() {
