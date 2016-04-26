@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/btn_get_focus"
-            android:text="精选"
+            android:text="返回商城"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_18sp" />
 

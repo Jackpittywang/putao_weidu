@@ -10,8 +10,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -86,6 +88,8 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     View view_apart;
     @Bind(R.id.pb_webview)
     ProgressBar pb_webview;
+    @Bind(R.id.rl_no_webviewData)
+    RelativeLayout rl_no_webviewData;
     /* @Bind(R.id.iv_upload_pic)
      ImageDraweeView iv_upload_pic;*/
   /*  @Bind(R.id.sv_load)
@@ -111,6 +115,11 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         super.onViewCreatedFinish(saveInstanceState);
+        if (NetManager.isNetworkAvailable(mContext)) {//没有网络连接
+            rl_no_webviewData.setVisibility(View.VISIBLE);
+        } else {
+            rl_no_webviewData.setVisibility(View.GONE);
+        }
         Collection collection = (Collection) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         final ServiceMessageContent content_list;
         if (null != collection) {
@@ -181,7 +190,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
             }
         });*/
-
 
         mSharePopupWindow.setOnShareClickListener(new OnShareClickListener() {
             String image = ImageUtils.getImageSizeUrl(cover_pic, ImageUtils.ImageSizeURL.SIZE_120x120);
@@ -295,6 +303,12 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
                 mSharePopupWindow.setCollectState(result.is_collect());
             }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                ll_cool.setClickable(false);
+            }
         });
     }
 
@@ -316,7 +330,12 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     @Override
     public void onRightAction() {
         super.onRightAction();
-        mSharePopupWindow.show(navigation_bar);
+        if (NetManager.isNetworkAvailable(mContext)) {//没有网络连接
+            navigation_bar.setRightClickable(false);
+        } else {
+            navigation_bar.setRightClickable(true);
+            mSharePopupWindow.show(navigation_bar);
+        }
     }
 
     @Override
