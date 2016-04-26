@@ -114,6 +114,7 @@ public class GlobalApplication extends BasicApplication {
         intentFilter.addAction(IN_FORE_MESSAGE);
         intentFilter.addAction(OUT_FORE_MESSAGE);
         intentFilter.addAction(OUT_FORE_MESSAGE_SOON);
+        intentFilter.addAction(RESTART_MESSAGE);
         getApplicationContext().registerReceiver(HomeBroadcastReceiver.getInstance(), intentFilter);
         ImageLoaderUtil.initImageLoader(this);
 
@@ -256,6 +257,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String IN_FORE_MESSAGE = "com.putao.inFore.message";
     public static final String OUT_FORE_MESSAGE = "com.putao.outFore.message";
     public static final String OUT_FORE_MESSAGE_SOON = "com.putao.outForeSoon.message";
+    public static final String RESTART_MESSAGE = "restart_message";
     public static final String IS_DEVICE_BIND = "is_device_bind";
     //===================preference key===========================
     public static final String PREFERENCE_KEY_UID = "uid";

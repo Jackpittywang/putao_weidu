@@ -18,6 +18,7 @@ import java.util.TimerTask;
 public class HomeBroadcastReceiver extends BroadcastReceiver {
     Timer timer;
     private static HomeBroadcastReceiver mHomeBroadcastReceiver;
+    private boolean isServiceStart;
 
     public static HomeBroadcastReceiver getInstance() {
         if (null == mHomeBroadcastReceiver) {
@@ -28,7 +29,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        final boolean isServiceStart = isServiceStart(context);
+        isServiceStart = isServiceStart(context);
         switch (intent.getAction()) {
             case GlobalApplication.IN_FORE_MESSAGE:
 //                inFore();
@@ -59,10 +60,31 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 }, 60 * 1000);
                 break;
             case GlobalApplication.OUT_FORE_MESSAGE_SOON:
-                context.stopService(GlobalApplication.redServiceIntent);
-                Logger.d("ptl---------------", "停止服务");
+                if (isServiceStart) {
+                    context.stopService(GlobalApplication.redServiceIntent);
+                    Logger.d("ptl---------------", "停止服务");
+                }
+                break;
+            case GlobalApplication.RESTART_MESSAGE:
+                if (isServiceStart) {
+                    context.stopService(GlobalApplication.redServiceIntent);
+                    isServiceStart = false;
+                    Logger.d("ptl---------------", "停止服务");
+                }
+                if (null == timer)
+                    timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (!isServiceStart) {
+                            Logger.d("ptl---------------", "重启");
+                            context.startService(GlobalApplication.redServiceIntent);
+                        }
+                    }
+                }, 10 * 1000);
                 break;
         }
+
     }
 
     private boolean isServiceStart(Context context) {

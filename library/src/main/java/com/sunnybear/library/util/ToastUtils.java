@@ -13,11 +13,13 @@ public final class ToastUtils {
     private static Toast mToast;
 
     public static void showToastLong(Context context, String msg) {
-        showToast(context, msg, Toast.LENGTH_LONG);
+        showNoRepeatToast(context, msg, Toast.LENGTH_LONG);
+        //      showToast(context, msg, Toast.LENGTH_LONG);
     }
 
     public static void showToastShort(Context context, String msg) {
-        showToast(context, msg, Toast.LENGTH_SHORT);
+//        showToast(context, msg, Toast.LENGTH_SHORT);
+        showNoRepeatToast(context, msg);
     }
 
     public static void showToastShort(Context context, int strRes) {
@@ -32,16 +34,19 @@ public final class ToastUtils {
         Toast.makeText(context, msg, duration).show();
     }
 
-    public static void showNoRepeatToast(Context context, String msg){
+    public static void showNoRepeatToast(Context context, String msg) {
 
-        if(mToast == null){
-            mToast = Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT);
+        showNoRepeatToast(context, msg, Toast.LENGTH_SHORT);
+    }
+
+    public static void showNoRepeatToast(Context context, String msg, int duration) {
+
+        if (mToast == null) {
+            mToast = Toast.makeText(context.getApplicationContext(), msg, duration);
         }
         mToast.setText(msg);
         mToast.show();
     }
-
-
 
 
 }

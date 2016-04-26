@@ -56,7 +56,7 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         addFragment();
-        mRedDots = new boolean[4];
+        mRedDots = new boolean[]{false, false, false, false};
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -74,7 +74,11 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         vp_message.setOffscreenPageLimit(mFragments.size());
         //红点显示
         mRedDots = PreferenceUtils.getValue(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
-        if (mRedDots[0]) ll_reply.show();
+        if (mRedDots[0]) {
+            mRedDots[0] = false;
+            PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
+        }
         if (mRedDots[1]) ll_cool.show();
         if (mRedDots[2]) ll_remind.show();
         if (mRedDots[3]) ll_notice.show();

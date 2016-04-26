@@ -1,10 +1,13 @@
 package com.putao.mtlib.tcp;
 
+import android.content.Intent;
+
 import com.putao.mtlib.util.PTLoger;
+import com.putao.wd.GlobalApplication;
 
 /**
  * @author jidongdong
- *         <p/>
+ *         <p>
  *         2015年7月27日 下午6:20:08
  */
 class PTSocketHeartThread extends Thread {
@@ -45,22 +48,17 @@ class PTSocketHeartThread extends Thread {
     public void run() {
 //        isStop = false;
         while (!isStop) {
-            boolean canConnectToServer = false;
-            // if (PTTCPClient.instance().isConnect()) {
-            if (PTSocketOutputThread.isConnected && PTTCPClient.instance().isConnect()) {
-                PTLoger.d("SocketConnect--is---------true, send heart message/");
-                PTSenderManager.sharedInstance().sendMsg(PingBytes, null);
-                canConnectToServer = true;
-            } else {
-                PTLoger.d("SocketConnect--is---------false, no send /");
-            }
-            if (!canConnectToServer && PTSocketOutputThread.isConnected) {
-                reConnect();
-            }
             try {
                 Thread.sleep(PTSenderManager.sharedInstance().getConfig().getHeartSecond() * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            if (PTSocketOutputThread.isConnected && PTTCPClient.instance().isConnect()) {
+                PTLoger.d("SocketConnect--is---------true, send heart message/");
+                PTSenderManager.sharedInstance().sendMsg(PingBytes, null);
+            } else {
+                PTLoger.d("SocketConnect--is---------false, no send /");
+                GlobalApplication.getInstance().sendBroadcast(new Intent(GlobalApplication.RESTART_MESSAGE));
             }
         }
     }

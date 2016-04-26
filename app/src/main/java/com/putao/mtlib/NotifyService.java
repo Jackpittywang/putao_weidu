@@ -119,7 +119,7 @@ public class NotifyService extends Service {
     /**
      * 发送连接验证
      */
-    public void sendConnectValidate() {
+    public static void sendConnectValidate() {
         CS_CONNECT connect = new CS_CONNECT();
         connect.setDeviceid(AccountHelper.getCurrentUid());
         connect.setAppid(appid);
@@ -127,7 +127,7 @@ public class NotifyService extends Service {
         PTSenderManager.sharedInstance().sendMsg(MsgPackUtil.Pack(connect, PTMessageType.CS_CONNECT));
     }
 
-    public String getSign(String deviceid, String secret) {
+    public static String getSign(String deviceid, String secret) {
         return MD5Util.getMD5Str(deviceid + appid + secret).toUpperCase();
     }
 
