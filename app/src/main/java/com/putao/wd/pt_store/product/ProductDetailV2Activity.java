@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
@@ -90,7 +91,8 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
     private String product_id;//产品id
     private String product_num;//是否是从陪伴传送过来的数据
     private int status;//判断是否已下架
-    private String title, subtitle, shareUrl, imageUrl;
+    private boolean isHave;
+    private String title, subtitle, shareUrl, imageUrl, imageShare;
 
     private ProductDetail detail = null;
 
@@ -106,7 +108,8 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
         is_service = args.getBoolean(BUNDLE_IS_SERVICE);
         is_remind = args.getBoolean(BUNDLE_IS_REMIND);
         product_num = args.getString(BUNDLE_PRODUCT_NUM);
-        status = args.getInt("status");
+        status = args.getInt(AccountConstants.Bundle.BUNDLE_STORE_STATUS);
+        isHave = args.getBoolean(AccountConstants.Bundle.BUNDLE_STORE_ISHAVE, false);
         wv_content.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -120,65 +123,72 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 loading.dismiss();
             }
         });
-        if (is_detail) {
-            if (is_service) {
-                ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
-                wv_content.loadUrl(PTWDRequestHelper.store()
-                        .addParam("pid", storeProduct.getProduct_id())
-                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
-                tv_product_price.setText(storeProduct.getPrice());
-                getProduct(storeProduct.getProduct_id());
-            } else {
-                OrderProduct storeProduct = (OrderProduct) args.getSerializable(BUNDLE_PRODUCT);
-                wv_content.loadUrl(PTWDRequestHelper.store()
-                        .addParam("pid", storeProduct.getProduct_id())
-                        .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
-                tv_product_price.setText(storeProduct.getPrice());
-                getProduct(storeProduct.getProduct_id());
-            }
-        } else if (is_remind) {
-//            if (product_num.equals("diary")) {
-//                product_id = args.getString(DiaryActivity.BUNDLE_PRODUCT_ID);
-//            } else {
-            product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
-//            }
-            wv_content.loadUrl(PTWDRequestHelper.store()
-                    .addParam("pid", product_id)
-                    .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
-            getProduct(product_id);
+        if (isHave) {
+            rl_detail.setVisibility(View.GONE);
+            rl_no_detail.setVisibility(View.VISIBLE);
         } else {
-            storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
             if (status == 0) {//已下架
                 rl_detail.setVisibility(View.GONE);
                 rl_no_detail.setVisibility(View.VISIBLE);
             } else if (status == 1) {//未下架
                 rl_detail.setVisibility(View.VISIBLE);
                 rl_no_detail.setVisibility(View.GONE);
-                if (null == storeProduct) {
+                if (is_detail) {
+                    if (is_service) {
+                        ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
+                        wv_content.loadUrl(PTWDRequestHelper.store()
+                                .addParam("pid", storeProduct.getProduct_id())
+                                .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+                        tv_product_price.setText(storeProduct.getPrice());
+                        getProduct(storeProduct.getProduct_id());
+                    } else {
+                        OrderProduct storeProduct = (OrderProduct) args.getSerializable(BUNDLE_PRODUCT);
+                        wv_content.loadUrl(PTWDRequestHelper.store()
+                                .addParam("pid", storeProduct.getProduct_id())
+                                .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+                        tv_product_price.setText(storeProduct.getPrice());
+                        getProduct(storeProduct.getProduct_id());
+                    }
+                } else if (is_remind) {
+//            if (product_num.equals("diary")) {
+//                product_id = args.getString(DiaryActivity.BUNDLE_PRODUCT_ID);
+//            } else {
+                    product_id = args.getString(RemindFragment.BUNDLE_REMIND_PRODUCTID);
+//            }
                     wv_content.loadUrl(PTWDRequestHelper.store()
-                            .addParam("pid", args.getString(JPushReceiver.MID))
+                            .addParam("pid", product_id)
                             .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
-                    getProduct(args.getString(JPushReceiver.MID));
+                    getProduct(product_id);
                 } else {
-                    wv_content.loadUrl(storeProduct.getMobile_url());
-                    tv_product_price.setText(storeProduct.getPrice());
-                    mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+                    storeProduct = (StoreProduct) args.getSerializable(BUNDLE_PRODUCT);
+                    if (null == storeProduct) {
+                        wv_content.loadUrl(PTWDRequestHelper.store()
+                                .addParam("pid", args.getString(JPushReceiver.MID))
+                                .joinURL(StoreApi.URL_PRODUCT_VIEW_V2));
+                        getProduct(args.getString(JPushReceiver.MID));
+                    } else {
+                        wv_content.loadUrl(storeProduct.getMobile_url());
+                        tv_product_price.setText(storeProduct.getPrice());
+                        imageShare = ImageUtils.getImageSizeUrl(storeProduct.getImage(), ImageUtils.ImageSizeURL.SIZE_96x96);
+                        mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
+                    }
                 }
             }
         }
-
         //分享弹框的点击事件
         addListener();
     }
 
     private void addListener() {
+
         mSharePopupWindow.setOnShareClickListener(false, new OnShareClickListener() {
+
             @Override
             public void onWechat() {
                 if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -187,7 +197,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -196,7 +206,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -205,7 +215,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -213,7 +223,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.OnWeiboShare(ProductDetailV2Activity.this, title, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnWeiboShare(ProductDetailV2Activity.this, storeProduct.getTitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.OnWeiboShare(ProductDetailV2Activity.this, storeProduct.getTitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 

@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -67,6 +68,10 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     BasicWebView wv_content;
     /*    @Bind(R.id.rv_content)
         LoadMoreRecyclerView rv_content;*/
+    @Bind(R.id.v_line_horizontal)
+    View v_line_horizontal;
+    @Bind(R.id.ll_bottom)
+    LinearLayout ll_bottom;
     @Bind(R.id.ll_cool)
     LinearLayout ll_cool;//点赞数
     @Bind(R.id.tv_count_cool)
@@ -183,22 +188,22 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
             @Override
             public void onWechat() {
-                ShareTools.wechatWebShare(mContext, true, title, sub_title, image, link_url);
+                ShareTools.wechatWebShare(mContext, true, title, sub_title, cover_pic, link_url);
             }
 
             @Override
             public void onWechatFriend() {
-                ShareTools.wechatWebShare(mContext, false, title, sub_title, image, link_url);
+                ShareTools.wechatWebShare(mContext, false, title, sub_title, cover_pic, link_url);
             }
 
             @Override
             public void onQQFriend() {
-                ShareTools.OnQQZShare(mContext, true, title, sub_title, image, link_url);
+                ShareTools.OnQQZShare(mContext, true, title, sub_title, cover_pic, link_url);
             }
 
             @Override
             public void onQQZone() {
-                ShareTools.OnQQZShare(mContext, false, title, sub_title, image, link_url);
+                ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
             }
 
             public void onSinaWeibo() {
@@ -220,7 +225,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                     addCollect();
                 else
                     cancelCollection();
-
             }
         });
     }
@@ -282,8 +286,12 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 sb_cool_icon.setState(result.is_like());
                 tv_count_cool.setText(result.getLike_count() == 0 ? "赞" : result.getLike_count() + "");
                 tv_count_comment.setText(result.getComments_count() == 0 ? "评论" : result.getComments_count() + "");
-                ll_comment.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
-                view_apart.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
+
+                v_line_horizontal.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
+                ll_bottom.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
+
+//                ll_comment.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
+//                view_apart.setVisibility(result.is_comment() ? View.VISIBLE : View.GONE);
 
                 mSharePopupWindow.setCollectState(result.is_collect());
             }

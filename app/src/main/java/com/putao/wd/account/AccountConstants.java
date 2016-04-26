@@ -91,5 +91,8 @@ public final class AccountConstants {
         public static final String BUNDLE_COMPANION_SERVICE_MESSAGE_LIST = "bundle_companion_service_message_list";
         public static final String BUNDLE_COMPANION_BIND_SERVICE = "bundle_companion_bind_service";
         public static final String BUNDLE_COMPANION_COLLECTION = "bundle_companion_collection";
+        public static final String BUNDLE_COMPANION_BIND="bundle_companion_bind";
+        public static final String BUNDLE_STORE_STATUS="bundle_store_status";
+        public static final String BUNDLE_STORE_ISHAVE="bundle_store_ishave";
     }
 }

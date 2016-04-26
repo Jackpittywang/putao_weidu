@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDFragment;
@@ -213,21 +214,21 @@ public class PutaoStoreFragment extends PTWDFragment {
      * 判断是否是精品页面
      */
     public void IsProductDetail(final String product_id, final StoreProduct product) {
+        final Bundle bundle = new Bundle();
         networkRequest(StoreApi.getProductStatus(product_id), new SimpleFastJsonCallback<ProductStatus>(ProductStatus.class, loading) {
             @Override
             public void onSuccess(String url, ProductStatus result) {
                 int status = result.getStatus();
                 int has_special = result.getHas_special();
-                Bundle bundle = new Bundle();
                 if (result.equals("") && result == null || status == 0) {
-                    bundle.putSerializable("status", status);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_STORE_STATUS, status);
                     startActivity(ProductDetailV2Activity.class, bundle);
                 } else {
                     //判断是否是精品(1.精品，0.非精品)
                     if (has_special == 1) {//精品页面：ProductDetailActivity
                         YouMengHelper.onEvent(mActivity, YouMengHelper.CreatorHome_mall_detail);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
-                        bundle.putSerializable("status", status);
+                        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_STORE_STATUS, status);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "product_num");
                         startActivity(ProductDetailV2Activity.class, bundle);
                     } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
@@ -236,6 +237,15 @@ public class PutaoStoreFragment extends PTWDFragment {
                         bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
                         startActivity(ProductDetailActivity.class, bundle);
                     }
+                }
+            }
+
+            @Override
+            public void onFinish(String url, boolean isSuccess, String msg) {
+                super.onFinish(url, isSuccess, msg);
+                if (msg.equals("商品不存在")) {
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_STORE_ISHAVE, true);
+                    startActivity(ProductDetailV2Activity.class, bundle);
                 }
             }
         });

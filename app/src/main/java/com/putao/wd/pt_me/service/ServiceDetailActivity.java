@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
@@ -194,14 +195,14 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
      * 判断是否下架以及是否是精品页面
      */
     public void IsProductDetail(final String product_id, final ServiceProduct product) {
+        final Bundle bundle = new Bundle();
         networkRequest(StoreApi.getProductStatus(product_id), new SimpleFastJsonCallback<ProductStatus>(ProductStatus.class, loading) {
             @Override
             public void onSuccess(String url, ProductStatus result) {
                 int status = result.getStatus();
                 int has_special = result.getHas_special();
-                Bundle bundle = new Bundle();
                 if (result.equals("") && result == null || status == 0) {
-                    bundle.putSerializable("status", status);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_STORE_STATUS, status);
                     startActivity(ProductDetailV2Activity.class, bundle);
                 } else {
                     //判断是否是精品(1.精品，0.非精品)
@@ -210,7 +211,7 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT, product);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_IS_DETAIL, true);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_IS_SERVICE, true);
-                        bundle.putSerializable("status", status);
+                        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_STORE_STATUS, status);
                         bundle.putSerializable(ProductDetailV2Activity.BUNDLE_PRODUCT_NUM, "");
                         startActivity(ProductDetailV2Activity.class, bundle);
                     } else if (has_special == 0) {//显示h5(非精品页面：ProductDetailV2Activity)
@@ -219,6 +220,15 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                         bundle.putSerializable(ProductDetailActivity.PRODUCT_ID, product_id);
                         startActivity(ProductDetailActivity.class, bundle);
                     }
+                }
+            }
+
+            @Override
+            public void onFinish(String url, boolean isSuccess, String msg) {
+                super.onFinish(url, isSuccess, msg);
+                if (msg.equals("商品不存在")) {
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_STORE_ISHAVE, true);
+                    startActivity(ProductDetailV2Activity.class, bundle);
                 }
             }
         });
