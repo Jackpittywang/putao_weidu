@@ -16,6 +16,7 @@ import com.putao.mtlib.tcp.PTMessageType;
 import com.putao.mtlib.tcp.PTRecMessage;
 import com.putao.mtlib.tcp.PTSenderManager;
 import com.putao.mtlib.tcp.PTSocketOutputThread;
+import com.putao.mtlib.tcp.PTTCPClient;
 import com.putao.mtlib.util.MD5Util;
 import com.putao.mtlib.util.MsgPackUtil;
 import com.putao.mtlib.util.PTLoger;
@@ -54,7 +55,7 @@ public class NotifyService extends Service {
 
             mPTSenderManager = PTSenderManager.sharedInstance();
             mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                    .setHost(HOST).setPort(PORT).setHeartSecond(1 * 10).build());
+                    .setHost(HOST).setPort(PORT).setHeartSecond(1 * 20).build());
             mPTSenderManager.init(getApplicationContext());
             mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
                 @Override
@@ -135,6 +136,7 @@ public class NotifyService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mPTSenderManager.stopThreads();
+        PTTCPClient.instance().closeTCPSocket();
         isAlive = false;
     }
 

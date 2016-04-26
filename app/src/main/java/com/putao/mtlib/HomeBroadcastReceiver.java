@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.putao.mtlib.tcp.PTSenderManager;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.util.Logger;
@@ -19,6 +20,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
     Timer timer;
     private static HomeBroadcastReceiver mHomeBroadcastReceiver;
     private boolean isServiceStart;
+    private boolean isServiceRealClose;
 
     public static HomeBroadcastReceiver getInstance() {
         if (null == mHomeBroadcastReceiver) {
@@ -42,6 +44,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 }
                 if (!isServiceStart) {
                     context.startService(GlobalApplication.redServiceIntent);
+                    isServiceRealClose = false;
                     Logger.d("ptl-----------", "启动服务");
                 }
                 break;
@@ -54,6 +57,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                     public void run() {
                         if (isServiceStart) {
                             context.stopService(GlobalApplication.redServiceIntent);
+                            isServiceRealClose = true;
                             Logger.d("ptl-----------", "停止服务");
                         }
                     }
@@ -62,6 +66,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
             case GlobalApplication.OUT_FORE_MESSAGE_SOON:
                 if (isServiceStart) {
                     context.stopService(GlobalApplication.redServiceIntent);
+                    isServiceRealClose = true;
                     Logger.d("ptl---------------", "停止服务");
                 }
                 break;
@@ -76,12 +81,12 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if (!isServiceStart) {
+                        if (!isServiceStart && !isServiceRealClose) {
                             Logger.d("ptl---------------", "重启");
                             context.startService(GlobalApplication.redServiceIntent);
                         }
                     }
-                }, 10 * 1000);
+                }, PTSenderManager.sharedInstance().getConfig().getHeartSecond() * 1000);
                 break;
         }
 

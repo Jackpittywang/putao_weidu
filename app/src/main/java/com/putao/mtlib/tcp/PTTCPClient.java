@@ -96,8 +96,8 @@ public class PTTCPClient {
                     done = true;
                 }
             }
-        } catch (IOException e){
-             PTLoger.e("connect to server failed");
+        } catch (IOException e) {
+            PTLoger.e("connect to server failed");
         }
        /* catch (ConnectException e) {
             PTLoger.e("connect to server failed");
