@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -224,7 +225,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                     addCollect();
                 else
                     cancelCollection();
-
             }
         });
     }

@@ -91,7 +91,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 final String mobile = et_mobile.getText().toString();
                 final String passWord = et_password.getText().toString();
                 final String verify = et_graph_verify.getText().toString();
-                if (NetManager.isNetworkAvailable(LoginActivity.this) == true) {//没有网络连接
+                if (NetManager.isNetworkAvailable(LoginActivity.this)) {//没有网络连接
                     ToastUtils.showToastLong(mContext, "您的网络不给力");
                     btn_login.setClickable(true);
                     loading.dismiss();
