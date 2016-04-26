@@ -337,7 +337,7 @@ public final class ImageUtils {
         if (StringUtils.isEmpty(url)) return false;
 //        String upperUrl = new String();
         url = url.toUpperCase();
-        if (url.endsWith(".JPG") || url.endsWith(".PNG") || url.endsWith(".GIF") || url.endsWith(".JPEG") || url.endsWith(".BMP"))
+        if (url.contains(".JPG") || url.contains(".PNG") || url.contains(".GIF") || url.contains(".JPEG") || url.contains(".BMP"))
             return true;
         else return false;
     }
