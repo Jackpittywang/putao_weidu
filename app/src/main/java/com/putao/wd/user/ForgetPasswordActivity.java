@@ -23,6 +23,7 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.qrcode.CaptureActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -225,9 +226,14 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
+                        if (is_relation)
+                            ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+                        else {
+                            startActivity(CaptureActivity.class, args);
+                        }
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         loading.dismiss();
-                        startActivity(IndexActivity.class);
+                        finish();
                     }
                 });
     }

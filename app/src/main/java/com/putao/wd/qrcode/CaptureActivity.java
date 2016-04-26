@@ -215,6 +215,13 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     }
 
     @Override
+    public void onLeftAction() {
+        super.onLeftAction();
+        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+        finish();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (mPreview == null)

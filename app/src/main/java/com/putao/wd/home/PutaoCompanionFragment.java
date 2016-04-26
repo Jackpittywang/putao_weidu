@@ -243,7 +243,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             case R.id.btn_relevance_device:
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean("bind", true);
+                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
                     startActivity(LoginActivity.class, bundle);
                 } else

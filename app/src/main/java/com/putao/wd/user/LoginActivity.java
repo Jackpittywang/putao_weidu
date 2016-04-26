@@ -25,6 +25,7 @@ import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -190,7 +191,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
-                        bind = args.getBoolean("bind", false);
+                        bind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
                         if (bind) {
                             if (is_relation)
                                 startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
@@ -244,5 +245,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
     protected void onDestroy() {
         super.onDestroy();
         mErrorCount = 0;
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void isFinish(String tag) {
+        this.finish();
     }
 }
