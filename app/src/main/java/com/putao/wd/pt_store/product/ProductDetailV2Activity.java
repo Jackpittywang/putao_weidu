@@ -90,7 +90,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
     private String product_id;//产品id
     private String product_num;//是否是从陪伴传送过来的数据
     private int status;//判断是否已下架
-    private String title, subtitle, shareUrl, imageUrl;
+    private String title, subtitle, shareUrl, imageUrl,imageShare;
 
     private ProductDetail detail = null;
 
@@ -165,8 +165,8 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                     mShoppingCarPopupWindow = new ShoppingCarPopupWindow(mContext, storeProduct.getId(), storeProduct.getTitle(), storeProduct.getSubtitle());
                 }
             }
+            imageShare = ImageUtils.getImageSizeUrl(storeProduct.getImage(), ImageUtils.ImageSizeURL.SIZE_96x96);
         }
-
         //分享弹框的点击事件
         addListener();
     }
@@ -178,7 +178,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -187,7 +187,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.wechatWebShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -196,7 +196,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, true, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -205,7 +205,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, title, subtitle, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.OnQQZShare(ProductDetailV2Activity.this, false, storeProduct.getTitle(), storeProduct.getSubtitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
@@ -213,7 +213,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 if (!product_num.equals("product_num")) {
                     ShareTools.OnWeiboShare(ProductDetailV2Activity.this, title, imageUrl, shareUrl);
                 } else {//不是从陪伴页面传送过来的数据
-                    ShareTools.OnWeiboShare(ProductDetailV2Activity.this, storeProduct.getTitle(), storeProduct.getImage(), storeProduct.getMobile_url());
+                    ShareTools.OnWeiboShare(ProductDetailV2Activity.this, storeProduct.getTitle(), imageShare, storeProduct.getMobile_url());
                 }
             }
 
