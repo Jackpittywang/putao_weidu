@@ -237,14 +237,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/navigation_bar"
         android:background="@color/color_EBEBEB"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/img_no_data"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="148dp"
             android:src="@drawable/img_me_order_empty" />
 
         <TextView

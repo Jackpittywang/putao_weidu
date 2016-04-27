@@ -52,4 +52,35 @@
             android:layout_marginTop="20dp"
             android:text="暂无收藏内容" />
     </LinearLayout>
+    <!--数据加载失败时-->
+    <RelativeLayout
+        android:id="@+id/rl_no_collection_failure"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigation_bar"
+        android:background="@color/color_EBEBEB"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="210dp"
+            android:text="加载失败，点击屏幕刷新"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <Button
+            android:id="@+id/btn_no_data"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tv_nodata"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/btn_get_focus"
+            android:text="刷新"
+            android:textColor="#fff"
+            android:textSize="@dimen/text_size_14sp" />
+    </RelativeLayout>
 </RelativeLayout>
