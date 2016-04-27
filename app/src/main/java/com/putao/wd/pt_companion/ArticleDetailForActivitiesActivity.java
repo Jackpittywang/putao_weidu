@@ -106,7 +106,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     private String sub_title;
     private String cover_pic;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_article_for_activities;
@@ -115,11 +114,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         super.onViewCreatedFinish(saveInstanceState);
-        if (NetManager.isNetworkAvailable(mContext)) {//没有网络连接
-            rl_no_webviewData.setVisibility(View.VISIBLE);
-        } else {
-            rl_no_webviewData.setVisibility(View.GONE);
-        }
         Collection collection = (Collection) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         final ServiceMessageContent content_list;
         if (null != collection) {
@@ -308,6 +302,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
                 ll_cool.setClickable(false);
+                rl_no_webviewData.setVisibility(View.VISIBLE);
             }
         });
     }

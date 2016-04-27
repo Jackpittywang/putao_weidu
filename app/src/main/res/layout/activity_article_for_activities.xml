@@ -237,7 +237,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/navigation_bar"
         android:background="@color/color_EBEBEB"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/img_no_data"
