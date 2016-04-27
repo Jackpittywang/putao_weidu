@@ -133,8 +133,8 @@
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_no_commpain"
-            android:layout_width="320dp"
-            android:layout_height="240dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tv_empty2"
             android:layout_centerHorizontal="true"
             android:background="@drawable/img_link_product_01" />

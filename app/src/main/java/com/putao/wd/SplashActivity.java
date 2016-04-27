@@ -6,26 +6,19 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
-import com.putao.wd.account.AccountApi;
-import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
-import com.putao.wd.api.UserApi;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
 import com.putao.wd.jpush.JPushReceiver;
-import com.putao.wd.pt_companion.ArticleDetailsActivity;
-import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_me.order.OrderDetailActivity;
 import com.putao.wd.pt_me.service.ServiceDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.putao.wd.util.DistrictUtils;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.BasicFragmentActivity;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.task.SuperTask;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.DownloadCallback;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -43,7 +36,7 @@ import cn.sharesdk.framework.ShareSDK;
  * 闪屏页面
  * Created by guchenkai on 2015/12/11.
  */
-public class SplashActivity extends BasicFragmentActivity {
+public class SplashActivity extends BasicFragmentActivity<GlobalApplication> {
 
     @Override
     protected int getLayoutId() {
@@ -54,17 +47,23 @@ public class SplashActivity extends BasicFragmentActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         ShareSDK.initSDK(mContext);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
         SuperTask.with(this)
                 .assign(new SuperTask.TaskDescription<ConcurrentHashMap<String, String>>() {
                     @Override
                     public ConcurrentHashMap<String, String> onBackground() {
                         try {
                             File setFile = new File(BasicApplication.sdCardPath + File.separator + "patch/biaoqing/set.txt");
-                            if (setFile.exists() == false)
+                            if (!setFile.exists())
                                 FileUtils.unZipInAsset(getApplicationContext(), "patch_10002_10003.zip", "patch", true);
                             DistrictUtils.insertRegion();
                         } catch (IOException e) {
+                            Logger.e("初始数据异常----" + e);
                             e.printStackTrace();
                         }
                         return parseEmoji();

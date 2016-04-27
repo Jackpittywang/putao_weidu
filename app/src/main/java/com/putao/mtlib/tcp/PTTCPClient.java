@@ -1,7 +1,10 @@
 package com.putao.mtlib.tcp;
 
+import android.text.TextUtils;
+
+import com.putao.mtlib.util.PTLoger;
+
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
@@ -9,10 +12,6 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-
-import com.putao.mtlib.util.PTLoger;
-
-import android.text.TextUtils;
 
 /**
  *
@@ -185,8 +184,9 @@ public class PTTCPClient {
     public boolean reConnect() {
         closeTCPSocket();
         PTLoger.i("client reconnect to server");
-        try {
-            initialize();
+        instance();
+     /*   try {
+//            initialize();
             isInitialized = true;
         } catch (IOException e) {
             isInitialized = false;
@@ -195,6 +195,7 @@ public class PTTCPClient {
             isInitialized = false;
             e.printStackTrace();
         }
+        return isInitialized;*/
         return isInitialized;
     }
 
@@ -221,10 +222,10 @@ public class PTTCPClient {
      */
     public void closeTCPSocket() {
         try {
-            if (socketChannel != null) {
+            if (socketChannel != null)
                 socketChannel.close();
-            }
-
+            if (null != s_Tcp)
+                s_Tcp = null;
         } catch (IOException e) {
 
         }

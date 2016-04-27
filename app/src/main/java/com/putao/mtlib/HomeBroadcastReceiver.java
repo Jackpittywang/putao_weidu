@@ -86,7 +86,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                             context.startService(GlobalApplication.redServiceIntent);
                         }
                     }
-                }, PTSenderManager.sharedInstance().getConfig().getHeartSecond() * 1000);
+                }, (PTSenderManager.sharedInstance().getConfig().getHeartSecond() + 5) * 1000);
                 break;
         }
 

@@ -58,6 +58,7 @@ class PTSocketHeartThread extends Thread {
                 PTSenderManager.sharedInstance().sendMsg(PingBytes, null);
             } else {
                 PTLoger.d("SocketConnect--is---------false, no send /");
+//                reConnect();
                 GlobalApplication.getInstance().sendBroadcast(new Intent(GlobalApplication.RESTART_MESSAGE));
             }
         }
