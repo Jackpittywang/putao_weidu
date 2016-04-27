@@ -82,7 +82,6 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
-                        cacheData(url, result);
                         if (result != null && result.size() > 0) {
                             mCollection = result;
                             adapter.replaceAll(result);
