@@ -240,7 +240,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 ToastUtils.showToastShort(mContext, "取消收藏");
                 property.setIs_collect(false);
                 mSharePopupWindow.setCollectState(false);
-                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_DELETE_COMPANION);
                 loading.dismiss();
             }
         });

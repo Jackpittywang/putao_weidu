@@ -83,6 +83,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
                         if (result != null && result.size() > 0) {
+                            cacheData(url, result);
                             mCollection = result;
                             adapter.replaceAll(result);
                             isCollection = false;
@@ -219,7 +220,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         YouMengHelper.onEvent(mContext, YouMengHelper.UserHome_interested_back);
     }
 
-    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_DELETE_COMPANION)
     private void refreshCollection(String tag) {
         initData();
     }
