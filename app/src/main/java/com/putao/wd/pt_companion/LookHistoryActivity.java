@@ -2,6 +2,7 @@ package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
@@ -35,6 +36,10 @@ public class LookHistoryActivity extends PTWDActivity {
     RelativeLayout rl_no_history;
     @Bind(R.id.rv_lookHistory)
     LoadMoreRecyclerView rv_lookHistory;
+    @Bind(R.id.rl_lookHistory_failure)
+    RelativeLayout rl_lookHistory_failure;
+    @Bind(R.id.btn_no_data)
+    Button btn_no_data;
 
     private LookHistoryAdapter adapter;
     private ArrayList<ServiceMessageList> messageLists;
@@ -87,14 +92,14 @@ public class LookHistoryActivity extends PTWDActivity {
      */
     private void lookHistoryData() {
         mPage = 1;
-        networkRequest(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+        networkRequestCache(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
                 cacheData(url, result);
                 if (result != null && result.getLists().size() > 0) {
                     messageLists = result.getLists();
                     adapter.replaceAll(messageLists);
-                    rv_lookHistory.setVisibility(View.VISIBLE);
+                    ptl_refresh.setVisibility(View.VISIBLE);
                     rl_no_history.setVisibility(View.GONE);
                 } else {
                     rl_no_history.setVisibility(View.VISIBLE);
@@ -104,7 +109,18 @@ public class LookHistoryActivity extends PTWDActivity {
                 checkLoadMoreComplete(messageLists);
                 loading.dismiss();
             }
-        });
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                //多了尾布局，因此至少是1
+                if (adapter.getItemCount() <= 1) {
+                    rl_lookHistory_failure.setVisibility(View.VISIBLE);
+                    ptl_refresh.setVisibility(View.GONE);
+                    ptl_refresh.refreshComplete();
+                }
+            }
+        }, 600 * 1000);
     }
 
     private void checkLoadMoreComplete(ArrayList<ServiceMessageList> result) {
