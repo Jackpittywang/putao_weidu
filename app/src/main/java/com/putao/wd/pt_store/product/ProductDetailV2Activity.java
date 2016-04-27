@@ -72,10 +72,12 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
     ImageView shopping_share;
     @Bind(R.id.shopping_relative_car)
     RelativeLayout shopping_relative_car;
-    @Bind(R.id.rl_detail)//商品没下架
-            RelativeLayout rl_detail;
-    @Bind(R.id.rl_no_detail)//商品已下架
-            RelativeLayout rl_no_detail;
+    //商品没下架
+    @Bind(R.id.rl_detail)
+    RelativeLayout rl_detail;
+    //商品已下架
+    @Bind(R.id.ll_no_detail)
+    LinearLayout ll_no_detail;
     @Bind(R.id.shopping_add_car)
     TextView shopping_add_car;//加入购物车
     @Bind(R.id.shopping_txt_number)
@@ -125,14 +127,16 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
         });
         if (isHave) {
             rl_detail.setVisibility(View.GONE);
-            rl_no_detail.setVisibility(View.VISIBLE);
+            ll_no_detail.setVisibility(View.VISIBLE);
+            shopping_share.setVisibility(View.GONE);
+            shopping_relative_car.setVisibility(View.GONE);
         } else {
             if (status == 0) {//已下架
                 rl_detail.setVisibility(View.GONE);
-                rl_no_detail.setVisibility(View.VISIBLE);
+                ll_no_detail.setVisibility(View.VISIBLE);
             } else if (status == 1) {//未下架
                 rl_detail.setVisibility(View.VISIBLE);
-                rl_no_detail.setVisibility(View.GONE);
+                ll_no_detail.setVisibility(View.GONE);
                 if (is_detail) {
                     if (is_service) {
                         ServiceProduct storeProduct = (ServiceProduct) args.getSerializable(BUNDLE_PRODUCT);
