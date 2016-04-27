@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
@@ -42,10 +45,13 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     LoadMoreRecyclerView rv_collection;
     @Bind(R.id.ll_empty)
     LinearLayout ll_empty;
+    @Bind(R.id.rl_no_collection_failure)
+    RelativeLayout rl_no_collection_failure;
+    @Bind(R.id.btn_no_data)
+    Button btn_no_data;
 
     private CollectionAdapter adapter;
     private int mPage = 1;
-    private boolean hasMoreData;
     private AlertDialog mDeleteDialog;
     private boolean isCollection = true;
     private ArrayList<Collection> mCollection;
@@ -72,28 +78,39 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
 
     private void initData() {
         mPage = 1;
-        networkRequest(CollectionApi.getCollection(mPage),
+        networkRequestCache(CollectionApi.getCollection(mPage),
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
+                        cacheData(url, result);
                         if (result != null && result.size() > 0) {
                             mCollection = result;
+                            adapter.replaceAll(result);
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
-                            rv_collection.setVisibility(View.VISIBLE);
-                            adapter.replaceAll(result);
+                            ptl_refresh.setVisibility(View.VISIBLE);
                             mPage++;
                             rv_collection.loadMoreComplete();
                         } else {
                             rv_collection.noMoreLoading();
-                            rv_collection.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
                         }
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
-                }
-        );
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        //多了尾布局，因此至少是1
+                        if (adapter.getItemCount() <= 1) {
+                            rl_no_collection_failure.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        }
+                    }
+                }, 600 * 1000);
     }
 
     private void addListenter() {
@@ -134,6 +151,15 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                                 mDeleteDialog.dismiss();
                             }
                         }).show();
+            }
+        });
+        btn_no_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetManager.isNetworkAvailable(mContext)) {//没有网络连接
+                    ToastUtils.showToastShort(mContext, "获取数据失败");
+                } else
+                    initData();
             }
         });
     }
