@@ -74,7 +74,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                 if (isServiceStart) {
                     context.stopService(GlobalApplication.redServiceIntent);
                     isServiceStart = false;
-                    Logger.d("ptl---------------", "停止服务");
+                    Logger.d("ptl---------------", "停止服务，准备重启");
                 }
                 if (null == timer)
                     timer = new Timer();
@@ -96,7 +96,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
         android.app.ActivityManager systemService = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<android.app.ActivityManager.RunningServiceInfo> runningServices = systemService.getRunningServices(100);
         for (android.app.ActivityManager.RunningServiceInfo runningServiceInfo : runningServices) {
-            Logger.d("service-----", runningServiceInfo.service.getClassName().toString());
+//            Logger.d("service-----", runningServiceInfo.service.getClassName().toString());
             if ("com.putao.mtlib.NotifyService".equals(runningServiceInfo.service.getClassName().toString())) {
                 return true;
             }

@@ -136,6 +136,7 @@ public class NotifyService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mPTSenderManager.stopThreads();
+        PTTCPClient.setS_Tcp(null);
         isAlive = false;
     }
 
