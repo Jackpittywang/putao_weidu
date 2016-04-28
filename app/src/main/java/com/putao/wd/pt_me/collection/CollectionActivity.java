@@ -78,12 +78,11 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
 
     private void initData() {
         mPage = 1;
-        networkRequestCache(CollectionApi.getCollection(mPage),
+        networkRequest(CollectionApi.getCollection(mPage),
                 new SimpleFastJsonCallback<ArrayList<Collection>>(Collection.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Collection> result) {
                         if (result != null && result.size() > 0) {
-                            cacheData(url, result);
                             mCollection = result;
                             adapter.replaceAll(result);
                             isCollection = false;
@@ -110,7 +109,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             ptl_refresh.refreshComplete();
                         }
                     }
-                }, 600 * 1000);
+                });
     }
 
     private void addListenter() {
