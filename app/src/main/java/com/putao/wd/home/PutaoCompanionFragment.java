@@ -208,7 +208,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "麦斯丝");
                 break;
             case "哈泥海洋":
-                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "哈泥海洋");
+                YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "哈尼海洋");
                 break;
             case "涂涂世界":
                 YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
