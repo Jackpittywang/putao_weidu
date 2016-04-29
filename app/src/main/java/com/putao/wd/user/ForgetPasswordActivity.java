@@ -226,11 +226,15 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
-                        if (is_relation)
+                        boolean bind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND);
+                        if (bind) {
+                            if (is_relation)
+                                ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+                            else {
+                                startActivity(CaptureActivity.class, args);
+                            }
+                        } else
                             ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
-                        else {
-                            startActivity(CaptureActivity.class, args);
-                        }
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         loading.dismiss();
                         finish();

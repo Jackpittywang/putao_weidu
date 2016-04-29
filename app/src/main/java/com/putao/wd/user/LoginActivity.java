@@ -74,6 +74,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
         et_password.addTextChangedListener(this);
         btn_login.setClickable(false);
         IndexActivity.isNotRefreshUserInfo = false;
+        bind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
     }
 
     @Override
@@ -143,7 +144,9 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 startActivity(RegisterActivity.class);
                 break;
             case R.id.tv_forget://忘记密码
-                startActivity(ForgetPasswordActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, bind);
+                startActivity(ForgetPasswordActivity.class, bundle);
                 break;
             case R.id.image_graph_verify:
                 AccountApi.OnGraphVerify(image_graph_verify, AccountConstants.Action.ACTION_LOGIN);
@@ -191,7 +194,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     public void onSuccess(String url, String result) {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
-                        bind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
                         if (bind) {
                             if (is_relation)
                                 startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
