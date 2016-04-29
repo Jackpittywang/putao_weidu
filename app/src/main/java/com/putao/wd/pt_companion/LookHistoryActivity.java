@@ -92,7 +92,7 @@ public class LookHistoryActivity extends PTWDActivity {
      */
     private void lookHistoryData() {
         mPage = 1;
-        networkRequestCache(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+        networkRequest(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
                 cacheData(url, result);
@@ -120,7 +120,7 @@ public class LookHistoryActivity extends PTWDActivity {
                     ptl_refresh.refreshComplete();
                 }
             }
-        }, 600 * 1000);
+        });
     }
 
     private void checkLoadMoreComplete(ArrayList<ServiceMessageList> result) {
