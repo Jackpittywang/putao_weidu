@@ -117,14 +117,14 @@
     <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.7.0" level="project" />
     <orderEntry type="library" exported="" name="MobTools-2016.0301.1053" level="project" />
     <orderEntry type="library" exported="" name="jpush-android-2.1.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-24.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-TencentWeibo-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.4.1.1" level="project" />
     <orderEntry type="library" exported="" name="MobCommons-2016.0301.1053" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-QZone-2.7.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.7.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-QZone-2.7.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.2.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.4" level="project" />

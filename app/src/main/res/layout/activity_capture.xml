@@ -13,8 +13,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="matrix"
-        android:src="@drawable/scan_bg" />
+        android:background="@drawable/scan_bg" />
 
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar

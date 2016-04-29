@@ -237,7 +237,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
         networkRequest(CompanionApi.cancelCollects(null, article_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
-                ToastUtils.showToastShort(mContext, "取消收藏");
+                ToastUtils.showToastShort(mContext, "取消成功");
                 property.setIs_collect(false);
                 mSharePopupWindow.setCollectState(false);
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_DELETE_COMPANION);

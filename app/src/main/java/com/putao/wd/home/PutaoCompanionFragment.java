@@ -188,7 +188,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onItemClick(Companion companion, int position) {
         YouMengHelper.onEvent(mActivity, YouMengHelper.Activity_list_detail);
-        switch (companion.getService_name()) {
+        YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, companion.getService_name());
+        /*switch (companion.getService_name()) {
             case "葡萄黑板报":
                 YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "葡萄活动");
                 break;
@@ -213,7 +214,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             case "涂涂世界":
                 YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
-        }
+        }*/
         if (1 == companion.getIs_relation()) {
             Bundle bundle = new Bundle();
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
