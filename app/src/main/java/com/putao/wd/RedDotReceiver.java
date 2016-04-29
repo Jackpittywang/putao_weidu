@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.tcp.PTMessageReceiver;
 import com.putao.mtlib.util.PTLoger;
+import com.putao.wd.account.AccountHelper;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 
 import java.util.regex.Matcher;
@@ -39,6 +40,8 @@ public class RedDotReceiver extends PTMessageReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
+            if (!AccountHelper.isLogin())
+                return;
             String message = intent.getExtras().getString(KeyMessage);
             setResult(message);
         } catch (Exception e) {
