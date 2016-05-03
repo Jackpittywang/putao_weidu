@@ -96,7 +96,6 @@ public class LookHistoryActivity extends PTWDActivity {
         networkRequest(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
-                cacheData(url, result);
                 if (result != null && result.getLists().size() > 0) {
                     messageLists = result.getLists();
                     adapter.replaceAll(messageLists);
@@ -137,7 +136,6 @@ public class LookHistoryActivity extends PTWDActivity {
         networkRequest(CompanionApi.lookHistoryData(service_id, "", String.valueOf(mPage)), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
-                cacheData(url, result);
                 if (result != null && result.getLists().size() > 0) {
                     messageLists = result.getLists();
                     adapter.addAll(messageLists);
