@@ -10,7 +10,6 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.Collection;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.adapter.LookHistoryAdapter;
@@ -20,7 +19,6 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -44,6 +42,7 @@ public class LookHistoryActivity extends PTWDActivity {
     private LookHistoryAdapter adapter;
     private ArrayList<ServiceMessageList> messageLists;
     private String service_id;
+    private String service_name;
     private int mPage = 1;
 
 
@@ -56,6 +55,7 @@ public class LookHistoryActivity extends PTWDActivity {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         service_id = args.getString(HISTORY_SERVICE_ID);
+        service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
         adapter = new LookHistoryAdapter(mContext, null);
         rv_lookHistory.setAdapter(adapter);
         lookHistoryData();
@@ -81,6 +81,7 @@ public class LookHistoryActivity extends PTWDActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, service_name);
                 bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }

@@ -251,6 +251,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mCompanion.getService_name());
                 bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }

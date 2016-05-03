@@ -57,6 +57,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private AlertDialog mDialog = null;
     private AlertDialog.Builder builder = null;
     private String mServiceId;
+    private String mServiceName;
 
     @Override
     protected int getLayoutId() {
@@ -73,6 +74,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         iv_icon.setImageURL(companion.getService_icon());
         tv_recommend.setText(companion.getService_description());
         mServiceId = companion.getService_id();
+        mServiceName = companion.getService_name();
         if (companion.is_unbunding())
             tv_cancel_associate.setVisibility(View.GONE);
         addListener();
@@ -92,6 +94,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
                 startActivity(LookHistoryActivity.class, bundle);
             }
         });

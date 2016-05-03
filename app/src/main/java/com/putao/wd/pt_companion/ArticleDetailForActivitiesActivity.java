@@ -88,7 +88,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     ViewGroup.LayoutParams mRvLayoutParams;
     private SharePopupWindow mSharePopupWindow;
     private Property property;
-    private String article_id, service_id, type;//文章id,服务号id
+    private String article_id, service_id, service_name, type;//文章id,服务号id
     private String title;
     private String sub_title;
     private String cover_pic;
@@ -118,9 +118,11 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             sub_title = collection.getSubtitle();
 //            cover_pic = collection.getHead_img();
             cover_pic = sharePicFromPage;
+            service_name = collection.getService_name();
             this.link_url = link_url;
         } else {
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
+            service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
             content_list = messageList.getContent_lists().get(0);
             service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
             title = content_list.getTitle();
@@ -143,7 +145,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 //                    pb_webview.setVisibility(View.GONE);
 //            }
 //        });
-        setMainTitle(title);
+        setMainTitle(!TextUtils.isEmpty(service_name) ? service_name : title);
         initData();
         getArticleProperty(link_url);
 //        if (link_url.contains("&inapp=1"))
