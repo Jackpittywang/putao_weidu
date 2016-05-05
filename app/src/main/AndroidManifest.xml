@@ -440,6 +440,14 @@
         <activity
             android:name=".album.activity.PhotoAlbumActivity"
             android:screenOrientation="portrait" />
+        <!--葡萄订阅列表-->
+        <activity
+            android:name=".pt_companion.PutaoSubcribeActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--订阅号列表-->
+        <activity
+            android:name=".pt_companion.SubscriptionNumberActivity"
+            android:screenOrientation="portrait"></activity>
         <!--图片的加载显示-->
         <!--<activity
             android:name=".image.ImageDetailActivity"

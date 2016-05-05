@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_companion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_EBEBEB"
@@ -13,6 +14,7 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="葡萄活动"
         auto:nav_main_title_color="@color/text_color"
+        auto:nav_right_icon="@drawable/btn_20_more_p_nor"
         auto:nav_right_title_color="@drawable/text_select" />
 
     <LinearLayout
@@ -68,14 +70,16 @@
         android:textColor="@color/text_color_gray"
         android:textSize="@dimen/text_size_14sp" />
 
-
     <TextView
         android:id="@+id/tv_look_history"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="20dp"
         android:background="#FFFFFF"
-        android:gravity="center"
+        android:drawableRight="@drawable/btn_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:text="查看历史文章"
         android:textSize="@dimen/text_size_16sp" />
 
@@ -86,19 +90,17 @@
         android:background="@color/divider_color" />
 
     <TextView
-        android:id="@+id/tv_cancel_associate"
+        android:id="@+id/tv_relation_companion"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="5dp"
-        android:background="#FFFFFF"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_get_focus"
         android:gravity="center"
-        android:text="取消关联产品"
-        android:textColor="@color/text_color_red"
-        android:textSize="@dimen/text_size_16sp" />
+        android:text="关联产品"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_18sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/divider_color" />
 
 </LinearLayout>

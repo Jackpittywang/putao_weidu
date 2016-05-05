@@ -27,6 +27,9 @@
     <color name="color_rectangle_nor">#F5F5F5</color>
     <color name="color_rectangle_sel">#985EC9</color>
 
+    <color name="color_history_nor">#985cc9</color>
+    <color name="color_history_sel">#8044b2</color>
+
     <color name="half_transparent_bg">#80000000</color>
 
     <color name="text_color_F5F5F5">#F5F5F5</color>
