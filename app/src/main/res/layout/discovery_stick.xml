@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="15dp">
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_discovery_pic"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+
+        android:scaleType="centerInside"
+        auto:placeholderImageScaleType="centerCrop"
+        />
+    <TextView
+        android:id="@+id/tv_discovery_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="这里显示的是这篇文章的标题"
+        android:textSize="18sp"
+        android:lineSpacingExtra="@dimen/distance_5dp"
+        android:textColor="@color/color_313131"
+        android:paddingTop="@dimen/distance_10dp"
+        android:paddingBottom="@dimen/distance_10dp"/>
+    <LinearLayout
+        android:id="@+id/ll_tag_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_show_top"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:paddingLeft="@dimen/distance_5dp"
+            android:paddingRight="@dimen/distance_5dp"
+            android:text="置顶"
+            android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/text_color_ED5564"
+            />
+        <TextView
+            android:id="@+id/tv_tag1"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:paddingLeft="@dimen/distance_5dp"
+            android:paddingRight="@dimen/distance_5dp"
+            android:text="标签名1"
+            android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/color_C2C2C2"/>
+        <TextView
+            android:id="@+id/tv_tag2"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:paddingLeft="@dimen/distance_5dp"
+            android:paddingRight="@dimen/distance_5dp"
+            android:text="标签名2"
+            android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/color_C2C2C2"/>
+        <TextView
+            android:id="@+id/tv_tag3"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:paddingLeft="@dimen/distance_5dp"
+            android:paddingRight="@dimen/distance_5dp"
+            android:text="标签名3"
+            android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/color_C2C2C2"/>
+    </LinearLayout>
+
+</LinearLayout>
+
