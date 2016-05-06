@@ -18,4 +18,18 @@ public class Constants {
     public static final int ACTION_GPUSH_START = 0;
     public static final int ACTION_GPUSH_STOP = 1;
 
+    public static String DEVICE_ID = "";
+
+    public static String APP_ID = "";
+
+    /**
+     * 设置deviceid 和 appid
+     * @param deviceId
+     * @param appId
+     */
+    public static void setDeviceAndAppId(String deviceId, String appId){
+        DEVICE_ID = deviceId;
+        APP_ID = appId;
+    }
+
 }

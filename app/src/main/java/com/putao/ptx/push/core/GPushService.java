@@ -29,8 +29,8 @@ public class GPushService extends Service {
     }
 
     public static int initGPush() {
-        String deviceId = "";
-        String appId = "";
+        String deviceId = Constants.DEVICE_ID;
+        String appId = Constants.APP_ID;
         int initialCode = GPush.initGPush(Constants.DEFAULT_SERVER, Constants.PLATFORM, deviceId);
         if (initialCode != 0) return initialCode;
 
