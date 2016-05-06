@@ -449,11 +449,20 @@
             android:name=".pt_companion.SubscriptionNumberActivity"
             android:screenOrientation="portrait" />
         <!--活动列表-->
+        <activity
+            android:name=".pt_discovery.CampaignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pt_discovery.SpecialListActivity"
+            android:screenOrientation="portrait" />
         <!--专题-->
         <activity
             android:name=".pt_discovery.SpecialActivity"
             android:screenOrientation="portrait" />
         <!--标签界面-->
+        <activity
+            android:name=".pt_discovery.LabelActivity"
+            android:screenOrientation="portrait" />
         <!--图片的加载显示-->
         <!--<activity
             android:name=".image.ImageDetailActivity"
