@@ -135,6 +135,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     };
     //扫面线动画
     private TranslateAnimation animation;
+    private HandlerThread mHandlerThread;
 
     @Override
     protected int getLayoutId() {
@@ -186,9 +187,9 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     }
 
     private void initViews() {
-        HandlerThread handlerThread = new HandlerThread("calculation");
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
+        mHandlerThread = new HandlerThread("calculation");
+        mHandlerThread.start();
+        Looper looper = mHandlerThread.getLooper();
         final Handler handler = new Handler(looper);
         previewCb = new Camera.PreviewCallback() {
             public void onPreviewFrame(byte[] data, Camera camera) {
@@ -238,11 +239,13 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         super.onDestroy();
         mCameraManager.closeDriver();
         scan_line.clearAnimation();
+        mHandlerThread = null;
     }
 
     private void releaseCamera() {
         if (mCamera != null) {
             previewing = false;
+            mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
             mCamera.release();
             mCamera = null;

@@ -107,7 +107,6 @@ public class GameStepListActivity extends BasicFragmentActivity implements View.
     private void startDetail(String str) {
         startActivity(GameStepDetailActivity.class);
     }
-
     @OnClick(R.id.iv_back)
     @Override
     public void onClick(View v) {

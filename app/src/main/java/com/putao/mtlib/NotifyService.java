@@ -55,7 +55,7 @@ public class NotifyService extends Service {
 
             mPTSenderManager = PTSenderManager.sharedInstance();
             mPTSenderManager.setConfig(new PTMessageConfig.Builder()
-                    .setHost(HOST).setPort(PORT).setHeartSecond(1 * 20).build());
+                    .setHost(HOST).setPort(PORT).setHeartSecond(1 * 30).build());
             mPTSenderManager.init(getApplicationContext());
             mPTSenderManager.setReceiveMessageListener(new OnReceiveMessageListener() {
                 @Override
