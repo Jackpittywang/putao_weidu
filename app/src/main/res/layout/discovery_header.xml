@@ -2,9 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/text_color_gray"
-    android:layout_height="250dp">
-
+    android:layout_height="250dp"
+    android:background="@color/text_color_gray">
 
 
     <!--<LinearLayout-->
@@ -20,12 +19,12 @@
 
     <com.sunnybear.library.view.viewpager.banner.ConvenientBanner
         android:id="@+id/cb_banner"
-        android:layout_above="@+id/tv_discovery_hottag"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_above="@+id/tv_discovery_hottag"
+        android:background="@color/text_color_gray"
         auto:align="CENTER_HORIZONTAL"
         auto:autoTurningTime="2"
-        android:background="@color/text_color_gray"
         auto:fillDrawable="@drawable/icon_logistics_flow_old"
         auto:pageDrawable="@drawable/icon_logistics_flow_latest" />
 
@@ -34,13 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:drawableLeft="@drawable/btn_20_back_p_sel"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/icon_16_34"
         android:drawablePadding="@dimen/distance_5dp"
         android:gravity="center_vertical"
+        android:paddingLeft="15dp"
         android:text="热门标签"
-        android:layout_marginTop="0.5dp"
         android:textColor="@color/color_313131"
-        android:background="@color/white"
-        android:textSize="@dimen/text_size_16sp"
-        android:paddingLeft="15dp"/>
+        android:textSize="@dimen/text_size_16sp" />
 </RelativeLayout>
