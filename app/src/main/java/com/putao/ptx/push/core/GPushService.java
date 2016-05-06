@@ -1,6 +1,7 @@
 package com.putao.ptx.push.core;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -21,6 +22,18 @@ public class GPushService extends Service {
         return sInstance;
     }
 
+    /**
+     * 启动GPushservice
+     * @param context
+     * @param deviceId 设备id
+     * @param appId appid
+     */
+    public static void startGPushService(Context context, String deviceId, String appId){
+        Constants.setDeviceAndAppId(deviceId, appId);
+        Intent i = new Intent(context, GPushService.class);
+        context.startService(i);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,7 +41,7 @@ public class GPushService extends Service {
         initGPush();
     }
 
-    public static int initGPush() {
+    public int initGPush() {
         String deviceId = Constants.DEVICE_ID;
         String appId = Constants.APP_ID;
         int initialCode = GPush.initGPush(Constants.DEFAULT_SERVER, Constants.PLATFORM, deviceId);
