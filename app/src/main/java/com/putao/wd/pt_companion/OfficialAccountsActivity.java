@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,6 +18,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.model.Companion;
 import com.sunnybear.library.controller.ActivityManager;
@@ -41,10 +43,12 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     TextView tv_official_title;
     @Bind(R.id.tv_recommend)
     TextView tv_recommend;
-    @Bind(R.id.tv_cancel_associate)
-    TextView tv_cancel_associate;
+    @Bind(R.id.tv_relation_companion)
+    TextView tv_relation_companion;
     @Bind(R.id.tv_look_history)
     TextView tv_look_history;
+    @Bind(R.id.ll_companion)
+    LinearLayout ll_companion;
 
 
 //    @Bind(R.id.no_cancel)
@@ -52,12 +56,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
 //    @Bind(R.id.cancel_associate)
 //    TextView cancel_associate;
 
-
+    private TextView tv_dialog, tv_no_cancel, tv_cancel;
     private View view_custom;
     private AlertDialog mDialog = null;
     private AlertDialog.Builder builder = null;
     private String mServiceId;
     private String mServiceName;
+    private SelectPopupWindow mSelectPopupWindow;
 
     @Override
     protected int getLayoutId() {
@@ -67,6 +72,38 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) && AccountHelper.isLogin()) {
+            navigation_bar.getRightView().setVisibility(View.VISIBLE);
+            mSelectPopupWindow = new SelectPopupWindow(mContext) {
+                @Override
+                public void onFirstClick(View v) {//清除内容
+                    YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
+                    showDialog();
+                    tv_dialog.setText("将清空所有历史内容");
+                    tv_cancel.setText("清空内容");
+                    tv_no_cancel.setText("取消");
+                }
+
+                @Override
+                public void onSecondClick(View v) {//取消关联
+                    YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
+                    showDialog();
+                    tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                    tv_cancel.setText("确定取消");
+                    tv_no_cancel.setText("暂不取消");
+                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            cancelServicce(mServiceId);
+                        }
+                    });
+                }
+            };
+            tv_relation_companion.setText("进入");
+        } else {
+            navigation_bar.getRightView().setVisibility(View.GONE);
+            tv_relation_companion.setText("关联产品");
+        }
         Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
         if (companion == null) return;
         setMainTitle(companion.getService_name());
@@ -75,17 +112,18 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         tv_recommend.setText(companion.getService_description());
         mServiceId = companion.getService_id();
         mServiceName = companion.getService_name();
-        if (companion.is_unbunding())
-            tv_cancel_associate.setVisibility(View.GONE);
+        if (companion.is_unbunding()) {
+            tv_relation_companion.setVisibility(View.GONE);
+            navigation_bar.getRightView().setVisibility(View.GONE);
+        }
         addListener();
     }
 
     private void addListener() {
-        tv_cancel_associate.setOnClickListener(new View.OnClickListener() {
+        tv_relation_companion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
-                showDialog();
+                finish();
             }
         });
         //查看历史文章
@@ -105,6 +143,10 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
 
         final LayoutInflater inflater = OfficialAccountsActivity.this.getLayoutInflater();
         view_custom = inflater.inflate(R.layout.activity_officialaccounts_dialog, null, false);
+        tv_dialog = (TextView) view_custom.findViewById(R.id.tv_dialog);
+        tv_no_cancel = (TextView) view_custom.findViewById(R.id.no_cancel);
+        tv_cancel = (TextView) view_custom.findViewById(R.id.cancel_associate);
+
 
         builder.setView(view_custom);
         builder.setCancelable(false);
@@ -115,13 +157,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 mDialog.dismiss();
             }
         });
-
-        view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelServicce(mServiceId);
-            }
-        });
+//
+//        view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cancelServicce(mServiceId);
+//            }
+//        });
         mDialog = builder.show();
         mDialog.show();
     }
@@ -198,5 +240,14 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     public void onLeftAction() {
         super.onLeftAction();
         finish();
+    }
+
+    @Override
+    public void onRightAction() {
+        super.onRightAction();
+        mSelectPopupWindow.show(ll_companion);
+        mSelectPopupWindow.tv_first.setText("清除内容");
+        mSelectPopupWindow.tv_second.setText("取消关联");
+        mSelectPopupWindow.tv_second.setTextColor(0xffcc0000);
     }
 }

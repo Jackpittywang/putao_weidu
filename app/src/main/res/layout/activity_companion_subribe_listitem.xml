@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:paddingBottom="10dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp">
+
+    <com.sunnybear.library.view.image.ImageDraweeView
+        android:id="@+id/iv_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/img_head_default" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:lines="1"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="文章标题"
+        android:textColor="@color/color_313131"
+        android:textSize="@dimen/text_size_16sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:lineSpacingExtra="2dp"
+        android:maxLines="2"
+        android:paddingLeft="10dp"
+        android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/text_size_14sp" />
+</RelativeLayout>

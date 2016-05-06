@@ -3,6 +3,7 @@ package com.putao.wd.pt_companion;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.putao.wd.R;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 /**
+ * 查看历史文章
  * Created by Administrator on 2016/4/18.
  */
 public class LookHistoryActivity extends PTWDActivity {
@@ -38,6 +40,8 @@ public class LookHistoryActivity extends PTWDActivity {
     RelativeLayout rl_lookHistory_failure;
     @Bind(R.id.btn_no_data)
     Button btn_no_data;
+    @Bind(R.id.ll_history_tail)
+    LinearLayout ll_history_tail;
 
     private LookHistoryAdapter adapter;
     private ArrayList<ServiceMessageList> messageLists;

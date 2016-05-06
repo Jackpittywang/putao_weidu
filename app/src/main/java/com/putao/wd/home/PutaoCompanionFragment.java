@@ -30,6 +30,7 @@ import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.GameDetailListActivity;
+import com.putao.wd.pt_companion.PutaoSubcribeActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.ActivityManager;
@@ -233,7 +234,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
         } else {
-            startActivity(CaptureActivity.class);
+            startActivity(PutaoSubcribeActivity.class);
+//            startActivity(CaptureActivity.class);
         }
     }
 

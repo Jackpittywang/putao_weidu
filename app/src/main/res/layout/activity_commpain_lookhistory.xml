@@ -13,6 +13,7 @@
         auto:nav_main_title="历史文章"
         auto:nav_main_title_color="@color/text_color" />
 
+
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
         android:layout_width="match_parent"
@@ -26,7 +27,40 @@
             android:layout_height="match_parent"
             auto:duration_animator="500"
             auto:has_row_divider="true" />
+
     </com.sunnybear.library.view.PullToRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_history_tail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_history_companion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/history_commpaion"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <Button
+            android:id="@+id/btn_relation_companion"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_get_history"
+            android:text="去关联"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14sp" />
+    </LinearLayout>
+
     <!--没有陪伴数据时-->
     <RelativeLayout
         android:id="@+id/rl_no_history"
@@ -83,4 +117,6 @@
             android:textColor="#fff"
             android:textSize="@dimen/text_size_14sp" />
     </RelativeLayout>
+
+
 </LinearLayout>
