@@ -42,6 +42,7 @@
 
     <color name="browse_background">#000000</color>
 
+    <color name="color_F4EFF9">#F4EFF9</color>
 
     <color name="colorAccent">#985ec9</color>
 </resources>

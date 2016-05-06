@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sunnybear.library.view.NavigationBar
+        style="@style/style_navigation_bar"
+        auto:nav_divider_color="@color/divider_color"
+        auto:nav_has_divider="true"
+        auto:nav_left_icon="@drawable/back_selector"
+        auto:nav_main_title="活动列表"></com.sunnybear.library.view.NavigationBar>
+
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:refresh_layout="@layout/sky_wheel_refresh_header"
+        auto:refresh_layout_height="120">
+
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            auto:divider_color="@color/divider_color"
+            auto:divider_height="0.5dp"
+            auto:has_row_divider="true" />
+    </com.sunnybear.library.view.PullToRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_page_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="暂无内容" />
+    </LinearLayout>
+    <!--数据加载失败时-->
+    <RelativeLayout
+        android:id="@+id/rl_campaign_failure"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigation_bar"
+        android:background="@color/color_EBEBEB"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="210dp"
+            android:text="加载失败，点击屏幕刷新"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <Button
+            android:id="@+id/btn_no_data"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tv_nodata"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/btn_get_focus"
+            android:text="刷新"
+            android:textColor="#fff"
+            android:textSize="@dimen/text_size_14sp" />
+    </RelativeLayout>
+
+</LinearLayout>

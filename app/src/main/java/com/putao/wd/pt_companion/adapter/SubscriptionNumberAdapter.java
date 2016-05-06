@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 订阅号列表适配器
  * Created by Administrator on 2016/5/5.
  */
 public class SubscriptionNumberAdapter extends LoadMoreAdapter<Companion, SubscriptionNumberAdapter.SubscriptionViewHolder> {

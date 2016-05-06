@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_icon"
+            style="@style/image_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_EBEBEB"
+            auto:aspect_ratio="2"
+            auto:placeholderImage="@drawable/img_image_default_m" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="5dp"
+            android:lines="2"
+            android:text="这里显示的是活动的标题，限制两行"
+            android:textColor="@color/color_313131"
+            android:textSize="@dimen/text_size_18sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

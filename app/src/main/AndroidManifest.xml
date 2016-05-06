@@ -443,11 +443,17 @@
         <!--葡萄订阅列表-->
         <activity
             android:name=".pt_companion.PutaoSubcribeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!--订阅号列表-->
         <activity
             android:name=".pt_companion.SubscriptionNumberActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <!--活动列表-->
+        <!--专题-->
+        <activity
+            android:name=".pt_discovery.SpecialActivity"
+            android:screenOrientation="portrait" />
+        <!--标签界面-->
         <!--图片的加载显示-->
         <!--<activity
             android:name=".image.ImageDetailActivity"
