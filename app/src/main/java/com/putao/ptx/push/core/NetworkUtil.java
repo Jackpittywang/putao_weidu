@@ -11,7 +11,7 @@ import android.net.NetworkInfo;
 public class NetworkUtil {
 
     public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager =
+       /* ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             Network[] allNetworks = connectivityManager.getAllNetworks();
@@ -24,7 +24,7 @@ public class NetworkUtil {
                     }
                 }
             }
-        }
-        return false;
+        }*/
+        return true;
     }
 }

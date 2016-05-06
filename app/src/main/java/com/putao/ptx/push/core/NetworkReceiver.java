@@ -17,12 +17,12 @@ public class NetworkReceiver extends BroadcastReceiver {
         boolean isConnected = NetworkUtil.isNetworkAvailable(context);
         if (isConnected) {
             Log.d(TAG, "网络状态:连接");
-            Intent i = new Intent(context, PushService.class);
+            Intent i = new Intent(context, GPushService.class);
             i.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_GPUSH_START);
             context.startService(i);
         } else {
             Log.d(TAG, "网络状态:断开");
-            Intent i = new Intent(context, PushService.class);
+            Intent i = new Intent(context, GPushService.class);
             i.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_GPUSH_STOP);
             context.startService(i);
         }
