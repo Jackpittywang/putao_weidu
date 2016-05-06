@@ -6,13 +6,13 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.sunnybear.library.view.NavigationBar
-        style="@style/style_navigation_bar"
-        android:background="@color/white"
-        auto:nav_has_divider="true"
-        auto:nav_main_title="发现"
-        auto:nav_main_title_color="@color/text_color"
-        auto:nav_right_title_color="@drawable/text_select" />
+    <!--<com.sunnybear.library.view.NavigationBar-->
+        <!--style="@style/style_navigation_bar"-->
+        <!--android:background="@color/white"-->
+        <!--auto:nav_has_divider="true"-->
+        <!--auto:nav_main_title="发现"-->
+        <!--auto:nav_main_title_color="@color/text_color"-->
+        <!--auto:nav_right_title_color="@drawable/text_select" />-->
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"

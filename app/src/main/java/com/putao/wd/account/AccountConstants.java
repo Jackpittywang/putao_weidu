@@ -80,6 +80,7 @@ public final class AccountConstants {
         public static final String EVENT_CANCEL_COMPANION_TAB = "event_cancel_companion_tab";
         public static final String EVENT_REFRESH_ME_TAB = "event_refresh_me_tab";
         public static final String EVENT_DELETE_COMPANION = "event_delete_companion";
+        public static final String EVENT_DISCOVERY_CAROUSEL = "event_discovery_Carousel";
     }
 
     /**

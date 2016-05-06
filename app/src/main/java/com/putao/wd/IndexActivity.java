@@ -17,6 +17,7 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
+import com.putao.wd.home.PutaoDiscovery2Fragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.pt_store.pay.PaySuccessActivity;
@@ -103,7 +104,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     private void addFragments() {
         mFragments = new SparseArray<>();
         mFragments.put(0, Fragment.instantiate(mContext, PutaoCompanionFragment.class.getName()));
-        mFragments.put(1, Fragment.instantiate(mContext, PutaoDiscoveryFragment.class.getName()));
+        // TODO 测试使用
+        mFragments.put(1, Fragment.instantiate(mContext, PutaoDiscovery2Fragment.class.getName()));
         mFragments.put(2, Fragment.instantiate(mContext, PutaoStoreFragment.class.getName()));
         mFragments.put(3, Fragment.instantiate(mContext, MeFragment.class.getName()));
     }

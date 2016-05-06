@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_color_gray">
+    <com.sunnybear.library.view.PullToRefreshLayout
+        android:id="@+id/ptl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        auto:refresh_layout="@layout/sky_wheel_refresh_header"
+        auto:refresh_layout_height="120">
+
+        <com.sunnybear.library.view.recycler.LoadMoreRecyclerView
+            android:id="@+id/rv_discovery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            auto:divider_color="@color/white"
+            auto:divider_height="2dp"
+            auto:has_row_divider="true"
+            />
+
+    </com.sunnybear.library.view.PullToRefreshLayout>
+
+</LinearLayout>
