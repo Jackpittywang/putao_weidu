@@ -19,7 +19,6 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.model.ProductStatus;
 import com.putao.wd.pt_me.service.adapter.ServiceAdapter;
 import com.putao.wd.model.Express;
@@ -130,7 +129,6 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
 
         Bundle bundle = getIntent().getExtras();
         serviceId = bundle.getString(KEY_SERVICE_ID);
-        if (null == serviceId) serviceId = args.getString(JPushReceiver.MID);
         networkRequest(OrderApi.getServiceDetail(serviceId), new SimpleFastJsonCallback<ArrayList<ServiceList>>(ServiceList.class, loading) {
             @Override
             public void onSuccess(String url, ArrayList<ServiceList> result) {

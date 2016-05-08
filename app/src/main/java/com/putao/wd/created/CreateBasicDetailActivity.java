@@ -21,10 +21,9 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
-import com.putao.wd.jpush.JPushReceiver;
-import com.putao.wd.pt_me.order.OrderListActivity;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.PicClickResult;
+import com.putao.wd.pt_me.order.OrderListActivity;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -43,7 +42,6 @@ import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
-
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -160,8 +158,6 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
             mCreate = (Create) args.getSerializable(CREATE);
             mPosition = args.getInt(POSITION);
             isShowProgress = args.getBoolean(SHOW_PROGRESS);
-            if (null == mCreate) getRemindCreate(args.getString(JPushReceiver.MID));
-            else
                 initView();
         }
     }

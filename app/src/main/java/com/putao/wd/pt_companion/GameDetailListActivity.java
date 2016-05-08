@@ -49,6 +49,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
 
     @Bind(R.id.ll_bottom_menus)
     LinearLayout ll_bottom_menus;
+    @Bind(R.id.ll_comment_edit)
+    LinearLayout ll_comment_edit;
     @Bind(R.id.tv_menu_first)
     TextView tv_menu_first;
     @Bind(R.id.tv_menu_second)
@@ -329,7 +331,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
-
+//                        ll_comment_edit.setVisibility();
                     }
                 }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
     }

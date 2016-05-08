@@ -42,6 +42,8 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     private List<ResourceBanner> banners;
     private List<ResourceTag> hotTags;
     private ImageHolderView mImageHolderView;
+    private boolean isScrollX;
+    private int mScrollX;
 
     public ResourceAdapter(Context context, List<FindResource> resous) {
         super(context, resous);
@@ -229,4 +231,10 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
         this.hotTags = bannerAndTag.getTag();
         notifyDataSetChanged();
     }
+
+  /*  public void setScrollX(int scrollX) {
+        isScrollX = true;
+        mScrollX = scrollX;
+        notifyDataSetChanged();
+    }*/
 }

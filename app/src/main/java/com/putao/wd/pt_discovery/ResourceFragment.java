@@ -62,8 +62,10 @@ public class ResourceFragment extends BasicFragment {
     private int mPage;
 
     private boolean isShowHead;
-    private View childAt;
+    private RecyclerView childAt;
     private RecyclerView.LayoutParams layoutParams;
+    private int mScrollX;
+    private RelativeLayout.LayoutParams mRelativeLayoutParams;
 
     @Override
     protected int getLayoutId() {
@@ -77,6 +79,8 @@ public class ResourceFragment extends BasicFragment {
         rv_discovery.setAdapter(mAdapter);
         freshResource();
 
+        mRelativeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mActivity, 80));
+//        mRelativeLayoutParams.setMargins(0, 500, 0, 0);
         addListener();
     }
 
@@ -115,25 +119,20 @@ public class ResourceFragment extends BasicFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (childAt == null) {
-                    childAt = discoveryLayoutManager.getChildAt(1);
+                    childAt = (RecyclerView) discoveryLayoutManager.getChildAt(1);
                     layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
                 }
                 if (discoveryLayoutManager.findFirstVisibleItemPosition() > 0 && !isShowHead) {
-//                    layoutManager1.removeViewAt(1);
-                    discoveryLayoutManager.removeView(childAt);
-//                    rv_discovery.setLayoutManager(layoutManager1);
-                    /*RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams();
-                    layoutParams.setMargins(DensityUtil.dp2px(mActivity, 15), 0, 0, 0);
-                    childAt.setLayoutParams(layoutParams);*/
-
+                    rv_discovery.removeView(childAt);
+                    childAt.setBackgroundColor(0xffffffff);
+                    int margin = DensityUtil.dp2px(mActivity, 10);
+                    childAt.setLayoutParams(mRelativeLayoutParams);
+                    childAt.setPadding(DensityUtil.dp2px(mActivity, 15), margin, 0, margin);
                     rl_main.addView(childAt);
-                    mAdapter.notifyDataSetChanged();
                     isShowHead = true;
                 } else if (discoveryLayoutManager.findFirstVisibleItemPosition() == 0 && isShowHead) {
                     rl_main.removeView(childAt);
-                    childAt.setLayoutParams(layoutParams);
-                    discoveryLayoutManager.addView(childAt, 1);
-                    mAdapter.notifyDataSetChanged();
+                    rv_discovery.addView(childAt, layoutParams);
                     isShowHead = false;
                 }
             }

@@ -16,7 +16,6 @@ import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.model.ExploreIndex;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.share.OnShareClickListener;
@@ -96,7 +95,6 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
         mHeight = (mWidth * 9) / 16 + 2;
 
         mArticleId = args.getString(ARTICLE_ID);
-        if (null == mArticleId) mArticleId = args.getString(JPushReceiver.MID);
         if (null == mArticleId) {
             ToastUtils.showToastShort(mContext, "文章不存在");
             finish();

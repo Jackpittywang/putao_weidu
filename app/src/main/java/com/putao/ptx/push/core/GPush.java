@@ -69,5 +69,8 @@ public class GPush {
 
     private static native int uninitial();
 
+    private static native int add(int a, int b);
+
+
 
 }

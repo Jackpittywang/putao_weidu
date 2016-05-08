@@ -24,7 +24,6 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.model.ProductStatus;
 import com.putao.wd.pt_me.order.adapter.ShipmentAdapter;
 import com.putao.wd.pt_me.service.ServiceChooseActivity;
@@ -171,7 +170,6 @@ public class OrderDetailActivity extends PTWDActivity<GlobalApplication> impleme
         //获取order数据
         Intent intent = getIntent();
         mOrderId = args.getString(KEY_ORDER);
-        if (null == mOrderId) mOrderId = args.getString(JPushReceiver.MID);
         //初始化布局对象
         initComponent();
         getOrderDetail();

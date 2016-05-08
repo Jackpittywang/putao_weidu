@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
-import com.putao.wd.jpush.JPushReceiver;
 import com.putao.wd.pt_me.order.OrderDetailActivity;
 import com.putao.wd.pt_me.service.ServiceDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
@@ -29,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -82,7 +80,6 @@ public class SplashActivity extends BasicFragmentActivity<GlobalApplication> {
                         if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                             startActivity(GuidanceActivity.class);
                         else {
-                            checkNotify();
                             startActivity(IndexActivity.class);
                         }
                         finish();
@@ -203,42 +200,6 @@ public class SplashActivity extends BasicFragmentActivity<GlobalApplication> {
 //                }
 //        );
 
-
-    private void checkNotify() {
-        if (null != args) {
-            String extras = args.getString(JPushInterface.EXTRA_EXTRA);
-            if (!TextUtils.isEmpty(extras)) {
-                String mType = "";
-                JSONObject extrasJson;
-                try {
-                    extrasJson = new JSONObject(extras);
-                    mType = extrasJson.optString(JPushReceiver.TYPE);
-                    if (0 == extrasJson.optInt(JPushReceiver.MID)) return;
-                } catch (Exception e) {
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putString(JPushReceiver.MID, extrasJson.optString(JPushReceiver.MID));
-                switch (mType) {
-                    case JPushReceiver.EXPLORE:
-                        startActivity(ExploreMoreDetailActivity.class, bundle);
-                        break;
-                    case JPushReceiver.IDEA:
-                        startActivity(CreateBasicDetailActivity.class, bundle);
-                        break;
-                    case JPushReceiver.PRODUCT:
-                        startActivity(ProductDetailActivity.class, bundle);
-                        break;
-                    case JPushReceiver.ORDER:
-                        startActivity(OrderDetailActivity.class, bundle);
-                        break;
-                    case JPushReceiver.CUSTOMER:
-                        startActivity(ServiceDetailActivity.class, bundle);
-                        break;
-                }
-            }
-        }
-    }
 
     /**
      * 解析表情

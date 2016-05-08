@@ -32,7 +32,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import cn.jpush.a.a.m;
 
 /**
  * 我的收藏

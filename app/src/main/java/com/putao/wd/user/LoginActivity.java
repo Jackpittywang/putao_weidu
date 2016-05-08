@@ -21,7 +21,6 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -110,7 +109,6 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                         //登录后的连接传送
                                         AccountHelper.setCurrentUid(result.getString("uid"));
                                         AccountHelper.setCurrentToken(result.getString("token"));
-                                        new JPushHeaper().setAlias(mContext, result.getString("uid"));
                                         //验证登陆后的连接发送
                                         checkLogin(mobile);
                                     }

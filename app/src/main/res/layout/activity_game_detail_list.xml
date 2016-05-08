@@ -109,4 +109,98 @@
             android:text=""
             android:textSize="@dimen/text_size_14sp" />
     </LinearLayout>
+
+    <!--输入栏-->
+    <LinearLayout
+        android:id="@+id/ll_comment_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divider_color" />
+        <!--发送栏-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/distance_10dp"
+                android:src="@drawable/icon_30_23" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/divider_color" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_upload_pic"
+                style="@style/image_round_4dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:visibility="visible"
+                auto:placeholderImage="@drawable/btn_30_p_selector" />
+
+            <com.sunnybear.library.view.emoji.EmojiEditText
+                android:id="@+id/et_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_weight="0.7"
+                android:background="@drawable/comment_shape"
+                android:gravity="center_vertical"
+                android:hint="发表评论"
+                android:imeOptions="actionSend"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:minHeight="36dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:scrollbars="vertical"
+                android:singleLine="false"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/color_C2C2C2"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tv_emojis"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/btn_emoji_select" />
+
+            <TextView
+                android:id="@+id/tv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:padding="@dimen/distance_10dp"
+                android:text="发送"
+                android:textSize="@dimen/text_size_18sp" />
+        </LinearLayout>
+        <!--表情栏-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_emojis"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:overScrollMode="never"
+            android:visibility="gone" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -1,17 +1,13 @@
 package com.putao.wd;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
-import android.text.TextUtils;
 
 import com.putao.mtlib.HomeBroadcastReceiver;
+import com.putao.ptx.push.core.GPushService;
 import com.putao.wd.account.AccountApi;
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.DataBaseManager;
@@ -19,7 +15,6 @@ import com.putao.wd.db.DistrictDBManager;
 import com.putao.wd.db.ProvinceDBManager;
 import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
-import com.putao.wd.jpush.JPushHeaper;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.controller.ActivityManager;
@@ -33,7 +28,6 @@ import com.youku.player.YoukuPlayerBaseConfiguration;
 import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -119,15 +113,7 @@ public class GlobalApplication extends BasicApplication {
         ImageLoaderUtil.initImageLoader(this);
 
 
-        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);            // 初始化 JPush
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                new JPushHeaper().setAlias(GlobalApplication.this, AccountHelper.getCurrentUid());
-            }
-        }, 3000);
-
+        GPushService.startGPushService(this, AppUtils.getDeviceId(this), "15");
         /*CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
         dataBaseManager.insertFixDownload("8003", "343");*/
 //        dataBaseManager.insertFixDownload("6000", "125");
@@ -251,7 +237,6 @@ public class GlobalApplication extends BasicApplication {
 
 
     /**
-     * 有此至下为常量定义
      */
     public static final String MAP_EMOJI = "map_emoji";
     public static final String IN_FORE_MESSAGE = "com.putao.inFore.message";
