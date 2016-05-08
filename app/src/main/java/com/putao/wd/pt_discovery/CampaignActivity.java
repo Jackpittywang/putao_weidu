@@ -3,13 +3,19 @@ package com.putao.wd.pt_discovery;
 import android.os.Bundle;
 
 import com.putao.wd.R;
+import com.putao.wd.api.DisCoveryApi;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.model.Campaign;
 import com.putao.wd.model.DisCovery;
+import com.putao.wd.model.Resources;
+import com.putao.wd.model.SubscribeList;
 import com.putao.wd.pt_discovery.adapter.CampaignAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -18,13 +24,14 @@ import butterknife.Bind;
  * Created by Administrator on 2016/5/5.
  */
 public class CampaignActivity extends PTWDActivity {
-
+    public static final String TAGID = "tag_id";
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
 
     private CampaignAdapter campaignAdapter;
+    private List<Resources> resources;
 
     @Override
     protected int getLayoutId() {
@@ -34,15 +41,11 @@ public class CampaignActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        ArrayList<DisCovery> disCoveries = new ArrayList<>();
-        disCoveries.add(new DisCovery());
-        disCoveries.add(new DisCovery());
-        disCoveries.add(new DisCovery());
-        disCoveries.add(new DisCovery());
-        disCoveries.add(new DisCovery());
-        campaignAdapter = new CampaignAdapter(mContext, disCoveries);
+        campaignAdapter = new CampaignAdapter(mContext, null);
         rv_content.setAdapter(campaignAdapter);
         addListener();
+        System.out.println("========================" + args.getString(TAGID));
+        getTagCampaign(args.getString(TAGID));
     }
 
 
@@ -61,6 +64,24 @@ public class CampaignActivity extends PTWDActivity {
             }
         });
     }
+
+    private void getTagCampaign(String tagId) {//String.valueOf(tagId)
+        networkRequest(DisCoveryApi.getTagResources(String.valueOf(tagId)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
+            @Override
+            public void onSuccess(String url, Campaign result) {
+                if (result != null) {
+                    resources = result.getResources();
+                    campaignAdapter.addAll(resources);
+                }
+            }
+        });
+    }
+
+//    private void checkLoadMoreComplete(ArrayList<SubscribeList> result) {
+//        if (result == null)
+//            rv_content.noMoreLoading();
+//        else mPage++;
+//    }
 
     @Override
     protected String[] getRequestUrls() {

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.DisCovery;
+import com.putao.wd.model.Resources;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
@@ -18,10 +19,10 @@ import butterknife.Bind;
  * 发现中活动类适配器
  * Created by Administrator on 2016/5/5.
  */
-public class CampaignAdapter extends LoadMoreAdapter<DisCovery, CampaignAdapter.CampaignViewHolder> {
+public class CampaignAdapter extends LoadMoreAdapter<Resources, CampaignAdapter.CampaignViewHolder> {
 
-    public CampaignAdapter(Context context, List<DisCovery> disCoveries) {
-        super(context, disCoveries);
+    public CampaignAdapter(Context context, List<Resources> resources) {
+        super(context, resources);
     }
 
     @Override
@@ -35,8 +36,9 @@ public class CampaignAdapter extends LoadMoreAdapter<DisCovery, CampaignAdapter.
     }
 
     @Override
-    public void onBindItem(CampaignViewHolder holder, DisCovery disCovery, int position) {
-        holder.tv_campign.setText("活动活动活动活活动活动活动活动活动活动活动活动活动活动活动活动动活动活动活动活动" + position);
+    public void onBindItem(CampaignViewHolder holder, Resources resources, int position) {
+        holder.tv_campign.setText(resources.getTitle());
+        holder.iv_campign.setImageURL(resources.getIcon());
     }
 
     static class CampaignViewHolder extends BasicViewHolder {

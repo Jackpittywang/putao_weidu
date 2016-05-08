@@ -9,12 +9,15 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.model.DiscoveryResource;
 import com.putao.wd.model.FindResource;
 import com.putao.wd.model.ResourceBanner;
 import com.putao.wd.model.ResourceBannerAndTag;
 import com.putao.wd.model.ResourceTag;
+import com.putao.wd.pt_discovery.CampaignActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -115,12 +118,14 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
 
             HotTagAdapter hotTagAdapter = new HotTagAdapter(context, hotTags);
             hotTagHolder.rv_discovery_hot_tag.setAdapter(hotTagAdapter);
-
             hotTagAdapter.setOnItemClickListener(new com.sunnybear.library.view.recycler.listener.OnItemClickListener<ResourceTag>() {
 
                 @Override
                 public void onItemClick(ResourceTag tag, int position) {
                     EventBusHelper.post(tag.getDisplay_type(), AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(CampaignActivity.TAGID, hotTags.get(position).getId());
+                    context.startActivity(CampaignActivity.class, bundle);
                 }
             });
         } else {

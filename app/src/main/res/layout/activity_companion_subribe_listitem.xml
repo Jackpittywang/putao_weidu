@@ -10,8 +10,7 @@
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_icon"
         android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/img_head_default" />
+        android:layout_height="60dp" />
 
     <TextView
         android:id="@+id/tv_title"
