@@ -21,10 +21,12 @@ import com.putao.wd.model.ResourceBannerAndTag;
 import com.putao.wd.model.ResourceTag;
 import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_discovery.adapter.ResourceAdapter;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -53,7 +55,7 @@ public class ResourceFragment extends BasicFragment {
     private BasicRecyclerView rv_discovery_hot_tag;
     private List<FindResource> resous;
     private List<ResourceBanner> banners;
-    private List<ResourceTag> hotTags;
+//    private List<ResourceTag> hotTags;
     private ResourceBannerAndTag bannerAndTag;
     private ResourceAdapter mAdapter;
 
@@ -104,10 +106,7 @@ public class ResourceFragment extends BasicFragment {
         rv_discovery.setOnItemClickListener(new OnItemClickListener<FindResource>() {
             @Override
             public void onItemClick(FindResource resou, int position) {
-                if (position == 0) {
-                    return;
-                }
-                EventBusHelper.post(resou.getTitle(), AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE);
+                EventBusHelper.post(position, AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE);
             }
         });
 
@@ -126,6 +125,7 @@ public class ResourceFragment extends BasicFragment {
                     /*RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams();
                     layoutParams.setMargins(DensityUtil.dp2px(mActivity, 15), 0, 0, 0);
                     childAt.setLayoutParams(layoutParams);*/
+
                     rl_main.addView(childAt);
                     mAdapter.notifyDataSetChanged();
                     isShowHead = true;
@@ -168,13 +168,12 @@ public class ResourceFragment extends BasicFragment {
                     top.setIs_recommend(true);
                     top.setIs_top(true);
                     resous.clear();
+                    resous.add(0, new FindResource());
+                    resous.add(1,new FindResource());
                     resous.add(top);
                     resous.addAll(list);
 
-//                    mAdapter = new ResourceAdapter(mActivity, resous,bannerAndTag);
-//                    rv_discovery.setAdapter(mAdapter);
                     mAdapter.replaceAll(resous);
-//                    resous = null;
                     mPage++;
                     rv_discovery.loadMoreComplete();
                 } else {
@@ -191,69 +190,14 @@ public class ResourceFragment extends BasicFragment {
                 cacheData(url, result);
                 if (result != null) {
                     bannerAndTag = result;
+                    banners = bannerAndTag.getBanner();
                 } else {
                     bannerAndTag = new ResourceBannerAndTag();
+                    banners = new ArrayList<>();
                 }
-//                mAdapter = new ResourceAdapter(mActivity, resous,bannerAndTag);
-//                rv_discovery.setAdapter(mAdapter);
-                mAdapter.setBannerAndTag(result);
+                mAdapter.setBannerAndTag(bannerAndTag);
             }
         });
-//        networkRequest();
-
-//        mPage = 0;
-//
-//        loadResous();
-        //loadDrawables();
-        //loadTags();
-//
-//        ptl_refresh.setVisibility(View.VISIBLE);
-//        mPage++;
-//        rv_discovery.loadMoreComplete();
-//
-//        ptl_refresh.refreshComplete();
-//        loading.dismiss();
-    }
-
-
-//    private void loadTags() {
-//        hotTags = new ArrayList<>();
-//        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-//        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-//        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-//        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-//        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-//        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-//    }
-
-//    private void loadDrawables() {
-//        drawables = new ArrayList<>();
-//        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-//        drawables.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-//        drawables.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-//        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-//    }
-
-
-    /**
-     * 虚拟数据
-     */
-    private void loadResous() {
-//        resous = new ArrayList<>();
-//        tags = new ArrayList<>();
-//        tags.add("one");
-//        tags.add("two");
-//        title = "一二三adfasdfasfasdfasdfasdfasdfasdfasdfasdfasadsfasdfa----sdfasdadf";
-//        resous.add(0,new Resou(false, false, "", null, ""));
-//        resous.add(1, new Resou(true, true, "http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg", tags, title));
-//        title = "5yue5asdfasdfasdfasdf";
-//        resous.add(2,new Resou(false, false, "http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg", tags, title));
-//
-//        tags.add("gogoasdfa");
-//        title = "wen";
-//        resous.add(3,new Resou(true, false, "http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg", tags, title));
-//        title = "mangadsfasdfasdfasdfadsfasdfasdfasdfasdfasdfasdfas----dfasdfaa";
-//        resous.add(4,new Resou(false, false, "http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg", tags, title));
     }
 
     @Override
@@ -263,42 +207,89 @@ public class ResourceFragment extends BasicFragment {
 
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL)
-    public void eventDiscoveryCarousel(Bundle bundle) {
+    public void eventDiscoveryCarousel(int position) {
 
-        String id = bundle.getString("id");
-        if (StringUtils.equals(id, "订阅号")) {
-            startActivity(ArticlesDetailActivity.class, bundle);
-        } else if (StringUtils.equals(id, "h5页面")) {
-
-        } else if (StringUtils.equals(id, "专题页")) {
-            ToastUtils.showToastShort(mActivity, bundle.getInt("po") + id);
-        }
+        ResourceBanner bann = banners.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseWebViewActivity.TITLE,bann.getBanner_title());
+        bundle.putString(BaseWebViewActivity.SERVICE_ID,bann.getSid());
+        bundle.putString(BaseWebViewActivity.URL, StringUtils.equals(bann.getLocation_type(), "1") ? bann.getLink_url() : bann.getLocation());
+        startActivity(BaseWebViewActivity.class,bundle);
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG)
-    public void eventDiscoveryHotTag(BasicRecyclerView rv_discovery_hot_tag) {
-
-        this.rv_discovery_hot_tag = rv_discovery_hot_tag;
-//        String id = bundle.getString("id");
-//        if(StringUtils.equals(id,"活动")){
-//            startActivity(ArticlesDetailActivity.class,bundle);
-//        }else if(StringUtils.equals(id,"专题")){
-//
-//        }
-//
-//        int position = bundle.getInt("po");
-//        ToastUtils.showToastShort(mActivity,position + "-------"+hotTags.get(position));
-
+    public void eventDiscoveryHotTag(String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG,type);
+        startActivity(SpecialListActivity.class,bundle);
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE)
-    public void eventDiscoveryResource(String url) {
+    public void eventDiscoveryResource(int position) {
 
-
-        Bundle bundle = new Bundle();
-        bundle.putString("url", url);
-//        startActivity(,bundle);
-
-        ToastUtils.showToastShort(mActivity, url);
+        FindResource reso = resous.get(position);
+        if(position != 0 && position != 1){
+            Bundle bundle = new Bundle();
+            bundle.putString(BaseWebViewActivity.TITLE,reso.getTitle());
+            bundle.putString(BaseWebViewActivity.SERVICE_ID,reso.getSid());
+            bundle.putString(BaseWebViewActivity.URL, reso.getLink_url());
+            startActivity(BaseWebViewActivity.class,bundle);
+        }
+        ToastUtils.showToastShort(mActivity, reso.getLink_url() != null ? reso.getLink_url():"nonono");
     }
 }
+
+
+/*
+        loadResous();
+loadDrawables();
+loadTags();
+        ptl_refresh.setVisibility(View.VISIBLE);
+        mPage++;
+        rv_discovery.loadMoreComplete();
+        ptl_refresh.refreshComplete();
+        loading.dismiss();
+}
+
+
+    private void loadTags() {
+        hotTags = new ArrayList<>();
+        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
+        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
+        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
+        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
+    }
+
+    private void loadDrawables() {
+        drawables = new ArrayList<>();
+        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+        drawables.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
+        drawables.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
+        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+    }
+
+
+*/
+/**
+ * 虚拟数据
+ *//*
+
+private void loadResous() {
+        resous = new ArrayList<>();
+        tags = new ArrayList<>();
+        tags.add("one");
+        tags.add("two");
+        title = "一二三adfasdfasfasdfasdfasdfasdfasdfasdfasdfasadsfasdfa----sdfasdadf";
+        resous.add(0,new Resou(false, false, "", null, ""));
+        resous.add(1, new Resou(true, true, "http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg", tags, title));
+        title = "5yue5asdfasdfasdfasdf";
+        resous.add(2,new Resou(false, false, "http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg", tags, title));
+
+        tags.add("gogoasdfa");
+        title = "wen";
+        resous.add(3,new Resou(true, false, "http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg", tags, title));
+        title = "mangadsfasdfasdfasdfadsfasdfasdfasdfasdfasdfasdfas----dfasdfaa";
+        resous.add(4,new Resou(false, false, "http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg", tags, title));
+*/

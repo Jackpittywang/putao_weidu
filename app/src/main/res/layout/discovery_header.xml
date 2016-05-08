@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         auto:align="ALIGN_PARENT_RIGHT"
-        auto:autoTurningTime="2"
+        auto:autoTurningTime="3"
         android:background="@color/text_color_gray"
         auto:fillDrawable="@drawable/icon_logistics_flow_old"
         auto:pageDrawable="@drawable/icon_logistics_flow_latest" />
