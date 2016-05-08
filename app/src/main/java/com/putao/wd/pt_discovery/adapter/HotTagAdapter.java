@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.model.ResourceTag;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
@@ -17,11 +18,11 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/5/5.
  */
-public class HotTagAdapter extends BasicAdapter<String,HotTagAdapter.HotHolder> {
+public class HotTagAdapter extends BasicAdapter<ResourceTag,HotTagAdapter.HotHolder> {
 
 
-    public HotTagAdapter(Context context, List<String> strings) {
-        super(context, strings);
+    public HotTagAdapter(Context context, List<ResourceTag> tags) {
+        super(context, tags);
     }
 
     @Override
@@ -35,8 +36,8 @@ public class HotTagAdapter extends BasicAdapter<String,HotTagAdapter.HotHolder> 
     }
 
     @Override
-    public void onBindItem(HotHolder holder, String str, int position) {
-        holder.idv_tag.setImageURL(str);
+    public void onBindItem(HotHolder holder, ResourceTag tag, int position) {
+        holder.idv_tag.setImageURL(tag.getTag_icon());
         holder.tv_hot_tag.setText(position/2 == 0 ? "主题":"活动");
     }
 

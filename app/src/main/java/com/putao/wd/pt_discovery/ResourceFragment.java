@@ -15,25 +15,22 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.DisCoveryApi;
 import com.putao.wd.model.DisCovery;
 import com.putao.wd.model.DiscoveryResource;
-import com.putao.wd.model.Resou;
+import com.putao.wd.model.FindResource;
+import com.putao.wd.model.ResourceBanner;
+import com.putao.wd.model.ResourceBannerAndTag;
+import com.putao.wd.model.ResourceTag;
 import com.putao.wd.pt_companion.ArticlesDetailActivity;
-import com.putao.wd.pt_companion.DividerDecoration;
-import com.putao.wd.pt_companion.adapter.ReplyListsAdapter;
 import com.putao.wd.pt_discovery.adapter.ResourceAdapter;
-import com.squareup.okhttp.internal.framed.Variant;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +51,10 @@ public class ResourceFragment extends BasicFragment {
 
 
     private BasicRecyclerView rv_discovery_hot_tag;
-    private List<DiscoveryResource> resous;
-    private List<String> tags;
-    private List<String> drawables;
-    private List<String> hotTags;
-    private String title;
+    private List<FindResource> resous;
+    private List<ResourceBanner> banners;
+    private List<ResourceTag> hotTags;
+    private ResourceBannerAndTag bannerAndTag;
     private ResourceAdapter mAdapter;
 
     private int mPage;
@@ -74,13 +70,11 @@ public class ResourceFragment extends BasicFragment {
 
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-
+        resous = new ArrayList<>();
+        mAdapter = new ResourceAdapter(mActivity, null);
+        rv_discovery.setAdapter(mAdapter);
         freshResource();
 
-
-        mAdapter = new ResourceAdapter(mActivity, resous, drawables, hotTags);
-        // Set layout manager
-        rv_discovery.setAdapter(mAdapter);
         addListener();
     }
 
@@ -103,28 +97,13 @@ public class ResourceFragment extends BasicFragment {
             public void onLoadMore() {
                 getDisCovery();
             }
-//            @Override
-//            public void onLoadMore() {
-//                networkRequest(DisCoveryApi.getfindVideo(String.valueOf(mPage)),
-//                        new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
-//
-//                            @Override
-//                            public void onSuccess(String url, ArrayList<DisCovery> result) {
-//                                if (result != null && result.size() > 0) {
-////                                    mAdapter.addAll(result);
-//                                }
-//                                rv_discovery.loadMoreComplete();
-//                                checkLoadMoreComplete(result);
-//                                loading.dismiss();
-//                            }
-//                        }, false);
-//            }
+
         });
         final LinearLayoutManager discoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
 
-        rv_discovery.setOnItemClickListener(new OnItemClickListener<DiscoveryResource>() {
+        rv_discovery.setOnItemClickListener(new OnItemClickListener<FindResource>() {
             @Override
-            public void onItemClick(DiscoveryResource resou, int position) {
+            public void onItemClick(FindResource resou, int position) {
                 if (position == 0) {
                     return;
                 }
@@ -147,7 +126,6 @@ public class ResourceFragment extends BasicFragment {
                     /*RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams();
                     layoutParams.setMargins(DensityUtil.dp2px(mActivity, 15), 0, 0, 0);
                     childAt.setLayoutParams(layoutParams);*/
-//                    RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams();
                     rl_main.addView(childAt);
                     mAdapter.notifyDataSetChanged();
                     isShowHead = true;
@@ -171,40 +149,6 @@ public class ResourceFragment extends BasicFragment {
         loading.dismiss();
         rv_discovery.loadMoreComplete();
 
-//        networkRequestCache(DisCoveryApi.getfindVideo(String.valueOf(mPage)),
-//                new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
-//
-//                    @Override
-//                    public void onSuccess(String url, ArrayList<DisCovery> result) {
-//                        cacheData(url, result);
-//                        if (result != null && result.size() > 0) {
-////                            disCoveries = result;
-////                            adapter.replaceAll(result);
-////                            rl_no_discovery.setVisibility(View.GONE);
-//                            ptl_refresh.setVisibility(View.VISIBLE);
-//                            mPage++;
-//                            rv_discovery.loadMoreComplete();
-//                        } else {
-//                            rv_discovery.noMoreLoading();
-////                            rl_no_discovery.setVisibility(View.VISIBLE);
-//                            ptl_refresh.setVisibility(View.GONE);
-//                        }
-//                        ptl_refresh.refreshComplete();
-//                        loading.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String url, int statusCode, String msg) {
-//                        super.onFailure(url, statusCode, msg);
-//                        //多了尾布局，因此至少是1
-//                        if (mAdapter.getItemCount() <= 1) {
-////                            rl_no_discovery_failure.setVisibility(View.VISIBLE);
-////                            rl_no_discovery.setVisibility(View.GONE);
-//                            ptl_refresh.setVisibility(View.GONE);
-//                            ptl_refresh.refreshComplete();
-//                        }
-//                    }
-//                }, 600 * 1000);
     }
 
     private void checkLoadMoreComplete(ArrayList<DisCovery> result) {
@@ -212,23 +156,25 @@ public class ResourceFragment extends BasicFragment {
     }
 
     private void freshResource() {
-//        networkRequest(CompanionApi.getCompanyArticleComment("1", "1", "1", "1"), new SimpleFastJsonCallback<DiscoveryResource>(DiscoveryResource.class,loading) {
-//            @Override
-//            public void onSuccess(String url, DiscoveryResource result) {
-//
-//            }
-//        });
 
         mPage = 0;
-        networkRequest(DisCoveryApi.getFindResource(String.valueOf(mPage)), new SimpleFastJsonCallback<ArrayList<DiscoveryResource>>(DiscoveryResource.class, loading) {
+        networkRequest(DisCoveryApi.getFindResource(String.valueOf(mPage)), new SimpleFastJsonCallback<DiscoveryResource>(DiscoveryResource.class, loading) {
             @Override
-            public void onSuccess(String url, ArrayList<DiscoveryResource> result) {
+            public void onSuccess(String url, DiscoveryResource result) {
                 cacheData(url, result);
-                if (result != null && result.size() > 0) {
-                    resous = result;
-                    resous.add(0, new DiscoveryResource());
-                    resous.add(1, new DiscoveryResource());
-                    mAdapter.replaceAll(result);
+                if (result != null) {
+                    FindResource top = result.getTop();
+                    List<FindResource> list = result.getList();
+                    top.setIs_recommend(true);
+                    top.setIs_top(true);
+                    resous.clear();
+                    resous.add(top);
+                    resous.addAll(list);
+
+//                    mAdapter = new ResourceAdapter(mActivity, resous,bannerAndTag);
+//                    rv_discovery.setAdapter(mAdapter);
+                    mAdapter.replaceAll(resous);
+//                    resous = null;
                     mPage++;
                     rv_discovery.loadMoreComplete();
                 } else {
@@ -239,13 +185,27 @@ public class ResourceFragment extends BasicFragment {
             }
         });
 
+        networkRequest(DisCoveryApi.getResouceTop(), new SimpleFastJsonCallback<ResourceBannerAndTag>(ResourceBannerAndTag.class, loading) {
+            @Override
+            public void onSuccess(String url, ResourceBannerAndTag result) {
+                cacheData(url, result);
+                if (result != null) {
+                    bannerAndTag = result;
+                } else {
+                    bannerAndTag = new ResourceBannerAndTag();
+                }
+//                mAdapter = new ResourceAdapter(mActivity, resous,bannerAndTag);
+//                rv_discovery.setAdapter(mAdapter);
+                mAdapter.setBannerAndTag(result);
+            }
+        });
 //        networkRequest();
 
 //        mPage = 0;
 //
 //        loadResous();
-        loadDrawables();
-        loadTags();
+        //loadDrawables();
+        //loadTags();
 //
 //        ptl_refresh.setVisibility(View.VISIBLE);
 //        mPage++;
@@ -256,23 +216,23 @@ public class ResourceFragment extends BasicFragment {
     }
 
 
-    private void loadTags() {
-        hotTags = new ArrayList<>();
-        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-    }
+//    private void loadTags() {
+//        hotTags = new ArrayList<>();
+//        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+//        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
+//        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
+//        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+//        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
+//        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
+//    }
 
-    private void loadDrawables() {
-        drawables = new ArrayList<>();
-        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-        drawables.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-        drawables.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-    }
+//    private void loadDrawables() {
+//        drawables = new ArrayList<>();
+//        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+//        drawables.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
+//        drawables.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
+//        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
+//    }
 
 
     /**

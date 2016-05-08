@@ -10,8 +10,13 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.model.DiscoveryResource;
+import com.putao.wd.model.FindResource;
+import com.putao.wd.model.ResourceBanner;
+import com.putao.wd.model.ResourceBannerAndTag;
+import com.putao.wd.model.ResourceTag;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -28,30 +33,30 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/5/4.
  */
-public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicViewHolder> {
+public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHolder> {
     private static final int KEY_HEAD = 0XFF;// 头部 轮播图
 
     private static final int KEY_STICK = 0XFD;// 置顶文章
     private static final int KEY_RESOURCE = 0XFC;//文章条目
     private static final int KEY_HOT_TAG = 0XFA;//文章标签
 
-    private List<String> drawables;
-    private List<String> hotTags;
+    private List<ResourceBanner> banners;
+    private List<ResourceTag> hotTags;
     private ImageHolderView mImageHolderView;
 
-    public ResourceAdapter(Context context, List<DiscoveryResource> resous, List<String> drawables, List<String> hotTags) {
+    public ResourceAdapter(Context context, List<FindResource> resous) {
         super(context, resous);
-        this.drawables = drawables;
-        this.hotTags = hotTags;
+//        this.banners = bannerAndTag.getBanner();
+//        this.hotTags = bannerAndTag.getTag();
     }
 
     @Override
     public int getMultiItemViewType(int position) {
         if (position == 0) {
             return KEY_HEAD;
-        }else if(position == 1){
+        } else if (position == 1) {
             return KEY_HOT_TAG;
-        }else if (mItems.get(position).is_recommend()) {
+        } else if (mItems.get(position).is_recommend()) {
             return KEY_STICK;
         } else {
             return KEY_RESOURCE;
@@ -62,9 +67,9 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
     public int getLayoutId(int viewType) {
         if (KEY_HEAD == viewType) {
             return R.layout.discovery_header;
-        }else if(KEY_HOT_TAG == viewType){
+        } else if (KEY_HOT_TAG == viewType) {
             return R.layout.discovery_hottag;
-        }else if (KEY_STICK == viewType) {
+        } else if (KEY_STICK == viewType) {
             return R.layout.discovery_stick;
         } else {
             return R.layout.discovery_resource;
@@ -76,15 +81,15 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
 
         if (KEY_HEAD == viewType) {
             return new ResourceAdapter.HeaderHolder(itemView);
-        }else if(KEY_HOT_TAG == viewType){
+        } else if (KEY_HOT_TAG == viewType) {
             return new ResourceAdapter.HotTagHolder(itemView);
-        }else {
+        } else {
             return new ResourceAdapter.ResourceHolder(itemView);
         }
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, DiscoveryResource resou, int position) {
+    public void onBindItem(BasicViewHolder holder, FindResource resou, int position) {
 
         if (position == 0) {
             final HeaderHolder headerHolder = (HeaderHolder) holder;
@@ -97,19 +102,19 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
                     public ImageHolderView createHolder() {
                         return new ImageHolderView();
                     }
-                }, drawables);/*.setPageTransformer(new CardsTransformer())*/
+                }, banners);/*.setPageTransformer(new CardsTransformer())*/
             }
             headerHolder.cb_banner.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("id","专题页");
+                    bundle.putString("id", "专题页");
                     bundle.putInt("po", headerHolder.cb_banner.getCurrentItem());
                     EventBusHelper.post(bundle, AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
                 }
             });
-        }else if(position == 1){
-            HotTagHolder hotTagHolder = (HotTagHolder)holder;
+        } else if (position == 1) {
+            HotTagHolder hotTagHolder = (HotTagHolder) holder;
 
             HotTagAdapter hotTagAdapter = new HotTagAdapter(context, hotTags);
             hotTagHolder.rv_discovery_hot_tag.setAdapter(hotTagAdapter);
@@ -158,9 +163,6 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
     }
 
 
-
-
-
     public static class HotTagHolder extends BasicViewHolder {
         @Bind(R.id.rv_discovery_hot_tag)
         BasicRecyclerView rv_discovery_hot_tag;
@@ -173,7 +175,7 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
     public static class HeaderHolder extends BasicViewHolder {
 
         @Bind(R.id.cb_banner)
-        ConvenientBanner<String> cb_banner;
+        ConvenientBanner<ResourceBanner> cb_banner;
 
         public HeaderHolder(View itemView) {
             super(itemView);
@@ -205,7 +207,7 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
     /**
      * 广告页适配器
      */
-    static class ImageHolderView implements Holder<String> {
+    static class ImageHolderView implements Holder<ResourceBanner> {
         private ImageDraweeView imageView;
 
         @Override
@@ -217,8 +219,14 @@ public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicVie
         }
 
         @Override
-        public void UpdateUI(Context context, int position, String data) {
-            imageView.setImageURL(data);
+        public void UpdateUI(Context context, int position, ResourceBanner data) {
+            imageView.setImageURL(data.getBanner());
         }
+    }
+
+    public void setBannerAndTag(ResourceBannerAndTag bannerAndTag) {
+        this.banners = bannerAndTag.getBanner();
+        this.hotTags = bannerAndTag.getTag();
+        notifyDataSetChanged();
     }
 }

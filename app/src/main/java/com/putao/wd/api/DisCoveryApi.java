@@ -26,6 +26,23 @@ public class DisCoveryApi {
     public static final String URL_RESOURCE_FIND = BASE_URL + "resources/resources";
 
     /**
+     * 顶部banner（轮播图）
+     */
+    public static final String URL_RESOURCE_BANNER = BASE_URL + "resources/banner";
+
+    /**
+     * 热门标签
+     */
+    public static final String URL_RESOURCE_HOT_TAG = BASE_URL + "resources/tag";
+
+    /**
+     * 资源头部（TOP）
+     */
+    private static final String URL_RESOURCE_TOP =  BASE_URL + "resources/top";
+
+
+
+    /**
      * 视频发现
      */
     public static Request getfindVideo(String page) {
@@ -45,7 +62,26 @@ public class DisCoveryApi {
                 .build(RequestMethod.POST,URL_RESOURCE_FIND);
     }
 
-//    public static Request getHotTag(){
-//
-//    }
+    /**
+     * 轮播图
+     * @return
+     */
+    public static Request getResourceBanner(){
+        return PTWDRequestHelper.find()
+                .build(RequestMethod.POST,URL_RESOURCE_BANNER);
+    }
+
+    /**
+     * 热门标签
+     * @return
+     */
+    public static Request getHotTag(){
+        return PTWDRequestHelper.find()
+                .build(RequestMethod.POST,URL_RESOURCE_HOT_TAG);
+    }
+
+    public static Request getResouceTop(){
+        return PTWDRequestHelper.find()
+                .build(RequestMethod.POST,URL_RESOURCE_TOP);
+    }
 }
