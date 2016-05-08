@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.SubscribeList;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
@@ -18,11 +19,11 @@ import butterknife.Bind;
  * 订阅号列表适配器
  * Created by Administrator on 2016/5/5.
  */
-public class SubscriptionNumberAdapter extends LoadMoreAdapter<Companion, SubscriptionNumberAdapter.SubscriptionViewHolder> {
+public class SubscriptionNumberAdapter extends LoadMoreAdapter<SubscribeList, SubscriptionNumberAdapter.SubscriptionViewHolder> {
 
 
-    public SubscriptionNumberAdapter(Context context, List<Companion> companions) {
-        super(context, companions);
+    public SubscriptionNumberAdapter(Context context, List<SubscribeList> subscribeLists) {
+        super(context, subscribeLists);
     }
 
     @Override
@@ -36,8 +37,10 @@ public class SubscriptionNumberAdapter extends LoadMoreAdapter<Companion, Subscr
     }
 
     @Override
-    public void onBindItem(SubscriptionViewHolder holder, Companion companion, int position) {
-        holder.tv_title.setText("订阅号名称限制一行" + position);
+    public void onBindItem(SubscriptionViewHolder holder, SubscribeList subscribeLists, int position) {
+        holder.tv_title.setText(subscribeLists.getService_name());
+        holder.iv_icon.setImageURL(subscribeLists.getService_icon());
+        holder.tv_content.setText(subscribeLists.getService_description());
     }
 
     static class SubscriptionViewHolder extends BasicViewHolder {

@@ -4,11 +4,12 @@ import android.os.Bundle;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.Companion;
+import com.putao.wd.model.SubscribeList;
 import com.putao.wd.pt_companion.adapter.SubscriptionNumberAdapter;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
-import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
@@ -29,6 +30,8 @@ public class SubscriptionNumberActivity extends PTWDActivity {
     LoadMoreRecyclerView rv_content;
 
     private SubscriptionNumberAdapter adapter;
+    protected ArrayList<SubscribeList> subscribeLists;
+    private int mPage = 1;
 
 
     @Override
@@ -39,21 +42,11 @@ public class SubscriptionNumberActivity extends PTWDActivity {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        ArrayList<Companion> companions = new ArrayList<>();
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        companions.add(new Companion());
-        adapter = new SubscriptionNumberAdapter(mContext, companions);
+        adapter = new SubscriptionNumberAdapter(mContext, null);
         rv_content.setAdapter(adapter);
 
         addListener();
+        getSubscribe();
     }
 
     //点击事件
@@ -66,6 +59,57 @@ public class SubscriptionNumberActivity extends PTWDActivity {
                 startActivity(OfficialAccountsActivity.class, bundle);
             }
         });
+
+        rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                networkRequest(CompanionApi.getSubscribeList(String.valueOf(mPage)), new SimpleFastJsonCallback<ArrayList<SubscribeList>>(SubscribeList.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<SubscribeList> result) {
+                        if (result != null && result.size() > 0) {
+                            subscribeLists = result;
+                            adapter.addAll(result);
+                        }
+                        rv_content.loadMoreComplete();
+                        checkLoadMoreComplete(result);
+                        loading.dismiss();
+                    }
+                });
+            }
+        });
+
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getSubscribe();
+            }
+        });
+    }
+
+
+    private void getSubscribe() {
+        mPage = 1;
+        networkRequest(CompanionApi.getSubscribeList(String.valueOf(mPage)),
+                new SimpleFastJsonCallback<ArrayList<SubscribeList>>(SubscribeList.class, loading) {
+                    @Override
+                    public void onSuccess(String url, ArrayList<SubscribeList> result) {
+                        if (result != null && result.size() > 0) {
+                            subscribeLists = result;
+                            adapter.replaceAll(result);
+                            mPage++;
+                            rv_content.loadMoreComplete();
+                        }
+                        checkLoadMoreComplete(result);
+                        ptl_refresh.refreshComplete();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    private void checkLoadMoreComplete(ArrayList<SubscribeList> result) {
+        if (result == null)
+            rv_content.noMoreLoading();
+        else mPage++;
     }
 
     @Override

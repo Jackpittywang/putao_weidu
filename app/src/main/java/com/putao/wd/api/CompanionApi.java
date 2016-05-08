@@ -4,6 +4,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.base.PTWDRequestHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.request.RequestMethod;
+import com.sunnybear.library.view.picker.popup.Popup;
 
 /**
  * 创造接口
@@ -475,5 +476,19 @@ public class CompanionApi {
         return PTWDRequestHelper.start()
                 .addParam(SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_GET_PUBLIC_MESSAGE);
+    }
+
+    /**
+     * 订阅号列表
+     */
+    private static final String URL_COMPANIN_SUBSCRIBE_LIST = BASE_URL + "/subscribe/lists";
+
+    /**
+     * 获取订阅号列表信息
+     */
+    public static Request getSubscribeList(String page) {
+        return PTWDRequestHelper.find()
+                .addParam(page, page)
+                .build(RequestMethod.POST, URL_COMPANIN_SUBSCRIBE_LIST);
     }
 }
