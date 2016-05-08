@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_resource"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="15dp"
+    >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -19,10 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingTop="15dp"
             android:lineSpacingExtra="@dimen/distance_5dp"
             android:maxLines="2"
             android:paddingBottom="@dimen/distance_10dp"
-            android:paddingTop="@dimen/distance_10dp"
             android:text="这里显示的是这篇文章的标题"
             android:textColor="@color/color_313131"
             android:textSize="18sp" />
@@ -44,7 +48,12 @@
                 android:text="置顶"
                 android:textColor="@color/text_color_ED5564"
                 android:textSize="@dimen/text_size_12sp"
-                android:visibility="gone"/>
+                android:gravity="center"
+                android:background="@drawable/discover_red_tag"
+                android:enabled="false"
+                android:clickable="false"
+                android:longClickable="false"
+                />
 
             <TextView
                 android:id="@+id/tv_tag1"
@@ -55,7 +64,12 @@
                 android:paddingRight="@dimen/distance_5dp"
                 android:text="标签名1"
                 android:textColor="@color/color_C2C2C2"
-                android:textSize="@dimen/text_size_12sp" />
+                android:textSize="@dimen/text_size_12sp"
+                android:gravity="center"
+                android:background="@drawable/discover_nor_tag"
+                android:enabled="false"
+                android:clickable="false"
+                android:longClickable="false"/>
 
             <TextView
                 android:id="@+id/tv_tag2"
@@ -66,7 +80,12 @@
                 android:paddingRight="@dimen/distance_5dp"
                 android:text="标签名2"
                 android:textColor="@color/color_C2C2C2"
-                android:textSize="@dimen/text_size_12sp" />
+                android:textSize="@dimen/text_size_12sp"
+                android:gravity="center"
+                android:background="@drawable/discover_nor_tag"
+                android:enabled="false"
+                android:clickable="false"
+                android:longClickable="false"/>
 
             <TextView
                 android:id="@+id/tv_tag3"
@@ -77,7 +96,12 @@
                 android:paddingRight="@dimen/distance_5dp"
                 android:text="标签名3"
                 android:textColor="@color/color_C2C2C2"
-                android:textSize="@dimen/text_size_12sp" />
+                android:textSize="@dimen/text_size_12sp"
+                android:gravity="center"
+                android:background="@drawable/discover_nor_tag"
+                android:enabled="false"
+                android:clickable="false"
+                android:longClickable="false"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -86,8 +110,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
-
         android:scaleType="centerInside"
+        android:layout_marginTop="15dp"
         auto:placeholderImageScaleType="centerCrop" />
 
 </LinearLayout>

@@ -21,6 +21,11 @@ public class DisCoveryApi {
     public static final String URL_VIDEO_FIND = BASE_URL + "find";
 
     /**
+     * 找资源
+     */
+    public static final String URL_RESOURCE_FIND = BASE_URL + "resources/resources";
+
+    /**
      * 视频发现
      */
     public static Request getfindVideo(String page) {
@@ -28,4 +33,19 @@ public class DisCoveryApi {
                 .addParam(DISCOVERY_PAGE, page)
                 .build(RequestMethod.POST, URL_VIDEO_FIND);
     }
+
+    /**
+     * 找资源
+     * @param page
+     * @return
+     */
+    public static Request getFindResource(String page){
+        return PTWDRequestHelper.find()
+                .addParam(DISCOVERY_PAGE ,page)
+                .build(RequestMethod.POST,URL_RESOURCE_FIND);
+    }
+
+//    public static Request getHotTag(){
+//
+//    }
 }

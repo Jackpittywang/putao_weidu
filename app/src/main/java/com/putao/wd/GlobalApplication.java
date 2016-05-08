@@ -185,8 +185,8 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected boolean isDebug() {
-//        return true;
-        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+        return true;
+   //     return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override

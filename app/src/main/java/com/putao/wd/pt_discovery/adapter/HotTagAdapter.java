@@ -3,6 +3,7 @@ package com.putao.wd.pt_discovery.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -36,11 +37,14 @@ public class HotTagAdapter extends BasicAdapter<String,HotTagAdapter.HotHolder> 
     @Override
     public void onBindItem(HotHolder holder, String str, int position) {
         holder.idv_tag.setImageURL(str);
+        holder.tv_hot_tag.setText(position/2 == 0 ? "主题":"活动");
     }
 
     static class HotHolder extends BasicViewHolder{
         @Bind(R.id.idv_tag)
         ImageDraweeView idv_tag;
+        @Bind(R.id.tv_hot_tag)
+        TextView tv_hot_tag;
         public HotHolder(View itemView) {
             super(itemView);
         }

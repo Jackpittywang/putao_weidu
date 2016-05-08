@@ -1,25 +1,25 @@
 package com.putao.wd.pt_discovery.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
-import com.putao.wd.model.Resou;
+import com.putao.wd.account.AccountConstants;
+import com.putao.wd.model.DiscoveryResource;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
-import com.sunnybear.library.view.recycler.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.sunnybear.library.view.viewpager.banner.ConvenientBanner;
 import com.sunnybear.library.view.viewpager.banner.holder.CBViewHolderCreator;
 import com.sunnybear.library.view.viewpager.banner.holder.Holder;
-import com.sunnybear.library.view.viewpager.transformer.CardsTransformer;
+import com.sunnybear.library.view.viewpager.banner.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -28,16 +28,18 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/5/4.
  */
-public class ResourceAdapter extends LoadMoreAdapter<Resou, BasicViewHolder> implements StickyRecyclerHeadersAdapter<ResourceAdapter.HotTagHolder> {
+public class ResourceAdapter extends LoadMoreAdapter<DiscoveryResource, BasicViewHolder> {
     private static final int KEY_HEAD = 0XFF;// 头部 轮播图
 
     private static final int KEY_STICK = 0XFD;// 置顶文章
     private static final int KEY_RESOURCE = 0XFC;//文章条目
+    private static final int KEY_HOT_TAG = 0XFA;//文章标签
 
     private List<String> drawables;
     private List<String> hotTags;
+    private ImageHolderView mImageHolderView;
 
-    public ResourceAdapter(Context context, List<Resou> resous, List<String> drawables, List<String> hotTags) {
+    public ResourceAdapter(Context context, List<DiscoveryResource> resous, List<String> drawables, List<String> hotTags) {
         super(context, resous);
         this.drawables = drawables;
         this.hotTags = hotTags;
@@ -47,7 +49,9 @@ public class ResourceAdapter extends LoadMoreAdapter<Resou, BasicViewHolder> imp
     public int getMultiItemViewType(int position) {
         if (position == 0) {
             return KEY_HEAD;
-        } else if (mItems.get(position).isBig) {
+        }else if(position == 1){
+            return KEY_HOT_TAG;
+        }else if (mItems.get(position).is_recommend()) {
             return KEY_STICK;
         } else {
             return KEY_RESOURCE;
@@ -58,7 +62,9 @@ public class ResourceAdapter extends LoadMoreAdapter<Resou, BasicViewHolder> imp
     public int getLayoutId(int viewType) {
         if (KEY_HEAD == viewType) {
             return R.layout.discovery_header;
-        } else if (KEY_STICK == viewType) {
+        }else if(KEY_HOT_TAG == viewType){
+            return R.layout.discovery_hottag;
+        }else if (KEY_STICK == viewType) {
             return R.layout.discovery_stick;
         } else {
             return R.layout.discovery_resource;
@@ -68,91 +74,92 @@ public class ResourceAdapter extends LoadMoreAdapter<Resou, BasicViewHolder> imp
     @Override
     public BasicViewHolder getViewHolder(View itemView, int viewType) {
 
-        if (KEY_HEAD == viewType){
+        if (KEY_HEAD == viewType) {
             return new ResourceAdapter.HeaderHolder(itemView);
-        }
-        else{
+        }else if(KEY_HOT_TAG == viewType){
+            return new ResourceAdapter.HotTagHolder(itemView);
+        }else {
             return new ResourceAdapter.ResourceHolder(itemView);
         }
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, Resou resou, int position) {
+    public void onBindItem(BasicViewHolder holder, DiscoveryResource resou, int position) {
 
         if (position == 0) {
+            final HeaderHolder headerHolder = (HeaderHolder) holder;
+            if (null == mImageHolderView) {
+                mImageHolderView = new ImageHolderView();
+                // EventBusHelper.post(headerHolder, AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
 
-            HeaderHolder headerHolder = (HeaderHolder) holder;
-            // EventBusHelper.post(headerHolder, AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
-
-            headerHolder.cb_banner.setPages(new CBViewHolderCreator<ImageHolderView>() {
+                headerHolder.cb_banner.setPages(new CBViewHolderCreator<ImageHolderView>() {
+                    @Override
+                    public ImageHolderView createHolder() {
+                        return new ImageHolderView();
+                    }
+                }, drawables);/*.setPageTransformer(new CardsTransformer())*/
+            }
+            headerHolder.cb_banner.setOnItemClickListener(new OnItemClickListener() {
                 @Override
-                public ImageHolderView createHolder() {
-                    return new ImageHolderView();
+                public void onItemClick(int position) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id","专题页");
+                    bundle.putInt("po", headerHolder.cb_banner.getCurrentItem());
+                    EventBusHelper.post(bundle, AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
                 }
-            }, drawables).setPageTransformer(new CardsTransformer());
+            });
+        }else if(position == 1){
+            HotTagHolder hotTagHolder = (HotTagHolder)holder;
 
+            HotTagAdapter hotTagAdapter = new HotTagAdapter(context, hotTags);
+            hotTagHolder.rv_discovery_hot_tag.setAdapter(hotTagAdapter);
         } else {
             ResourceHolder resHolder = (ResourceHolder) holder;
+            resHolder.iv_discovery_pic.setImageURL(resou.getIcon());
+            resHolder.tv_discovery_title.setText(resou.getTitle());
+            resHolder.tv_show_top.setVisibility(resou.is_top() ? View.VISIBLE : View.GONE);
 
-            resHolder.iv_discovery_pic.setImageURL(resou.pic);
-            resHolder.tv_discovery_title.setText(resou.title);
-            resHolder.tv_show_top.setVisibility(resou.isTop ? View.VISIBLE : View.GONE);
-
-            int length = resou.tags.size();
-
-            switch (length) {
-                case 0:
-                    resHolder.tv_tag1.setVisibility(View.GONE);
-                    resHolder.tv_tag2.setVisibility(View.GONE);
-                    resHolder.tv_tag3.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    resHolder.tv_tag1.setVisibility(View.VISIBLE);
-                    resHolder.tv_tag2.setVisibility(View.GONE);
-                    resHolder.tv_tag3.setVisibility(View.GONE);
-                    resHolder.tv_tag1.setText(resou.tags.get(0));
-                    break;
-                case 2:
-                    resHolder.tv_tag1.setVisibility(View.VISIBLE);
-                    resHolder.tv_tag2.setVisibility(View.VISIBLE);
-                    resHolder.tv_tag3.setVisibility(View.GONE);
-                    resHolder.tv_tag1.setText(resou.tags.get(0));
-                    resHolder.tv_tag2.setText(resou.tags.get(1));
-                    break;
-                case 3:
-                    resHolder.tv_tag1.setVisibility(View.VISIBLE);
-                    resHolder.tv_tag2.setVisibility(View.VISIBLE);
-                    resHolder.tv_tag3.setVisibility(View.VISIBLE);
-                    resHolder.tv_tag1.setText(resou.tags.get(0));
-                    resHolder.tv_tag2.setText(resou.tags.get(1));
-                    resHolder.tv_tag3.setText(resou.tags.get(2));
-                    break;
-            }
+            resHolder.tv_tag1.setText(resou.getTag());
+            resHolder.tv_tag2.setVisibility(View.GONE);
+            resHolder.tv_tag3.setVisibility(View.GONE);
+//            int length = resou.tags.size();
+//
+//            int length =1;
+//
+//            switch (length) {
+//                case 0:
+//                    resHolder.tv_tag1.setVisibility(View.GONE);
+//                    resHolder.tv_tag2.setVisibility(View.GONE);
+//                    resHolder.tv_tag3.setVisibility(View.GONE);
+//                    break;
+//                case 1:
+//                    resHolder.tv_tag1.setVisibility(View.VISIBLE);
+//                    resHolder.tv_tag2.setVisibility(View.GONE);
+//                    resHolder.tv_tag3.setVisibility(View.GONE);
+//                    resHolder.tv_tag1.setText(resou.tags.get(0));
+//                    break;
+//                case 2:
+//                    resHolder.tv_tag1.setVisibility(View.VISIBLE);
+//                    resHolder.tv_tag2.setVisibility(View.VISIBLE);
+//                    resHolder.tv_tag3.setVisibility(View.GONE);
+//                    resHolder.tv_tag1.setText(resou.tags.get(0));
+//                    resHolder.tv_tag2.setText(resou.tags.get(1));
+//                    break;
+//                case 3:
+//                    resHolder.tv_tag1.setVisibility(View.VISIBLE);
+//                    resHolder.tv_tag2.setVisibility(View.VISIBLE);
+//                    resHolder.tv_tag3.setVisibility(View.VISIBLE);
+//                    resHolder.tv_tag1.setText(resou.tags.get(0));
+//                    resHolder.tv_tag2.setText(resou.tags.get(1));
+//                    resHolder.tv_tag3.setText(resou.tags.get(2));
+//                    break;
+//            }
         }
     }
 
-    @Override
-    public long getHeaderId(int position) {
-        return position > 0 ? 0 : -1;
-    }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.discovery_hottag, parent, false);
-        return new ResourceAdapter.HotTagHolder(view);
-    }
 
-    @Override
-    public void onBindHeaderViewHolder(HotTagHolder holder, int position) {
-        //设置布局管理器
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        HotTagAdapter hotTagAdapter = new HotTagAdapter(context, hotTags);
-        holder.rv_discovery_hot_tag.setAdapter(hotTagAdapter);
-
-        holder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
-    }
 
     public static class HotTagHolder extends BasicViewHolder {
         @Bind(R.id.rv_discovery_hot_tag)
@@ -175,6 +182,8 @@ public class ResourceAdapter extends LoadMoreAdapter<Resou, BasicViewHolder> imp
 
     public static class ResourceHolder extends BasicViewHolder {
 
+        @Bind(R.id.ll_resource)
+        LinearLayout ll_resource;
         @Bind(R.id.iv_discovery_pic)
         ImageDraweeView iv_discovery_pic;
         @Bind(R.id.tv_discovery_title)

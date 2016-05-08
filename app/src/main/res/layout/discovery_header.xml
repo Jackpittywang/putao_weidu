@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:background="@color/text_color_gray">
+    android:background="@color/white"
+    android:layout_height="176dp">
+
 
 
     <!--<LinearLayout-->
@@ -19,27 +20,31 @@
 
     <com.sunnybear.library.view.viewpager.banner.ConvenientBanner
         android:id="@+id/cb_banner"
+        android:layout_above="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_above="@+id/tv_discovery_hottag"
-        android:background="@color/text_color_gray"
-        auto:align="CENTER_HORIZONTAL"
+        android:layout_height="150dp"
+        auto:align="ALIGN_PARENT_RIGHT"
         auto:autoTurningTime="2"
+        android:background="@color/text_color_gray"
         auto:fillDrawable="@drawable/icon_logistics_flow_old"
         auto:pageDrawable="@drawable/icon_logistics_flow_latest" />
-
+    <View
+        android:id="@+id/view"
+        android:layout_above="@+id/tv_discovery_hottag"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_color_gray"/>
     <TextView
         android:id="@+id/tv_discovery_hottag"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="26dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="0.5dp"
-        android:background="@color/white"
         android:drawableLeft="@drawable/icon_16_34"
         android:drawablePadding="@dimen/distance_5dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
+        android:gravity="bottom"
         android:text="热门标签"
         android:textColor="@color/color_313131"
-        android:textSize="@dimen/text_size_16sp" />
+        android:background="@color/white"
+        android:textSize="@dimen/text_size_16sp"
+        android:paddingLeft="15dp"/>
 </RelativeLayout>

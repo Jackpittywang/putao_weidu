@@ -81,6 +81,9 @@ public final class AccountConstants {
         public static final String EVENT_REFRESH_ME_TAB = "event_refresh_me_tab";
         public static final String EVENT_DELETE_COMPANION = "event_delete_companion";
         public static final String EVENT_DISCOVERY_CAROUSEL = "event_discovery_Carousel";
+        public static final String EVENT_DISCOVERY_HOT_TAG = "event_discovery_hot_tag";
+        public static final String EVENT_DISCOVERY_RESOURCE = "event_discovery_resource";
+
     }
 
     /**
