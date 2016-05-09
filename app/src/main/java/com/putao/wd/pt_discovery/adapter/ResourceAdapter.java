@@ -15,6 +15,7 @@ import com.putao.wd.model.ResourceBanner;
 import com.putao.wd.model.ResourceBannerAndTag;
 import com.putao.wd.model.ResourceTag;
 import com.putao.wd.pt_discovery.CampaignActivity;
+import com.putao.wd.pt_discovery.LabelActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.ResourcesUtils;
@@ -122,10 +123,16 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
 
                 @Override
                 public void onItemClick(ResourceTag tag, int position) {
-                    EventBusHelper.post(tag.getDisplay_type(), AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(CampaignActivity.TAGID, hotTags.get(position).getId());
-                    context.startActivity(CampaignActivity.class, bundle);
+                    if (hotTags.get(position).getDisplay_type().equals("1")) {
+                        bundle.putSerializable(CampaignActivity.TAGID, hotTags.get(position).getId());
+                        EventBusHelper.post(tag.getDisplay_type(), AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
+                        context.startActivity(CampaignActivity.class, bundle);
+                    } else {
+                        bundle.putSerializable(LabelActivity.TAG_NAME, hotTags.get(position).getTag_name());
+                        bundle.putSerializable(LabelActivity.TAGID, hotTags.get(position).getId());
+                        context.startActivity(LabelActivity.class, bundle);
+                    }
                 }
             });
         } else {

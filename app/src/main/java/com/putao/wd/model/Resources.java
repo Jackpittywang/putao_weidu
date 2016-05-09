@@ -11,7 +11,7 @@ public class Resources implements Serializable {
     private String icon;//文章icon
     private String tag;//所属标签
     private String sid;//所属服务号/订阅号
-    private String linke_url;//跳转链接
+    private String link_url;//跳转链接
 
     public String getId() {
         return id;
@@ -53,11 +53,11 @@ public class Resources implements Serializable {
         this.sid = sid;
     }
 
-    public String getLinke_url() {
-        return linke_url;
+    public String getLink_url() {
+        return link_url;
     }
 
-    public void setLinke_url(String linke_url) {
-        this.linke_url = linke_url;
+    public void setLink_url(String link_url) {
+        this.link_url = link_url;
     }
 }

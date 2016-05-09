@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.ServiceMessageContent;
+import com.putao.wd.model.ServiceMessageList;
+import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
@@ -19,11 +22,11 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/5/5.
  */
-public class SubribeAdapter extends BasicAdapter<Companion, SubribeAdapter.SburibeViewholder> {
+public class SubribeAdapter extends BasicAdapter<ServiceMessageList, SubribeAdapter.SburibeViewholder> {
 
 
-    public SubribeAdapter(Context context, List<Companion> companions) {
-        super(context, companions);
+    public SubribeAdapter(Context context, List<ServiceMessageList> messageLists) {
+        super(context, messageLists);
     }
 
     @Override
@@ -37,9 +40,15 @@ public class SubribeAdapter extends BasicAdapter<Companion, SubribeAdapter.Sburi
     }
 
     @Override
-    public void onBindItem(SburibeViewholder holder, Companion companion, int position) {
-        holder.tv_title.setText("幼升小全方位" + position);
-        holder.tv_time.setText("刚刚");
+    public void onBindItem(SburibeViewholder holder, ServiceMessageList messageLists, int position) {
+        ServiceMessageContent serviceMessageContent = messageLists.getContent_lists().get(0);
+        holder.tv_title.setText(serviceMessageContent.getTitle());
+        holder.iv_icon.setImageURL(serviceMessageContent.getCover_pic());
+        holder.tv_intro.setText(serviceMessageContent.getSub_title());
+        String date = "";
+        date = DateUtils.timeCalculate(messageLists.getRelease_time());
+        holder.tv_time.setVisibility(View.VISIBLE);
+        holder.tv_time.setText(date);
     }
 
     static class SburibeViewholder extends BasicViewHolder {

@@ -491,4 +491,18 @@ public class CompanionApi {
                 .addParam(page, page)
                 .build(RequestMethod.POST, URL_COMPANIN_SUBSCRIBE_LIST);
     }
+
+    /**
+     * 关注服务号
+     */
+    private static final String URL_COMPAIN_SERVICE_RELATION = BASE_URL + "service/relation";
+
+    /**
+     * 关注服务号
+     */
+    public static Request getServiceRelation(String service_id) {
+        return PTWDRequestHelper.start()
+                .addParam(SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_COMPAIN_SERVICE_RELATION);
+    }
 }

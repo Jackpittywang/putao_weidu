@@ -17,6 +17,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/iv_icon"
             android:lines="2"
             android:text="这是显示的是列表标题,限制两行"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
             android:background="@drawable/tv_get_label_shape"
-            android:padding="5dp"
+            android:padding="3dp"
             android:text="标签一"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_12sp" />
@@ -43,7 +44,7 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/tv_labelOne"
             android:background="@drawable/comment_shape"
-            android:padding="5dp"
+            android:padding="3dp"
             android:text="标签二"
             android:textSize="@dimen/text_size_12sp" />
 
@@ -54,7 +55,7 @@
             android:layout_below="@+id/tv_title"
             android:layout_toRightOf="@+id/tv_labelSecond"
             android:background="@drawable/comment_shape"
-            android:padding="5dp"
+            android:padding="3dp"
             android:text="标签三"
             android:textSize="@dimen/text_size_12sp" />
 

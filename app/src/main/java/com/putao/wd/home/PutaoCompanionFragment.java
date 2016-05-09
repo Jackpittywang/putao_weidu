@@ -216,13 +216,16 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
         }*/
-        if (1 == companion.getIs_relation()) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+//        if (1 == companion.getIs_relation()) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
            /* ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
             notDownloadIds.removeAll(notDownloadIds);
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
+        if (companion.getService_type() == 0) {
+            startActivity(PutaoSubcribeActivity.class, bundle);
+        } else {
             companion.setIsShowRed(false);
             boolean isShowTabDot = false;
             for (Companion compan : mCompanion) {
@@ -233,10 +236,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB);
             mCompanionAdapter.notifyItemChanged(position);
             startActivity(GameDetailListActivity.class, bundle);
-        } else {
-            startActivity(PutaoSubcribeActivity.class);
-//            startActivity(CaptureActivity.class);
         }
+//        } else {
+////            startActivity(CaptureActivity.class);
+//        }
     }
 
     @OnClick(R.id.btn_relevance_device)
@@ -256,7 +259,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (NetManager.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
-                    initData();
+//                    initData();
+                    startActivity(PutaoSubcribeActivity.class);
                 break;
         }
     }

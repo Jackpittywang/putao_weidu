@@ -113,7 +113,8 @@ public class GlobalApplication extends BasicApplication {
         ImageLoaderUtil.initImageLoader(this);
 
 
-        GPushService.startGPushService(this, AppUtils.getDeviceId(this), "15");
+        // 启动gpush service
+        GPushService.startGPushService(this, AppUtils.getDeviceId(this), app_id);
         /*CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
         dataBaseManager.insertFixDownload("8003", "343");*/
 //        dataBaseManager.insertFixDownload("6000", "125");

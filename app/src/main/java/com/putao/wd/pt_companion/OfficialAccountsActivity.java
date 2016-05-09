@@ -60,6 +60,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private String mServiceName;
     private SelectPopupWindow mSelectPopupWindow;
     private boolean isSubscribe;
+    private SubscribeList subscribeList;
+    private Companion companion;
 
     @Override
     protected int getLayoutId() {
@@ -70,40 +72,14 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
-        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) && AccountHelper.isLogin()) {
-            navigation_bar.getRightView().setVisibility(View.VISIBLE);
-            mSelectPopupWindow = new SelectPopupWindow(mContext) {
-                @Override
-                public void onFirstClick(View v) {//清除内容
-                    YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
-                    showDialog();
-                    tv_dialog.setText("将清空所有历史内容");
-                    tv_cancel.setText("清空内容");
-                    tv_no_cancel.setText("取消");
-                }
-
-                @Override
-                public void onSecondClick(View v) {//取消关联
-                    YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
-                    showDialog();
-                    tv_dialog.setText(isSubscribe ? "取消订阅后后，所有信息将会清空。" : "取消关联产品后，所有信息将会清空。");
-                    tv_cancel.setText("确定取消");
-                    tv_no_cancel.setText("暂不取消");
-                    tv_cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            cancelServicce(mServiceId);
-                        }
-                    });
-                }
-            };
-            tv_relation_companion.setText("进入");
-        } else {
-            navigation_bar.getRightView().setVisibility(View.GONE);
-            tv_relation_companion.setText("关联产品");
-        }
         if (isSubscribe) {
-            SubscribeList subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+            subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+            if (subscribeList.is_relation()) {
+                isSubscribeCoampin();
+            } else {
+                navigation_bar.getRightView().setVisibility(View.GONE);
+                tv_relation_companion.setText("立即订阅");
+            }
             if (subscribeList == null) return;
             setMainTitle(subscribeList.getService_name());
             tv_official_title.setText(subscribeList.getService_name());
@@ -111,12 +87,18 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             tv_recommend.setText(subscribeList.getService_description());
             mServiceId = subscribeList.getService_id();
             mServiceName = subscribeList.getService_name();
-            if (subscribeList.is_relation()) {
+            if (subscribeList.is_unbunding()) {
                 tv_relation_companion.setVisibility(View.GONE);
                 navigation_bar.getRightView().setVisibility(View.GONE);
             }
         } else {
-            Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+            companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+            if (companion.getIs_relation() == 1) {
+                isSubscribeCoampin();
+            } else {
+                navigation_bar.getRightView().setVisibility(View.GONE);
+                tv_relation_companion.setText("关联产品");
+            }
             if (companion == null) return;
             setMainTitle(companion.getService_name());
             tv_official_title.setText(companion.getService_name());
@@ -129,6 +111,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 navigation_bar.getRightView().setVisibility(View.GONE);
             }
         }
+
         addListener();
     }
 
@@ -136,7 +119,19 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         tv_relation_companion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (isSubscribe) {//订阅号（立即订阅)
+                    if (subscribeList.is_relation()) {
+                        finish();
+                    } else {//关联产品
+
+                    }
+                } else {//服务号（关联产品）
+                    if (companion.getIs_relation() == 1) {
+                        finish();
+                    } else {
+
+                    }
+                }
             }
         });
         //查看历史文章
@@ -170,16 +165,18 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 mDialog.dismiss();
             }
         });
-//
-//        view_custom.findViewById(R.id.cancel_associate).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cancelServicce(mServiceId);
-//            }
-//        });
+
         mDialog = builder.show();
         mDialog.show();
     }
+//
+//    /**
+//     * 关注服务号
+//     */
+//    private void correlationService(String service_id) {
+//        networkRequest(CompanionApi.getServiceRelation(service_id), new SimpleFastJsonCallback<>() {
+//        });
+//    }
 
     /**
      * 取消绑定服务号
@@ -262,5 +259,39 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         mSelectPopupWindow.tv_first.setText("清除内容");
         mSelectPopupWindow.tv_second.setText("取消关联");
         mSelectPopupWindow.tv_second.setTextColor(0xffcc0000);
+    }
+
+
+    /**
+     * 是否已关联/订阅
+     */
+    private void isSubscribeCoampin() {
+        navigation_bar.getRightView().setVisibility(View.VISIBLE);
+        mSelectPopupWindow = new SelectPopupWindow(mContext) {
+            @Override
+            public void onFirstClick(View v) {//清除内容
+                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
+                showDialog();
+                tv_dialog.setText("将清空所有历史内容");
+                tv_cancel.setText("清空内容");
+                tv_no_cancel.setText("取消");
+            }
+
+            @Override
+            public void onSecondClick(View v) {//取消关联
+                YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
+                showDialog();
+                tv_dialog.setText(isSubscribe ? "取消订阅后后，所有信息将会清空。" : "取消关联产品后，所有信息将会清空。");
+                tv_cancel.setText("确定取消");
+                tv_no_cancel.setText("暂不取消");
+                tv_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cancelServicce(mServiceId);
+                    }
+                });
+            }
+        };
+        tv_relation_companion.setText("进入");
     }
 }

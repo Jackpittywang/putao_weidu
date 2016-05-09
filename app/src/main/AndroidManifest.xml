@@ -553,7 +553,7 @@
         </service>
         <!--通知推送-->
         <service
-            android:name=".push.GPushService"
+            android:name="com.putao.ptx.push.core.GPushService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
