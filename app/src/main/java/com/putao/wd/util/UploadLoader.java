@@ -101,7 +101,7 @@ public class UploadLoader {
 
     private void initUpload() {
         if (null == mHandlerThread) {
-            mHandlerThread = new HandlerThread("calculation");
+            mHandlerThread = new HandlerThread("upload");
             mHandlerThread.start();
             Looper looper = mHandlerThread.getLooper();
             mLoopHandler = new Handler(looper);

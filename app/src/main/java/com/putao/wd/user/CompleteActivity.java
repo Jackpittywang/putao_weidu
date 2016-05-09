@@ -276,8 +276,10 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                         @Override
                         protected void fileUploadSuccess(String filePath) {
                             Logger.d("fileUploadSuccess-----------" + filePath);
-                            if (mFilePath.equals(filePath))
+                            if (mFilePath.equals(filePath)) {
+                                EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
                                 loading.dismiss();
+                            }
                         }
                     });
                     break;
