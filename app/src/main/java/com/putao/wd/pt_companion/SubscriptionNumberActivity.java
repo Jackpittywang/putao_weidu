@@ -22,7 +22,7 @@ import butterknife.Bind;
  * 订阅号列表
  * Created by Administrator on 2016/5/5.
  */
-public class SubscriptionNumberActivity extends PTWDActivity {
+public class SubscriptionNumberActivity extends PTWDActivity implements OnItemClickListener<SubscribeList> {
 
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
@@ -51,14 +51,7 @@ public class SubscriptionNumberActivity extends PTWDActivity {
 
     //点击事件
     private void addListener() {
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Serializable serializable, int position) {
-                Bundle bundle = new Bundle();
-//                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, mCompanion);
-                startActivity(OfficialAccountsActivity.class, bundle);
-            }
-        });
+        adapter.setOnItemClickListener(this);
 
         rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
@@ -121,5 +114,13 @@ public class SubscriptionNumberActivity extends PTWDActivity {
     public void onLeftAction() {
         super.onLeftAction();
         finish();
+    }
+
+    @Override
+    public void onItemClick(SubscribeList subscribeList, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, subscribeList);
+        startActivity(OfficialAccountsActivity.class, bundle);
     }
 }

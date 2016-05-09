@@ -10,6 +10,7 @@ import com.sunnybear.library.model.http.request.RequestMethod;
  */
 public class DisCoveryApi {
     private static final String DISCOVERY_PAGE = "page";//页码
+    private static final String TAG_ID = "tag_id";//标签tag_id
 
     //    公网线上地址：api-weidu.putao.com ； admin-weidu.putao.com
 //    内网测试地址：api-weidu.ptdev.cn ; admin-weidu.ptdev.cn
@@ -38,8 +39,7 @@ public class DisCoveryApi {
     /**
      * 资源头部（TOP）
      */
-    private static final String URL_RESOURCE_TOP =  BASE_URL + "resources/top";
-
+    private static final String URL_RESOURCE_TOP = BASE_URL + "resources/top";
 
 
     /**
@@ -53,35 +53,57 @@ public class DisCoveryApi {
 
     /**
      * 找资源
+     *
      * @param page
      * @return
      */
-    public static Request getFindResource(String page){
+    public static Request getFindResource(String page) {
         return PTWDRequestHelper.find()
-                .addParam(DISCOVERY_PAGE ,page)
-                .build(RequestMethod.POST,URL_RESOURCE_FIND);
+                .addParam(DISCOVERY_PAGE, page)
+                .build(RequestMethod.POST, URL_RESOURCE_FIND);
     }
 
     /**
      * 轮播图
+     *
      * @return
      */
-    public static Request getResourceBanner(){
+    public static Request getResourceBanner() {
         return PTWDRequestHelper.find()
-                .build(RequestMethod.POST,URL_RESOURCE_BANNER);
+                .build(RequestMethod.POST, URL_RESOURCE_BANNER);
     }
 
     /**
      * 热门标签
+     *
      * @return
      */
-    public static Request getHotTag(){
+    public static Request getHotTag() {
         return PTWDRequestHelper.find()
-                .build(RequestMethod.POST,URL_RESOURCE_HOT_TAG);
+                .build(RequestMethod.POST, URL_RESOURCE_HOT_TAG);
     }
 
-    public static Request getResouceTop(){
+    public static Request getResouceTop() {
         return PTWDRequestHelper.find()
-                .build(RequestMethod.POST,URL_RESOURCE_TOP);
+                .build(RequestMethod.POST, URL_RESOURCE_TOP);
     }
+//    public static Request getHotTag(){
+//
+//    }
+
+
+    /**
+     * 获取tag相关文章列表(活动列表)
+     */
+    private static final String URL_DISCOVERY_TAG_RESOURCES = BASE_URL + "resources/tag/resources";
+
+    /**
+     * 获取tag相关文章列表（活动列表）
+     */
+    public static Request getTagResources(String tagId) {
+        return PTWDRequestHelper.find()
+                .addParam(TAG_ID, tagId)
+                .build(RequestMethod.POST, URL_DISCOVERY_TAG_RESOURCES);
+    }
+
 }

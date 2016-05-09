@@ -21,6 +21,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.SubscribeList;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -51,11 +52,6 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     LinearLayout ll_companion;
 
 
-//    @Bind(R.id.no_cancel)
-//    TextView no_cancel;
-//    @Bind(R.id.cancel_associate)
-//    TextView cancel_associate;
-
     private TextView tv_dialog, tv_no_cancel, tv_cancel;
     private View view_custom;
     private AlertDialog mDialog = null;
@@ -63,6 +59,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private String mServiceId;
     private String mServiceName;
     private SelectPopupWindow mSelectPopupWindow;
+    private boolean isSubscribe;
 
     @Override
     protected int getLayoutId() {
@@ -72,6 +69,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
+        isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
         if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) && AccountHelper.isLogin()) {
             navigation_bar.getRightView().setVisibility(View.VISIBLE);
             mSelectPopupWindow = new SelectPopupWindow(mContext) {
@@ -88,7 +86,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 public void onSecondClick(View v) {//取消关联
                     YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
                     showDialog();
-                    tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                    tv_dialog.setText(isSubscribe ? "取消订阅后后，所有信息将会清空。" : "取消关联产品后，所有信息将会清空。");
                     tv_cancel.setText("确定取消");
                     tv_no_cancel.setText("暂不取消");
                     tv_cancel.setOnClickListener(new View.OnClickListener() {
@@ -104,17 +102,32 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             navigation_bar.getRightView().setVisibility(View.GONE);
             tv_relation_companion.setText("关联产品");
         }
-        Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-        if (companion == null) return;
-        setMainTitle(companion.getService_name());
-        tv_official_title.setText(companion.getService_name());
-        iv_icon.setImageURL(companion.getService_icon());
-        tv_recommend.setText(companion.getService_description());
-        mServiceId = companion.getService_id();
-        mServiceName = companion.getService_name();
-        if (companion.is_unbunding()) {
-            tv_relation_companion.setVisibility(View.GONE);
-            navigation_bar.getRightView().setVisibility(View.GONE);
+        if (isSubscribe) {
+            SubscribeList subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+            if (subscribeList == null) return;
+            setMainTitle(subscribeList.getService_name());
+            tv_official_title.setText(subscribeList.getService_name());
+            iv_icon.setImageURL(subscribeList.getService_icon());
+            tv_recommend.setText(subscribeList.getService_description());
+            mServiceId = subscribeList.getService_id();
+            mServiceName = subscribeList.getService_name();
+            if (subscribeList.is_relation()) {
+                tv_relation_companion.setVisibility(View.GONE);
+                navigation_bar.getRightView().setVisibility(View.GONE);
+            }
+        } else {
+            Companion companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+            if (companion == null) return;
+            setMainTitle(companion.getService_name());
+            tv_official_title.setText(companion.getService_name());
+            iv_icon.setImageURL(companion.getService_icon());
+            tv_recommend.setText(companion.getService_description());
+            mServiceId = companion.getService_id();
+            mServiceName = companion.getService_name();
+            if (companion.is_unbunding()) {
+                tv_relation_companion.setVisibility(View.GONE);
+                navigation_bar.getRightView().setVisibility(View.GONE);
+            }
         }
         addListener();
     }
