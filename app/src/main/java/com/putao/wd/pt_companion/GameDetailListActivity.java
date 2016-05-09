@@ -1,13 +1,16 @@
 package com.putao.wd.pt_companion;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -26,16 +29,22 @@ import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+
+//import com.alibaba.fastjson.JSONArray;
+//import com.alibaba.fastjson.JSONObject;
 
 /**
  * 游戏详情页
@@ -47,7 +56,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
 
-    @Bind(R.id.ll_bottom_menus)
+   /* @Bind(R.id.ll_bottom_menus)
     LinearLayout ll_bottom_menus;
     @Bind(R.id.ll_comment_edit)
     LinearLayout ll_comment_edit;
@@ -60,7 +69,14 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Bind(R.id.vLineLeft)
     View vLineLeft;
     @Bind(R.id.vLineRight)
-    View vLineRight;
+    View vLineRight;*/
+
+    @Bind(R.id.layout_customemenu)
+    LinearLayout layout_customemenu;
+
+    @Bind(R.id.layout_custommenu)
+    LinearLayout layout_custommenu;
+
 
     private boolean isLoadMore = false;
     private GameDetailAdapter mGameDetailAdapter;
@@ -71,7 +87,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private Companion mCompanion;
     private String mServiceId;
     private ArrayList<ServiceMessageList> lists;
-
+    private String jsonStr = "{\"customemenu\": [{\"title\":\"菜单一\",\"sub\":[{\"title\":\"居然服务\"},{\"title\":\"居然简介\"},{\"title\":\"居然位置\"},{\"title\":\"顾客留言\"}]},{\"title\":\"菜单二\",\"sub\":[{\"title\":\"传递幸福\"},{\"title\":\"河西印象\"},{\"title\":\"居然新闻\"}]},{\"title\":\"菜单三\",\"sub\":[]}]}";
+    private PopMenus popupWindow_custommenu;
 
     @Override
     protected int getLayoutId() {
@@ -93,6 +110,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         lists = new ArrayList<>();
+
+        try {
+            setCustomMenu(new JSONObject(jsonStr));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         initData();
         initBottomMenu();
         addListener();
@@ -103,7 +126,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 new SimpleFastJsonCallback<String>(String.class, loading) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        JSONObject jsonObject = JSON.parseObject(result);
+                        com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(result);
                         setMainTitle(jsonObject.getString("service_name"));
                         mCompanion = new Companion();
                         mCompanion.setService_id(jsonObject.getString("service_id"));
@@ -150,7 +173,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
         mCompanion.setNotDownloadIds(null);
         if (null != serviceSendDatas && serviceSendDatas.size() > 0)
-            networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), mServiceId),
+            networkRequest(CompanionApi.getServiceLists(com.alibaba.fastjson.JSONObject.toJSONString(serviceSendDatas), mServiceId),
                     new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
                         @Override
                         public void onSuccess(String url, ServiceMessage result) {
@@ -295,14 +318,14 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
 
 
     private void initBottomMenu() {
-        final TextView[] menuViews = {tv_menu_first, tv_menu_second, tv_menu_third};
+//        final TextView[] menuViews = {tv_menu_first, tv_menu_second, tv_menu_third};
         networkRequestCache(CompanionApi.getServicemenu(mServiceId),
                 new SimpleFastJsonCallback<ArrayList<ServiceMenu>>(ServiceMenu.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<ServiceMenu> result) {
                         if (result != null && result.size() > 0) {
                             cacheData(CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, result);
-                            ll_bottom_menus.setVisibility(View.VISIBLE);
+                           /* ll_bottom_menus.setVisibility(View.VISIBLE);
                             tv_menu_first.setVisibility(View.GONE);
                             vLineLeft.setVisibility(View.GONE);
                             tv_menu_second.setVisibility(View.GONE);
@@ -313,19 +336,19 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                                 menuViews[i].setText(menu.getName() + "");
                                 menuViews[i].setTag(menu);
                                 menuViews[i].setVisibility(View.VISIBLE);
-                                addMenuListener(menuViews[i], i);
-                            }
+//                                addMenuListener(menuViews[i], i);
+                            }*/
 
-                            if (result.size() == 2) {
+                           /* if (result.size() == 2) {
                                 vLineLeft.setVisibility(View.VISIBLE);
                             } else if (result.size() == 3) {
                                 vLineLeft.setVisibility(View.VISIBLE);
                                 vLineRight.setVisibility(View.VISIBLE);
-                            }
+                            }*/
 
 
                         } else {
-                            ll_bottom_menus.setVisibility(View.GONE);
+//                            ll_bottom_menus.setVisibility(View.GONE);
                         }
                     }
 
@@ -336,35 +359,96 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                 }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
     }
 
-    private void addMenuListener(final TextView menuView, final int position) {
+    private void setCustomMenu(JSONObject jsonObject) throws JSONException {
+        JSONArray jsonCustomMenu = jsonObject.getJSONArray("customemenu");
+        if (jsonCustomMenu != null && jsonCustomMenu.length() > 0) {
+            layout_customemenu.setVisibility(View.VISIBLE);
+            layout_custommenu.removeAllViews();
+            JSONArray btnJson = jsonCustomMenu;
+            for (int i = 0; i < btnJson.length(); i++) {
+
+                final JSONObject ob = btnJson.getJSONObject(i);
+                LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_custommenu, null);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
+                layout.setLayoutParams(lp);
+                TextView tv_custommenu_name = (TextView) layout.findViewById(R.id.tv_custommenu_name);
+                tv_custommenu_name.setText(ob.getString("title"));
+                if (ob.getJSONArray("sub").length() > 0) // 显示三角
+                {
+                    tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_black, 0);
+                } else // 隐藏三角
+                {
+                    tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+                layout.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        try {
+                            if (ob.getJSONArray("sub").length() == 0) {
+                                Toast.makeText(getApplicationContext(), "主菜单点击事件", Toast.LENGTH_SHORT).show();
+                            } else {
+                                popupWindow_custommenu = new PopMenus(getApplicationContext(), ob.getJSONArray("sub"), v.getWidth() + 10, 0);
+                                popupWindow_custommenu.showAtLocation(v);
+                            }
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                layout_custommenu.addView(layout);
+            }
+        } else {
+            layout_customemenu.setVisibility(View.GONE);
+        }
+    }
+
+    public void btnShowExchange_Click(View v) {
+        Toast.makeText(getApplicationContext(), "菜单点击事件", 0).show();
+    }
+
+  /*  private void addMenuListener(final TextView menuView, final int position) {
         menuView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (position) {
                     case 0:
                         YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单1");
+                        game_detail_list_panel.setVisibility(View.VISIBLE);
+                        game_detail_list_panel2.setVisibility(View.GONE);
+                        game_detail_list_panel3.setVisibility(View.GONE);
                         break;
                     case 1:
                         YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单2");
+                        game_detail_list_panel.setVisibility(View.GONE);
+                        game_detail_list_panel2.setVisibility(View.VISIBLE);
+                        game_detail_list_panel3.setVisibility(View.GONE);
                         break;
                     case 2:
                         YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单3");
+                        game_detail_list_panel.setVisibility(View.GONE);
+                        game_detail_list_panel2.setVisibility(View.GONE);
+                        game_detail_list_panel3.setVisibility(View.VISIBLE);
                         break;
                 }
-                ServiceMenu menu = (ServiceMenu) v.getTag();
-                if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
-                    //跳转web
-                    Intent intent = new Intent(mContext, BaseWebViewActivity.class);
-                    intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
-                    intent.putExtra(BaseWebViewActivity.URL, menu.getUrl());
-                    intent.putExtra(BaseWebViewActivity.SERVICE_ID, mCompanion.getService_id());
-                    startActivity(intent);
-                } else if (ServiceMenu.TYPE_CLICK.equals(menu.getType())) {
-                    //TODO
-                }
+//                ServiceMenu menu = (ServiceMenu) v.getTag();
+//                if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
+//                    //跳转web
+//                    Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+//                    intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
+//                    intent.putExtra(BaseWebViewActivity.URL, menu.getUrl());
+//                    intent.putExtra(BaseWebViewActivity.SERVICE_ID, mCompanion.getService_id());
+//                    startActivity(intent);
+//                } else if (ServiceMenu.TYPE_CLICK.equals(menu.getType())) {
+//                    //TODO
+//                }
             }
         });
-    }
+    }*/
+
+
 }
 
 

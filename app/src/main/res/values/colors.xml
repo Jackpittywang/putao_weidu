@@ -15,10 +15,14 @@
     <color name="text_color_C1C1C1">#C1C1C1</color>
     <color name="color_golden">#FFE875</color>
 
+
+    <color name="gray_white2">#f7f7f7</color>
     <color name="white">#FFFFFFFF</color>
     <color name="divider_color">#E1E1E1</color>
     <color name="color_EBEBEB">#EBEBEB</color>
-
+    <color name="black">#646464</color>
+    <color name="gray_black">#333333</color>
+    <color name="border_color">#cccccc</color>
     <color name="color_C2C2C2">#C2C2C2</color>
     <color name="color_313131">#313131</color>
     <!--主颜色-->
