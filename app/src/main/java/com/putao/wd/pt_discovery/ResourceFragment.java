@@ -1,14 +1,12 @@
 package com.putao.wd.pt_discovery;
 
-import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -18,8 +16,6 @@ import com.putao.wd.model.DiscoveryResource;
 import com.putao.wd.model.FindResource;
 import com.putao.wd.model.ResourceBanner;
 import com.putao.wd.model.ResourceBannerAndTag;
-import com.putao.wd.model.ResourceTag;
-import com.putao.wd.pt_companion.ArticlesDetailActivity;
 import com.putao.wd.pt_discovery.adapter.ResourceAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.BasicFragment;
@@ -55,7 +51,7 @@ public class ResourceFragment extends BasicFragment {
     private BasicRecyclerView rv_discovery_hot_tag;
     private List<FindResource> resous;
     private List<ResourceBanner> banners;
-//    private List<ResourceTag> hotTags;
+    //    private List<ResourceTag> hotTags;
     private ResourceBannerAndTag bannerAndTag;
     private ResourceAdapter mAdapter;
 
@@ -66,6 +62,10 @@ public class ResourceFragment extends BasicFragment {
     private RecyclerView.LayoutParams layoutParams;
     private int mScrollX;
     private RelativeLayout.LayoutParams mRelativeLayoutParams;
+    private Handler mHandler;
+    private Runnable mSetHeaderRunnable;
+    private Runnable mRemoveHeaderRunnable;
+    private LinearLayoutManager mDiscoveryLayoutManager;
 
     @Override
     protected int getLayoutId() {
@@ -78,9 +78,40 @@ public class ResourceFragment extends BasicFragment {
         mAdapter = new ResourceAdapter(mActivity, null);
         rv_discovery.setAdapter(mAdapter);
         freshResource();
+        mHandler = new Handler();
 
+        mDiscoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
         mRelativeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mActivity, 80));
 //        mRelativeLayoutParams.setMargins(0, 500, 0, 0);
+        mSetHeaderRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ((ViewGroup) childAt.getParent()).removeView(childAt);
+                    childAt.setBackgroundColor(0xffffffff);
+                    int margin = DensityUtil.dp2px(mActivity, 10);
+                    childAt.setLayoutParams(mRelativeLayoutParams);
+                    childAt.setPadding(DensityUtil.dp2px(mActivity, 15), margin, 0, margin);
+                    rl_main.addView(childAt);
+                    isShowHead = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        mRemoveHeaderRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ((ViewGroup) childAt.getParent()).removeView(childAt);
+                    mDiscoveryLayoutManager.removeViewAt(1);
+                    rv_discovery.addView(childAt, 1, layoutParams);
+                    isShowHead = false;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
         addListener();
     }
 
@@ -105,7 +136,6 @@ public class ResourceFragment extends BasicFragment {
             }
 
         });
-        final LinearLayoutManager discoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
 
         rv_discovery.setOnItemClickListener(new OnItemClickListener<FindResource>() {
             @Override
@@ -119,24 +149,26 @@ public class ResourceFragment extends BasicFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (childAt == null) {
-                    childAt = (RecyclerView) discoveryLayoutManager.getChildAt(1);
+                    childAt = (RecyclerView) mDiscoveryLayoutManager.getChildAt(1);
                     layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
                 }
-                if (discoveryLayoutManager.findFirstVisibleItemPosition() > 0 && !isShowHead) {
-                    rv_discovery.removeView(childAt);
-                    childAt.setBackgroundColor(0xffffffff);
-                    int margin = DensityUtil.dp2px(mActivity, 10);
-                    childAt.setLayoutParams(mRelativeLayoutParams);
-                    childAt.setPadding(DensityUtil.dp2px(mActivity, 15), margin, 0, margin);
-                    rl_main.addView(childAt);
-                    isShowHead = true;
-                } else if (discoveryLayoutManager.findFirstVisibleItemPosition() == 0 && isShowHead) {
-                    rl_main.removeView(childAt);
-                    rv_discovery.addView(childAt, layoutParams);
-                    isShowHead = false;
+                if (mDiscoveryLayoutManager.findFirstVisibleItemPosition() > 0 && !isShowHead) {
+                    checkHeader(mSetHeaderRunnable);
+                } else if (mDiscoveryLayoutManager.findFirstVisibleItemPosition() == 0 && isShowHead) {
+                    checkHeader(mRemoveHeaderRunnable);
                 }
             }
         });
+    }
+
+
+    private void checkHeader(Runnable runnable) {
+        ViewParent parent = childAt.getParent();
+        if (null != parent) {
+            runnable.run();
+        } else {
+            mHandler.postDelayed(runnable, 200);
+        }
     }
 
     /**
@@ -168,7 +200,7 @@ public class ResourceFragment extends BasicFragment {
                     top.setIs_top(true);
                     resous.clear();
                     resous.add(0, new FindResource());
-                    resous.add(1,new FindResource());
+                    resous.add(1, new FindResource());
                     resous.add(top);
                     resous.addAll(list);
 
@@ -210,31 +242,31 @@ public class ResourceFragment extends BasicFragment {
 
         ResourceBanner bann = banners.get(position);
         Bundle bundle = new Bundle();
-        bundle.putString(BaseWebViewActivity.TITLE,bann.getBanner_title());
-        bundle.putString(BaseWebViewActivity.SERVICE_ID,bann.getSid());
+        bundle.putString(BaseWebViewActivity.TITLE, bann.getBanner_title());
+        bundle.putString(BaseWebViewActivity.SERVICE_ID, bann.getSid());
         bundle.putString(BaseWebViewActivity.URL, StringUtils.equals(bann.getLocation_type(), "1") ? bann.getLink_url() : bann.getLocation());
-        startActivity(BaseWebViewActivity.class,bundle);
+        startActivity(BaseWebViewActivity.class, bundle);
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG)
     public void eventDiscoveryHotTag(String type) {
         Bundle bundle = new Bundle();
-        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG,type);
-        startActivity(SpecialListActivity.class,bundle);
+        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG, type);
+        startActivity(SpecialListActivity.class, bundle);
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE)
     public void eventDiscoveryResource(int position) {
 
         FindResource reso = resous.get(position);
-        if(position != 0 && position != 1){
+        if (position != 0 && position != 1) {
             Bundle bundle = new Bundle();
-            bundle.putString(BaseWebViewActivity.TITLE,reso.getTitle());
-            bundle.putString(BaseWebViewActivity.SERVICE_ID,reso.getSid());
+            bundle.putString(BaseWebViewActivity.TITLE, reso.getTitle());
+            bundle.putString(BaseWebViewActivity.SERVICE_ID, reso.getSid());
             bundle.putString(BaseWebViewActivity.URL, reso.getLink_url());
-            startActivity(BaseWebViewActivity.class,bundle);
+            startActivity(BaseWebViewActivity.class, bundle);
         }
-        ToastUtils.showToastShort(mActivity, reso.getLink_url() != null ? reso.getLink_url():"nonono");
+        ToastUtils.showToastShort(mActivity, reso.getLink_url() != null ? reso.getLink_url() : "nonono");
     }
 }
 
