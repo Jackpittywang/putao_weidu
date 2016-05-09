@@ -134,10 +134,16 @@ public class UploadLoader {
 
             @Override
             public void onFailure(String url, int statusCode, String msg) {
-                isUploadFinish = true;
+                setUploadFail();
             }
 
         });
+    }
+
+    private void setUploadFail() {
+        upLoadList.remove(0);
+        isUploadFinish = true;
+        mUploadCallback.fileUploadFail(uploadFile.getAbsolutePath());
     }
 
     /**
@@ -156,7 +162,7 @@ public class UploadLoader {
             @Override
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
-                isUploadFinish = true;
+                setUploadFail();
             }
         });
     }
@@ -193,15 +199,17 @@ public class UploadLoader {
                 new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        if (null != mUploadCallback)
+                        if (null != mUploadCallback) {
                             mUploadCallback.fileUploadSuccess(uploadFile.getAbsolutePath());
+                        }
+                        isUploadFinish = true;
                         upLoadList.remove(0);
                     }
 
                     @Override
-                    public void onFinish(String url, boolean isSuccess, String msg) {
-                        super.onFinish(url, isSuccess, msg);
-                        isUploadFinish = true;
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        setUploadFail();
                     }
                 });
     }

@@ -9,4 +9,8 @@ public abstract class UploadFileCallback {
     void fileUploadFinish() {
 
     }
+    void fileUploadFail(String filePath) {
+
+    }
+
 }

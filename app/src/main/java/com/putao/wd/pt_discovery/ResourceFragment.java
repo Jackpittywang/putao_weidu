@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.RelativeLayout;
@@ -23,6 +24,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -59,13 +61,11 @@ public class ResourceFragment extends BasicFragment {
 
     private boolean isShowHead;
     private RecyclerView childAt;
-    private RecyclerView.LayoutParams layoutParams;
+    //    private RecyclerView.LayoutParams layoutParams;
     private int mScrollX;
-    private RelativeLayout.LayoutParams mRelativeLayoutParams;
-    private Handler mHandler;
-    private Runnable mSetHeaderRunnable;
-    private Runnable mRemoveHeaderRunnable;
+    private boolean isScroll = true;
     private LinearLayoutManager mDiscoveryLayoutManager;
+    private RelativeLayout reChildAt;
 
     @Override
     protected int getLayoutId() {
@@ -78,40 +78,8 @@ public class ResourceFragment extends BasicFragment {
         mAdapter = new ResourceAdapter(mActivity, null);
         rv_discovery.setAdapter(mAdapter);
         freshResource();
-        mHandler = new Handler();
 
         mDiscoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
-        mRelativeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mActivity, 80));
-//        mRelativeLayoutParams.setMargins(0, 500, 0, 0);
-        mSetHeaderRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ((ViewGroup) childAt.getParent()).removeView(childAt);
-                    childAt.setBackgroundColor(0xffffffff);
-                    int margin = DensityUtil.dp2px(mActivity, 10);
-                    childAt.setLayoutParams(mRelativeLayoutParams);
-                    childAt.setPadding(DensityUtil.dp2px(mActivity, 15), margin, 0, margin);
-                    rl_main.addView(childAt);
-                    isShowHead = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        mRemoveHeaderRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ((ViewGroup) childAt.getParent()).removeView(childAt);
-                    mDiscoveryLayoutManager.removeViewAt(1);
-                    rv_discovery.addView(childAt, 1, layoutParams);
-                    isShowHead = false;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
         addListener();
     }
 
@@ -149,28 +117,35 @@ public class ResourceFragment extends BasicFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (childAt == null) {
-                    childAt = (RecyclerView) mDiscoveryLayoutManager.getChildAt(1);
-                    layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
+                    reChildAt = (RelativeLayout) mDiscoveryLayoutManager.getChildAt(1);
+                    childAt = (RecyclerView) reChildAt.getChildAt(0);
+                    childAt.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+                            if (isScroll)
+                                mScrollX = mScrollX + dx;
+                        }
+                    });
                 }
                 if (mDiscoveryLayoutManager.findFirstVisibleItemPosition() > 0 && !isShowHead) {
-                    checkHeader(mSetHeaderRunnable);
+                    ((ViewGroup) childAt.getParent()).removeView(childAt);
+                    childAt.setBackgroundColor(0xffffffff);
+                    rl_main.addView(childAt);
+                    isShowHead = true;
                 } else if (mDiscoveryLayoutManager.findFirstVisibleItemPosition() == 0 && isShowHead) {
-                    checkHeader(mRemoveHeaderRunnable);
+                    ((ViewGroup) childAt.getParent()).removeView(childAt);
+                    reChildAt.addView(childAt);
+                    isScroll = false;
+                    if (0 == ((LinearLayoutManager) childAt.getLayoutManager()).findFirstCompletelyVisibleItemPosition())
+                        childAt.scrollBy(mScrollX, 0);
+                    isScroll = true;
+                    isShowHead = false;
                 }
             }
         });
     }
 
-
-    private void checkHeader(Runnable runnable) {
-        ViewParent parent = childAt.getParent();
-        if (null != parent) {
-            runnable.run();
-        } else {
-            mDiscoveryLayoutManager.removeViewAt(1);
-            mHandler.postDelayed(runnable, 100);
-        }
-    }
 
     /**
      * 加载视频列表
