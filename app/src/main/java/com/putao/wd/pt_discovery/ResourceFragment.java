@@ -167,7 +167,8 @@ public class ResourceFragment extends BasicFragment {
         if (null != parent) {
             runnable.run();
         } else {
-            mHandler.postDelayed(runnable, 200);
+            mDiscoveryLayoutManager.removeViewAt(1);
+            mHandler.postDelayed(runnable, 100);
         }
     }
 
