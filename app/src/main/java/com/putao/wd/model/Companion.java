@@ -2,9 +2,11 @@ package com.putao.wd.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
+ * 陪伴首页数据
  * Created by zhanghao on 2015/12/8.
  */
 public class Companion implements Serializable {
@@ -12,14 +14,16 @@ public class Companion implements Serializable {
     private String service_icon;//游戏ICON
     private String service_name;//
     private String service_description;//游戏介绍
+    private String last_pull_id; //最后拉取此服务号数据的id
+    private int service_type;// //产品类型  0葡萄订阅 1服务号 2订阅号
+    private ArrayList<Companion> second_level_lists;//是否为订阅号  0不是 1是
     private int relation_time;//更新时间
-    private int is_relation;//订阅状态，0未订阅，1已订阅
+    private int is_relation;//是否关注
     private boolean is_unbunding;//是否可以解绑
-    private int sort;//
+    private String sort;//排序，由大到小
     private boolean isShowRed;
-    private ServiceMessage auto_reply;//
+    private ServiceMessage auto_reply;//自动回复内容
     private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
-
 
     public boolean isShowRed() {
         return isShowRed;
@@ -92,6 +96,7 @@ public class Companion implements Serializable {
     public void setNotDownloadIds(ArrayList<String> notDownloadIds) {
         this.notDownloadIds = notDownloadIds;
     }
+
     public ServiceMessage getAuto_reply() {
         return auto_reply;
     }
@@ -100,4 +105,35 @@ public class Companion implements Serializable {
         this.auto_reply = auto_reply;
     }
 
+    public String getLast_pull_id() {
+        return last_pull_id;
+    }
+
+    public void setLast_pull_id(String last_pull_id) {
+        this.last_pull_id = last_pull_id;
+    }
+
+    public int getService_type() {
+        return service_type;
+    }
+
+    public void setService_type(int service_type) {
+        this.service_type = service_type;
+    }
+
+    public ArrayList<Companion> getSecond_level_lists() {
+        return second_level_lists;
+    }
+
+    public void setSecond_level_lists(ArrayList<Companion> second_level_lists) {
+        this.second_level_lists = second_level_lists;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
 }

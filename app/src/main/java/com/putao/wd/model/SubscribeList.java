@@ -11,6 +11,7 @@ public class SubscribeList implements Serializable {
     private String service_description;//副标题
     private String service_icon; //订阅号图标
     private int service_type;//共建号类型， 1为服务号，2为订阅号
+    private boolean is_unbunding;//是否可以解绑，0可以 1不可以
     private int sort; //排序，由大到小
     private boolean is_relation;//是否关注，0未关注 1已关注
 
@@ -70,6 +71,14 @@ public class SubscribeList implements Serializable {
         this.is_relation = is_relation;
     }
 
+    public boolean is_unbunding() {
+        return is_unbunding;
+    }
+
+    public void setIs_unbunding(boolean is_unbunding) {
+        this.is_unbunding = is_unbunding;
+    }
+
     @Override
     public String toString() {
         return "SubscribeList{" +
@@ -78,6 +87,7 @@ public class SubscribeList implements Serializable {
                 ", service_description='" + service_description + '\'' +
                 ", service_icon='" + service_icon + '\'' +
                 ", service_type=" + service_type +
+                ", is_unbunding=" + is_unbunding +
                 ", sort=" + sort +
                 ", is_relation=" + is_relation +
                 '}';
