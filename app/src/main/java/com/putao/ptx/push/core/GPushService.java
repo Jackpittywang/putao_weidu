@@ -29,6 +29,7 @@ public class GPushService extends Service {
      * @param appId appid
      */
     public static void startGPushService(Context context, String deviceId, String appId){
+        Log.i(TAG, "start service called, deviceId is:"+deviceId +" app id is:"+ appId);
         Constants.setDeviceAndAppId(deviceId, appId);
         Intent i = new Intent(context, GPushService.class);
         context.startService(i);
@@ -42,6 +43,7 @@ public class GPushService extends Service {
     }
 
     public int initGPush() {
+
         String deviceId = Constants.DEVICE_ID;
         String appId = Constants.APP_ID;
         int initialCode = GPush.initGPush(Constants.DEFAULT_SERVER, Constants.PLATFORM, deviceId);
@@ -69,7 +71,7 @@ public class GPushService extends Service {
             default:
                 break;
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
+import com.putao.ptx.push.core.GPushCallback;
+import com.putao.ptx.push.core.GPushService;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.created.CreateBasicDetailActivity;
 import com.putao.wd.explore.ExploreMoreDetailActivity;
@@ -18,6 +20,7 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.task.SuperTask;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.callback.DownloadCallback;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
