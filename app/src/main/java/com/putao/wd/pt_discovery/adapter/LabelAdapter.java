@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.DisCovery;
+import com.putao.wd.model.ResourceTag;
+import com.putao.wd.model.Resources;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
@@ -18,10 +20,10 @@ import butterknife.Bind;
  * 标签列表适配器
  * Created by Administrator on 2016/5/6.
  */
-public class LabelAdapter extends LoadMoreAdapter<DisCovery, LabelAdapter.LabelViewHolder> {
+public class LabelAdapter extends LoadMoreAdapter<Resources, LabelAdapter.LabelViewHolder> {
 
-    public LabelAdapter(Context context, List<DisCovery> disCoveries) {
-        super(context, disCoveries);
+    public LabelAdapter(Context context, List<Resources> resources) {
+        super(context, resources);
     }
 
     @Override
@@ -35,8 +37,42 @@ public class LabelAdapter extends LoadMoreAdapter<DisCovery, LabelAdapter.LabelV
     }
 
     @Override
-    public void onBindItem(LabelViewHolder holder, DisCovery disCovery, int position) {
-        holder.tv_title.setText("这里显示的是标签列表的标题，限制显示两行");
+    public void onBindItem(LabelViewHolder holder, Resources resources, int position) {
+        holder.tv_title.setText(resources.getTitle());
+        holder.iv_icon.setImageURL(resources.getIcon());
+        String[] tags = new String[]{};
+        if (resources.getTag() != null) {
+            tags = resources.getTag().split("#");
+        }
+        switch (tags.length) {
+            case 0:
+            case 1:
+                holder.tv_labelOne.setVisibility(View.GONE);
+                holder.tv_labelSecond.setVisibility(View.GONE);
+                holder.tv_labelThird.setVisibility(View.GONE);
+                break;
+            case 2:
+                holder.tv_labelOne.setVisibility(View.VISIBLE);
+                holder.tv_labelSecond.setVisibility(View.GONE);
+                holder.tv_labelThird.setVisibility(View.GONE);
+                holder.tv_labelOne.setText(tags[1]);
+                break;
+            case 3:
+                holder.tv_labelOne.setVisibility(View.VISIBLE);
+                holder.tv_labelSecond.setVisibility(View.VISIBLE);
+                holder.tv_labelThird.setVisibility(View.GONE);
+                holder.tv_labelOne.setText(tags[1]);
+                holder.tv_labelSecond.setText(tags[2]);
+                break;
+            case 4:
+                holder.tv_labelOne.setVisibility(View.VISIBLE);
+                holder.tv_labelSecond.setVisibility(View.VISIBLE);
+                holder.tv_labelThird.setVisibility(View.VISIBLE);
+                holder.tv_labelOne.setText(tags[1]);
+                holder.tv_labelSecond.setText(tags[2]);
+                holder.tv_labelThird.setText(tags[3]);
+                break;
+        }
     }
 
     static class LabelViewHolder extends BasicViewHolder {

@@ -32,7 +32,7 @@ public class DisCoveryApi {
     public static final String URL_RESOURCE_BANNER = BASE_URL + "resources/banner";
 
     /**
-     * 热门标签
+     * 标签列表
      */
     public static final String URL_RESOURCE_HOT_TAG = BASE_URL + "resources/tag";
 
@@ -74,7 +74,7 @@ public class DisCoveryApi {
     }
 
     /**
-     * 热门标签
+     * 标签列表
      *
      * @return
      */

@@ -10,7 +10,7 @@
         auto:nav_divider_color="@color/divider_color"
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="活动列表"></com.sunnybear.library.view.NavigationBar>
+        auto:nav_main_title="活动"></com.sunnybear.library.view.NavigationBar>
 
     <com.sunnybear.library.view.PullToRefreshLayout
         android:id="@+id/ptl_refresh"
@@ -50,7 +50,7 @@
     </LinearLayout>
     <!--数据加载失败时-->
     <RelativeLayout
-        android:id="@+id/rl_campaign_failure"
+        android:id="@+id/rl_failure"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/navigation_bar"
