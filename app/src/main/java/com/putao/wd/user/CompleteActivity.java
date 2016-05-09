@@ -1,7 +1,6 @@
 package com.putao.wd.user;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,13 +17,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
-import com.putao.wd.account.AccountApi;
-import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.UserInfo;
+import com.putao.wd.util.UploadFileCallback;
+import com.putao.wd.util.UploadLoader;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -35,7 +34,6 @@ import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
-
 
 import java.io.File;
 
@@ -76,7 +74,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     private File uploadFile;//上传文件
     private String sha1;//上传文件sha1
 
-    private String filePath;//头像文件路径
+    private String mFilePath;//头像文件路径
     private String nick_name;//用户昵称
     private String profile;//个人简介
 
@@ -97,7 +95,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
-        filePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
+        mFilePath = GlobalApplication.sdCardPath + File.separator + "head_icon.jpg";
         initInfo();
         IndexActivity.isNotRefreshUserInfo = false;
 
@@ -259,8 +257,8 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     bitmap = (Bitmap) bundle.get("data");
 //                    bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.setDefaultImage(bitmap);
-                    ImageUtils.bitmapOutSdCard(bitmap, filePath);
-                    checkSha1(filePath);
+                    ImageUtils.bitmapOutSdCard(bitmap, mFilePath);
+                    checkSha1(mFilePath);
                     break;
                 case ALBUM_REQCODE://相册选择
 //                    ToastUtils.showToastShort(this, "系统图库返回");
@@ -271,8 +269,17 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     Logger.d(picturePath);
                     bitmap = ImageUtils.getSmallBitmap(picturePath, 320, 320);
                     iv_header_icon.resize(320, 320).setDefaultImage(bitmap);
-                    ImageUtils.bitmapOutSdCard(bitmap, filePath);
-                    checkSha1(filePath);
+                    ImageUtils.bitmapOutSdCard(bitmap, mFilePath);
+//                    checkSha1(mFilePath);
+                    loading.show();
+                    UploadLoader.getInstance().addUploadFile(mFilePath).execute(new UploadFileCallback() {
+                        @Override
+                        protected void fileUploadSuccess(String filePath) {
+                            Logger.d("fileUploadSuccess-----------" + filePath);
+                            if (mFilePath.equals(filePath))
+                                loading.dismiss();
+                        }
+                    });
                     break;
             }
         }

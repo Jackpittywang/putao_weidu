@@ -10,11 +10,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
+import com.sunnybear.library.model.http.OkHttpRequestHelper;
 import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.Logger;
@@ -22,22 +23,22 @@ import com.sunnybear.library.util.NetworkLogUtil;
 import com.sunnybear.library.util.StringUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class UploadLoader {
 
-
     private String uploadToken;//上传token
     private File uploadFile;//上传文件
     private String sha1;//上传文件sha1
-    private OkHttpClient mOkHttpClient;
-    private List<String> upLoadList;
+    private List<String> upLoadList = new ArrayList<>();
 
     private String filePath;//文件路径
-    private boolean isUploadSuccess = true;
     private boolean isUploadFinish = true;
-    private UploadLoader mUploadLoader;
+    private boolean isUploadAllFinish = true;
+    private UploadFileCallback mUploadCallback;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -46,32 +47,55 @@ public class UploadLoader {
             upload(bundle.getString("ext"), bundle.getString("filename"), bundle.getString("hash"));
         }
     };
+    private Handler mMainHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (upLoadList.size() > 0)
+                checkSha1(upLoadList.get(0));
+        }
+    };
+
+
     Runnable mRun = new Runnable() {
         @Override
         public void run() {
-            isUploadFinish = false;
+            isUploadAllFinish = false;
             while (upLoadList.size() > 0) {
-                if (!isUploadSuccess) continue;
-                isUploadSuccess = false;
-                checkSha1(upLoadList.get(0));
+                if (!isUploadFinish) continue;
+                isUploadFinish = false;
+                mMainHandler.sendEmptyMessage(0);
+                try {
+                    mHandlerThread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            isUploadFinish = true;
+            if (null != mUploadCallback)
+                mUploadCallback.fileUploadFinish();
+            isUploadAllFinish = true;
         }
     };
     private HandlerThread mHandlerThread;
     private Handler mLoopHandler;
-
+    private static UploadLoader mUploadLoader;
 
     private UploadLoader() {
     }
 
-    public UploadLoader getInstance() {
-        if (null == mUploadLoader) mUploadLoader = new UploadLoader();
+    public static UploadLoader getInstance() {
+        if (null == mUploadLoader) {
+            mUploadLoader = new UploadLoader();
+        }
         return mUploadLoader;
     }
 
-    public void uploadFile(String uploadFilePath) {
+    public UploadLoader addUploadFile(String uploadFilePath) {
         upLoadList.add(uploadFilePath);
+        return mUploadLoader;
+    }
+
+    public void execute(UploadFileCallback uploadCallback) {
+        mUploadCallback = uploadCallback;
         initUpload();
     }
 
@@ -128,6 +152,12 @@ public class UploadLoader {
                 Logger.d(uploadToken);
                 uploadFile();
             }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                isUploadFinish = true;
+            }
         });
     }
 
@@ -154,6 +184,7 @@ public class UploadLoader {
         }).start();
     }
 
+
     /**
      * 上传PHP服务器
      */
@@ -162,17 +193,27 @@ public class UploadLoader {
                 new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
                     public void onSuccess(String url, String result) {
+                        if (null != mUploadCallback)
+                            mUploadCallback.fileUploadSuccess(uploadFile.getAbsolutePath());
+                        upLoadList.remove(0);
+                    }
 
-
+                    @Override
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+                        isUploadFinish = true;
                     }
                 });
     }
 
-
-    private void networkRequest(Request request, Callback callback) {
+    private void networkRequest(Request request, RequestCallback callback) {
+        LinkedList<Interceptor> interceptors = new LinkedList<>();
         NetworkLogUtil.addLog(request);
         if (request == null)
             throw new NullPointerException("request为空");
-        mOkHttpClient.newCall(request).enqueue(callback);
+        OkHttpRequestHelper helper = OkHttpRequestHelper.newInstance();
+        if (interceptors != null && interceptors.size() > 0)
+            helper.addInterceptors(interceptors);
+        helper.request(request, callback);
     }
 }
