@@ -117,6 +117,14 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     }
 
     /**
+     * 清除公众号数据
+     */
+    public void removeData(String service_id) {
+        DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).buildDelete();
+        companionDBDeleteQuery.executeDeleteWithoutDetachingEntities();
+    }
+
+    /**
      * 插入上传的图片
      */
     public String insertUploadImage(String service_id, String imageUrl) {
