@@ -28,7 +28,7 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.activity_game_detail_list_item;
+        return R.layout.activity_game_detail_list_article_item;
     }
 
     @Override

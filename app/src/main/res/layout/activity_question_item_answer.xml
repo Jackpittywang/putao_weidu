@@ -16,12 +16,13 @@
         android:gravity="center"
         android:paddingBottom="@dimen/distance_8dp"
         android:paddingTop="@dimen/distance_8dp"
-        android:text="───2015-12-23───" />
+        android:text="───   2015-12-23   ───" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_answer_icon"
@@ -30,6 +31,55 @@
             android:layout_gravity="bottom"
             app:default_drawable="@drawable/img_head_cs"
             app:roundAsCircle="true" />
+
+        <LinearLayout
+            android:id="@+id/ll_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="70dp"
+            android:background="@drawable/dialogue_w"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="对于您的留言" />
+
+            <TextView
+                android:id="@+id/tv_ask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EBEBEB"
+                android:padding="@dimen/distance_8dp"
+                android:text="hahahah"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:text="给予回复:" />
+
+            <TextView
+                android:id="@+id/tv_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:text="heheh" />
+        </LinearLayout>
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/question_item_ask_image"
+            style="@style/image_style"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:clickable="false"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:aspect_ratio="2"
+            app:placeholderImage="@drawable/img_image_default_m" />
 
         <com.sunnybear.library.view.emoji.EmojiTextView
             android:id="@+id/question_item_answer_context"
@@ -40,7 +90,8 @@
             android:gravity="left"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="我的提问我的提问我的提问我的提问我的提问我的提问我的提问" />
+            android:text="我的提问我的提问我的提问我的提问我的提问我的提问我的提问"
+            android:visibility="gone" />
 
     </LinearLayout>
 </LinearLayout>

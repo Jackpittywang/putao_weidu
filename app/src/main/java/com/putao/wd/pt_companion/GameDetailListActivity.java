@@ -30,8 +30,10 @@ import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
+import com.putao.wd.util.RedDotUtils;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -86,6 +88,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     ImageView iv_send;
     @Bind(R.id.vp_emojis)
     ViewPager vp_emojis;
+    @Bind(R.id.v_split)
+    View v_split;
 
 
     private boolean isLoadMore = false;
@@ -99,7 +103,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private ArrayList<ServiceMessageList> lists;
     private TranslateAnimation showAnim;
     private TranslateAnimation hintAnim;
-    //    private String jsonStr = "{\"customemenu\": [{\"title\":\"菜单一\",\"sub\":[{\"title\":\"居然服务\"},{\"title\":\"居然简介\"},{\"title\":\"居然位置\"},{\"title\":\"顾客留言\"}]},{\"title\":\"菜单二\",\"sub\":[{\"title\":\"传递幸福\"},{\"title\":\"河西印象\"},{\"title\":\"居然新闻\"}]},{\"title\":\"菜单三\",\"sub\":[]}]}";
     private PopMenus popupWindow_custommenu;
     private Animation.AnimationListener mShowMenuListener;
     private Animation.AnimationListener mShowSendListener;
@@ -344,21 +347,26 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                             rl_customemenu.setVisibility(View.VISIBLE);
                             ll_comment_edit.setVisibility(View.GONE);
                         } else {
-                            rl_customemenu.setVisibility(View.GONE);
-                            ll_comment_edit.setVisibility(View.VISIBLE);
+                            setNoMenu();
                         }
                     }
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
-//                        ll_comment_edit.setVisibility();
-                        rl_customemenu.setVisibility(View.GONE);
-                        ll_comment_edit.setVisibility(View.VISIBLE);
+                        setNoMenu();
                     }
                 }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
     }
 
+    private void setNoMenu() {
+        v_split.setVisibility(View.GONE);
+        rl_customemenu.setVisibility(View.GONE);
+        ll_comment_edit.setVisibility(View.VISIBLE);
+        iv_send.setVisibility(View.GONE);
+    }
+
     private void setCustomMenu(ArrayList<ServiceMenu> result) {
+        ll_custommenu.removeAllViews();
         for (final ServiceMenu serviceMenu : result) {
             LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_custommenu, null);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
@@ -490,6 +498,14 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
             }
         };
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY)
+    private void startAct(ServiceMessageContent serviceMessageContent) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BaseWebViewActivity.TITLE, serviceMessageContent.getTitle());
+        bundle.putSerializable(BaseWebViewActivity.URL, serviceMessageContent.getLink_url());
+        startActivity(BaseWebViewActivity.class, bundle);
     }
 
     @Override

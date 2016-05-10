@@ -3,7 +3,7 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/text_color_F5F5F5"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <!--时间-->
@@ -14,7 +14,7 @@
         android:gravity="center"
         android:paddingBottom="@dimen/distance_8dp"
         android:paddingTop="@dimen/distance_8dp"
-        android:text="───2015-12-23───" />
+        android:text="───  2015-12-23  ───" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +24,17 @@
         android:gravity="right"
         android:orientation="horizontal"
         android:weightSum="10">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/question_item_ask_image"
+            style="@style/image_style"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:clickable="false"
+            android:padding="10dp"
+            android:visibility="gone"
+            auto:aspect_ratio="2"
+            auto:placeholderImage="@drawable/img_image_default_m" />
 
         <com.sunnybear.library.view.emoji.EmojiTextView
             android:id="@+id/question_item_ask_context"
@@ -35,7 +46,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingStart="@dimen/distance_8dp"
-            android:text="我的提问我的提问我的提问我的提问我的提问我的提问我的提问" />
+            android:text="我的提问我的提问我的提" />
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_ask_icon"

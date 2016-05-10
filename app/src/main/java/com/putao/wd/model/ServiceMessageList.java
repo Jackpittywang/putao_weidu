@@ -11,8 +11,11 @@ public class ServiceMessageList implements Serializable {
     private String id;
     private String type;
     private int release_time;
-//    private boolean isShowData;
+    //    private boolean isShowData;
     private List<ServiceMessageContent> content_lists;
+    private String message;
+    private ServiceMessageListImage image;
+    private ServiceMessageListReply reply;
 
     public String getId() {
         return id;
@@ -46,11 +49,27 @@ public class ServiceMessageList implements Serializable {
         this.content_lists = content_lists;
     }
 
-/*    public boolean isShowData() {
-        return isShowData;
+    public String getMessage() {
+        return message;
     }
 
-    public void setIsShowData(boolean isShowData) {
-        this.isShowData = isShowData;
-    }*/
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public ServiceMessageListImage getImage() {
+        return image;
+    }
+
+    public void setImage(ServiceMessageListImage image) {
+        this.image = image;
+    }
+
+    public ServiceMessageListReply getReply() {
+        return reply;
+    }
+
+    public void setReply(ServiceMessageListReply reply) {
+        this.reply = reply;
+    }
 }
