@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,8 +19,12 @@ import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.model.CompainServiceInfo;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.SubscribeList;
+import com.putao.wd.qrcode.CaptureActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -37,6 +40,9 @@ import butterknife.Bind;
  */
 public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     public static final String EVENT_OFFICIAL_URL = "event_official_url";
+    public static final String CAPTURE_SERVICE_ID = "service_id";
+    public static final String CAPTURE_URL = "capture_url";
+    public static final String SUBSCRIBE = "subscribe";
 
     @Bind(R.id.iv_icon)
     ImageDraweeView iv_icon;
@@ -56,10 +62,11 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private View view_custom;
     private AlertDialog mDialog = null;
     private AlertDialog.Builder builder = null;
-    private String mServiceId;
+    private String mServiceId, capture_url;
     private String mServiceName;
     private SelectPopupWindow mSelectPopupWindow;
-    private boolean isSubscribe;
+    private CompainServiceInfo serviceInfo;
+    private boolean isSubscribe, isBind;
     private SubscribeList subscribeList;
     private Companion companion;
 
@@ -71,65 +78,69 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-        isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
-        if (isSubscribe) {
-            subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-            if (subscribeList.is_relation()) {
-                isSubscribeCoampin();
+        isBind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION, false);//陪伴首页未关联产品传送过来的数据
+        mServiceId = args.getString(CAPTURE_SERVICE_ID);
+        capture_url = args.getString(CAPTURE_URL);
+
+        if (capture_url == null) {
+            if (isBind) {
+                mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND);
+                navigation_bar.getRightView().setVisibility(View.GONE);
             } else {
-                navigation_bar.getRightView().setVisibility(View.GONE);
-                tv_relation_companion.setText("立即订阅");
-            }
-            if (subscribeList == null) return;
-            setMainTitle(subscribeList.getService_name());
-            tv_official_title.setText(subscribeList.getService_name());
-            iv_icon.setImageURL(subscribeList.getService_icon());
-            tv_recommend.setText(subscribeList.getService_description());
-            mServiceId = subscribeList.getService_id();
-            mServiceName = subscribeList.getService_name();
-            if (subscribeList.is_unbunding()) {
-                tv_relation_companion.setVisibility(View.GONE);
-                navigation_bar.getRightView().setVisibility(View.GONE);
-            }
-        } else {
-            companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-            if (companion.getIs_relation() == 1) {
-                isSubscribeCoampin();
-            } else {
-                navigation_bar.getRightView().setVisibility(View.GONE);
-                tv_relation_companion.setText("关联产品");
-            }
-            if (companion == null) return;
-            setMainTitle(companion.getService_name());
-            tv_official_title.setText(companion.getService_name());
-            iv_icon.setImageURL(companion.getService_icon());
-            tv_recommend.setText(companion.getService_description());
-            mServiceId = companion.getService_id();
-            mServiceName = companion.getService_name();
-            if (companion.is_unbunding()) {
-                tv_relation_companion.setVisibility(View.GONE);
-                navigation_bar.getRightView().setVisibility(View.GONE);
+                isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
+                if (isSubscribe) {
+                    subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+                    if (subscribeList == null) return;
+                    mServiceId = subscribeList.getService_id();
+                    mServiceName = subscribeList.getService_name();
+                } else {
+                    companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
+                    if (companion == null) return;
+                    mServiceId = companion.getService_id();
+                    mServiceName = companion.getService_name();
+                }
             }
         }
 
+        /**
+         * 获取公众号服务详情
+         * */
+        setMainTitleFromNetwork(mServiceId);
+
         addListener();
+
     }
 
     private void addListener() {
         tv_relation_companion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSubscribe) {//订阅号（立即订阅)
-                    if (subscribeList.is_relation()) {
-                        finish();
-                    } else {//关联产品
-
-                    }
-                } else {//服务号（关联产品）
-                    if (companion.getIs_relation() == 1) {
-                        finish();
-                    } else {
-
+                if (!AccountHelper.isLogin()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
+                    startActivity(LoginActivity.class, bundle);
+                } else {
+                    //先判断是否已关注
+                    if (serviceInfo.is_relation()) {//已关注
+                        if (serviceInfo.isService_type()) {//服务号
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+                            startActivity(GameDetailListActivity.class, bundle);
+                        } else {//订阅号
+                            startActivity(PutaoSubcribeActivity.class);
+                        }
+                    } else {//未关注
+                        if (serviceInfo.isService_type()) {//服务号
+                            if (isBind) {//从陪伴首页未关联传送过来的数据
+                                startActivity(CaptureActivity.class);
+                                finish();
+                            } else {
+                                correlationService(mServiceId, capture_url);
+                            }
+                        } else {//订阅号
+                            correlationService(mServiceId, capture_url);
+                        }
                     }
                 }
             }
@@ -169,14 +180,36 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         mDialog = builder.show();
         mDialog.show();
     }
-//
-//    /**
-//     * 关注服务号
-//     */
-//    private void correlationService(String service_id) {
-//        networkRequest(CompanionApi.getServiceRelation(service_id), new SimpleFastJsonCallback<>() {
-//        });
-//    }
+
+
+    /**
+     * 关注服务号/立即订阅
+     */
+    private void correlationService(String service_id, String url) {
+        networkRequest(CompanionApi.getServiceRelation(service_id, url), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+            @Override
+            public void onSuccess(String url, ServiceMessage result) {
+                Bundle bundle = new Bundle();
+                if (serviceInfo.isService_type()) {
+                    EventBusHelper.post(SUBSCRIBE, SUBSCRIBE);
+                    bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                    PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                    startActivity(GameDetailListActivity.class, bundle);
+                    finish();
+                } else {
+                    EventBusHelper.post(SUBSCRIBE, SUBSCRIBE);
+                    startActivity(PutaoSubcribeActivity.class);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                ToastUtils.showToastShort(mContext, serviceInfo.isService_type() ? "关联失败" : "订阅失败");
+            }
+        });
+    }
 
     /**
      * 取消绑定服务号
@@ -293,5 +326,43 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             }
         };
         tv_relation_companion.setText("进入");
+    }
+
+    /**
+     * 查询公众号数据
+     */
+    private void setMainTitleFromNetwork(String service_id) {
+        networkRequest(CompanionApi.getServiceInfo(service_id),
+                new SimpleFastJsonCallback<CompainServiceInfo>(CompainServiceInfo.class, loading) {
+                    @Override
+                    public void onSuccess(String url, CompainServiceInfo result) {
+                        if (result != null) {
+                            serviceInfo = result;
+                            tv_official_title.setText(result.getService_name());
+                            navigation_bar.setMainTitle(result.getService_name());
+                            iv_icon.setImageURL(result.getService_icon());
+                            tv_recommend.setText(result.getService_description());
+                            if (result.is_relation()) {//是否关注
+                                isSubscribeCoampin();
+                            } else {
+                                navigation_bar.getRightView().setVisibility(View.GONE);
+                                tv_relation_companion.setText(result.isService_type() ? "关联产品" : "立即订阅");
+                            }
+
+                            //是否可以解绑
+                            if (result.is_unbunding()) {
+                                tv_relation_companion.setVisibility(View.GONE);
+                                navigation_bar.getRightView().setVisibility(View.GONE);
+                            }
+
+                        }
+                        loading.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                    }
+                }, false);
     }
 }

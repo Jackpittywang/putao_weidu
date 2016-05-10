@@ -24,40 +24,47 @@
             android:textColor="@color/color_313131"
             android:textSize="@dimen/text_size_16sp" />
 
-        <TextView
-            android:id="@+id/tv_labelOne"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
-            android:background="@drawable/tv_get_label_shape"
-            android:padding="3dp"
-            android:text="标签一"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_size_12sp" />
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/iv_icon"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_labelSecond"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/tv_labelOne"
-            android:background="@drawable/comment_shape"
-            android:padding="3dp"
-            android:text="标签二"
-            android:textSize="@dimen/text_size_12sp" />
+            <TextView
+                android:id="@+id/tv_labelOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_get_label_shape"
+                android:padding="3dp"
+                android:text="标签一"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_12sp" />
 
-        <TextView
-            android:id="@+id/tv_labelThird"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_toRightOf="@+id/tv_labelSecond"
-            android:background="@drawable/comment_shape"
-            android:padding="3dp"
-            android:text="标签三"
-            android:textSize="@dimen/text_size_12sp" />
+            <TextView
+                android:id="@+id/tv_labelSecond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_labelOne"
+                android:background="@drawable/comment_shape"
+                android:padding="3dp"
+                android:text="标签二"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/tv_labelThird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_labelSecond"
+                android:background="@drawable/comment_shape"
+                android:padding="3dp"
+                android:text="标签三"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_icon"

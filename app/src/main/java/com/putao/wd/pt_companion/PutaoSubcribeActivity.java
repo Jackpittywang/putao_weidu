@@ -184,9 +184,4 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
         finish();
     }
 
-    @Override
-    public void onRightAction() {
-        super.onRightAction();
-        startActivity(SubscriptionNumberActivity.class);
-    }
 }

@@ -1,11 +1,18 @@
 package com.putao.wd.home;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.view.MyViewPager;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -20,7 +27,6 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
-import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
@@ -30,7 +36,9 @@ import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.GameDetailListActivity;
+import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.pt_companion.PutaoSubcribeActivity;
+import com.putao.wd.pt_companion.SubscriptionNumberActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.ActivityManager;
@@ -71,10 +79,15 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     Button btn_no_data;
     @Bind(R.id.iv_no_commpain)
     ImageDraweeView iv_no_commpain;
+    @Bind(R.id.img_compain_menu)
+    ImageView img_compain_menu;
 
     private ArrayList<Companion> mCompanion;
     private int mPicChangeCount;
     private AnimationSet mSet;
+    private PopupWindow popupWindow;
+    private View contentView;
+    private LinearLayout ll_ScanCode, ll_Subscribe;
 
     @Override
     protected int getLayoutId() {
@@ -86,10 +99,11 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         addNavigation();
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
+        //弹框
+        onCompainPopupWindow();
         checkDevice();
         mPicChangeCount = 1;
         startAnim();
-
     }
 
 
@@ -179,6 +193,23 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             }
         });
         btn_no_data.setOnClickListener(this);
+        img_compain_menu.setOnClickListener(this);
+        ll_ScanCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
+                startActivity(CaptureActivity.class, bundle);
+                popupWindow.dismiss();
+            }
+        });
+        ll_Subscribe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(SubscriptionNumberActivity.class);
+                popupWindow.dismiss();
+            }
+        });
     }
 
     @Override
@@ -216,33 +247,35 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 YouMengHelper.onEvent(mActivity, YouMengHelper.AccompanyHome_app_game, "涂涂世界");
                 break;
         }*/
-//        if (1 == companion.getIs_relation()) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+        if (1 == companion.getIs_relation()) {
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
            /* ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
             notDownloadIds.removeAll(notDownloadIds);
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
-        if (companion.getService_type() == 0) {
-            startActivity(PutaoSubcribeActivity.class, bundle);
-        } else {
-            companion.setIsShowRed(false);
-            boolean isShowTabDot = false;
-            for (Companion compan : mCompanion) {
-                isShowTabDot = compan.isShowRed() || isShowTabDot;
-                if (isShowTabDot) break;
+            if (companion.getService_type() == 0) {
+                startActivity(PutaoSubcribeActivity.class, bundle);
+            } else {
+                companion.setIsShowRed(false);
+                boolean isShowTabDot = false;
+                for (Companion compan : mCompanion) {
+                    isShowTabDot = compan.isShowRed() || isShowTabDot;
+                    if (isShowTabDot) break;
+                }
+                if (!isShowTabDot)
+                    EventBusHelper.post("", AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB);
+                mCompanionAdapter.notifyItemChanged(position);
+                startActivity(GameDetailListActivity.class, bundle);
             }
-            if (!isShowTabDot)
-                EventBusHelper.post("", AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB);
-            mCompanionAdapter.notifyItemChanged(position);
-            startActivity(GameDetailListActivity.class, bundle);
+        } else {
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, true);
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, companion.getService_id());
+            startActivity(OfficialAccountsActivity.class, bundle);
         }
-//        } else {
-////            startActivity(CaptureActivity.class);
-//        }
     }
 
-    @OnClick(R.id.btn_relevance_device)
+    @OnClick({R.id.btn_relevance_device, R.id.img_compain_menu})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -259,20 +292,22 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (NetManager.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
-//                    initData();
-                    startActivity(PutaoSubcribeActivity.class);
+                    initData();
+                break;
+            case R.id.img_compain_menu:
+                popupWindow.showAsDropDown(img_compain_menu);
                 break;
         }
     }
 
-    @Override
-    public void onRightAction() {
-        super.onRightAction();
-        startActivity(CaptureActivity.class);
-    }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
     private void refresh_companion(String str) {
+        checkDevice();
+    }
+
+    @Subcriber(tag = OfficialAccountsActivity.SUBSCRIBE)
+    private void onSubscribe(String tag) {
         checkDevice();
     }
 
@@ -351,6 +386,19 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
     }
 
+
+    /**
+     * 弹出扫一扫和订阅号的弹框
+     */
+    private void onCompainPopupWindow() {
+        contentView = mActivity.getLayoutInflater().inflate(R.layout.activity_compain_menulist, null);
+        popupWindow = new PopupWindow(contentView, MyViewPager.LayoutParams.WRAP_CONTENT, MyViewPager.LayoutParams.WRAP_CONTENT);
+        ll_ScanCode = (LinearLayout) contentView.findViewById(R.id.ll_ScanCode);
+        ll_Subscribe = (LinearLayout) contentView.findViewById(R.id.ll_Subscribe);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+    }
 }
 
 

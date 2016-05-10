@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceType;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -38,10 +39,31 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
 
     @Override
     public void onBindItem(LookViewHolder holder, ServiceMessageList serviceMessageList, int position) {
-        ServiceMessageContent serviceMessageContent = serviceMessageList.getContent_lists().get(0);
-        holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
-        holder.tv_title.setText(serviceMessageContent.getTitle());
-        holder.tv_content.setText(serviceMessageContent.getSub_title());
+        switch (serviceMessageList.getType()) {
+            case "article":
+                ServiceMessageContent serviceMessageContent = serviceMessageList.getContent_lists().get(0);
+                holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
+                holder.tv_title.setText(serviceMessageContent.getTitle());
+                holder.tv_content.setText(serviceMessageContent.getSub_title());
+                break;
+            case "text"://文字
+                holder.tv_title.setText(serviceMessageList.getMessage());
+                holder.iv_sign.setBackgroundResource(R.drawable.img_image_default_m);
+                holder.tv_content.setVisibility(View.GONE);
+                break;
+            case "image"://图片
+                ServiceType image = serviceMessageList.getImage();
+                holder.iv_sign.setImageURL(image.getPic());
+                holder.tv_title.setVisibility(View.GONE);
+                holder.tv_content.setVisibility(View.GONE);
+                break;
+            case "reply"://回復
+                ServiceType reply = serviceMessageList.getReply();
+                holder.iv_sign.setDefaultImage(R.drawable.img_image_default_m);
+                holder.tv_title.setText(reply.getQuestion());
+                holder.tv_content.setText(reply.getAnswer());
+                break;
+        }
         String date = "";
         date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         holder.tv_time.setVisibility(View.VISIBLE);

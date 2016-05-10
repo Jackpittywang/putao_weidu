@@ -31,11 +31,14 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.pt_companion.GameDetailActivity;
 import com.putao.wd.pt_companion.GameDetailListActivity;
+import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.user.WebLoginActivity;
 import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
+import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -408,7 +411,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 });
                 break;
             case ScanUrlParseUtils.Scheme.HTTP:
-                // result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
+//                result = "http://api-resource.start.wang/bind?s=6001&code=5570ca50284ecc";
 
                 // 从url里面获取serverId和code
                 final String serverId = ScanUrlParseUtils.getSingleParams(result, "s");
@@ -418,59 +421,69 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                     return false;
                 }
                 isRequesting = true;
-                networkRequest(CompanionApi.bindService(serverId, code), new JSONObjectCallback() {
-                    @Override
-                    public void onSuccess(String url, JSONObject result) {
-                        Logger.d(result.toString());
-                        int http_code = result.getInteger("http_code");
-                        if (http_code == 200) {
-                            try {
-                                JSONObject data = result.getJSONObject("data");
-                                ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
-                                CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                                for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
-                                    dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                boolean isCapture = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
+                if (isCapture) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(OfficialAccountsActivity.CAPTURE_SERVICE_ID, serverId);
+                    bundle.putSerializable(OfficialAccountsActivity.CAPTURE_URL, result);
+                    startActivity(OfficialAccountsActivity.class, bundle);
+                    this.finish();
+                } else {
+                    networkRequest(CompanionApi.getServiceRelation(serverId, result), new JSONObjectCallback() {
+                        @Override
+                        public void onSuccess(String url, JSONObject result) {
+                            Logger.d(result.toString());
+                            int http_code = result.getInteger("http_code");
+                            if (http_code == 200) {
+                                try {
+                                    JSONObject data = result.getJSONObject("data");
+                                    ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
+                                    CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                                    for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                                        dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                                    }
+                                } catch (Exception e) {
+
                                 }
-                            } catch (Exception e) {
 
+                                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                                // 跳到订阅号列表页面
+                                Bundle bundle = new Bundle();
+                                bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
+                                PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                                startActivity(GameDetailListActivity.class, bundle);
+                                ToastUtils.showToastShort(mContext, "添加成功");
+
+                            } else if (http_code == 4201)
+                                ToastUtils.showToastShort(mContext, "重复绑定");
+                            else if (http_code == 4200)
+                                ToastUtils.showToastShort(mContext, "二维码已过期");
+                            else {
+                                String msg = result.getString("msg");
+                                if (msg != null)
+                                    ToastUtils.showToastShort(mContext, result.getString("msg"));
+                                else ToastUtils.showToastShort(mContext, "绑定失败");
                             }
+                            loading.dismiss();
+                            // isRequesting = false;
+                            finish();
 
-                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                            // 跳到订阅号列表页面
-                            Bundle bundle = new Bundle();
-                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                            startActivity(GameDetailListActivity.class, bundle);
-                            ToastUtils.showToastShort(mContext, "添加成功");
-
-                        } else if (http_code == 4201)
-                            ToastUtils.showToastShort(mContext, "重复绑定");
-                        else if (http_code == 4200)
-                            ToastUtils.showToastShort(mContext, "二维码已过期");
-                        else {
-                            String msg = result.getString("msg");
-                            if (msg != null)
-                                ToastUtils.showToastShort(mContext, result.getString("msg"));
-                            else ToastUtils.showToastShort(mContext, "绑定失败");
                         }
-                        loading.dismiss();
-                        // isRequesting = false;
-                        finish();
 
-                    }
+                        @Override
+                        public void onCacheSuccess(String url, JSONObject result) {
 
-                    @Override
-                    public void onCacheSuccess(String url, JSONObject result) {
+                        }
 
-                    }
+                        @Override
+                        public void onFailure(String url, int statusCode, String msg) {
+                            loading.dismiss();
+                            ToastUtils.showToastShort(mContext, msg);
+                            isRequesting = false;
+                        }
+                    });
 
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        loading.dismiss();
-                        ToastUtils.showToastShort(mContext, msg);
-                        isRequesting = false;
-                    }
-                });
+                }
                 break;
             default:
                 showErrorInfo();
