@@ -565,6 +565,14 @@
                 <action android:name="com.putao.mtlib.message"></action>
             </intent-filter>
         </receiver>
+
+        <!--监听网络变化-->
+        <receiver android:name="com.putao.ptx.push.core.NetworkReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
         <!--优酷视频播放配置-->
         <meta-data
             android:name="client_id"
