@@ -134,7 +134,6 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         if (serviceInfo.isService_type()) {//服务号
                             if (isBind) {//从陪伴首页未关联传送过来的数据
                                 startActivity(CaptureActivity.class);
-                                finish();
                             } else {
                                 correlationService(mServiceId, capture_url);
                             }

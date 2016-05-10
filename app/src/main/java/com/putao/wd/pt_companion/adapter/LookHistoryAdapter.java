@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 查看历史文章适配器
  * Created by Administrator on 2016/4/18.
  */
 public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, LookHistoryAdapter.LookViewHolder> {
@@ -48,7 +49,6 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 break;
             case "text"://文字
                 holder.tv_title.setText(serviceMessageList.getMessage());
-                holder.iv_sign.setBackgroundResource(R.drawable.img_image_default_m);
                 holder.tv_content.setVisibility(View.GONE);
                 break;
             case "image"://图片
@@ -59,7 +59,6 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 break;
             case "reply"://回復
                 ServiceType reply = serviceMessageList.getReply();
-                holder.iv_sign.setDefaultImage(R.drawable.img_image_default_m);
                 holder.tv_title.setText(reply.getQuestion());
                 holder.tv_content.setText(reply.getAnswer());
                 break;
