@@ -41,6 +41,11 @@ public class SubscriptionNumberAdapter extends LoadMoreAdapter<SubscribeList, Su
         holder.tv_title.setText(subscribeLists.getService_name());
         holder.iv_icon.setImageURL(subscribeLists.getService_icon());
         holder.tv_content.setText(subscribeLists.getService_description());
+        if (subscribeLists.is_relation()) {//已订阅
+            holder.tv_isSubribe.setVisibility(View.VISIBLE);
+        } else {//未订阅
+            holder.tv_isSubribe.setVisibility(View.GONE);
+        }
     }
 
     static class SubscriptionViewHolder extends BasicViewHolder {
@@ -50,6 +55,8 @@ public class SubscriptionNumberAdapter extends LoadMoreAdapter<SubscribeList, Su
         TextView tv_title;
         @Bind(R.id.tv_content)
         TextView tv_content;
+        @Bind(R.id.tv_isSubribe)
+        TextView tv_isSubribe;
 
         public SubscriptionViewHolder(View itemView) {
             super(itemView);

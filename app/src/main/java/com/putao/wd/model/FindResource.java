@@ -6,15 +6,24 @@ import java.io.Serializable;
  * Created by Administrator on 2016/5/8.
  */
 public class FindResource implements Serializable{
-    private String id;
-    private String title;
-    private String icon;
-    private String tag;
-    private String sid;
-    private String link_url;
-    private boolean is_recommend;
+    private String id;//文章id
+    private String title;//标题
+    private String icon;//图片
+    private String tag;//标签
+    private String sid;//服务号 service_id
+    private String link_url;//
+    private boolean is_recommend;//是否推荐
 
-    private boolean is_top;
+    private boolean is_top;//是否置顶  ，（自定义，非接口中的参数）
+    private boolean is_show_view;//是否显示分割线  ， （自定义，非接口中的参数）
+
+    public boolean is_show_view() {
+        return is_show_view;
+    }
+
+    public void setIs_show_view(boolean is_show_view) {
+        this.is_show_view = is_show_view;
+    }
 
     public boolean is_top() {
         return is_top;

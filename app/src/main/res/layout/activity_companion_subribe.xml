@@ -11,7 +11,6 @@
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="葡萄订阅"
-        auto:nav_right_title="订阅号"
         auto:nav_right_title_color="@drawable/text_select"></com.sunnybear.library.view.NavigationBar>
 
     <com.sunnybear.library.view.PullToRefreshLayout

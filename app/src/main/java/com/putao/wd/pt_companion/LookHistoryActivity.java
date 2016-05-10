@@ -16,6 +16,7 @@ import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_companion.adapter.LookHistoryAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -83,11 +84,15 @@ public class LookHistoryActivity extends PTWDActivity {
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_detail);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
-                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
-                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, service_name);
-                bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
-                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
+                if (serviceMessageList.getType().equals("article")) {
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
+                    bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
+                    bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, service_name);
+                    bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
+                    startActivity(ArticleDetailForActivitiesActivity.class, bundle);
+                } else {
+                    ToastUtils.showToastShort(mContext, "这不是文章类型");
+                }
             }
         });
     }

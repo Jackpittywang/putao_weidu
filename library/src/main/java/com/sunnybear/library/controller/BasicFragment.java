@@ -387,9 +387,10 @@ public abstract class BasicFragment<App extends BasicApplication> extends Fragme
         if (url.contains("?"))
             url = url.substring(0, url.indexOf("?"));
         T cacheData = (T) mDiskFileCacheHelper.getAsSerializable(url);
-        if (cacheData != null)
+        if (cacheData != null) {
             callback.onSuccess(url, cacheData);
-
+            callback.onFinish(url, true, "");
+        }
         long currentTime = System.currentTimeMillis();//当前时间
         String past_time = mDiskFileCacheHelper.getAsString(url + "_past_time");
         //获取过期时间

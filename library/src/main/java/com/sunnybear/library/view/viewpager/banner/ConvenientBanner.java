@@ -118,7 +118,9 @@ public class ConvenientBanner<T> extends LinearLayout {
         startTurning(autoTurningTime);
         if (page_indicatorId != null)
             setPageIndicator(page_indicatorId);
-        viewPager.setOffscreenPageLimit(datas.size());
+
+        if (datas != null)
+            viewPager.setOffscreenPageLimit(datas.size());
         return this;
     }
 

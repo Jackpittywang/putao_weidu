@@ -32,7 +32,6 @@
             android:background="@drawable/tv_get_label_shape"
             android:padding="3dp"
             android:text="标签一"
-            android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_12sp" />
 
         <TextView

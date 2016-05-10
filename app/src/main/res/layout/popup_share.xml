@@ -136,6 +136,21 @@
                         style="@style/style_share_text"
                         android:text="@string/sina_weibo" />
                 </LinearLayout>
+                <!--用Safari打开-->
+                <LinearLayout
+                    android:id="@+id/ll_safari"
+                    style="@style/style_share_button"
+                    android:paddingLeft="8dp"
+                    android:visibility="visible">
+
+                    <ImageView
+                        style="@style/style_share_icon"
+                        android:src="@drawable/icon_40_15" />
+
+                    <TextView
+                        style="@style/style_share_text"
+                        android:text="@string/safari" />
+                </LinearLayout>
                 <!--复制链接-->
                 <LinearLayout
                     android:id="@+id/ll_copy_url"
@@ -151,10 +166,11 @@
                         style="@style/style_share_text"
                         android:text="@string/copy_url" />
                 </LinearLayout>
-                <!--占位-->
-                <LinearLayout
-                    style="@style/style_share_button"
-                    android:visibility="invisible" />
+
+                <!--&lt;!&ndash;占位&ndash;&gt;-->
+                <!--<LinearLayout-->
+                    <!--style="@style/style_share_button"-->
+                    <!--android:visibility="invisible" />-->
 
                 <LinearLayout
                     android:id="@+id/ll_share"

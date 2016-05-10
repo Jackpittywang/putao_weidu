@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/distance_10dp"
+        android:background="@drawable/img_get_compain_menulist"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/distance_10dp"
+        android:paddingRight="@dimen/distance_10dp">
+
+        <LinearLayout
+            android:id="@+id/ll_ScanCode"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center">
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/icon_20_40" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="扫一扫"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/color_EBEBEB" />
+
+        <LinearLayout
+            android:id="@+id/ll_Subscribe"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center">
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/icon_20_41" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="订阅号"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

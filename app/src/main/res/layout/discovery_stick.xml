@@ -6,8 +6,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="15dp">
-
+    >
+    <View
+        android:id="@+id/view_gray"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/distance_10dp"
+        android:background="@color/divider_color"
+        android:visibility="gone"/>
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_discovery_pic"
         android:layout_width="match_parent"
@@ -16,6 +21,9 @@
         auto:aspect_ratio="2"
         android:scaleType="centerInside"
         auto:placeholderImageScaleType="centerCrop"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         />
     <TextView
         android:id="@+id/tv_discovery_title"
@@ -27,12 +35,17 @@
         android:lineSpacingExtra="@dimen/distance_5dp"
         android:textColor="@color/color_313131"
         android:paddingTop="@dimen/distance_10dp"
-        android:paddingBottom="@dimen/distance_10dp"/>
+        android:paddingBottom="@dimen/distance_10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
     <LinearLayout
         android:id="@+id/ll_tag_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
         <TextView
             android:id="@+id/tv_show_top"
             android:layout_marginRight="5dp"
@@ -95,6 +108,10 @@
             android:clickable="false"
             android:longClickable="false"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider_color"/>
 
 </LinearLayout>
 

@@ -100,9 +100,10 @@ public class DisCoveryApi {
     /**
      * 获取tag相关文章列表（活动列表）
      */
-    public static Request getTagResources(String tagId) {
+    public static Request getTagResources(String tagId, String mPage) {
         return PTWDRequestHelper.find()
                 .addParam(TAG_ID, tagId)
+                .addParam(DISCOVERY_PAGE, mPage)
                 .build(RequestMethod.POST, URL_DISCOVERY_TAG_RESOURCES);
     }
 

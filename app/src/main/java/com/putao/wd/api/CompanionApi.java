@@ -495,14 +495,15 @@ public class CompanionApi {
     /**
      * 关注服务号
      */
-    private static final String URL_COMPAIN_SERVICE_RELATION = BASE_URL + "service/relation";
+    private static final String URL_COMPAIN_SERVICE_RELATION = BASE_URL + "/service/relation";
 
     /**
      * 关注服务号
      */
-    public static Request getServiceRelation(String service_id) {
-        return PTWDRequestHelper.start()
-                .addParam(SERVICE_ID, service_id)
+    public static Request getServiceRelation(String service_id, String url) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .addParam(REQUEST_URL, url)
                 .build(RequestMethod.POST, URL_COMPAIN_SERVICE_RELATION);
     }
 }

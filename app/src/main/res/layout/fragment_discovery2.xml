@@ -10,7 +10,7 @@
         style="@style/style_navigation_bar"
         android:background="@color/white"
         auto:nav_has_divider="true"
-        auto:nav_right_icon="@drawable/btn_20_search_p_sel">
+        >
 
         <com.sunnybear.library.view.select.TabBar
             android:id="@+id/tb_bar"
@@ -21,6 +21,7 @@
             <com.sunnybear.library.view.select.TabItem
                 android:id="@+id/ti_video"
                 style="@style/style_tab_bar"
+
                 auto:active="false"
                 auto:activeDrawable="@drawable/label_square_2_l_sel"
                 auto:inactiveDrawable="@drawable/label_square_2_l_nor" />

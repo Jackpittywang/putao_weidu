@@ -28,6 +28,7 @@ import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.ArticleDetailForActivitiesAdapter;
+import com.putao.wd.pt_discovery.ResourceFragment;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
@@ -36,6 +37,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 
@@ -52,6 +54,9 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     public static final String COOL_COUNT = "like_count";
     public static final String COLLECTION_ID = "collection_id";
     public static final String EVENT_COUNT_COOL = "event_count_cool";
+
+    public static final String SHARE_ICON = "share_icon";
+    public static final String ARTICLE = "article";
 
     /*@Bind(R.id.wv_content)
     BasicWebView wv_content;
@@ -102,6 +107,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         super.onViewCreatedFinish(saveInstanceState);
         Collection collection = (Collection) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
+        String str = args.getString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE);
         final ServiceMessageContent content_list;
         if (null != collection) {
             String link_url = collection.getLink_url();
@@ -120,7 +126,11 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             cover_pic = sharePicFromPage;
             service_name = collection.getService_name();
             this.link_url = link_url;
-        } else {
+        } else if(StringUtils.equals(str, ResourceFragment.RESOURCE)){
+            cover_pic = args.getString(SHARE_ICON);
+            link_url = args.getString(BaseWebViewActivity.URL);
+            article_id = args.getString(ARTICLE);
+        }else{
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
             service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
             content_list = messageList.getContent_lists().get(0);

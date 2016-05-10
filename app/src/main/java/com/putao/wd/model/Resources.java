@@ -13,6 +13,17 @@ public class Resources implements Serializable {
     private String sid;//所属服务号/订阅号
     private String link_url;//跳转链接
 
+
+    private String mainTle ;//（自定义）增加的字段用于比较    标签
+
+    public String getMainTle() {
+        return mainTle;
+    }
+
+    public void setMainTle(String mainTle) {
+        this.mainTle = mainTle;
+    }
+
     public String getId() {
         return id;
     }

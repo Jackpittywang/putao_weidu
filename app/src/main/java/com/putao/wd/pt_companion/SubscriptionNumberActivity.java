@@ -8,6 +8,7 @@ import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.SubscribeList;
 import com.putao.wd.pt_companion.adapter.SubscriptionNumberAdapter;
+import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
@@ -46,7 +47,7 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
         rv_content.setAdapter(adapter);
 
         addListener();
-        getSubscribe();
+        getSubscribeList();
     }
 
     //点击事件
@@ -74,13 +75,13 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getSubscribe();
+                getSubscribeList();
             }
         });
     }
 
 
-    private void getSubscribe() {
+    private void getSubscribeList() {
         mPage = 1;
         networkRequest(CompanionApi.getSubscribeList(String.valueOf(mPage)),
                 new SimpleFastJsonCallback<ArrayList<SubscribeList>>(SubscribeList.class, loading) {
@@ -122,5 +123,10 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, subscribeList);
         startActivity(OfficialAccountsActivity.class, bundle);
+    }
+
+    @Subcriber(tag = OfficialAccountsActivity.SUBSCRIBE)
+    private void onSubscribe(String tag) {
+        getSubscribeList();
     }
 }
