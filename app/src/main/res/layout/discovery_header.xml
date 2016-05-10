@@ -41,7 +41,7 @@
         android:layout_alignParentBottom="true"
         android:drawableLeft="@drawable/icon_16_34"
         android:drawablePadding="@dimen/distance_5dp"
-        android:gravity="bottom"
+        android:gravity="center_vertical"
         android:text="热门标签"
         android:textColor="@color/color_313131"
         android:background="@color/white"

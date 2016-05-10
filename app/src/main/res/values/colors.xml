@@ -25,6 +25,7 @@
     <color name="border_color">#cccccc</color>
     <color name="color_C2C2C2">#C2C2C2</color>
     <color name="color_313131">#313131</color>
+    <color name="color_7f313131">#7f313131</color>
     <!--主颜色-->
     <color name="text_main_color_sel">#B57DE4</color>
     <color name="text_main_color_nor">#985EC9</color>

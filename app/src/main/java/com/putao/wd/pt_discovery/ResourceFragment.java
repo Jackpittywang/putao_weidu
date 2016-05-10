@@ -195,13 +195,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 if (result != null) {
                     FindResource top = result.getTop();
                     List<FindResource> list = result.getList();
-                    top.setIs_recommend(true);
-                    top.setIs_top(true);
-                    resous.clear();
-                    resous.add(0, new FindResource());
-                    resous.add(1, new FindResource());
-                    resous.add(top);
-                    resous.addAll(list);
                     if (list != null && list.size() > 0) {
                         resous.clear();
                         resous.add(0, new FindResource());

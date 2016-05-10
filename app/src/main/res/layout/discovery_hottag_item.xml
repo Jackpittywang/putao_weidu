@@ -8,18 +8,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        auto:roundedCornerRadius="3dp"
+        auto:roundedCornerRadius="5dp"
         auto:default_drawable="@drawable/ic_launcher"
         />
+    <!--<com.sunnybear.library.view.image.ImageDraweeView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="fitXY"-->
+        <!--auto:roundedCornerRadius="5dp"-->
+        <!--auto:default_drawable="@color/color_7f313131"-->
+        <!--/>-->
     <TextView
         android:id="@+id/tv_hot_tag"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="蒙板"
         android:gravity="center"
         android:textSize="@dimen/text_size_14sp"
-        android:textColor="@color/color_313131"/>
+        android:textColor="@color/text_color_white"
+        android:background="@drawable/discovery_hottag_marking"/>
 </RelativeLayout>
 
 
