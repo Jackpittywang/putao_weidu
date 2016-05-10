@@ -12,21 +12,16 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.DisCoveryApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Campaign;
-import com.putao.wd.model.DisCovery;
 import com.putao.wd.model.ResourceTag;
 import com.putao.wd.model.Resources;
-import com.putao.wd.model.SubscribeList;
+import com.putao.wd.pt_companion.ArticleDetailForActivitiesActivity;
 import com.putao.wd.pt_discovery.adapter.CampaignAdapter;
-import com.putao.wd.pt_discovery.adapter.LabelAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -90,10 +85,13 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
             @Override
             public void onItemClick(Resources resources, int position) {
                 Bundle bundle = new Bundle();
+                bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE,ResourceFragment.RESOURCE);
+                bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON,resources.getIcon());
+                bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE,resources.getId());
                 bundle.putString(BaseWebViewActivity.TITLE, resources.getTitle());
                 bundle.putString(BaseWebViewActivity.SERVICE_ID, resources.getSid());
                 bundle.putString(BaseWebViewActivity.URL, resources.getLink_url());
-                startActivity(BaseWebViewActivity.class, bundle);
+                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
             }
         });
     }
@@ -112,13 +110,6 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                     } else {
                         rv_content.noMoreLoading();
                     }
-
-//                    if (res.size() < 10) {
-//                        rv_content.noMoreLoading();
-//                    } else {
-//                        mPage++;
-//                        rv_content.loadMoreComplete();
-//                    }
                     loading.dismiss();
                 }
             }
@@ -148,12 +139,6 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                         rv_content.noMoreLoading();
                     }
                 }
-//                if (resources.size() < 10) {
-//                    rv_content.noMoreLoading();
-//                } else {
-//                    mPage++;
-//                    rv_content.loadMoreComplete();
-//                }
                 campaignAdapter.setMainTitleNotify(tag_info.getTag_name());
                 ptl_refresh.refreshComplete();
                 loading.dismiss();
@@ -175,12 +160,6 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
 
     }
 
-//    private void checkLoadMoreComplete(ArrayList<SubscribeList> result) {
-//        if (result == null)
-//            rv_content.noMoreLoading();
-//        else mPage++;
-//    }
-
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
@@ -201,6 +180,4 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                 break;
         }
     }
-
-
 }

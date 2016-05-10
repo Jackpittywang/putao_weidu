@@ -54,6 +54,8 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     @Bind(R.id.btn_no_data)
     Button btn_no_data;
 
+    public static final String RESOURCE = "resource";
+
     private List<FindResource> resous;
     private List<ResourceBanner> banners;
     private ResourceBannerAndTag bannerAndTag;
@@ -77,8 +79,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private RelativeLayout reChildAt;
     private boolean isScroll = true;
     private int mScrollX;
-
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_resource;
@@ -90,9 +90,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         mAdapter = new ResourceAdapter(mActivity, null);
         rv_discovery.setAdapter(mAdapter);
         freshResource();
-
 //        mRelativeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mActivity, 80));
-
         mDiscoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
         addListener();
 
@@ -117,7 +115,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
             public void onLoadMore() {
                 getDisCovery();
             }
-
         });
         final LinearLayoutManager discoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
 
@@ -195,7 +192,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
             @Override
             public void onSuccess(String url, DiscoveryResource result) {
                 cacheData(url, result);
-
                 if (result != null) {
                     FindResource top = result.getTop();
                     List<FindResource> list = result.getList();
@@ -206,10 +202,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                     resous.add(1, new FindResource());
                     resous.add(top);
                     resous.addAll(list);
-
                     if (list != null && list.size() > 0) {
-//                        rl_no_discovery.setVisibility(View.GONE);
-//                        ptl_refresh.setVisibility(View.VISIBLE);
                         resous.clear();
                         resous.add(0, new FindResource());
                         resous.add(1, new FindResource());
@@ -225,15 +218,10 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                         mAdapter.replaceAll(resous);
                         mPage++;
                         rv_discovery.loadMoreComplete();
-
                         isNoResource = false;
                     } else {
                         isNoResource = true;
-
                         rv_discovery.noMoreLoading();
-
-//                        rl_no_discovery.setVisibility(View.VISIBLE);
-//                        ptl_refresh.setVisibility(View.GONE);
                     }
                 }
                 loading.dismiss();
@@ -317,14 +305,15 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL)
     public void eventDiscoveryCarousel(int position) {
-
         ResourceBanner bann = banners.get(position);
         Bundle bundle = new Bundle();
-        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE, "resource");
+        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE, RESOURCE);
+        bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON, bann.getIcon());
+        bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE, bann.getId());
         bundle.putString(BaseWebViewActivity.TITLE, bann.getBanner_title());
         bundle.putString(BaseWebViewActivity.SERVICE_ID, bann.getSid());
         bundle.putString(BaseWebViewActivity.URL, StringUtils.equals(bann.getLocation_type(), "1") ? bann.getLink_url() : bann.getLocation());
-        startActivity(BaseWebViewActivity.class, bundle);
+        startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG)
@@ -339,12 +328,14 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE)
     public void eventDiscoveryResource(FindResource reso) {
-
         Bundle bundle = new Bundle();
+        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE, RESOURCE);
+        bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON, reso.getIcon());
+        bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE, reso.getId());
         bundle.putString(BaseWebViewActivity.TITLE, reso.getTitle());
         bundle.putString(BaseWebViewActivity.SERVICE_ID, reso.getSid());
         bundle.putString(BaseWebViewActivity.URL, reso.getLink_url());
-        startActivity(BaseWebViewActivity.class, bundle);
+        startActivity(ArticleDetailForActivitiesActivity.class, bundle);
     }
 
     @OnClick({R.id.rl_no_discovery, R.id.btn_no_data})
@@ -363,58 +354,3 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         }
     }
 }
-
-
-/*
-        loadResous();
-loadDrawables();
-loadTags();
-        ptl_refresh.setVisibility(View.VISIBLE);
-        mPage++;
-        rv_discovery.loadMoreComplete();
-        ptl_refresh.refreshComplete();
-        loading.dismiss();
-}
-
-
-    private void loadTags() {
-        hotTags = new ArrayList<>();
-        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-        hotTags.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-    }
-
-    private void loadDrawables() {
-        drawables = new ArrayList<>();
-        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-        drawables.add("http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg");
-        drawables.add("http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg");
-        drawables.add("http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg");
-    }
-
-
-*/
-/**
- * 虚拟数据
- *//*
-
-private void loadResous() {
-        resous = new ArrayList<>();
-        tags = new ArrayList<>();
-        tags.add("one");
-        tags.add("two");
-        title = "一二三adfasdfasfasdfasdfasdfasdfasdfasdfasdfasadsfasdfa----sdfasdadf";
-        resous.add(0,new Resou(false, false, "", null, ""));
-        resous.add(1, new Resou(true, true, "http://weidu.file.putaocdn.com/file/4976bada04f9b3c31fb51e0cd6a3237dff026311.jpg", tags, title));
-        title = "5yue5asdfasdfasdfasdf";
-        resous.add(2,new Resou(false, false, "http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg", tags, title));
-
-        tags.add("gogoasdfa");
-        title = "wen";
-        resous.add(3,new Resou(true, false, "http://weidu.file.putaocdn.com/file/d6bcf5c2c6d6cbc408ed7fca3718f76323c8d677.jpg", tags, title));
-        title = "mangadsfasdfasdfasdfadsfasdfasdfasdfasdfasdfasdfas----dfasdfaa";
-        resous.add(4,new Resou(false, false, "http://weidu.file.putaocdn.com/file/f23c5d489aa3d2a96f12a9d1337af3174c38a3a4.jpg", tags, title));
-*/

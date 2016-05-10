@@ -106,4 +106,5 @@ public final class AccountConstants {
         public static final String BUNDLE_DISCOVRY_RESOURCE_TAG_ID = "bundle_discovry_resource_tag_id";
         public static final String BUNDLE_DISCOVERY_ARTICLE = "bundle_discovery_article";
     }
+
 }
