@@ -279,7 +279,7 @@ public class CreateBasicDetailFragment extends BasicFragment implements View.OnC
                 copy.setText(mCreate.getShare_links());
                 ToastUtils.showToastShort(mActivity, "复制成功");
             }
-        });
+        },mCreate.getShare_links());
     }
 
     private void showDidBtn(boolean isEnd) {

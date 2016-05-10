@@ -308,7 +308,7 @@ public class DiaryActivity extends PTWDActivity {
                 }
 
             }
-        });
+        },"http://v.youku.com/v_show/id_" + video_id);
     }
 
     public DiskFileCacheHelper getDiskCacheHelper() {

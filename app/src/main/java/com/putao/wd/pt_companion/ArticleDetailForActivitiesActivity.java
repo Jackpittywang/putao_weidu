@@ -227,7 +227,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 else
                     cancelCollection();
             }
-        });
+        },link_url);
     }
 
     private void addCollect() {

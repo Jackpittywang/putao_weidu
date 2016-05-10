@@ -66,6 +66,12 @@ public class DisPlayActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+
+    }
+
+/*
+    @Override
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         Logger.d("炫耀页面开启");
 
         mSharePopupWindow = new SharePopupWindow(mContext);
@@ -175,6 +181,7 @@ public class DisPlayActivity extends BasicFragmentActivity {
             }
         });
     }
+*/
 
     @Override
     protected String[] getRequestUrls() {

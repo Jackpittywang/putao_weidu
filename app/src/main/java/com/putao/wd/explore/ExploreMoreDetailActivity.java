@@ -182,7 +182,7 @@ public class ExploreMoreDetailActivity extends BasicFragmentActivity implements 
                 copy.setText(mExploreIndex.getShare_url());
                 ToastUtils.showToastShort(mContext, "复制成功");
             }
-        });
+        },mExploreIndex.getShare_url());
         wb_explore_detail.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {

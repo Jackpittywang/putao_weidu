@@ -286,7 +286,7 @@ public class CreateBasicDetailActivity extends BasicFragmentActivity implements 
                 copy.setText(mCreate.getShare_links());
                 ToastUtils.showToastShort(mContext, "复制成功");
             }
-        });
+        },mCreate.getShare_links());
     }
 
     private void showDidBtn(boolean isEnd) {

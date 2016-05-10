@@ -1,6 +1,8 @@
 package com.putao.wd.share;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,13 +22,15 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     private OnShareClickListener mOnShareClickListener;
     private TextView tv_collection;
     private ImageView iv_collection;
+    private String mUrl;
 
-    public void setOnShareClickListener(OnShareClickListener onShareClickListener) {
-        setOnShareClickListener(true, onShareClickListener);
+    public void setOnShareClickListener(OnShareClickListener onShareClickListener,String url) {
+        setOnShareClickListener(true, onShareClickListener,url);
     }
 
-    public void setOnShareClickListener(boolean isCopy, OnShareClickListener onShareClickListener) {
+    public void setOnShareClickListener(boolean isCopy, OnShareClickListener onShareClickListener,String url) {
         this.isCopy = isCopy;
+        this.mUrl = url;
         mOnShareClickListener = onShareClickListener;
         LinearLayout ll_second = (LinearLayout) mRootView.findViewById(R.id.ll_second);
         LinearLayout ll_qq_zone = (LinearLayout) mRootView.findViewById(R.id.ll_qq_zone);
@@ -81,6 +85,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
             R.id.ll_qq_friend,
             R.id.ll_qq_zone,
             R.id.ll_sina_weibo,
+            R.id.ll_safari,
             R.id.ll_copy_url,
             R.id.tv_cancel
     })
@@ -116,6 +121,14 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     break;
                 case R.id.ll_sina_weibo://新浪微博
                     mOnShareClickListener.onSinaWeibo();
+                    break;
+                case R.id.ll_safari://用Safari打开
+                    Intent intent= new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(mUrl);
+                    intent.setData(content_url);
+                    intent.setClassName("com.android.browser","com.android.browser.BrowserActivity");
+                    mContext.startActivity(intent);
                     break;
                 case R.id.ll_copy_url://复制链接
                     mOnShareClickListener.onCopyUrl();

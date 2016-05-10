@@ -167,7 +167,7 @@ public class ExploreDetailFragment extends BasicFragment implements View.OnClick
                 copy.setText(mExploreIndex.getShare_url());
                 ToastUtils.showToastShort(mActivity, "复制成功");
             }
-        });
+        },mExploreIndex.getShare_url());
         wb_explore_detail.setOnWebViewLoadUrlCallback(new BasicWebView.OnWebViewLoadUrlCallback() {
             @Override
             public void onParsePutaoUrl(String scheme, JSONObject result) {

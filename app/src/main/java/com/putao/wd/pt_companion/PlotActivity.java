@@ -54,6 +54,12 @@ public class PlotActivity extends BasicFragmentActivity {
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
+
+    }
+
+/*
+    @Override
+    protected void onViewCreatedFinish(Bundle saveInstanceState) {
         ll_main.scrollTo(0, -2500);
         mSharePopupWindow = new SharePopupWindow(mContext);
         plot = (ExploreProductPlot) args.getSerializable(BUNDLE_DISPLAY_PLOT);
@@ -151,8 +157,8 @@ public class PlotActivity extends BasicFragmentActivity {
                         });
             }
         });
-
     }
+*/
 
     @Override
     protected String[] getRequestUrls() {

@@ -156,7 +156,7 @@ public class ProductDetailActivity extends BasicFragmentActivity implements View
                 copy.setText(shareUrl);
                 ToastUtils.showToastShort(ProductDetailActivity.this, "复制成功");
             }
-        });
+        },shareUrl);
     }
 
     @OnClick({R.id.shopping_add_car, R.id.shopping_back, R.id.shopping_relative_car, R.id.ll_share})
