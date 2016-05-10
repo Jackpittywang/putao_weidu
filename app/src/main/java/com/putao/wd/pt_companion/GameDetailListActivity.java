@@ -2,13 +2,17 @@ package com.putao.wd.pt_companion;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.putao.wd.GlobalApplication;
@@ -29,19 +33,17 @@ import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 //import com.alibaba.fastjson.JSONArray;
 //import com.alibaba.fastjson.JSONObject;
@@ -50,7 +52,7 @@ import butterknife.Bind;
  * 游戏详情页
  * Created by zhanghao on 2016/04/05.
  */
-public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
+public class GameDetailListActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
     @Bind(R.id.ptl_refresh)
@@ -71,11 +73,19 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     @Bind(R.id.vLineRight)
     View vLineRight;*/
 
-    @Bind(R.id.layout_customemenu)
-    LinearLayout layout_customemenu;
+    @Bind(R.id.rl_customemenu)
+    RelativeLayout rl_customemenu;
 
-    @Bind(R.id.layout_custommenu)
-    LinearLayout layout_custommenu;
+    @Bind(R.id.ll_custommenu)
+    LinearLayout ll_custommenu;
+    @Bind(R.id.ll_comment_edit)
+    LinearLayout ll_comment_edit;
+    @Bind(R.id.iv_menu)
+    ImageView iv_menu;
+    @Bind(R.id.iv_send)
+    ImageView iv_send;
+    @Bind(R.id.vp_emojis)
+    ViewPager vp_emojis;
 
 
     private boolean isLoadMore = false;
@@ -87,8 +97,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
     private Companion mCompanion;
     private String mServiceId;
     private ArrayList<ServiceMessageList> lists;
-    private String jsonStr = "{\"customemenu\": [{\"title\":\"菜单一\",\"sub\":[{\"title\":\"居然服务\"},{\"title\":\"居然简介\"},{\"title\":\"居然位置\"},{\"title\":\"顾客留言\"}]},{\"title\":\"菜单二\",\"sub\":[{\"title\":\"传递幸福\"},{\"title\":\"河西印象\"},{\"title\":\"居然新闻\"}]},{\"title\":\"菜单三\",\"sub\":[]}]}";
+    private TranslateAnimation showAnim;
+    private TranslateAnimation hintAnim;
+    //    private String jsonStr = "{\"customemenu\": [{\"title\":\"菜单一\",\"sub\":[{\"title\":\"居然服务\"},{\"title\":\"居然简介\"},{\"title\":\"居然位置\"},{\"title\":\"顾客留言\"}]},{\"title\":\"菜单二\",\"sub\":[{\"title\":\"传递幸福\"},{\"title\":\"河西印象\"},{\"title\":\"居然新闻\"}]},{\"title\":\"菜单三\",\"sub\":[]}]}";
     private PopMenus popupWindow_custommenu;
+    private Animation.AnimationListener mShowMenuListener;
+    private Animation.AnimationListener mShowSendListener;
 
     @Override
     protected int getLayoutId() {
@@ -110,16 +124,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
         rv_content.setAdapter(mGameDetailAdapter);
         lists = new ArrayList<>();
-
-        try {
-            setCustomMenu(new JSONObject(jsonStr));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        initAnim();
         initData();
         initBottomMenu();
         addListener();
     }
+
 
     private void setMainTitleFromNetwork() {
         networkRequest(CompanionApi.getServiceInfo(mServiceId),
@@ -288,18 +298,23 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
         return new String[0];
     }
 
-  /*  @OnClick({R.id.tv_game_step, R.id.tv_game_service})
+    @OnClick({R.id.iv_send, R.id.iv_menu})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_game_step:
-                startActivity(GameStepListActivity.class);
+            case R.id.iv_send:
+                iv_send.setEnabled(false);
+                vp_emojis.setVisibility(View.GONE);
+                hintAnim.setAnimationListener(mShowSendListener);
+                ll_comment_edit.startAnimation(hintAnim);
                 break;
-            case R.id.tv_game_service:
-                startActivity(GameServiceActivity.class);
+            case R.id.iv_menu:
+                iv_menu.setEnabled(false);
+                hintAnim.setAnimationListener(mShowMenuListener);
+                rl_customemenu.startAnimation(hintAnim);
                 break;
         }
-    }*/
+    }
 
     @Override
     public void onLeftAction() {
@@ -325,130 +340,163 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> {
                     public void onSuccess(String url, ArrayList<ServiceMenu> result) {
                         if (result != null && result.size() > 0) {
                             cacheData(CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, result);
-                           /* ll_bottom_menus.setVisibility(View.VISIBLE);
-                            tv_menu_first.setVisibility(View.GONE);
-                            vLineLeft.setVisibility(View.GONE);
-                            tv_menu_second.setVisibility(View.GONE);
-                            vLineRight.setVisibility(View.GONE);
-                            tv_menu_third.setVisibility(View.GONE);
-                            for (int i = 0; i < result.size(); i++) {
-                                ServiceMenu menu = result.get(i);
-                                menuViews[i].setText(menu.getName() + "");
-                                menuViews[i].setTag(menu);
-                                menuViews[i].setVisibility(View.VISIBLE);
-//                                addMenuListener(menuViews[i], i);
-                            }*/
-
-                           /* if (result.size() == 2) {
-                                vLineLeft.setVisibility(View.VISIBLE);
-                            } else if (result.size() == 3) {
-                                vLineLeft.setVisibility(View.VISIBLE);
-                                vLineRight.setVisibility(View.VISIBLE);
-                            }*/
-
-
+                            setCustomMenu(result);
+                            rl_customemenu.setVisibility(View.VISIBLE);
+                            ll_comment_edit.setVisibility(View.GONE);
                         } else {
-//                            ll_bottom_menus.setVisibility(View.GONE);
+                            rl_customemenu.setVisibility(View.GONE);
+                            ll_comment_edit.setVisibility(View.VISIBLE);
                         }
                     }
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
 //                        ll_comment_edit.setVisibility();
+                        rl_customemenu.setVisibility(View.GONE);
+                        ll_comment_edit.setVisibility(View.VISIBLE);
                     }
                 }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
     }
 
-    private void setCustomMenu(JSONObject jsonObject) throws JSONException {
-        JSONArray jsonCustomMenu = jsonObject.getJSONArray("customemenu");
-        if (jsonCustomMenu != null && jsonCustomMenu.length() > 0) {
-            layout_customemenu.setVisibility(View.VISIBLE);
-            layout_custommenu.removeAllViews();
-            JSONArray btnJson = jsonCustomMenu;
-            for (int i = 0; i < btnJson.length(); i++) {
-
-                final JSONObject ob = btnJson.getJSONObject(i);
-                LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_custommenu, null);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
-                layout.setLayoutParams(lp);
-                TextView tv_custommenu_name = (TextView) layout.findViewById(R.id.tv_custommenu_name);
-                tv_custommenu_name.setText(ob.getString("title"));
-                if (ob.getJSONArray("sub").length() > 0) // 显示三角
-                {
-                    tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_black, 0);
-                } else // 隐藏三角
-                {
-                    tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                }
+    private void setCustomMenu(ArrayList<ServiceMenu> result) {
+        for (final ServiceMenu serviceMenu : result) {
+            LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_custommenu, null);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
+            layout.setLayoutParams(lp);
+            final TextView tv_custommenu_name = (TextView) layout.findViewById(R.id.tv_custommenu_name);
+            tv_custommenu_name.setText(serviceMenu.getName());
+            if (null != serviceMenu.getSub_button() && serviceMenu.getSub_button().size() > 0) // 显示三角
+            {
+                tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_black, 0);
                 layout.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        try {
-                            if (ob.getJSONArray("sub").length() == 0) {
-                                Toast.makeText(getApplicationContext(), "主菜单点击事件", Toast.LENGTH_SHORT).show();
-                            } else {
-                                popupWindow_custommenu = new PopMenus(getApplicationContext(), ob.getJSONArray("sub"), v.getWidth() + 10, 0);
-                                popupWindow_custommenu.showAtLocation(v);
+                        popupWindow_custommenu = new PopMenus(getApplicationContext(), serviceMenu.getSub_button(), v.getWidth() + 10, 0) {
+                            @Override
+                            void secondMenuClick(ServiceMenu serviceMenu, int position) {
+                                startToWebViewActivity(serviceMenu);
+
                             }
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+                        };
+                        popupWindow_custommenu.showAtLocation(v);
                     }
                 });
-                layout_custommenu.addView(layout);
+            } else // 隐藏三角
+            {
+                tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                layout.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        startToWebViewActivity(serviceMenu);
+                    }
+                });
             }
-        } else {
-            layout_customemenu.setVisibility(View.GONE);
+            ll_custommenu.addView(layout);
         }
     }
 
-    public void btnShowExchange_Click(View v) {
-        Toast.makeText(getApplicationContext(), "菜单点击事件", 0).show();
+    private void startToWebViewActivity(ServiceMenu serviceMenu) {
+        switch (serviceMenu.getType()) {
+            case "view":
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(BaseWebViewActivity.TITLE, serviceMenu.getName());
+                bundle.putSerializable(BaseWebViewActivity.URL, serviceMenu.getUrl());
+                startActivity(BaseWebViewActivity.class, bundle);
+                break;
+
+        }
     }
 
-  /*  private void addMenuListener(final TextView menuView, final int position) {
-        menuView.setOnClickListener(new View.OnClickListener() {
+    /*  private void addMenuListener(final TextView menuView, final int position) {
+          menuView.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  switch (position) {
+                      case 0:
+                          YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单1");
+                          game_detail_list_panel.setVisibility(View.VISIBLE);
+                          game_detail_list_panel2.setVisibility(View.GONE);
+                          game_detail_list_panel3.setVisibility(View.GONE);
+                          break;
+                      case 1:
+                          YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单2");
+                          game_detail_list_panel.setVisibility(View.GONE);
+                          game_detail_list_panel2.setVisibility(View.VISIBLE);
+                          game_detail_list_panel3.setVisibility(View.GONE);
+                          break;
+                      case 2:
+                          YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单3");
+                          game_detail_list_panel.setVisibility(View.GONE);
+                          game_detail_list_panel2.setVisibility(View.GONE);
+                          game_detail_list_panel3.setVisibility(View.VISIBLE);
+                          break;
+                  }
+  //                ServiceMenu menu = (ServiceMenu) v.getTag();
+  //                if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
+  //                    //跳转web
+  //                    Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+  //                    intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
+  //                    intent.putExtra(BaseWebViewActivity.URL, menu.getUrl());
+  //                    intent.putExtra(BaseWebViewActivity.SERVICE_ID, mCompanion.getService_id());
+  //                    startActivity(intent);
+  //                } else if (ServiceMenu.TYPE_CLICK.equals(menu.getType())) {
+  //                    //TODO
+  //                }
+              }
+          });
+      }*/
+    private void initAnim() {
+        showAnim = new TranslateAnimation(0, 0, DensityUtil.dp2px(mContext, 50), 0);
+        showAnim.setDuration(150);
+        hintAnim = new TranslateAnimation(0, 0, 0, DensityUtil.dp2px(mContext, 50));
+        hintAnim.setDuration(150);
+        mShowSendListener = new Animation.AnimationListener() {
             @Override
-            public void onClick(View v) {
-                switch (position) {
-                    case 0:
-                        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单1");
-                        game_detail_list_panel.setVisibility(View.VISIBLE);
-                        game_detail_list_panel2.setVisibility(View.GONE);
-                        game_detail_list_panel3.setVisibility(View.GONE);
-                        break;
-                    case 1:
-                        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单2");
-                        game_detail_list_panel.setVisibility(View.GONE);
-                        game_detail_list_panel2.setVisibility(View.VISIBLE);
-                        game_detail_list_panel3.setVisibility(View.GONE);
-                        break;
-                    case 2:
-                        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_menu, "菜单3");
-                        game_detail_list_panel.setVisibility(View.GONE);
-                        game_detail_list_panel2.setVisibility(View.GONE);
-                        game_detail_list_panel3.setVisibility(View.VISIBLE);
-                        break;
-                }
-//                ServiceMenu menu = (ServiceMenu) v.getTag();
-//                if (ServiceMenu.TYPE_VIEW.equals(menu.getType()) && !StringUtils.isEmpty(menu.getUrl())) {
-//                    //跳转web
-//                    Intent intent = new Intent(mContext, BaseWebViewActivity.class);
-//                    intent.putExtra(BaseWebViewActivity.TITLE, menu.getName());
-//                    intent.putExtra(BaseWebViewActivity.URL, menu.getUrl());
-//                    intent.putExtra(BaseWebViewActivity.SERVICE_ID, mCompanion.getService_id());
-//                    startActivity(intent);
-//                } else if (ServiceMenu.TYPE_CLICK.equals(menu.getType())) {
-//                    //TODO
-//                }
+            public void onAnimationStart(Animation animation) {
+
             }
-        });
-    }*/
 
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                iv_menu.setEnabled(true);
+                ll_comment_edit.setVisibility(View.GONE);
+                rl_customemenu.setVisibility(View.VISIBLE);
+                rl_customemenu.startAnimation(showAnim);
+            }
 
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
+        mShowMenuListener = new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                iv_send.setEnabled(true);
+                rl_customemenu.setVisibility(View.GONE);
+                ll_comment_edit.setVisibility(View.VISIBLE);
+                ll_comment_edit.startAnimation(showAnim);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        popupWindow_custommenu = null;
+    }
 }
 
 

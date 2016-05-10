@@ -60,7 +60,7 @@ public class ResourceFragment extends BasicFragment {
     private int mPage;
 
     private boolean isShowHead;
-    private RecyclerView childAt;
+    private RelativeLayout childAt;
     //    private RecyclerView.LayoutParams layoutParams;
     private int mScrollX;
     private boolean isScroll = true;
@@ -118,15 +118,15 @@ public class ResourceFragment extends BasicFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (childAt == null) {
                     reChildAt = (RelativeLayout) mDiscoveryLayoutManager.getChildAt(1);
-                    childAt = (RecyclerView) reChildAt.getChildAt(0);
-                    childAt.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    childAt = (RelativeLayout) reChildAt.getChildAt(0);
+                  /*  childAt.addOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override
                         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                             super.onScrolled(recyclerView, dx, dy);
                             if (isScroll)
                                 mScrollX = mScrollX + dx;
                         }
-                    });
+                    });*/
                 }
                 if (mDiscoveryLayoutManager.findFirstVisibleItemPosition() > 0 && !isShowHead) {
                     ((ViewGroup) childAt.getParent()).removeView(childAt);
@@ -137,8 +137,8 @@ public class ResourceFragment extends BasicFragment {
                     ((ViewGroup) childAt.getParent()).removeView(childAt);
                     reChildAt.addView(childAt);
                     isScroll = false;
-                    if (0 == ((LinearLayoutManager) childAt.getLayoutManager()).findFirstCompletelyVisibleItemPosition())
-                        childAt.scrollBy(mScrollX, 0);
+                    /*if (0 == ((LinearLayoutManager) childAt.getLayoutManager()).findFirstCompletelyVisibleItemPosition())
+                        childAt.scrollBy(mScrollX, 0);*/
                     isScroll = true;
                     isShowHead = false;
                 }

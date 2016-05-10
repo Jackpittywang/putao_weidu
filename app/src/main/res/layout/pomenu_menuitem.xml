@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/listview_item_bg_noborder"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/pop_item_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="10dip"
+        android:padding="8dip"
         android:text="-"
         android:textColor="@color/gray_black"
-        android:textSize="14dip" />
+        android:textSize="12dip" />
 
     <View
         android:id="@+id/pop_item_line"

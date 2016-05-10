@@ -223,4 +223,8 @@
         <item name="android:windowEnterAnimation">@anim/bottom_enter_animation</item>
         <item name="android:windowExitAnimation">@anim/bottom_exit_animation</item>
     </style>
+    <style name="smart_in_anim_style">
+        <item name="android:windowEnterAnimation">@anim/smart_alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/smart_alpha_out</item>
+    </style>
 </resources>

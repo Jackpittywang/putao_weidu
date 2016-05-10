@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.model.Diary;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.sunnybear.library.util.DateUtils;
@@ -32,6 +33,18 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, GameDeta
     public int getLayoutId(int viewType) {
         return R.layout.activity_game_detail_list_item;
     }
+
+    /*@Override
+    public int getMultiItemViewType(int position) {
+        Diary diary = getItem(position);
+        if (diary.getTag_type() == 1 || diary.getTag_type() == 2) {
+            if (diary.getOption_type() == 1)
+                return TYPE_CHALLENGE;
+            if (diary.getOption_type() == 2)
+                return TYPE_CHALLENGE_PIC;
+        }
+        return TYPE_TASKS;
+    }*/
 
     @Override
     public GameDetailAdapter.GameDetailHolder getViewHolder(View itemView, int viewType) {
