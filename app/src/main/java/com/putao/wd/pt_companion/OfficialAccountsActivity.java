@@ -379,7 +379,6 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
      * 是否已关联/订阅
      */
     private void isSubscribeCoampin() {
-        navigation_bar.getRightView().setVisibility(View.VISIBLE);
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {//清除内容
@@ -425,13 +424,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                             if (result.is_relation()) {//是否关注
                                 isSubscribeCoampin();
                             } else {
-//                                navigation_bar.getRightView().setVisibility(View.GONE);
+                                navigation_bar.getRightView().setVisibility(View.GONE);
                                 tv_relation_companion.setText(result.isService_type() ? "关联产品" : "立即订阅");
                             }
 
                             //是否可以解绑
                             if (result.is_unbunding()) {
-//                                tv_relation_companion.setVisibility(View.GONE);
+                                tv_relation_companion.setVisibility(View.GONE);
                                 navigation_bar.getRightView().setVisibility(View.GONE);
                             }
                         }
