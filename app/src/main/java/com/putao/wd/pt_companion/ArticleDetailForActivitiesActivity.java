@@ -130,6 +130,8 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             cover_pic = args.getString(SHARE_ICON);
             link_url = args.getString(BaseWebViewActivity.URL);
             article_id = args.getString(ARTICLE);
+            title = args.getString(BaseWebViewActivity.TITLE);
+            service_id = args.getString(BaseWebViewActivity.SERVICE_ID);
         }else{
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
             service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);

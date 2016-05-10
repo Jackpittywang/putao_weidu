@@ -155,7 +155,7 @@
                 <LinearLayout
                     android:id="@+id/ll_copy_url"
                     style="@style/style_share_button"
-                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
                     android:visibility="visible">
 
                     <ImageView

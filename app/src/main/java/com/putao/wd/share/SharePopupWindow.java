@@ -122,7 +122,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                 case R.id.ll_sina_weibo://新浪微博
                     mOnShareClickListener.onSinaWeibo();
                     break;
-                case R.id.ll_safari://用Safari打开
+                case R.id.ll_safari://用本机浏览器打开
                     Intent intent= new Intent();
                     intent.setAction("android.intent.action.VIEW");
                     Uri content_url = Uri.parse(mUrl);
