@@ -11,20 +11,9 @@ import android.net.NetworkInfo;
 public class NetworkUtil {
 
     public static boolean isNetworkAvailable(Context context) {
-       /* ConnectivityManager connectivityManager =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            Network[] allNetworks = connectivityManager.getAllNetworks();
-            for (int i = 0; i < allNetworks.length; i++) {
-                NetworkInfo networkInfo = connectivityManager.getNetworkInfo(allNetworks[i]);
-                if (networkInfo != null) {
-                    NetworkInfo.State state = networkInfo.getState();
-                    if (NetworkInfo.State.CONNECTED == state) {
-                        return true;
-                    }
-                }
-            }
-        }*/
-        return true;
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo == null) return false;
+        return mNetworkInfo.isAvailable();
     }
 }
