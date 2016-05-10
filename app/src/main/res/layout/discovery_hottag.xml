@@ -6,24 +6,19 @@
     android:layout_height="80dp"
     android:background="@color/white">
 
-    <RelativeLayout
+
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@+id/rv_discovery_hot_tag"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/white">
-
-        <com.sunnybear.library.view.recycler.BasicRecyclerView
-            android:id="@+id/rv_discovery_hot_tag"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:visibility="visible"
-            auto:divider_width="10dp"
-            auto:has_rank_divider="true"
-            auto:layout_mode="horizontal" />
-    </RelativeLayout>
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:visibility="visible"
+        auto:divider_width="10dp"
+        auto:has_rank_divider="true"
+        auto:layout_mode="horizontal" />
 </RelativeLayout>

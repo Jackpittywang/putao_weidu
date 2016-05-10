@@ -26,8 +26,8 @@
         auto:align="ALIGN_PARENT_RIGHT"
         auto:autoTurningTime="3"
         android:background="@color/text_color_gray"
-        auto:fillDrawable="@drawable/icon_logistics_flow_old"
-        auto:pageDrawable="@drawable/icon_logistics_flow_latest" />
+        auto:fillDrawable="@drawable/dot_8_nor"
+        auto:pageDrawable="@drawable/dot_8_sel" />
     <View
         android:id="@+id/view"
         android:layout_above="@+id/tv_discovery_hottag"

@@ -83,6 +83,7 @@ public final class AccountConstants {
         public static final String EVENT_DISCOVERY_CAROUSEL = "event_discovery_Carousel";
         public static final String EVENT_DISCOVERY_HOT_TAG = "event_discovery_hot_tag";
         public static final String EVENT_DISCOVERY_RESOURCE = "event_discovery_resource";
+        public static final String EVENT_DISCOVERY_RESOURCE_TAG = "event_discovery_resource_tag";
 
     }
 
@@ -102,5 +103,7 @@ public final class AccountConstants {
         public static final String BUNDLE_STORE_ISHAVE = "bundle_store_ishave";
         public static final String BUNDLE_DISCOVRY_RESOURCE_TAG = "bundle_discovry_resource_tag";
         public static final String BUNDLE_DISCOVRY_RESOURCE_FIND = "bundle_discovry_resource_find";
+        public static final String BUNDLE_DISCOVRY_RESOURCE_TAG_ID = "bundle_discovry_resource_tag_id";
+        public static final String BUNDLE_DISCOVERY_ARTICLE = "bundle_discovery_article";
     }
 }

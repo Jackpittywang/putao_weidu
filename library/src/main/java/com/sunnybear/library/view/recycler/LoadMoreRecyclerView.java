@@ -125,4 +125,62 @@ public class LoadMoreRecyclerView extends BasicRecyclerView {
 
         void onLoadMore();
     }
+
+//    private float startY = -1;
+//    private float startX = -1;
+//
+//
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                startY = ev.getY();
+//                startX = ev.getX();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//
+//                float moveX = ev.getX();
+//                float moveY = ev.getY();
+//
+//                float diffX = moveX - startX;
+//                float diffY = moveY - startY;
+//
+//                if (Math.abs(diffX) > Math.abs(diffY)) {
+//                    //水平滑动
+//                    return false;
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                break;
+//        }
+//        return super.onTouchEvent(ev);
+//    }
+
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                startY = ev.getY();
+//                startX = ev.getX();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//
+//                float moveX = ev.getX();
+//                float moveY = ev.getY();
+//
+//                float diffX = moveX - startX;
+//                float diffY = moveY - startY;
+//
+//                if (Math.abs(diffX) > Math.abs(diffY)) {
+//                    //水平滑动
+//                    return false;
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                break;
+//        }
+//        return super.onInterceptTouchEvent(ev);
+//    }
 }

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.DisCovery;
+import com.putao.wd.model.DiscoveryTag;
 import com.putao.wd.model.Resources;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -20,7 +21,8 @@ import butterknife.Bind;
  * Created by Administrator on 2016/5/5.
  */
 public class CampaignAdapter extends LoadMoreAdapter<Resources, CampaignAdapter.CampaignViewHolder> {
-
+    private String mainTitle;
+    private List<DiscoveryTag> listTagDatas;
     public CampaignAdapter(Context context, List<Resources> resources) {
         super(context, resources);
     }
@@ -51,4 +53,9 @@ public class CampaignAdapter extends LoadMoreAdapter<Resources, CampaignAdapter.
             super(itemView);
         }
     }
+    public void setMainTitleNotify(String mainTitle){
+        this.mainTitle = mainTitle;
+        notifyDataSetChanged();
+    }
+
 }

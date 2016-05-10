@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ResourceTag;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
@@ -38,7 +39,8 @@ public class HotTagAdapter extends BasicAdapter<ResourceTag,HotTagAdapter.HotHol
     @Override
     public void onBindItem(HotHolder holder, ResourceTag tag, int position) {
         holder.idv_tag.setImageURL(tag.getTag_icon());
-        holder.tv_hot_tag.setText(position/2 == 0 ? "主题":"活动");
+        //holder.tv_hot_tag.setText(StringUtils.equals(tag.getDisplay_type(),"0") ? tag.getTag_name():"活动");
+        holder.tv_hot_tag.setText(tag.getTag_name());
     }
 
     static class HotHolder extends BasicViewHolder{

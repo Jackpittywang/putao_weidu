@@ -70,13 +70,6 @@ public class PutaoDiscovery2Fragment extends PTWDFragment<GlobalApplication>{
         return new String[0];
     }
 
-
-    @Override
-    public void onRightAction() {
-        super.onRightAction();
-        ToastUtils.showToastShort(mActivity,"这是搜索按钮");
-    }
-
 //    @OnClick({R.id.ti_video,R.id.ti_resource})
 //    @Override
 //    public void onClick(View v) {
