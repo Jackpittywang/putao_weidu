@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
-import com.putao.wd.model.Question;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;

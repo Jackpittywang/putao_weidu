@@ -21,6 +21,7 @@ public class CompanionApi {
     private static final String REQUEST_PICS = "pics";//作品图片，多图
     private static final String REQUEST_SERVICE_ID = "service_id";//服务号id
     private static final String REQUEST_SEND_DATA = "send_data";//接收推送的数据包，转发给纬度服务器
+    private static final String REQUEST_LAST_PULL_ID = "last_pull_id";//最后拉取id，每10条返回，连续多次拉取将最后拉取的id继续传入请求
     private static final String REQUEST_URL = "url";
     private static final String REQUEST_RWD_MID = "wd_mid";//点赞文章ID
     private static final String SERVICE_ID = "sid"; //服务号唯一service_id
@@ -110,6 +111,19 @@ public class CompanionApi {
     public static Request getServiceLists(String send_data, String service_id) {
         return PTWDRequestHelper.start()
                 .addParam(REQUEST_SEND_DATA, send_data)
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .build(RequestMethod.POST, URL_SERVICE_MESSAGE_LISTS);
+    }
+
+    /**
+     * 公众号消息获取
+     *
+     * @param last_pull_id 最后拉取id，每10条返回，连续多次拉取将最后拉取的id继续传入请求
+     * @param service_id   服务号唯一id
+     */
+    public static Request getServicesLists(String service_id, String last_pull_id) {
+        return PTWDRequestHelper.start()
+                .addParam(REQUEST_LAST_PULL_ID, last_pull_id)
                 .addParam(REQUEST_SERVICE_ID, service_id)
                 .build(RequestMethod.POST, URL_SERVICE_MESSAGE_LISTS);
     }
