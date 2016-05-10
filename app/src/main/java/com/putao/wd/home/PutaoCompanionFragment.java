@@ -269,8 +269,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 startActivity(GameDetailListActivity.class, bundle);
             }
         } else {
-            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, true);
-            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, companion.getService_id());
+//            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, true);
+//            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, companion.getService_id());
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, true);
+            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
             startActivity(OfficialAccountsActivity.class, bundle);
         }
     }

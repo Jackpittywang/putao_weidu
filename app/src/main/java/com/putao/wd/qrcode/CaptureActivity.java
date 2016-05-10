@@ -452,7 +452,8 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
                                 PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                                 startActivity(GameDetailListActivity.class, bundle);
-                                ToastUtils.showToastShort(mContext, "添加成功");
+                                ToastUtils.showToastShort(mContext, "关注成功");
+
 
                             } else if (http_code == 4201)
                                 ToastUtils.showToastShort(mContext, "重复绑定");

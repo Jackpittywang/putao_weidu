@@ -41,18 +41,22 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
     @Override
     public void onBindItem(CompanionAdapter.CompanionHolder holder, Companion companion, int position) {
 
-        holder.iv_icon.setImageURL(companion.getService_icon());
+
         holder.tv_title.setText(companion.getService_name());
         holder.tv_intro.setText(companion.getService_description());
+        if (companion.getService_type() == 0)
+            holder.iv_icon.setBackgroundResource(R.drawable.img_head_subscribe_default);
+        else
+            holder.iv_icon.setImageURL(companion.getService_icon());
         if (1 == companion.getIs_relation()) {
             holder.tv_time.setText(DateUtils.timeCalculate(companion.getRelation_time() * 1000L));
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
-           // holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));
+            // holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
         } else {
             holder.tv_time.setText("未关联");
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_main_color_nor));
-         //   holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
+            //   holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
         }
         int size = companion.getNotDownloadIds().size();
