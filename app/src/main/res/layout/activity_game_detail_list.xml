@@ -21,16 +21,15 @@
         <com.sunnybear.library.view.PullToRefreshLayout
             android:id="@+id/ptl_refresh"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="45dp"
             auto:refresh_layout="@layout/sky_wheel_refresh_header"
             auto:refresh_layout_height="120">
 
             <com.sunnybear.library.view.recycler.BasicRecyclerView
                 android:id="@+id/rv_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_EBEBEB" />
+                android:layout_height="wrap_content" />
 
         </com.sunnybear.library.view.PullToRefreshLayout>
 

@@ -32,6 +32,10 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         public final static Property is_download = new Property(5, String.class, "is_download", false, "IS_DOWNLOAD");
         public final static Property uid = new Property(6, String.class, "uid", false, "UID");
         public final static Property key = new Property(7, String.class, "key", true, "KEY");
+        public final static Property message = new Property(8, String.class, "message", true, "MESSAGE");
+        public final static Property image = new Property(9, String.class, "image", true, "IMAGE");
+        public final static Property reply = new Property(10, String.class, "reply", true, "REPLY");
+        public final static Property is_upload_finish = new Property(11, String.class, "reply", true, "IS_UPLOAD_FINISH");
     }
 
 
@@ -56,7 +60,11 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
                 "\"" + Properties.content_lists.columnName + "\"" + " TEXT," +
                 "\"" + Properties.is_download.columnName + "\"" + " TEXT," +
                 "\"" + Properties.uid.columnName + "\"" + " TEXT," +
-                "\"" + Properties.key.columnName + "\"" + "  TEXT PRIMARY KEY NOT NULL)";
+                "\"" + Properties.key.columnName + "\"" + "  TEXT PRIMARY KEY NOT NULL," +
+                "\"" + Properties.message.columnName + "\"" + " TEXT," +
+                "\"" + Properties.image.columnName + "\"" + " TEXT," +
+                "\"" + Properties.reply.columnName + "\"" + " TEXT," +
+                "\"" + Properties.is_upload_finish.columnName + "\"" + " TEXT)";
         db.execSQL(str);
     }
 
@@ -89,7 +97,11 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
                 cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // content_lists
                 cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // is_download
                 cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // uid
-                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // key
+                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // key
+                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // message
+                cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // image
+                cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // reply
+                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // is_upload_finish
         );
         return entity;
     }
@@ -107,6 +119,10 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         entity.setIsDownload(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setUid(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setKey(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setMessage(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setImage(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setReply(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setKey(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
     }
 
     @Override
@@ -147,6 +163,22 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         String key = entity.getKey();
         if (key != null) {
             stmt.bindString(8, key);
+        }
+        String message = entity.getMessage();
+        if (key != null) {
+            stmt.bindString(9, message);
+        }
+        String image = entity.getImage();
+        if (image != null) {
+            stmt.bindString(10, image);
+        }
+        String reply = entity.getReply();
+        if (reply != null) {
+            stmt.bindString(11, reply);
+        }
+        String is_upload_finish = entity.getIs_upload_finish();
+        if (is_upload_finish != null) {
+            stmt.bindString(12, is_upload_finish);
         }
     }
 

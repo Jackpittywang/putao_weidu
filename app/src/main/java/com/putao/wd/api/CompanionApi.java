@@ -27,6 +27,8 @@ public class CompanionApi {
     private static final String REQUEST_TYPE = "type";
     private static final String REQUEST_LINK_URL = "link_url";
     private static final String REQUST_OPEN_ID = "open_id";//用户与公众号的唯一ID
+    private static final String REQUST_MESSAGE = "message";//提问内容
+    private static final String REQUST_TYPE = "type";//1文本，2图片
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-wd.putao.com";//基础url
@@ -505,5 +507,21 @@ public class CompanionApi {
                 .addParam(REQUEST_SERVICE_ID, service_id)
                 .addParam(REQUEST_URL, url)
                 .build(RequestMethod.POST, URL_COMPAIN_SERVICE_RELATION);
+    }
+
+    /**
+     * 关注服务号
+     */
+    private static final String URL_COMPAIN_SERVICE_QUIZ = BASE_URL + "/service/quiz";
+
+    /**
+     * 关注服务号
+     */
+    public static Request sendServiceQuiz(String service_id, String message, int type) {
+        return PTWDRequestHelper.find()
+                .addParam(REQUEST_SERVICE_ID, service_id)
+                .addParam(REQUST_MESSAGE, message)
+                .addParam(REQUST_TYPE, type + "")
+                .build(RequestMethod.POST, URL_COMPAIN_SERVICE_QUIZ);
     }
 }

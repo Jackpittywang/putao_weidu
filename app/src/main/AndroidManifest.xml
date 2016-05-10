@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.putao.wd"
     android:versionCode="5"
-    android:versionName="1.3.0">
+    android:versionName="1.3.1">
 
     <permission
         android:name="com.putao.wd.permission.JPUSH_MESSAGE"

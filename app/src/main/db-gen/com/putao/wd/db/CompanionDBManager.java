@@ -97,14 +97,32 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 插入没有带下载的文章
      */
     public void insertFixDownload(String service_id, String id) {
-        insert(new CompanionDB(id, service_id, "article", "", "", 0 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid()));
+        insert(new CompanionDB(id, service_id, "article", "", "", 0 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid(), "", "", "", ""));
     }
 
     /**
      * 插入已经下载的文章
      */
     public void insertFinishDownload(String service_id, String id, String release_time, String content_lists) {
-        insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid()));
+        insert(new CompanionDB(id, service_id, "article", release_time, content_lists, 1 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid(), "", "", "", ""));
+    }
+
+    /**
+     * 插入上传的文字
+     */
+    public String insertUploadText(String service_id, String message) {
+        String currentTime = (int) (System.currentTimeMillis() / 1000) + "";
+        insert(new CompanionDB(currentTime, service_id, "upload_text", currentTime, "", 1 + "", AccountHelper.getCurrentUid(), currentTime + AccountHelper.getCurrentUid(), message, "", "", ""));
+        return currentTime;
+    }
+
+    /**
+     * 插入上传的图片
+     */
+    public String insertUploadImage(String service_id, String imageUrl) {
+        String currentTime = (int) (System.currentTimeMillis() / 1000) + "";
+        insert(new CompanionDB(currentTime, service_id, "upload_image", currentTime, "", 1 + "", AccountHelper.getCurrentUid(), currentTime + AccountHelper.getCurrentUid(), imageUrl, "", "", ""));
+        return currentTime;
     }
 
     /**

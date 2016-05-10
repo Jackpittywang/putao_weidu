@@ -131,8 +131,11 @@ public class GlobalApplication extends BasicApplication {
                 mHelper = new DaoMaster.OpenHelper(getApplicationContext(), "putao-weidu.db", null) {
                     @Override
                     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-                        if (oldVersion < 2)
+                        if (oldVersion == 1)
                             CompanionDBDao.createTable(db, false);
+                        else if (oldVersion == 2) {
+                            
+                        }
                     }
                 };
     }
@@ -173,7 +176,7 @@ public class GlobalApplication extends BasicApplication {
     @Override
     protected boolean isDebug() {
         return true;
-   //     return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+        //     return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override

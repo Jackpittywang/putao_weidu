@@ -3,6 +3,7 @@ package com.putao.wd.home;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MyViewPager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,7 +146,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                 ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
                                 try {
                                     CompanionDB companionDB = dataBaseManager.getNearestItem(companion.getService_id());
-                                    if (companionDB != null) {
+                                    if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
                                         int time = Integer.parseInt(companionDB.getRelease_time());
                                         if (time > 0) {
                                             companion.setRelation_time(time);

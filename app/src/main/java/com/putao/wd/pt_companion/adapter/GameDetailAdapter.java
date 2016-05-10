@@ -31,6 +31,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     private static final int TYPE_REPLY = 2;
     private static final int TYPE_ARTICLE = 3;
     private Context mContent;
+    public final static String UPLOAD_TEXT_TYPE = "upload_text";
+    public final static String UPLOAD_TEXT_IMAGE = "upload_image";
 
     public GameDetailAdapter(Context context, List<ServiceMessageList> serviceMessageList) {
         super(context, serviceMessageList);
@@ -114,7 +116,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     break;
 
             }
-            askViewHolder.question_item_ask_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
+            askViewHolder.question_item_answer_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
         } else if (holder instanceof GameDetailHolder) {
             GameDetailHolder gameDetailHolder = (GameDetailHolder) holder;
             gameDetailHolder.tv_time.setText("───    " + date + "    ───");
@@ -187,8 +189,21 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     }
                 }
             }
-        } else {
-
+        } else if (holder instanceof QuestionLocalViewHolder) {
+            QuestionLocalViewHolder questionLocalViewHolder = (QuestionLocalViewHolder) holder;
+            questionLocalViewHolder.question_item_ask_time.setText("───    " + date + "    ───");
+            switch (serviceMessageList.getType()) {
+                case UPLOAD_TEXT_TYPE:
+                    questionLocalViewHolder.question_item_ask_image.setVisibility(View.GONE);
+                    questionLocalViewHolder.question_item_ask_context.setVisibility(View.VISIBLE);
+                    questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage());
+                    break;
+                case UPLOAD_TEXT_IMAGE:
+                    questionLocalViewHolder.question_item_ask_image.setVisibility(View.VISIBLE);
+                    questionLocalViewHolder.question_item_ask_context.setVisibility(View.GONE);
+                    questionLocalViewHolder.question_item_ask_image.setImageURL(serviceMessageList.getImage().getPic());
+                    break;
+            }
         }
     }
 
@@ -243,8 +258,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         @Bind(R.id.question_item_answer_context)
         EmojiTextView question_item_answer_context;
 
-        @Bind(R.id.question_item_ask_icon)
-        ImageDraweeView question_item_ask_icon;
+        @Bind(R.id.question_item_answer_icon)
+        ImageDraweeView question_item_answer_icon;
         @Bind(R.id.tv_ask)
         TextView tv_ask;
         @Bind(R.id.tv_reply)

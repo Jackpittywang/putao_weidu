@@ -3,23 +3,27 @@ package com.putao.wd.pt_companion;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
+import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
@@ -36,6 +40,8 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -90,6 +96,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     ViewPager vp_emojis;
     @Bind(R.id.v_split)
     View v_split;
+    @Bind(R.id.et_msg)
+    EditText et_msg;
 
 
     private boolean isLoadMore = false;
@@ -106,6 +114,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private PopMenus popupWindow_custommenu;
     private Animation.AnimationListener mShowMenuListener;
     private Animation.AnimationListener mShowSendListener;
+    private String msg;
+    private CompanionDBManager mDataBaseManager;
 
     @Override
     protected int getLayoutId() {
@@ -115,6 +125,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        mDataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         mCompanion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
         if (null != mCompanion) {
             setMainTitle(mCompanion.getService_name());
@@ -131,6 +142,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         initData();
         initBottomMenu();
         addListener();
+
     }
 
 
@@ -169,14 +181,22 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         if (null != downloadArticles) {
             for (CompanionDB companionDB : downloadArticles) {
                 ServiceMessageList serviceMessageList = new ServiceMessageList();
-                serviceMessageList.setType(companionDB.getType());
-//                serviceMessageList.setIsShowData(true);
-                serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
+                String content_lists = companionDB.getContent_lists();
+                String message = companionDB.getMessage();
+
+                if (!TextUtils.isEmpty(content_lists))
+                    serviceMessageList.setContent_lists(JSON.parseArray(content_lists, ServiceMessageContent.class));
+                if (!TextUtils.isEmpty(message)) {
+                    serviceMessageList.setMessage(message);
+                }
                 serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
+                serviceMessageList.setType(companionDB.getType());
+                serviceMessageList.setId(companionDB.getId());
                 lists.add(serviceMessageList);
             }
             mGameDetailAdapter.replaceAll(lists);
-            rv_content.scrollToPosition(lists.size() - 1);
+            if (lists.size() > 0)
+                rv_content.scrollToPosition(lists.size() - 1);
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
 //        mPage = 1;
@@ -286,12 +306,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         rv_content.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {
             @Override
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
-                Bundle bundle = new Bundle();
+
+               /* Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mCompanion.getService_name());
                 bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
-                startActivity(ArticleDetailForActivitiesActivity.class, bundle);
+                startActivity(ArticleDetailForActivitiesActivity.class, bundle);*/
             }
         });
     }
@@ -301,7 +322,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         return new String[0];
     }
 
-    @OnClick({R.id.iv_send, R.id.iv_menu})
+    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -316,7 +337,48 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 hintAnim.setAnimationListener(mShowMenuListener);
                 rl_customemenu.startAnimation(hintAnim);
                 break;
+            case R.id.tv_send://点击发送
+                sendAsk();
+                break;
         }
+    }
+
+    private void sendAsk() {
+        msg = et_msg.getText().toString();
+        if (msg.trim().isEmpty()) {
+            ToastUtils.showToastShort(mContext, "不能发送空消息");
+            return;
+        }
+        ServiceMessageList serviceMessageList = new ServiceMessageList();
+        serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+        serviceMessageList.setMessage(msg);
+        serviceMessageList.setType("upload_text");
+        mGameDetailAdapter.add(serviceMessageList);
+        mDataBaseManager.insertUploadText(mServiceId, msg);
+        rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+        networkRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
+                new SimpleFastJsonCallback<String>(String.class, loading) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        if (!TextUtils.isEmpty(result)) {
+                            JSONObject jsonObject = JSONObject.parseObject(result);
+                            String message = (String) jsonObject.get("message");
+                            if (!TextUtils.isEmpty(message)) return;
+                            ServiceMessageList serviceMessageList = new ServiceMessageList();
+                            serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+                            serviceMessageList.setType("text");
+                            serviceMessageList.setMessage(message);
+                            mGameDetailAdapter.add(serviceMessageList);
+//                            mDataBaseManager.insertUploadText(mServiceId, msg);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastShort(mContext, "发送失败，请检查您的网络");
+                    }
+                });
     }
 
     @Override
@@ -457,9 +519,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
       }*/
     private void initAnim() {
         showAnim = new TranslateAnimation(0, 0, DensityUtil.dp2px(mContext, 50), 0);
-        showAnim.setDuration(150);
+        showAnim.setDuration(100);
         hintAnim = new TranslateAnimation(0, 0, 0, DensityUtil.dp2px(mContext, 50));
-        hintAnim.setDuration(150);
+        hintAnim.setDuration(100);
         mShowSendListener = new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
