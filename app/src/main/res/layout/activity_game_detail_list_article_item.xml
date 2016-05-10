@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="───  ##:##  ───"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/text_size_12sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_campaign"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <!--标题图-->
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_sign"
+                style="@style/image_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EBEBEB"
+                android:clickable="false"
+                auto:aspect_ratio="2"
+                auto:placeholderImage="@drawable/img_image_default_m" />
+
+            <TextView
+                android:id="@+id/tv_title_multi"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/iv_sign"
+                android:background="#55000000"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <!--活动状态-->
+        <TextView
+            android:id="@+id/tv_action_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/action_ing_background"
+            android:padding="4dp"
+            android:text="进行中"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp"
+            android:visibility="gone" />
+
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="2"
+            android:text="陪孩子一起学数学"
+            android:textColor="@color/color_313131"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/marketing_sign_shape"
+            android:padding="5dp"
+            android:text="话题征集"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="gone" />
+
+        <!--摘要-->
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="2"
+            android:text="可以陪孩子一起学数学让孩子对数字敏感,限制两行.可以陪孩子一起学数学让孩子对数字敏感,限制两行"
+            android:textColor="@color/text_color_gray"
+            android:textSize="@dimen/text_size_14sp" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_article1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:id="@+id/tv_article1"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="顺利通过，快去第一个评论吧"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_article1"
+                style="@style/image_style"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:padding="8dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_article2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:id="@+id/tv_article2"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="顺利通过，快去第一个评论吧"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_article2"
+                style="@style/image_style"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:padding="8dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_article3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:id="@+id/tv_article3"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="顺利通过，快去第一个评论吧"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_article3"
+                style="@style/image_style"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:padding="8dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_article4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:id="@+id/tv_article4"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="顺利通过，快去第一个评论吧"
+                android:textColor="@color/color_313131"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_article4"
+                style="@style/image_style"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:padding="8dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

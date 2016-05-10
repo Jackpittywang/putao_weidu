@@ -83,6 +83,7 @@ public final class AccountConstants {
         public static final String EVENT_DISCOVERY_CAROUSEL = "event_discovery_Carousel";
         public static final String EVENT_DISCOVERY_HOT_TAG = "event_discovery_hot_tag";
         public static final String EVENT_DISCOVERY_RESOURCE = "event_discovery_resource";
+        public static final String EVENT_GAME_START_ACTIVITY = "event_game_start_activity";
         public static final String EVENT_DISCOVERY_RESOURCE_TAG = "event_discovery_resource_tag";
 
     }
