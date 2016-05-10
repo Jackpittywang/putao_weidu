@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/distance_10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/company_plus_selector"
             android:padding="10dp" />
     </RelativeLayout>

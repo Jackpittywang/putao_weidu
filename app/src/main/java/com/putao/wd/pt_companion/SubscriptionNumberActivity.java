@@ -129,4 +129,9 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
     private void onSubscribe(String tag) {
         getSubscribeList();
     }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void refresh_subscribe(String tag) {
+        getSubscribeList();
+    }
 }

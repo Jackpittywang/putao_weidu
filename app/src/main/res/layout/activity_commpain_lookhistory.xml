@@ -83,7 +83,7 @@
             android:layout_below="@+id/img_no_data"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:text="还没有历史文章"
+            android:text="暂无历史文章"
             android:textColor="@color/text_color_gray"
             android:textSize="@dimen/text_size_20sp" />
     </RelativeLayout>
