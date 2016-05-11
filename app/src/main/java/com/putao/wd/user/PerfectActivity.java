@@ -1,7 +1,6 @@
 package com.putao.wd.user;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,9 +25,9 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
 import com.putao.wd.model.UserInfo;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.model.http.callback.UploadCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
@@ -249,7 +248,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadFileTask.UploadCallback() {
+                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());

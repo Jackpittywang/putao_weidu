@@ -42,9 +42,9 @@ import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
-import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.model.http.callback.UploadCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.KeyboardUtils;
@@ -577,7 +577,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadFileTask.UploadCallback() {
+                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());

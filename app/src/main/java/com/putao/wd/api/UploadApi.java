@@ -4,6 +4,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountHelper;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.UploadFileTask;
+import com.sunnybear.library.model.http.callback.UploadCallback;
 import com.sunnybear.library.model.http.request.MultiPartRequestBuilder;
 
 import java.io.File;
@@ -56,7 +57,7 @@ public class UploadApi {
      * @param file        上传文件
      * @return
      */
-    public static void uploadFile(String uploadToken, String sha1, File file, UploadFileTask.UploadCallback callback) {
+    public static void uploadFile(String uploadToken, String sha1, File file, UploadCallback callback) {
         UploadFileTask.newInstance()
                 .addParam(REQUEST_APP_ID, UPLOAD_APP_ID)
                 .addParam(REQUEST_UPLOAD_TOKEN, uploadToken)

@@ -25,18 +25,18 @@ import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.base.SelectPopupWindow;
-import com.putao.wd.pt_me.address.AddressListActivity;
-import com.putao.wd.pt_me.order.OrderListActivity;
-import com.putao.wd.pt_me.service.adapter.ChangeBackListAdapter;
 import com.putao.wd.model.Address;
 import com.putao.wd.model.Order;
 import com.putao.wd.model.OrderProduct;
 import com.putao.wd.model.ProductData;
 import com.putao.wd.model.ServiceBackImage;
+import com.putao.wd.pt_me.address.AddressListActivity;
+import com.putao.wd.pt_me.order.OrderListActivity;
+import com.putao.wd.pt_me.service.adapter.ChangeBackListAdapter;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
-import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.model.http.callback.UploadCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
@@ -354,7 +354,7 @@ public class ServiceChangeBackActivity extends PTWDActivity<GlobalApplication> i
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadFileTask.UploadCallback() {
+                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());
