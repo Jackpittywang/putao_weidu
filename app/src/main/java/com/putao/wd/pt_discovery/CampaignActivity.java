@@ -48,6 +48,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
     private List<Resources> resources;
     private ResourceTag tag_info;
     private String tagId;
+    private String title;
     private int mPage = 1;
 
     @Override
@@ -59,6 +60,8 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         tagId = args.getString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_ID);
+        title = args.getString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_TITLE);
+        setMainTitle(title);
         campaignAdapter = new CampaignAdapter(mContext, null);
         rv_content.setAdapter(campaignAdapter);
         getTagCampaign();
@@ -97,7 +100,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
     }
 
     private void loadMoreTagList() {
-        networkRequestCache(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
+        networkRequest(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
             @Override
             public void onSuccess(String url, Campaign result) {
                 if (result != null) {
@@ -113,7 +116,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                     loading.dismiss();
                 }
             }
-        }, 600 * 1000);
+        });
     }
 
     private void getTagCampaign() {
@@ -129,12 +132,14 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                         campaignAdapter.replaceAll(resources);
                         ll_empty.setVisibility(View.GONE);
                         ptl_refresh.setVisibility(View.VISIBLE);
+                        rl_campaign_failure.setVisibility(View.GONE);
 
                         mPage++;
-                        rv_content.loadMoreComplete();
+//                        rv_content.loadMoreComplete();
                     } else {
                         ll_empty.setVisibility(View.VISIBLE);
                         ptl_refresh.setVisibility(View.GONE);
+                        rl_campaign_failure.setVisibility(View.GONE);
 
                         rv_content.noMoreLoading();
                     }
@@ -142,7 +147,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                 campaignAdapter.setMainTitleNotify(tag_info.getTag_name());
                 ptl_refresh.refreshComplete();
                 loading.dismiss();
-                setMainTitle(tag_info.getTag_name());
+        //        setMainTitle(tag_info.getTag_name());
             }
 
             @Override
@@ -169,7 +174,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_no_discovery:
+            case R.id.ll_empty:
                 getTagCampaign();
                 break;
             case R.id.btn_no_data:

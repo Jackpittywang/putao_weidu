@@ -93,9 +93,11 @@ public class VideoFragment extends BasicFragment implements View.OnClickListener
                                 if (result != null && result.size() > 0) {
                                     disCoveries = result;
                                     adapter.addAll(result);
+                                    rv_discovery.loadMoreComplete();
+                                }else {
+                                    rv_discovery.noMoreLoading();
                                 }
-                                rv_discovery.loadMoreComplete();
-                                checkLoadMoreComplete(result);
+//                                checkLoadMoreComplete(result);
                                 loading.dismiss();
                             }
                         }, false);

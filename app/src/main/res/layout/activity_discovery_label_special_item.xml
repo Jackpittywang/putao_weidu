@@ -8,18 +8,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingBottom="10dp"
+        android:paddingBottom="15dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingTop="10dp">
+        android:paddingTop="15dp">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/iv_icon"
-            android:lines="2"
+            android:maxLines="2"
             android:text="这是显示的是列表标题,限制两行"
             android:textColor="@color/color_313131"
             android:textSize="@dimen/text_size_16sp" />
@@ -28,41 +28,43 @@
             android:id="@+id/tv_labelOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
             android:background="@drawable/tv_get_label_shape"
-            android:padding="3dp"
+            android:padding="5dp"
+            android:layout_marginRight="5dp"
             android:text="标签一"
-            android:textSize="@dimen/text_size_12sp" />
+            android:textSize="@dimen/text_size_12sp"
+            android:layout_alignBottom="@+id/iv_icon"
+            android:layout_alignLeft="@+id/tv_title"/>
 
         <TextView
             android:id="@+id/tv_labelSecond"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/tv_labelOne"
+            android:layout_marginRight="5dp"
             android:background="@drawable/comment_shape"
-            android:padding="3dp"
+            android:padding="5dp"
             android:text="标签二"
-            android:textSize="@dimen/text_size_12sp" />
+            android:textSize="@dimen/text_size_12sp"
+            android:layout_alignBottom="@+id/iv_icon"
+            android:layout_toRightOf="@+id/tv_labelOne"/>
 
         <TextView
             android:id="@+id/tv_labelThird"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_toRightOf="@+id/tv_labelSecond"
             android:background="@drawable/comment_shape"
-            android:padding="3dp"
+            android:padding="5dp"
             android:text="标签三"
-            android:textSize="@dimen/text_size_12sp" />
+            android:textSize="@dimen/text_size_12sp"
+            android:layout_alignBottom="@+id/iv_icon"
+            android:layout_toRightOf="@+id/tv_labelSecond"/>
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/iv_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/img_head_default" />
     </RelativeLayout>
 </LinearLayout>
+
