@@ -121,6 +121,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
 
     private void getTagCampaign() {
         mPage = 1;
+        rv_content.reset();
         networkRequest(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
             @Override
             public void onSuccess(String url, Campaign result) {
@@ -129,13 +130,14 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                     resources = result.getResources();
                     tag_info = result.getTag_info();
                     if (resources != null && resources.size() > 0) {
+                        campaignAdapter.clear();
                         campaignAdapter.replaceAll(resources);
                         ll_empty.setVisibility(View.GONE);
                         ptl_refresh.setVisibility(View.VISIBLE);
                         rl_campaign_failure.setVisibility(View.GONE);
 
                         mPage++;
-//                        rv_content.loadMoreComplete();
+                        rv_content.loadMoreComplete();
                     } else {
                         ll_empty.setVisibility(View.VISIBLE);
                         ptl_refresh.setVisibility(View.GONE);

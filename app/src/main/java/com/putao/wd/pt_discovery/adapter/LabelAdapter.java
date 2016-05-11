@@ -47,7 +47,6 @@ public class LabelAdapter extends LoadMoreAdapter<Resources, LabelAdapter.LabelV
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindItem(LabelViewHolder holder, Resources disCovery, int position) {
-//        holder.tv_title.setText("这里显示的是标签列表的标题，限制显示两行");
         holder.tv_title.setText(disCovery.getTitle());
         holder.iv_icon.setImageURL(disCovery.getIcon());
         String[] tags = new String[]{};

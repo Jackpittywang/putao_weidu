@@ -68,6 +68,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
 
     private void getTagList() {
         mPage = 1;
+        rv_content.reset();
         networkRequest(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
             @Override
             public void onSuccess(String url, Campaign result) {
@@ -76,12 +77,15 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
                     resources = result.getResources();
                     tag_info = result.getTag_info();
                     if (resources != null && resources.size() > 0) {
+                        labelAdapter.clear();
                         labelAdapter.replaceAll(resources);
                         ll_empty.setVisibility(View.GONE);
                         ptl_refresh.setVisibility(View.VISIBLE);
                         rl_campaign_failure.setVisibility(View.GONE);
                         mPage++;
-//                        rv_content.loadMoreComplete();
+                        rv_content.loadMoreComplete();
+
+ //                       checkIsNoMore();
                     } else {
                         rv_content.noMoreLoading();
                         ll_empty.setVisibility(View.VISIBLE);
@@ -92,7 +96,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
                 labelAdapter.setMainTitleNotify(tag_info.getTag_name());
                 ptl_refresh.refreshComplete();
                 loading.dismiss();
-       //         setMainTitle(tag_info.getTag_name());
+                //         setMainTitle(tag_info.getTag_name());
             }
 
             @Override
@@ -108,6 +112,13 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
             }
         });
     }
+
+//    private void checkIsNoMore() {
+//        if (rv_content.getLayoutManager().getChildAt(rv_content.getLayoutManager().getItemCount() - 2).getVisibility() == View.VISIBLE) {
+//            rv_content.noMoreLoading();
+//        }
+//    }
+
     private void loadMoreTagList() {
         networkRequest(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
             @Override
