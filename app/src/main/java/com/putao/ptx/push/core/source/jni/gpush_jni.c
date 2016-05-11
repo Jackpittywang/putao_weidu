@@ -22,40 +22,43 @@ void CHECK(const char* msg, jclass toCheck) {
     }
 }
 
-int msg_cb(const char *appid, const unsigned char *payload, unsigned int payload_size)
+void notify_cb(int type){
+    LOGE("notify message is: %d", type);
+}
+
+void msg_cb(const char *appid, const unsigned char *payload, unsigned int payload_size)
 {
     fflush(stdout);
 
     char cp_payload[payload_size+1];
     cp_payload[payload_size] = 0;
     memcpy(cp_payload, payload, payload_size);
-    LOGD("message %s", cp_payload);
+    //LOGD("message %s", cp_payload);
 
     JNIEnv * env;
     // double check it's all ok
     int getEnvStat = (*g_vm)->GetEnv((JavaVM*)g_vm, (void *)&env, JNI_VERSION_1_6);
     if (getEnvStat == JNI_EDETACHED) {
-        LOGW("GetEnv: not attached\n");
+        //LOGW("GetEnv: not attached\n");
         if ((*g_vm)->AttachCurrentThread((JavaVM*)g_vm, (JNIEnv **) &env, NULL) != 0) {
-            LOGW("Failed to attach\n");
+            //LOGW("Failed to attach\n");
         }
     } else if (getEnvStat == JNI_OK) {
-        LOGW("OK");
+        //LOGW("OK");
     } else if (getEnvStat == JNI_EVERSION) {
         LOGW("GetEnv: version not supported\n");
     }
-    LOGD("Call Void Method ");
+    //LOGD("Call Void Method ");
     jstring jappid = (*env)->NewStringUTF(env, appid);
     jstring jpayload = (*env)->NewStringUTF(env, cp_payload);
     (*env)->CallVoidMethod(env, g_obj, g_mid, jappid, jpayload);
     //(*g_env)->CallStaticVoidMethod(g_env, g_clazz, g_mid, val);
-    LOGD("Call ExceptionCheck Method");
+    //LOGD("Call ExceptionCheck Method");
     if ((*env)->ExceptionCheck(env)) {
         (*env)->ExceptionDescribe(env);
     }
     (*g_vm)->DetachCurrentThread(g_vm);
 
-    return 0;
 }
 
 //int PTGPush_Initial(const char *http_url, const char *platform, const char *device_token);
@@ -67,7 +70,7 @@ jint Java_com_putao_ptx_push_core_GPush_initial(JNIEnv* env,
     const char *http_url = (*env)->GetStringUTFChars(env, jhttp_url, 0);
     const char *platform = (*env)->GetStringUTFChars(env, jplatform, 0);
     const char *device_token = (*env)->GetStringUTFChars(env, jdevice_token, 0);
-    LOGD("GPUSH inital called,  url is:%s, platform is:%s, device is:%s", http_url, platform, device_token);
+    //LOGD("GPUSH inital called,  url is:%s, platform is:%s, device is:%s", http_url, platform, device_token);
     int result = PTGPush_Initial(http_url, platform, device_token);
     (*env)->ReleaseStringUTFChars(env, jhttp_url, http_url);
     (*env)->ReleaseStringUTFChars(env, jplatform, platform);
@@ -87,7 +90,7 @@ jint Java_com_putao_ptx_push_core_GPush_login(JNIEnv* env,
     const char *secret_key = (*env)->GetStringUTFChars(env, jsecret_key, 0);
     const char *secret_token = (*env)->GetStringUTFChars(env, jsecret_token, 0);
     int result = PTGPush_login(secret_key, secret_token);
-    PTGPush_setOnMessageCB(msg_cb);
+    PTGPush_setCallBack(msg_cb, notify_cb);
     (*env)->ReleaseStringUTFChars(env, jsecret_key, secret_key);
     (*env)->ReleaseStringUTFChars(env, jsecret_token, secret_token);
     return result;
