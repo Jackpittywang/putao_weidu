@@ -273,13 +273,17 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
 //                    checkSha1(mFilePath);
                     loading.show();
                     UploadLoader.getInstance().addUploadFile(mFilePath, new UploadFileCallback() {
+
                         @Override
-                        protected void onFileUploadSuccess(String filePath) {
-                            Logger.d("onFileUploadSuccess-----------" + filePath);
-                            if (mFilePath.equals(filePath)) {
-                                EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-                                loading.dismiss();
-                            }
+                        protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
+                            networkRequest(UserApi.userEdit(ext, filename, hash),
+                                    new SimpleFastJsonCallback<String>(String.class, loading) {
+                                        @Override
+                                        public void onSuccess(String url, String result) {
+                                            Logger.i("保存用户信息");
+                                            EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+                                        }
+                                    });
                         }
                     }).execute();
                     break;

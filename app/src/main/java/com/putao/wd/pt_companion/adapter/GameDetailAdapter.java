@@ -231,7 +231,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
                             UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
                                 @Override
-                                protected void onFileUploadSuccess(String filePath) {
+                                protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
                                     if (filePath.equals(picUri)) {
                                         serviceMessageList.setSend_state(1);
                                         questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);

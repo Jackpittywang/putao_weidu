@@ -41,15 +41,6 @@ public class UploadLoader {
     private boolean isUploadFinish = true;
     private TreeMap<String, UploadFileCallback> uploadMap = new TreeMap();
     private boolean isUploadAllFinish = true;
-    //    private UploadFileCallback mUploadCallback;
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = (Bundle) msg.obj;
-            //上传PHP服务器
-            upload(bundle.getString("ext"), bundle.getString("filename"), bundle.getString("hash"));
-        }
-    };
     private Handler mMainHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -80,6 +71,12 @@ public class UploadLoader {
                 uploadMap.remove(filePath);
             }
             isUploadAllFinish = true;
+        }
+    };
+    Runnable mRunSuccess = new Runnable() {
+        @Override
+        public void run() {
+            setOnSuccess();
         }
     };
     private HandlerThread mHandlerThread;
@@ -132,11 +129,15 @@ public class UploadLoader {
         networkRequest(UploadApi.checkSha1(sha1), new JSONObjectCallback() {
             @Override
             public void onSuccess(String url, JSONObject result) {
-                String hash = result.getString("hash");
-                if (StringUtils.isEmpty(hash))
+                String filehash = result.getString("hash");
+                if (StringUtils.isEmpty(filehash))
                     getUploadToken();
-                else
-                    upload("jpg", hash, hash);
+                else {
+                    ext = "jpg";
+                    filename = hash;
+                    hash = filehash;
+                    setOnSuccess();
+                }
             }
 
             @Override
@@ -180,6 +181,10 @@ public class UploadLoader {
         });
     }
 
+    private String ext;
+    private String filename;
+    private String hash;
+
     /**
      * 上传文件
      */
@@ -190,13 +195,10 @@ public class UploadLoader {
                 UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
-                        Logger.d(result.toJSONString());
-                        Bundle bundle = new Bundle();
-                        bundle.putString("ext", result.getString("ext"));
-                        bundle.putString("filename", result.getString("filename"));
-                        bundle.putString("hash", result.getString("hash"));
-                        //上传PHP服务器
-                        mHandler.sendMessage(Message.obtain(mHandler, 0x01, bundle));
+                        ext = result.getString("ext");
+                        filename = result.getString("filename");
+                        hash = result.getString("hash");
+                        mMainHandler.post(mRunSuccess);
                     }
 
                     @Override
@@ -208,29 +210,13 @@ public class UploadLoader {
         }).start();
     }
 
-
-    /**
-     * 上传PHP服务器
-     */
-    private void upload(String ext, String filename, String filehash) {
-        networkRequest(UserApi.userEdit(ext, filename, filehash),
-                new SimpleFastJsonCallback<String>(String.class, null) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        upLoadList.remove(0);
-                        isUploadFinish = true;
-                        if (null != uploadMap.get(filePath)) {
-                            uploadMap.get(filePath).onFileUploadSuccess(uploadFile.getAbsolutePath());
-                            uploadMap.remove(filePath);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        super.onFailure(url, statusCode, msg);
-                        setUploadFail();
-                    }
-                });
+    private void setOnSuccess() {
+        upLoadList.remove(0);
+        isUploadFinish = true;
+        if (null != uploadMap.get(filePath)) {
+            uploadMap.get(filePath).onFileUploadSuccess(ext, filename, hash, filePath);
+            uploadMap.remove(filePath);
+        }
     }
 
     private void networkRequest(Request request, RequestCallback callback) {

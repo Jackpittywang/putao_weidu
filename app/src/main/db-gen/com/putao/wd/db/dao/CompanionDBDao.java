@@ -32,10 +32,10 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         public final static Property is_download = new Property(5, String.class, "is_download", false, "IS_DOWNLOAD");
         public final static Property uid = new Property(6, String.class, "uid", false, "UID");
         public final static Property key = new Property(7, String.class, "key", true, "KEY");
-        public final static Property message = new Property(8, String.class, "message", true, "MESSAGE");
-        public final static Property image = new Property(9, String.class, "image", true, "IMAGE");
-        public final static Property reply = new Property(10, String.class, "reply", true, "REPLY");
-        public final static Property is_upload_finish = new Property(11, String.class, "reply", true, "IS_UPLOAD_FINISH");
+        public final static Property message = new Property(8, String.class, "message", false, "MESSAGE");
+        public final static Property image = new Property(9, String.class, "image", false, "IMAGE");
+        public final static Property reply = new Property(10, String.class, "reply", false, "REPLY");
+        public final static Property is_upload_finish = new Property(11, String.class, "reply", false, "IS_UPLOAD_FINISH");
     }
 
 
@@ -122,7 +122,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         entity.setMessage(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setImage(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setReply(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setKey(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setIs_upload_finish(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
     }
 
     @Override

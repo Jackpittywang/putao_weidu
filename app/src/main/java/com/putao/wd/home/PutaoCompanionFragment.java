@@ -338,6 +338,16 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     companion.setIsShowRed(true);
                     companion.setNotDownloadIds(notDownloadIds);
                     mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
+                } else if (1 != companion.getService_type()) {
+                    for (Companion SecondCompanion : companion.getSecond_level_lists()) {
+                        if (companion.getService_id().equals(service_id)) {
+                            ArrayList<String> notDownloadIds = SecondCompanion.getNotDownloadIds();
+                            notDownloadIds.add(id);
+                            SecondCompanion.setIsShowRed(true);
+                            SecondCompanion.setNotDownloadIds(notDownloadIds);
+                            mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
+                        }
+                    }
                 }
             }
         }
