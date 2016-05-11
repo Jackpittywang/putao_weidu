@@ -34,6 +34,7 @@ import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
@@ -326,11 +327,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
-    private void setCompanionDot(JSONArray accompanyNumber) {
-        for (Object object : accompanyNumber) {
-            JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
-            String service_id = jsonObject.getString(RedDotReceiver.SERVICE_ID);
-            String id = jsonObject.getString(RedDotReceiver.ID);
+    private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
+        for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
+            String service_id = gpushMessageAccNumber.getService_id();
+            String id = gpushMessageAccNumber.getId();
             for (Companion companion : mCompanion) {
                 if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();

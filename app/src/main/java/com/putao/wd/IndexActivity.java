@@ -20,6 +20,7 @@ import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoDiscovery2Fragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.ActivityManager;
@@ -32,6 +33,7 @@ import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 import com.umeng.update.UmengUpdateAgent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.Bind;
@@ -183,13 +185,12 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
 
     //-------------------------------以下是红点信息缓存-------------------------//
-    @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
-    private void setCompanionDot(JSONArray accompanyNumber) {
+    @Subcriber(tag = GPushMessageReceiver.COMPANION_TABBAR)
+    private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         ti_index_companion.show(-1);
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-        for (Object object : accompanyNumber) {
-            JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
-            dataBaseManager.insertFixDownload(jsonObject.getString(RedDotReceiver.SERVICE_ID), jsonObject.getString(RedDotReceiver.ID));
+        for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
+            dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId());
         }
     }
 

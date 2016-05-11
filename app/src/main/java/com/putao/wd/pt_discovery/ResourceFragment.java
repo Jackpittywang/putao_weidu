@@ -93,7 +93,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 //        mRelativeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mActivity, 80));
         mDiscoveryLayoutManager = (LinearLayoutManager) rv_discovery.getLayoutManager();
         addListener();
-
     }
 
     private void addListener() {

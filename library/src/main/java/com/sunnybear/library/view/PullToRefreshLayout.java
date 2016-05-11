@@ -150,6 +150,7 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     @Override
     public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
         int currentPos = ptrIndicator.getCurrentPosY();
+        onPtrStatusPrefresh(status);
         switch (status) {
             case PtrFrameLayout.PTR_STATUS_PREPARE://下拉时
                 mRefreshText.setText(mPrepareText);
@@ -172,6 +173,10 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
 
     @Override
     public void onUIReset(PtrFrameLayout frame) {
+
+    }
+
+    public void onPtrStatusPrefresh(byte status) {
 
     }
 
