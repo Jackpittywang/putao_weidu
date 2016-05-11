@@ -38,6 +38,7 @@ public class LoadingHUD extends Dialog {
     ImageView iv_icon;
     AnimationDrawable adProgressSpinner;
     Context context;
+    private RotateAnimation mRotateAnimation;//旋转动画
 
     OnDialogDismiss onDialogDismiss;
 
@@ -74,21 +75,31 @@ public class LoadingHUD extends Dialog {
         this.setContentView(view);
     }
 
+    /**
+     * 初始化旋转动画
+     */
+    private void initAnimation() {
+        mRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
+        mRotateAnimation.setInterpolator(new LinearInterpolator());
+        mRotateAnimation.setDuration(1000);
+        mRotateAnimation.setRepeatCount(Animation.INFINITE);
+    }
+
     public void setSpinnerType(int spinnerType) {
-        Animation anim = AnimationUtils.loadAnimation(context, R.anim.loading_dialog_progressbar);
-        iv_icon.setAnimation(anim);
+        initAnimation();
+        iv_icon.setAnimation(mRotateAnimation);
 //        switch (spinnerType) {
 //            case 0:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
 //                break;
 //            case 1:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.gear_spinner);
 //                break;
 //            case 2:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.round_spinner);
 //                break;
 //            default:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
 //        }
 //        adProgressSpinner = (AnimationDrawable) iv_icon.getDrawable();
     }
@@ -105,77 +116,77 @@ public class LoadingHUD extends Dialog {
             instance = null;
     }
 
-//    public void dismissWithSuccess() {
+    public void dismissWithSuccess() {
 //        tvMessage.setText("Success");
 //        showSuccessImage();
-//
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
-//
-//    public void dismissWithSuccess(String message) {
+
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithSuccess(String message) {
 //        showSuccessImage();
-//        if (message != null) {
-//            tvMessage.setText(message);
-//        } else {
-//            tvMessage.setText("");
-//        }
-//
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
-//
-//    public void dismissWithFailure() {
+        if (message != null) {
+            tvMessage.setText(message);
+        } else {
+            tvMessage.setText("");
+        }
+
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithFailure() {
 //        showFailureImage();
 //        tvMessage.setText("Failure");
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
-//
-//    public void dismissWithFailure(String message) {
-//        showFailureImage();
-//        if (message != null) {
-//            tvMessage.setText(message);
-//        } else {
-//            tvMessage.setText("");
-//        }
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
 
-//    protected void showSuccessImage() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithFailure(String message) {
+//        showFailureImage();
+        if (message != null) {
+            tvMessage.setText(message);
+        } else {
+            tvMessage.setText("");
+        }
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+//   protected void showSuccessImage() {
 //        ivProgressSpinner.setVisibility(View.GONE);
 //        ivSuccess.setVisibility(View.VISIBLE);
 //    }

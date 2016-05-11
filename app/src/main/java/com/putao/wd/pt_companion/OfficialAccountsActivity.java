@@ -222,14 +222,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         Bundle bundle = new Bundle();
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         if (capture_url != null || !isSubscribe) {
-                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
                             finish();
                         } else {
-                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             startActivity(PutaoSubcribeActivity.class);
                             finish();
                         }
@@ -241,7 +240,6 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         ToastUtils.showToastShort(mContext, isSubscribe ? "订阅失败" : "关联失败");
                     }
                 }
-
         );
     }
 
@@ -299,6 +297,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         } else {
                             ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         }
+                        mDialog.dismiss();
                        /* if (!is_relation) {//未关联
                         } else {//已关联
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
@@ -354,6 +353,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         ToastUtils.showToastShort(mContext, "清除成功");
+                        mDialog.dismiss();
                     }
                 });
             }
