@@ -84,6 +84,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         capture_url = args.getString(CAPTURE_URL);
 
         if (capture_url == null) {
+            //isSubscribe为true则是订阅号传送过来的数据，反之则是服务号传送过来的数据
             isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
             if (isSubscribe) {
                 subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
@@ -351,6 +352,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     public void onClick(View v) {
                         dataBaseManager.removeData(mServiceId);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         ToastUtils.showToastShort(mContext, "清除成功");
                     }
                 });

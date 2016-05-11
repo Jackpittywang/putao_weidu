@@ -69,7 +69,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_message_center_activity_test">MessageCenterActivityTest</string>
 
-    <string name="question_1">打开葡萄科技产品任一款产品,点击\"帮助\"找到\"葡萄纬度\"入口,点击后获取关联二维码。</string>
+    <string name="question_1"><!--打开葡萄科技产品任一款产品,点击\"帮助\"找到\"葡萄纬度\"入口,点击后获取关联二维码。-->
+        打开葡萄APP游戏，点击左侧葡萄纬度图标获取二维码</string>
     <string name="question_2">即使在同一台iPad设备上安装了多个葡萄科技系列产品，也均需逐个扫描进行关联。</string>
 
     <string name="umeng_common_action_info_exist">正在下载中.</string>

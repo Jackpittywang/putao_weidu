@@ -169,7 +169,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         return new String[0];
     }
 
-    @OnClick({R.id.tv_question_2, R.id.tv_question_1, R.id.capture_container})
+    @OnClick({/*R.id.tv_question_2,*/ R.id.tv_question_1, R.id.capture_container})
 
     @Override
     public void onClick(View v) {

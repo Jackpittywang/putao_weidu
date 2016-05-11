@@ -11,6 +11,10 @@ import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +35,7 @@ public class LoadingHUD extends Dialog {
     ImageView ivSuccess;
     ImageView ivFailure;
     ImageView ivProgressSpinner;
+    ImageView iv_icon;
     AnimationDrawable adProgressSpinner;
     Context context;
 
@@ -59,36 +64,38 @@ public class LoadingHUD extends Dialog {
         this.setCanceledOnTouchOutside(false);
         this.context = context;
         view = getLayoutInflater().inflate(R.layout.widget_loading_dialog_progress, null);
-        tvMessage = (TextView) view.findViewById(R.id.textview_message);
-        ivSuccess = (ImageView) view.findViewById(R.id.imageview_success);
-        ivFailure = (ImageView) view.findViewById(R.id.imageview_failure);
-        ivProgressSpinner = (ImageView) view
-                .findViewById(R.id.imageview_progress_spinner);
-
+        iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
+//        tvMessage = (TextView) view.findViewById(R.id.textview_message);
+//        ivSuccess = (ImageView) view.findViewById(R.id.imageview_success);
+//        ivFailure = (ImageView) view.findViewById(R.id.imageview_failure);
+//        ivProgressSpinner = (ImageView) view
+//                .findViewById(R.id.imageview_progress_spinner);
         setSpinnerType(FADED_ROUND_SPINNER);
         this.setContentView(view);
     }
 
     public void setSpinnerType(int spinnerType) {
-        switch (spinnerType) {
-            case 0:
-                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
-                break;
-            case 1:
-                ivProgressSpinner.setImageResource(R.anim.gear_spinner);
-                break;
-            case 2:
-                ivProgressSpinner.setImageResource(R.anim.round_spinner);
-                break;
-            default:
-                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
-        }
-        adProgressSpinner = (AnimationDrawable) ivProgressSpinner.getDrawable();
+        Animation anim = AnimationUtils.loadAnimation(context, R.anim.loading_dialog_progressbar);
+        iv_icon.setAnimation(anim);
+//        switch (spinnerType) {
+//            case 0:
+//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                break;
+//            case 1:
+//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                break;
+//            case 2:
+//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                break;
+//            default:
+//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//        }
+//        adProgressSpinner = (AnimationDrawable) iv_icon.getDrawable();
     }
 
-    public void setMessage(String message) {
-        tvMessage.setText(message);
-    }
+//    public void setMessage(String message) {
+//        tvMessage.setText(message);
+//    }
 
     @Override
     public void show() {
@@ -98,92 +105,92 @@ public class LoadingHUD extends Dialog {
             instance = null;
     }
 
-    public void dismissWithSuccess() {
-        tvMessage.setText("Success");
-        showSuccessImage();
+//    public void dismissWithSuccess() {
+//        tvMessage.setText("Success");
+//        showSuccessImage();
+//
+//        if (onDialogDismiss != null) {
+//            this.setOnDismissListener(new OnDismissListener() {
+//
+//                @Override
+//                public void onDismiss(DialogInterface dialog) {
+//                    onDialogDismiss.onDismiss();
+//                }
+//            });
+//        }
+//        dismissHUD();
+//    }
+//
+//    public void dismissWithSuccess(String message) {
+//        showSuccessImage();
+//        if (message != null) {
+//            tvMessage.setText(message);
+//        } else {
+//            tvMessage.setText("");
+//        }
+//
+//        if (onDialogDismiss != null) {
+//            this.setOnDismissListener(new OnDismissListener() {
+//
+//                @Override
+//                public void onDismiss(DialogInterface dialog) {
+//                    onDialogDismiss.onDismiss();
+//                }
+//            });
+//        }
+//        dismissHUD();
+//    }
+//
+//    public void dismissWithFailure() {
+//        showFailureImage();
+//        tvMessage.setText("Failure");
+//        if (onDialogDismiss != null) {
+//            this.setOnDismissListener(new OnDismissListener() {
+//
+//                @Override
+//                public void onDismiss(DialogInterface dialog) {
+//                    onDialogDismiss.onDismiss();
+//                }
+//            });
+//        }
+//        dismissHUD();
+//    }
+//
+//    public void dismissWithFailure(String message) {
+//        showFailureImage();
+//        if (message != null) {
+//            tvMessage.setText(message);
+//        } else {
+//            tvMessage.setText("");
+//        }
+//        if (onDialogDismiss != null) {
+//            this.setOnDismissListener(new OnDismissListener() {
+//
+//                @Override
+//                public void onDismiss(DialogInterface dialog) {
+//                    onDialogDismiss.onDismiss();
+//                }
+//            });
+//        }
+//        dismissHUD();
+//    }
 
-        if (onDialogDismiss != null) {
-            this.setOnDismissListener(new OnDismissListener() {
-
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    onDialogDismiss.onDismiss();
-                }
-            });
-        }
-        dismissHUD();
-    }
-
-    public void dismissWithSuccess(String message) {
-        showSuccessImage();
-        if (message != null) {
-            tvMessage.setText(message);
-        } else {
-            tvMessage.setText("");
-        }
-
-        if (onDialogDismiss != null) {
-            this.setOnDismissListener(new OnDismissListener() {
-
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    onDialogDismiss.onDismiss();
-                }
-            });
-        }
-        dismissHUD();
-    }
-
-    public void dismissWithFailure() {
-        showFailureImage();
-        tvMessage.setText("Failure");
-        if (onDialogDismiss != null) {
-            this.setOnDismissListener(new OnDismissListener() {
-
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    onDialogDismiss.onDismiss();
-                }
-            });
-        }
-        dismissHUD();
-    }
-
-    public void dismissWithFailure(String message) {
-        showFailureImage();
-        if (message != null) {
-            tvMessage.setText(message);
-        } else {
-            tvMessage.setText("");
-        }
-        if (onDialogDismiss != null) {
-            this.setOnDismissListener(new OnDismissListener() {
-
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    onDialogDismiss.onDismiss();
-                }
-            });
-        }
-        dismissHUD();
-    }
-
-    protected void showSuccessImage() {
-        ivProgressSpinner.setVisibility(View.GONE);
-        ivSuccess.setVisibility(View.VISIBLE);
-    }
-
-    protected void showFailureImage() {
-        ivProgressSpinner.setVisibility(View.GONE);
-        ivFailure.setVisibility(View.VISIBLE);
-    }
-
-    protected void reset() {
-        ivProgressSpinner.setVisibility(View.VISIBLE);
-        ivFailure.setVisibility(View.GONE);
-        ivSuccess.setVisibility(View.GONE);
-        tvMessage.setText("Loading ...");
-    }
+//    protected void showSuccessImage() {
+//        ivProgressSpinner.setVisibility(View.GONE);
+//        ivSuccess.setVisibility(View.VISIBLE);
+//    }
+//
+//    protected void showFailureImage() {
+//        ivProgressSpinner.setVisibility(View.GONE);
+//        ivFailure.setVisibility(View.VISIBLE);
+//    }
+//
+//    protected void reset() {
+//        ivProgressSpinner.setVisibility(View.VISIBLE);
+//        ivFailure.setVisibility(View.GONE);
+//        ivSuccess.setVisibility(View.GONE);
+//        tvMessage.setText("Loading ...");
+//    }
 
     protected void dismissHUD() {
         AsyncTask<String, Integer, Long> task = new AsyncTask<String, Integer, Long>() {
@@ -198,23 +205,23 @@ public class LoadingHUD extends Dialog {
             protected void onPostExecute(Long result) {
                 super.onPostExecute(result);
                 dismiss();
-                reset();
+//                reset();
             }
         };
         task.execute();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        ivProgressSpinner.post(new Runnable() {
-
-            @Override
-            public void run() {
-                adProgressSpinner.start();
-
-            }
-        });
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        iv_icon.post(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                adProgressSpinner.start();
+//
+//            }
+//        });
+//    }
 
     /**
      * 关闭加载框回调
