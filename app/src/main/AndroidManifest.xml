@@ -560,9 +560,9 @@
                 <action android:name="com.putao.wd.GPush" />
             </intent-filter>
         </service>
-        <receiver android:name=".RedDotReceiver">
+        <receiver android:name=".GPushMessageReceiver">
             <intent-filter>
-                <action android:name="com.putao.mtlib.message"></action>
+                <action android:name="com.putao.action.PUSH"></action>
             </intent-filter>
         </receiver>
 
