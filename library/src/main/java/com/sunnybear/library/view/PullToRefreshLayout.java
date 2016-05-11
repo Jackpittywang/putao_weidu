@@ -37,6 +37,7 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     private RotateAnimation mRotateAnimation;//旋转动画
 
     private OnRefreshListener mOnRefreshListener;
+    private OnStatusPrefresh mOnStatusPrefresh;
     private int mRefreshLayoutId;
     private int mRefreshLayoutHeight;
 
@@ -47,6 +48,10 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
 
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         mOnRefreshListener = onRefreshListener;
+    }
+
+    public void setOnStatusPrefresh(OnStatusPrefresh onStatusPrefresh) {
+        mOnStatusPrefresh = onStatusPrefresh;
     }
 
     public PullToRefreshLayout(Context context) {
@@ -150,7 +155,8 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     @Override
     public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
         int currentPos = ptrIndicator.getCurrentPosY();
-        onPtrStatusPrefresh(status);
+        if (null != mOnStatusPrefresh)
+            mOnStatusPrefresh.onPtrStatusPrefresh(status);
         switch (status) {
             case PtrFrameLayout.PTR_STATUS_PREPARE://下拉时
                 mRefreshText.setText(mPrepareText);
@@ -176,10 +182,6 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
 
     }
 
-    public void onPtrStatusPrefresh(byte status) {
-
-    }
-
     @Override
     public void onUIRefreshPrepare(PtrFrameLayout frame) {
         Logger.d("onUIRefreshPrepare");
@@ -201,5 +203,12 @@ public class PullToRefreshLayout extends PtrFrameLayout implements PtrUIHandler,
     public interface OnRefreshListener {
 
         void onRefresh();
+    }
+
+    /**
+     * 下拉回调
+     */
+    public interface OnStatusPrefresh {
+        void onPtrStatusPrefresh(byte status);
     }
 }
