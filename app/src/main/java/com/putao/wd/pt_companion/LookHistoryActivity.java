@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -41,13 +42,14 @@ public class LookHistoryActivity extends PTWDActivity {
     RelativeLayout rl_lookHistory_failure;
     @Bind(R.id.btn_no_data)
     Button btn_no_data;
-    @Bind(R.id.ll_history_tail)
-    LinearLayout ll_history_tail;
+    @Bind(R.id.tv_history_companion)
+    TextView tv_history_companion;
 
     private LookHistoryAdapter adapter;
     private ArrayList<ServiceMessageList> messageLists;
     private String service_id;
     private String service_name;
+    private boolean isSubscribe, isBunding;
     private int mPage = 1;
 
 
@@ -61,6 +63,8 @@ public class LookHistoryActivity extends PTWDActivity {
         addNavigation();
         service_id = args.getString(HISTORY_SERVICE_ID);
         service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
+        isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
+        isBunding = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         adapter = new LookHistoryAdapter(mContext, null);
         rv_lookHistory.setAdapter(adapter);
         lookHistoryData();

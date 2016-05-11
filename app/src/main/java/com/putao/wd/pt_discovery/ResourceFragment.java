@@ -188,6 +188,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 
         mPage = 0;
         rest();
+        rv_discovery.reset();
         networkRequestCache(DisCoveryApi.getFindResource(String.valueOf(mPage)), new SimpleFastJsonCallback<DiscoveryResource>(DiscoveryResource.class, loading) {
             @Override
             public void onSuccess(String url, DiscoveryResource result) {
@@ -210,7 +211,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                         resous.addAll(list);
                         mAdapter.replaceAll(resous);
                         mPage++;
-//                        rv_discovery.loadMoreComplete();
+                        rv_discovery.loadMoreComplete();
                         isNoResource = false;
                     } else {
                         isNoResource = true;

@@ -12,7 +12,7 @@
         android:background="@color/white"
         auto:nav_has_divider="true"
         auto:nav_left_icon="@drawable/back_selector"
-        auto:nav_main_title="葡萄活动"
+        auto:nav_main_title=""
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_icon="@drawable/btn_20_more_p_nor"
         auto:nav_right_title_color="@drawable/text_select" />
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="葡萄活动"
+                android:text=""
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_18sp" />
 
@@ -66,7 +66,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="20dp"
-        android:text="可以陪孩子一起学数学让孩子对数字敏感可以陪孩子一起学可以陪孩子一起学数学让孩子对数字敏感数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行可以陪孩子一起学数学让孩子对数字敏感,限制两行"
+        android:text=""
         android:textColor="@color/text_color_gray"
         android:textSize="@dimen/text_size_14sp" />
 

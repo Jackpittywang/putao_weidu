@@ -5,7 +5,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 
+import com.putao.wd.GlobalApplication;
 import com.sunnybear.library.util.ImageUtils;
+import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 
 import java.util.HashMap;
@@ -208,8 +211,16 @@ public class ShareTools {
                 public void run() {
                     if (throwable.getClass().getName().contains("NotExistException"))
                         ToastUtils.showToastShort(mContext, "您未安装该应用");
-                    else
+                    else if (StringUtils.equals("text is needed", throwable.getMessage())) {//sub_title 为空
+                        ToastUtils.showToastShort(mContext, "链接错误，分享失败");
+                    } else if (StringUtils.equals("sendReq checkArgs fail", throwable.getMessage())) {// shareUrl 为null 或 ""时
+                        ToastUtils.showToastShort(mContext, "链接错误，分享失败");
+                    } else {
                         ToastUtils.showToastShort(mContext, "分享失败");
+                    }
+
+                    if (GlobalApplication.isDebug)
+                        Logger.d(throwable.getMessage());
                 }
             });
         }

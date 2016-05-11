@@ -112,6 +112,7 @@ public class VideoFragment extends BasicFragment implements View.OnClickListener
      */
     private void getDisCovery() {
         currentPage = 1;
+        rv_discovery.reset();
         networkRequestCache(DisCoveryApi.getfindVideo(String.valueOf(currentPage)),
                 new SimpleFastJsonCallback<ArrayList<DisCovery>>(DisCovery.class, loading) {
 

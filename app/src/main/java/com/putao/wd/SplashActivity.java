@@ -77,8 +77,8 @@ public class SplashActivity extends BasicFragmentActivity<GlobalApplication> {
                         mDiskFileCacheHelper.put(GlobalApplication.MAP_EMOJI, result);
                         GlobalApplication.setEmojis(result);
                         if (AccountHelper.isLogin()) {
-                            Intent intent = new Intent(GlobalApplication.IN_FORE_MESSAGE);
-                            sendBroadcast(intent);
+                            //Intent intent = new Intent(GlobalApplication.IN_FORE_MESSAGE);
+                            //sendBroadcast(intent);
                         }
                         if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_KEY_IS_FIRST, false))
                             startActivity(GuidanceActivity.class);

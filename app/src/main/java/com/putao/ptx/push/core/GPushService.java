@@ -42,6 +42,7 @@ public class GPushService extends Service {
         Constants.setDeviceAndAppId(deviceId, appId);
         Intent i = new Intent(context, GPushService.class);
         context.startService(i);
+        GPushCallback.mContext = context;
     }
 
     @Override
@@ -120,9 +121,7 @@ public class GPushService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-
         uninitGPush();
-
     }
 
     @Override
