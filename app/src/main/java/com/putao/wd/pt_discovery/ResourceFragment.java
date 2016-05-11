@@ -5,8 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
@@ -24,6 +27,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -79,6 +83,8 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private RelativeLayout reChildAt;
     private boolean isScroll = true;
     private int mScrollX;
+    private boolean isPullToRefresh;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_resource;
@@ -102,6 +108,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isPullToRefresh = true;
                 freshResource();
             }
         });
@@ -123,7 +130,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 EventBusHelper.post(resou, AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE);
             }
         });
-
         rv_discovery.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -160,8 +166,18 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                     isShowHead = false;
                 }
             }
+
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                Logger.d(newState + "");
+//                if (AbsListView.OnScrollListener.SCROLL_STATE_IDLE == newState && mDiscoveryLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 && !isPullToRefresh) {
+//                    rv_discovery.scrollBy(0, 1);
+//                }
+//            }
         });
     }
+
 
     /**
      * 加载资源列表
@@ -235,6 +251,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
             public void onFinish(String url, boolean isSuccess, String msg) {
                 super.onFinish(url, isSuccess, msg);
                 checkNetFailureAndData();
+                isPullToRefresh = false;
             }
         }, 600 * 1000);
 
@@ -245,9 +262,9 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 if (result != null) {
                     bannerAndTag = result;
                     banners = bannerAndTag.getBanner();
-                    if(banners != null || bannerAndTag.getTag() != null){
+                    if (banners != null || bannerAndTag.getTag() != null) {
                         isNoHeader = false;
-                    }else {
+                    } else {
                         isNoHeader = true;
                     }
                 } else {

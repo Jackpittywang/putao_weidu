@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicPopupWindow;
+import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 
 import butterknife.OnClick;
 
@@ -24,11 +26,11 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     private ImageView iv_collection;
     private String mUrl;
 
-    public void setOnShareClickListener(OnShareClickListener onShareClickListener,String url) {
-        setOnShareClickListener(true, onShareClickListener,url);
+    public void setOnShareClickListener(OnShareClickListener onShareClickListener, String url) {
+        setOnShareClickListener(true, onShareClickListener, url);
     }
 
-    public void setOnShareClickListener(boolean isCopy, OnShareClickListener onShareClickListener,String url) {
+    public void setOnShareClickListener(boolean isCopy, OnShareClickListener onShareClickListener, String url) {
         this.isCopy = isCopy;
         this.mUrl = url;
         mOnShareClickListener = onShareClickListener;
@@ -94,12 +96,18 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         if (mOnShareClickListener != null)
             switch (v.getId()) {
                 case R.id.ll_wechat://微信
+                    if(!checkShareUrl(R.id.ll_wechat))
+                        return;
                     mOnShareClickListener.onWechat();
                     break;
                 case R.id.ll_wechat_friend_circle://微信朋友圈
+                    if(!checkShareUrl(R.id.ll_wechat_friend_circle))
+                        return;
                     mOnShareClickListener.onWechatFriend();
                     break;
                 case R.id.ll_collection://收藏
+                    if(!checkShareUrl(R.id.ll_collection))
+                        return;
                     if (isCopy) {
                         mOnShareClickListener.onCollection();
                     } else {
@@ -107,12 +115,16 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     }
                     break;
                 case R.id.ll_qq_friend://QQ好友
+                    if(!checkShareUrl(R.id.ll_qq_friend))
+                        return;
                     if (isCopy)
                         mOnShareClickListener.onQQFriend();
                     else
                         mOnShareClickListener.onQQZone();
                     break;
                 case R.id.ll_qq_zone://QQ空间
+                    if(!checkShareUrl(R.id.ll_qq_zone))
+                        return;
                     if (isCopy) {
                         mOnShareClickListener.onQQZone();
                     } else {
@@ -120,21 +132,43 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     }
                     break;
                 case R.id.ll_sina_weibo://新浪微博
+                    if(!checkShareUrl(R.id.ll_sina_weibo))
+                        return;
                     mOnShareClickListener.onSinaWeibo();
                     break;
                 case R.id.ll_safari://用本机浏览器打开
-                    Intent intent= new Intent();
+                    if(!checkShareUrl(R.id.ll_safari))
+                        return;
+                    Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
                     Uri content_url = Uri.parse(mUrl);
                     intent.setData(content_url);
-                    intent.setClassName("com.android.browser","com.android.browser.BrowserActivity");
+                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
                     mContext.startActivity(intent);
                     break;
                 case R.id.ll_copy_url://复制链接
+                    if(!checkShareUrl(R.id.ll_copy_url))
+                        return;
                     mOnShareClickListener.onCopyUrl();
                     break;
             }
         dismiss();
+    }
+
+    private boolean checkShareUrl(int rId) {
+        if(StringUtils.isEmpty(mUrl)){
+            if(rId == R.id.ll_collection){
+                ToastUtils.showToastShort(mContext,"链接错误，收藏失败");
+            }else if(rId == R.id.ll_safari){
+                ToastUtils.showToastShort(mContext,"链接错误，浏览器打开失败");
+            }else if(rId == R.id.ll_copy_url){
+                ToastUtils.showToastShort(mContext,"链接错误，复制失败");
+            }else{
+                ToastUtils.showToastShort(mContext,"链接错误，分享失败");
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override
