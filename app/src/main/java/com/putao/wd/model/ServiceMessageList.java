@@ -14,7 +14,7 @@ public class ServiceMessageList implements Serializable {
     private String message;
     private ServiceMessageListImage image;
     private ServiceMessageListReply reply;
-    private int send_state;//0 发送成功 1 带发送 2 发送失败
+    private int send_state;//0 发送成功 1 发送成功 2 发送失败
     //    private boolean isShowData;
     private List<ServiceMessageContent> content_lists;
 

@@ -2,6 +2,7 @@ package com.sunnybear.library.model.http;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sunnybear.library.model.http.callback.UploadCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,17 +95,12 @@ public class UploadFileTask {
                 String responseBody = EntityUtils.toString(response.getEntity());
                 if (callback != null)
                     callback.onSuccess(JSON.parseObject(responseBody));
+                else
+                    callback.onFail();
             }
         } catch (IOException e) {
             e.printStackTrace();
+            callback.onFail();
         }
-    }
-
-    /**
-     *
-     */
-    public interface UploadCallback {
-
-        void onSuccess(JSONObject result);
     }
 }

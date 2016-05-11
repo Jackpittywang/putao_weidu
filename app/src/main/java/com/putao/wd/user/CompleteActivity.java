@@ -25,9 +25,9 @@ import com.putao.wd.model.UserInfo;
 import com.putao.wd.util.UploadFileCallback;
 import com.putao.wd.util.UploadLoader;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
-import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.model.http.callback.UploadCallback;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
@@ -213,7 +213,7 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadFileTask.UploadCallback() {
+                UploadApi.uploadFile(uploadToken, sha1, uploadFile, new UploadCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
                         Logger.d(result.toJSONString());
@@ -272,16 +272,16 @@ public class CompleteActivity extends PTWDActivity implements View.OnClickListen
                     ImageUtils.bitmapOutSdCard(bitmap, mFilePath);
 //                    checkSha1(mFilePath);
                     loading.show();
-                    UploadLoader.getInstance().addUploadFile(mFilePath).execute(new UploadFileCallback() {
+                    UploadLoader.getInstance().addUploadFile(mFilePath, new UploadFileCallback() {
                         @Override
-                        protected void fileUploadSuccess(String filePath) {
-                            Logger.d("fileUploadSuccess-----------" + filePath);
+                        protected void onFileUploadSuccess(String filePath) {
+                            Logger.d("onFileUploadSuccess-----------" + filePath);
                             if (mFilePath.equals(filePath)) {
                                 EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
                                 loading.dismiss();
                             }
                         }
-                    });
+                    }).execute();
                     break;
             }
         }

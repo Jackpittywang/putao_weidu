@@ -428,6 +428,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         finish();
     }
 
+
     @Override
     public void onRightAction() {
         super.onRightAction();
