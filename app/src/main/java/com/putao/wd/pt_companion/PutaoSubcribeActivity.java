@@ -11,6 +11,7 @@ import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
+import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
@@ -34,14 +35,16 @@ import butterknife.Bind;
  */
 public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
 
+    private CompanionAdapter mCompanionAdapter;
 
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
 
-    private SubribeAdapter mServiceAdapter;
     private Companion mCompanion;
+    private ArrayList<Companion> mCompanions;
+
     protected String mServiceId;
     private ArrayList<ServiceMessageList> lists;
     private boolean isLoadMore = false;
@@ -49,23 +52,17 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_companion_subribe;
+        return R.layout.activity_companion_subribe_list;
     }
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         mCompanion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-        if (null != mCompanion) {
-            setMainTitle(mCompanion.getService_name());
-            mServiceId = mCompanion.getService_id();
-        } else {
-            mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
-            setMainTitleFromNetwork();
-        }
-
-        mServiceAdapter = new SubribeAdapter(mContext, null);
-        rv_content.setAdapter(mServiceAdapter);
+        mCompanions = mCompanion.getSecond_level_lists();
+        if (null == mCompanionAdapter)
+            mCompanionAdapter = new CompanionAdapter(mContext, mCompanions);
+        rv_content.setAdapter(mCompanionAdapter);
 
 //        initData();
         addListener();
@@ -79,99 +76,6 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
             }
         });
     }
-
-    private void setMainTitleFromNetwork() {
-        networkRequest(CompanionApi.getServiceInfo(mServiceId),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        JSONObject jsonObject = JSON.parseObject(result);
-                        setMainTitle(jsonObject.getString("service_name"));
-                        mCompanion = new Companion();
-                        mCompanion.setService_id(jsonObject.getString("service_id"));
-                        mCompanion.setService_name(jsonObject.getString("service_name"));
-                        mCompanion.setService_icon(jsonObject.getString("service_icon"));
-                        mCompanion.setIs_relation(jsonObject.getInteger("is_relation"));
-                        mCompanion.setIs_unbunding(jsonObject.getBoolean("is_unbunding"));
-                        mCompanion.setService_description(jsonObject.getString("service_description"));
-                        navigation_bar.setRightClickable(true);
-                        loading.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        super.onFailure(url, statusCode, msg);
-                        ptl_refresh.refreshComplete();
-                    }
-                }, false);
-    }
-
-    /**
-     * 下拉刷新 以及 最初的初始化
-     */
-    private void initData() {
-        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-        List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles(mServiceId);
-        if (null != downloadArticles) {
-            for (CompanionDB companionDB : downloadArticles) {
-                ServiceMessageList serviceMessageList = new ServiceMessageList();
-                serviceMessageList.setType(companionDB.getType());
-//                serviceMessageList.setIsShowData(true);
-                serviceMessageList.setContent_lists(JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class));
-                serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
-                lists.add(serviceMessageList);
-            }
-            mServiceAdapter.replaceAll(lists);
-            rv_content.scrollToPosition(lists.size() - 1);
-//            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
-        }
-//        mPage = 1;
-        if (null == mCompanion)
-            return;
-        ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(mServiceId);
-        List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
-        mCompanion.setNotDownloadIds(null);
-        if (null != serviceSendDatas && serviceSendDatas.size() > 0)
-            networkRequest(CompanionApi.getServiceLists(JSONObject.toJSONString(serviceSendDatas), mServiceId),
-                    new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
-                        @Override
-                        public void onSuccess(String url, ServiceMessage result) {
-                            isLoadMore = false;
-                            lists = result.getLists();
-                            if (null != lists && lists.size() > 0) {
-                                CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                                for (ServiceMessageList serviceMessageList : lists) {
-                                    dataBaseManager.updataDownloadFinish(serviceMessageList);
-                                }
-                                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-//                            lists = setIsSameDate(lists);
-                                mServiceAdapter.addAll(lists);
-                                rv_content.scrollToPosition(mServiceAdapter.getItemCount() - 1);
-                            }
-                            ptl_refresh.refreshComplete();
-//                            checkLoadMoreComplete(lists);
-                            loading.dismiss();
-                        }
-
-                        @Override
-                        public void onFailure(String url, int statusCode, String msg) {
-                            super.onFailure(url, statusCode, msg);
-                            ptl_refresh.refreshComplete();
-                        }
-                    }, false);
-    }
-
-
-    private List<ServiceSendData> listToServiceListData(ArrayList<String> notDownloadIds) {
-        if (null == mServiceSendData)
-            mServiceSendData = new ArrayList<ServiceSendData>();
-        if (null != notDownloadIds)
-            for (String str : notDownloadIds) {
-                mServiceSendData.add(new ServiceSendData(str));
-            }
-        return mServiceSendData;
-    }
-
 
     @Override
     protected String[] getRequestUrls() {
