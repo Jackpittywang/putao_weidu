@@ -30,36 +30,18 @@
 
     </com.sunnybear.library.view.PullToRefreshLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_history_tail"
+    <TextView
+        android:id="@+id/tv_history_companion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_below="@+id/navigation_bar"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/history_commpaion"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/text_size_14sp"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tv_history_companion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:lineSpacingExtra="5dp"
-            android:text="@string/history_commpaion"
-            android:textColor="@color/text_color_gray"
-            android:textSize="@dimen/text_size_14sp" />
-
-        <Button
-            android:id="@+id/btn_relation_companion"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_get_history"
-            android:text="去关联"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14sp" />
-    </LinearLayout>
 
     <!--没有陪伴数据时-->
     <RelativeLayout

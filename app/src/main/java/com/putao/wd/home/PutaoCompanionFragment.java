@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -76,12 +77,17 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     RelativeLayout rl_no_commpain;
     @Bind(R.id.rl_no_commpain_failure)
     RelativeLayout rl_no_commpain_failure;
+    @Bind(R.id.rl_compain_navigation)
+    RelativeLayout rl_compain_navigation;
     @Bind(R.id.btn_no_data)
     Button btn_no_data;
     @Bind(R.id.iv_no_commpain)
     ImageDraweeView iv_no_commpain;
     @Bind(R.id.img_compain_menu)
     ImageView img_compain_menu;
+    @Bind(R.id.tv_later_relevance)
+    TextView tv_later_relevance;
+
 
     private ArrayList<Companion> mCompanion;
     private int mPicChangeCount;
@@ -111,9 +117,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private void checkDevice() {
         Logger.d("IS_DEVICE_BIND", PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) + "");
         Logger.d("AccountHelper.isLogin()", AccountHelper.isLogin() + "");
-        if (PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) && AccountHelper.isLogin()) {
+//        PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) &&
+        if (AccountHelper.isLogin()) {
             rl_companion_empty.setVisibility(View.GONE);
-            navigation_bar.setVisibility(View.VISIBLE);
+            rl_compain_navigation.setVisibility(View.VISIBLE);
             ptl_refresh.setVisibility(View.VISIBLE);
             if (null == mCompanionAdapter)
                 mCompanionAdapter = new CompanionAdapter(mActivity, null);
@@ -122,8 +129,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             initData();
         } else {
             rl_companion_empty.setVisibility(View.VISIBLE);
-            navigation_bar.setVisibility(View.GONE);
             ptl_refresh.setVisibility(View.GONE);
+            rl_compain_navigation.setVisibility(View.GONE);
         }
     }
 
@@ -195,6 +202,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         });
         btn_no_data.setOnClickListener(this);
         img_compain_menu.setOnClickListener(this);
+        tv_later_relevance.setOnClickListener(this);
         ll_ScanCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,15 +278,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 startActivity(GameDetailListActivity.class, bundle);
             }
         } else {
-//            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, true);
-//            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, companion.getService_id());
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, true);
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
             startActivity(OfficialAccountsActivity.class, bundle);
         }
     }
 
-    @OnClick({R.id.btn_relevance_device, R.id.img_compain_menu})
+    @OnClick({R.id.btn_relevance_device, R.id.img_compain_menu, R.id.tv_later_relevance})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -291,14 +297,24 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 } else
                     startActivity(CaptureActivity.class);
                 break;
-            case R.id.btn_no_data:
+            case R.id.btn_no_data://加载失败时，点击刷新数据
                 if (NetManager.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     initData();
                 break;
-            case R.id.img_compain_menu:
+            case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
                 popupWindow.showAsDropDown(img_compain_menu);
+                break;
+            case R.id.tv_later_relevance://稍后关联
+                if (!AccountHelper.isLogin()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
+                    startActivity(LoginActivity.class, bundle);
+                } else {
+                    //当已登录时，请求数据
+                    checkDevice();
+                }
                 break;
         }
     }
@@ -306,11 +322,6 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
     private void refresh_companion(String str) {
-        checkDevice();
-    }
-
-    @Subcriber(tag = OfficialAccountsActivity.SUBSCRIBE)
-    private void onSubscribe(String tag) {
         checkDevice();
     }
 
@@ -402,6 +413,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
+
+
 }
 
 

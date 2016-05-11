@@ -43,7 +43,6 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     public static final String EVENT_OFFICIAL_URL = "event_official_url";
     public static final String CAPTURE_SERVICE_ID = "service_id";
     public static final String CAPTURE_URL = "capture_url";
-    public static final String SUBSCRIBE = "subscribe";
 
     @Bind(R.id.iv_icon)
     ImageDraweeView iv_icon;
@@ -79,30 +78,11 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
-//        isBind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION, false);//陪伴首页未关联产品传送过来的数据
+        //陪伴首页未关联产品传送过来的数据
         isBind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
         mServiceId = args.getString(CAPTURE_SERVICE_ID);
         capture_url = args.getString(CAPTURE_URL);
 
-//        if (capture_url == null) {
-//            if (isBind) {
-//                mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND);
-//                navigation_bar.getRightView().setVisibility(View.GONE);
-//            } else {
-//                isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
-//                if (isSubscribe) {
-//                    subscribeList = (SubscribeList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-//                    if (subscribeList == null) return;
-//                    mServiceId = subscribeList.getService_id();
-//                    mServiceName = subscribeList.getService_name();
-//                } else {
-//                    companion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-//                    if (companion == null) return;
-//                    mServiceId = companion.getService_id();
-//                    mServiceName = companion.getService_name();
-//                }
-//            }
-//        }
         if (capture_url == null) {
             isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
             if (isSubscribe) {
@@ -163,30 +143,10 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
                     startActivity(LoginActivity.class, bundle);
                 } else {
-//                    //先判断是否已关注
-//                    if (serviceInfo.is_relation()) {//已关注
-//                        if (serviceInfo.isService_type()) {//服务号
-//                            Bundle bundle = new Bundle();
-//                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
-//                            startActivity(GameDetailListActivity.class, bundle);
-//                        } else {//订阅号
-//                            startActivity(PutaoSubcribeActivity.class);
-//                        }
-//                    } else {//未关注
-//                        if (serviceInfo.isService_type()) {//服务号
-//                            if (isBind) {//从陪伴首页未关联传送过来的数据
-//                                startActivity(CaptureActivity.class);
-//                            } else {
-//                                correlationService(mServiceId, capture_url);
-//                            }
-//                        } else {//订阅号
-//                            correlationService(mServiceId, capture_url);
-//                        }
-//                    }
                     Bundle bundle = new Bundle();
                     if (capture_url != null) {
                         if (serviceInfo.is_relation()) {//已关注
-                            EventBusHelper.post(SUBSCRIBE, SUBSCRIBE);
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
@@ -199,7 +159,9 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         } else {
                             if (isSubscribe) {
                                 if (subscribeList.is_relation()) {
-                                    startActivity(PutaoSubcribeActivity.class);
+                                    bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                                    PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                                    startActivity(GameDetailListActivity.class, bundle);
                                 } else {
                                     correlationService(mServiceId, capture_url);
                                 }
@@ -217,6 +179,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
+//                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, isSubscribe);
+//                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
                 bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
                 startActivity(LookHistoryActivity.class, bundle);
@@ -254,36 +218,30 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
      */
     private void correlationService(String service_id, String url) {
         networkRequest(CompanionApi.getServiceRelation(service_id, url), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
-            @Override
-            public void onSuccess(String url, ServiceMessage result) {
-                Bundle bundle = new Bundle();
-                if (capture_url != null) {
-                    EventBusHelper.post(SUBSCRIBE, SUBSCRIBE);
-                    bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
-                    PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                    startActivity(GameDetailListActivity.class, bundle);
-                    finish();
-                } else {
-                    if (isSubscribe) {
-                        EventBusHelper.post(SUBSCRIBE, SUBSCRIBE);
-                        bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
-                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                        startActivity(GameDetailListActivity.class, bundle);
-                        finish();
-                    } else {
-                        EventBusHelper.post(SUBSCRIBE, SUBSCRIBE);
-                        startActivity(PutaoSubcribeActivity.class);
-                        finish();
+                    @Override
+                    public void onSuccess(String url, ServiceMessage result) {
+                        Bundle bundle = new Bundle();
+                        if (capture_url != null || !isSubscribe) {
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                            startActivity(GameDetailListActivity.class, bundle);
+                            finish();
+                        } else {
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                            startActivity(PutaoSubcribeActivity.class);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        ToastUtils.showToastShort(mContext, isSubscribe ? "订阅失败" : "关联失败");
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(String url, int statusCode, String msg) {
-                super.onFailure(url, statusCode, msg);
-                ToastUtils.showToastShort(mContext, isSubscribe ? "关联失败" : "订阅失败");
-            }
-        });
+        );
     }
 
     /**
@@ -370,7 +328,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         super.onRightAction();
         mSelectPopupWindow.show(ll_companion);
         mSelectPopupWindow.tv_first.setText("清除内容");
-        mSelectPopupWindow.tv_second.setText("取消关联");
+        mSelectPopupWindow.tv_second.setText(isSubscribe ? "取消订阅" : "取消关联");
         mSelectPopupWindow.tv_second.setTextColor(0xffcc0000);
     }
 
@@ -379,6 +337,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
      * 是否已关联/订阅
      */
     private void isSubscribeCoampin() {
+        final CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         mSelectPopupWindow = new SelectPopupWindow(mContext) {
             @Override
             public void onFirstClick(View v) {//清除内容
@@ -387,6 +346,14 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 tv_dialog.setText("将清空所有历史内容");
                 tv_cancel.setText("清空内容");
                 tv_no_cancel.setText("取消");
+                tv_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dataBaseManager.removeData(mServiceId);
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        ToastUtils.showToastShort(mContext, "清除成功");
+                    }
+                });
             }
 
             @Override

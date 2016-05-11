@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_compain_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -25,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/company_plus_selector"
-            android:padding="10dp" />
+            android:layout_marginRight="7dp"
+            android:padding="13dp"
+            android:src="@drawable/company_plus_selector" />
     </RelativeLayout>
 
 
@@ -149,6 +150,7 @@
             android:id="@+id/iv_no_commpain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_relevance_device"
             android:layout_below="@+id/tv_empty2"
             android:layout_centerHorizontal="true"
             android:background="@drawable/img_link_product_01" />
@@ -157,10 +159,8 @@
             android:id="@+id/btn_relevance_device"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/tv_later_relevance"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="30dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/btn_compantion_default_detail"
@@ -168,6 +168,18 @@
             android:text="关联产品"
             android:textColor="@color/service_btn_nor"
             android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/tv_later_relevance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:padding="15dp"
+            android:text="稍后关联"
+            android:textColor="@color/service_btn_sel"
+            android:textSize="@dimen/text_size_16sp" />
 
     </RelativeLayout>
 
