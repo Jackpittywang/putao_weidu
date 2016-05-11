@@ -38,6 +38,7 @@ public class LoadingHUD extends Dialog {
     ImageView iv_icon;
     AnimationDrawable adProgressSpinner;
     Context context;
+    private RotateAnimation mRotateAnimation;//旋转动画
 
     OnDialogDismiss onDialogDismiss;
 
@@ -74,9 +75,19 @@ public class LoadingHUD extends Dialog {
         this.setContentView(view);
     }
 
+    /**
+     * 初始化旋转动画
+     */
+    private void initAnimation() {
+        mRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
+        mRotateAnimation.setInterpolator(new LinearInterpolator());
+        mRotateAnimation.setDuration(1000);
+        mRotateAnimation.setRepeatCount(Animation.INFINITE);
+    }
+
     public void setSpinnerType(int spinnerType) {
-        Animation anim = AnimationUtils.loadAnimation(context, R.anim.loading_dialog_progressbar);
-        iv_icon.setAnimation(anim);
+        initAnimation();
+        iv_icon.setAnimation(mRotateAnimation);
 //        switch (spinnerType) {
 //            case 0:
 //                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);

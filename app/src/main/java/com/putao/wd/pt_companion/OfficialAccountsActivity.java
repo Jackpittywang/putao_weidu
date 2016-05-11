@@ -222,14 +222,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         Bundle bundle = new Bundle();
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         if (capture_url != null || !isSubscribe) {
-                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
                             finish();
                         } else {
-                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             startActivity(PutaoSubcribeActivity.class);
                             finish();
                         }
