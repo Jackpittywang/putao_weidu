@@ -39,6 +39,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Created by Administrator on 2016/5/4.
@@ -84,6 +85,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private boolean isScroll = true;
     private int mScrollX;
     private boolean isPullToRefresh;
+    private boolean isDown;
 
     @Override
     protected int getLayoutId() {
@@ -108,11 +110,20 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                isPullToRefresh = true;
                 freshResource();
             }
         });
-
+        ptl_refresh.setOnStatusPrefresh(new PullToRefreshLayout.OnStatusPrefresh() {
+            @Override
+            public void onPtrStatusPrefresh(byte status) {
+//                    isPullToRefresh = true;
+                switch (status) {
+                    case PtrFrameLayout.PTR_STATUS_INIT://初始化
+                        rv_discovery.scrollBy(0, 1);
+                        break;
+                }
+            }
+        });
         /**
          * 上拉加载更多
          * */
