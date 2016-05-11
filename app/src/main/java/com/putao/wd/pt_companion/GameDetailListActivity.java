@@ -1,7 +1,9 @@
 package com.putao.wd.pt_companion;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,8 +24,9 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
+import com.putao.wd.album.activity.PhotoAlbumActivity;
+import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
-import com.putao.wd.api.ExploreApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
@@ -32,15 +35,17 @@ import com.putao.wd.model.ServiceMenu;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceMessageListImage;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
-import com.putao.wd.util.RedDotUtils;
+import com.putao.wd.util.BottomPanelUtil;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
-import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.KeyboardUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
@@ -322,7 +327,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         return new String[0];
     }
 
-    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send})
+    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -340,6 +345,41 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             case R.id.tv_send://点击发送
                 sendAsk();
                 break;
+            case R.id.iv_upload_pic://点击发送
+                KeyboardUtils.closeKeyboard(mContext, et_msg);//关闭软键盘
+                //选择图片
+                BottomPanelUtil.showBottomFunctionPanel(mContext, new String[]{"相机", "从手机相册选择"}, new BottomPanelUtil.FunctionPanelCallBack[]{new BottomPanelUtil.FunctionPanelCallBack() {
+                    @Override
+                    public void doFunction() {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 0x900);
+                    }
+                }, new BottomPanelUtil.FunctionPanelCallBack() {
+                    @Override
+                    public void doFunction() {
+                        Intent intent = new Intent(mContext, PhotoAlbumActivity.class);
+                        intent.putExtra("MAX_COUNT", 1);
+                        startActivity(intent);
+                    }
+                }}, null);
+                break;
+        }
+    }
+
+    //图片选择后的处理
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
+    public void eventSelectPic(List<ImageInfo> selectPhotos) {
+        if (selectPhotos != null && selectPhotos.size() > 0 && selectPhotos.get(0) != null) {
+            ServiceMessageListImage serviceMessageListImage = new ServiceMessageListImage();
+            serviceMessageListImage.setPic("file://" + selectPhotos.get(0)._DATA);
+            if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
+                serviceMessageListImage.setThumb("file://" + selectPhotos.get(0).THUMB_DATA);
+            ServiceMessageList serviceMessageList = new ServiceMessageList();
+            serviceMessageList.setImage(serviceMessageListImage);
+            serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+            serviceMessageList.setType(GameDetailAdapter.UPLOAD_IMAGE_TYPE);
+            mGameDetailAdapter.add(serviceMessageList);
+            rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         }
     }
 
@@ -352,7 +392,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         ServiceMessageList serviceMessageList = new ServiceMessageList();
         serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
         serviceMessageList.setMessage(msg);
-        serviceMessageList.setType("upload_text");
+        serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
         mGameDetailAdapter.add(serviceMessageList);
         mDataBaseManager.insertUploadText(mServiceId, msg);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);

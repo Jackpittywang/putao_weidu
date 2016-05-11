@@ -300,7 +300,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     ToastUtils.showToastShort(mContext, msg);
                 } else {
                     CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                    dataBaseManager.deleteContent(service_id);
+                    dataBaseManager.removeData(service_id);
                     checkInquiryBind(AccountHelper.getCurrentUid());
                 }
                 loading.dismiss();

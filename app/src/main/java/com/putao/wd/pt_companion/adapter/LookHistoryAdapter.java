@@ -7,6 +7,8 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceMessageListImage;
+import com.putao.wd.model.ServiceMessageListReply;
 import com.putao.wd.model.ServiceType;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -52,13 +54,13 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 holder.tv_content.setVisibility(View.GONE);
                 break;
             case "image"://图片
-                ServiceType image = serviceMessageList.getImage();
-                holder.iv_sign.setImageURL(image.getPic());
+                ServiceMessageListImage image = serviceMessageList.getImage();
+                holder.iv_sign.setImageURL(image.getThumb());
                 holder.tv_title.setVisibility(View.GONE);
                 holder.tv_content.setVisibility(View.GONE);
                 break;
             case "reply"://回復
-                ServiceType reply = serviceMessageList.getReply();
+                ServiceMessageListReply reply = serviceMessageList.getReply();
                 holder.tv_title.setText(reply.getQuestion());
                 holder.tv_content.setText(reply.getAnswer());
                 break;

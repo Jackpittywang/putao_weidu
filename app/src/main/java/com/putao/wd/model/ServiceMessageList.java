@@ -11,9 +11,10 @@ public class ServiceMessageList implements Serializable {
     private String id;
     private String type;
     private int release_time;
-    private ServiceType image;
     private String message;
-    private ServiceType reply;
+    private ServiceMessageListImage image;
+    private ServiceMessageListReply reply;
+    private int send_state;//0 发送成功 1 带发送 2 发送失败
     //    private boolean isShowData;
     private List<ServiceMessageContent> content_lists;
 
@@ -49,12 +50,8 @@ public class ServiceMessageList implements Serializable {
         this.content_lists = content_lists;
     }
 
-    public ServiceType getImage() {
+    public ServiceMessageListImage getImage() {
         return image;
-    }
-
-    public void setImage(ServiceType image) {
-        this.image = image;
     }
 
     public String getMessage() {
@@ -65,15 +62,27 @@ public class ServiceMessageList implements Serializable {
         this.message = message;
     }
 
-    public ServiceType getReply() {
+    public void setImage(ServiceMessageListImage image) {
+        this.image = image;
+    }
+
+    public ServiceMessageListReply getReply() {
         return reply;
     }
 
-    public void setReply(ServiceType reply) {
+    public void setReply(ServiceMessageListReply reply) {
         this.reply = reply;
     }
 
-/*    public boolean isShowData() {
+    public int getSend_state() {
+        return send_state;
+    }
+
+    public void setSend_state(int send_state) {
+        this.send_state = send_state;
+    }
+
+    /*    public boolean isShowData() {
         return isShowData;
     }
 

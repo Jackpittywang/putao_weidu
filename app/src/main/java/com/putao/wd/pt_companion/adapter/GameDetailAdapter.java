@@ -1,8 +1,11 @@
 package com.putao.wd.pt_companion.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +14,7 @@ import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.util.ImageLoaderUtil;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
@@ -31,7 +35,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     private static final int TYPE_ARTICLE = 3;
     private Context mContent;
     public final static String UPLOAD_TEXT_TYPE = "upload_text";
-    public final static String UPLOAD_TEXT_IMAGE = "upload_image";
+    public final static String UPLOAD_IMAGE_TYPE = "upload_image";
 
     public GameDetailAdapter(Context context, List<ServiceMessageList> serviceMessageList) {
         super(context, serviceMessageList);
@@ -115,7 +119,6 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     break;
 
             }
-            askViewHolder.question_item_answer_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
         } else if (holder instanceof GameDetailHolder) {
             GameDetailHolder gameDetailHolder = (GameDetailHolder) holder;
             gameDetailHolder.tv_time.setText("───    " + date + "    ───");
@@ -190,17 +193,21 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             }
         } else if (holder instanceof QuestionLocalViewHolder) {
             QuestionLocalViewHolder questionLocalViewHolder = (QuestionLocalViewHolder) holder;
+            questionLocalViewHolder.question_item_ask_icon.setImageURL(AccountHelper.getCurrentUserInfo().getHead_img());
             questionLocalViewHolder.question_item_ask_time.setText("───    " + date + "    ───");
             switch (serviceMessageList.getType()) {
                 case UPLOAD_TEXT_TYPE:
-                    questionLocalViewHolder.question_item_ask_image.setVisibility(View.GONE);
+                    questionLocalViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     questionLocalViewHolder.question_item_ask_context.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage());
                     break;
-                case UPLOAD_TEXT_IMAGE:
-                    questionLocalViewHolder.question_item_ask_image.setVisibility(View.VISIBLE);
+                case UPLOAD_IMAGE_TYPE:
+                    questionLocalViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.question_item_ask_context.setVisibility(View.GONE);
-                    questionLocalViewHolder.question_item_ask_image.setImageURL(serviceMessageList.getImage().getPic());
+                    if (!TextUtils.isEmpty(serviceMessageList.getImage().getThumb()))
+                        ImageLoaderUtil.getInstance(context).displayImage(serviceMessageList.getImage().getThumb(), questionLocalViewHolder.question_item_ask_image);
+                    else
+                        ImageLoaderUtil.getInstance(context).displayImage(serviceMessageList.getImage().getPic(), questionLocalViewHolder.question_item_ask_image);
                     break;
             }
         }
@@ -285,6 +292,10 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
 
         @Bind(R.id.question_item_ask_image)
         ImageDraweeView question_item_ask_image;
+        @Bind(R.id.rl_item_ask_image)
+        RelativeLayout rl_item_ask_image;
+        @Bind(R.id.pb_item_ask_image)
+        ProgressBar pb_item_ask_image;
 
         public QuestionLocalViewHolder(View itemView) {
             super(itemView);

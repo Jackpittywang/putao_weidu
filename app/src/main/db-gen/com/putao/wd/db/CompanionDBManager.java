@@ -152,12 +152,12 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
         return list.get(0);
     }
 
-    /**
+/*    *//**
      * 删除订阅号的内容
-     */
+     *//*
     public void deleteContent(String service_id) {
         DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).buildDelete();
         companionDBDeleteQuery.executeDeleteWithoutDetachingEntities();
 //        rawQuery("delete from " + CompanionDBDao.TABLENAME + " where " + CompanionDBDao.Properties.is_download.columnName + " = '0'");
-    }
+    }*/
 }

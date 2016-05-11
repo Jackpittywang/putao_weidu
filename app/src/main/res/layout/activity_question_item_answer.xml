@@ -26,11 +26,12 @@
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_answer_icon"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            style="@style/image_round_4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="bottom"
-            app:default_drawable="@drawable/img_head_cs"
-            app:roundAsCircle="true" />
+            android:layout_marginRight="@dimen/distance_8dp"
+            app:default_drawable="@drawable/img_head_cs" />
 
         <LinearLayout
             android:id="@+id/ll_reply"
@@ -38,17 +39,21 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="70dp"
             android:background="@drawable/dialogue_w"
-
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="对于您的留言" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_EBEBEB"
+                android:paddingLeft="@dimen/distance_8dp"
+                android:paddingRight="@dimen/distance_8dp"
+                android:paddingTop="@dimen/distance_8dp"
+                android:text="对于您的留言："
+                android:textSize="@dimen/text_size_12sp" />
 
             <TextView
                 android:id="@+id/tv_ask"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_EBEBEB"
                 android:padding="@dimen/distance_8dp"
@@ -60,21 +65,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="6dp"
-                android:text="给予回复:" />
+                android:text="给予回复:"
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
                 android:id="@+id/tv_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/distance_8dp"
-                android:text="heheh" />
+                android:text="heheh"
+                android:textSize="@dimen/text_size_14sp" />
         </LinearLayout>
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_ask_image"
-            style="@style/image_style"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            style="@style/image_round_10dp"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
             android:clickable="false"
             android:padding="10dp"
             android:visibility="gone"
@@ -91,6 +97,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="我的提问我的提问我的提问我的提问我的提问我的提问我的提问"
+            android:textSize="@dimen/text_size_16sp"
             android:visibility="gone" />
 
     </LinearLayout>
