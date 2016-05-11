@@ -240,7 +240,6 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         ToastUtils.showToastShort(mContext, isSubscribe ? "订阅失败" : "关联失败");
                     }
                 }
-
         );
     }
 
@@ -298,6 +297,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         } else {
                             ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         }
+                        mDialog.dismiss();
                        /* if (!is_relation) {//未关联
                         } else {//已关联
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
@@ -353,6 +353,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         ToastUtils.showToastShort(mContext, "清除成功");
+                        mDialog.dismiss();
                     }
                 });
             }

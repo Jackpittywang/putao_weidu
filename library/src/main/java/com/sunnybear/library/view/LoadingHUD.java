@@ -90,16 +90,16 @@ public class LoadingHUD extends Dialog {
         iv_icon.setAnimation(mRotateAnimation);
 //        switch (spinnerType) {
 //            case 0:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
 //                break;
 //            case 1:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.gear_spinner);
 //                break;
 //            case 2:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.round_spinner);
 //                break;
 //            default:
-//                iv_icon.setImageResource(R.anim.loading_dialog_progressbar);
+//                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
 //        }
 //        adProgressSpinner = (AnimationDrawable) iv_icon.getDrawable();
     }
@@ -116,77 +116,77 @@ public class LoadingHUD extends Dialog {
             instance = null;
     }
 
-//    public void dismissWithSuccess() {
+    public void dismissWithSuccess() {
 //        tvMessage.setText("Success");
 //        showSuccessImage();
-//
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
-//
-//    public void dismissWithSuccess(String message) {
+
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithSuccess(String message) {
 //        showSuccessImage();
-//        if (message != null) {
-//            tvMessage.setText(message);
-//        } else {
-//            tvMessage.setText("");
-//        }
-//
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
-//
-//    public void dismissWithFailure() {
+        if (message != null) {
+            tvMessage.setText(message);
+        } else {
+            tvMessage.setText("");
+        }
+
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithFailure() {
 //        showFailureImage();
 //        tvMessage.setText("Failure");
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
-//
-//    public void dismissWithFailure(String message) {
-//        showFailureImage();
-//        if (message != null) {
-//            tvMessage.setText(message);
-//        } else {
-//            tvMessage.setText("");
-//        }
-//        if (onDialogDismiss != null) {
-//            this.setOnDismissListener(new OnDismissListener() {
-//
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    onDialogDismiss.onDismiss();
-//                }
-//            });
-//        }
-//        dismissHUD();
-//    }
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
 
-//    protected void showSuccessImage() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+    public void dismissWithFailure(String message) {
+//        showFailureImage();
+        if (message != null) {
+            tvMessage.setText(message);
+        } else {
+            tvMessage.setText("");
+        }
+        if (onDialogDismiss != null) {
+            this.setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    onDialogDismiss.onDismiss();
+                }
+            });
+        }
+        dismissHUD();
+    }
+
+//   protected void showSuccessImage() {
 //        ivProgressSpinner.setVisibility(View.GONE);
 //        ivSuccess.setVisibility(View.VISIBLE);
 //    }
