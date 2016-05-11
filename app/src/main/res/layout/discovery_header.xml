@@ -30,21 +30,51 @@
         auto:pageDrawable="@drawable/dot_8_sel" />
     <View
         android:id="@+id/view"
-        android:layout_above="@+id/tv_discovery_hottag"
+        android:layout_above="@+id/ll_dis_hot_tag"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/text_color_gray"/>
-    <TextView
-        android:id="@+id/tv_discovery_hottag"
+
+    
+    <LinearLayout
+        android:id="@+id/ll_dis_hot_tag"
         android:layout_width="match_parent"
         android:layout_height="26dp"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:drawableLeft="@drawable/icon_16_34"
-        android:drawablePadding="@dimen/distance_5dp"
-        android:gravity="center_vertical"
-        android:text="热门标签"
-        android:textColor="@color/color_313131"
-        android:background="@color/white"
-        android:textSize="@dimen/text_size_16sp"
-        android:paddingLeft="15dp"/>
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:src="@drawable/icon_16_34"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:id="@+id/tv_discovery_hottag"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="热门标签"
+            android:textColor="@color/color_313131"
+            android:background="@color/white"
+            android:textSize="@dimen/text_size_16sp"
+            android:layout_marginLeft="@dimen/distance_5dp"/>
+    </LinearLayout>
+
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_discovery_hottag"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="26dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:drawableLeft="@drawable/icon_16_34"-->
+        <!--android:drawablePadding="@dimen/distance_5dp"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:text="热门标签"-->
+        <!--android:textColor="@color/color_313131"-->
+        <!--android:background="@color/white"-->
+        <!--android:textSize="@dimen/text_size_16sp"-->
+        <!--android:paddingLeft="15dp"/>-->
 </RelativeLayout>

@@ -55,6 +55,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     Button btn_no_data;
 
     public static final String RESOURCE = "resource";
+    public static final String CAMPAIGN_TYPE = "1";
 
     private List<FindResource> resous;
     private List<ResourceBanner> banners;
@@ -74,7 +75,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private RelativeLayout.LayoutParams mRelativeLayoutParams;
 
     private RecyclerView childAt;
-    //    private RecyclerView.LayoutParams layoutParams;
     private LinearLayoutManager mDiscoveryLayoutManager;
     private RelativeLayout reChildAt;
     private boolean isScroll = true;
@@ -171,7 +171,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         networkRequest(DisCoveryApi.getFindResource(String.valueOf(mPage)), new SimpleFastJsonCallback<DiscoveryResource>(DiscoveryResource.class, loading) {
             @Override
             public void onSuccess(String url, DiscoveryResource result) {
-                cacheData(url, result);
                 List<FindResource> listResult = result.getList();
                 if (listResult != null && listResult.size() > 0) {
                     mAdapter.addAll(listResult);
@@ -188,6 +187,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private void freshResource() {
 
         mPage = 0;
+        rest();
         networkRequestCache(DisCoveryApi.getFindResource(String.valueOf(mPage)), new SimpleFastJsonCallback<DiscoveryResource>(DiscoveryResource.class, loading) {
             @Override
             public void onSuccess(String url, DiscoveryResource result) {
@@ -195,7 +195,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 if (result != null) {
                     FindResource top = result.getTop();
                     List<FindResource> list = result.getList();
-                    if (list != null && list.size() > 0) {
+                    if ((list != null && list.size() > 0) || top != null) {
                         resous.clear();
                         resous.add(0, new FindResource());
                         resous.add(1, new FindResource());
@@ -210,7 +210,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                         resous.addAll(list);
                         mAdapter.replaceAll(resous);
                         mPage++;
-                        rv_discovery.loadMoreComplete();
+//                        rv_discovery.loadMoreComplete();
                         isNoResource = false;
                     } else {
                         isNoResource = true;
@@ -245,12 +245,13 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 if (result != null) {
                     bannerAndTag = result;
                     banners = bannerAndTag.getBanner();
-
-                    isNoHeader = false;
+                    if(banners != null || bannerAndTag.getTag() != null){
+                        isNoHeader = false;
+                    }else {
+                        isNoHeader = true;
+                    }
                 } else {
                     bannerAndTag = new ResourceBannerAndTag();
-                    banners = new ArrayList<>();
-
                     isNoHeader = true;
                 }
                 mAdapter.setBannerAndTag(bannerAndTag);
@@ -274,12 +275,22 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         }, 600 * 1000);
     }
 
+    /**
+     * 将标志位设置成原来的值
+     */
+    private void rest() {
+        isHeaderFailure = false;
+        isResourceFailure = false;
+        isNoHeader = false;
+        isNoResource = false;
+    }
+
     private void checkNetFailureAndData() {
         if (isHeaderFailure && isResourceFailure) {
             rl_no_discovery_failure.setVisibility(View.VISIBLE);
             rl_no_discovery.setVisibility(View.GONE);
             ptl_refresh.setVisibility(View.GONE);
-        } else if (isNoHeader && isNoHeader) {
+        } else if (isNoHeader && isNoResource) {
             rl_no_discovery.setVisibility(View.VISIBLE);
             rl_no_discovery_failure.setVisibility(View.GONE);
             ptl_refresh.setVisibility(View.GONE);
@@ -313,7 +324,8 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     public void eventDiscoveryHotTag(ResourceTag tag) {
         Bundle bundle = new Bundle();
         bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_ID, tag.getId());
-        if (StringUtils.equals("1", tag.getDisplay_type()))
+        bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_TITLE, tag.getTag_name());
+        if (StringUtils.equals(CAMPAIGN_TYPE, tag.getDisplay_type()))
             startActivity(CampaignActivity.class, bundle);
         else
             startActivity(LabelActivity.class, bundle);

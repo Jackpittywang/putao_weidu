@@ -28,6 +28,7 @@
             auto:has_row_divider="true" />
     </com.sunnybear.library.view.PullToRefreshLayout>
 
+    <!-- 活动内容为空-->
     <LinearLayout
         android:id="@+id/ll_empty"
         android:layout_width="match_parent"

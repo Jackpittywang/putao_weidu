@@ -44,6 +44,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
 
     private LabelAdapter labelAdapter;
     private String tagId;
+    private String title;
     private int mPage = 1;
     private List<Resources> resources;
     private ResourceTag tag_info;
@@ -57,6 +58,8 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
         addNavigation();
         tagId = args.getString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_ID);
+        title = args.getString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_TITLE);
+        setMainTitle(title);
         labelAdapter = new LabelAdapter(mContext, null);
         rv_content.setAdapter(labelAdapter);
         getTagList();
@@ -76,18 +79,20 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
                         labelAdapter.replaceAll(resources);
                         ll_empty.setVisibility(View.GONE);
                         ptl_refresh.setVisibility(View.VISIBLE);
+                        rl_campaign_failure.setVisibility(View.GONE);
                         mPage++;
-                        rv_content.loadMoreComplete();
+//                        rv_content.loadMoreComplete();
                     } else {
                         rv_content.noMoreLoading();
                         ll_empty.setVisibility(View.VISIBLE);
                         ptl_refresh.setVisibility(View.GONE);
+                        rl_campaign_failure.setVisibility(View.GONE);
                     }
                 }
                 labelAdapter.setMainTitleNotify(tag_info.getTag_name());
                 ptl_refresh.refreshComplete();
                 loading.dismiss();
-                setMainTitle(tag_info.getTag_name());
+       //         setMainTitle(tag_info.getTag_name());
             }
 
             @Override
@@ -104,7 +109,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
         });
     }
     private void loadMoreTagList() {
-        networkRequestCache(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
+        networkRequest(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
             @Override
             public void onSuccess(String url, Campaign result) {
                 if (result != null) {
@@ -120,7 +125,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
                     loading.dismiss();
                 }
             }
-        }, 600 * 1000);
+        });
     }
 
     private void addListenrer() {
@@ -164,7 +169,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_no_discovery:
+            case R.id.ll_empty:
                 getTagList();
                 break;
             case R.id.btn_no_data:
