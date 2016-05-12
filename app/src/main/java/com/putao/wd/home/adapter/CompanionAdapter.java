@@ -57,11 +57,14 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
         }
         int size = companion.getNotDownloadIds().size();
+        holder.tv_dot.setVisibility(View.GONE);
         if (0 == size || !companion.isShowRed()) {
             holder.tv_number.setVisibility(View.GONE);
         } else {
             holder.tv_number.setVisibility(View.VISIBLE);
             holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
+            if (0 == companion.getService_type())
+                holder.tv_dot.setVisibility(View.VISIBLE);
         }
     }
 
@@ -76,6 +79,8 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         TextView tv_intro;
         @Bind(R.id.tv_number)
         TextView tv_number;
+        @Bind(R.id.tv_dot)
+        TextView tv_dot;
 
         public CompanionHolder(View itemView) {
             super(itemView);

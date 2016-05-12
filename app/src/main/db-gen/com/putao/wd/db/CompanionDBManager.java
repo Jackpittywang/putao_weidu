@@ -108,6 +108,20 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     }
 
     /**
+     * 插入文字信息
+     */
+    public void insertText(String service_id, String id, String release_time, String message) {
+        insert(new CompanionDB(id, service_id, "text", release_time, "", 1 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid(), message, "", "", ""));
+    }
+
+    /**
+     * 插入回复信息
+     */
+    public void insertReply(String service_id, String id, String release_time, String message) {
+        insert(new CompanionDB(id, service_id, "text", release_time, "", 1 + "", AccountHelper.getCurrentUid(), id + AccountHelper.getCurrentUid(), message, "", "", ""));
+    }
+
+    /**
      * 插入上传的文字
      */
     public String insertUploadText(String service_id, String message) {

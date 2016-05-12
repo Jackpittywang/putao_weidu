@@ -96,7 +96,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private PopupWindow popupWindow;
     private View contentView;
     private LinearLayout ll_ScanCode, ll_Subscribe;
-
+    private CompanionDBManager mDataBaseManager;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_companion;
@@ -108,6 +108,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
         //弹框
+        mDataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         onCompainPopupWindow();
         checkDevice();
         mPicChangeCount = 1;
@@ -143,32 +144,14 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         if (result != null && result.size() > 0) {
                             mCompanion = result;
                             cacheData(url, result);
-                            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                             for (Companion companion : result) {
-                                ServiceMessage serviceMessage = companion.getAuto_reply();
-                                if (null != serviceMessage && null != serviceMessage.getLists()) {
-                                    for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
-                                        dataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                                if (0 == companion.getService_type()) {
+                                    for (Companion companionReply : companion.getSecond_level_lists()) {
+                                        checkResult(companionReply);
                                     }
+                                    continue;
                                 }
-                                ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(companion.getService_id());
-                                try {
-                                    CompanionDB companionDB = dataBaseManager.getNearestItem(companion.getService_id());
-                                    if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
-                                        int time = Integer.parseInt(companionDB.getRelease_time());
-                                        if (time > 0) {
-                                            companion.setRelation_time(time);
-                                        }
-                                        List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
-                                        if (null != content_lists && content_lists.size() >= 0)
-                                            companion.setService_description(content_lists.get(0).getSub_title());
-                                    }
-                                } catch (NumberFormatException e) {
-                                    e.printStackTrace();
-                                }
-//                            companion.setService_description();
-                                if (notDownloadIds.size() > 0) companion.setIsShowRed(true);
-                                companion.setNotDownloadIds(notDownloadIds);
+                                checkResult(companion);
                             }
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
@@ -191,6 +174,33 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         }
                     }
                 }, 0);
+    }
+
+    private void checkResult(Companion companion){
+        ServiceMessage serviceMessage = companion.getAuto_reply();
+        if (null != serviceMessage && null != serviceMessage.getLists()) {
+            for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                mDataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+            }
+        }
+        ArrayList<String> notDownloadIds = mDataBaseManager.getNotDownloadIds(companion.getService_id());
+        try {
+            CompanionDB companionDB = mDataBaseManager.getNearestItem(companion.getService_id());
+            if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
+                int time = Integer.parseInt(companionDB.getRelease_time());
+                if (time > 0) {
+                    companion.setRelation_time(time);
+                }
+                List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
+                if (null != content_lists && content_lists.size() >= 0)
+                    companion.setService_description(content_lists.get(0).getSub_title());
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+//                            companion.setService_description();
+        if (notDownloadIds.size() > 0) companion.setIsShowRed(true);
+        companion.setNotDownloadIds(notDownloadIds);
     }
 
     private void addListener() {

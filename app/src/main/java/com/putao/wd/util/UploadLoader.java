@@ -1,6 +1,5 @@
 package com.putao.wd.util;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -13,7 +12,6 @@ import com.putao.wd.api.UserApi;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
 import com.sunnybear.library.model.http.OkHttpRequestHelper;
-import com.sunnybear.library.model.http.UploadFileTask;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.RequestCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -65,11 +63,11 @@ public class UploadLoader {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                if (null != uploadMap.get(filePath)) {
+                    uploadMap.remove(filePath);
+                }
             }
-            if (null != uploadMap.get(filePath)) {
-                uploadMap.get(filePath).onFileUploadFinish();
-                uploadMap.remove(filePath);
-            }
+            uploadMap.get(filePath).onFileUploadFinish();
             isUploadAllFinish = true;
         }
     };

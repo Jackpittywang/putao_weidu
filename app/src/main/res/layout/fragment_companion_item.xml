@@ -69,4 +69,14 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_10sp"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_dot"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:background="@drawable/btn_companion_num_shape"
+        android:visibility="gone"/>
 </RelativeLayout>
