@@ -85,7 +85,7 @@ public class GPushService extends Service {
         if (initialCode != 0) return initialCode;
         gpushConnected = true;
 
-        int loginCode = GPush.loginGPush(Constants.GPUSH_KEY, Constants.GPUSH_TOKEN);
+        int loginCode = GPush.loginGPush(Constants.getPushKey(), Constants.getPushToken());
         if (loginCode != 0) return loginCode;
 
         int registerCode = GPush.registerGPush(appId);

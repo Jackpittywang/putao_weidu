@@ -114,7 +114,10 @@ public class GlobalApplication extends BasicApplication {
 
 
         // 启动gpush service, 最后一个参数设置true内网 false外网
-        GPushService.startGPushService(this, AppUtils.getDeviceId(this), app_id, GlobalApplication.isDebug);
+        // GPUSH 内网appid是15；
+        String appId = "15";
+        if (GlobalApplication.isDebug == false) appId = app_id;
+        GPushService.startGPushService(this, AppUtils.getDeviceId(this), appId, GlobalApplication.isDebug);
         /*CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
         dataBaseManager.insertFixDownload("8003", "343");*/
 //        dataBaseManager.insertFixDownload("6000", "125");
@@ -134,7 +137,7 @@ public class GlobalApplication extends BasicApplication {
                         if (oldVersion == 1)
                             CompanionDBDao.createTable(db, false);
                         else if (oldVersion == 2) {
-                            
+
                         }
                     }
                 };
