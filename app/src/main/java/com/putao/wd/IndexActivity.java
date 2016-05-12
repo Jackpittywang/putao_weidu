@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
+import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.home.MeFragment;
@@ -20,6 +21,7 @@ import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoDiscovery2Fragment;
 import com.putao.wd.home.PutaoDiscoveryFragment;
 import com.putao.wd.home.PutaoStoreFragment;
+import com.putao.wd.model.CompainServiceMessage;
 import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.putao.wd.util.RedDotUtils;
@@ -27,6 +29,7 @@ import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
@@ -35,6 +38,7 @@ import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -59,7 +63,10 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     TabItem ti_index_me;
 
     private SparseArray<Fragment> mFragments;
-
+    private boolean isNoMoreService = false;
+    private String mServiceId;
+    private String mLastPullId;
+    private List<CompainServiceMessage> mLists;
 
     @Override
     protected int getLayoutId() {
@@ -96,9 +103,33 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             refreshMeDot("");
             checkInquiryBind(AccountHelper.getCurrentUid());
         }
-
+        mLastPullId = "0";
+        mServiceId = "50000";
+        getLastestArticle();
     }
 
+    private void getLastestArticle() {
+        networkRequest(CompanionApi.getServicesLists(mServiceId,mLastPullId), new SimpleFastJsonCallback<CompainServiceMessage>(CompainServiceMessage.class, loading) {
+            @Override
+            public void onSuccess(String url, CompainServiceMessage result) {
+                if (result != null) {
+                    mLists = result.getLists();
+                    if (result != null && mLists.size() > 0) {
+                        mLastPullId = mLists.get(mLists.size() - 1).getId();
+                        AccountHelper.getCurrentUid();
+                        getLastestArticle();
+                    } else
+                        mLists = null;
+                }
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                getLastestArticle();
+            }
+        });
+    }
 
     /**
      * 添加Fragment
