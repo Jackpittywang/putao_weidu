@@ -14,6 +14,13 @@
         auto:nav_right_icon="@drawable/company_head_selector" />
 
 
+    <ProgressBar
+        android:layout_width="@dimen/distance_10dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:endColor="@color/color_EBEBEB"
+        android:startColor="@color/player_gray" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

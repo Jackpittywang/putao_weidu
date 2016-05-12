@@ -185,7 +185,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     Runnable mFailRun = new Runnable() {
         @Override
         public void run() {
-            getLastestArticle();
+            ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            ComponentName cn = am.getRunningTasks(2).get(0).topActivity;
+            if (cn != null) {
+                if (getClass().getName().contains(cn.getClassName())) {
+                    getLastestArticle();
+                }
+            }
         }
     };
 
@@ -201,9 +207,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                     if (null != lists && lists.size() > 0) {
                         mGameDetailAdapter.addAll(lists);
                         rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
-                        getLastestArticle();
                         mDataBaseManager.insertAll(mServiceId, lists);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        List<ServiceMessageContent> content_lists = lists.get(lists.size() - 1).getContent_lists();
+                        mCompanion.setLast_pull_id(content_lists.get(content_lists.size() - 1).getArticle_id());
+                        mFailHandler.postDelayed(mFailRun, 300);
                     }
                 }
             }
@@ -211,13 +219,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             @Override
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
-                ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                ComponentName cn = am.getRunningTasks(2).get(0).topActivity;
-                if (cn != null) {
-                    if (getClass().getName().contains(cn.getClassName())) {
-                        mFailHandler.postDelayed(mFailRun, 2000);
-                    }
-                }
+                mFailHandler.postDelayed(mFailRun, 2000);
                 mCancelUrl = url;
             }
         });
