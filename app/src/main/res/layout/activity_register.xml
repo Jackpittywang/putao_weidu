@@ -60,6 +60,8 @@
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
                 android:hint="@string/graph_verify"
+                android:lines="1"
+                android:singleLine="true"
                 auto:maxLength="4" />
 
             <!--图形验证码-->
@@ -98,7 +100,9 @@
                 android:background="@null"
                 android:drawableRight="@drawable/close_selector"
                 android:hint="@string/sms_verify"
-                android:minHeight="48dp" />
+                android:lines="1"
+                android:minHeight="48dp"
+                android:singleLine="true" />
 
             <com.sunnybear.library.view.TimeButton
                 android:id="@+id/tb_get_verify"

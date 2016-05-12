@@ -379,7 +379,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             @Override
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
 
-               /* Bundle bundle = new Bundle();
+                /*Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
                 bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mCompanion.getService_name());
@@ -475,6 +475,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
         serviceMessageList.setMessage(msg);
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
+        serviceMessageList.setSend_state(1);
         mGameDetailAdapter.add(serviceMessageList);
         mGameDetailAdapter.setMsg(mServiceId, msg);
         mDataBaseManager.insertUploadText(mServiceId, msg);

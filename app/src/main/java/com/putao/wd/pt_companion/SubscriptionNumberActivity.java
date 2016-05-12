@@ -1,7 +1,11 @@
 package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.CompanionApi;
@@ -10,6 +14,7 @@ import com.putao.wd.model.SubscribeList;
 import com.putao.wd.pt_companion.adapter.SubscriptionNumberAdapter;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -29,6 +34,12 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
     LoadMoreRecyclerView rv_content;
+    @Bind(R.id.rl_no_Subscribe)
+    RelativeLayout rl_no_Subscribe;
+    @Bind(R.id.rl_subscribe_failure)
+    RelativeLayout rl_subscribe_failure;
+    @Bind(R.id.btn_no_data)
+    Button btn_no_data;
 
     private SubscriptionNumberAdapter adapter;
     protected ArrayList<SubscribeList> subscribeLists;
@@ -78,6 +89,16 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
                 getSubscribeList();
             }
         });
+
+        btn_no_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetManager.isNetworkAvailable(mContext))
+                    ToastUtils.showToastShort(mContext, "获取数据失败");
+                else
+                    getSubscribeList();
+            }
+        });
     }
 
 
@@ -92,12 +113,31 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
                             adapter.replaceAll(result);
                             mPage++;
                             rv_content.loadMoreComplete();
+                            ptl_refresh.setVisibility(View.VISIBLE);
+                            rl_no_Subscribe.setVisibility(View.GONE);
+                        } else {
+                            rl_no_Subscribe.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
                         }
+
                         checkLoadMoreComplete(result);
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
-                });
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        //多了尾布局，因此至少是1
+                        if (adapter.getItemCount() <= 1) {
+                            rl_subscribe_failure.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        }
+                    }
+                }
+
+        );
     }
 
     private void checkLoadMoreComplete(ArrayList<SubscribeList> result) {

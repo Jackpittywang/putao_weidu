@@ -270,7 +270,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
 
             @Override
             public void onFailure(String url, int statusCode, String msg) {
-
+                ToastUtils.showToastShort(mContext, isSubscribe ? "取消订阅失败" : "取消关联失败");
+                mDialog.dismiss();
             }
 
             @Override

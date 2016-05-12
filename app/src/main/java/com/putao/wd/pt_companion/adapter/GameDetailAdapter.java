@@ -21,11 +21,13 @@ import com.putao.wd.model.PicClickResult;
 import com.putao.wd.model.PicList;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.pt_companion.ArticleDetailForActivitiesActivity;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.util.ImageLoaderUtil;
 import com.putao.wd.util.NetworkUtil;
 import com.putao.wd.util.UploadFileCallback;
 import com.putao.wd.util.UploadLoader;
+import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
@@ -151,6 +153,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
 
     @Override
     public void onBindItem(BasicViewHolder holder, final ServiceMessageList serviceMessageList, int position) {
+
+//        String date = DateUtils.secondToDate(serviceMessageList.getRelease_time(), "yyyy-MM-dd HH:mm");
         String date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         if (holder instanceof QuestionReplyViewHolder) {
             QuestionReplyViewHolder askViewHolder = (QuestionReplyViewHolder) holder;
@@ -198,16 +202,28 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             gameDetailHolder.rl_article2.setVisibility(View.GONE);
             gameDetailHolder.rl_article3.setVisibility(View.GONE);
             gameDetailHolder.rl_article4.setVisibility(View.GONE);
-            ServiceMessageContent serviceMessageContent = content_lists.get(0);
+            final ServiceMessageContent serviceMessageContent = content_lists.get(0);
             gameDetailHolder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
             if (content_lists.size() == 1) {
                 gameDetailHolder.tv_title.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_content.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_title.setText(serviceMessageContent.getTitle());
                 gameDetailHolder.tv_content.setText(serviceMessageContent.getSub_title());
+                gameDetailHolder.ll_main.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onSkipPage(serviceMessageList, serviceMessageContent);
+                    }
+                });
             } else if (content_lists.size() > 1) {
                 gameDetailHolder.tv_title_multi.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_title_multi.setText(content_lists.get(0).getTitle());
+                gameDetailHolder.rl_gamedetail_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onSkipPage(serviceMessageList, serviceMessageContent);
+                    }
+                });
                 for (int i = 1; i < content_lists.size(); i++) {
                     final ServiceMessageContent serviceMContent = content_lists.get(i);
                     switch (i) {
@@ -219,6 +235,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
+                                    onSkipPage(serviceMessageList, serviceMessageContent);
                                 }
                             });
                             break;
@@ -226,10 +243,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             gameDetailHolder.rl_article2.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article2.setText(serviceMContent.getTitle());
                             gameDetailHolder.iv_article2.setImageURL(serviceMContent.getCover_pic());
-                            gameDetailHolder.rl_article1.setOnClickListener(new View.OnClickListener() {
+                            gameDetailHolder.rl_article2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
+                                    onSkipPage(serviceMessageList, serviceMessageContent);
                                 }
                             });
                             break;
@@ -237,10 +255,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             gameDetailHolder.rl_article3.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article3.setText(serviceMContent.getTitle());
                             gameDetailHolder.iv_article3.setImageURL(serviceMContent.getCover_pic());
-                            gameDetailHolder.rl_article1.setOnClickListener(new View.OnClickListener() {
+                            gameDetailHolder.rl_article3.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
+                                    onSkipPage(serviceMessageList, serviceMessageContent);
                                 }
                             });
 
@@ -249,10 +268,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             gameDetailHolder.rl_article4.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article4.setText(serviceMContent.getTitle());
                             gameDetailHolder.iv_article4.setImageURL(serviceMContent.getCover_pic());
-                            gameDetailHolder.rl_article1.setOnClickListener(new View.OnClickListener() {
+                            gameDetailHolder.rl_article4.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
+                                    onSkipPage(serviceMessageList, serviceMessageContent);
                                 }
                             });
                             break;
@@ -277,33 +297,16 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     switch (serviceMessageList.getSend_state()) {
                         case 0:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
-                            NetworkUtil.getInstance().startRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
-                                    new SimpleFastJsonCallback<String>(String.class, null) {
-                                        @Override
-                                        public void onSuccess(String url, String result) {
-                                            if (!TextUtils.isEmpty(result)) {
-                                                JSONObject jsonObject = JSONObject.parseObject(result);
-                                                String message = (String) jsonObject.get("message");
-                                                if (!TextUtils.isEmpty(message)) return;
-                                                ServiceMessageList serviceMessageList = new ServiceMessageList();
-                                                serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
-                                                serviceMessageList.setType("text");
-                                                serviceMessageList.setMessage(message);
-                                                add(serviceMessageList);
-                                            }
-                                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
-                                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                        }
 
-                                        @Override
-                                        public void onFailure(String url, int statusCode, String msg) {
-                                            super.onFailure(url, statusCode, msg);
-                                            serviceMessageList.setSend_state(2);
-                                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
-                                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                            ToastUtils.showToastShort(context, "发送失败，请检查您的网络");
-                                        }
-                                    });
+                            questionLocalViewHolder.pb_item_ask_text.setVisibility(View.VISIBLE);
+                            //请求数据，是否评论成功
+                            initServiceQuiz(questionLocalViewHolder, serviceMessageList);
+                            questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList);
+                                }
+                            });
                             break;
                         case 1:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
@@ -318,6 +321,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                 case UPLOAD_IMAGE_TYPE:
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.GONE);
+                    if (null == serviceMessageList.getImage()) return;
                     final String pic = serviceMessageList.getImage().getPic();
                     final String picUri = pic.substring(pic.indexOf("//") + 2);
                     if (!TextUtils.isEmpty(serviceMessageList.getImage().getThumb()))
@@ -350,24 +354,21 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     });
                     switch (serviceMessageList.getSend_state()) {
                         case 0:
-                            questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
+                            questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
                             UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
                                 @Override
                                 protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
-                                    if (filePath.equals(picUri)) {
-                                        serviceMessageList.setSend_state(1);
-                                        questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
-                                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                    }
+                                    serviceMessageList.setSend_state(1);
+                                    questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
+                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                 }
 
                                 @Override
                                 protected void onFileUploadFail(String filePath) {
-                                    if (filePath.equals(serviceMessageList.getImage().getPic())) {
-                                        serviceMessageList.setSend_state(2);
-                                        questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
-                                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                    }
+                                    serviceMessageList.setSend_state(2);
+                                    questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
+                                    questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
+                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                 }
                             }).execute();
                             break;
@@ -423,6 +424,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         TextView tv_article4;
         @Bind(R.id.iv_article4)
         ImageDraweeView iv_article4;
+
+        @Bind(R.id.ll_main)
+        LinearLayout ll_main;
+        @Bind(R.id.rl_gamedetail_image)
+        RelativeLayout rl_gamedetail_image;
 
         public GameDetailHolder(View itemView) {
             super(itemView);
@@ -489,6 +495,51 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         msg = serviceMsg;
     }
 
+    /**
+     * 加载数据
+     */
+    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList) {
+        NetworkUtil.getInstance().startRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
+                new SimpleFastJsonCallback<String>(String.class, null) {
+                    @Override
+                    public void onSuccess(String url, String result) {
+                        if (!TextUtils.isEmpty(result)) {
+                            JSONObject jsonObject = JSONObject.parseObject(result);
+                            String message = (String) jsonObject.get("message");
+                            if (!TextUtils.isEmpty(message)) return;
+                            ServiceMessageList serviceMessageList = new ServiceMessageList();
+                            serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+                            serviceMessageList.setType("text");
+                            serviceMessageList.setMessage(message);
+                            add(serviceMessageList);
+                        }
+                        questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
+                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        serviceMessageList.setSend_state(2);
+                        questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
+                        questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
+                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                        ToastUtils.showToastShort(context, "发送失败，请检查您的网络");
+                    }
+                });
+    }
+
+    /**
+     * 跳转页面
+     */
+    private void onSkipPage(ServiceMessageList serviceMessageList, ServiceMessageContent serviceMessageContent) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
+        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
+        bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, serviceMessageContent.getTitle());
+        bundle.putString(BaseWebViewActivity.URL, serviceMessageContent.getLink_url());
+        context.startActivity(ArticleDetailForActivitiesActivity.class, bundle);
+    }
 
 }
 

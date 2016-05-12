@@ -52,7 +52,7 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_companion_subribe_list;
+        return R.layout.activity_companion_subribe;
     }
 
     @Override

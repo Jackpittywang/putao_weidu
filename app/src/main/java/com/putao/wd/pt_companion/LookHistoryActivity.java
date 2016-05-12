@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
@@ -97,6 +98,15 @@ public class LookHistoryActivity extends PTWDActivity {
                 } else {
                     ToastUtils.showToastShort(mContext, "这不是文章类型");
                 }
+            }
+        });
+        btn_no_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetManager.isNetworkAvailable(mContext))
+                    ToastUtils.showToastShort(mContext, "获取数据失败");
+                else
+                    lookHistoryData();
             }
         });
     }
