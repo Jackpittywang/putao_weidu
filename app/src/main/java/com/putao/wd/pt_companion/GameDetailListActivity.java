@@ -40,6 +40,7 @@ import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceMessageListImage;
+import com.putao.wd.model.ServiceMessageListReply;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 import com.putao.wd.util.BottomPanelUtil;
@@ -260,6 +261,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 if (!TextUtils.isEmpty(message)) {
                     serviceMessageList.setMessage(message);
                 }
+                serviceMessageList.setReply(JSON.parseObject(companionDB.getReply(), ServiceMessageListReply.class));
+                serviceMessageList.setImage(JSON.parseObject(companionDB.getImage(), ServiceMessageListImage.class));
                 serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
                 serviceMessageList.setType(companionDB.getType());
                 serviceMessageList.setId(companionDB.getId());
