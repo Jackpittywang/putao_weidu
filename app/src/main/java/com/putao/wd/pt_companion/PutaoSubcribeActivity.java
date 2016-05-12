@@ -69,10 +69,14 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
     }
 
     private void addListener() {
-        rv_content.setOnItemClickListener(new OnItemClickListener() {
+        rv_content.setOnItemClickListener(new OnItemClickListener<Companion>() {
             @Override
-            public void onItemClick(Serializable serializable, int position) {
-
+            public void onItemClick(Companion companion, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+                startActivity(GameDetailListActivity.class, bundle);
+                companion.setIsShowRed(false);
+                mCompanionAdapter.notifyItemChanged(position);
             }
         });
     }

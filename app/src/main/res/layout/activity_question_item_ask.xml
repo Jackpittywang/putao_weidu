@@ -31,12 +31,12 @@
 
         <ImageView
             android:id="@+id/img_item_retry_image"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/rl_item_ask_image"
-            android:background="@drawable/icon_16_03"
+            android:background="@drawable/red_dot_shape"
             android:visibility="gone" />
 
         <RelativeLayout
@@ -90,11 +90,11 @@
 
             <ImageView
                 android:id="@+id/img_item_retry_text"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/icon_16_03"
+                android:background="@drawable/red_dot_shape"
                 android:visibility="gone" />
 
             <com.sunnybear.library.view.emoji.EmojiTextView

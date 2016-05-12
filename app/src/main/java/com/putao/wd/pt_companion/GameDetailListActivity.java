@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -47,13 +48,14 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -184,6 +186,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
     Handler mLoadHandler = new Handler();
     private String mCancelUrl;
+    private int mFailCount;
     Runnable mLoadRun = new Runnable() {
         @Override
         public void run() {
@@ -206,6 +209,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             @Override
             public void onSuccess(String url, ServiceMessage result) {
                 if (result != null) {
+                    mFailCount = 0;
                     ArrayList<ServiceMessageList> lists = result.getLists();
                     if (null != lists && lists.size() > 0) {
                         for (ServiceMessageList serviceMessageList : lists) {
@@ -228,7 +232,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
                 if ("data数据返回错误".equals(msg)) return;
-                mLoadHandler.postDelayed(mLoadRun, 2000);
+                mFailCount++;
+                if (mFailCount < 3)
+                    mLoadHandler.postDelayed(mLoadRun, 2000);
+                else
+                    pb_loading.setVisibility(View.GONE);
                 mCancelUrl = url;
             }
         }, false);
@@ -420,6 +428,21 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 0x900) {
+            Bundle bundle = data.getExtras();
+            Bitmap bitmap = (Bitmap) bundle.get("data");
+            String filePath = GlobalApplication.sdCardPath + File.separator + "pt" + System.currentTimeMillis() / 1000 + ".jpg";
+            ImageUtils.bitmapOutSdCard(bitmap, filePath);
+
+            ServiceMessageListImage serviceMessageListImage = new ServiceMessageListImage();
+            serviceMessageListImage.setPic("file://" + filePath);
+            conductPic(serviceMessageListImage);
+        }
+    }
+
     //图片选择后的处理
     @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
     public void eventSelectPic(List<ImageInfo> selectPhotos) {
@@ -428,13 +451,18 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             serviceMessageListImage.setPic("file://" + selectPhotos.get(0)._DATA);
             if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
                 serviceMessageListImage.setThumb("file://" + selectPhotos.get(0).THUMB_DATA);
-            ServiceMessageList serviceMessageList = new ServiceMessageList();
-            serviceMessageList.setImage(serviceMessageListImage);
-            serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
-            serviceMessageList.setType(GameDetailAdapter.UPLOAD_IMAGE_TYPE);
-            mGameDetailAdapter.add(serviceMessageList);
-            rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+            conductPic(serviceMessageListImage);
         }
+    }
+
+    private void conductPic(ServiceMessageListImage serviceMessageListImage) {
+        ServiceMessageList serviceMessageList = new ServiceMessageList();
+        serviceMessageList.setImage(serviceMessageListImage);
+        serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+        serviceMessageList.setType(GameDetailAdapter.UPLOAD_IMAGE_TYPE);
+        mGameDetailAdapter.add(serviceMessageList);
+        rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+        mDataBaseManager.insertObject(mServiceId, serviceMessageList);
     }
 
     private void sendAsk() {
@@ -654,6 +682,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         if (null != mCancelUrl)
             return new String[]{mCancelUrl};
         return new String[0];
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_UPDATE_UPLOAD)
+    private void insertUpload(ServiceMessageList serviceMessageList) {
+        mDataBaseManager.insertObject(mServiceId, serviceMessageList);
     }
 }
 

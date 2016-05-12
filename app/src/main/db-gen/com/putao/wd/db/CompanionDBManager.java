@@ -180,7 +180,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     }
 
     public boolean insertObject(String service_id, ServiceMessageList serviceMessageList) {
-        return insert(new CompanionDB(serviceMessageList.getId(), service_id, serviceMessageList.getType(), serviceMessageList.getRelease_time() + "", toJsonString(serviceMessageList.getContent_lists()),
+        return insertOrReplace(new CompanionDB(serviceMessageList.getId(), service_id, serviceMessageList.getType(), serviceMessageList.getRelease_time() + "", toJsonString(serviceMessageList.getContent_lists()),
                 1 + "", AccountHelper.getCurrentUid(), serviceMessageList.getId() + AccountHelper.getCurrentUid(), null == serviceMessageList.getMessage() ? "" : serviceMessageList.getMessage(), toJsonString(serviceMessageList.getImage()),
                 toJsonString(serviceMessageList.getReply()), serviceMessageList.getSend_state() + ""));
     }

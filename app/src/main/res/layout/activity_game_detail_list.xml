@@ -23,12 +23,12 @@
         auto:refresh_layout="@layout/sky_wheel_refresh_header"
         auto:refresh_layout_height="120">-->
 
-        <com.sunnybear.library.view.recycler.BasicRecyclerView
-            android:id="@+id/rv_content"
-            android:layout_below="@+id/navigation_bar"
-            android:layout_above="@+id/rl_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@+id/rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_below="@+id/navigation_bar" />
 
     <!--</com.sunnybear.library.view.PullToRefreshLayout>-->
 
@@ -36,6 +36,7 @@
         android:id="@+id/pb_loading"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:layout_above="@+id/rv_content"
         android:layout_below="@+id/navigation_bar"
         android:layout_centerHorizontal="true"
         android:background="#FAFAFA"

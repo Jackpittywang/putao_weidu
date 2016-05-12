@@ -292,6 +292,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                                 add(serviceMessageList);
                                             }
                                             questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
+                                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                         }
 
                                         @Override
@@ -299,6 +300,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                             super.onFailure(url, statusCode, msg);
                                             serviceMessageList.setSend_state(2);
                                             questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
+                                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                             ToastUtils.showToastShort(context, "发送失败，请检查您的网络");
                                         }
                                     });
@@ -355,6 +357,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                     if (filePath.equals(picUri)) {
                                         serviceMessageList.setSend_state(1);
                                         questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
+                                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                     }
                                 }
 
@@ -363,6 +366,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                     if (filePath.equals(serviceMessageList.getImage().getPic())) {
                                         serviceMessageList.setSend_state(2);
                                         questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
+                                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                     }
                                 }
                             }).execute();
