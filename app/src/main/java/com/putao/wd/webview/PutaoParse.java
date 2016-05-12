@@ -25,6 +25,9 @@ public class PutaoParse {
     // putao://pageSetting/{'isComment':'1','commentNumber':'xxx','zanNumber':'xxx'}
     public static String PAGE_SETTING = "pageSetting";
 
+    //putao://openAccNo/{"type":1,"id":50008}
+    public static String OPEN_ACC_NO = "openAccNo";
+
     public static boolean parseUrl(Context context, String scheme, JSONObject jsonObj) {
         // Log.i(TAG, "url called:" + jsonObj.toJSONString());
         try {
@@ -48,6 +51,12 @@ public class PutaoParse {
                 return true;
             } else if (PAGE_SETTING.equals(scheme)) {
                 //PAGE_SETTING不在此处做处理
+                return true;
+            } else if (OPEN_ACC_NO.equals(scheme)) {
+                String type = jsonObj.getInteger("type") + "";
+                String id = jsonObj.getInteger("id") + "";
+
+
                 return true;
 
             } else {
