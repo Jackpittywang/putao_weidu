@@ -8,7 +8,9 @@ public class Constants {
     public static final String EXTRA_APPID = "appId";
     public static final String EXTRA_PAYLOAD = "payload";
 
+    public static final String DEFAULT_SERVER_DEBUG = "http://10.1.11.171:10090/mqtt_server";
     public static final String DEFAULT_SERVER = "http://10.1.11.171:10090/mqtt_server";
+
     public static final String PLATFORM = "android";
 
     public static final String GPUSH_KEY = "0d87e77f509a419285db58f985836901";
@@ -22,14 +24,22 @@ public class Constants {
 
     public static String APP_ID = "";
 
+
+    public static boolean isDebug = true;
+
     /**
      * 设置deviceid 和 appid
      * @param deviceId
      * @param appId
      */
-    public static void setDeviceAndAppId(String deviceId, String appId){
+    public static void setDeviceAndAppId(String deviceId, String appId, boolean isDebug){
         DEVICE_ID = deviceId;
         APP_ID = appId;
+    }
+
+    public static String getServerUrl(){
+        if(isDebug) return DEFAULT_SERVER_DEBUG;
+        else return DEFAULT_SERVER;
     }
 
 }

@@ -70,7 +70,7 @@ jint Java_com_putao_ptx_push_core_GPush_initial(JNIEnv* env,
     const char *http_url = (*env)->GetStringUTFChars(env, jhttp_url, 0);
     const char *platform = (*env)->GetStringUTFChars(env, jplatform, 0);
     const char *device_token = (*env)->GetStringUTFChars(env, jdevice_token, 0);
-    //LOGD("GPUSH inital called,  url is:%s, platform is:%s, device is:%s", http_url, platform, device_token);
+    LOGD("GPUSH inital called,  url is:%s, platform is:%s, device is:%s", http_url, platform, device_token);
     int result = PTGPush_Initial(http_url, platform, device_token);
     (*env)->ReleaseStringUTFChars(env, jhttp_url, http_url);
     (*env)->ReleaseStringUTFChars(env, jplatform, platform);

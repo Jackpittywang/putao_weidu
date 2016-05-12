@@ -37,9 +37,9 @@ public class GPushService extends Service {
      * @param deviceId 设备id
      * @param appId    appid
      */
-    public static void startGPushService(Context context, String deviceId, String appId) {
+    public static void startGPushService(Context context, String deviceId, String appId, boolean isDebug) {
         // Log.i(TAG, "start service called, deviceId is:"+deviceId +" app id is:"+ appId);
-        Constants.setDeviceAndAppId(deviceId, appId);
+        Constants.setDeviceAndAppId(deviceId, appId, isDebug);
         Intent i = new Intent(context, GPushService.class);
         context.startService(i);
         GPushCallback.mContext = context;
@@ -81,7 +81,7 @@ public class GPushService extends Service {
         Log.i(TAG, "gpush initGPushHandle called");
         String deviceId = Constants.DEVICE_ID;
         String appId = Constants.APP_ID;
-        int initialCode = GPush.initGPush(Constants.DEFAULT_SERVER, Constants.PLATFORM, deviceId);
+        int initialCode = GPush.initGPush(Constants.getServerUrl(), Constants.PLATFORM, deviceId);
         if (initialCode != 0) return initialCode;
         gpushConnected = true;
 
