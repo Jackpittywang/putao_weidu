@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/distance_8dp"
         android:text="───  2015-12-23  ───" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/question_item_ask_time"
@@ -25,12 +25,14 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <ProgressBar
-            android:id="@+id/pb_item_ask_text"
+        <ImageView
+            android:id="@+id/img_item_retry_image"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/rl_item_ask_image"
+            android:background="@drawable/icon_16_03"
             android:visibility="gone" />
 
         <RelativeLayout
@@ -38,15 +40,17 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="@dimen/distance_10dp"
-            android:visibility="visible">
+            android:layout_toLeftOf="@+id/question_item_ask_icon"
+            android:visibility="gone">
+
 
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/question_item_ask_image"
                 style="@style/image_round_10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/dialogue_g_mask"
                 auto:placeholderImage="@drawable/img_image_default_m" />
-
 
             <ProgressBar
                 android:id="@+id/pb_item_ask_image"
@@ -57,27 +61,61 @@
                 android:padding="45dp" />
         </RelativeLayout>
 
-        <com.sunnybear.library.view.emoji.EmojiTextView
-            android:id="@+id/question_item_ask_context"
+        <LinearLayout
+            android:id="@+id/ll_item_ask_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:background="@drawable/dialogue_g"
-            android:gravity="center_vertical|left"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="@dimen/distance_8dp"
-            android:text="我的提问我的提问我的提"
-            android:textSize="@dimen/text_size_16sp" />
+            android:layout_toLeftOf="@+id/question_item_ask_icon"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:gravity="left" />
+
+            <ProgressBar
+                android:id="@+id/pb_item_ask_text"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/question_item_ask_context"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/img_item_retry_text"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/icon_16_03"
+                android:visibility="gone" />
+
+            <com.sunnybear.library.view.emoji.EmojiTextView
+                android:id="@+id/question_item_ask_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialogue_g"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="@dimen/distance_8dp"
+                android:text="我的提问我的"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+
 
         <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_ask_icon"
             style="@style/image_round_4dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/distance_8dp"
             android:layout_marginRight="@dimen/distance_8dp"
             auto:placeholderImage="@drawable/img_head_default" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

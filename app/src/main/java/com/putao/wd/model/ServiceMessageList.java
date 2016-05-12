@@ -1,7 +1,6 @@
 package com.putao.wd.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class ServiceMessageList implements Serializable {
     private ServiceMessageListImage image;
     private ServiceMessageListReply reply;
     private int send_state;//0 发送成功 1 发送成功 2 发送失败
-    //    private boolean isShowData;
+    private int isShowData;//0未记录  1 显示 2 不显示
     private List<ServiceMessageContent> content_lists;
 
     public String getId() {
@@ -82,11 +81,11 @@ public class ServiceMessageList implements Serializable {
         this.send_state = send_state;
     }
 
-    /*    public boolean isShowData() {
+    public int getIsShowData() {
         return isShowData;
     }
 
-    public void setIsShowData(boolean isShowData) {
+    public void setIsShowData(int isShowData) {
         this.isShowData = isShowData;
-    }*/
+    }
 }

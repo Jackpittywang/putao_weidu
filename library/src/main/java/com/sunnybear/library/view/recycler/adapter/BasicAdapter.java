@@ -19,6 +19,7 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
      * @param holder ViewHolder
      * @param item   item数据
      */
-    public abstract void onBindItem(VH holder, Item item, int position);
+    public abstract void onBindItem(VH holder, Item item, int position) throws ParseException;
 
     @Override
     public int getItemCount() {
@@ -175,7 +176,11 @@ public abstract class BasicAdapter<Item extends Serializable, VH extends BasicVi
         });
         if (isStartAnimation)
             setAnimator(holder.itemView, position);
-        onBindItem(holder, item, position);
+        try {
+            onBindItem(holder, item, position);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

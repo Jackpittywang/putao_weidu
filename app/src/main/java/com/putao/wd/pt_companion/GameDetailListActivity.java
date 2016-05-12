@@ -57,6 +57,7 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -449,31 +450,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         serviceMessageList.setMessage(msg);
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
         mGameDetailAdapter.add(serviceMessageList);
+        mGameDetailAdapter.setMsg(mServiceId, msg);
         mDataBaseManager.insertUploadText(mServiceId, msg);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
-        networkRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
-                new SimpleFastJsonCallback<String>(String.class, loading) {
-                    @Override
-                    public void onSuccess(String url, String result) {
-                        if (!TextUtils.isEmpty(result)) {
-                            JSONObject jsonObject = JSONObject.parseObject(result);
-                            String message = (String) jsonObject.get("message");
-                            if (!TextUtils.isEmpty(message)) return;
-                            ServiceMessageList serviceMessageList = new ServiceMessageList();
-                            serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
-                            serviceMessageList.setType("text");
-                            serviceMessageList.setMessage(message);
-                            mGameDetailAdapter.add(serviceMessageList);
-//                            mDataBaseManager.insertUploadText(mServiceId, msg);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(String url, int statusCode, String msg) {
-                        super.onFailure(url, statusCode, msg);
-                        ToastUtils.showToastShort(mContext, "发送失败，请检查您的网络");
-                    }
-                });
+        et_msg.setText("");
     }
 
     @Override

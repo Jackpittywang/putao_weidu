@@ -52,7 +52,7 @@
             android:layout_height="20dp"
             android:layout_alignRight="@+id/img_company"
             android:layout_below="@+id/tv_company"
-            android:text="v1.3.0" />
+            android:text="v1.3.1" />
 
         <TextView
             android:layout_width="wrap_content"
