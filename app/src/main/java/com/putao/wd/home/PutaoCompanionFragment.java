@@ -49,6 +49,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
+import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -57,6 +58,8 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -97,6 +100,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private View contentView;
     private LinearLayout ll_ScanCode, ll_Subscribe;
     private CompanionDBManager mDataBaseManager;
+    private List<Companion> mSubscriptCompanion;  //葡萄订阅的serviceI
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_companion;
@@ -105,6 +110,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        mSubscriptCompanion = new ArrayList<>();
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
         //弹框
@@ -137,6 +143,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void initData() {
+        final StepComparator stepComparator = new StepComparator();
+
         networkRequestCache(CompanionApi.getServiceUserRelation(),
                 new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
                     @Override
@@ -147,8 +155,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             for (Companion companion : result) {
                                 if (0 == companion.getService_type()) {
                                     for (Companion companionReply : companion.getSecond_level_lists()) {
+                                        mSubscriptCompanion.add(companionReply);
                                         checkResult(companionReply);
+                                        if (companionReply.isShowRed())
+                                            companion.setIsShowRed(true);
                                     }
+                                    Companion min = Collections.min(mSubscriptCompanion, stepComparator);
+                                    companion.setService_description(min.getService_description());
                                     continue;
                                 }
                                 checkResult(companion);
@@ -176,7 +189,18 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 }, 0);
     }
 
-    private void checkResult(Companion companion){
+    public class StepComparator implements Comparator<Companion> {
+
+
+        @Override
+        public int compare(Companion lhs, Companion rhs) {
+            if (lhs.getRelation_time() < rhs.getRelation_time())
+                return 1;
+            return -1;
+        }
+    }
+
+    private void checkResult(Companion companion) {
         ServiceMessage serviceMessage = companion.getAuto_reply();
         if (null != serviceMessage && null != serviceMessage.getLists()) {
             for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {

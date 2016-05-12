@@ -58,13 +58,15 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         }
         int size = companion.getNotDownloadIds().size();
         holder.tv_dot.setVisibility(View.GONE);
-        if (0 == size || !companion.isShowRed()) {
+        if ((0 == size || !companion.isShowRed()) && 0 != companion.getService_type()) {
             holder.tv_number.setVisibility(View.GONE);
         } else {
             holder.tv_number.setVisibility(View.VISIBLE);
             holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
-            if (0 == companion.getService_type())
+            if (0 == companion.getService_type()) {
+                holder.tv_number.setVisibility(View.GONE);
                 holder.tv_dot.setVisibility(View.VISIBLE);
+            }
         }
     }
 
