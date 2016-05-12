@@ -40,6 +40,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -57,13 +58,50 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     public final static String UPLOAD_TEXT_TYPE = "upload_text";
     public final static String UPLOAD_IMAGE_TYPE = "upload_image";
     private ArrayList<String> mDates;
+    private HashMap<Integer, Integer> mDatesMap;
 
     public GameDetailAdapter(Context context, List<ServiceMessageList> serviceMessageList) {
         super(context, serviceMessageList);
         mContent = context;
         mDates = new ArrayList<>();
+        mDatesMap = new HashMap<>();
     }
 
+    @Override
+    public void replaceAll(List<ServiceMessageList> serviceMessageLists) {
+        super.replaceAll(serviceMessageLists);
+        int i = 0;
+        for (ServiceMessageList serviceMessage : serviceMessageLists) {
+            putDate(serviceMessage.getRelease_time(), i);
+            i++;
+        }
+    }
+
+    @Override
+    public void add(ServiceMessageList serviceMessageList) {
+        super.add(serviceMessageList);
+        putDate(serviceMessageList.getRelease_time(), getItemCount() - 1);
+    }
+
+    @Override
+    public void addAll(List<ServiceMessageList> serviceMessageLists) {
+        super.addAll(serviceMessageLists);
+        int i = getItemCount() - serviceMessageLists.size();
+        for (ServiceMessageList serviceMessage : serviceMessageLists) {
+            putDate(serviceMessage.getRelease_time(), i);
+            i++;
+        }
+    }
+
+    private void putDate(int release_time, int position) {
+        String date = DateUtils.timeCalculate(release_time);
+        if (mDates.contains(date)) {
+            mDatesMap.put(position, 2);
+        } else {
+            mDates.add(date);
+            mDatesMap.put(position, 1);
+        }
+    }
 
     @Override
     public int getLayoutId(int viewType) {
@@ -113,25 +151,15 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
 
     @Override
     public void onBindItem(BasicViewHolder holder, final ServiceMessageList serviceMessageList, int position) {
-
-//        Date nowDate = new Date();
-//        String nowTime = DateUtils.millisecondToDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm");
-//        String date = DateUtils.secondToDate(serviceMessageList.getRelease_time(), "yyyy-MM-dd HH:mm");
-//        String getSecond = date.substring(date.length() - 2, date.length());
-//        String getNowSecond = nowTime.substring(nowTime.length() - 2, nowTime.length());
         String date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
-        if (mDates.contains(date))
-            serviceMessageList.setIsShowData(2);
-        else {
-            mDates.add(date);
-            serviceMessageList.setIsShowData(1);
-        }
         if (holder instanceof QuestionReplyViewHolder) {
             QuestionReplyViewHolder askViewHolder = (QuestionReplyViewHolder) holder;
-            if (2 == serviceMessageList.getIsShowData()) {
+            if (2 == mDatesMap.get(position)) {
                 askViewHolder.question_item_ask_time.setVisibility(View.GONE);
-            } else
+            } else {
+                askViewHolder.question_item_ask_time.setVisibility(View.VISIBLE);
                 askViewHolder.question_item_ask_time.setText("───    " + date + "    ───");
+            }
             switch (serviceMessageList.getType()) {
                 case "text":
                     askViewHolder.ll_reply.setVisibility(View.GONE);
@@ -156,10 +184,12 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             }
         } else if (holder instanceof GameDetailHolder) {
             GameDetailHolder gameDetailHolder = (GameDetailHolder) holder;
-            if (2 == serviceMessageList.getIsShowData()) {
+            if (2 == mDatesMap.get(position)) {
                 gameDetailHolder.tv_time.setVisibility(View.GONE);
-            } else
+            } else {
+                gameDetailHolder.tv_time.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_time.setText("───    " + date + "    ───");
+            }
             List<ServiceMessageContent> content_lists = serviceMessageList.getContent_lists();
             gameDetailHolder.tv_title.setVisibility(View.GONE);
             gameDetailHolder.tv_content.setVisibility(View.GONE);
@@ -233,15 +263,17 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             final QuestionLocalViewHolder questionLocalViewHolder = (QuestionLocalViewHolder) holder;
             String headPic = ImageUtils.getImageSizeUrl(AccountHelper.getCurrentUserInfo().getHead_img(), ImageUtils.ImageSizeURL.SIZE_240x240);
             questionLocalViewHolder.question_item_ask_icon.setImageURL(headPic);
-            if (2 == serviceMessageList.getIsShowData()) {
+            if (2 == mDatesMap.get(position)) {
                 questionLocalViewHolder.question_item_ask_time.setVisibility(View.GONE);
-            } else
+            } else {
+                questionLocalViewHolder.question_item_ask_time.setVisibility(View.VISIBLE);
                 questionLocalViewHolder.question_item_ask_time.setText("───    " + date + "    ───");
+            }
             switch (serviceMessageList.getType()) {
                 case UPLOAD_TEXT_TYPE:
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.VISIBLE);
-                    questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage());
+                    questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage().trim());
                     switch (serviceMessageList.getSend_state()) {
                         case 0:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);

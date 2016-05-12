@@ -63,11 +63,7 @@ public class UploadLoader {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (null != uploadMap.get(filePath)) {
-                    uploadMap.remove(filePath);
-                }
             }
-            uploadMap.get(filePath).onFileUploadFinish();
             isUploadAllFinish = true;
         }
     };
@@ -154,8 +150,20 @@ public class UploadLoader {
         if (upLoadList.size() > 0)
             upLoadList.remove(0);
         isUploadFinish = true;
-        uploadMap.remove(filePath);
-        uploadMap.get(filePath).onFileUploadFail(uploadFile.getAbsolutePath());
+        if (null != uploadMap.get(filePath)) {
+            uploadMap.get(filePath).onFileUploadFail(uploadFile.getAbsolutePath());
+            uploadMap.remove(filePath);
+        }
+    }
+
+    private void setOnSuccess() {
+        if (upLoadList.size() > 0)
+            upLoadList.remove(0);
+        isUploadFinish = true;
+        if (null != uploadMap.get(filePath)) {
+            uploadMap.get(filePath).onFileUploadSuccess(ext, filename, hash, filePath);
+            uploadMap.remove(filePath);
+        }
     }
 
     /**
@@ -206,15 +214,6 @@ public class UploadLoader {
                 });
             }
         }).start();
-    }
-
-    private void setOnSuccess() {
-        upLoadList.remove(0);
-        isUploadFinish = true;
-        if (null != uploadMap.get(filePath)) {
-            uploadMap.get(filePath).onFileUploadSuccess(ext, filename, hash, filePath);
-            uploadMap.remove(filePath);
-        }
     }
 
     private void networkRequest(Request request, RequestCallback callback) {

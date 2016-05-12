@@ -4,9 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MyViewPager;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -18,8 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
@@ -49,7 +45,6 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
-import com.sunnybear.library.util.MathUtils;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -144,7 +139,6 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
     private void initData() {
         final StepComparator stepComparator = new StepComparator();
-
         networkRequestCache(CompanionApi.getServiceUserRelation(),
                 new SimpleFastJsonCallback<ArrayList<Companion>>(Companion.class, loading) {
                     @Override

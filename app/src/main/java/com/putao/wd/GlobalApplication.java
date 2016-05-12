@@ -26,6 +26,8 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -46,6 +48,7 @@ public class GlobalApplication extends BasicApplication {
     public static String blurIndex;
     public static String resourcePath;
     public static String orderId;
+    public static Map<String,Boolean> serviceBindMap;
 
     public static YoukuPlayerBaseConfiguration mYoukuPlayerBaseConfiguration;
 
@@ -121,6 +124,7 @@ public class GlobalApplication extends BasicApplication {
         /*CompanionDBManager dataBaseManager = (CompanionDBManager) getDataBaseManager(CompanionDBManager.class);
         dataBaseManager.insertFixDownload("8003", "343");*/
 //        dataBaseManager.insertFixDownload("6000", "125");
+        serviceBindMap = new HashMap<>();
     }
 
     /**

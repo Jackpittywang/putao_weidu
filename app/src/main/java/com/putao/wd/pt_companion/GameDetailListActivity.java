@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -57,7 +56,6 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -72,9 +70,9 @@ import butterknife.OnClick;
  */
 public class GameDetailListActivity extends PTWDActivity<GlobalApplication> implements OnClickListener {
     @Bind(R.id.rv_content)
-    BasicRecyclerView rv_content;
+    BasicRecyclerView rv_content;/*
     @Bind(R.id.ptl_refresh)
-    PullToRefreshLayout ptl_refresh;
+    PullToRefreshLayout ptl_refresh;*/
 
    /* @Bind(R.id.ll_bottom_menus)
     LinearLayout ll_bottom_menus;
@@ -179,7 +177,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        ptl_refresh.refreshComplete();
+//                        ptl_refresh.refreshComplete();
                     }
                 }, false);
     }
@@ -356,12 +354,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     }
 
     private void addListener() {
-        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+        /*ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 ptl_refresh.refreshComplete();
             }
-        });
+        });*/
         /*rv_content.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -493,7 +491,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                     public void onFailure(String url, int statusCode, String msg) {
                         setNoMenu();
                     }
-                }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 60 * 1000);
+                }, CompanionApi.getServicemenu(mServiceId).urlString() + mServiceId, 0);
     }
 
     private void setNoMenu() {

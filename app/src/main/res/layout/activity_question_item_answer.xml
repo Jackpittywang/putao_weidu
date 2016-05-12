@@ -11,12 +11,16 @@
     <!--时间-->
     <TextView
         android:id="@+id/question_item_ask_time"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="@dimen/distance_8dp"
-        android:paddingTop="@dimen/distance_8dp"
-        android:text="───   2015-12-23   ───" />
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/distance_5dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="───  ##:##  ───"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/text_size_12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

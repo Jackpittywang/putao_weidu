@@ -519,7 +519,7 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         //获取过期时间
         long pastTime = !StringUtils.isEmpty(past_time) ? Long.parseLong(past_time) : currentTime + pastTimer;
         if (!(!StringUtils.isEmpty(past_time) && currentTime < pastTime)) {
-            if (cacheData == null) loading.show();
+//            if (cacheData == null) loading.show();
             mDiskFileCacheHelper.put(url + "_past_time", String.valueOf(currentTime + pastTimer));//存入过期时间
             mOkHttpClient.newCall(request).enqueue(callback);
         }
