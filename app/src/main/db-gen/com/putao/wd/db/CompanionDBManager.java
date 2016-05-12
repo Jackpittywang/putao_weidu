@@ -176,25 +176,11 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     public void insertAll(String service_id, ArrayList<ServiceMessageList> lists) {
         for (ServiceMessageList serviceMessageList : lists) {
             insertObject(service_id, serviceMessageList);
-            /*switch (serviceMessageList.getType()) {
-                case "article":
-                    break;
-                case "text":
-                    break;
-                case "image":
-                    break;
-                case "reply":
-                    break;
-                case GameDetailAdapter.UPLOAD_TEXT_TYPE:
-                    break;
-                case GameDetailAdapter.UPLOAD_IMAGE_TYPE:
-                    break;
-            }*/
         }
     }
 
-    public void insertObject(String service_id, ServiceMessageList serviceMessageList) {
-        insert(new CompanionDB(serviceMessageList.getId(), service_id, serviceMessageList.getType(), serviceMessageList.getRelease_time() + "", toJsonString(serviceMessageList.getContent_lists()),
+    public boolean insertObject(String service_id, ServiceMessageList serviceMessageList) {
+        return insert(new CompanionDB(serviceMessageList.getId(), service_id, serviceMessageList.getType(), serviceMessageList.getRelease_time() + "", toJsonString(serviceMessageList.getContent_lists()),
                 1 + "", AccountHelper.getCurrentUid(), serviceMessageList.getId() + AccountHelper.getCurrentUid(), null == serviceMessageList.getMessage() ? "" : serviceMessageList.getMessage(), toJsonString(serviceMessageList.getImage()),
                 toJsonString(serviceMessageList.getReply()), serviceMessageList.getSend_state() + ""));
     }

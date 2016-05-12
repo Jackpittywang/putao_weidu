@@ -18,6 +18,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -106,6 +107,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     View v_split;
     @Bind(R.id.et_msg)
     EditText et_msg;
+    @Bind(R.id.pb_loading)
+    ProgressBar pb_loading;
 
 
     private boolean isLoadMore = false;
@@ -180,15 +183,16 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 }, false);
     }
 
-    Handler mFailHandler = new Handler();
+    Handler mLoadHandler = new Handler();
     private String mCancelUrl;
-    Runnable mFailRun = new Runnable() {
+    Runnable mLoadRun = new Runnable() {
         @Override
         public void run() {
             ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             ComponentName cn = am.getRunningTasks(2).get(0).topActivity;
             if (cn != null) {
                 if (getClass().getName().contains(cn.getClassName())) {
+                    pb_loading.setVisibility(View.VISIBLE);
                     getLastestArticle();
                 }
             }
@@ -199,30 +203,35 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
      * 获取文章数据
      */
     private void getLastestArticle() {
-        networkRequest(CompanionApi.getServicesLists(mServiceId, mCompanion.getLast_pull_id()), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+        networkRequest(CompanionApi.getServicesLists(mServiceId, mCompanion.getLast_pull_id()), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, null) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
                 if (result != null) {
                     ArrayList<ServiceMessageList> lists = result.getLists();
                     if (null != lists && lists.size() > 0) {
-                        mGameDetailAdapter.addAll(lists);
-                        rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
-                        mDataBaseManager.insertAll(mServiceId, lists);
+                        for (ServiceMessageList serviceMessageList : lists) {
+                            if (mDataBaseManager.insertObject(mServiceId, serviceMessageList)) {
+                                mGameDetailAdapter.add(serviceMessageList);
+                                rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+                            }
+                        }
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         List<ServiceMessageContent> content_lists = lists.get(lists.size() - 1).getContent_lists();
                         mCompanion.setLast_pull_id(content_lists.get(content_lists.size() - 1).getArticle_id());
-                        mFailHandler.postDelayed(mFailRun, 300);
-                    }
-                }
+                        mLoadHandler.postDelayed(mLoadRun, 1000);
+                    } else
+                        pb_loading.setVisibility(View.GONE);
+                } else
+                    pb_loading.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
-                mFailHandler.postDelayed(mFailRun, 2000);
+                mLoadHandler.postDelayed(mLoadRun, 2000);
                 mCancelUrl = url;
             }
-        });
+        }, false);
     }
 
 
@@ -254,7 +263,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
 //        mPage = 1;
-        getLastestArticle();
+        mLoadHandler.post(mLoadRun);
         /*if (null == mCompanion)
             return;
         ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(mServiceId);
