@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.album.model.ImageInfo;
 import com.putao.wd.api.CompanionApi;
@@ -32,6 +33,7 @@ import com.putao.wd.pt_discovery.ResourceFragment;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
+import com.putao.wd.user.LoginActivity;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -308,6 +310,15 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
         });
     }
 
+    private boolean checkLogin(){
+        if(!AccountHelper.isLogin()){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ArticleDetailForActivitiesActivity.class);
+            startActivity(LoginActivity.class,bundle);
+            return false;
+        }else
+            return true;
+    }
 
     /**
      * 重新设置recycleview高度
@@ -361,6 +372,9 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_cool://赞
+                if(!checkLogin())
+                    return;
+
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "赞");
                 if (!property.is_like()) {
                     sb_cool_icon.setState(true);
@@ -382,6 +396,9 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了");
                 break;
             case R.id.ll_comment://评论
+                if(!checkLogin())
+                    return;
+
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "评论");
                 Bundle bundle = new Bundle();
                 bundle.putString(CommentForArticleActivity.EVENT_COUNT_ARTICLEID, article_id);
@@ -390,6 +407,9 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 startActivity(CommentForArticleActivity.class, bundle);
                 break;
             case R.id.sb_cool_icon:
+                if(!checkLogin())
+                    return;
+
                 //使用EventBus提交点赞
                 networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),
                         new SimpleFastJsonCallback<String>(String.class, loading) {
@@ -401,7 +421,6 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                         });
                 break;
         }
-
     }
 
     private List<ServiceSendData> listToServiceListData(ArrayList<String> notDownloadIds) {
@@ -424,7 +443,5 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                         }
                     }, false);
         return serviceSendDatas;
-
     }
-
 }

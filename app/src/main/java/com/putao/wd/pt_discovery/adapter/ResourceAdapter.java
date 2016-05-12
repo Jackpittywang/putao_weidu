@@ -1,24 +1,23 @@
 package com.putao.wd.pt_discovery.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
-import com.putao.wd.model.DiscoveryResource;
 import com.putao.wd.model.FindResource;
 import com.putao.wd.model.ResourceBanner;
 import com.putao.wd.model.ResourceBannerAndTag;
 import com.putao.wd.model.ResourceTag;
-import com.putao.wd.pt_discovery.CampaignActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DensityUtil;
-import com.sunnybear.library.util.ResourcesUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -28,7 +27,6 @@ import com.sunnybear.library.view.viewpager.banner.holder.CBViewHolderCreator;
 import com.sunnybear.library.view.viewpager.banner.holder.Holder;
 import com.sunnybear.library.view.viewpager.banner.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,6 +44,12 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     private List<ResourceBanner> banners;
     private List<ResourceTag> hotTags;
     private ImageHolderView mImageHolderView;
+    private LinearLayoutManager linearLayoutManager;
+    private int mWeight;
+    private int mShowCount;
+    private int mScrollWeight;
+    private boolean isFirstItem = true;
+    private float startX;
 
     public ResourceAdapter(Context context, List<FindResource> resous) {
         super(context, resous);
@@ -111,7 +115,7 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
                 }
             });
         } else if (position == 1) {
-            HotTagHolder hotTagHolder = (HotTagHolder) holder;
+            final HotTagHolder hotTagHolder = (HotTagHolder) holder;
 
             HotTagAdapter hotTagAdapter = new HotTagAdapter(context, hotTags);
             hotTagHolder.rv_discovery_hot_tag.setAdapter(hotTagAdapter);
@@ -120,11 +124,57 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
                 @Override
                 public void onItemClick(ResourceTag tag, int position) {
                     EventBusHelper.post(tag, AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable(CampaignActivity.TAGID, hotTags.get(position).getId());
-//                    context.startActivity(CampaignActivity.class, bundle);
                 }
             });
+            linearLayoutManager = new LinearLayoutManager(context);
+            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            hotTagHolder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
+
+            hotTagHolder.rv_discovery_hot_tag.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+//                    linearLayoutManager.findFirstVisib leItemPosition() == linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                    mScrollWeight += mScrollWeight + dx;
+
+                    if (isFirstItem) {
+                        isFirstItem = false;
+                        View listItem = hotTagHolder.rv_discovery_hot_tag.findViewHolderForAdapterPosition(0).itemView;
+                        listItem.measure(0, 0);
+                        mWeight = listItem.getMeasuredWidth();
+                    }
+                }
+
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+
+                    switch (newState) {
+                        case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+//                            if (linearLayoutManager.findFirstVisibleItemPosition() != linearLayoutManager.findFirstCompletelyVisibleItemPosition()) {
+//                                if (mScrollWeight % mWeight > mWeight / 2)
+//                                    linearLayoutManager.offsetChildrenHorizontal(mWeight - mScrollWeight % mWeight);
+//                                else
+//                                    linearLayoutManager.offsetChildrenHorizontal(-mScrollWeight % mWeight);
+//                            }
+                            linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstVisibleItemPosition());
+                            mScrollWeight = 0;
+                            break;
+                    }
+                }
+            });
+//            hotTagHolder.rv_discovery_hot_tag.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    switch (event.getAction()) {
+//                        case MotionEvent.ACTION_UP:
+//                            linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstVisibleItemPosition());
+//                            break;
+//                    }
+//                    return false;
+//                }
+//            });
+
         } else {
             ResourceHolder resHolder = (ResourceHolder) holder;
             resHolder.iv_discovery_pic.setImageURL(resou.getIcon());

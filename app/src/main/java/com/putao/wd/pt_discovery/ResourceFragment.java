@@ -116,7 +116,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         ptl_refresh.setOnStatusPrefresh(new PullToRefreshLayout.OnStatusPrefresh() {
             @Override
             public void onPtrStatusPrefresh(byte status) {
-//                    isPullToRefresh = true;
                 switch (status) {
                     case PtrFrameLayout.PTR_STATUS_INIT://初始化
                         rv_discovery.scrollBy(0, 1);
