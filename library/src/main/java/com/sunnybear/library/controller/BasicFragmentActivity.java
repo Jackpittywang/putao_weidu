@@ -572,8 +572,8 @@ public abstract class BasicFragmentActivity<App extends BasicApplication> extend
         isResume = true;
         if (isRunningForeground) {
             isRunningForeground = false;
-            Intent intent = new Intent("com.putao.inFore.message");
-            mContext.sendBroadcast(intent);
+            //Intent intent = new Intent("com.putao.inFore.message");
+            //mContext.sendBroadcast(intent);
         }
         MobclickAgent.onResume(this);
     }
