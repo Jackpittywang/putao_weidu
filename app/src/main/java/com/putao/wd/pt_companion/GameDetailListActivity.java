@@ -228,6 +228,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             @Override
             public void onFailure(String url, int statusCode, String msg) {
                 super.onFailure(url, statusCode, msg);
+                if ("data数据返回错误".equals(msg)) return;
                 mLoadHandler.postDelayed(mLoadRun, 2000);
                 mCancelUrl = url;
             }
