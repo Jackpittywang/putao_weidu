@@ -7,9 +7,11 @@ import com.putao.wd.db.dao.CompanionDBDao;
 import com.putao.wd.db.dao.DaoMaster;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import de.greenrobot.dao.AbstractDao;
@@ -164,6 +166,37 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
         List<CompanionDB> list = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).orderDesc(CompanionDBDao.Properties.release_time).limit(0).limit(1).list();
         if (list == null || list.size() == 0) return null;
         return list.get(0);
+    }
+
+    private String toJsonString(Object object) {
+        if (null == object) return "";
+        return JSON.toJSONString(object);
+    }
+
+    public void insertAll(String service_id, ArrayList<ServiceMessageList> lists) {
+        for (ServiceMessageList serviceMessageList : lists) {
+            insertObject(service_id, serviceMessageList);
+            /*switch (serviceMessageList.getType()) {
+                case "article":
+                    break;
+                case "text":
+                    break;
+                case "image":
+                    break;
+                case "reply":
+                    break;
+                case GameDetailAdapter.UPLOAD_TEXT_TYPE:
+                    break;
+                case GameDetailAdapter.UPLOAD_IMAGE_TYPE:
+                    break;
+            }*/
+        }
+    }
+
+    public void insertObject(String service_id, ServiceMessageList serviceMessageList) {
+        insert(new CompanionDB(serviceMessageList.getId(), service_id, serviceMessageList.getType(), serviceMessageList.getRelease_time() + "", toJsonString(serviceMessageList.getContent_lists()),
+                1 + "", AccountHelper.getCurrentUid(), serviceMessageList.getId() + AccountHelper.getCurrentUid(), serviceMessageList.getMessage(), toJsonString(serviceMessageList.getImage()),
+                toJsonString(serviceMessageList.getReply()), serviceMessageList.getSend_state() + ""));
     }
 
 /*    *//**

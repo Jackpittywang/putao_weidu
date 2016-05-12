@@ -64,9 +64,6 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
     private SparseArray<Fragment> mFragments;
     private boolean isNoMoreService = false;
-    private String mServiceId;
-    private String mLastPullId;
-    private List<CompainServiceMessage> mLists;
 
     @Override
     protected int getLayoutId() {
@@ -103,33 +100,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             refreshMeDot("");
             checkInquiryBind(AccountHelper.getCurrentUid());
         }
-        mLastPullId = "0";
-        mServiceId = "50000";
-        getLastestArticle();
     }
 
-    private void getLastestArticle() {
-        networkRequest(CompanionApi.getServicesLists(mServiceId,mLastPullId), new SimpleFastJsonCallback<CompainServiceMessage>(CompainServiceMessage.class, loading) {
-            @Override
-            public void onSuccess(String url, CompainServiceMessage result) {
-                if (result != null) {
-                    mLists = result.getLists();
-                    if (result != null && mLists.size() > 0) {
-                        mLastPullId = mLists.get(mLists.size() - 1).getId();
-                        AccountHelper.getCurrentUid();
-                        getLastestArticle();
-                    } else
-                        mLists = null;
-                }
-            }
-
-            @Override
-            public void onFailure(String url, int statusCode, String msg) {
-                super.onFailure(url, statusCode, msg);
-                getLastestArticle();
-            }
-        });
-    }
 
     /**
      * 添加Fragment

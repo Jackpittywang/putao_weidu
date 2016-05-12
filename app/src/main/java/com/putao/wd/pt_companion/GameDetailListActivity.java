@@ -1,8 +1,11 @@
 package com.putao.wd.pt_companion;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -177,6 +180,50 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 }, false);
     }
 
+    Handler mFailHandler = new Handler();
+    private String mCancelUrl;
+    Runnable mFailRun = new Runnable() {
+        @Override
+        public void run() {
+            getLastestArticle();
+        }
+    };
+
+    /**
+     * 获取文章数据
+     */
+    private void getLastestArticle() {
+        networkRequest(CompanionApi.getServicesLists(mServiceId, mCompanion.getLast_pull_id()), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
+            @Override
+            public void onSuccess(String url, ServiceMessage result) {
+                if (result != null) {
+                    ArrayList<ServiceMessageList> lists = result.getLists();
+                    if (null != lists && lists.size() > 0) {
+                        mGameDetailAdapter.addAll(lists);
+                        rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+                        getLastestArticle();
+                        mDataBaseManager.insertAll(mServiceId, lists);
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                super.onFailure(url, statusCode, msg);
+                ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                ComponentName cn = am.getRunningTasks(2).get(0).topActivity;
+                if (cn != null) {
+                    if (getClass().getName().contains(cn.getClassName())) {
+                        mFailHandler.postDelayed(mFailRun, 2000);
+                    }
+                }
+                mCancelUrl = url;
+            }
+        });
+    }
+
+
     /**
      * 下拉刷新 以及 最初的初始化
      */
@@ -205,7 +252,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
 //        mPage = 1;
-        if (null == mCompanion)
+        getLastestArticle();
+        /*if (null == mCompanion)
             return;
         ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(mServiceId);
         List<ServiceSendData> serviceSendDatas = listToServiceListData(notDownloadIds);
@@ -237,7 +285,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                             super.onFailure(url, statusCode, msg);
                             ptl_refresh.refreshComplete();
                         }
-                    }, false);
+                    }, false);*/
     }
 
 
@@ -320,11 +368,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);*/
             }
         });
-    }
-
-    @Override
-    protected String[] getRequestUrls() {
-        return new String[0];
     }
 
     @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic})
@@ -487,7 +530,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                             @Override
                             void secondMenuClick(ServiceMenu serviceMenu, int position) {
                                 startToWebViewActivity(serviceMenu);
-
                             }
                         };
                         popupWindow_custommenu.showAtLocation(v);
@@ -615,6 +657,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     protected void onDestroy() {
         super.onDestroy();
         popupWindow_custommenu = null;
+    }
+
+    @Override
+    protected String[] getRequestUrls() {
+        if (null != mCancelUrl)
+            return new String[]{mCancelUrl};
+        return new String[0];
     }
 }
 
