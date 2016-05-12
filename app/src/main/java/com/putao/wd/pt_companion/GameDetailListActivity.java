@@ -261,8 +261,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 if (!TextUtils.isEmpty(message)) {
                     serviceMessageList.setMessage(message);
                 }
-                serviceMessageList.setReply(JSON.parseObject(companionDB.getReply(), ServiceMessageListReply.class));
-                serviceMessageList.setImage(JSON.parseObject(companionDB.getImage(), ServiceMessageListImage.class));
+                if (!TextUtils.isEmpty(companionDB.getReply()))
+                    serviceMessageList.setReply(JSON.parseObject(companionDB.getReply(), ServiceMessageListReply.class));
+                if (!TextUtils.isEmpty(companionDB.getImage()))
+                    serviceMessageList.setImage(JSON.parseObject(companionDB.getImage(), ServiceMessageListImage.class));
                 serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
                 serviceMessageList.setType(companionDB.getType());
                 serviceMessageList.setId(companionDB.getId());
