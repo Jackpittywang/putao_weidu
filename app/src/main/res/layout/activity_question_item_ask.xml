@@ -53,15 +53,14 @@
                 style="@style/image_round_10dp"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/dialogue_g_mask"
-                auto:placeholderImage="@drawable/img_image_default_m" />
+                android:background="@drawable/dialogue_g_flip" />
 
             <ProgressBar
                 android:id="@+id/pb_item_ask_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:background="#55000000"
+                android:background="@drawable/dialogue_g_mask"
                 android:padding="45dp" />
         </RelativeLayout>
 

@@ -61,20 +61,25 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     public final static String UPLOAD_IMAGE_TYPE = "upload_image";
     private ArrayList<String> mDates;
     private HashMap<Integer, Integer> mDatesMap;
+    private HashMap<Integer, Integer> mSendStateMap;
 
     public GameDetailAdapter(Context context, List<ServiceMessageList> serviceMessageList) {
         super(context, serviceMessageList);
         mContent = context;
         mDates = new ArrayList<>();
         mDatesMap = new HashMap<>();
+        mSendStateMap = new HashMap<>();
     }
 
     @Override
     public void replaceAll(List<ServiceMessageList> serviceMessageLists) {
         super.replaceAll(serviceMessageLists);
+        mDatesMap.clear();
+        mSendStateMap.clear();
         int i = 0;
         for (ServiceMessageList serviceMessage : serviceMessageLists) {
             putDate(serviceMessage.getRelease_time(), i);
+            mSendStateMap.put(i, serviceMessage.getSend_state());
             i++;
         }
     }
@@ -83,6 +88,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     public void add(ServiceMessageList serviceMessageList) {
         super.add(serviceMessageList);
         putDate(serviceMessageList.getRelease_time(), getItemCount() - 1);
+        mSendStateMap.put(getItemCount() - 1, serviceMessageList.getSend_state());
     }
 
     @Override
@@ -91,6 +97,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         int i = getItemCount() - serviceMessageLists.size();
         for (ServiceMessageList serviceMessage : serviceMessageLists) {
             putDate(serviceMessage.getRelease_time(), i);
+            mSendStateMap.put(i, serviceMessage.getSend_state());
             i++;
         }
     }
@@ -152,7 +159,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     }
 
     @Override
-    public void onBindItem(BasicViewHolder holder, final ServiceMessageList serviceMessageList, int position) {
+    public void onBindItem(BasicViewHolder holder, final ServiceMessageList serviceMessageList, final int position) {
 
 //        String date = DateUtils.secondToDate(serviceMessageList.getRelease_time(), "yyyy-MM-dd HH:mm");
         String date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
@@ -294,17 +301,17 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage().trim());
-                    switch (serviceMessageList.getSend_state()) {
+                    switch (mSendStateMap.get(position)) {
                         case 0:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
 
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.VISIBLE);
                             //请求数据，是否评论成功
-                            initServiceQuiz(questionLocalViewHolder, serviceMessageList);
+                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, position);
                             questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList);
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, position);
                                 }
                             });
                             break;
@@ -352,12 +359,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             context.startActivity(intent);
                         }
                     });
-                    switch (serviceMessageList.getSend_state()) {
+                    switch (mSendStateMap.get(position)) {
                         case 0:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
                             UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
                                 @Override
                                 protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
+                                    mSendStateMap.put(position, 1);
                                     serviceMessageList.setSend_state(1);
                                     questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
                                     EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
@@ -365,6 +373,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
 
                                 @Override
                                 protected void onFileUploadFail(String filePath) {
+                                    mSendStateMap.put(position, 2);
                                     serviceMessageList.setSend_state(2);
                                     questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
                                     questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
@@ -498,7 +507,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     /**
      * 加载数据
      */
-    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList) {
+    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList, final int position) {
         NetworkUtil.getInstance().startRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
                 new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
@@ -508,11 +517,16 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             String message = (String) jsonObject.get("message");
                             if (!TextUtils.isEmpty(message)) return;
                             ServiceMessageList serviceMessageList = new ServiceMessageList();
-                            serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+                            String time = System.currentTimeMillis() / 1000 + "";
+                            serviceMessageList.setRelease_time(Integer.parseInt(time));
                             serviceMessageList.setType("text");
+                            serviceMessageList.setId(time);
                             serviceMessageList.setMessage(message);
                             add(serviceMessageList);
+                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                         }
+                        serviceMessageList.setSend_state(1);
+                        mSendStateMap.put(position, 1);
                         questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
                         EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                     }
@@ -521,6 +535,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         serviceMessageList.setSend_state(2);
+                        mSendStateMap.put(position, 2);
                         questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                         questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                         EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);

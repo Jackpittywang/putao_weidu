@@ -458,8 +458,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private void conductPic(ServiceMessageListImage serviceMessageListImage) {
         ServiceMessageList serviceMessageList = new ServiceMessageList();
         serviceMessageList.setImage(serviceMessageListImage);
-        serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+        String time = System.currentTimeMillis() / 1000 + "";
+        serviceMessageList.setRelease_time(Integer.parseInt(time));
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_IMAGE_TYPE);
+        serviceMessageList.setId(time);
         mGameDetailAdapter.add(serviceMessageList);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         mDataBaseManager.insertObject(mServiceId, serviceMessageList);
