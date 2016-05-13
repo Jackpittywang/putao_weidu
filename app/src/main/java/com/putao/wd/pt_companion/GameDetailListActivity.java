@@ -138,7 +138,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private PopMenus popupWindow_custommenu;
     private Animation.AnimationListener mShowMenuListener;
     private Animation.AnimationListener mShowSendListener;
-    private String msg;
+    private String msg, imageIcon;
     private CompanionDBManager mDataBaseManager;
 
 
@@ -163,11 +163,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             mServiceId = mCompanion.getService_id();
         } else {
             mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
+            imageIcon = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD);
             navigation_bar.setRightClickable(false);
             setMainTitleFromNetwork();
         }
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
-        mGameDetailAdapter.setMsg(mServiceId, mCompanion.getService_icon());
+        mGameDetailAdapter.setMsg(mServiceId, null != mCompanion ? mCompanion.getService_icon() : imageIcon);
         rv_content.setAdapter(mGameDetailAdapter);
         lists = new ArrayList<>();
         initAnim();
@@ -444,7 +445,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
     }
 
-    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic,R.id.et_msg,R.id.tv_emojis})
+    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic, R.id.et_msg, R.id.tv_emojis})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -485,7 +486,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 vp_emojis.setVisibility(View.GONE);
                 break;
             case R.id.tv_emojis:
-                KeyboardUtils.closeKeyboard(mContext,et_msg);
+                KeyboardUtils.closeKeyboard(mContext, et_msg);
                 isShowEmoji = isShowEmoji ? false : true;
                 vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
@@ -545,7 +546,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
         serviceMessageList.setSend_state(0);
         mGameDetailAdapter.add(serviceMessageList);
-        mGameDetailAdapter.setMsg(mServiceId, mCompanion.getService_icon());
+        mGameDetailAdapter.setMsg(mServiceId, null != mCompanion ? mCompanion.getService_icon() : imageIcon);
         mDataBaseManager.insertUploadText(mServiceId, msg);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         resetMsg();
@@ -557,6 +558,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         mMinLenght = 0;
         vp_emojis.setVisibility(View.GONE);
     }
+
     @Override
     public void onLeftAction() {
         super.onLeftAction();
@@ -738,13 +740,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         };
     }
 
-    @Subcriber(tag = AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY)
-    private void startAct(ServiceMessageContent serviceMessageContent) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(BaseWebViewActivity.TITLE, serviceMessageContent.getTitle());
-        bundle.putSerializable(BaseWebViewActivity.URL, serviceMessageContent.getLink_url());
-        startActivity(BaseWebViewActivity.class, bundle);
-    }
+//    @Subcriber(tag = AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY)
+//    private void startAct(ServiceMessageContent serviceMessageContent) {
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(BaseWebViewActivity.TITLE, serviceMessageContent.getTitle());
+//        bundle.putSerializable(BaseWebViewActivity.URL, serviceMessageContent.getLink_url());
+//        startActivity(BaseWebViewActivity.class, bundle);
+//    }
 
     @Override
     protected void onDestroy() {
