@@ -302,11 +302,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                 questionLocalViewHolder.question_item_ask_time.setVisibility(View.VISIBLE);
                 questionLocalViewHolder.question_item_ask_time.setText("───    " + date + "    ───");
             }
+            questionLocalViewHolder.question_item_ask_icon.setImageURL(ImageUtils.getImageSizeUrl(headPic, ImageUtils.ImageSizeURL.SIZE_120x120));
+
             switch (serviceMessageList.getType()) {
                 case UPLOAD_TEXT_TYPE:
-                    questionLocalViewHolder.question_item_ask_icon_text.setVisibility(View.VISIBLE);
-                    questionLocalViewHolder.question_item_ask_icon.setVisibility(View.GONE);
-                    questionLocalViewHolder.question_item_ask_icon_text.setImageURL(headPic);
+//                    questionLocalViewHolder.question_item_ask_icon_text.setVisibility(View.VISIBLE);
+//                    questionLocalViewHolder.question_item_ask_icon.setVisibility(View.GONE);
+//                    questionLocalViewHolder.question_item_ask_icon.setImageURL(headPic);
                     questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.VISIBLE);
@@ -341,9 +343,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     }
                     break;
                 case UPLOAD_IMAGE_TYPE:
-                    questionLocalViewHolder.question_item_ask_icon_text.setVisibility(View.GONE);
-                    questionLocalViewHolder.question_item_ask_icon.setVisibility(View.VISIBLE);
-                    questionLocalViewHolder.question_item_ask_icon.setImageURL(headPic);
+//                    questionLocalViewHolder.question_item_ask_icon_text.setVisibility(View.GONE);
+//                    questionLocalViewHolder.question_item_ask_icon.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.GONE);
                     if (null == serviceMessageList.getImage()) return;
@@ -481,8 +482,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
 
         @Bind(R.id.question_item_ask_icon)
         ImageDraweeView question_item_ask_icon;
-        @Bind(R.id.question_item_ask_icon_text)
-        ImageDraweeView question_item_ask_icon_text;
+//        @Bind(R.id.question_item_ask_icon_text)
+//        ImageDraweeView question_item_ask_icon_text;
 
         @Bind(R.id.question_item_ask_image)
         ImageDraweeView question_item_ask_image;
