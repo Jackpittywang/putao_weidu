@@ -73,6 +73,19 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp" />
 
+            <TextView
+                android:id="@+id/tv_isNetWork"
+                android:layout_width="88dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/tv_get_failure"
+                android:gravity="center"
+                android:text="点击刷新"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="gone" />
+
             <!--间隔线-->
             <View
                 android:layout_width="match_parent"
