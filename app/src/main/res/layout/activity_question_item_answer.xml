@@ -84,16 +84,29 @@
                 android:textSize="@dimen/text_size_14sp" />
         </LinearLayout>
 
-        <com.sunnybear.library.view.image.ImageDraweeView
-            android:id="@+id/question_item_ask_image"
-            style="@style/image_round_10dp"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:clickable="false"
-            android:padding="10dp"
-            android:visibility="visible"
-            app:aspect_ratio="2"
-            app:placeholderImage="@drawable/img_image_default_m" />
+        <RelativeLayout
+            android:id="@+id/rl_item_ask_image"
+            android:layout_width="165dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="@dimen/distance_10dp"
+            android:visibility="visible">
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/question_item_ask_image"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:layout_alignParentLeft="true"
+                android:minWidth="85dp"
+                android:scaleType="fitXY" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/question_item_ask_image"
+                android:background="@drawable/dialogue_w_flip" />
+
+        </RelativeLayout>
 
         <com.sunnybear.library.view.emoji.EmojiTextView
             android:id="@+id/question_item_answer_context"
