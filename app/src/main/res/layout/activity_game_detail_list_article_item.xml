@@ -122,10 +122,12 @@
 
             <TextView
                 android:id="@+id/tv_article1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/iv_article1"
                 android:gravity="center_vertical"
+                android:paddingRight="5dp"
                 android:text="顺利通过，快去第一个评论吧"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_16sp" />
@@ -153,10 +155,12 @@
 
             <TextView
                 android:id="@+id/tv_article2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/iv_article2"
                 android:gravity="center_vertical"
+                android:paddingRight="5dp"
                 android:text="顺利通过，快去第一个评论吧"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_16sp" />
@@ -184,10 +188,12 @@
 
             <TextView
                 android:id="@+id/tv_article3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/iv_article3"
                 android:gravity="center_vertical"
+                android:paddingRight="5dp"
                 android:text="顺利通过，快去第一个评论吧"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_16sp" />
@@ -215,10 +221,12 @@
 
             <TextView
                 android:id="@+id/tv_article4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/iv_article4"
                 android:gravity="center_vertical"
+                android:paddingRight="5dp"
                 android:text="顺利通过，快去第一个评论吧"
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_16sp" />

@@ -146,9 +146,10 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 } else {
                     Bundle bundle = new Bundle();
                     if (capture_url != null) {
-                        if (serviceInfo.is_relation()) {//已关注
+                        if (serviceInfo.is_relation()) {//已关注(从扫一扫界面跳转过来)
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, serviceInfo.getService_icon());
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
                         } else {//未关注
@@ -156,11 +157,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         }
                     } else {
                         if (isBind) {//从未关联跳转过来
-                            startActivity(CaptureActivity.class);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, companion.getService_icon());
+                            startActivity(CaptureActivity.class, bundle);
                         } else {
                             if (isSubscribe) {
                                 if (subscribeList.is_relation()) {
                                     bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
                                     PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                                     startActivity(GameDetailListActivity.class, bundle);
                                 } else {
@@ -217,19 +220,23 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     /**
      * 关注服务号/立即订阅
      */
-    private void correlationService(String service_id, String url) {
+    private void correlationService(final String service_id, String url) {
         networkRequest(CompanionApi.getServiceRelation(service_id, url), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, loading) {
                     @Override
                     public void onSuccess(String url, ServiceMessage result) {
                         Bundle bundle = new Bundle();
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        if (capture_url != null || !isSubscribe) {
-                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                        if (capture_url != null || !isSubscribe) {//从扫一扫页面过来以及不是订阅号
+                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, capture_url != null ? serviceInfo.getService_icon() : companion.getService_icon());
                             PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
                             finish();
                         } else {
-                            startActivity(PutaoSubcribeActivity.class);
+                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                            startActivity(GameDetailListActivity.class, bundle);
                             finish();
                         }
                     }

@@ -450,6 +450,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 // 跳到订阅号列表页面
                                 Bundle bundle = new Bundle();
                                 bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
+                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME));
                                 PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                                 startActivity(GameDetailListActivity.class, bundle);
                                 ToastUtils.showToastShort(mContext, "关注成功");
