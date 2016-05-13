@@ -147,7 +147,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             mCompanion = result;
                             cacheData(url, result);
                             for (Companion companion : result) {
-                                if (0 == companion.getService_type()) {
+                                if (0 == companion.getService_type() && companion.getSecond_level_lists() != null) {
                                     for (Companion companionReply : companion.getSecond_level_lists()) {
                                         mSubscriptCompanion.add(companionReply);
                                         checkResult(companionReply);
