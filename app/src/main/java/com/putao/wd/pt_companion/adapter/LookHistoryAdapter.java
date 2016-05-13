@@ -48,10 +48,14 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
                 holder.tv_title.setText(serviceMessageContent.getTitle());
                 holder.tv_content.setText(serviceMessageContent.getSub_title());
+                holder.iv_sign.setVisibility(View.VISIBLE);
+                holder.tv_title.setVisibility(View.VISIBLE);
+                holder.tv_content.setVisibility(View.VISIBLE);
                 break;
             case "text"://文字
                 holder.tv_title.setText(serviceMessageList.getMessage());
                 holder.tv_content.setVisibility(View.GONE);
+                holder.iv_sign.setVisibility(View.GONE);
                 break;
             case "image"://图片
                 ServiceMessageListImage image = serviceMessageList.getImage();
@@ -63,6 +67,7 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 ServiceMessageListReply reply = serviceMessageList.getReply();
                 holder.tv_title.setText(reply.getQuestion());
                 holder.tv_content.setText(reply.getAnswer());
+                holder.iv_sign.setVisibility(View.GONE);
                 break;
         }
         String date = "";

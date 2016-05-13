@@ -167,6 +167,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             setMainTitleFromNetwork();
         }
         mGameDetailAdapter = new GameDetailAdapter(mContext, null);
+        mGameDetailAdapter.setMsg(mServiceId, mCompanion.getService_icon());
         rv_content.setAdapter(mGameDetailAdapter);
         lists = new ArrayList<>();
         initAnim();
@@ -541,7 +542,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
         serviceMessageList.setSend_state(0);
         mGameDetailAdapter.add(serviceMessageList);
-        mGameDetailAdapter.setMsg(mServiceId, msg);
+        mGameDetailAdapter.setMsg(mServiceId, mCompanion.getService_icon());
         mDataBaseManager.insertUploadText(mServiceId, msg);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         resetMsg();

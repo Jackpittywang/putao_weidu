@@ -14,10 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="@dimen/distance_5dp"
         android:layout_marginBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        android:paddingTop="@dimen/distance_5dp"
         android:text="───  ##:##  ───"
         android:textColor="@color/text_color_gray"
         android:textSize="@dimen/text_size_12sp" />
@@ -25,7 +25,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="5dp">
 
 
         <com.sunnybear.library.view.image.ImageDraweeView
@@ -43,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="70dp"
             android:background="@drawable/dialogue_w"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
@@ -87,7 +91,7 @@
             android:layout_height="240dp"
             android:clickable="false"
             android:padding="10dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:aspect_ratio="2"
             app:placeholderImage="@drawable/img_image_default_m" />
 
@@ -102,7 +106,7 @@
             android:paddingRight="10dp"
             android:text="我的提问我的提问我的提问我的提问我的提问我的提问我的提问"
             android:textSize="@dimen/text_size_16sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </LinearLayout>
 </LinearLayout>

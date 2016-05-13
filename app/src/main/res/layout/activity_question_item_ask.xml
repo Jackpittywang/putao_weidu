@@ -31,18 +31,20 @@
 
         <ImageView
             android:id="@+id/img_item_retry_image"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_width="40dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/rl_item_ask_image"
-            android:background="@drawable/red_dot_shape"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/red_dot_shape"
             android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/rl_item_ask_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_marginTop="@dimen/distance_10dp"
             android:layout_toLeftOf="@+id/question_item_ask_icon"
             android:visibility="gone">
@@ -51,16 +53,15 @@
             <com.sunnybear.library.view.image.ImageDraweeView
                 android:id="@+id/question_item_ask_image"
                 style="@style/image_round_10dp"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/dialogue_g_flip" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/dialogue_g_mask" />
 
             <ProgressBar
                 android:id="@+id/pb_item_ask_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:background="@drawable/dialogue_g_mask"
                 android:padding="45dp" />
         </RelativeLayout>
 
@@ -68,7 +69,7 @@
             android:id="@+id/ll_item_ask_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/question_item_ask_icon"
+            android:layout_toLeftOf="@+id/question_item_ask_icon_text"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -89,11 +90,12 @@
 
             <ImageView
                 android:id="@+id/img_item_retry_text"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/red_dot_shape"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/red_dot_shape"
                 android:visibility="gone" />
 
             <com.sunnybear.library.view.emoji.EmojiTextView
@@ -111,14 +113,27 @@
 
 
         <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/question_item_ask_icon_text"
+            style="@style/image_round_4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@id/ll_item_ask_text"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/distance_8dp"
+            android:layout_marginRight="@dimen/distance_8dp"
+            android:background="@drawable/img_head_default"
+            auto:placeholderImage="@drawable/img_head_default" />
+
+        <com.sunnybear.library.view.image.ImageDraweeView
             android:id="@+id/question_item_ask_icon"
             style="@style/image_round_4dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_alignBottom="@id/rl_item_ask_image"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/distance_8dp"
             android:layout_marginRight="@dimen/distance_8dp"
+            android:background="@drawable/img_head_default"
             auto:placeholderImage="@drawable/img_head_default" />
     </RelativeLayout>
 </LinearLayout>

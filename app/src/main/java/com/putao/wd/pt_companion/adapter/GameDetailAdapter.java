@@ -55,8 +55,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     private static final int TYPE_REPLY = 2;
     private static final int TYPE_ARTICLE = 3;
     private Context mContent;
-    private String mServiceId;
-    private String msg;
+    private String mServiceId, imageIcon;
     public final static String UPLOAD_TEXT_TYPE = "upload_text";
     public final static String UPLOAD_IMAGE_TYPE = "upload_image";
     private ArrayList<String> mDates;
@@ -165,6 +164,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         String date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         if (holder instanceof QuestionReplyViewHolder) {
             QuestionReplyViewHolder askViewHolder = (QuestionReplyViewHolder) holder;
+            askViewHolder.question_item_answer_icon.setImageURL(imageIcon);
             if (2 == mDatesMap.get(position)) {
                 askViewHolder.question_item_ask_time.setVisibility(View.GONE);
             } else {
@@ -183,6 +183,12 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     askViewHolder.question_item_ask_image.setVisibility(View.VISIBLE);
                     askViewHolder.question_item_answer_context.setVisibility(View.GONE);
                     askViewHolder.question_item_ask_image.setImageURL(serviceMessageList.getImage().getPic());
+                    askViewHolder.question_item_ask_image.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            initImage(serviceMessageList, serviceMessageList.getImage().getPic());
+                        }
+                    });
                     break;
                 case "reply":
                     askViewHolder.ll_reply.setVisibility(View.VISIBLE);
@@ -289,7 +295,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         } else if (holder instanceof QuestionLocalViewHolder) {
             final QuestionLocalViewHolder questionLocalViewHolder = (QuestionLocalViewHolder) holder;
             String headPic = ImageUtils.getImageSizeUrl(AccountHelper.getCurrentUserInfo().getHead_img(), ImageUtils.ImageSizeURL.SIZE_240x240);
-            questionLocalViewHolder.question_item_ask_icon.setImageURL(headPic);
+//            questionLocalViewHolder.question_item_ask_icon.setImageURL(headPic);
             if (2 == mDatesMap.get(position)) {
                 questionLocalViewHolder.question_item_ask_time.setVisibility(View.GONE);
             } else {
@@ -298,6 +304,9 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             }
             switch (serviceMessageList.getType()) {
                 case UPLOAD_TEXT_TYPE:
+                    questionLocalViewHolder.question_item_ask_icon_text.setVisibility(View.VISIBLE);
+                    questionLocalViewHolder.question_item_ask_icon.setVisibility(View.GONE);
+                    questionLocalViewHolder.question_item_ask_icon_text.setImageURL(headPic);
                     questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.VISIBLE);
@@ -305,28 +314,36 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     switch (mSendStateMap.get(position)) {
                         case 0:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.VISIBLE);
+                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
                             //请求数据，是否评论成功
-                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, position);
-                            questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
+                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
+                            questionLocalViewHolder.img_item_retry_text.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, position);
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
                                 }
                             });
                             break;
                         case 1:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                             questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
-
+                            questionLocalViewHolder.img_item_retry_text.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
+                                }
+                            });
                             break;
                         case 2:
-//                            questionLocalViewHolder.pb_item_ask_text.setBackgroundResource(R.drawable.icon_16_03);
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                             questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                             break;
                     }
                     break;
                 case UPLOAD_IMAGE_TYPE:
+                    questionLocalViewHolder.question_item_ask_icon_text.setVisibility(View.GONE);
+                    questionLocalViewHolder.question_item_ask_icon.setVisibility(View.VISIBLE);
+                    questionLocalViewHolder.question_item_ask_icon.setImageURL(headPic);
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.GONE);
                     if (null == serviceMessageList.getImage()) return;
@@ -341,28 +358,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     questionLocalViewHolder.question_item_ask_image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicClickResult picClickResult = new PicClickResult();
-                            picClickResult.setClickIndex(0);
-                            ArrayList<PicList> picLists = new ArrayList<PicList>();
-                            PicList picList = new PicList();
-                            if (!TextUtils.isEmpty(serviceMessageList.getImage().getThumb())) {
-                                picList.setSrc(serviceMessageList.getImage().getThumb());
-                            } else {
-                                picList.setSrc(pic);
-                            }
-                            picLists.add(picList);
-                            picClickResult.setPicList(picLists);
-
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable(PictrueBrowseActivity.IMAGE_URL, picClickResult);
-                            Intent intent = new Intent(context, PictrueBrowseActivity.class);
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
+                            initImage(serviceMessageList, pic);
                         }
                     });
                     switch (mSendStateMap.get(position)) {
                         case 0:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
+                            questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
                             UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
                                 @Override
                                 protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
@@ -479,6 +481,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
 
         @Bind(R.id.question_item_ask_icon)
         ImageDraweeView question_item_ask_icon;
+        @Bind(R.id.question_item_ask_icon_text)
+        ImageDraweeView question_item_ask_icon_text;
 
         @Bind(R.id.question_item_ask_image)
         ImageDraweeView question_item_ask_image;
@@ -502,15 +506,15 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     }
 
 
-    public void setMsg(String serviceId, String serviceMsg) {
+    public void setMsg(String serviceId, String serviceIcon) {
         mServiceId = serviceId;
-        msg = serviceMsg;
+        imageIcon = serviceIcon;
     }
 
     /**
      * 加载数据
      */
-    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList, final int position) {
+    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList, String msg, final int position) {
         NetworkUtil.getInstance().startRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
                 new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
@@ -563,6 +567,29 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, serviceMessageContent.getTitle());
         bundle.putString(BaseWebViewActivity.URL, serviceMessageContent.getLink_url());
         context.startActivity(ArticleDetailForActivitiesActivity.class, bundle);
+    }
+
+    /**
+     * 图片点击放大
+     */
+    private void initImage(ServiceMessageList serviceMessageList, String pic) {
+        PicClickResult picClickResult = new PicClickResult();
+        picClickResult.setClickIndex(0);
+        ArrayList<PicList> picLists = new ArrayList<PicList>();
+        PicList picList = new PicList();
+        if (!TextUtils.isEmpty(serviceMessageList.getImage().getThumb())) {
+            picList.setSrc(serviceMessageList.getImage().getThumb());
+        } else {
+            picList.setSrc(pic);
+        }
+        picLists.add(picList);
+        picClickResult.setPicList(picLists);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PictrueBrowseActivity.IMAGE_URL, picClickResult);
+        Intent intent = new Intent(context, PictrueBrowseActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
 }
