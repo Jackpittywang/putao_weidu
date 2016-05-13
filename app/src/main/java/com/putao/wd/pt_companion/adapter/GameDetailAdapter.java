@@ -295,14 +295,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             }
         } else if (holder instanceof QuestionLocalViewHolder) {
             final QuestionLocalViewHolder questionLocalViewHolder = (QuestionLocalViewHolder) holder;
-            String headPic = ImageUtils.getImageSizeUrl(AccountHelper.getCurrentUserInfo().getHead_img(), ImageUtils.ImageSizeURL.SIZE_240x240);
             if (2 == mDatesMap.get(position)) {
                 questionLocalViewHolder.question_item_ask_time.setVisibility(View.GONE);
             } else {
                 questionLocalViewHolder.question_item_ask_time.setVisibility(View.VISIBLE);
                 questionLocalViewHolder.question_item_ask_time.setText("───    " + date + "    ───");
             }
-            questionLocalViewHolder.question_item_ask_icon.setImageURL(ImageUtils.getImageSizeUrl(headPic, ImageUtils.ImageSizeURL.SIZE_120x120));
+            questionLocalViewHolder.question_item_ask_icon.setImageURL(ImageUtils.getImageSizeUrl(AccountHelper.getCurrentUserInfo().getHead_img(), ImageUtils.ImageSizeURL.SIZE_120x120));
 
             switch (serviceMessageList.getType()) {
                 case UPLOAD_TEXT_TYPE:
