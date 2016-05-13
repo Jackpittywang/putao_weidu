@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +44,8 @@ import com.putao.wd.model.ServiceMessageListImage;
 import com.putao.wd.model.ServiceMessageListReply;
 import com.putao.wd.model.ServiceSendData;
 import com.putao.wd.pt_companion.adapter.GameDetailAdapter;
+import com.putao.wd.start.comment.EmojiFragment;
+import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
@@ -53,13 +56,19 @@ import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.KeyboardUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
+import com.sunnybear.library.view.emoji.Emoji;
+import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -108,9 +117,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     @Bind(R.id.v_split)
     View v_split;
     @Bind(R.id.et_msg)
-    EditText et_msg;
+    EmojiEditText et_msg;
     @Bind(R.id.pb_loading)
     ProgressBar pb_loading;
+    @Bind(R.id.tv_emojis)
+    TextView tv_emojis;
 
 
     private boolean isLoadMore = false;
@@ -129,6 +140,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private Animation.AnimationListener mShowSendListener;
     private String msg;
     private CompanionDBManager mDataBaseManager;
+
+
+    private int mMinLenght = 0;
+    private boolean isReply = false;
+    private boolean isShowEmoji = false;
+    private Map<String, String> emojiMap;
+    private List<Emoji> emojis;
 
     @Override
     protected int getLayoutId() {
@@ -155,6 +173,15 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         initData();
         initBottomMenu();
         addListener();
+
+        emojiMap = mApp.getEmojis();
+        emojis = new ArrayList<>();
+        if (emojiMap == null)
+            emojiMap = new HashMap<>();
+        for (Map.Entry<String, String> entry : emojiMap.entrySet()) {
+            emojis.add(new Emoji(entry.getKey(), entry.getValue()));
+        }
+        vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
 
     }
 
@@ -397,9 +424,23 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 startActivity(ArticleDetailForActivitiesActivity.class, bundle);*/
             }
         });
+
+        et_msg.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL && mMinLenght > et_msg.length()) {
+                    et_msg.setText("");
+                    isReply = false;
+                    mMinLenght = 0;
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
-    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic})
+    @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic,R.id.et_msg,R.id.tv_emojis})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -434,6 +475,15 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                         startActivity(intent);
                     }
                 }}, null);
+                break;
+            case R.id.et_msg:
+                isShowEmoji = false;
+                vp_emojis.setVisibility(View.GONE);
+                break;
+            case R.id.tv_emojis:
+                KeyboardUtils.closeKeyboard(mContext,et_msg);
+                isShowEmoji = isShowEmoji ? false : true;
+                vp_emojis.setVisibility(isShowEmoji ? View.VISIBLE : View.GONE);
                 break;
         }
     }
@@ -494,9 +544,15 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         mGameDetailAdapter.setMsg(mServiceId, msg);
         mDataBaseManager.insertUploadText(mServiceId, msg);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
-        et_msg.setText("");
+        resetMsg();
     }
 
+    private void resetMsg() {
+        isReply = false;
+        et_msg.setText("");
+        mMinLenght = 0;
+        vp_emojis.setVisibility(View.GONE);
+    }
     @Override
     public void onLeftAction() {
         super.onLeftAction();
@@ -703,6 +759,16 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private void insertUpload(ServiceMessageList serviceMessageList) {
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         mDataBaseManager.insertObject(mServiceId, serviceMessageList);
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)
+    public void eventClickEmoji(Emoji emoji) {
+        et_msg.append(emoji.getName());
+    }
+
+    @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
+    public void eventDeleteEmoji(Emoji emoji) {
+        et_msg.delete();
     }
 }
 

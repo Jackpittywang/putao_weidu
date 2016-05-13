@@ -36,7 +36,6 @@ import butterknife.Bind;
  */
 public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHolder> {
     private static final int KEY_HEAD = 0XFF;// 头部 轮播图
-
     private static final int KEY_STICK = 0XFD;// 置顶文章
     private static final int KEY_RESOURCE = 0XFC;//文章条目
     private static final int KEY_HOT_TAG = 0XFA;//文章标签
@@ -44,12 +43,9 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     private List<ResourceBanner> banners;
     private List<ResourceTag> hotTags;
     private ImageHolderView mImageHolderView;
+
     private LinearLayoutManager linearLayoutManager;
-    private int mWeight;
-    private int mShowCount;
     private int mScrollWeight;
-    private boolean isFirstItem = true;
-    private float startX;
 
     public ResourceAdapter(Context context, List<FindResource> resous) {
         super(context, resous);
@@ -130,51 +126,32 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             hotTagHolder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
 
+/*
             hotTagHolder.rv_discovery_hot_tag.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-//                    linearLayoutManager.findFirstVisib leItemPosition() == linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                     mScrollWeight += mScrollWeight + dx;
-
-                    if (isFirstItem) {
-                        isFirstItem = false;
-                        View listItem = hotTagHolder.rv_discovery_hot_tag.findViewHolderForAdapterPosition(0).itemView;
-                        listItem.measure(0, 0);
-                        mWeight = listItem.getMeasuredWidth();
-                    }
                 }
 
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-
                     switch (newState) {
                         case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-//                            if (linearLayoutManager.findFirstVisibleItemPosition() != linearLayoutManager.findFirstCompletelyVisibleItemPosition()) {
-//                                if (mScrollWeight % mWeight > mWeight / 2)
-//                                    linearLayoutManager.offsetChildrenHorizontal(mWeight - mScrollWeight % mWeight);
-//                                else
-//                                    linearLayoutManager.offsetChildrenHorizontal(-mScrollWeight % mWeight);
-//                            }
-                            linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstVisibleItemPosition());
+                            if (mScrollWeight >= 0) {//recycle 往右滑动，相当与屏幕往左滑动
+                                linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstVisibleItemPosition());
+                            } else {
+                                    linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstCompletelyVisibleItemPosition());
+                            }
                             mScrollWeight = 0;
+                            break;
+                        default:
                             break;
                     }
                 }
             });
-//            hotTagHolder.rv_discovery_hot_tag.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    switch (event.getAction()) {
-//                        case MotionEvent.ACTION_UP:
-//                            linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstVisibleItemPosition());
-//                            break;
-//                    }
-//                    return false;
-//                }
-//            });
-
+*/
         } else {
             ResourceHolder resHolder = (ResourceHolder) holder;
             resHolder.iv_discovery_pic.setImageURL(resou.getIcon());
@@ -216,7 +193,6 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             }
         }
     }
-
 
     public static class HotTagHolder extends BasicViewHolder {
         @Bind(R.id.rv_discovery_hot_tag)

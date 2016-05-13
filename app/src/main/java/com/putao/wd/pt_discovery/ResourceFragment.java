@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.Scroller;
 
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.R;
@@ -27,7 +25,6 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -45,7 +42,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Created by Administrator on 2016/5/4.
  */
 public class ResourceFragment extends BasicFragment implements View.OnClickListener {
-
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_discovery)
@@ -86,6 +82,10 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private int mScrollX;
     private boolean isPullToRefresh;
     private boolean isDown;
+
+    private int mLeft = 0;
+    private int mScrollWidth = 0;
+    private LinearLayoutManager childAtLayoutManager;
 
     @Override
     protected int getLayoutId() {
@@ -177,6 +177,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 }
             }
 
+
 //            @Override
 //            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 //                super.onScrollStateChanged(recyclerView, newState);
@@ -186,6 +187,31 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 //                }
 //            }
         });
+/*
+        if(childAt != null){
+            childAtLayoutManager = (LinearLayoutManager) childAt.getLayoutManager();
+            childAtLayoutManager.getChildAt(0).getWidth();
+            childAt.getChildAt(0).getWidth();
+            childAtLayoutManager.getWidth();
+
+            childAt.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    mScrollWidth = mScrollWidth + dx;
+                }
+
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+                        if(mScrollWidth > 0){
+                        }
+                    }
+                }
+            });
+        }
+*/
     }
 
 
