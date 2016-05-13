@@ -144,7 +144,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/distance_8dp"
             android:layout_marginRight="@dimen/distance_8dp"
-            android:background="@drawable/img_head_default"
             auto:placeholderImage="@drawable/img_head_default" />
     </RelativeLayout>
 </LinearLayout>
