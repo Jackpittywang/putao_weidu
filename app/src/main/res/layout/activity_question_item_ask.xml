@@ -45,7 +45,6 @@
             android:id="@+id/rl_item_ask_image"
             android:layout_width="165dp"
             android:layout_height="120dp"
-            android:layout_marginTop="@dimen/distance_10dp"
             android:layout_toLeftOf="@+id/question_item_ask_icon"
             android:visibility="gone">
 
@@ -140,7 +139,7 @@
             style="@style/image_round_4dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/distance_8dp"
             android:layout_marginRight="@dimen/distance_8dp"

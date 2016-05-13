@@ -2,6 +2,7 @@ package com.putao.wd.home.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -44,7 +45,14 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
 
         holder.tv_title.setText(companion.getService_name());
         holder.tv_intro.setText(companion.getService_description());
-        holder.iv_icon.setImageURL(companion.getService_icon());
+        if (TextUtils.isEmpty(companion.getService_icon()))
+            if (0 == companion.getService_type())
+                holder.iv_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_subscribe_default).toString());
+            else
+                holder.iv_icon.setImageURI(Uri.parse("file:///"));
+        else
+            holder.iv_icon.setImageURL(companion.getService_icon());
+
         if (1 == companion.getIs_relation()) {
             holder.tv_time.setText(DateUtils.timeCalculate(companion.getRelation_time() * 1000L));
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));

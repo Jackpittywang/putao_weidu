@@ -36,7 +36,7 @@
             style="@style/image_round_4dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="top"
             android:layout_marginRight="@dimen/distance_8dp"
             app:default_drawable="@drawable/img_head_cs" />
 

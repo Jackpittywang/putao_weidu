@@ -616,7 +616,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             tv_custommenu_name.setText(serviceMenu.getName());
             if (null != serviceMenu.getSub_button() && serviceMenu.getSub_button().size() > 0) // 显示三角
             {
-                tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up_black, 0);
+                tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_12_06,
+                        0, 0, 0);
+                tv_custommenu_name.setCompoundDrawablePadding(10);
                 layout.setOnClickListener(new OnClickListener() {
 
                     @Override

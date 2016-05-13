@@ -82,7 +82,8 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
         // 添加默认的显示文字
         if (StringUtils.isEmpty(title)) title = "葡萄纬度";
         setMainTitle(title);
-        String url = args.getString(URL);
+        String url = "";
+        url = args.getString(URL);
         Logger.d(url);
         setWebSettings();
 
