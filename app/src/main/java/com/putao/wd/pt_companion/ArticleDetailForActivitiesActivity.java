@@ -312,9 +312,9 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
     private boolean checkLogin(){
         if(!AccountHelper.isLogin()){
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ArticleDetailForActivitiesActivity.class);
-            startActivity(LoginActivity.class,bundle);
+            args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ArticleDetailForActivitiesActivity.class);
+            startActivity(LoginActivity.class,args);
+            finish();
             return false;
         }else
             return true;
