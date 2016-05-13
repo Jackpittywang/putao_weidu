@@ -484,7 +484,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             return;
         }
         ServiceMessageList serviceMessageList = new ServiceMessageList();
-        serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
+        int time = (int) (System.currentTimeMillis() / 1000) - 1; //-1区分响应msg，防止time相同
+        serviceMessageList.setRelease_time(time);
+        serviceMessageList.setId(time + "");
         serviceMessageList.setMessage(msg);
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
         serviceMessageList.setSend_state(0);
