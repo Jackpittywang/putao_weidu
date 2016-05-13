@@ -233,30 +233,33 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
      * 获取文章数据
      */
     private void getLastestArticle() {
-        String lastPullId = "0";
+        String lastPullId;
         if (mCompanion != null) lastPullId = mCompanion.getLast_pull_id();
-
+        else lastPullId = "0";
         networkRequest(CompanionApi.getServicesLists(mServiceId, lastPullId), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, null) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
-                if (result != null) {
-                    mFailCount = 0;
-                    ArrayList<ServiceMessageList> lists = result.getLists();
-                    if (null != lists && lists.size() > 0) {
-                        for (ServiceMessageList serviceMessageList : lists) {
-                            if (mDataBaseManager.insertObject(mServiceId, serviceMessageList)) {
-                                mGameDetailAdapter.add(serviceMessageList);
-                                rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+                try {
+                    if (result != null) {
+                        mFailCount = 0;
+                        ArrayList<ServiceMessageList> lists = result.getLists();
+                        if (null != lists && lists.size() > 0) {
+                            for (ServiceMessageList serviceMessageList : lists) {
+                                if (mDataBaseManager.insertObject(mServiceId, serviceMessageList)) {
+                                    mGameDetailAdapter.add(serviceMessageList);
+                                    rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
+                                }
                             }
-                        }
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        List<ServiceMessageContent> content_lists = lists.get(lists.size() - 1).getContent_lists();
-                        mCompanion.setLast_pull_id(content_lists.get(content_lists.size() - 1).getArticle_id());
-                        mLoadHandler.postDelayed(mLoadRun, 1000);
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                            mCompanion.setLast_pull_id(lists.get(lists.size() - 1).getId());
+                            mLoadHandler.postDelayed(mLoadRun, 1000);
+                        } else
+                            pb_loading.setVisibility(View.GONE);
                     } else
                         pb_loading.setVisibility(View.GONE);
-                } else
-                    pb_loading.setVisibility(View.GONE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
