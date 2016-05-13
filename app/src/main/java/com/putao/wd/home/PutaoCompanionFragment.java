@@ -218,8 +218,21 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             e.printStackTrace();
         }
 //                            companion.setService_description();
-        if (notDownloadIds.size() > 0) companion.setIsShowRed(true);
-        companion.setNotDownloadIds(notDownloadIds);
+
+        //这里判断库中空Id是否比lastPullID小 防止红点永久不能删除
+        ArrayList<String> realNotDownload = null;
+        if (notDownloadIds.size() > 0) {
+            for (String notDownloadId : notDownloadIds) {
+                int lastId = Integer.parseInt(companion.getLast_pull_id());
+                if (Integer.parseInt(notDownloadId) <= lastId)
+                    mDataBaseManager.removeDataWithId(notDownloadId);
+                else realNotDownload.add(notDownloadId);
+            }
+        }
+        if (null != realNotDownload && realNotDownload.size() >= 0) {
+            companion.setIsShowRed(true);
+            companion.setNotDownloadIds(notDownloadIds);
+        }
     }
 
     private void addListener() {

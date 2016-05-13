@@ -7,9 +7,13 @@ import android.content.Intent;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.ptx.push.core.Constants;
 import com.putao.wd.account.AccountHelper;
+import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.model.GpushMessage;
+import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.model.GpushMessageMsgCenter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by yanguoqiang on 16/5/11.
@@ -54,8 +58,12 @@ public class GPushMessageReceiver extends BroadcastReceiver {
         GpushMessage gpushMessage = JSONObject.parseObject(result, GpushMessage.class);
         //陪伴位置提醒红点
         if (null != gpushMessage && gpushMessage.getAccompanyNumber() != null && gpushMessage.getAccompanyNumber().size() > 0) {
-            //if (result.contains("\"id\":234")) return;
-            EventBusHelper.post(gpushMessage.getAccompanyNumber(), COMPANION_TABBAR);
+            ArrayList<GpushMessageAccNumber> accompanyNumber = gpushMessage.getAccompanyNumber();
+            CompanionDBManager dataBaseManager = (CompanionDBManager) GlobalApplication.getDataBaseManager(CompanionDBManager.class);
+            for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
+                dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId());
+            }
+            EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
         }
         if (null != gpushMessage.getMessageCenter()) {
             GpushMessageMsgCenter messageCenter = gpushMessage.getMessageCenter();

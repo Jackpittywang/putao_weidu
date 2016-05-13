@@ -41,7 +41,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String WX_APP_ID = "wxd930ea5d5a258f4f";
     public static Intent redServiceIntent;
 
-    private DaoMaster.OpenHelper mHelper;
+    private static DaoMaster.OpenHelper mHelper;
     public static ConcurrentHashMap<String, String> mEmojis;//表情集合
 
     public static String shareImagePath;
@@ -161,7 +161,7 @@ public class GlobalApplication extends BasicApplication {
      * @param clazz 类型
      * @return DataBaseManager实例
      */
-    public DataBaseManager getDataBaseManager(Class<? extends DataBaseManager> clazz) {
+    public static DataBaseManager getDataBaseManager(Class<? extends DataBaseManager> clazz) {
         switch (clazz.getSimpleName()) {
             case "CityDBManager":
                 return CityDBManager.getInstance(mHelper);

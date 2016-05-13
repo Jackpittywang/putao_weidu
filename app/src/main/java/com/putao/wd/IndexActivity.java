@@ -191,10 +191,6 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     @Subcriber(tag = GPushMessageReceiver.COMPANION_TABBAR)
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         ti_index_companion.show(-1);
-        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-        for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
-            dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId());
-        }
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
