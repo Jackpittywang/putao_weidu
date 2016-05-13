@@ -195,6 +195,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void checkResult(Companion companion) {
+        GlobalApplication.serviceBindMap.put(companion.getService_id(), 0 == companion.getIs_relation() ? false : true);
         ServiceMessage serviceMessage = companion.getAuto_reply();
         if (null != serviceMessage && null != serviceMessage.getLists()) {
             for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {

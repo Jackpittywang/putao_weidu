@@ -303,8 +303,6 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage().trim());
                     switch (mSendStateMap.get(position)) {
                         case 0:
-                            questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
-
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.VISIBLE);
                             //请求数据，是否评论成功
                             initServiceQuiz(questionLocalViewHolder, serviceMessageList, position);
@@ -317,11 +315,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             break;
                         case 1:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
+                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
 
                             break;
                         case 2:
 //                            questionLocalViewHolder.pb_item_ask_text.setBackgroundResource(R.drawable.icon_16_03);
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
+                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                             break;
                     }
                     break;
@@ -383,11 +383,12 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             break;
                         case 1:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
+                            questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
 
                             break;
                         case 2:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
-
+                            questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
                             break;
                     }
                     break;
