@@ -64,7 +64,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private ResourceBannerAndTag bannerAndTag;
     private ResourceAdapter mAdapter;
 
-    private int mPage = 0;
+    private int mPage = 1;
 
     private boolean isHeaderFailure = false;
     private boolean isResourceFailure = false;
@@ -172,7 +172,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                                     int firstVisiablePosition = childAtLayoutManager.findFirstVisibleItemPosition();
 
-                                    if (Math.abs(mScrollWidth) % simpleItem == halfItem) {
+                                    if (Math.abs(mScrollWidth) % simpleItem <= halfItem) {
                                         childAtLayoutManager.scrollToPosition(firstVisiablePosition);
                                     } else {
                                         childAtLayoutManager.scrollToPosition(firstVisiablePosition + 1);

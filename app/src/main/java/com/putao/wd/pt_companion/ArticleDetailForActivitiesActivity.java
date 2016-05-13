@@ -128,13 +128,13 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             cover_pic = sharePicFromPage;
             service_name = collection.getService_name();
             this.link_url = link_url;
-        } else if(StringUtils.equals(str, ResourceFragment.RESOURCE)){
+        } else if (StringUtils.equals(str, ResourceFragment.RESOURCE)) {
             cover_pic = args.getString(SHARE_ICON);
             link_url = args.getString(BaseWebViewActivity.URL);
             article_id = args.getString(ARTICLE);
             title = args.getString(BaseWebViewActivity.TITLE);
             service_id = args.getString(BaseWebViewActivity.SERVICE_ID);
-        }else{
+        } else {
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
             service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
             content_list = messageList.getContent_lists().get(0);
@@ -226,12 +226,15 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
             @Override
             public void onCollection() {
+                if (!checkLogin())
+                    return;
+
                 if (!property.is_collect())
                     addCollect();
                 else
                     cancelCollection();
             }
-        },link_url);
+        }, link_url);
     }
 
     private void addCollect() {
@@ -310,13 +313,13 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
         });
     }
 
-    private boolean checkLogin(){
-        if(!AccountHelper.isLogin()){
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ArticleDetailForActivitiesActivity.class);
-            startActivity(LoginActivity.class,bundle);
+    private boolean checkLogin() {
+        if (!AccountHelper.isLogin()) {
+            args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ArticleDetailForActivitiesActivity.class);
+            startActivity(LoginActivity.class, args);
+            finish();
             return false;
-        }else
+        } else
             return true;
     }
 
@@ -372,7 +375,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_cool://赞
-                if(!checkLogin())
+                if (!checkLogin())
                     return;
 
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "赞");
@@ -396,7 +399,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 } else ToastUtils.showToastShort(mContext, "您已经点过赞了");
                 break;
             case R.id.ll_comment://评论
-                if(!checkLogin())
+                if (!checkLogin())
                     return;
 
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "评论");
@@ -407,7 +410,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 startActivity(CommentForArticleActivity.class, bundle);
                 break;
             case R.id.sb_cool_icon:
-                if(!checkLogin())
+                if (!checkLogin())
                     return;
 
                 //使用EventBus提交点赞

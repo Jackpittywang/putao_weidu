@@ -174,13 +174,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             switch (serviceMessageList.getType()) {
                 case "text":
                     askViewHolder.ll_reply.setVisibility(View.GONE);
-                    askViewHolder.question_item_ask_image.setVisibility(View.GONE);
+                    askViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     askViewHolder.question_item_answer_context.setVisibility(View.VISIBLE);
                     askViewHolder.question_item_answer_context.setText(serviceMessageList.getMessage());
                     break;
                 case "image":
                     askViewHolder.ll_reply.setVisibility(View.GONE);
-                    askViewHolder.question_item_ask_image.setVisibility(View.VISIBLE);
+                    askViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     askViewHolder.question_item_answer_context.setVisibility(View.GONE);
                     String pic = ImageUtils.getImageSizeUrl(serviceMessageList.getImage().getPic(), ImageUtils.ImageSizeURL.SIZE_360x360);
                     askViewHolder.question_item_ask_image.setImageURL(pic);
@@ -193,7 +193,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     break;
                 case "reply":
                     askViewHolder.ll_reply.setVisibility(View.VISIBLE);
-                    askViewHolder.question_item_ask_image.setVisibility(View.GONE);
+                    askViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     askViewHolder.question_item_answer_context.setVisibility(View.GONE);
                     askViewHolder.tv_ask.setText(serviceMessageList.getReply().getQuestion());
                     askViewHolder.tv_reply.setText(serviceMessageList.getReply().getAnswer());
@@ -464,6 +464,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         TextView tv_reply;
         @Bind(R.id.question_item_ask_image)
         ImageDraweeView question_item_ask_image;
+        @Bind(R.id.rl_item_ask_image)
+        RelativeLayout rl_item_ask_image;
         @Bind(R.id.ll_reply)
         LinearLayout ll_reply;
 

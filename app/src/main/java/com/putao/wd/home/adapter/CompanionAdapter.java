@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -58,27 +59,41 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
             // holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));
             holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
+        if (companion.getSecond_level_lists() == null && companion.getService_type() == 0) {
+            holder.rl_compain_main.setVisibility(View.GONE);
         } else {
-            holder.tv_time.setText("未关联");
-            holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_main_color_nor));
-            //   holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
-            holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
-        }
-        int size = companion.getNotDownloadIds().size();
-        holder.tv_dot.setVisibility(View.GONE);
-        if ((0 == size || !companion.isShowRed()) && 0 != companion.getService_type()) {
-            holder.tv_number.setVisibility(View.GONE);
-        } else {
-            holder.tv_number.setVisibility(View.VISIBLE);
-            holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
-            if (0 == companion.getService_type() && companion.isShowRed()) {
-                holder.tv_number.setVisibility(View.GONE);
-                holder.tv_dot.setVisibility(View.VISIBLE);
+            holder.rl_compain_main.setVisibility(View.VISIBLE);
+            holder.tv_title.setText(companion.getService_name());
+            holder.tv_intro.setText(companion.getService_description());
+            holder.iv_icon.setImageURL(companion.getService_icon());
+            if (1 == companion.getIs_relation()) {
+                holder.tv_time.setText(DateUtils.timeCalculate(companion.getRelation_time() * 1000L));
+                holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
+                // holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.color_313131));
+                holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
             } else {
+                holder.tv_time.setText("未关联");
+                holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_main_color_nor));
+                //   holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
+                holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
+            }
+            int size = companion.getNotDownloadIds().size();
+            holder.tv_dot.setVisibility(View.GONE);
+            if ((0 == size || !companion.isShowRed()) && 0 != companion.getService_type()) {
                 holder.tv_number.setVisibility(View.GONE);
-                holder.tv_dot.setVisibility(View.GONE);
+            } else {
+                holder.tv_number.setVisibility(View.VISIBLE);
+                holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
+                if (0 == companion.getService_type() && companion.isShowRed()) {
+                    holder.tv_number.setVisibility(View.GONE);
+                    holder.tv_dot.setVisibility(View.VISIBLE);
+                } else {
+                    holder.tv_number.setVisibility(View.GONE);
+                    holder.tv_dot.setVisibility(View.GONE);
+                }
             }
         }
+
     }
 
     static class CompanionHolder extends BasicViewHolder {
@@ -94,6 +109,8 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         TextView tv_number;
         @Bind(R.id.tv_dot)
         TextView tv_dot;
+        @Bind(R.id.rl_compain_main)
+        RelativeLayout rl_compain_main;
 
         public CompanionHolder(View itemView) {
             super(itemView);
