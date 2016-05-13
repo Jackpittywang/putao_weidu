@@ -25,6 +25,7 @@ import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
@@ -86,6 +87,9 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private int mLeft = 0;
     private int mScrollWidth = 0;
     private LinearLayoutManager childAtLayoutManager;
+    private int simpleItem;
+    private int firstVisiablePosition;
+    private int halfItem;
 
     @Override
     protected int getLayoutId() {
@@ -148,6 +152,36 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                     try {
                         reChildAt = (RelativeLayout) mDiscoveryLayoutManager.getChildAt(1);
                         childAt = (RecyclerView) reChildAt.getChildAt(0);
+
+
+                        childAtLayoutManager = (LinearLayoutManager) childAt.getLayoutManager();
+                        childAtLayoutManager.getChildAt(0).getWidth();
+
+                        simpleItem = DensityUtil.dp2px(mActivity, 95);
+                        halfItem = DensityUtil.dp2px(mActivity, 40);
+                        childAt.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                            @Override
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                mScrollWidth = mScrollWidth + dx;
+                            }
+
+                            @Override
+                            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                                super.onScrollStateChanged(recyclerView, newState);
+                                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                                    int firstVisiablePosition = childAtLayoutManager.findFirstVisibleItemPosition();
+
+                                    if (Math.abs(mScrollWidth) % simpleItem == halfItem) {
+                                        childAtLayoutManager.scrollToPosition(firstVisiablePosition);
+                                    } else {
+                                        childAtLayoutManager.scrollToPosition(firstVisiablePosition + 1);
+                                    }
+                                    mScrollWidth = 0;
+                                }
+                            }
+                        });
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -187,31 +221,6 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 //                }
 //            }
         });
-/*
-        if(childAt != null){
-            childAtLayoutManager = (LinearLayoutManager) childAt.getLayoutManager();
-            childAtLayoutManager.getChildAt(0).getWidth();
-            childAt.getChildAt(0).getWidth();
-            childAtLayoutManager.getWidth();
-
-            childAt.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    mScrollWidth = mScrollWidth + dx;
-                }
-
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
-                        if(mScrollWidth > 0){
-                        }
-                    }
-                }
-            });
-        }
-*/
     }
 
 

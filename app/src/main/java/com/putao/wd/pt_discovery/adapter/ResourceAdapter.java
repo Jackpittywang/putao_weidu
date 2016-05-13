@@ -45,7 +45,11 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     private ImageHolderView mImageHolderView;
 
     private LinearLayoutManager linearLayoutManager;
-    private int mScrollWeight;
+    private int mScrollWidth;
+
+    private int simpleItem;
+    private int firstVisiablePosition;
+    private int halfItem;
 
     public ResourceAdapter(Context context, List<FindResource> resous) {
         super(context, resous);
@@ -126,32 +130,31 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             hotTagHolder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
 
-/*
+
+/*            simpleItem = DensityUtil.dp2px(context, 95);
+            halfItem = DensityUtil.dp2px(context, 40);
             hotTagHolder.rv_discovery_hot_tag.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    mScrollWeight += mScrollWeight + dx;
+                    mScrollWidth = mScrollWidth + dx;
                 }
 
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-                    switch (newState) {
-                        case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-                            if (mScrollWeight >= 0) {//recycle 往右滑动，相当与屏幕往左滑动
-                                linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstVisibleItemPosition());
-                            } else {
-                                    linearLayoutManager.scrollToPosition(linearLayoutManager.findFirstCompletelyVisibleItemPosition());
-                            }
-                            mScrollWeight = 0;
-                            break;
-                        default:
-                            break;
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                        firstVisiablePosition = linearLayoutManager.findFirstVisibleItemPosition();
+
+                        if (Math.abs(mScrollWidth) % simpleItem < halfItem) {
+                            linearLayoutManager.scrollToPosition(firstVisiablePosition);
+                        } else {
+                            linearLayoutManager.scrollToPosition(firstVisiablePosition + 1);
+                        }
+                        mScrollWidth = 0;
                     }
                 }
-            });
-*/
+            });*/
         } else {
             ResourceHolder resHolder = (ResourceHolder) holder;
             resHolder.iv_discovery_pic.setImageURL(resou.getIcon());
