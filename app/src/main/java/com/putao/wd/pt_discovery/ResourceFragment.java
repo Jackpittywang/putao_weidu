@@ -64,7 +64,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
     private ResourceBannerAndTag bannerAndTag;
     private ResourceAdapter mAdapter;
 
-    private int mPage = 0;
+    private int mPage = 1;
 
     private boolean isHeaderFailure = false;
     private boolean isResourceFailure = false;

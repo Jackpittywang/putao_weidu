@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -185,8 +186,19 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         }
         vp_emojis.setAdapter(new EmojiFragmentAdapter(getSupportFragmentManager(), emojis, 20));
 
+//        et_msg.requestFocus();
+//        et_msg.setFocusableInTouchMode(true);
+//        et_msg.setFocusable(true);
     }
 
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        et_msg.requestFocus();
+//        et_msg.setFocusableInTouchMode(true);
+//        et_msg.setFocusable(true);
+//    }
 
     private void setMainTitleFromNetwork() {
         networkRequest(CompanionApi.getServiceInfo(mServiceId),
@@ -404,6 +416,13 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     }
 
     private void addListener() {
+        et_msg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                vp_emojis.setVisibility(View.GONE);
+                return false;
+            }
+        });
         /*ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -430,6 +449,15 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             }
         });
 
+        et_msg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    isShowEmoji = false;
+                    vp_emojis.setVisibility(View.GONE);
+                }
+            }
+        });
         et_msg.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -454,6 +482,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 vp_emojis.setVisibility(View.GONE);
                 hintAnim.setAnimationListener(mShowSendListener);
                 ll_comment_edit.startAnimation(hintAnim);
+                KeyboardUtils.closeKeyboard(mContext, et_msg);
                 break;
             case R.id.iv_menu:
                 iv_menu.setEnabled(false);
