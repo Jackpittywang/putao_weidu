@@ -298,6 +298,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             }
             switch (serviceMessageList.getType()) {
                 case UPLOAD_TEXT_TYPE:
+                    questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.rl_item_ask_image.setVisibility(View.GONE);
                     questionLocalViewHolder.ll_item_ask_text.setVisibility(View.VISIBLE);
                     questionLocalViewHolder.question_item_ask_context.setText(serviceMessageList.getMessage().trim());
@@ -367,6 +368,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
                                     mSendStateMap.put(position, 1);
                                     serviceMessageList.setSend_state(1);
+                                    questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
                                     questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
                                     EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                 }
@@ -514,20 +516,26 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     @Override
                     public void onSuccess(String url, String result) {
                         if (!TextUtils.isEmpty(result)) {
-                            JSONObject jsonObject = JSONObject.parseObject(result);
-                            String message = (String) jsonObject.get("message");
-                            if (!TextUtils.isEmpty(message)) return;
-                            ServiceMessageList serviceMessageList = new ServiceMessageList();
-                            String time = System.currentTimeMillis() / 1000 + "";
-                            serviceMessageList.setRelease_time(Integer.parseInt(time));
-                            serviceMessageList.setType("text");
-                            serviceMessageList.setId(time);
-                            serviceMessageList.setMessage(message);
-                            add(serviceMessageList);
-                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                            try {
+                                JSONObject jsonObject = JSONObject.parseObject(result);
+                                String message = (String) jsonObject.get("message");
+                                if (!TextUtils.isEmpty(message)) {
+                                    ServiceMessageList serviceMessageList = new ServiceMessageList();
+                                    String time = System.currentTimeMillis() / 1000 + "";
+                                    serviceMessageList.setRelease_time(Integer.parseInt(time));
+                                    serviceMessageList.setType("text");
+                                    serviceMessageList.setId(time);
+                                    serviceMessageList.setMessage(message);
+                                    add(serviceMessageList);
+                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         serviceMessageList.setSend_state(1);
                         mSendStateMap.put(position, 1);
+                        questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                         questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
                         EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                     }

@@ -48,7 +48,7 @@ public class GlobalApplication extends BasicApplication {
     public static String blurIndex;
     public static String resourcePath;
     public static String orderId;
-    public static Map<String,Boolean> serviceBindMap;
+    public static Map<String, Boolean> serviceBindMap;
 
     public static YoukuPlayerBaseConfiguration mYoukuPlayerBaseConfiguration;
 
@@ -273,5 +273,11 @@ public class GlobalApplication extends BasicApplication {
     public static final class Scheme {
         public static final String OPENWEBVIEW = "openWebview";
         public static final String VIEWPIC = "viewPic";
+    }
+
+    public static boolean isServiceIdBind(String sId) {
+        if (serviceBindMap == null) return false;
+        if (serviceBindMap.get(sId) == null) return false;
+        return true;
     }
 }

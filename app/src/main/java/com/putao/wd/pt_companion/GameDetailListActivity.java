@@ -206,7 +206,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
      * 获取文章数据
      */
     private void getLastestArticle() {
-        networkRequest(CompanionApi.getServicesLists(mServiceId, mCompanion.getLast_pull_id()), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, null) {
+        String lastPullId = "0";
+        if (mCompanion != null) lastPullId = mCompanion.getLast_pull_id();
+
+        networkRequest(CompanionApi.getServicesLists(mServiceId, lastPullId), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, null) {
             @Override
             public void onSuccess(String url, ServiceMessage result) {
                 if (result != null) {
@@ -267,6 +270,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                     serviceMessageList.setImage(JSON.parseObject(companionDB.getImage(), ServiceMessageListImage.class));
                 serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
                 serviceMessageList.setType(companionDB.getType());
+                if (!TextUtils.isEmpty(companionDB.getIs_upload_finish()))
+                    serviceMessageList.setSend_state(Integer.parseInt(companionDB.getIs_upload_finish()));
                 serviceMessageList.setId(companionDB.getId());
                 lists.add(serviceMessageList);
             }
@@ -482,7 +487,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         serviceMessageList.setRelease_time((int) (System.currentTimeMillis() / 1000));
         serviceMessageList.setMessage(msg);
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
-        serviceMessageList.setSend_state(1);
+        serviceMessageList.setSend_state(0);
         mGameDetailAdapter.add(serviceMessageList);
         mGameDetailAdapter.setMsg(mServiceId, msg);
         mDataBaseManager.insertUploadText(mServiceId, msg);
@@ -694,6 +699,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_UPDATE_UPLOAD)
     private void insertUpload(ServiceMessageList serviceMessageList) {
+        rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         mDataBaseManager.insertObject(mServiceId, serviceMessageList);
     }
 }

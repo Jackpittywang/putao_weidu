@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.GlobalApplication;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
 
@@ -55,7 +56,9 @@ public class PutaoParse {
             } else if (OPEN_ACC_NO.equals(scheme)) {
                 String type = jsonObj.getInteger("type") + "";
                 String id = jsonObj.getInteger("id") + "";
+                if(GlobalApplication.isServiceIdBind(id)){
 
+                }
 
                 return true;
 
