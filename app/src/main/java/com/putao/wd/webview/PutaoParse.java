@@ -7,8 +7,12 @@ import android.os.Bundle;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.model.PicClickResult;
+import com.putao.wd.pt_companion.GameDetailListActivity;
+import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
+import com.sunnybear.library.util.StringUtils;
 
 /**
  * Created by yanguoqiang on 16/4/11.
@@ -57,7 +61,20 @@ public class PutaoParse {
                 String type = jsonObj.getInteger("type") + "";
                 String id = jsonObj.getInteger("id") + "";
                 if(GlobalApplication.isServiceIdBind(id)){
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE,id);
+                    Intent intent = new Intent(context, GameDetailListActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
+                    bundle.putString(OfficialAccountsActivity.CAPTURE_SERVICE_ID, id);
+                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, true);
+                    bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_SUBSCR_STATE, type);
+                    Intent intent = new Intent(context,OfficialAccountsActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                 }
 
                 return true;

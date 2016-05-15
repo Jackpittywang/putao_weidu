@@ -31,6 +31,7 @@ import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.PreferenceUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 
@@ -43,6 +44,9 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     public static final String EVENT_OFFICIAL_URL = "event_official_url";
     public static final String CAPTURE_SERVICE_ID = "service_id";
     public static final String CAPTURE_URL = "capture_url";
+    public static final String HIDE_NO_FINISH = "hide_no_finish";
+    public static final String HIDE_FINISH = "hide_finish";
+
 
     @Bind(R.id.iv_icon)
     ImageDraweeView iv_icon;
@@ -70,6 +74,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private SubscribeList subscribeList;
     private Companion companion;
     private int serviceType;
+    private boolean isFromArticle;
 
     @Override
     protected int getLayoutId() {
@@ -84,8 +89,11 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
 //        serviceType = args.getInt(AccountConstants.Bundle.BUNDLE_COMPANION_NOTNULL, 1);
         mServiceId = args.getString(CAPTURE_SERVICE_ID);
         capture_url = args.getString(CAPTURE_URL);
-
-        if (capture_url == null) {
+        isFromArticle = args.getBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK);
+        if (isFromArticle) {
+            setMainTitleFromNetwork(mServiceId);
+            isSubscribe = StringUtils.equals("1", args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_SUBSCR_STATE,"")) ? true : false;
+        } else if (capture_url == null) {
             //isSubscribe为true则是订阅号传送过来的数据，反之则是服务号传送过来的数据
             isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
             if (isSubscribe) {
@@ -142,7 +150,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             public void onClick(View v) {
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
+                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
                     startActivity(LoginActivity.class, bundle);
                 } else {
@@ -186,12 +194,22 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         tv_look_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
+                if (!AccountHelper.isLogin()) {
+//                    Bundle bundle = new Bundle();
+//                    args.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
+//                    args.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
+//                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, isBind);
+                    args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OfficialAccountsActivity.class);
+                    args.putString(HIDE_FINISH, HIDE_NO_FINISH);
+                    startActivity(LoginActivity.class, args);
+                } else {
+                    Bundle bundle = new Bundle();
 //                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, isSubscribe);
 //                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
-                bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
-                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
-                startActivity(LookHistoryActivity.class, bundle);
+                    bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
+                    bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
+                    startActivity(LookHistoryActivity.class, bundle);
+                }
             }
         });
     }
@@ -340,7 +358,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         super.onRightAction();
         mSelectPopupWindow.show(ll_companion);
         mSelectPopupWindow.tv_first.setText("清除内容");
-        if (!isSubscribe && companion.getService_type() != 2) {
+
+        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
             mSelectPopupWindow.tv_second.setText("取消关联");
         } else {
             mSelectPopupWindow.tv_second.setText("取消订阅");
@@ -412,12 +431,30 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, CompainServiceInfo result) {
                         if (result != null) {
+                            if(isFromArticle){
+                                if(isSubscribe){
+                                    if(subscribeList == null)
+                                        subscribeList = new SubscribeList();
+                                    subscribeList.setService_icon(result.getService_icon());
+                                    subscribeList.setIs_relation(result.is_relation());
+                                }else{
+                                    if(companion == null)
+                                        companion = new Companion();
+                                    companion.setService_id(result.getService_id());
+                                    companion.setService_name(result.getService_name());
+                                    companion.setService_icon(result.getService_icon());
+                                    companion.setIs_relation(result.is_relation() ? 1 : 0);
+                                    companion.setIs_unbunding(result.is_unbunding());
+                                    companion.setService_description(result.getService_description());
+                                }
+                            }
                             serviceInfo = result;
                             tv_official_title.setText(result.getService_name());
                             navigation_bar.setMainTitle(result.getService_name());
                             iv_icon.setImageURL(result.getService_icon());
                             tv_recommend.setText(result.getService_description());
                             if (result.is_relation()) {//是否关注
+                                navigation_bar.getRightView().setVisibility(View.VISIBLE);
                                 isSubscribeCoampin();
                             } else {
                                 navigation_bar.getRightView().setVisibility(View.GONE);
@@ -440,12 +477,14 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 }, false);
     }
 
-    /**
+     /**
      * 是否要隐藏该页面
      */
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
     private void refresh_data(String tag) {
+//        if (!StringUtils.equals(HIDE_NO_FINISH, tag)) {
         this.finish();
+//        } else
+//            setMainTitleFromNetwork(mServiceId);
     }
-
 }

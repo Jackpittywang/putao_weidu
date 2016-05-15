@@ -23,6 +23,7 @@ import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UserApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.UserInfo;
+import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -211,7 +212,10 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         } else {
                             startActivity((Class) args.getSerializable(TERMINAL_ACTIVITY), args);
                         }
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+//                        if(){
+//                            EventBusHelper.post("",);
+//                        }
+                        EventBusHelper.post(args.getString(OfficialAccountsActivity.HIDE_FINISH,""), AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         loading.dismiss();
                         finish();
                     }

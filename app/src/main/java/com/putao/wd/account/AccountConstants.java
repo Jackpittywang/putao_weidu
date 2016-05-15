@@ -108,6 +108,17 @@ public final class AccountConstants {
         public static final String BUNDLE_DISCOVRY_RESOURCE_TAG_ID = "bundle_discovry_resource_tag_id";
         public static final String BUNDLE_DISCOVRY_RESOURCE_TAG_TITLE = "bundle_discovry_resource_tag_id_title";
         public static final String BUNDLE_DISCOVERY_ARTICLE = "bundle_discovery_article";
+        public static final String BUNDLE_ARTICLE_CLICK = "bundle_article_click";
+        public static final String BUNDLE_SERVICE_SUBSCR_STATE = "bundle_service_subscr_state";
+
+    }
+
+    public enum State{
+        putaosubscr("0"),subscr("1"),service("");
+        private final String state;
+        private State(String state) {
+            this.state = state;
+        }
     }
 
 }
