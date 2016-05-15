@@ -153,6 +153,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     public void onSuccess(String url, ArrayList<Companion> result) {
                         if (result != null && result.size() > 0) {
                             mCompanion = result;
+                            GlobalApplication.serviceBindMap.clear();
                             cacheData(url, result);
                             for (Companion companion : result) {
                                 if (0 == companion.getService_type() && companion.getSecond_level_lists() != null) {
