@@ -69,6 +69,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private boolean isSubscribe, isBind;
     private SubscribeList subscribeList;
     private Companion companion;
+    private int serviceType;
 
     @Override
     protected int getLayoutId() {
@@ -80,6 +81,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         addNavigation();
         //陪伴首页未关联产品传送过来的数据
         isBind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
+//        serviceType = args.getInt(AccountConstants.Bundle.BUNDLE_COMPANION_NOTNULL, 1);
         mServiceId = args.getString(CAPTURE_SERVICE_ID);
         capture_url = args.getString(CAPTURE_URL);
 
@@ -301,7 +303,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         if (isSubscribe) {
-                            finish();
+                            ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         } else {
                             ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                         }
@@ -336,7 +338,11 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         super.onRightAction();
         mSelectPopupWindow.show(ll_companion);
         mSelectPopupWindow.tv_first.setText("清除内容");
-        mSelectPopupWindow.tv_second.setText(isSubscribe ? "取消订阅" : "取消关联");
+        if (!isSubscribe && companion.getService_type() != 2) {
+            mSelectPopupWindow.tv_second.setText("取消关联");
+        } else {
+            mSelectPopupWindow.tv_second.setText("取消订阅");
+        }
         mSelectPopupWindow.tv_second.setTextColor(0xffcc0000);
     }
 
@@ -359,7 +365,14 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     public void onClick(View v) {
                         dataBaseManager.removeData(mServiceId);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+                        Bundle bundle = new Bundle();
+                        if (isSubscribe) {
+                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
+                        } else {
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+                        }
+                        startActivity(GameDetailListActivity.class, bundle);
                         ToastUtils.showToastShort(mContext, "清除成功");
                         mDialog.dismiss();
                     }
@@ -370,7 +383,11 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             public void onSecondClick(View v) {//取消关联
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
                 showDialog();
-                tv_dialog.setText(isSubscribe ? "取消订阅后后，所有信息将会清空。" : "取消关联产品后，所有信息将会清空。");
+                if (!isSubscribe && companion.getService_type() != 2) {
+                    tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                } else {
+                    tv_dialog.setText("取消订阅后后，所有信息将会清空。");
+                }
                 tv_cancel.setText("确定取消");
                 tv_no_cancel.setText("暂不取消");
                 tv_cancel.setOnClickListener(new View.OnClickListener() {

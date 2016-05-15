@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -134,6 +135,14 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                                     public void onFinish(String url, boolean isSuccess, String msg) {
                                         super.onFinish(url, isSuccess, msg);
                                         btn_login.setClickable(true);
+                                        loading.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFailure(String url, int statusCode, String msg) {
+                                        super.onFailure(url, statusCode, msg);
+                                        ToastUtils.showToastShort(mContext, "请检查网络后重新尝试");
+                                        loading.dismiss();
                                     }
                                 });
                 }
@@ -174,13 +183,15 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-//                        ToastUtils.showToastLong(mContext, "登录失败请重新登录");
+                        ToastUtils.showToastLong(mContext, "请检查网络后重新尝试");
+                        loading.dismiss();
                     }
 
                     @Override
                     public void onFinish(String url, boolean isSuccess, String msg) {
                         super.onFinish(url, isSuccess, msg);
                         btn_login.setClickable(true);
+                        loading.dismiss();
                     }
                 });
     }

@@ -120,7 +120,7 @@
     <string name="viewpager_indicator">%1$d/%2$d</string>
 
     <!--未关联产品-->
-    <string name="no_commpaion">如果您有葡萄产品，\n请在此处将它与您的纬度帐号进行关联。\n关联后可更好的了解孩子成长变化。</string>
+    <string name="no_commpaion">关联葡萄产品\n获得孩子最新的行为数据\n发掘孩子的成长潜力</string>
     <string name="history_commpaion">关联产品后可查看更多内容，\n帮助您更好的陪伴孩子哦！</string>
     <string name="history_subscribe">订阅后可查看更多精彩内容</string>
 </resources>

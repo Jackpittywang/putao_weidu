@@ -83,6 +83,23 @@ public class LoadingHUD extends Dialog {
         mRotateAnimation.setInterpolator(new LinearInterpolator());
         mRotateAnimation.setDuration(1000);
         mRotateAnimation.setRepeatCount(Animation.INFINITE);
+        mRotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animation.cancel();
+                dismissHUD();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     public void setSpinnerType(int spinnerType) {
