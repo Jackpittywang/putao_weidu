@@ -18,6 +18,7 @@ import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountApi;
+import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.UploadApi;
 import com.putao.wd.api.UserApi;
@@ -151,6 +152,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         startActivity(IndexActivity.class);
         EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
+        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
         loading.dismiss();
         finish();
     }

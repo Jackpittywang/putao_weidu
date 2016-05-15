@@ -183,11 +183,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        if (mCompanionAdapter.getItemCount() <= 1) {
-                            rl_no_commpain_failure.setVisibility(View.VISIBLE);
-                            ptl_refresh.setVisibility(View.GONE);
-                            ptl_refresh.refreshComplete();
-                        }
+                        rl_no_commpain_failure.setVisibility(View.VISIBLE);
+                        ptl_refresh.setVisibility(View.GONE);
+                        ptl_refresh.refreshComplete();
+
                     }
                 }, 0);
     }
@@ -355,7 +354,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (NetManager.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
-                    initData();
+                    checkDevice();
                 break;
             case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
                 popupWindow.showAsDropDown(img_compain_menu);

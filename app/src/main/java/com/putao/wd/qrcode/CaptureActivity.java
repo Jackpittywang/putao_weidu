@@ -430,7 +430,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                     this.finish();
                 } else {
                     String mServceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
-                    if (!serverId.equals(mServceId)) {
+                    if (mServceId != null && !serverId.equals(mServceId)) {
                         ToastUtils.showToastShort(mContext, "请扫描" + args.getString(AccountConstants.Bundle.BUNDLE_COMPANION) + "游戏的二维码");
                         finish();
                     } else {
@@ -465,8 +465,6 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                     ToastUtils.showToastShort(mContext, "重复绑定");
                                 else if (http_code == 4200)
                                     ToastUtils.showToastShort(mContext, "二维码已过期");
-//                                else if (http_code == 631)
-
                                 else {
                                     String msg = result.getString("msg");
                                     if (msg != null)
@@ -506,7 +504,6 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         String scaneErrorInfo = "请扫描葡萄产品的二维码";
         ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }
-
 
 //    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
 //    private BarCodeData getBarCodeDataFromUrl(String url) {
