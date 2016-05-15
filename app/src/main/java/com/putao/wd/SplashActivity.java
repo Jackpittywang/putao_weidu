@@ -60,7 +60,7 @@ public class SplashActivity extends BasicFragmentActivity<GlobalApplication> {
                     public ConcurrentHashMap<String, String> onBackground() {
                         try {
                             File setFile = new File(BasicApplication.sdCardPath + File.separator + "patch/biaoqing/set.txt");
-                            if (!setFile.exists())
+                            if (!setFile.exists() || !new File(BasicApplication.sdCardPath + File.separator + "patch/biaoqing/001.png").exists())
                                 FileUtils.unZipInAsset(getApplicationContext(), "patch_10002_10003.zip", "patch", true);
                             DistrictUtils.insertRegion();
                         } catch (IOException e) {
