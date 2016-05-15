@@ -3,6 +3,7 @@ package com.putao.wd.pt_discovery.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
@@ -19,7 +20,7 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/5/5.
  */
-public class HotTagAdapter extends BasicAdapter<ResourceTag,HotTagAdapter.HotHolder> {
+public class HotTagAdapter extends BasicAdapter<ResourceTag, HotTagAdapter.HotHolder> {
 
 
     public HotTagAdapter(Context context, List<ResourceTag> tags) {
@@ -37,17 +38,28 @@ public class HotTagAdapter extends BasicAdapter<ResourceTag,HotTagAdapter.HotHol
     }
 
     @Override
-    public void onBindItem(HotHolder holder, ResourceTag tag, int position) {
-        holder.idv_tag.setImageURL(tag.getTag_icon());
-        //holder.tv_hot_tag.setText(StringUtils.equals(tag.getDisplay_type(),"0") ? tag.getTag_name():"活动");
-        holder.tv_hot_tag.setText(tag.getTag_name());
+    public int getItemCount() {
+        return super.getItemCount();
     }
 
-    static class HotHolder extends BasicViewHolder{
+    @Override
+    public void onBindItem(HotHolder holder, ResourceTag tag, int position) {
+        if (position == getItemCount() - 1) {
+            holder.rl_main.setVisibility(View.INVISIBLE);
+        }
+        holder.tv_hot_tag.setText(tag.getTag_name());
+        holder.idv_tag.setImageURL(tag.getTag_icon());
+        //holder.tv_hot_tag.setText(StringUtils.equals(tag.getDisplay_type(),"0") ? tag.getTag_name():"活动");
+    }
+
+    static class HotHolder extends BasicViewHolder {
         @Bind(R.id.idv_tag)
         ImageDraweeView idv_tag;
         @Bind(R.id.tv_hot_tag)
         TextView tv_hot_tag;
+        @Bind(R.id.rl_main)
+        RelativeLayout rl_main;
+
         public HotHolder(View itemView) {
             super(itemView);
         }

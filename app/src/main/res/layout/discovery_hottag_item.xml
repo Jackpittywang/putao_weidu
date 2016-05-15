@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:auto="http://schemas.android.com/apk/res-auto"
-     android:layout_width="80dp"
-     android:layout_height="60dp">
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
+    android:layout_width="80dp"
+    android:layout_height="60dp">
+
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/idv_tag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        auto:roundedCornerRadius="5dp"
         auto:default_drawable="@drawable/ic_launcher"
-        />
+        auto:roundedCornerRadius="5dp" />
     <!--<com.sunnybear.library.view.image.ImageDraweeView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:scaleType="fitXY"-->
-        <!--auto:roundedCornerRadius="5dp"-->
-        <!--auto:default_drawable="@color/color_7f313131"-->
-        <!--/>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scaleType="fitXY"-->
+    <!--auto:roundedCornerRadius="5dp"-->
+    <!--auto:default_drawable="@color/color_7f313131"-->
+    <!--/>-->
     <TextView
         android:id="@+id/tv_hot_tag"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="蒙板"
+        android:layout_centerInParent="true"
+        android:background="@drawable/discovery_hottag_marking"
         android:gravity="center"
-        android:textSize="@dimen/text_size_14sp"
+        android:text="蒙板"
         android:textColor="@color/text_color_white"
-        android:background="@drawable/discovery_hottag_marking"/>
+        android:textSize="@dimen/text_size_14sp" />
 </RelativeLayout>
 
 

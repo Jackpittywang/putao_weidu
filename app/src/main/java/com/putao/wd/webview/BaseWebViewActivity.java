@@ -3,6 +3,7 @@ package com.putao.wd.webview;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.webkit.WebChromeClient;
@@ -84,7 +85,8 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
         setMainTitle(title);
         String url = "";
         url = args.getString(URL);
-        Logger.d(url);
+        if (!TextUtils.isEmpty(url))
+            Logger.d(url);
         setWebSettings();
 
         // url = "http://static.uzu.wang/putaowd/pages/support.html";

@@ -30,6 +30,7 @@ import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
+import com.sunnybear.library.view.recycler.SmoollLinearSmoothScroller;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -107,6 +108,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         addListener();
     }
 
+
     private void addListener() {
         /**
          * 下拉刷新
@@ -172,12 +174,14 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                                     int firstVisiablePosition = childAtLayoutManager.findFirstVisibleItemPosition();
 
-                                    if (Math.abs(mScrollWidth) % simpleItem <= halfItem) {
-                                        childAtLayoutManager.scrollToPosition(firstVisiablePosition);
+                                    SmoollLinearSmoothScroller smollLinearSmoothScroller = new SmoollLinearSmoothScroller(mActivity, childAtLayoutManager);
+                                    smollLinearSmoothScroller.setTargetPosition(firstVisiablePosition);
+                                    /*if (Math.abs(mScrollWidth) % simpleItem <= halfItem) {
                                     } else {
-                                        childAtLayoutManager.scrollToPosition(firstVisiablePosition + 1);
-                                    }
-                                    mScrollWidth = 0;
+                                        smollLinearSmoothScroller.setTargetPosition(firstVisiablePosition);
+                                        smollLinearSmoothScroller.setTargetPosition(firstVisiablePosition + 1);
+                                    }*/
+                                    childAtLayoutManager.startSmoothScroll(smollLinearSmoothScroller);
                                 }
                             }
                         });

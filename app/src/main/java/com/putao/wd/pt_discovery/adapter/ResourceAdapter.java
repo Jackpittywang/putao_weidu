@@ -50,6 +50,7 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     private int simpleItem;
     private int firstVisiablePosition;
     private int halfItem;
+    private HotTagAdapter mHotTagAdapter;
 
     public ResourceAdapter(Context context, List<FindResource> resous) {
         super(context, resous);
@@ -116,19 +117,22 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             });
         } else if (position == 1) {
             final HotTagHolder hotTagHolder = (HotTagHolder) holder;
+            if (null == mHotTagAdapter && null != hotTags) {
+                hotTags.add(new ResourceTag());
+                mHotTagAdapter = new HotTagAdapter(context, hotTags);
+                hotTagHolder.rv_discovery_hot_tag.setAdapter(mHotTagAdapter);
 
-            HotTagAdapter hotTagAdapter = new HotTagAdapter(context, hotTags);
-            hotTagHolder.rv_discovery_hot_tag.setAdapter(hotTagAdapter);
-            hotTagAdapter.setOnItemClickListener(new com.sunnybear.library.view.recycler.listener.OnItemClickListener<ResourceTag>() {
+                mHotTagAdapter.setOnItemClickListener(new com.sunnybear.library.view.recycler.listener.OnItemClickListener<ResourceTag>() {
 
-                @Override
-                public void onItemClick(ResourceTag tag, int position) {
-                    EventBusHelper.post(tag, AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG);
-                }
-            });
-            linearLayoutManager = new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            hotTagHolder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
+                    @Override
+                    public void onItemClick(ResourceTag tag, int position) {
+                        EventBusHelper.post(tag, AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG);
+                    }
+                });
+            }
+//            linearLayoutManager = new LinearLayoutManager(context);
+//            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//            hotTagHolder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
 
 
 /*            simpleItem = DensityUtil.dp2px(context, 95);
