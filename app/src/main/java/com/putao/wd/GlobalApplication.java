@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.putao.mtlib.HomeBroadcastReceiver;
 import com.putao.ptx.push.core.GPushService;
 import com.putao.wd.account.AccountApi;
+import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.DataBaseManager;
@@ -265,6 +267,7 @@ public class GlobalApplication extends BasicApplication {
     public static final String PREFERENCE_KEY_BABY_ID = "baby_id";
 
     public static final String PREFERENCE_KEY_IS_FIRST = "is_first";
+    public static final String PREFERENCE_STEP1_IS_FIRST = "preference_step1_is_first";
     public static final String SECRET = "499478a81030bb177e578f86410cda8641a22799";
 
     /**
@@ -277,7 +280,7 @@ public class GlobalApplication extends BasicApplication {
 
     public static boolean isServiceIdBind(String sId) {
         if (serviceBindMap == null) return false;
-        if (serviceBindMap.get(sId) == null) return false;
+        if (serviceBindMap.get(sId + AccountHelper.getCurrentUid()) == null) return false;
         return true;
     }
 }

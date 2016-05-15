@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.putao.mtlib.util.NetManager;
 import com.putao.wd.GlobalApplication;
+import com.putao.wd.GuidanceActivity;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.RedDotReceiver;
@@ -86,6 +87,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     ImageView img_compain_menu;
     @Bind(R.id.tv_later_relevance)
     TextView tv_later_relevance;
+    @Bind(R.id.iv_step1_first)
+    ImageView iv_step1_first;
 
 
     private ArrayList<Companion> mCompanion;
@@ -105,6 +108,11 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_STEP1_IS_FIRST, false))
+            iv_step1_first.setVisibility(View.VISIBLE);
+        else {
+            iv_step1_first.setVisibility(View.GONE);
+        }
         mSubscriptCompanion = new ArrayList<>();
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
@@ -195,7 +203,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     private void checkResult(Companion companion) {
-        GlobalApplication.serviceBindMap.put(companion.getService_id(), 0 == companion.getIs_relation() ? false : true);
+        GlobalApplication.serviceBindMap.put(companion.getService_id() + AccountHelper.getCurrentUid(), 0 == companion.getIs_relation() ? false : true);
         ServiceMessage serviceMessage = companion.getAuto_reply();
         if (null != serviceMessage && null != serviceMessage.getLists()) {
             for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
@@ -332,6 +340,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_relevance_device:
+                iv_step1_first.setVisibility(View.GONE);
+                PreferenceUtils.save(GlobalApplication.PREFERENCE_STEP1_IS_FIRST, true);
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
