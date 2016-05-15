@@ -83,28 +83,10 @@ public class LoadingHUD extends Dialog {
         mRotateAnimation.setInterpolator(new LinearInterpolator());
         mRotateAnimation.setDuration(1000);
         mRotateAnimation.setRepeatCount(Animation.INFINITE);
-        mRotateAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animation.cancel();
-                dismissHUD();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
     }
 
     public void setSpinnerType(int spinnerType) {
         initAnimation();
-        iv_icon.setAnimation(mRotateAnimation);
 //        switch (spinnerType) {
 //            case 0:
 //                ivProgressSpinner.setImageResource(R.anim.round_spinner_fade);
@@ -127,9 +109,10 @@ public class LoadingHUD extends Dialog {
 
     @Override
     public void show() {
-        if (!((Activity) context).isFinishing())
+        if (!((Activity) context).isFinishing()) {
             super.show();
-        else
+            iv_icon.startAnimation(mRotateAnimation);
+        } else
             instance = null;
     }
 
@@ -232,6 +215,7 @@ public class LoadingHUD extends Dialog {
             @Override
             protected void onPostExecute(Long result) {
                 super.onPostExecute(result);
+                mRotateAnimation.cancel();
                 dismiss();
 //                reset();
             }
