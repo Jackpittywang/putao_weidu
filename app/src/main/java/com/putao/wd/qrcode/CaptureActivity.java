@@ -429,70 +429,74 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                     startActivity(OfficialAccountsActivity.class, bundle);
                     this.finish();
                 } else {
-                    networkRequest(CompanionApi.getServiceRelation(serverId, result), new JSONObjectCallback() {
-                        @Override
-                        public void onSuccess(String url, JSONObject result) {
-                            Logger.d(result.toString());
-                            int http_code = result.getInteger("http_code");
-                            if (http_code == 200) {
-                                try {
-                                    JSONObject data = result.getJSONObject("data");
-                                    ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
-                                    CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                                    for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
-                                        dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                    String mServceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
+                    if (mServceId != null && !serverId.equals(mServceId)) {
+                        ToastUtils.showToastShort(mContext, "请扫描" + args.getString(AccountConstants.Bundle.BUNDLE_COMPANION) + "游戏的二维码");
+                        finish();
+                    } else {
+                        networkRequest(CompanionApi.getServiceRelation(serverId, result), new JSONObjectCallback() {
+                            @Override
+                            public void onSuccess(String url, JSONObject result) {
+                                Logger.d(result.toString());
+                                int http_code = result.getInteger("http_code");
+                                if (http_code == 200) {
+                                    try {
+                                        JSONObject data = result.getJSONObject("data");
+                                        ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
+                                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                                        for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                                            dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                                        }
+                                    } catch (Exception e) {
+
                                     }
-                                } catch (Exception e) {
 
+                                    EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                                    // 跳到订阅号列表页面
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
+                                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME));
+                                    PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                                    startActivity(GameDetailListActivity.class, bundle);
+                                    ToastUtils.showToastShort(mContext, "关注成功");
+
+
+                                } else if (http_code == 4201)
+                                    ToastUtils.showToastShort(mContext, "重复绑定");
+                                else if (http_code == 4200)
+                                    ToastUtils.showToastShort(mContext, "二维码已过期");
+                                else {
+                                    String msg = result.getString("msg");
+                                    if (msg != null)
+                                        ToastUtils.showToastShort(mContext, result.getString("msg"));
+                                    else ToastUtils.showToastShort(mContext, "绑定失败");
                                 }
+                                loading.dismiss();
+                                // isRequesting = false;
+                                finish();
 
-                                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                                // 跳到订阅号列表页面
-                                Bundle bundle = new Bundle();
-                                bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, serverId);
-                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME));
-                                PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                                startActivity(GameDetailListActivity.class, bundle);
-                                ToastUtils.showToastShort(mContext, "关注成功");
-
-
-                            } else if (http_code == 4201)
-                                ToastUtils.showToastShort(mContext, "重复绑定");
-                            else if (http_code == 4200)
-                                ToastUtils.showToastShort(mContext, "二维码已过期");
-                            else if (http_code == 631)
-                                ToastUtils.showToastShort(mContext, "请扫描" + args.getString(AccountConstants.Bundle.BUNDLE_COMPANION) + "游戏的二维码");
-                            else {
-                                String msg = result.getString("msg");
-                                if (msg != null)
-                                    ToastUtils.showToastShort(mContext, result.getString("msg"));
-                                else ToastUtils.showToastShort(mContext, "绑定失败");
                             }
-                            loading.dismiss();
-                            // isRequesting = false;
-                            finish();
 
-                        }
+                            @Override
+                            public void onCacheSuccess(String url, JSONObject result) {
 
-                        @Override
-                        public void onCacheSuccess(String url, JSONObject result) {
+                            }
 
-                        }
-
-                        @Override
-                        public void onFailure(String url, int statusCode, String msg) {
-                            loading.dismiss();
-                            ToastUtils.showToastShort(mContext, msg);
-                            isRequesting = false;
-                        }
-                    });
-
+                            @Override
+                            public void onFailure(String url, int statusCode, String msg) {
+                                loading.dismiss();
+                                ToastUtils.showToastShort(mContext, msg);
+                                isRequesting = false;
+                            }
+                        });
+                    }
                 }
                 break;
             default:
                 showErrorInfo();
                 return false;
         }
+
         return true;
     }
 
@@ -500,7 +504,6 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         String scaneErrorInfo = "请扫描葡萄产品的二维码";
         ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }
-
 
 //    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
 //    private BarCodeData getBarCodeDataFromUrl(String url) {
