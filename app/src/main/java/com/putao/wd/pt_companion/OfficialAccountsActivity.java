@@ -160,6 +160,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     } else {
                         if (isBind) {//从未关联跳转过来
                             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, companion.getService_icon());
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion.getService_name());
                             startActivity(CaptureActivity.class, bundle);
                         } else {
                             if (isSubscribe) {
