@@ -452,7 +452,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         et_msg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     isShowEmoji = false;
                     vp_emojis.setVisibility(View.GONE);
                 }
@@ -796,6 +796,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     private void insertUpload(ServiceMessageList serviceMessageList) {
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         mDataBaseManager.insertObject(mServiceId, serviceMessageList);
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void refresh_data(String tag) {
+        initData();
     }
 
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)

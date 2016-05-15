@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:gravity="center"
-            android:text="欢迎进入葡萄领域"
+            android:text="欢迎进入葡萄纬度"
             android:textColor="@color/service_btn_nor"
             android:textSize="@dimen/text_size_24sp" />
 

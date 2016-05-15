@@ -460,6 +460,8 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 ToastUtils.showToastShort(mContext, "重复绑定");
                             else if (http_code == 4200)
                                 ToastUtils.showToastShort(mContext, "二维码已过期");
+                            else if (http_code == 631)
+                                ToastUtils.showToastShort(mContext, "请扫描" + args.getString(AccountConstants.Bundle.BUNDLE_COMPANION) + "游戏的二维码");
                             else {
                                 String msg = result.getString("msg");
                                 if (msg != null)
