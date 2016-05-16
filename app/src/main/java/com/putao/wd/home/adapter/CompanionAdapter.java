@@ -73,12 +73,14 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
             } else {
                 holder.tv_number.setVisibility(View.VISIBLE);
                 holder.tv_number.setText(size > 99 ? 99 + "" : size + "");
-                if (0 == companion.getService_type() && companion.isShowRed()) {
-                    holder.tv_number.setVisibility(View.GONE);
-                    holder.tv_dot.setVisibility(View.VISIBLE);
-                } else {
-                    holder.tv_number.setVisibility(View.GONE);
-                    holder.tv_dot.setVisibility(View.GONE);
+                if (0 == companion.getService_type()) {
+                    if (companion.isShowRed()) {
+                        holder.tv_number.setVisibility(View.GONE);
+                        holder.tv_dot.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.tv_number.setVisibility(View.GONE);
+                        holder.tv_dot.setVisibility(View.GONE);
+                    }
                 }
             }
         }

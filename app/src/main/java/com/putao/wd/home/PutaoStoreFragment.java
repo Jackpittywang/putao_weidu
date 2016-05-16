@@ -200,7 +200,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         btn_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetworkUtil.isNetworkAvailable(mActivity))
+                if (!NetworkUtil.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     getStoreHome();

@@ -81,9 +81,13 @@ public class ModifyPasswardActivity extends PTWDActivity implements TextWatcher 
         networkRequest(AccountApi.updatePassword(oldPassword, newPassword, repeatPassword), new AccountCallback(loading) {
             @Override
             public void onSuccess(JSONObject result) {
-                ToastUtils.showToastShort(mContext, "密码修改成功！");
-                loading.dismiss();
-                finish();
+                if (null != result.getJSONObject("error_code")) {
+                    ToastUtils.showToastShort(mContext, "密码修改失败");
+                } else {
+                    ToastUtils.showToastShort(mContext, "密码修改成功！");
+                    loading.dismiss();
+                    finish();
+                }
             }
 
             @Override

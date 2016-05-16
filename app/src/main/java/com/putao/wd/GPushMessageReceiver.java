@@ -64,7 +64,7 @@ public class GPushMessageReceiver extends BroadcastReceiver {
             for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
                 dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId());
             }
-            EventBusHelper.post(true, COMPANION_TABBAR);
+//            EventBusHelper.post(true, COMPANION_TABBAR);
             EventBusHelper.post(accompanyNumber, COMPANION_DOT);
         }
         if (null != gpushMessage.getMessageCenter()) {

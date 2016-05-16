@@ -180,7 +180,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                 getTagCampaign();
                 break;
             case R.id.btn_no_data:
-                if (NetworkUtil.isNetworkAvailable(mContext))
+                if (!NetworkUtil.isNetworkAvailable(mContext))
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 else
                     getTagCampaign();

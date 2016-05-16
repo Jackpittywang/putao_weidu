@@ -93,7 +93,7 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
         btn_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetworkUtil.isNetworkAvailable(mContext))
+                if (!NetworkUtil.isNetworkAvailable(mContext))
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 else
                     getSubscribeList();

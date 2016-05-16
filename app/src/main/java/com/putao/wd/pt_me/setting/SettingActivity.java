@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.putao.ptx.push.core.Constants;
+import com.putao.ptx.push.core.GPushService;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -13,6 +15,7 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.pt_me.address.AboutUsActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.AppUtils;
 
 
 import butterknife.OnClick;
@@ -58,6 +61,9 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 IndexActivity.isNotRefreshUserInfo = false;
                 //重置陪伴页面
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                Intent i = new Intent(mContext, GPushService.class);
+                i.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_GPUSH_STOP);
+                mContext.startService(i);
                 //立即关闭内部推送
 //                mContext.sendBroadcast(new Intent(GlobalApplication.OUT_FORE_MESSAGE_SOON));
                 //清除红点

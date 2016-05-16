@@ -186,7 +186,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener 
                 getTagList();
                 break;
             case R.id.btn_no_data:
-                if (NetworkUtil.isNetworkAvailable(mContext))
+                if (!NetworkUtil.isNetworkAvailable(mContext))
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 else
                     getTagList();

@@ -161,7 +161,7 @@ public class VideoFragment extends BasicFragment implements View.OnClickListener
                 getDisCovery();
                 break;
             case R.id.btn_no_data:
-                if (NetworkUtil.isNetworkAvailable(mActivity)) {//没有网络连接
+                if (!NetworkUtil.isNetworkAvailable(mActivity)) {//没有网络连接
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 } else
                     getDisCovery();

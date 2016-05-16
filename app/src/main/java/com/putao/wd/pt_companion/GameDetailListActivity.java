@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -37,6 +38,7 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.Companion;
+import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.model.ServiceMenu;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
@@ -814,6 +816,17 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     @Subcriber(tag = EmojiFragment.EVENT_DELETE_EMOJI)
     public void eventDeleteEmoji(Emoji emoji) {
         et_msg.delete();
+    }
+
+    @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)
+    private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
+        for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
+            String service_id = gpushMessageAccNumber.getService_id();
+            if (mServiceId.equals(service_id)) {
+                getLastestArticle();
+            }
+        }
+
     }
 }
 

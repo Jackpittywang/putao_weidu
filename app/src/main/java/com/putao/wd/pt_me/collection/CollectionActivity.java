@@ -146,7 +146,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         btn_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetworkUtil.isNetworkAvailable(mContext)) {//没有网络连接
+                if (!NetworkUtil.isNetworkAvailable(mContext)) {//没有网络连接
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 } else
                     initData();

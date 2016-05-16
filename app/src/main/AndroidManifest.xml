@@ -544,15 +544,6 @@
             android:value="OkePLMGvIVg0KYBt0AQ6Uj1R" />
         <!--通知推送-->
         <service
-            android:name="com.putao.mtlib.NotifyService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.putao.wd.PUSH" />
-            </intent-filter>
-        </service>
-        <!--通知推送-->
-        <service
             android:name="com.putao.ptx.push.core.GPushService"
             android:enabled="true"
             android:exported="false">

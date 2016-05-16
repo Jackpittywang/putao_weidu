@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.ptx.push.core.Constants;
+import com.putao.ptx.push.core.GPushService;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -211,6 +213,9 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 AccountHelper.setUserInfo(result);
                 EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
 //                mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
+                Intent i = new Intent(mContext, GPushService.class);
+                i.putExtra(Constants.EXTRA_ACTION, Constants.ACTION_GPUSH_START);
+                mContext.startService(i);
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
 //                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                 checkInquiryBind(AccountHelper.getCurrentUid());

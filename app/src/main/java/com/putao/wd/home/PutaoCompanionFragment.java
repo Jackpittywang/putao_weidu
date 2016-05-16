@@ -127,6 +127,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private void checkDevice() {
         Logger.d("IS_DEVICE_BIND", PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) + "");
         Logger.d("AccountHelper.isLogin()", AccountHelper.isLogin() + "");
+        EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
 //        PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) &&
         if (AccountHelper.isLogin()) {
             rl_companion_empty.setVisibility(View.GONE);
@@ -166,8 +167,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                     Companion min = Collections.min(mSubscriptCompanion, stepComparator);
                                     companion.setService_description(min.getService_description());
                                     continue;
-                                }
-                                checkResult(companion);
+                                } else
+                                    checkResult(companion);
                             }
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
@@ -228,21 +229,20 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 //                            companion.setService_description();
 
         //这里判断库中空Id是否比lastPullID小 防止红点永久不能删除
-        ArrayList<String> realNotDownload = null;
+       /* ArrayList<String> realNotDownload = null;
         if (notDownloadIds.size() > 0) {
             for (String notDownloadId : notDownloadIds) {
                 int lastId = Integer.parseInt(companion.getLast_pull_id());
-                if (Integer.parseInt(notDownloadId) <= lastId)
+                if (Integer.parseInt(notDownloadId) <= lastId || lastId == 0)
                     mDataBaseManager.removeDataWithId(notDownloadId);
                 else realNotDownload.add(notDownloadId);
             }
-        }
-        if (null != realNotDownload && realNotDownload.size() >= 0) {
+        }*/
+        if (null != notDownloadIds && notDownloadIds.size() > 0) {
             companion.setIsShowRed(true);
             companion.setNotDownloadIds(notDownloadIds);
             EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
-        } else
-            EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
+        }
     }
 
     private void addListener() {
@@ -319,7 +319,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             if (companion.getService_type() == 0) {
                 startActivity(PutaoSubcribeActivity.class, bundle);
             } else {
+                mDataBaseManager.removeEmptyData(companion.getService_id());
                 companion.setIsShowRed(false);
+                companion.setNotDownloadIds(new ArrayList<String>());
                 boolean isShowTabDot = false;
                 for (Companion compan : mCompanion) {
                     isShowTabDot = compan.isShowRed() || isShowTabDot;
@@ -353,7 +355,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_no_data://加载失败时，点击刷新数据
-                if (NetworkUtil.isNetworkAvailable(mActivity))
+                if (!NetworkUtil.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     checkDevice();
@@ -380,11 +382,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         checkDevice();
     }
 
-    @Subcriber(tag = GPushMessageReceiver.COMPANION_TABBAR)
+    @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
             String service_id = gpushMessageAccNumber.getService_id();
             String id = gpushMessageAccNumber.getId();
+            EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
             for (Companion companion : mCompanion) {
                 if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
@@ -394,7 +397,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
                 } else if (1 != companion.getService_type()) {
                     for (Companion secondCompanion : companion.getSecond_level_lists()) {
-                        if (companion.getService_id().equals(service_id)) {
+                        if (secondCompanion.getService_id().equals(service_id)) {
                             ArrayList<String> notDownloadIds = secondCompanion.getNotDownloadIds();
                             notDownloadIds.add(id);
                             companion.setIsShowRed(true);
@@ -482,6 +485,28 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Subcriber(tag = AccountConstants.EventBus.EVENT_UPDATE_UPLOAD)
     private void insertUpload(ServiceMessageList serviceMessageList) {
         mDataBaseManager.insertObject(serviceMessageList);
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_SUBSCRIBE)
+    private void refreshSubscribe(Companion companion) {
+        companion.setIsShowRed(false);
+        boolean isShowTabDot = false;
+        for (Companion compan : mCompanion) {
+            if (0 == compan.getService_type()) {
+                compan.setIsShowRed(false);
+                compan.setNotDownloadIds(new ArrayList<String>());
+                for (Companion compani : compan.getSecond_level_lists()) {
+                    compani.setIsShowRed(false);
+                    compani.setNotDownloadIds(new ArrayList<String>());
+                }
+            }
+            isShowTabDot = compan.isShowRed() || isShowTabDot;
+            if (isShowTabDot) break;
+        }
+        if (!isShowTabDot) {
+            EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
+        }
+        mCompanionAdapter.notifyDataSetChanged();
     }
 }
 

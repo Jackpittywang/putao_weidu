@@ -417,7 +417,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 freshResource();
                 break;
             case R.id.btn_no_data:
-                if (NetworkUtil.isNetworkAvailable(mActivity))
+                if (!NetworkUtil.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     freshResource();

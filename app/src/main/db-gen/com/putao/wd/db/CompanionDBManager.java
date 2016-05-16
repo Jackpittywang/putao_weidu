@@ -143,6 +143,14 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
     /**
      * 清除公众号数据
      */
+    public void removeEmptyData(String service_id) {
+        DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("0"), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).buildDelete();
+        companionDBDeleteQuery.executeDeleteWithoutDetachingEntities();
+    }
+
+    /**
+     * 清除公众号数据
+     */
     public void removeDataWithId(String id) {
         DeleteQuery<CompanionDB> companionDBDeleteQuery = getQueryBuilder().where(CompanionDBDao.Properties.id.eq(id), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).buildDelete();
         companionDBDeleteQuery.executeDeleteWithoutDetachingEntities();
