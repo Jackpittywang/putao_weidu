@@ -9,7 +9,7 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.DisCoveryApi;
@@ -417,7 +417,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 freshResource();
                 break;
             case R.id.btn_no_data:
-                if (NetManager.isNetworkAvailable(mActivity))
+                if (NetworkUtil.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     freshResource();

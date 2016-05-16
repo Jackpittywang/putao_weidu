@@ -1,14 +1,12 @@
-package com.putao.mtlib.util;
+package com.putao.wd.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.putao.wd.model.PicList;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.putao.wd.model.PicList;
-import com.sunnybear.library.util.Logger;
 
 /**
  * Created by JIDONGDONG on 2015/7/16.

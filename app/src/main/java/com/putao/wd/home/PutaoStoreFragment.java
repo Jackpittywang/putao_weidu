@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
@@ -17,7 +17,6 @@ import com.putao.wd.model.StoreProduct;
 import com.putao.wd.model.StoreProductHome;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailV2Activity;
-import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -25,7 +24,6 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.animators.ScaleInAnimation;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
 
 import java.util.List;
 
@@ -202,7 +200,7 @@ public class PutaoStoreFragment extends PTWDFragment {
         btn_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetManager.isNetworkAvailable(mActivity))
+                if (NetworkUtil.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     getStoreHome();

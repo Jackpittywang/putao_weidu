@@ -2,13 +2,10 @@ package com.putao.wd;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.putao.mtlib.HomeBroadcastReceiver;
 import com.putao.ptx.push.core.GPushService;
 import com.putao.wd.account.AccountApi;
-import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CityDBManager;
 import com.putao.wd.db.CompanionDBManager;

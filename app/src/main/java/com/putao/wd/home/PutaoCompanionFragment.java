@@ -16,12 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
+import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.GlobalApplication;
-import com.putao.wd.GuidanceActivity;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
-import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
@@ -160,8 +159,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                     for (Companion companionReply : companion.getSecond_level_lists()) {
                                         mSubscriptCompanion.add(companionReply);
                                         checkResult(companionReply);
-                                        if (companionReply.isShowRed())
+                                        if (companionReply.isShowRed()) {
                                             companion.setIsShowRed(true);
+                                        }
                                     }
                                     Companion min = Collections.min(mSubscriptCompanion, stepComparator);
                                     companion.setService_description(min.getService_description());
@@ -240,7 +240,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         if (null != realNotDownload && realNotDownload.size() >= 0) {
             companion.setIsShowRed(true);
             companion.setNotDownloadIds(notDownloadIds);
-        }
+            EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
+        } else
+            EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
     }
 
     private void addListener() {
@@ -324,7 +326,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     if (isShowTabDot) break;
                 }
                 if (!isShowTabDot)
-                    EventBusHelper.post("", AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB);
+                    EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
                 mCompanionAdapter.notifyItemChanged(position);
                 startActivity(GameDetailListActivity.class, bundle);
             }
@@ -351,7 +353,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     startActivity(CaptureActivity.class);
                 break;
             case R.id.btn_no_data://加载失败时，点击刷新数据
-                if (NetManager.isNetworkAvailable(mActivity))
+                if (NetworkUtil.isNetworkAvailable(mActivity))
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 else
                     checkDevice();
@@ -378,7 +380,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         checkDevice();
     }
 
-    @Subcriber(tag = RedDotReceiver.COMPANION_TABBAR)
+    @Subcriber(tag = GPushMessageReceiver.COMPANION_TABBAR)
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
             String service_id = gpushMessageAccNumber.getService_id();
@@ -391,12 +393,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     companion.setNotDownloadIds(notDownloadIds);
                     mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
                 } else if (1 != companion.getService_type()) {
-                    for (Companion SecondCompanion : companion.getSecond_level_lists()) {
+                    for (Companion secondCompanion : companion.getSecond_level_lists()) {
                         if (companion.getService_id().equals(service_id)) {
-                            ArrayList<String> notDownloadIds = SecondCompanion.getNotDownloadIds();
+                            ArrayList<String> notDownloadIds = secondCompanion.getNotDownloadIds();
                             notDownloadIds.add(id);
-                            SecondCompanion.setIsShowRed(true);
-                            SecondCompanion.setNotDownloadIds(notDownloadIds);
+                            companion.setIsShowRed(true);
+                            secondCompanion.setIsShowRed(true);
+                            secondCompanion.setNotDownloadIds(notDownloadIds);
                             mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
                         }
                     }

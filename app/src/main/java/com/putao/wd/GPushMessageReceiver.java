@@ -22,6 +22,7 @@ public class GPushMessageReceiver extends BroadcastReceiver {
 
     public static final String ME_TABBAR = "me_tabbar";
     public static final String COMPANION_TABBAR = "companion_tabbar";
+    public static final String COMPANION_DOT = "companion_dot";
     public static final String ME_MESSAGECENTER = "me_messageCenter";
     public static final String MESSAGECENTER_NOTICE = "messageCenter_notice";
     public static final String MESSAGECENTER_REPLY = "messageCenter_reply";
@@ -63,7 +64,8 @@ public class GPushMessageReceiver extends BroadcastReceiver {
             for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
                 dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId());
             }
-            EventBusHelper.post(accompanyNumber, COMPANION_TABBAR);
+            EventBusHelper.post(true, COMPANION_TABBAR);
+            EventBusHelper.post(accompanyNumber, COMPANION_DOT);
         }
         if (null != gpushMessage.getMessageCenter()) {
             GpushMessageMsgCenter messageCenter = gpushMessage.getMessageCenter();

@@ -212,7 +212,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
                 EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
 //                mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
-                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
+//                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                 checkInquiryBind(AccountHelper.getCurrentUid());
                 loading.dismiss();
             }

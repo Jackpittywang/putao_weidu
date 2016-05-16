@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.DisCoveryApi;
@@ -22,7 +22,9 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -30,7 +32,7 @@ import butterknife.OnClick;
  * 标签类
  * Created by Administrator on 2016/5/6.
  */
-public class LabelActivity extends PTWDActivity implements View.OnClickListener{
+public class LabelActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
@@ -85,7 +87,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
                         mPage++;
                         rv_content.loadMoreComplete();
 
- //                       checkIsNoMore();
+                        //                       checkIsNoMore();
                     } else {
                         rv_content.noMoreLoading();
                         ll_empty.setVisibility(View.VISIBLE);
@@ -146,9 +148,9 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
             public void onItemClick(Resources resources, int position) {
                 Bundle bundle = new Bundle();
 
-                bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE,ResourceFragment.RESOURCE);
-                bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON,resources.getIcon());
-                bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE,resources.getId());
+                bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE, ResourceFragment.RESOURCE);
+                bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON, resources.getIcon());
+                bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE, resources.getId());
                 bundle.putString(BaseWebViewActivity.TITLE, resources.getTitle());
                 bundle.putString(BaseWebViewActivity.SERVICE_ID, resources.getSid());
                 bundle.putString(BaseWebViewActivity.URL, resources.getLink_url());
@@ -184,7 +186,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener{
                 getTagList();
                 break;
             case R.id.btn_no_data:
-                if (NetManager.isNetworkAvailable(mContext))
+                if (NetworkUtil.isNetworkAvailable(mContext))
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 else
                     getTagList();

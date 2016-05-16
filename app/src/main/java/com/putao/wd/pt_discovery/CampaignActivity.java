@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.DisCoveryApi;
@@ -180,7 +180,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                 getTagCampaign();
                 break;
             case R.id.btn_no_data:
-                if (NetManager.isNetworkAvailable(mContext))
+                if (NetworkUtil.isNetworkAvailable(mContext))
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 else
                     getTagCampaign();

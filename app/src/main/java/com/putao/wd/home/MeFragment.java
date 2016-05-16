@@ -14,9 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
-import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
@@ -484,7 +484,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         return true;
     }
 
-    @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
+    @Subcriber(tag = GPushMessageReceiver.MESSAGECENTER)
     private void setDot(String me_tabbar) {
         si_message.show();
     }

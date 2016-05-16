@@ -62,7 +62,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
 //                mContext.sendBroadcast(new Intent(GlobalApplication.OUT_FORE_MESSAGE_SOON));
                 //清除红点
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
-                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
+//                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                 finish();
                 break;
             case R.id.si_clear:

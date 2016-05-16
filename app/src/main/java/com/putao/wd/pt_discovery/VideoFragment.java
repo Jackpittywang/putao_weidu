@@ -5,11 +5,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
-import com.putao.wd.GlobalApplication;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.DisCoveryApi;
-import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.DiscoveryAdapter;
 import com.putao.wd.model.DisCovery;
 import com.sunnybear.library.controller.BasicFragment;
@@ -27,7 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/5/4.
  */
-public class VideoFragment extends BasicFragment implements View.OnClickListener{
+public class VideoFragment extends BasicFragment implements View.OnClickListener {
 
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
@@ -94,7 +92,7 @@ public class VideoFragment extends BasicFragment implements View.OnClickListener
                                     disCoveries = result;
                                     adapter.addAll(result);
                                     rv_discovery.loadMoreComplete();
-                                }else {
+                                } else {
                                     rv_discovery.noMoreLoading();
                                 }
 //                                checkLoadMoreComplete(result);
@@ -163,7 +161,7 @@ public class VideoFragment extends BasicFragment implements View.OnClickListener
                 getDisCovery();
                 break;
             case R.id.btn_no_data:
-                if (NetManager.isNetworkAvailable(mActivity)) {//没有网络连接
+                if (NetworkUtil.isNetworkAvailable(mActivity)) {//没有网络连接
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 } else
                     getDisCovery();

@@ -6,21 +6,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.api.DisCoveryApi;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.home.adapter.DiscoveryAdapter;
 import com.putao.wd.model.DisCovery;
-import com.putao.wd.video.YoukuVideoPlayerActivity;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.animators.ScaleInAnimation;
-import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -164,7 +161,7 @@ public class PutaoDiscoveryFragment extends PTWDFragment implements OnClickListe
                 getDisCovery();
                 break;
             case R.id.btn_no_data:
-                if (NetManager.isNetworkAvailable(mActivity)) {//没有网络连接
+                if (NetworkUtil.isNetworkAvailable(mActivity)) {//没有网络连接
                     ToastUtils.showToastShort(mActivity, "获取数据失败");
                 } else
                     getDisCovery();

@@ -14,21 +14,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.putao.mtlib.util.HTMLUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CreateApi;
 import com.putao.wd.home.PutaoCreatedSecondFragment;
-import com.putao.wd.pt_me.order.OrderListActivity;
 import com.putao.wd.model.Create;
 import com.putao.wd.model.PicClickResult;
+import com.putao.wd.pt_me.order.OrderListActivity;
 import com.putao.wd.share.OnShareClickListener;
 import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.start.action.ActionsDetailActivity;
 import com.putao.wd.start.browse.PictrueBrowseActivity;
 import com.putao.wd.user.LoginActivity;
+import com.putao.wd.util.HTMLUtil;
 import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -41,7 +41,6 @@ import com.sunnybear.library.view.CircleTextView;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.scroll.SupportScrollView;
-
 
 import butterknife.Bind;
 import butterknife.OnClick;

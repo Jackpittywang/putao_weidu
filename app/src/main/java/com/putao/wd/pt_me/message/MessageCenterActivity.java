@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 
+import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.R;
-import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.util.PreferenceUtils;
@@ -73,10 +72,10 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         //打开预加载 一次就加载所有的fragment
         vp_message.setOffscreenPageLimit(mFragments.size());
         //红点显示
-        mRedDots = PreferenceUtils.getValue(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        mRedDots = PreferenceUtils.getValue(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         if (mRedDots[0]) {
             mRedDots[0] = false;
-            PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+            PreferenceUtils.save(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
         }
         if (mRedDots[1]) ll_cool.show();
@@ -130,32 +129,32 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
                 break;
         }
         mRedDots[position] = false;
-        PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        PreferenceUtils.save(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         vp_message.setCurrentItem(position, false);
         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
 
     }
 
-    @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
+    @Subcriber(tag = GPushMessageReceiver.MESSAGECENTER)
     private void setDot(String messagecenter) {
         switch (messagecenter) {
-            case RedDotReceiver.MESSAGECENTER_REPLY:
+            case GPushMessageReceiver.MESSAGECENTER_REPLY:
                 mRedDots[0] = true;
                 ll_reply.show();
                 break;
-            case RedDotReceiver.MESSAGECENTER_PRAISE:
+            case GPushMessageReceiver.MESSAGECENTER_PRAISE:
                 mRedDots[1] = true;
                 ll_cool.show();
                 break;
-            case RedDotReceiver.MESSAGECENTER_REMIND:
+            case GPushMessageReceiver.MESSAGECENTER_REMIND:
                 mRedDots[2] = true;
                 ll_remind.show();
                 break;
-            case RedDotReceiver.MESSAGECENTER_NOTICE:
+            case GPushMessageReceiver.MESSAGECENTER_NOTICE:
                 mRedDots[3] = true;
                 ll_notice.show();
                 break;
         }
-        PreferenceUtils.save(RedDotReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        PreferenceUtils.save(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
     }
 }

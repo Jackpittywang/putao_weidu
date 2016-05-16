@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.api.CompanionApi;
@@ -93,7 +93,7 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
         btn_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetManager.isNetworkAvailable(mContext))
+                if (NetworkUtil.isNetworkAvailable(mContext))
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 else
                     getSubscribeList();

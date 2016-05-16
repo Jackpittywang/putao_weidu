@@ -1,18 +1,16 @@
 package com.putao.wd.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSONObject;
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -93,7 +91,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                 final String mobile = et_mobile.getText().toString();
                 final String passWord = et_password.getText().toString();
                 final String verify = et_graph_verify.getText().toString();
-                if (NetManager.isNetworkAvailable(LoginActivity.this)) {//没有网络连接
+                if (NetworkUtil.isNetworkAvailable(LoginActivity.this)) {//没有网络连接
                     ToastUtils.showToastLong(mContext, "您的网络不给力");
                     btn_login.setClickable(true);
                     loading.dismiss();
@@ -174,7 +172,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
 //                        mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
+//                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                         checkInquiryBind(AccountHelper.getCurrentUid());
                         if (!TextUtils.isEmpty(mDiskFileCacheHelper.getAsString(NEED_CODE + mobile))) {
                             mDiskFileCacheHelper.remove(NEED_CODE + mobile);
@@ -215,7 +213,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
 //                        if(){
 //                            EventBusHelper.post("",);
 //                        }
-                        EventBusHelper.post(args.getString(OfficialAccountsActivity.HIDE_FINISH,""), AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                        EventBusHelper.post(args.getString(OfficialAccountsActivity.HIDE_FINISH, ""), AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         loading.dismiss();
                         finish();
                     }

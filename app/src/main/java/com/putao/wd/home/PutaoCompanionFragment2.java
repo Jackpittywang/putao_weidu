@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
-import com.putao.wd.RedDotReceiver;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
@@ -148,7 +148,7 @@ public class PutaoCompanionFragment2 extends BasicFragment implements View.OnCli
      */
     private ArrayList<DiaryApp> setRedDot(ArrayList<DiaryApp> result) {
         //红点显示
-        mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid());
+        mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GPushMessageReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid());
         if (null != mRedDotMap) {
             if (!TextUtils.isEmpty(mRedDotMap.get(PRO_601)))
                 result.get(0).setShowRedDot(true);
@@ -279,11 +279,11 @@ public class PutaoCompanionFragment2 extends BasicFragment implements View.OnCli
         Bundle bundle = new Bundle();
         bundle.putSerializable(DiaryActivity.DIARY_APP, diaryApp);
         bundle.putSerializable("position", position);
-        mDiskFileCacheHelper.put(RedDotReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), mRedDotMap);
+        mDiskFileCacheHelper.put(GPushMessageReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), mRedDotMap);
         startActivity(DiaryActivity.class, bundle);
     }
 
-    @Subcriber(tag = RedDotReceiver.APPPRODUCT_ID)
+    @Subcriber(tag = GPushMessageReceiver.APPPRODUCT_ID)
     private void setDot(String appproduct_id) {
         int position = -1;
         switch (appproduct_id) {

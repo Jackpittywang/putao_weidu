@@ -96,7 +96,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         vp_content.setCurrentItem(/*is_device_bind &&*/ AccountHelper.isLogin() ? 0 : 1);
         if (AccountHelper.isLogin()) {
             //红点显示
-            refreshCompanionDot("");
+//            refreshCompanionDot("");
             refreshMeDot("");
             checkInquiryBind(AccountHelper.getCurrentUid());
         }
@@ -189,22 +189,24 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
     //-------------------------------以下是红点信息缓存-------------------------//
     @Subcriber(tag = GPushMessageReceiver.COMPANION_TABBAR)
-    private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
-        ti_index_companion.show(-1);
+    private void setCompanionDot(boolean isShow) {
+        if (isShow)
+            ti_index_companion.show(-1);
+        else ti_index_companion.hide();
     }
 
-    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
+ /*   @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB)
     private void refreshCompanionDot(String tab) {
         if (RedDotUtils.getCompanionDot(mApp)) ti_index_companion.show(-1);
         else ti_index_companion.hide();
-    }
+    }*/
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_CANCEL_COMPANION_TAB)
     private void cancelCompanionDot(String tab) {
         ti_index_companion.hide();
     }
 
-    @Subcriber(tag = RedDotReceiver.MESSAGECENTER)
+    @Subcriber(tag = GPushMessageReceiver.MESSAGECENTER)
     private void setDot(String messagecenter) {
         ti_index_me.show(-1);
         RedDotUtils.saveMessageCenterDot(messagecenter);

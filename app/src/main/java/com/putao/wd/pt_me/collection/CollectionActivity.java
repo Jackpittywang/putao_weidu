@@ -7,9 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.putao.mtlib.util.NetManager;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.YouMengHelper;
@@ -18,7 +17,6 @@ import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Collection;
 import com.putao.wd.pt_companion.ArticleDetailForActivitiesActivity;
-import com.putao.wd.pt_companion.GameDetailActivity;
 import com.putao.wd.webview.BaseWebViewActivity;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
@@ -28,7 +26,6 @@ import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 import com.sunnybear.library.view.recycler.listener.OnItemLongClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -149,7 +146,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         btn_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetManager.isNetworkAvailable(mContext)) {//没有网络连接
+                if (NetworkUtil.isNetworkAvailable(mContext)) {//没有网络连接
                     ToastUtils.showToastShort(mContext, "获取数据失败");
                 } else
                     initData();
