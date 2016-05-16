@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MyViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -184,10 +185,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        rl_no_commpain_failure.setVisibility(View.VISIBLE);
-                        ptl_refresh.setVisibility(View.GONE);
-                        ptl_refresh.refreshComplete();
-
+                        try {
+                            rl_no_commpain_failure.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, 0);
     }
@@ -361,7 +365,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     checkDevice();
                 break;
             case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
-                popupWindow.showAsDropDown(img_compain_menu);
+                    popupWindow.showAsDropDown(img_compain_menu);
                 break;
             case R.id.tv_later_relevance://稍后关联
                 if (!AccountHelper.isLogin()) {

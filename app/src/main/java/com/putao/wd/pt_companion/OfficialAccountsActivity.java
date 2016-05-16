@@ -357,7 +357,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     public void onRightAction() {
         super.onRightAction();
         mSelectPopupWindow.show(ll_companion);
-        mSelectPopupWindow.tv_first.setText("清除内容");
+        mSelectPopupWindow.tv_first.setText("清空内容");
 
 //        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
         if (!isSubscribe && companion.getService_type() != 2) {

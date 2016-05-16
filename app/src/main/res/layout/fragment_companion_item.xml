@@ -1,83 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rl_compain_main"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_icon"
-        style="@style/image_round_10dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="9dp"
-        android:layout_marginTop="9dp"
-        auto:placeholderImage="@drawable/app_icon"
-        auto:roundingBorderWidth="1dp" />
-
-    <TextView
-        android:id="@+id/tv_title"
+    <RelativeLayout
+        android:id="@+id/rl_compain_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/iv_icon"
-        android:gravity="left"
-        android:text="葡萄活动"
-        android:textColor="@color/browse_background"
-        android:textSize="@dimen/text_size_18sp" />
+        android:layout_height="65dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_title"
-        android:layout_alignRight="@+id/tv_title"
-        android:layout_marginLeft="10dp"
-        android:gravity="left"
-        android:text="刚刚"
-        android:textColor="@color/text_color_B2B2B2"
-        android:textSize="@dimen/text_size_12sp" />
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_icon"
+            style="@style/image_round_10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="9dp"
+            auto:placeholderImage="@drawable/app_icon"
+            auto:roundingBorderWidth="1dp" />
 
-    <TextView
-        android:id="@+id/tv_intro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/iv_icon"
-        android:gravity="left"
-        android:singleLine="true"
-        android:text="这里显示活动简介，只能显示一行"
-        android:textColor="@color/text_color_9B9B9B"
-        android:textSize="@dimen/text_size_14sp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:gravity="left"
+            android:text="葡萄活动"
+            android:textColor="@color/browse_background"
+            android:textSize="@dimen/text_size_18sp" />
 
-    <TextView
-        android:id="@+id/tv_number"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginLeft="-11dp"
-        android:layout_marginTop="2dp"
-        android:layout_toRightOf="@+id/iv_icon"
-        android:background="@drawable/btn_companion_num_shape"
-        android:gravity="center"
-        android:text="0"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_10sp"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_title"
+            android:layout_alignRight="@+id/tv_title"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:text="刚刚"
+            android:textColor="@color/text_color_B2B2B2"
+            android:textSize="@dimen/text_size_12sp" />
 
-    <TextView
-        android:id="@+id/tv_dot"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginLeft="-10dp"
-        android:layout_marginTop="4dp"
-        android:layout_toRightOf="@+id/iv_icon"
-        android:background="@drawable/btn_companion_num_shape"
-        android:visibility="gone" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="这里显示活动简介，只能显示一行"
+            android:textColor="@color/text_color_9B9B9B"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="-11dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:background="@drawable/btn_companion_num_shape"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_10sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_dot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:background="@drawable/btn_companion_num_shape"
+            android:visibility="gone" />
+    </RelativeLayout>
+</FrameLayout>

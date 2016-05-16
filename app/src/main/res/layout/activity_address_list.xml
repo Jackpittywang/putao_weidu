@@ -12,10 +12,16 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="@string/address" />
 
-    <!--内容区-->
-    <FrameLayout
+    <!--&lt;!&ndash;内容区&ndash;&gt;-->
+    <!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        >
 
 
         <!-- auto:divider_color="@color/divider_color"
@@ -26,14 +32,17 @@
             android:id="@+id/rv_addresses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_EBEBEB" />
+            android:background="@color/color_EBEBEB"
+            android:layout_above="@+id/rl_add_address"
+            />
 
         <!--没有收货地址时-->
         <RelativeLayout
             android:id="@+id/rl_no_address"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/layout_background">
+            android:layout_height="wrap_content"
+            android:background="@color/layout_background"
+            >
 
             <ImageView
                 android:id="@+id/iv_address_empty"
@@ -59,7 +68,8 @@
             android:id="@+id/rl_add_address"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+
             android:background="@color/white">
 
             <View
@@ -77,7 +87,8 @@
                 android:textColor="@color/service_btn_nor" />
         </RelativeLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
+    <!--</FrameLayout>-->
 
 
 </LinearLayout>
