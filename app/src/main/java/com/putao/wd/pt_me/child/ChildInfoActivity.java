@@ -79,6 +79,28 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
      */
     private boolean checkInfo() {
         mEtNickname = et_nickname.getText().toString();
+
+        mTvBirthday = tv_birthday.getText().toString();
+        if (mEtNickname.trim().isEmpty()) {
+            ToastUtils.showToastShort(mContext, "昵称不能为空");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(tv_sex.getText().toString())) {
+            ToastUtils.showToastShort(mContext, "请选择性别");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(mTvBirthday)) {
+            ToastUtils.showToastShort(mContext, "请选择生日");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(tv_identity.getText().toString())) {
+            ToastUtils.showToastShort(mContext, "请选择身份");
+            return false;
+        }
+
         switch (tv_identity.getText().toString()) {
             case "我是爸爸":
                 mTvIdentity = "FATHER";
@@ -101,6 +123,9 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
             default:
                 mTvIdentity = "QITA";
         }
+
+
+
         switch (tv_sex.getText().toString()) {
             case "女":
                 mTvSex = "F";
@@ -108,23 +133,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
             default:
                 mTvSex = "M";
         }
-        mTvBirthday = tv_birthday.getText().toString();
-        if (mEtNickname.trim().isEmpty()) {
-            ToastUtils.showToastShort(mContext, "昵称不能为空");
-            return false;
-        }
-        if (StringUtils.isEmpty(mTvIdentity)) {
-            ToastUtils.showToastShort(mContext, "请选择身份");
-            return false;
-        }
-        if (StringUtils.isEmpty(mTvSex)) {
-            ToastUtils.showToastShort(mContext, "请选择性别");
-            return false;
-        }
-        if (StringUtils.isEmpty(mTvBirthday)) {
-            ToastUtils.showToastShort(mContext, "请选择生日");
-            return false;
-        }
+
         return true;
     }
 

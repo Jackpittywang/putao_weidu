@@ -29,6 +29,8 @@ import com.sunnybear.library.view.SwitchButton;
 
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -242,9 +244,11 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
      */
 
     private boolean checkData() {
+
         String name = et_name.getText().toString();
         String street = et_street.getText().toString();
         String phone = et_phone.getText().toString();
+        String province = tv_province.getText().toString();
         boolean noFill = false;
         StringBuilder str = new StringBuilder();
         if (null == name || "".equals(name)) {
@@ -259,10 +263,23 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
             str.append(" 电话 ");
             noFill = true;
         }
+        if(StringUtils.isEmpty(province)){
+            str.append(" 省市区 ");
+            noFill = true;
+        }
         if (noFill) {
             ToastUtils.showToastShort(this, "收货人" + str + "未填写");
             return false;
         }
+
+        String regExp = "^[1]([3|7|5|8]{1}\\d{1})\\d{8}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(phone);
+        if (!m.matches()) {
+            ToastUtils.showToastShort(mContext, "请输入正确的手机号码");
+            return false;
+        }
+
         return true;
     }
 
