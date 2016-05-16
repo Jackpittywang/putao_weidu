@@ -365,6 +365,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     checkDevice();
                 break;
             case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
+                if (isVisible)
                     popupWindow.showAsDropDown(img_compain_menu);
                 break;
             case R.id.tv_later_relevance://稍后关联
@@ -511,6 +512,11 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
         }
         mCompanionAdapter.notifyDataSetChanged();
+    }
+
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_COMPANION_POP_DISMISS)
+    private void refreshSubscribe(String str) {
+        popupWindow.dismiss();
     }
 }
 

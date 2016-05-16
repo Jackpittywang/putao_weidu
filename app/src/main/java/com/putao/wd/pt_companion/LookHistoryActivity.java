@@ -68,6 +68,12 @@ public class LookHistoryActivity extends PTWDActivity {
         isBunding = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         adapter = new LookHistoryAdapter(mContext, null);
         rv_lookHistory.setAdapter(adapter);
+        if (!isBunding) {
+            if (isSubscribe)
+                rv_lookHistory.setNoMoreText("关联产品可查看更多内容，帮助您更好的陪伴孩子哦！");
+            else
+                rv_lookHistory.setNoMoreText("订阅后可查看更多内容，帮助您更好的陪伴孩子哦！");
+        }
         lookHistoryData();
         addListener();
     }
@@ -81,7 +87,10 @@ public class LookHistoryActivity extends PTWDActivity {
         rv_lookHistory.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                loadMoreData();
+                if (isBunding)
+                    loadMoreData();
+                else
+                    rv_lookHistory.noMoreLoading();
             }
         });
         rv_lookHistory.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {

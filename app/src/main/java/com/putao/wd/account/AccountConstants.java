@@ -86,7 +86,8 @@ public final class AccountConstants {
         public static final String EVENT_GAME_START_ACTIVITY = "event_game_start_activity";
         public static final String EVENT_DISCOVERY_RESOURCE_TAG = "event_discovery_resource_tag";
         public static final String EVENT_UPDATE_UPLOAD = "event_update_upload";
-        public static final String EVENT_REFRESH_SUBSCRIBE = "EVENT_REFRESH_SUBSCRIBE";
+        public static final String EVENT_REFRESH_SUBSCRIBE = "event_refresh_subscribe";
+        public static final String EVENT_COMPANION_POP_DISMISS = "event_companion_pop_dismiss";
 
     }
 

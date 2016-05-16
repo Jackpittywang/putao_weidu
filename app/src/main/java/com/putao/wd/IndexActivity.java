@@ -27,6 +27,7 @@ import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.BasicFragmentActivity;
+import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -49,7 +50,7 @@ import butterknife.Bind;
 public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     public static boolean isNotRefreshUserInfo = false;
     public final static String PAY_ALL = "pay_all";
-//    public static boolean isPuTaoCompanionPlusCanUse = false;
+    //    public static boolean isPuTaoCompanionPlusCanUse = false;
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;
     @Bind(R.id.tb_index_tab)
@@ -135,6 +136,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
                         break;
                 }
                 vp_content.setCurrentItem(position, false);
+                EventBusHelper.post("", AccountConstants.EventBus.EVENT_COMPANION_POP_DISMISS);
+
 //                if (3 == position) hideMeRedDot();
 //                if (0 == position) hideCompanionRedDot();
             }

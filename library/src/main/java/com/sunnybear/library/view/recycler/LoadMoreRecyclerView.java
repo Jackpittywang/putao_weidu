@@ -126,6 +126,14 @@ public class LoadMoreRecyclerView extends BasicRecyclerView {
         void onLoadMore();
     }
 
+    /**
+     * 设置没有更多时文字
+     *
+     * @param noMoreText 没有更多时文字
+     */
+    public void setNoMoreText(String noMoreText) {
+        mFootView.setNoMoreText(noMoreText);
+    }
 //    private float startY = -1;
 //    private float startX = -1;
 //
