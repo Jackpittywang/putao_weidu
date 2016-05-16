@@ -46,7 +46,7 @@
             android:background="@color/white"
             android:drawableRight="@drawable/close_selector"
             android:hint="孩子的昵称"
-            android:maxEms="8"
+            android:maxLength="8"
             android:paddingLeft="5dp"
             android:textColor="@color/text_color" />
     </LinearLayout>

@@ -130,7 +130,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         wd_mid = args.getString(ActionsDetailActivity.BUNDLE_ACTION_ID);
         mSuperPosition = args.getInt(POSITION);
 
-
+        iv_upload_pic.resize(200, 200);
         Bundle data = getIntent().getExtras();
         if (data.containsKey(EVENT_COUNT_ARTICLEID)) {
             wd_mid = data.getString(EVENT_COUNT_ARTICLEID);
@@ -339,12 +339,12 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         if (resultCode == RESULT_OK && requestCode == 0x900) {
             Bundle bundle = data.getExtras();
             bitmap = (Bitmap) bundle.get("data");
-            iv_upload_pic.setDefaultImage(bitmap);
+//            iv_upload_pic.setDefaultImage(bitmap);
             String filePath = GlobalApplication.sdCardPath + File.separator + "upload.jpg";
             ImageUtils.bitmapOutSdCard(bitmap, filePath);
             uploadPic = filePath;
             hasPic = true;
-            iv_upload_pic.setImageURI(Uri.parse("file://putao/" + filePath));
+            iv_upload_pic.setImageURL("file://putao/" + filePath);
         }
     }
 
@@ -385,7 +385,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
 
                             List<ArticleDetailComment> comments = result.getComment_lists();
                             if (comments != null && comments.size() > 0) {
-                        //        checkLiked(comments);
+                                //        checkLiked(comments);
                                 adapter.replaceAll(comments);
                                 hasComment = true;
                                 rv_content.loadMoreComplete();
@@ -416,7 +416,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 Logger.i(url);
                 List<ArticleDetailComment> comments = result.getComment_lists();
                 if (comments != null && comments.size() > 0) {
-           //         checkLiked(comments);
+                    //         checkLiked(comments);
                     adapter.addAll(comments);
                     hasComment = true;
                     rv_content.loadMoreComplete();
@@ -484,7 +484,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
 
     //二级评论页面的点赞提交
     @Subcriber(tag = ArticlesDetailActivity.EVENT_COUNT_COOL)
-    public void eventCountCool(int superPosition){
+    public void eventCountCool(int superPosition) {
         refreshCommentList();
     }
 
@@ -509,9 +509,9 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         if (selectPhotos != null && selectPhotos.size() > 0 && selectPhotos.get(0) != null) {
             String picStr = selectPhotos.get(0)._DATA;
             if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
-                iv_upload_pic.setImageURI(Uri.parse("file://putao/" + selectPhotos.get(0).THUMB_DATA));
+                iv_upload_pic.setImageURL("file://putao/" + selectPhotos.get(0).THUMB_DATA);
             else
-                iv_upload_pic.setImageURI(Uri.parse("file://putao/" + selectPhotos.get(0)._DATA));
+                iv_upload_pic.setImageURL("file://putao/" + selectPhotos.get(0)._DATA);
 
             if (!StringUtils.isEmpty(picStr)) {
                 hasPic = true;

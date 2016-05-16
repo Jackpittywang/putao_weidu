@@ -47,9 +47,9 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
         } else {
             if (TextUtils.isEmpty(companion.getService_icon())) {
                 if (0 == companion.getService_type())
-                    holder.iv_icon.setImageURL(Uri.parse("res://putao/" + R.drawable.img_head_subscribe_default).toString());
+                    holder.iv_icon.setImageURL("res://putao/" + R.drawable.img_head_subscribe_default);
                 else
-                    holder.iv_icon.setImageURI(Uri.parse("file:///"));
+                    holder.iv_icon.setImageURL("file:///");
             } else
                 holder.iv_icon.setImageURL(companion.getService_icon());
             holder.rl_compain_main.setVisibility(View.VISIBLE);
