@@ -70,6 +70,7 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
         initSexPicker();
         initDatePicker();
         initFamilyPicker();
+       // et_nickname.addTextChangedListener(new MaxLengthWatcher(16, et_nickname));
     }
 
     /**

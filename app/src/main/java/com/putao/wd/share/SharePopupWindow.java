@@ -2,6 +2,9 @@ package com.putao.wd.share;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,8 +13,11 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.sunnybear.library.controller.BasicPopupWindow;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
+
+import java.util.List;
 
 import butterknife.OnClick;
 
@@ -25,6 +31,9 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     private TextView tv_collection;
     private ImageView iv_collection;
     private String mUrl;
+    private String packageName = "";
+    private String clazzName = "";
+    private List<ResolveInfo> resolveInfoList;
 
     public void setOnShareClickListener(OnShareClickListener onShareClickListener, String url) {
         setOnShareClickListener(true, onShareClickListener, url);
@@ -73,6 +82,22 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     public SharePopupWindow(Context context) {
         super(context);
         setAnimationStyle(R.style.bottom_anim_style);
+        getBrowsers();
+    }
+
+    public void getBrowsers() {
+        String default_browser = "android.intent.category.DEFAULT";
+        String browsable = "android.intent.category.BROWSABLE";
+        String view = "android.intent.action.VIEW";
+
+        Intent intent = new Intent(view);
+        intent.addCategory(default_browser);
+        intent.addCategory(browsable);
+        Uri uri = Uri.parse("http://");
+        intent.setDataAndType(uri, null);
+
+        resolveInfoList = mContext.getPackageManager().queryIntentActivities(intent, PackageManager.GET_INTENT_FILTERS);
+
     }
 
     @Override
@@ -96,17 +121,17 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         if (mOnShareClickListener != null)
             switch (v.getId()) {
                 case R.id.ll_wechat://微信
-                    if(!checkShareUrl(R.id.ll_wechat))
+                    if (!checkShareUrl(R.id.ll_wechat))
                         return;
                     mOnShareClickListener.onWechat();
                     break;
                 case R.id.ll_wechat_friend_circle://微信朋友圈
-                    if(!checkShareUrl(R.id.ll_wechat_friend_circle))
+                    if (!checkShareUrl(R.id.ll_wechat_friend_circle))
                         return;
                     mOnShareClickListener.onWechatFriend();
                     break;
                 case R.id.ll_collection://收藏
-                    if(!checkShareUrl(R.id.ll_collection))
+                    if (!checkShareUrl(R.id.ll_collection))
                         return;
                     if (isCopy) {
                         mOnShareClickListener.onCollection();
@@ -115,7 +140,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     }
                     break;
                 case R.id.ll_qq_friend://QQ好友
-                    if(!checkShareUrl(R.id.ll_qq_friend))
+                    if (!checkShareUrl(R.id.ll_qq_friend))
                         return;
                     if (isCopy)
                         mOnShareClickListener.onQQFriend();
@@ -123,7 +148,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                         mOnShareClickListener.onQQZone();
                     break;
                 case R.id.ll_qq_zone://QQ空间
-                    if(!checkShareUrl(R.id.ll_qq_zone))
+                    if (!checkShareUrl(R.id.ll_qq_zone))
                         return;
                     if (isCopy) {
                         mOnShareClickListener.onQQZone();
@@ -132,22 +157,28 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     }
                     break;
                 case R.id.ll_sina_weibo://新浪微博
-                    if(!checkShareUrl(R.id.ll_sina_weibo))
+                    if (!checkShareUrl(R.id.ll_sina_weibo))
                         return;
                     mOnShareClickListener.onSinaWeibo();
                     break;
                 case R.id.ll_safari://用本机浏览器打开
-                    if(!checkShareUrl(R.id.ll_safari))
+                    if(resolveInfoList == null || !(resolveInfoList.size() >0)){
                         return;
+                    }
+                    if (!checkShareUrl(R.id.ll_safari))
+                        return;
+                    getDefaultBrowser();
+
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
                     Uri content_url = Uri.parse(mUrl);
                     intent.setData(content_url);
-                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+//                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                    intent.setClassName(packageName,clazzName);
                     mContext.startActivity(intent);
                     break;
                 case R.id.ll_copy_url://复制链接
-                    if(!checkShareUrl(R.id.ll_copy_url))
+                    if (!checkShareUrl(R.id.ll_copy_url))
                         return;
                     mOnShareClickListener.onCopyUrl();
                     break;
@@ -155,16 +186,31 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         dismiss();
     }
 
+    private void getDefaultBrowser() {
+        for (ResolveInfo info: resolveInfoList) {
+            Logger.d(info.activityInfo.packageName + ":::::" + info.activityInfo.name);
+            if(StringUtils.equals(info.activityInfo.packageName,"com.android.browser") && StringUtils.equals(info.activityInfo.name,"com.android.browser.BrowserActivity")){
+                packageName = info.activityInfo.packageName;
+                clazzName = info.activityInfo.name;
+            }
+        }
+        if(StringUtils.isEmpty(packageName)){
+            packageName = resolveInfoList.get(0).activityInfo.packageName;
+            clazzName = resolveInfoList.get(0).activityInfo.name;
+        }
+    }
+
+
     private boolean checkShareUrl(int rId) {
-        if(StringUtils.isEmpty(mUrl)){
-            if(rId == R.id.ll_collection){
-                ToastUtils.showToastShort(mContext,"链接错误，收藏失败");
-            }else if(rId == R.id.ll_safari){
-                ToastUtils.showToastShort(mContext,"链接错误，浏览器打开失败");
-            }else if(rId == R.id.ll_copy_url){
-                ToastUtils.showToastShort(mContext,"链接错误，复制失败");
-            }else{
-                ToastUtils.showToastShort(mContext,"链接错误，分享失败");
+        if (StringUtils.isEmpty(mUrl)) {
+            if (rId == R.id.ll_collection) {
+                ToastUtils.showToastShort(mContext, "链接错误，收藏失败");
+            } else if (rId == R.id.ll_safari) {
+                ToastUtils.showToastShort(mContext, "链接错误，浏览器打开失败");
+            } else if (rId == R.id.ll_copy_url) {
+                ToastUtils.showToastShort(mContext, "链接错误，复制失败");
+            } else {
+                ToastUtils.showToastShort(mContext, "链接错误，分享失败");
             }
             return false;
         }

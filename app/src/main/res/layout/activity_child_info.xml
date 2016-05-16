@@ -33,6 +33,7 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:text="昵称"
+            android:maxLength="8"
             android:textColor="@color/text_color_646464"
             android:textSize="@dimen/text_size_18sp" />
 
@@ -46,7 +47,6 @@
             android:background="@color/white"
             android:drawableRight="@drawable/close_selector"
             android:hint="孩子的昵称"
-            android:maxLength="8"
             android:paddingLeft="5dp"
             android:textColor="@color/text_color" />
     </LinearLayout>
