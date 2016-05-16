@@ -359,7 +359,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         mSelectPopupWindow.show(ll_companion);
         mSelectPopupWindow.tv_first.setText("清除内容");
 
-        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
+//        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
+        if (!isSubscribe && companion.getService_type() != 2) {
             mSelectPopupWindow.tv_second.setText("取消关联");
         } else {
             mSelectPopupWindow.tv_second.setText("取消订阅");
