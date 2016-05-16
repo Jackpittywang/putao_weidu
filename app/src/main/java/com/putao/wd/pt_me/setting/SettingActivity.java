@@ -59,7 +59,7 @@ public class SettingActivity extends PTWDActivity<GlobalApplication> implements 
                 //重置陪伴页面
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                 //立即关闭内部推送
-                mContext.sendBroadcast(new Intent(GlobalApplication.OUT_FORE_MESSAGE_SOON));
+//                mContext.sendBroadcast(new Intent(GlobalApplication.OUT_FORE_MESSAGE_SOON));
                 //清除红点
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);

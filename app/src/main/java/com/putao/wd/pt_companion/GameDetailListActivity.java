@@ -261,6 +261,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                             for (ServiceMessageList serviceMessageList : lists) {
                                 if (mDataBaseManager.insertObject(mServiceId, serviceMessageList)) {
                                     mGameDetailAdapter.add(serviceMessageList);
+                                    serviceMessageList.setService_id(mServiceId);
                                     rv_content.scrollToPosition(mGameDetailAdapter.getItemCount() - 1);
                                 }
                             }
@@ -300,6 +301,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         if (null != downloadArticles) {
             for (CompanionDB companionDB : downloadArticles) {
                 ServiceMessageList serviceMessageList = new ServiceMessageList();
+                serviceMessageList.setService_id(mServiceId);
                 String content_lists = companionDB.getContent_lists();
                 String message = companionDB.getMessage();
 
@@ -551,6 +553,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
     private void conductPic(ServiceMessageListImage serviceMessageListImage) {
         ServiceMessageList serviceMessageList = new ServiceMessageList();
+        serviceMessageList.setService_id(mServiceId);
         serviceMessageList.setImage(serviceMessageListImage);
         String time = System.currentTimeMillis() / 1000 + "";
         serviceMessageList.setRelease_time(Integer.parseInt(time));
@@ -568,6 +571,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             return;
         }
         ServiceMessageList serviceMessageList = new ServiceMessageList();
+        serviceMessageList.setService_id(mServiceId);
         int time = (int) (System.currentTimeMillis() / 1000) - 1; //-1区分响应msg，防止time相同
         serviceMessageList.setRelease_time(time);
         serviceMessageList.setId(time + "");
@@ -795,7 +799,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     @Subcriber(tag = AccountConstants.EventBus.EVENT_UPDATE_UPLOAD)
     private void insertUpload(ServiceMessageList serviceMessageList) {
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
-        mDataBaseManager.insertObject(mServiceId, serviceMessageList);
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)

@@ -31,7 +31,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        isServiceStart = isServiceStart(context);
+     /*   isServiceStart = isServiceStart(context);
         switch (intent.getAction()) {
             case GlobalApplication.IN_FORE_MESSAGE:
 //                inFore();
@@ -88,7 +88,7 @@ public class HomeBroadcastReceiver extends BroadcastReceiver {
                     }
                 }, (PTSenderManager.sharedInstance().getConfig().getHeartSecond() + 5) * 1000);
                 break;
-        }
+        }*/
 
     }
 

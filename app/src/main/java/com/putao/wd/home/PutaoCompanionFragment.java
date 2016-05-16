@@ -476,7 +476,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
 
-
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_UPDATE_UPLOAD)
+    private void insertUpload(ServiceMessageList serviceMessageList) {
+        mDataBaseManager.insertObject(serviceMessageList);
+    }
 }
 
 

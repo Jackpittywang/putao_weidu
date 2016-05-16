@@ -16,6 +16,7 @@ public class ServiceMessageList implements Serializable {
     private int send_state;//0 发送成功 1 发送成功 2 发送失败
     private int isShowData;//0未记录  1 显示 2 不显示
     private List<ServiceMessageContent> content_lists;
+    private String service_id;
 
     public String getId() {
         return id;
@@ -87,5 +88,13 @@ public class ServiceMessageList implements Serializable {
 
     public void setIsShowData(int isShowData) {
         this.isShowData = isShowData;
+    }
+
+    public String getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(String service_id) {
+        this.service_id = service_id;
     }
 }

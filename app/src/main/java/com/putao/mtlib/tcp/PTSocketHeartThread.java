@@ -59,7 +59,7 @@ class PTSocketHeartThread extends Thread {
             } else {
                 PTLoger.d("SocketConnect--is---------false, no send /");
 //                reConnect();
-                GlobalApplication.getInstance().sendBroadcast(new Intent(GlobalApplication.RESTART_MESSAGE));
+//                GlobalApplication.getInstance().sendBroadcast(new Intent(GlobalApplication.RESTART_MESSAGE));
             }
         }
     }

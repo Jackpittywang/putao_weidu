@@ -46,9 +46,11 @@ public class HotTagAdapter extends BasicAdapter<ResourceTag, HotTagAdapter.HotHo
     public void onBindItem(HotHolder holder, ResourceTag tag, int position) {
         if (position == getItemCount() - 1) {
             holder.rl_main.setVisibility(View.INVISIBLE);
+        } else {
+            holder.rl_main.setVisibility(View.VISIBLE);
+            holder.tv_hot_tag.setText(tag.getTag_name());
+            holder.idv_tag.setImageURL(tag.getTag_icon());
         }
-        holder.tv_hot_tag.setText(tag.getTag_name());
-        holder.idv_tag.setImageURL(tag.getTag_icon());
         //holder.tv_hot_tag.setText(StringUtils.equals(tag.getDisplay_type(),"0") ? tag.getTag_name():"活动");
     }
 

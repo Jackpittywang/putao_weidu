@@ -172,7 +172,7 @@ public class LoginActivity extends PTWDActivity implements View.OnClickListener,
                     public void onSuccess(String url, UserInfo result) {
                         AccountHelper.setUserInfo(result);
                         EventBusHelper.post(EVENT_LOGIN, EVENT_LOGIN);
-                        mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
+//                        mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                         checkInquiryBind(AccountHelper.getCurrentUid());

@@ -368,20 +368,20 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
                                 @Override
                                 protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
+                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                     mSendStateMap.put(position, 1);
                                     serviceMessageList.setSend_state(1);
                                     questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
                                     questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
-                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                 }
 
                                 @Override
                                 protected void onFileUploadFail(String filePath) {
+                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                     mSendStateMap.put(position, 2);
                                     serviceMessageList.setSend_state(2);
                                     questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
                                     questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
-                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                                 }
                             }).execute();
                             break;
@@ -532,28 +532,29 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                     serviceMessageList.setType("text");
                                     serviceMessageList.setId(time);
                                     serviceMessageList.setMessage(message);
-                                    add(serviceMessageList);
+                                    serviceMessageList.setService_id(mServiceId);
                                     EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                                    add(serviceMessageList);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                         serviceMessageList.setSend_state(1);
+                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                         mSendStateMap.put(position, 1);
                         questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                         questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
-                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                     }
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         serviceMessageList.setSend_state(2);
+                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                         mSendStateMap.put(position, 2);
                         questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                         questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
-                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                         ToastUtils.showToastShort(context, "发送失败，请检查您的网络");
                     }
                 });

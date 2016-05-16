@@ -210,7 +210,7 @@ public class ForgetPasswordActivity extends PTWDActivity implements View.OnClick
             public void onSuccess(String url, UserInfo result) {
                 AccountHelper.setUserInfo(result);
                 EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-                mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
+//                mContext.sendBroadcast(new Intent(GlobalApplication.IN_FORE_MESSAGE));
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION_TAB);
                 checkInquiryBind(AccountHelper.getCurrentUid());
