@@ -250,7 +250,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 
     private void freshResource() {
 
-        mPage = 0;
+        mPage = 1;
         rest();
         rv_discovery.reset();
         networkRequestCache(DisCoveryApi.getFindResource(String.valueOf(mPage)), new SimpleFastJsonCallback<DiscoveryResource>(DiscoveryResource.class, loading) {
