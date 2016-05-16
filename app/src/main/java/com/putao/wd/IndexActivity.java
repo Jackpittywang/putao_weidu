@@ -49,6 +49,7 @@ import butterknife.Bind;
 public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     public static boolean isNotRefreshUserInfo = false;
     public final static String PAY_ALL = "pay_all";
+//    public static boolean isPuTaoCompanionPlusCanUse = false;
     @Bind(R.id.vp_content)
     UnScrollableViewPager vp_content;
     @Bind(R.id.tb_index_tab)

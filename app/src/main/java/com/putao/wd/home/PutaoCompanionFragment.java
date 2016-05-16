@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MyViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -362,7 +363,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     checkDevice();
                 break;
             case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
-                popupWindow.showAsDropDown(img_compain_menu);
+                    popupWindow.showAsDropDown(img_compain_menu);
                 break;
             case R.id.tv_later_relevance://稍后关联
                 if (!AccountHelper.isLogin()) {
@@ -486,6 +487,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private void insertUpload(ServiceMessageList serviceMessageList) {
         mDataBaseManager.insertObject(serviceMessageList);
     }
+
 }
 
 
