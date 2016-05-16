@@ -183,10 +183,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
-                        rl_no_commpain_failure.setVisibility(View.VISIBLE);
-                        ptl_refresh.setVisibility(View.GONE);
-                        ptl_refresh.refreshComplete();
-
+                        try {
+                            rl_no_commpain_failure.setVisibility(View.VISIBLE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, 0);
     }

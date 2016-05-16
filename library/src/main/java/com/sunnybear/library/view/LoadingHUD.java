@@ -109,11 +109,16 @@ public class LoadingHUD extends Dialog {
 
     @Override
     public void show() {
-        if (!((Activity) context).isFinishing()) {
-            super.show();
-            iv_icon.startAnimation(mRotateAnimation);
-        } else
-            instance = null;
+        try {
+            if(this.isShowing()) return;
+            if (!((Activity) context).isFinishing()) {
+                super.show();
+                iv_icon.startAnimation(mRotateAnimation);
+            } else
+                instance = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void dismissWithSuccess() {
