@@ -302,7 +302,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 checkNetFailureAndData();
                 isPullToRefresh = false;
             }
-        }, 600 * 1000);
+        }, 0);
 
         networkRequestCache(DisCoveryApi.getResouceTop(), new SimpleFastJsonCallback<ResourceBannerAndTag>(ResourceBannerAndTag.class, loading) {
             @Override
@@ -338,7 +338,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
                 super.onFinish(url, isSuccess, msg);
                 checkNetFailureAndData();
             }
-        }, 600 * 1000);
+        }, 0);
     }
 
     /**

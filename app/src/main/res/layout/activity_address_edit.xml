@@ -79,7 +79,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
                     android:singleLine="false"
-                    android:hint="城市" />
+                    android:text="城市" />
 
                 <TextView
                     android:id="@+id/tv_district"
@@ -89,7 +89,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
                     android:singleLine="false"
-                    android:hint="城区" />
+                    android:text="城区" />
 
                 <ImageView
                     android:layout_width="8dp"

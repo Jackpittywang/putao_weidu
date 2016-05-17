@@ -151,10 +151,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             @Override
             public void onClick(View v) {
                 if (!AccountHelper.isLogin()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
-                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
-                    startActivity(LoginActivity.class, bundle);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
+//                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
+//                    startActivity(LoginActivity.class, bundle);
+                    args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OfficialAccountsActivity.class);
+                    args.putString(HIDE_FINISH, HIDE_NO_FINISH);
+                    startActivity(LoginActivity.class, args);
                 } else {
                     Bundle bundle = new Bundle();
                     if (capture_url != null) {

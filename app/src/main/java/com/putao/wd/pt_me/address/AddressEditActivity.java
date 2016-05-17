@@ -127,6 +127,19 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
                         EventBusHelper.post("", EVENT_ADDRESS_UPDATE);
                         loading.dismiss();
                     }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                    }
+
+                    @Override
+                    public void onFinish(String url, boolean isSuccess, String msg) {
+                        super.onFinish(url, isSuccess, msg);
+
+                        if (StringUtils.equals(msg, "地址最多保存十个"))
+                            ToastUtils.showToastShort(mContext,msg);
+                    }
                 });
     }
 
@@ -208,9 +221,9 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
     public void onRightAction() {
         if (!checkData()) return;
 //            ToastUtils.showToastShort(mContext, "您还有地址信息没有填写哟!");
-        mAddress.setRealname(et_name.getText().toString());
-        mAddress.setMobile(et_phone.getText().toString());
-        mAddress.setAddress(et_street.getText().toString());
+        mAddress.setRealname(et_name.getText().toString().trim());
+        mAddress.setMobile(et_phone.getText().toString().trim());
+        mAddress.setAddress(et_street.getText().toString().trim());
         if (StringUtils.equals(mAddress.getStatus(), "1"))
             EventBusHelper.post(mAddress, EVENT_ADDRESS_IS_DEFAULT);
         if (isAdd)
@@ -251,19 +264,19 @@ public class AddressEditActivity extends PTWDActivity<GlobalApplication> impleme
         String province = tv_province.getText().toString();
         boolean noFill = false;
         StringBuilder str = new StringBuilder();
-        if (null == name || "".equals(name)) {
+        if (null == name || "".equals(name.trim())) {
             str.append(" 姓名 ");
             noFill = true;
         }
-        if (null == street || "".equals(street)) {
+        if (null == street || "".equals(street.trim())) {
             str.append(" 地址 ");
             noFill = true;
         }
-        if (null == phone || "".equals(phone)) {
+        if (null == phone || "".equals(phone.trim())) {
             str.append(" 电话 ");
             noFill = true;
         }
-        if(StringUtils.isEmpty(province)){
+        if (StringUtils.isEmpty(province)) {
             str.append(" 省市区 ");
             noFill = true;
         }
