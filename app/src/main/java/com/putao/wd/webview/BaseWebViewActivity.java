@@ -18,6 +18,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDActivity;
+import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.BasicApplication;
 import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.Logger;
@@ -42,6 +43,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
     public static String titleFromPage = "";
     public static String descriptionFromPage = "";
     public static String sharePicFromPage = "";
+    public static String mServiceId = "";
 
     @Bind(R.id.wv_content)
     WebView wv_content;
@@ -130,7 +132,12 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                             if (url.contains("issue.html"))
                                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_should_ask);
 
-                            PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
+                            if (!AccountHelper.isLogin()) {
+                                args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, BaseWebViewActivity.class);
+                                startActivity(LoginActivity.class, args);
+                                finish();
+                            } else
+                                PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
                         }
                         return true;
                 }

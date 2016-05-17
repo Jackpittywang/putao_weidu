@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="20dp">
+    android:paddingBottom="30dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,8 +25,8 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:lineSpacingExtra="3dp"
-            android:paddingLeft="60dp"
-            android:paddingRight="60dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:text="加载更多"
             android:textSize="@dimen/text_size_16sp" />
 

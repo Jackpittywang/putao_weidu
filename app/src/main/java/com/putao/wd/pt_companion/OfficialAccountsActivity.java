@@ -408,6 +408,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         } else {
                             if (capture_url != null) {
                                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, true);
+                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, serviceInfo.getService_name());
                                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, serviceInfo.getService_icon());
                             } else {
                                 EventBusHelper.post("", AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);

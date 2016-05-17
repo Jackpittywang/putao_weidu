@@ -32,6 +32,7 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DateUtils;
 import com.sunnybear.library.util.ImageUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
@@ -183,9 +184,12 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     askViewHolder.ll_reply.setVisibility(View.GONE);
                     askViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     askViewHolder.question_item_answer_context.setVisibility(View.GONE);
-                    String pic = ImageUtils.getImageSizeUrl(serviceMessageList.getImage().getPic(), ImageUtils.ImageSizeURL.SIZE_360x360);
                     askViewHolder.question_item_ask_image.resize(200, 200);
-                    askViewHolder.question_item_ask_image.setImageURL(pic);
+                    if (TextUtils.isEmpty(serviceMessageList.getImage().getPic())) {
+                        askViewHolder.question_item_ask_image.setImageURL("file://putao/" + serviceMessageList.getImage().getThumb());
+                    } else {
+                        askViewHolder.question_item_ask_image.setImageURL("file://putao/" + serviceMessageList.getImage().getPic());
+                    }
                     askViewHolder.question_item_ask_image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -221,7 +225,6 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             final ServiceMessageContent serviceMessageContent = content_lists.get(0);
             gameDetailHolder.iv_sign.resize(200, 200);
             gameDetailHolder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
-            gameDetailHolder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(serviceMessageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_120x120));
             if (content_lists.size() == 1) {
                 gameDetailHolder.tv_title.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_content.setVisibility(View.VISIBLE);
@@ -325,11 +328,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.VISIBLE);
                             questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
                             //请求数据，是否评论成功
-                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
+                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position, 1);
                             questionLocalViewHolder.img_item_retry_text.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position, 1);
                                 }
                             });
                             break;
@@ -343,7 +346,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             questionLocalViewHolder.img_item_retry_text.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position,1);
                                 }
                             });
                             break;
@@ -375,12 +378,14 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
                             UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
                                 @Override
-                                protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
-                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                    mSendStateMap.put(position, 1);
-                                    serviceMessageList.setSend_state(1);
-                                    questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
-                                    questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
+                                protected void onFileUploadSuccess(final String ext, final String filename, String hash, String filePath) {
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, String.valueOf(filename + "." + ext), position, 2);
+//                                    questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, String.valueOf(filename + "." + ext), position, 2);
+//                                        }
+//                                    });
                                 }
 
                                 @Override
@@ -524,16 +529,22 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     /**
      * 加载数据
      */
-    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList, String msg, final int position) {
-        NetworkUtil.getInstance().startRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, 1),
+    private void initServiceQuiz(final QuestionLocalViewHolder questionLocalViewHolder, final ServiceMessageList serviceMessageList, final String msg, final int position, final int type) {
+        NetworkUtil.getInstance().startRequest(CompanionApi.sendServiceQuiz(mServiceId, msg, type),
                 new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
                     public void onSuccess(String url, String result) {
-                        serviceMessageList.setSend_state(1);
                         EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
                         mSendStateMap.put(position, 1);
-                        questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
-                        questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
+                        serviceMessageList.setSend_state(1);
+                        if (type == 1) {
+                            questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
+                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
+                        } else if (type == 2) {
+                            questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
+                            questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
+                        }
+
                         if (!TextUtils.isEmpty(result)) {
                             try {
                                 JSONObject jsonObject = JSONObject.parseObject(result);
@@ -541,8 +552,14 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 if (!TextUtils.isEmpty(message)) {
                                     ServiceMessageList serviceMessageList = new ServiceMessageList();
                                     long time = System.currentTimeMillis();
+                                    if (type == 1) {//文字
+                                        serviceMessageList.setType("text");
+                                    } else if (type == 2) {//图片
+                                        serviceMessageList.setType("image");
+                                        serviceMessageList.getImage().setThumb(msg);
+                                        serviceMessageList.getImage().setPic(msg);
+                                    }
                                     serviceMessageList.setReceiver_time(time);
-                                    serviceMessageList.setType("text");
                                     serviceMessageList.setId(time+"");
                                     serviceMessageList.setMessage(message);
                                     serviceMessageList.setService_id(mServiceId);
