@@ -2,7 +2,9 @@ package com.putao.wd.pt_me.child;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.Selection;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +27,9 @@ import com.sunnybear.library.view.picker.DatePicker;
 import com.sunnybear.library.view.picker.OptionPicker;
 import com.sunnybear.library.view.picker.SexPicker;
 
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -77,6 +82,10 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
         initSexPicker();
         initDatePicker();
         initFamilyPicker();
+        // 限制中文8个字，英文16个字的filter
+        InputFilter[] filters = {new NameLengthFilter(16)};
+        et_nickname.setFilters(filters);
+
         //et_nickname.addTextChangedListener(new MaxLengthWatcher(16, et_nickname));
 //        et_nickname.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -173,7 +182,6 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
             default:
                 mTvIdentity = "QITA";
         }
-
 
 
         switch (tv_sex.getText().toString()) {
@@ -329,5 +337,43 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
     @Override
     public void onLeftAction() {
         super.onLeftAction();
+    }
+
+
+    private class NameLengthFilter implements InputFilter {
+        int MAX_EN;// 最大英文/数字长度 一个汉字算两个字母
+        String regEx = "[\\u4e00-\\u9fa5]"; // unicode编码，判断是否为汉字
+
+        public NameLengthFilter(int mAX_EN) {
+            super();
+            MAX_EN = mAX_EN;
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
+            int destCount = dest.toString().length()
+                    + getChineseCount(dest.toString());
+            int sourceCount = source.toString().length()
+                    + getChineseCount(source.toString());
+            if (destCount + sourceCount > MAX_EN) {
+                return "";
+
+            } else {
+                return source;
+            }
+        }
+
+        private int getChineseCount(String str) {
+            int count = 0;
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(str);
+            while (m.find()) {
+                for (int i = 0; i <= m.groupCount(); i++) {
+                    count = count + 1;
+                }
+            }
+            return count;
+        }
     }
 }
