@@ -39,6 +39,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
     public static final String URL = "url";
     public static final String TITLE = "title";
     public static final String SERVICE_ID = "service_id";
+    public static final String SERVICE_ICON = "service_icon";
 
     public static String titleFromPage = "";
     public static String descriptionFromPage = "";
@@ -137,7 +138,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                                 startActivity(LoginActivity.class, args);
                                 finish();
                             } else
-                                PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, JSON.parseObject(content));
+                                PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, args.getString(SERVICE_ICON), JSON.parseObject(content));
                         }
                         return true;
                 }
