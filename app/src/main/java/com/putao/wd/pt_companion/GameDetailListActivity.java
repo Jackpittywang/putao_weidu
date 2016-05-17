@@ -547,8 +547,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         if (selectPhotos != null && selectPhotos.size() > 0 && selectPhotos.get(0) != null) {
             ServiceMessageListImage serviceMessageListImage = new ServiceMessageListImage();
             serviceMessageListImage.setPic("file://" + selectPhotos.get(0)._DATA);
-            if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
-                serviceMessageListImage.setThumb("file://" + selectPhotos.get(0).THUMB_DATA);
+//            if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
+//                serviceMessageListImage.setThumb("file://" + selectPhotos.get(0).THUMB_DATA);
             conductPic(serviceMessageListImage);
         }
     }

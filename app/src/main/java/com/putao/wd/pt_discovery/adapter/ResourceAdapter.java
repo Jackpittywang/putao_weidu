@@ -43,6 +43,7 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     private List<ResourceBanner> banners;
     private List<ResourceTag> hotTags;
     private ImageHolderView mImageHolderView;
+    private CBViewHolderCreator<ImageHolderView> mCBViewHolderCreator;
 
     private LinearLayoutManager linearLayoutManager;
     private int mScrollWidth;
@@ -99,16 +100,37 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
 
         if (position == 0) {
             final HeaderHolder headerHolder = (HeaderHolder) holder;
+/*
             if (null == mImageHolderView) {
                 mImageHolderView = new ImageHolderView();
 
                 headerHolder.cb_banner.setPages(new CBViewHolderCreator<ImageHolderView>() {
                     @Override
                     public ImageHolderView createHolder() {
-                        return new ImageHolderView();
+                        return mImageHolderView;
+                    }
+                }, banners);
+            } else {
+                headerHolder.cb_banner.setPages(new CBViewHolderCreator<ImageHolderView>() {
+                    @Override
+                    public ImageHolderView createHolder() {
+                        return mImageHolderView;
                     }
                 }, banners);
             }
+*/
+            if (null == mImageHolderView)
+                mImageHolderView = new ImageHolderView();
+
+            if (null == mCBViewHolderCreator)
+                mCBViewHolderCreator = new CBViewHolderCreator<ImageHolderView>() {
+                    @Override
+                    public ImageHolderView createHolder() {
+                        return mImageHolderView;
+                    }
+                };
+            headerHolder.cb_banner.setPages(mCBViewHolderCreator, banners);
+
             headerHolder.cb_banner.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
@@ -118,6 +140,18 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
         } else if (position == 1) {
             final HotTagHolder hotTagHolder = (HotTagHolder) holder;
             if (null == mHotTagAdapter && null != hotTags) {
+                hotTags.add(new ResourceTag());
+                mHotTagAdapter = new HotTagAdapter(context, hotTags);
+                hotTagHolder.rv_discovery_hot_tag.setAdapter(mHotTagAdapter);
+
+                mHotTagAdapter.setOnItemClickListener(new com.sunnybear.library.view.recycler.listener.OnItemClickListener<ResourceTag>() {
+
+                    @Override
+                    public void onItemClick(ResourceTag tag, int position) {
+                        EventBusHelper.post(tag, AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG);
+                    }
+                });
+            } else if (null != hotTags) {
                 hotTags.add(new ResourceTag());
                 mHotTagAdapter = new HotTagAdapter(context, hotTags);
                 hotTagHolder.rv_discovery_hot_tag.setAdapter(mHotTagAdapter);
@@ -265,6 +299,8 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
     }
 
     public void setBannerAndTag(ResourceBannerAndTag bannerAndTag) {
+//        if (this.banners != null)
+//            this.banners.clear();
         this.banners = bannerAndTag.getBanner();
         this.hotTags = bannerAndTag.getTag();
         notifyDataSetChanged();
