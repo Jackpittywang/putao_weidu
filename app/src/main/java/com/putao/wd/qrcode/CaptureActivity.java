@@ -452,7 +452,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                             dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()), System.currentTimeMillis());
                                         }
                                     } catch (Exception e) {
-
+                                        e.printStackTrace();
                                     }
 
                                     EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
@@ -493,6 +493,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 isRequesting = false;
                             }
                         });
+
                     }
                 }
                 break;
@@ -508,6 +509,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         String scaneErrorInfo = "请扫描葡萄产品的二维码";
         ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }
+
 
 //    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
 //    private BarCodeData getBarCodeDataFromUrl(String url) {
