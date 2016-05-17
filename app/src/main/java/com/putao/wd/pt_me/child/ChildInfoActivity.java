@@ -1,6 +1,9 @@
 package com.putao.wd.pt_me.child;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +59,10 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
     private String mTvSex;//性别
     private String mTvBirthday;//生日
 
+    private byte[] previousArray;
+    private String currentStr;
+    private int maxLen = 16;
+
     private boolean isEditable = true;//是否可以修改
 
     @Override
@@ -70,7 +77,49 @@ public class ChildInfoActivity extends PTWDActivity implements View.OnClickListe
         initSexPicker();
         initDatePicker();
         initFamilyPicker();
-       // et_nickname.addTextChangedListener(new MaxLengthWatcher(16, et_nickname));
+        //et_nickname.addTextChangedListener(new MaxLengthWatcher(16, et_nickname));
+//        et_nickname.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if (et_nickname == null) {
+//                    return;
+//                }
+//                Editable editable = et_nickname.getText();
+//
+//                if (editable.toString() == null) {
+//                    return;
+//                }
+//
+//                previousArray = editable.toString().getBytes();
+//
+//
+//                if (previousArray.length > maxLen) {
+//                    if (previousArray[maxLen - 2] < 0) {
+//                        currentStr = new String(previousArray);
+//                    } else {
+//                        if (previousArray[maxLen - 1] < 0) {
+//                            currentStr = new String(previousArray, 0, previousArray.length - 1);
+//                        } else {
+//                            currentStr = new String(previousArray);
+//                        }
+//                    }
+//
+//                    et_nickname.setText(currentStr);
+//                    editable = et_nickname.getText();
+//                    Selection.setSelection(editable, editable.length());
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
     }
 
     /**

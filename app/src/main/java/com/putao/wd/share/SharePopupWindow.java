@@ -34,6 +34,7 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
     private String packageName = "";
     private String clazzName = "";
     private List<ResolveInfo> resolveInfoList;
+    private boolean isHasBrowser = false;
 
     public void setOnShareClickListener(OnShareClickListener onShareClickListener, String url) {
         setOnShareClickListener(true, onShareClickListener, url);
@@ -162,19 +163,22 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
                     mOnShareClickListener.onSinaWeibo();
                     break;
                 case R.id.ll_safari://用本机浏览器打开
-                    if(resolveInfoList == null || !(resolveInfoList.size() >0)){
+                    if (resolveInfoList == null || !(resolveInfoList.size() > 0)) {
                         return;
                     }
                     if (!checkShareUrl(R.id.ll_safari))
                         return;
-                    getDefaultBrowser();
+
+                    if(!getDefaultBrowser()){
+                        return;
+                    }
 
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
                     Uri content_url = Uri.parse(mUrl);
                     intent.setData(content_url);
 //                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
-                    intent.setClassName(packageName,clazzName);
+                    intent.setClassName(packageName, clazzName);
                     mContext.startActivity(intent);
                     break;
                 case R.id.ll_copy_url://复制链接
@@ -186,18 +190,41 @@ public class SharePopupWindow extends BasicPopupWindow implements View.OnClickLi
         dismiss();
     }
 
-    private void getDefaultBrowser() {
-        for (ResolveInfo info: resolveInfoList) {
+    private boolean getDefaultBrowser() {
+        for (ResolveInfo info : resolveInfoList) {
             Logger.d(info.activityInfo.packageName + ":::::" + info.activityInfo.name);
-            if(StringUtils.equals(info.activityInfo.packageName,"com.android.browser") && StringUtils.equals(info.activityInfo.name,"com.android.browser.BrowserActivity")){
+            if (StringUtils.equals(info.activityInfo.packageName, "com.android.browser") && StringUtils.equals(info.activityInfo.name, "com.android.browser.BrowserActivity")) {
                 packageName = info.activityInfo.packageName;
                 clazzName = info.activityInfo.name;
+                return true;
             }
         }
-        if(StringUtils.isEmpty(packageName)){
-            packageName = resolveInfoList.get(0).activityInfo.packageName;
-            clazzName = resolveInfoList.get(0).activityInfo.name;
+
+        if (StringUtils.isEmpty(packageName)) {
+            for (ResolveInfo info : resolveInfoList) {
+                Logger.d(info.activityInfo.packageName + ":::::" + info.activityInfo.name);
+                if (StringUtils.equals(info.activityInfo.packageName, "com.UCMobile") && StringUtils.equals(info.activityInfo.name, "com.UCMobile.main.UCMobile")) {
+                    packageName = info.activityInfo.packageName;
+                    clazzName = info.activityInfo.name;
+                    return true;
+                }
+            }
         }
+        if (StringUtils.isEmpty(packageName)) {
+            for (ResolveInfo info : resolveInfoList) {
+                Logger.d(info.activityInfo.packageName + ":::::" + info.activityInfo.name);
+                if (StringUtils.equals(info.activityInfo.packageName, "com.tencent.mtt") && StringUtils.equals(info.activityInfo.name, "com.tencent.mtt.MainActivity")) {
+                    packageName = info.activityInfo.packageName;
+                    clazzName = info.activityInfo.name;
+                    return true;
+                }
+            }
+        }
+        if (StringUtils.isEmpty(packageName)) {
+            ToastUtils.showToastShort(mContext,"手机尚未安装相关浏览器");
+            return false;
+        }
+        return false;
     }
 
 
