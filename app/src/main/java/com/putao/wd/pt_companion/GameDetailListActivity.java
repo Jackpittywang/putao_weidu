@@ -582,7 +582,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         serviceMessageList.setSend_state(0);
         mGameDetailAdapter.add(serviceMessageList);
         mGameDetailAdapter.setMsg(mServiceId, null != mCompanion ? mCompanion.getService_icon() : imageIcon);
-        mDataBaseManager.insertUploadText(mServiceId, msg);
+        mDataBaseManager.insertObject(mServiceId, serviceMessageList);
+//        mDataBaseManager.insertUploadText(mServiceId, msg);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         resetMsg();
     }
@@ -649,7 +650,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
             layout.setLayoutParams(lp);
             final TextView tv_custommenu_name = (TextView) layout.findViewById(R.id.tv_custommenu_name);
-            tv_custommenu_name.setText(serviceMenu.getName());
+            tv_custommenu_name.setText(StringUtils.getCutStringByByteCount(serviceMenu.getName(), 8, "..."));
             if (null != serviceMenu.getSub_button() && serviceMenu.getSub_button().size() > 0) // 显示三角
             {
                 tv_custommenu_name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_12_06,

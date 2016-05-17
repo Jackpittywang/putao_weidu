@@ -32,26 +32,26 @@
     </RelativeLayout>
 
 
-    <com.sunnybear.library.view.PullToRefreshLayout
-        android:id="@+id/ptl_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        auto:refresh_layout="@layout/sky_wheel_refresh_header"
-        auto:refresh_layout_height="120">
+    <!-- <com.sunnybear.library.view.PullToRefreshLayout
+         android:id="@+id/ptl_refresh"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:visibility="gone"
+         auto:refresh_layout="@layout/sky_wheel_refresh_header"
+         auto:refresh_layout_height="120">-->
 
-        <com.sunnybear.library.view.recycler.BasicRecyclerView
-            android:id="@+id/rv_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:minHeight="200dp"
-            auto:divider_color="@color/divider_color"
-            auto:divider_height="0.5dp"
-            auto:divider_marginLeft="15dp"
-            auto:has_row_divider="true"
-            auto:is_inner="false" />
-    </com.sunnybear.library.view.PullToRefreshLayout>
+    <com.sunnybear.library.view.recycler.BasicRecyclerView
+        android:id="@+id/rv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="200dp"
+        auto:divider_color="@color/divider_color"
+        auto:divider_height="0.5dp"
+        auto:divider_marginLeft="15dp"
+        auto:has_row_divider="true"
+        auto:is_inner="false" />
+    <!--</com.sunnybear.library.view.PullToRefreshLayout>-->
 
     <!--没有陪伴数据时-->
     <RelativeLayout

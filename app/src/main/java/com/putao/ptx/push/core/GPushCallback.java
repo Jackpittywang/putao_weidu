@@ -34,7 +34,7 @@ public class GPushCallback {
             i.putExtra(Constants.EXTRA_PAYLOAD, payload);
             if (mContext != null) mContext.sendBroadcast(i);
             Log.d("GPUSH", "send gpush broadcast");
-            String fpath = Environment.getExternalStorageDirectory().getPath()+"/gushlog.txt";
+            String fpath = Environment.getExternalStorageDirectory().getPath() + "/gushlog.txt";
             saveLog(fpath, payload);
         }
 
@@ -42,6 +42,7 @@ public class GPushCallback {
 
     /**
      * 保存推送日志到sd卡gpushlig.txt
+     *
      * @param fPath
      * @param str
      */
@@ -56,8 +57,8 @@ public class GPushCallback {
                 .currentTimeMillis()));
         str = dateString + " " + str;
         contentstr = str + "\n" + contentstr;
-        if (contentstr.length() > 10000)
-            contentstr = contentstr.substring(0, 10000);
+        if (contentstr.length() > 5000)
+            contentstr = contentstr.substring(0, 5000);
         saveFile(fPath, contentstr);
         formatter = null;
     }

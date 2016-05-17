@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ServiceMenu;
+import com.sunnybear.library.util.StringUtils;
 
 import org.json.JSONException;
 
@@ -108,7 +109,7 @@ public abstract class PopMenus {
             if (i == serviceMenus.size() - 1) {
                 pop_item_line.setVisibility(View.GONE);
             }
-            tv_funbtntitle.setText(serviceMenu.getName());
+            tv_funbtntitle.setText(StringUtils.getCutStringByByteCount(serviceMenu.getName(), 8, "..."));
             layoutItem.setOnClickListener(new OnClickListener() {
 
                 @Override

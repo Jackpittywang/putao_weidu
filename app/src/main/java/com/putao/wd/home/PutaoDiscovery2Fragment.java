@@ -43,6 +43,8 @@ public class PutaoDiscovery2Fragment extends PTWDFragment<GlobalApplication>{
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         loadFragment();
+        navigation_bar.setLeftClickable(false);
+        navigation_bar.getLeftView().setVisibility(View.GONE);
         vp_content.setAdapter(new FragmentSwitchAdapter(getChildFragmentManager(), mFragments));
         vp_content.setOffscreenPageLimit(2);
         addListener();

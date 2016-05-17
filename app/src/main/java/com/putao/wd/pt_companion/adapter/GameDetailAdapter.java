@@ -164,6 +164,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         String date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
         if (holder instanceof QuestionReplyViewHolder) {
             QuestionReplyViewHolder askViewHolder = (QuestionReplyViewHolder) holder;
+            askViewHolder.question_item_answer_icon.resize(200, 200);
             askViewHolder.question_item_answer_icon.setImageURL(imageIcon);
             if (2 == mDatesMap.get(position)) {
                 askViewHolder.question_item_ask_time.setVisibility(View.GONE);
@@ -183,6 +184,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     askViewHolder.rl_item_ask_image.setVisibility(View.VISIBLE);
                     askViewHolder.question_item_answer_context.setVisibility(View.GONE);
                     String pic = ImageUtils.getImageSizeUrl(serviceMessageList.getImage().getPic(), ImageUtils.ImageSizeURL.SIZE_360x360);
+                    askViewHolder.question_item_ask_image.resize(200, 200);
                     askViewHolder.question_item_ask_image.setImageURL(pic);
                     askViewHolder.question_item_ask_image.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -217,7 +219,9 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             gameDetailHolder.rl_article3.setVisibility(View.GONE);
             gameDetailHolder.rl_article4.setVisibility(View.GONE);
             final ServiceMessageContent serviceMessageContent = content_lists.get(0);
-            gameDetailHolder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(serviceMessageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_240x240));
+            gameDetailHolder.iv_sign.resize(200, 200);
+            gameDetailHolder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
+            gameDetailHolder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(serviceMessageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_120x120));
             if (content_lists.size() == 1) {
                 gameDetailHolder.tv_title.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_content.setVisibility(View.VISIBLE);
@@ -244,6 +248,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 1:
                             gameDetailHolder.rl_article1.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article1.setText(serviceMContent.getTitle());
+                            gameDetailHolder.iv_article1.resize(200, 200);
                             gameDetailHolder.iv_article1.setImageURL(serviceMContent.getCover_pic());
                             gameDetailHolder.rl_article1.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -256,6 +261,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 2:
                             gameDetailHolder.rl_article2.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article2.setText(serviceMContent.getTitle());
+                            gameDetailHolder.iv_article2.resize(200, 200);
                             gameDetailHolder.iv_article2.setImageURL(serviceMContent.getCover_pic());
                             gameDetailHolder.rl_article2.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -268,6 +274,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 3:
                             gameDetailHolder.rl_article3.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article3.setText(serviceMContent.getTitle());
+                            gameDetailHolder.iv_article3.resize(200, 200);
                             gameDetailHolder.iv_article3.setImageURL(serviceMContent.getCover_pic());
                             gameDetailHolder.rl_article3.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -281,6 +288,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 4:
                             gameDetailHolder.rl_article4.setVisibility(View.VISIBLE);
                             gameDetailHolder.tv_article4.setText(serviceMContent.getTitle());
+                            gameDetailHolder.iv_article4.resize(200, 200);
                             gameDetailHolder.iv_article4.setImageURL(serviceMContent.getCover_pic());
                             gameDetailHolder.rl_article4.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -328,16 +336,16 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 1:
                             questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
                             questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
+                            break;
+                        case 2:
+                            questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
+                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                             questionLocalViewHolder.img_item_retry_text.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position);
                                 }
                             });
-                            break;
-                        case 2:
-                            questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
-                            questionLocalViewHolder.img_item_retry_text.setVisibility(View.VISIBLE);
                             break;
                     }
                     break;
@@ -521,6 +529,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                 new SimpleFastJsonCallback<String>(String.class, null) {
                     @Override
                     public void onSuccess(String url, String result) {
+                        serviceMessageList.setSend_state(1);
+                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                        mSendStateMap.put(position, 1);
+                        questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
+                        questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
                         if (!TextUtils.isEmpty(result)) {
                             try {
                                 JSONObject jsonObject = JSONObject.parseObject(result);
@@ -540,11 +553,6 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 e.printStackTrace();
                             }
                         }
-                        serviceMessageList.setSend_state(1);
-                        EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                        mSendStateMap.put(position, 1);
-                        questionLocalViewHolder.pb_item_ask_text.setVisibility(View.GONE);
-                        questionLocalViewHolder.img_item_retry_text.setVisibility(View.GONE);
                     }
 
                     @Override

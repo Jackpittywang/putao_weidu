@@ -1,5 +1,7 @@
 package com.putao.wd.db;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
@@ -78,6 +80,7 @@ public class CompanionDBManager extends DataBaseManager<CompanionDB, String> {
      * 获取已经下载的文章列表
      */
     public List<CompanionDB> getDownloadArticles(String service_id) {
+        if (TextUtils.isEmpty(service_id)) return null;
         return getQueryBuilder().where(CompanionDBDao.Properties.service_id.eq(service_id), CompanionDBDao.Properties.is_download.eq("1"), CompanionDBDao.Properties.uid.eq(AccountHelper.getCurrentUid())).orderAsc(CompanionDBDao.Properties.release_time).build().list();
     }
 

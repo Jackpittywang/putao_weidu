@@ -2,6 +2,7 @@ package com.sunnybear.library.util;
 
 import android.text.TextUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,4 +104,54 @@ public final class StringUtils {
         }
         return true;
     }
+
+    static String regEx = "[\\u4e00-\\u9fa5]"; // unicode编码，判断是否为汉字
+
+    public static int getChineseCount(String str) {
+        int count = 0;
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        while (m.find()) {
+            for (int i = 0; i <= m.groupCount(); i++) {
+                count = count + 1;
+            }
+        }
+        return count;
+    }
+
+    public static boolean isContainChinese(String str) {
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String getCutStringByByteCount(String str, int count) {
+        String newStr = "";
+        int addCount = 0;
+        for (int i = 0; i < str.length(); i++) {
+            addCount++;
+            String substring = str.substring(i, i + 1);
+            if (isContainChinese(substring))
+                addCount++;
+            if (addCount > count)
+                break;
+            newStr = newStr + substring;
+        }
+        if (newStr.length() <= str.length())
+            return newStr;
+        else
+            return str;
+    }
+
+    public static String getCutStringByByteCount(String str, int count, String endString) {
+        String cutStringByByteCount = getCutStringByByteCount(str, count);
+        if (cutStringByByteCount.equals(str))
+            return cutStringByByteCount;
+        else return cutStringByByteCount + endString;
+    }
+
+
 }

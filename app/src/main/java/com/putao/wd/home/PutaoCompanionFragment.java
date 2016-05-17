@@ -4,7 +4,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MyViewPager;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -48,7 +47,6 @@ import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.util.ToastUtils;
-import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
@@ -69,8 +67,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private CompanionAdapter mCompanionAdapter;
     @Bind(R.id.rv_content)
     BasicRecyclerView rv_content;
-    @Bind(R.id.ptl_refresh)
-    PullToRefreshLayout ptl_refresh;
+    /*@Bind(R.id.ptl_refresh)
+    PullToRefreshLayout ptl_refresh;*/
     @Bind(R.id.rl_companion_empty)
     RelativeLayout rl_companion_empty;
     @Bind(R.id.rl_no_commpain)
@@ -133,7 +131,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         if (AccountHelper.isLogin()) {
             rl_companion_empty.setVisibility(View.GONE);
             rl_compain_navigation.setVisibility(View.VISIBLE);
-            ptl_refresh.setVisibility(View.VISIBLE);
+            rv_content.setVisibility(View.VISIBLE);
             if (null == mCompanionAdapter)
                 mCompanionAdapter = new CompanionAdapter(mActivity, null);
             rv_content.setAdapter(mCompanionAdapter);
@@ -141,7 +139,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             initData();
         } else {
             rl_companion_empty.setVisibility(View.VISIBLE);
-            ptl_refresh.setVisibility(View.GONE);
+            rv_content.setVisibility(View.GONE);
             rl_compain_navigation.setVisibility(View.GONE);
         }
     }
@@ -166,19 +164,18 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                         }
                                     }
                                     Companion min = Collections.min(mSubscriptCompanion, stepComparator);
-                                    companion.setService_description(min.getService_description());
+                                    companion.setService_description(min.getService_name() + ":" + min.getService_description());
                                     continue;
                                 } else
                                     checkResult(companion);
                             }
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
-                            ptl_refresh.setVisibility(View.VISIBLE);
+                            rv_content.setVisibility(View.VISIBLE);
                         } else {
                             rl_no_commpain.setVisibility(View.VISIBLE);
-                            ptl_refresh.setVisibility(View.GONE);
+                            rv_content.setVisibility(View.GONE);
                         }
-                        ptl_refresh.refreshComplete();
                         loading.dismiss();
                     }
 
@@ -187,8 +184,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         super.onFailure(url, statusCode, msg);
                         try {
                             rl_no_commpain_failure.setVisibility(View.VISIBLE);
-                            ptl_refresh.setVisibility(View.GONE);
-                            ptl_refresh.refreshComplete();
+                            rv_content.setVisibility(View.GONE);
+//                            ptl_refresh.refreshComplete();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -225,7 +222,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 }
                 List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
                 if (null != content_lists && content_lists.size() >= 0)
-                    companion.setService_description(content_lists.get(0).getSub_title());
+                    companion.setService_description(content_lists.get(0).getTitle());
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -251,12 +248,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
     private void addListener() {
         mCompanionAdapter.setOnItemClickListener(this);
-        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initData();
-            }
-        });
+//        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                initData();
+//            }
+//        });
         btn_no_data.setOnClickListener(this);
         img_compain_menu.setOnClickListener(this);
         tv_later_relevance.setOnClickListener(this);

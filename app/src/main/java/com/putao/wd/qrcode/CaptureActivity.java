@@ -83,7 +83,6 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     private byte[] mResultByte;
     private Camera mResultCamera;
     private String mResult;
-    private ZBarDecoder zBarDecoder = new ZBarDecoder();
 
     private Camera.PreviewCallback previewCb;
     private Runnable doAutoFocus = new Runnable() {
@@ -98,12 +97,12 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
             try {
                 size = mCamera.getParameters().getPreviewSize();
                 // 处理异常
-                if(mResultByte == null || mResultByte.length == -1) return;
+                if (mResultByte == null || mResultByte.length == -1) return;
                 // 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
-                byte[] rotatedData = new byte[mResultByte.length/4];
-                for (int y = 0; y < size.height/2; y++) {
-                    for (int x = 0; x < size.width/2; x++)
-                        rotatedData[x * size.height/2 + size.height/2 - y - 1] = mResultByte[2*x + 2*y * size.width];
+                byte[] rotatedData = new byte[mResultByte.length / 4];
+                for (int y = 0; y < size.height / 2; y++) {
+                    for (int x = 0; x < size.width / 2; x++)
+                        rotatedData[x * size.height / 2 + size.height / 2 - y - 1] = mResultByte[2 * x + 2 * y * size.width];
                 }
                 // 宽高也要调整
                 int tmp = size.width;
@@ -111,9 +110,9 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 size.height = tmp;
 
                 initCrop();
-
+                ZBarDecoder zBarDecoder = new ZBarDecoder();
                 mResult = zBarDecoder
-                        .decodeCrop(rotatedData, size.width/2, size.height/2, mCropRect.left/2, mCropRect.top/2, mCropRect.width()/2, mCropRect.height()/2);
+                        .decodeCrop(rotatedData, size.width / 2, size.height / 2, mCropRect.left / 2, mCropRect.top / 2, mCropRect.width() / 2, mCropRect.height() / 2);
                 if (!TextUtils.isEmpty(mResult)) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -247,6 +246,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         mCameraManager.closeDriver();
         scan_line.clearAnimation();
         mHandlerThread = null;
+        mResultByte = null;
     }
 
     private void releaseCamera() {

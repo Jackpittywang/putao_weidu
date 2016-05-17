@@ -47,7 +47,7 @@ public class EmojiTextView extends TextView {
                 Bitmap bitmap = BitmapFactory.decodeFile(source);
 //                Drawable emoji = getResources().getDrawable(Integer.parseInt(source));
                 Drawable emoji = new BitmapDrawable(bitmap);
-                emoji.setBounds(0, 0, (int) getTextSize(), (int) getTextSize());
+                emoji.setBounds(0, -8, (int) getTextSize() + 8, (int) getTextSize());
                 return emoji;
             }
         };
@@ -85,7 +85,7 @@ public class EmojiTextView extends TextView {
      * @return boolean
      */
     private boolean isEmoji(CharSequence text) {
-        if(StringUtils.isEmpty(text+""))
+        if (StringUtils.isEmpty(text + ""))
             return false;
         return Pattern
                 .compile(".*?\\[(.*?)\\].*?",
