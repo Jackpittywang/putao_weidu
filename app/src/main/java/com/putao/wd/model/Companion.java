@@ -2,8 +2,6 @@ package com.putao.wd.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * 陪伴首页数据
@@ -23,8 +21,9 @@ public class Companion implements Serializable {
     private String sort;//排序，由大到小
     private boolean isShowRed;
     private ServiceMessage auto_reply;//自动回复内容
-    private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
-
+    private String substr;
+//    private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
+    private int notDownloadCount;
     public boolean isShowRed() {
         return isShowRed;
     }
@@ -81,9 +80,6 @@ public class Companion implements Serializable {
         this.is_relation = is_relation;
     }
 
-    public ArrayList<String> getNotDownloadIds() {
-        return notDownloadIds;
-    }
 
     public boolean is_unbunding() {
         return is_unbunding;
@@ -93,8 +89,12 @@ public class Companion implements Serializable {
         this.is_unbunding = is_unbunding;
     }
 
-    public void setNotDownloadIds(ArrayList<String> notDownloadIds) {
-        this.notDownloadIds = notDownloadIds;
+    public int getNotDownloadCount() {
+        return notDownloadCount;
+    }
+
+    public void setNotDownloadCount(int notDownloadCount) {
+        this.notDownloadCount = notDownloadCount;
     }
 
     public ServiceMessage getAuto_reply() {
@@ -135,5 +135,13 @@ public class Companion implements Serializable {
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    public String getSubstr() {
+        return substr;
+    }
+
+    public void setSubstr(String substr) {
+        this.substr = substr;
     }
 }

@@ -54,7 +54,7 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
                 holder.iv_icon.setImageURL(companion.getService_icon());
             holder.rl_compain_main.setVisibility(View.VISIBLE);
             holder.tv_title.setText(companion.getService_name());
-            holder.tv_intro.setText(companion.getService_description());
+            holder.tv_intro.setText(companion.getSubstr());
             if (1 == companion.getIs_relation()) {
                 holder.tv_time.setText(DateUtils.timeCalculate(companion.getRelation_time() * 1000L));
                 holder.tv_time.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
@@ -66,7 +66,7 @@ public class CompanionAdapter extends BasicAdapter<Companion, CompanionAdapter.C
                 //   holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.text_color_gray));
                 holder.tv_title.setTextColor(mContext.getResources().getColor(R.color.browse_background));
             }
-            int size = companion.getNotDownloadIds().size();
+            int size = companion.getNotDownloadCount();
             holder.tv_dot.setVisibility(View.GONE);
             if ((0 == size || !companion.isShowRed()) && 0 != companion.getService_type()) {
                 holder.tv_number.setVisibility(View.GONE);

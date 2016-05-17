@@ -159,6 +159,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             GlobalApplication.serviceBindMap.clear();
                             cacheData(url, result);
                             for (Companion companion : result) {
+                                companion.setSubstr(companion.getService_description());
                                 if (0 == companion.getService_type() && companion.getSecond_level_lists() != null) {
                                     for (Companion companionReply : companion.getSecond_level_lists()) {
                                         mSubscriptCompanion.add(companionReply);
@@ -168,7 +169,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                         }
                                     }
                                     Companion max = Collections.max(mSubscriptCompanion, stepComparator);
-                                    companion.setService_description(max.getService_name() + ":" + max.getService_description());
+                                    companion.setSubstr(max.getService_name() + ":" + max.getSubstr() != null ? max.getSubstr() : "");
                                     continue;
                                 } else
                                     checkResult(companion);
@@ -216,26 +217,26 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 mDataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()), System.currentTimeMillis());
             }
         }
-        ArrayList<String> notDownloadIds = mDataBaseManager.getNotDownloadIds(companion.getService_id());
+//        ArrayList<String> notDownloadIds = mDataBaseManager.getNotDownloadIds(companion.getService_id());
         try {
             CompanionDB companionDB = mDataBaseManager.getNearestItem(companion.getService_id());
             if (companionDB != null) {
                 switch (companionDB.getType()) {
                     case "text":
-                        companion.setService_description(companionDB.getMessage());
+                        companion.setSubstr(companionDB.getMessage());
                         break;
                     case "image":
-                        companion.setService_description("[图片]");
+                        companion.setSubstr("[图片]");
                         break;
                     case "reply":
                         ServiceMessageListReply serviceMessageListReply = JSON.parseObject(companionDB.getReply(), ServiceMessageListReply.class);
-                        companion.setService_description(serviceMessageListReply.getAnswer());
+                        companion.setSubstr(serviceMessageListReply.getAnswer());
                         break;
                     case "upload_text":
-                        companion.setService_description(companionDB.getMessage());
+                        companion.setSubstr(companionDB.getMessage());
                         break;
                     case "upload_image":
-                        companion.setService_description("[图片]");
+                        companion.setSubstr("[图片]");
                         break;
                 }
                 if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
@@ -245,7 +246,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     }
                     List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
                     if ("article".equals(companionDB.getType()) && null != content_lists && content_lists.size() >= 0)
-                        companion.setService_description(content_lists.get(0).getTitle());
+                        companion.setSubstr(content_lists.get(0).getTitle());
                 }
             }
         } catch (NumberFormatException e) {
@@ -263,9 +264,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 else realNotDownload.add(notDownloadId);
             }
         }*/
-        if (null != notDownloadIds && notDownloadIds.size() > 0) {
+        Integer value = PreferenceUtils.getValue(companion.getService_id() + AccountHelper.getCurrentUid(), 0);
+        if (0 != value) {
+            companion.setNotDownloadCount(value);
             companion.setIsShowRed(true);
-            companion.setNotDownloadIds(notDownloadIds);
             EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
         }
     }
@@ -344,9 +346,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             if (companion.getService_type() == 0) {
                 startActivity(PutaoSubcribeActivity.class, bundle);
             } else {
-                mDataBaseManager.removeEmptyData(companion.getService_id());
+//                mDataBaseManager.removeEmptyData(companion.getService_id());
+                PreferenceUtils.save(companion.getService_id() + AccountHelper.getCurrentUid(), 0);
                 companion.setIsShowRed(false);
-                companion.setNotDownloadIds(new ArrayList<String>());
+                companion.setNotDownloadCount(0);
                 boolean isShowTabDot = false;
                 for (Companion compan : mCompanion) {
                     isShowTabDot = compan.isShowRed() || isShowTabDot;
@@ -452,7 +455,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                     serviceMessageList.setReceiver_time(System.currentTimeMillis());
                                     mDataBaseManager.insertObject(mServiceId, serviceMessageList);
                                 }
-                                setLastPullIdByService(mServiceId, lists.get(lists.size() - 1).getId());
+                                setLastPullIdByService(mServiceId, lists.get(lists.size() - 1).getId(), lists.size());
                                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                                 mLoadHandler.postDelayed(mLoadRun, 1000);
                             }
@@ -483,10 +486,30 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             return "0";
         }
 
-        private void setLastPullIdByService(String serviceId, String lastPullId) {
+        private void setLastPullIdByService(String serviceId, String lastPullId, int size) {
             for (Companion companion : mCompanion) {
-                if (companion.getService_id().equals(serviceId))
+                if (companion.getService_id().equals(serviceId)) {
                     companion.setLast_pull_id(lastPullId);
+                    companion.setIsShowRed(true);
+                    companion.setNotDownloadCount(companion.getNotDownloadCount() + size);
+                    mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
+                    companion.setNotDownloadCount(companion.getNotDownloadCount() + size);
+                    PreferenceUtils.save(companion.getService_id() + AccountHelper.getCurrentUid(), companion.getNotDownloadCount());
+                }
+                if (companion.getService_type() == 0) {
+                    ArrayList<Companion> second_level_lists = companion.getSecond_level_lists();
+                    for (Companion compan : second_level_lists) {
+                        if (compan.getService_id().equals(serviceId)) {
+                            compan.setLast_pull_id(lastPullId);
+                            compan.setIsShowRed(true);
+                            compan.setNotDownloadCount(compan.getNotDownloadCount() + size);
+                            PreferenceUtils.save(compan.getService_id() + AccountHelper.getCurrentUid(), compan.getNotDownloadCount());
+                            companion.setSecond_level_lists(second_level_lists);
+//                            mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
+                        }
+                    }
+                }
+                EventBusHelper.post(companion, AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
             }
         }
     }
@@ -503,9 +526,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             String service_id = gpushMessageAccNumber.getService_id();
             RequestData requestData = new RequestData(service_id);
             requestData.getLastestArticle();
-            String id = gpushMessageAccNumber.getId();
+//            String id = gpushMessageAccNumber.getId();
             EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
-            for (Companion companion : mCompanion) {
+            /*for (Companion companion : mCompanion) {
                 if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
                     notDownloadIds.add(id);
@@ -524,7 +547,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         }
                     }
                 }
-            }
+            }*/
         }
 
     }
@@ -611,10 +634,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         for (Companion compan : mCompanion) {
             if (0 == compan.getService_type()) {
                 compan.setIsShowRed(false);
-                compan.setNotDownloadIds(new ArrayList<String>());
+                compan.setNotDownloadCount(0);
                 for (Companion compani : compan.getSecond_level_lists()) {
                     compani.setIsShowRed(false);
-                    compani.setNotDownloadIds(new ArrayList<String>());
+                    compani.setNotDownloadCount(0);
                 }
             }
             isShowTabDot = compan.isShowRed() || isShowTabDot;

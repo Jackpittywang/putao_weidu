@@ -4,32 +4,25 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
-import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
 import com.putao.wd.model.Companion;
-import com.putao.wd.model.GpushMessageAccNumber;
-import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceSendData;
-import com.putao.wd.pt_companion.adapter.SubribeAdapter;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
-import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
+import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,10 +59,7 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
         addNavigation();
         mDataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         mCompanion = (Companion) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION);
-        mCompanions = mCompanion.getSecond_level_lists();
-        if (null == mCompanionAdapter)
-            mCompanionAdapter = new CompanionAdapter(mContext, mCompanions);
-        rv_content.setAdapter(mCompanionAdapter);
+        refresh_data(mCompanion);
 
 //        initData();
         addListener();
@@ -81,10 +71,10 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
             public void onItemClick(Companion companion, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+                PreferenceUtils.save(companion.getService_id() + AccountHelper.getCurrentUid(), 0);
                 startActivity(GameDetailListActivity.class, bundle);
-                mDataBaseManager.removeEmptyData(companion.getService_id());
                 companion.setIsShowRed(false);
-                companion.setNotDownloadIds(new ArrayList<String>());
+                companion.setNotDownloadCount(0);
                 boolean isShowTabDot = false;
                 for (Companion compan : mCompanions) {
                     isShowTabDot = compan.isShowRed() || isShowTabDot;
@@ -123,16 +113,16 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
             if (companionDB != null) {
                 switch (companionDB.getType()) {
                     case "text":
-                        companion.setService_description(companionDB.getMessage());
+                        companion.setSubstr(companionDB.getMessage());
                         break;
                     case "image":
-                        companion.setService_description("[图片]");
+                        companion.setSubstr("[图片]");
                         break;
                     case "upload_text":
-                        companion.setService_description(companionDB.getMessage());
+                        companion.setSubstr(companionDB.getMessage());
                         break;
                     case "upload_image":
-                        companion.setService_description("[图片]");
+                        companion.setSubstr("[图片]");
                         break;
                 }
                 if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
@@ -142,7 +132,7 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
                     }
                     List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
                     if ("article".equals(companionDB.getType()) && null != content_lists && content_lists.size() >= 0)
-                        companion.setService_description(content_lists.get(0).getTitle());
+                        companion.setSubstr(content_lists.get(0).getTitle());
                 }
             }
         } catch (NumberFormatException e) {
@@ -150,21 +140,12 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
         }
     }
 
-    @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)
-    private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
-        for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
-            String service_id = gpushMessageAccNumber.getService_id();
-            String id = gpushMessageAccNumber.getId();
-            for (Companion companion : mCompanions) {
-                if (companion.getService_id().equals(service_id)) {
-                    ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
-                    notDownloadIds.add(id);
-                    companion.setIsShowRed(true);
-                    companion.setNotDownloadIds(notDownloadIds);
-                    mCompanionAdapter.notifyItemChanged(mCompanions.indexOf(companion));
-                }
-            }
-        }
-
+    @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
+    private void refresh_data(Companion companion) {
+        mCompanions = companion.getSecond_level_lists();
+        if (null == mCompanionAdapter)
+            mCompanionAdapter = new CompanionAdapter(mContext, null);
+        rv_content.setAdapter(mCompanionAdapter);
+        mCompanionAdapter.replaceAll(mCompanions);
     }
 }
