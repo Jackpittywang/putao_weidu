@@ -9,7 +9,7 @@
     <!--标题栏-->
     <com.sunnybear.library.view.NavigationBar
         style="@style/style_navigation_bar"
-        android:background="@color/transparent"
+        android:background="@color/color_212121"
         auto:nav_left_icon="@drawable/btn_back_browse_select" />
     <!--    auto:nav_right_icon="@drawable/btn_share_browse_select"-->
     <android.support.v4.view.ViewPager
@@ -21,11 +21,6 @@
         android:background="#000000"
         android:overScrollMode="never" />
 
-    <RelativeLayout
-        android:id="@+id/relative_pager"
-        android:layout_width="30dp"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/navigation_bar"></RelativeLayout>
     <!--   <ProgressBar
            android:id="@+id/loading"
            android:layout_width="wrap_content"
