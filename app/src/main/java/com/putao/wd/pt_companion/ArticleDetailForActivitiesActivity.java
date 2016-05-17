@@ -215,6 +215,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
             @Override
             public void onQQZone() {
+                sub_title = StringUtils.isEmpty(sub_title) ? " ":sub_title;
                 ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
             }
 
