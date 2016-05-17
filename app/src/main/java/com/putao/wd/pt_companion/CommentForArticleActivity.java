@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -41,6 +42,8 @@ import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.CommentAdapter;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
+import com.putao.wd.util.UploadFileCallback;
+import com.putao.wd.util.UploadLoader;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
@@ -611,19 +614,37 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
 
 
     private void sendComment(boolean hasPic) {
-        if (hasPic)
-            checkSha1(uploadPic);
-        else
+        if (et_msg.getText().toString().trim().isEmpty()) {
+            ToastUtils.showToastShort(mContext, "评论不能为空");
+            return;
+        }
+        if (hasPic) {
+            loading.show();
+//            checkSha1(uploadPic);
+            UploadLoader.getInstance().addUploadFile(uploadPic, new UploadFileCallback() {
+                @Override
+                protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
+                    loading.dismiss();
+                    sendCommentMsg(filename + "." + ext);
+                }
+
+                @Override
+                protected void onFileUploadFail(String filePath) {
+                    super.onFileUploadFail(filePath);
+                    loading.dismiss();
+                }
+            }).execute();
+        } else
             sendCommentMsg(null);
     }
 
 
     private void sendCommentMsg(@Nullable String picName) {
         String msg = et_msg.getText().toString();
-        if (msg.trim().isEmpty()) {
-            ToastUtils.showToastShort(mContext, "评论不能为空");
-            return;
-        }
+//        if (msg.trim().isEmpty()) {
+//            ToastUtils.showToastShort(mContext, "评论不能为空");
+//            return;
+//        }
         String pics = "";
         if (picName != null)
             pics = picName;
