@@ -70,7 +70,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     private String mServiceName;
     private SelectPopupWindow mSelectPopupWindow;
     private CompainServiceInfo serviceInfo;
-    private boolean isSubscribe, isBind;
+    private boolean isSubscribe, isBind, isSubscription;
     private SubscribeList subscribeList;
     private Companion companion;
     private int serviceType;
@@ -86,13 +86,15 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         addNavigation();
         //陪伴首页未关联产品传送过来的数据
         isBind = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
+        //是否订阅
+        isSubscription = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
 //        serviceType = args.getInt(AccountConstants.Bundle.BUNDLE_COMPANION_NOTNULL, 1);
         mServiceId = args.getString(CAPTURE_SERVICE_ID);
         capture_url = args.getString(CAPTURE_URL);
         isFromArticle = args.getBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK);
         if (isFromArticle) {
             setMainTitleFromNetwork(mServiceId);
-            isSubscribe = StringUtils.equals("1", args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_SUBSCR_STATE,"")) ? true : false;
+            isSubscribe = StringUtils.equals("1", args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_SUBSCR_STATE, "")) ? true : false;
         } else if (capture_url == null) {
             //isSubscribe为true则是订阅号传送过来的数据，反之则是服务号传送过来的数据
             isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
@@ -204,8 +206,9 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     startActivity(LoginActivity.class, args);
                 } else {
                     Bundle bundle = new Bundle();
-//                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, isSubscribe);
-//                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, isSubscribe);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, isSubscription);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
                     bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
                     startActivity(LookHistoryActivity.class, bundle);
@@ -392,6 +395,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
                             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
                         } else {
+                            EventBusHelper.post("", AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
                             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
                         }
                         startActivity(GameDetailListActivity.class, bundle);
@@ -432,14 +436,14 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     @Override
                     public void onSuccess(String url, CompainServiceInfo result) {
                         if (result != null) {
-                            if(isFromArticle){
-                                if(isSubscribe){
-                                    if(subscribeList == null)
+                            if (isFromArticle) {
+                                if (isSubscribe) {
+                                    if (subscribeList == null)
                                         subscribeList = new SubscribeList();
                                     subscribeList.setService_icon(result.getService_icon());
                                     subscribeList.setIs_relation(result.is_relation());
-                                }else{
-                                    if(companion == null)
+                                } else {
+                                    if (companion == null)
                                         companion = new Companion();
                                     companion.setService_id(result.getService_id());
                                     companion.setService_name(result.getService_name());
@@ -478,7 +482,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 }, false);
     }
 
-     /**
+    /**
      * 是否要隐藏该页面
      */
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)

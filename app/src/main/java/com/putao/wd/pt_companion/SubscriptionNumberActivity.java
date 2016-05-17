@@ -161,6 +161,7 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
     public void onItemClick(SubscribeList subscribeList, int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, subscribeList.is_relation());
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, subscribeList);
         startActivity(OfficialAccountsActivity.class, bundle);
     }

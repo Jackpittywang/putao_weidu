@@ -607,6 +607,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         super.onRightAction();
         Bundle bundle = new Bundle();
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, mCompanion);
+
         startActivity(OfficialAccountsActivity.class, bundle);
     }
 
@@ -806,6 +807,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
     private void refresh_data(String tag) {
         initData();
+    }
+
+    @Subcriber(tag = AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST)
+    private void clearData(String tag) {
+        this.finish();
     }
 
     @Subcriber(tag = EmojiFragment.EVENT_CLICK_EMOJI)

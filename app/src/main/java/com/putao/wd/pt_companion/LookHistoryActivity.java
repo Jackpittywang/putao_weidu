@@ -64,15 +64,16 @@ public class LookHistoryActivity extends PTWDActivity {
         addNavigation();
         service_id = args.getString(HISTORY_SERVICE_ID);
         service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
-        isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
-        isBunding = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
+        isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
+        isBunding = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, false);
         adapter = new LookHistoryAdapter(mContext, null);
         rv_lookHistory.setAdapter(adapter);
-        if (!isBunding) {
-            if (isSubscribe)
-                rv_lookHistory.setNoMoreText("关联产品可查看更多内容，帮助您更好的陪伴孩子哦！");
-            else
-                rv_lookHistory.setNoMoreText("订阅后可查看更多内容，帮助您更好的陪伴孩子哦！");
+        if (isSubscribe) {
+            if (!args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD))//没有关注的情况下
+                rv_lookHistory.setNoMoreText("订阅后可查看更多精彩内容,帮助您更好的陪伴孩子哦");
+        } else {
+            if (isBunding)
+                rv_lookHistory.setNoMoreText("关联产品后可查看更多内容，帮助您更好的陪伴孩子哦！");
         }
         lookHistoryData();
         addListener();
@@ -87,7 +88,7 @@ public class LookHistoryActivity extends PTWDActivity {
         rv_lookHistory.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (isBunding)
+                if (isBunding || isSubscribe)
                     loadMoreData();
                 else
                     rv_lookHistory.noMoreLoading();

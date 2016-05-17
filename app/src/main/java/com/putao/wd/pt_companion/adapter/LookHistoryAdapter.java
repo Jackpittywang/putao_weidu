@@ -5,12 +5,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.putao.wd.R;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceMessageListImage;
 import com.putao.wd.model.ServiceMessageListReply;
 import com.putao.wd.model.ServiceType;
 import com.sunnybear.library.util.DateUtils;
+import com.sunnybear.library.util.ImageUtils;
+import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
@@ -45,7 +48,7 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
         switch (serviceMessageList.getType()) {
             case "article":
                 ServiceMessageContent serviceMessageContent = serviceMessageList.getContent_lists().get(0);
-                holder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
+                holder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(serviceMessageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_360x360));
                 holder.tv_title.setText(serviceMessageContent.getTitle());
                 holder.tv_content.setText(serviceMessageContent.getSub_title());
                 holder.iv_sign.setVisibility(View.VISIBLE);
@@ -59,7 +62,12 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 break;
             case "image"://图片
                 ServiceMessageListImage image = serviceMessageList.getImage();
-                holder.iv_sign.setImageURL(image.getThumb());
+                String thumb = ImageUtils.getImageSizeUrl(image.getThumb(), ImageUtils.ImageSizeURL.SIZE_360x360);
+                if (StringUtils.isEmpty(thumb)) {
+                    holder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(image.getPic(), ImageUtils.ImageSizeURL.SIZE_360x360));
+                } else {
+                    holder.iv_sign.setImageURL(thumb);
+                }
                 holder.tv_title.setVisibility(View.GONE);
                 holder.tv_content.setVisibility(View.GONE);
                 break;
