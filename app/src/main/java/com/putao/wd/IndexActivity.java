@@ -168,14 +168,14 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             @Override
             public void onClick(View v) {
                 view_img.setVisibility(View.GONE);
-                PreferenceUtils.save(PREFERENCE_STEP1_IS_FIRST, true);
+                PreferenceUtils.save(PREFERENCE_STEP1_IS_FIRST+AccountHelper.getCurrentUid(), true);
             }
         });
 
     }
 
     private void checkFristImg() {
-        if (!PreferenceUtils.getValue(PREFERENCE_STEP1_IS_FIRST, false))
+        if (!PreferenceUtils.getValue(PREFERENCE_STEP1_IS_FIRST+AccountHelper.getCurrentUid(), false))
             view_img.setVisibility(View.VISIBLE);
         else {
             view_img.setVisibility(View.GONE);
