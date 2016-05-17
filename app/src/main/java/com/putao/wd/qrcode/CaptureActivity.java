@@ -95,6 +95,8 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
             Camera.Size size = null;
             try {
                 size = mCamera.getParameters().getPreviewSize();
+                // 处理异常
+                if(mResultByte.length == -1) return;
                 // 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
                 byte[] rotatedData = new byte[mResultByte.length];
                 for (int y = 0; y < size.height; y++) {
