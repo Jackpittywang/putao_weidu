@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -82,6 +83,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     private byte[] mResultByte;
     private Camera mResultCamera;
     private String mResult;
+    private ZBarDecoder zBarDecoder = new ZBarDecoder();
 
     private Camera.PreviewCallback previewCb;
     private Runnable doAutoFocus = new Runnable() {
@@ -98,10 +100,10 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 // 处理异常
                 if(mResultByte == null || mResultByte.length == -1) return;
                 // 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
-                byte[] rotatedData = new byte[mResultByte.length];
-                for (int y = 0; y < size.height; y++) {
-                    for (int x = 0; x < size.width; x++)
-                        rotatedData[x * size.height + size.height - y - 1] = mResultByte[x + y * size.width];
+                byte[] rotatedData = new byte[mResultByte.length/4];
+                for (int y = 0; y < size.height/2; y++) {
+                    for (int x = 0; x < size.width/2; x++)
+                        rotatedData[x * size.height/2 + size.height/2 - y - 1] = mResultByte[2*x + 2*y * size.width];
                 }
                 // 宽高也要调整
                 int tmp = size.width;
@@ -109,9 +111,9 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 size.height = tmp;
 
                 initCrop();
-                ZBarDecoder zBarDecoder = new ZBarDecoder();
+
                 mResult = zBarDecoder
-                        .decodeCrop(rotatedData, size.width, size.height, mCropRect.left, mCropRect.top, mCropRect.width(), mCropRect.height());
+                        .decodeCrop(rotatedData, size.width/2, size.height/2, mCropRect.left/2, mCropRect.top/2, mCropRect.width()/2, mCropRect.height()/2);
                 if (!TextUtils.isEmpty(mResult)) {
                     runOnUiThread(new Runnable() {
                         @Override
