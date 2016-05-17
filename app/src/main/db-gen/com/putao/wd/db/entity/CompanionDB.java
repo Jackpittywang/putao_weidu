@@ -21,8 +21,9 @@ public class CompanionDB extends DBEntity {
     private String image;
     private String reply;
     private String is_upload_finish;
+    private String receiver_time;
 
-    public CompanionDB(String id,String service_id, String type, String release_time, String content_lists, String isDownload, String uid, String key, String message, String image, String reply, String is_upload_finish) {
+    public CompanionDB(String id, String service_id, String type, String release_time, String content_lists, String isDownload, String uid, String key, String message, String image, String reply, String is_upload_finish, String receiver_time) {
         this.id = id;
         this.service_id = service_id;
         this.type = type;
@@ -35,6 +36,7 @@ public class CompanionDB extends DBEntity {
         this.image = image;
         this.reply = reply;
         this.is_upload_finish = is_upload_finish;
+        this.receiver_time = receiver_time;
     }
 
     public String getId() {
@@ -131,5 +133,13 @@ public class CompanionDB extends DBEntity {
 
     public void setIs_upload_finish(String is_upload_finish) {
         this.is_upload_finish = is_upload_finish;
+    }
+
+    public String getReceiver_time() {
+        return receiver_time;
+    }
+
+    public void setReceiver_time(String receiver_time) {
+        this.receiver_time = receiver_time;
     }
 }

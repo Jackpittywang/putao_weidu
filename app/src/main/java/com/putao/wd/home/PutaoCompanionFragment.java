@@ -1,7 +1,10 @@
 package com.putao.wd.home;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.MyViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,6 +37,7 @@ import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceMessageListReply;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.pt_companion.OfficialAccountsActivity;
 import com.putao.wd.pt_companion.PutaoSubcribeActivity;
@@ -111,13 +115,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         else {
             iv_step1_first.setVisibility(View.GONE);
         }
-        mSubscriptCompanion = new ArrayList<>();
         navigation_bar.setLeftClickable(false);
         navigation_bar.getLeftView().setVisibility(View.GONE);
         //弹框
         mDataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         onCompainPopupWindow();
-        checkDevice();
+//        checkDevice();
         mPicChangeCount = 1;
         startAnim();
     }
@@ -151,6 +154,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onSuccess(String url, ArrayList<Companion> result) {
                         if (result != null && result.size() > 0) {
+                            mSubscriptCompanion = new ArrayList<>();
                             mCompanion = result;
                             GlobalApplication.serviceBindMap.clear();
                             cacheData(url, result);
@@ -163,8 +167,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                             companion.setIsShowRed(true);
                                         }
                                     }
-                                    Companion min = Collections.min(mSubscriptCompanion, stepComparator);
-                                    companion.setService_description(min.getService_name() + ":" + min.getService_description());
+                                    Companion max = Collections.max(mSubscriptCompanion, stepComparator);
+                                    companion.setService_description(max.getService_name() + ":" + max.getService_description());
                                     continue;
                                 } else
                                     checkResult(companion);
@@ -209,20 +213,40 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         ServiceMessage serviceMessage = companion.getAuto_reply();
         if (null != serviceMessage && null != serviceMessage.getLists()) {
             for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
-                mDataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                mDataBaseManager.insertFinishDownload(companion.getService_id(), serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()), System.currentTimeMillis());
             }
         }
         ArrayList<String> notDownloadIds = mDataBaseManager.getNotDownloadIds(companion.getService_id());
         try {
             CompanionDB companionDB = mDataBaseManager.getNearestItem(companion.getService_id());
-            if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
-                int time = Integer.parseInt(companionDB.getRelease_time());
-                if (time > 0) {
-                    companion.setRelation_time(time);
+            if (companionDB != null) {
+                switch (companionDB.getType()) {
+                    case "text":
+                        companion.setService_description(companionDB.getMessage());
+                        break;
+                    case "image":
+                        companion.setService_description("[图片]");
+                        break;
+                    case "reply":
+                        ServiceMessageListReply serviceMessageListReply = JSON.parseObject(companionDB.getReply(), ServiceMessageListReply.class);
+                        companion.setService_description(serviceMessageListReply.getAnswer());
+                        break;
+                    case "upload_text":
+                        companion.setService_description(companionDB.getMessage());
+                        break;
+                    case "upload_image":
+                        companion.setService_description("[图片]");
+                        break;
                 }
-                List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
-                if (null != content_lists && content_lists.size() >= 0)
-                    companion.setService_description(content_lists.get(0).getTitle());
+                if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
+                    int time = Integer.parseInt(companionDB.getReceiver_time()) / 1000;
+                    if (time > 0) {
+                        companion.setRelation_time(time);
+                    }
+                    List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
+                    if ("article".equals(companionDB.getType()) && null != content_lists && content_lists.size() >= 0)
+                        companion.setService_description(content_lists.get(0).getTitle());
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -340,7 +364,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         }
     }
 
-    @OnClick({R.id.btn_relevance_device, R.id.img_compain_menu, R.id.tv_later_relevance})
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkDevice();
+    }
+
+    @OnClick({R.id.btn_relevance_device, R.id.img_compain_menu, R.id.tv_later_relevance, R.id.iv_step1_first})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -365,6 +395,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (isVisible)
                     popupWindow.showAsDropDown(img_compain_menu);
                 break;
+            case R.id.iv_step1_first:
+                iv_step1_first.setVisibility(View.GONE);
+                break;
             case R.id.tv_later_relevance://稍后关联
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
@@ -379,6 +412,86 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
 
+    class RequestData {
+        Handler mLoadHandler = new Handler();
+        private String mCancelUrl;
+        private int mFailCount;
+        private String mServiceId;
+
+        public RequestData(String mServiceId) {
+            this.mServiceId = mServiceId;
+        }
+
+        Runnable mLoadRun = new Runnable() {
+            @Override
+            public void run() {
+                android.app.ActivityManager am = (android.app.ActivityManager) mActivity.getSystemService(Context.ACTIVITY_SERVICE);
+                ComponentName cn = am.getRunningTasks(2).get(0).topActivity;
+                if (cn != null) {
+                    if (getClass().getName().contains(cn.getClassName())) {
+                        getLastestArticle();
+                    }
+                }
+            }
+        };
+
+        /**
+         * 获取文章数据
+         */
+        private void getLastestArticle() {
+            String lastPullId = getLastPullIdByService(mServiceId);
+            networkRequest(CompanionApi.getServicesLists(mServiceId, lastPullId), new SimpleFastJsonCallback<ServiceMessage>(ServiceMessage.class, null) {
+                @Override
+                public void onSuccess(String url, ServiceMessage result) {
+                    try {
+                        if (result != null) {
+                            mFailCount = 0;
+                            ArrayList<ServiceMessageList> lists = result.getLists();
+                            if (null != lists && lists.size() > 0) {
+                                for (ServiceMessageList serviceMessageList : lists) {
+                                    serviceMessageList.setReceiver_time(System.currentTimeMillis());
+                                    mDataBaseManager.insertObject(mServiceId, serviceMessageList);
+                                }
+                                setLastPullIdByService(mServiceId, lists.get(lists.size() - 1).getId());
+                                EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                                mLoadHandler.postDelayed(mLoadRun, 1000);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(String url, int statusCode, String msg) {
+                    super.onFailure(url, statusCode, msg);
+                    if ("data数据返回错误".equals(msg)) return;
+                    mFailCount++;
+                    if (mFailCount < 3)
+                        mLoadHandler.postDelayed(mLoadRun, 2000);
+                    else
+                        mCancelUrl = url;
+                }
+            }, false);
+        }
+
+        private String getLastPullIdByService(String serviceId) {
+            for (Companion companion : mCompanion) {
+                if (companion.getService_id().equals(serviceId))
+                    return companion.getLast_pull_id();
+            }
+            return "0";
+        }
+
+        private void setLastPullIdByService(String serviceId, String lastPullId) {
+            for (Companion companion : mCompanion) {
+                if (companion.getService_id().equals(serviceId))
+                    companion.setLast_pull_id(lastPullId);
+            }
+        }
+    }
+
+
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)
     private void refresh_companion(String str) {
         checkDevice();
@@ -388,6 +501,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
             String service_id = gpushMessageAccNumber.getService_id();
+            RequestData requestData = new RequestData(service_id);
+            requestData.getLastestArticle();
             String id = gpushMessageAccNumber.getId();
             EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
             for (Companion companion : mCompanion) {

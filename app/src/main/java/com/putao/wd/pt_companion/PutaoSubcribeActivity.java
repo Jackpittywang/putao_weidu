@@ -1,6 +1,7 @@
 package com.putao.wd.pt_companion;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -8,6 +9,7 @@ import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.AccountHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
@@ -104,6 +106,48 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
     public void onLeftAction() {
         super.onLeftAction();
         finish();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        for (Companion companion : mCompanions) {
+            checkResult(companion);
+        }
+        mCompanionAdapter.notifyDataSetChanged();
+    }
+
+    private void checkResult(Companion companion) {
+        try {
+            CompanionDB companionDB = mDataBaseManager.getNearestItem(companion.getService_id());
+            if (companionDB != null) {
+                switch (companionDB.getType()) {
+                    case "text":
+                        companion.setService_description(companionDB.getMessage());
+                        break;
+                    case "image":
+                        companion.setService_description("[图片]");
+                        break;
+                    case "upload_text":
+                        companion.setService_description(companionDB.getMessage());
+                        break;
+                    case "upload_image":
+                        companion.setService_description("[图片]");
+                        break;
+                }
+                if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
+                    int time = Integer.parseInt(companionDB.getRelease_time());
+                    if (time > 0) {
+                        companion.setRelation_time(time);
+                    }
+                    List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
+                    if ("article".equals(companionDB.getType()) && null != content_lists && content_lists.size() >= 0)
+                        companion.setService_description(content_lists.get(0).getTitle());
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)

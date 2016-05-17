@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -63,8 +62,6 @@ import com.sunnybear.library.view.emoji.Emoji;
 import com.sunnybear.library.view.emoji.EmojiEditText;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -193,6 +190,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 //        et_msg.setFocusable(true);
     }
 
+    @Override
+    protected String[] getRequestUrls() {
+        return new String[0];
+    }
+
 
 //    @Override
 //    protected void onResume() {
@@ -228,7 +230,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 }, false);
     }
 
-    Handler mLoadHandler = new Handler();
+/*    Handler mLoadHandler = new Handler();
     private String mCancelUrl;
     private int mFailCount;
     Runnable mLoadRun = new Runnable() {
@@ -245,9 +247,9 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         }
     };
 
-    /**
+    *//**
      * 获取文章数据
-     */
+     *//*
     private void getLastestArticle() {
         String lastPullId;
         if (mCompanion != null) lastPullId = mCompanion.getLast_pull_id();
@@ -291,7 +293,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 mCancelUrl = url;
             }
         }, false);
-    }
+    }*/
 
 
     /**
@@ -317,6 +319,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 if (!TextUtils.isEmpty(companionDB.getImage()))
                     serviceMessageList.setImage(JSON.parseObject(companionDB.getImage(), ServiceMessageListImage.class));
                 serviceMessageList.setRelease_time(Integer.parseInt(companionDB.getRelease_time()));
+                serviceMessageList.setReceiver_time(Long.parseLong(companionDB.getReceiver_time()));
                 serviceMessageList.setType(companionDB.getType());
                 if (!TextUtils.isEmpty(companionDB.getIs_upload_finish()))
                     serviceMessageList.setSend_state(Integer.parseInt(companionDB.getIs_upload_finish()));
@@ -329,7 +332,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 //            mGameDetailAdapter.replaceAll(JSONArray.parseArray(JSONArray.toJSONString(downloadArticles), ServiceMessageList.class));
         }
 //        mPage = 1;
-        mLoadHandler.post(mLoadRun);
+//        mLoadHandler.post(mLoadRun);
         /*if (null == mCompanion)
             return;
         ArrayList<String> notDownloadIds = dataBaseManager.getNotDownloadIds(mServiceId);
@@ -557,10 +560,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         ServiceMessageList serviceMessageList = new ServiceMessageList();
         serviceMessageList.setService_id(mServiceId);
         serviceMessageList.setImage(serviceMessageListImage);
-        String time = System.currentTimeMillis() / 1000 + "";
-        serviceMessageList.setRelease_time(Integer.parseInt(time));
+//        String time = System.currentTimeMillis() / 1000 + "";
+//        serviceMessageList.setReceiver_time(Sys);
+        long time = System.currentTimeMillis();
+        serviceMessageList.setReceiver_time(time);
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_IMAGE_TYPE);
-        serviceMessageList.setId(time);
+        serviceMessageList.setId(time + "");
         mGameDetailAdapter.add(serviceMessageList);
         rv_content.smoothScrollToPosition(mGameDetailAdapter.getItemCount() - 1);
         mDataBaseManager.insertObject(mServiceId, serviceMessageList);
@@ -574,8 +579,10 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         }
         ServiceMessageList serviceMessageList = new ServiceMessageList();
         serviceMessageList.setService_id(mServiceId);
-        int time = (int) (System.currentTimeMillis() / 1000) - 1; //-1区分响应msg，防止time相同
-        serviceMessageList.setRelease_time(time);
+//        int time = (int) (System.currentTimeMillis() / 1000) - 1; //-1区分响应msg，防止time相同
+//        serviceMessageList.setRelease_time(time);
+        long time = System.currentTimeMillis();
+        serviceMessageList.setReceiver_time(time);
         serviceMessageList.setId(time + "");
         serviceMessageList.setMessage(msg);
         serviceMessageList.setType(GameDetailAdapter.UPLOAD_TEXT_TYPE);
@@ -787,17 +794,11 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 //        startActivity(BaseWebViewActivity.class, bundle);
 //    }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         popupWindow_custommenu = null;
-    }
-
-    @Override
-    protected String[] getRequestUrls() {
-        if (null != mCancelUrl)
-            return new String[]{mCancelUrl};
-        return new String[0];
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_UPDATE_UPLOAD)
@@ -827,12 +828,12 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
     @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
-        for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
+        /*for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
             String service_id = gpushMessageAccNumber.getService_id();
             if (mServiceId.equals(service_id)) {
                 getLastestArticle();
             }
-        }
+        }*/
 
     }
 }

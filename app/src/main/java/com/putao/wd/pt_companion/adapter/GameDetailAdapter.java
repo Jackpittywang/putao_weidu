@@ -77,7 +77,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         mSendStateMap.clear();
         int i = 0;
         for (ServiceMessageList serviceMessage : serviceMessageLists) {
-            putDate(serviceMessage.getRelease_time(), i);
+            putDate(serviceMessage.getReceiver_time(), i);
             mSendStateMap.put(i, serviceMessage.getSend_state());
             i++;
         }
@@ -86,7 +86,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     @Override
     public void add(ServiceMessageList serviceMessageList) {
         super.add(serviceMessageList);
-        putDate(serviceMessageList.getRelease_time(), getItemCount() - 1);
+        putDate(serviceMessageList.getReceiver_time(), getItemCount() - 1);
         mSendStateMap.put(getItemCount() - 1, serviceMessageList.getSend_state());
     }
 
@@ -95,13 +95,13 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
         super.addAll(serviceMessageLists);
         int i = getItemCount() - serviceMessageLists.size();
         for (ServiceMessageList serviceMessage : serviceMessageLists) {
-            putDate(serviceMessage.getRelease_time(), i);
+            putDate(serviceMessage.getReceiver_time(), i);
             mSendStateMap.put(i, serviceMessage.getSend_state());
             i++;
         }
     }
 
-    private void putDate(int release_time, int position) {
+    private void putDate(long release_time, int position) {
         String date = DateUtils.timeCalculate(release_time);
         if (mDates.contains(date)) {
             mDatesMap.put(position, 2);
@@ -161,7 +161,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     public void onBindItem(BasicViewHolder holder, final ServiceMessageList serviceMessageList, final int position) {
 
 //        String date = DateUtils.secondToDate(serviceMessageList.getRelease_time(), "yyyy-MM-dd HH:mm");
-        String date = DateUtils.timeCalculate(serviceMessageList.getRelease_time());
+        String date = DateUtils.timeCalculate(serviceMessageList.getReceiver_time());
         if (holder instanceof QuestionReplyViewHolder) {
             QuestionReplyViewHolder askViewHolder = (QuestionReplyViewHolder) holder;
             askViewHolder.question_item_answer_icon.resize(200, 200);
@@ -540,10 +540,10 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 String message = (String) jsonObject.get("message");
                                 if (!TextUtils.isEmpty(message)) {
                                     ServiceMessageList serviceMessageList = new ServiceMessageList();
-                                    String time = System.currentTimeMillis() / 1000 + "";
-                                    serviceMessageList.setRelease_time(Integer.parseInt(time));
+                                    long time = System.currentTimeMillis();
+                                    serviceMessageList.setReceiver_time(time);
                                     serviceMessageList.setType("text");
-                                    serviceMessageList.setId(time);
+                                    serviceMessageList.setId(time+"");
                                     serviceMessageList.setMessage(message);
                                     serviceMessageList.setService_id(mServiceId);
                                     EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);

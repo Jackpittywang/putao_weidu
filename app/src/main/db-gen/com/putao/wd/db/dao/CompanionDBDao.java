@@ -36,6 +36,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         public final static Property image = new Property(9, String.class, "image", false, "IMAGE");
         public final static Property reply = new Property(10, String.class, "reply", false, "REPLY");
         public final static Property is_upload_finish = new Property(11, String.class, "reply", false, "IS_UPLOAD_FINISH");
+        public final static Property receiver_time = new Property(12, String.class, "reply", false, "RECEIVER_TIME");
     }
 
 
@@ -64,7 +65,8 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
                 "\"" + Properties.message.columnName + "\"" + " TEXT," +
                 "\"" + Properties.image.columnName + "\"" + " TEXT," +
                 "\"" + Properties.reply.columnName + "\"" + " TEXT," +
-                "\"" + Properties.is_upload_finish.columnName + "\"" + " TEXT)";
+                "\"" + Properties.is_upload_finish.columnName + "\"" + " TEXT," +
+                "\"" + Properties.receiver_time.columnName + "\"" + " TEXT)";
         db.execSQL(str);
     }
 
@@ -101,7 +103,8 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
                 cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // message
                 cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // image
                 cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // reply
-                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // is_upload_finish
+                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // is_upload_finish
+                cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // receiver_time
         );
         return entity;
     }
@@ -123,6 +126,7 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         entity.setImage(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setReply(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setIs_upload_finish(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setReceiver_time(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
     }
 
     @Override
@@ -179,6 +183,10 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         String is_upload_finish = entity.getIs_upload_finish();
         if (is_upload_finish != null) {
             stmt.bindString(12, is_upload_finish);
+        }
+        String receiver_time = entity.getReceiver_time();
+        if (receiver_time != null) {
+            stmt.bindString(13, receiver_time);
         }
     }
 

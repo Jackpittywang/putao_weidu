@@ -1,13 +1,15 @@
 package com.putao.wd;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -25,6 +27,8 @@ import com.putao.wd.home.PutaoDiscoveryFragment;
 import com.putao.wd.home.PutaoStoreFragment;
 import com.putao.wd.model.CompainServiceMessage;
 import com.putao.wd.model.GpushMessageAccNumber;
+import com.putao.wd.model.ServiceMessage;
+import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.ActivityManager;
@@ -105,7 +109,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         tb_index_tab.setTabItemSelected(/*is_device_bind && */AccountHelper.isLogin() ? R.id.ti_index_companion : R.id.ti_index_discovery);
         vp_content.setCurrentItem(/*is_device_bind &&*/ AccountHelper.isLogin() ? 0 : 1);
 
-        if(AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             checkFristImg();
         }
 
@@ -168,13 +172,14 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
     }
 
-    private void checkFristImg(){
+    private void checkFristImg() {
         if (!PreferenceUtils.getValue(PREFERENCE_STEP1_IS_FIRST, false))
             view_img.setVisibility(View.VISIBLE);
         else {
             view_img.setVisibility(View.GONE);
         }
     }
+
     @Override
     protected String[] getRequestUrls() {
         return new String[0];

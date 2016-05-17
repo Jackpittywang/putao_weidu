@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.putao.ptx.push.core.Constants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.db.CompanionDBManager;
+import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.GpushMessage;
 import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.model.GpushMessageMsgCenter;
@@ -62,10 +63,14 @@ public class GPushMessageReceiver extends BroadcastReceiver {
             ArrayList<GpushMessageAccNumber> accompanyNumber = gpushMessage.getAccompanyNumber();
             CompanionDBManager dataBaseManager = (CompanionDBManager) GlobalApplication.getDataBaseManager(CompanionDBManager.class);
             for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
-                dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId());
+                CompanionDB companInfoById = dataBaseManager.getCompanInfoById(gpushMessageAccNumber.getId());
+                if (null == companInfoById) {
+                    dataBaseManager.insertFixDownload(gpushMessageAccNumber.getService_id(), gpushMessageAccNumber.getId(), System.currentTimeMillis());
+                    EventBusHelper.post(accompanyNumber, COMPANION_DOT);
+                }
             }
 //            EventBusHelper.post(true, COMPANION_TABBAR);
-            EventBusHelper.post(accompanyNumber, COMPANION_DOT);
+
         }
         if (null != gpushMessage.getMessageCenter()) {
             GpushMessageMsgCenter messageCenter = gpushMessage.getMessageCenter();

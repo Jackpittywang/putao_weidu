@@ -17,6 +17,7 @@ public class ServiceMessageList implements Serializable {
     private int isShowData;//0未记录  1 显示 2 不显示
     private List<ServiceMessageContent> content_lists;
     private String service_id;
+    private long receiver_time;
 
     public String getId() {
         return id;
@@ -96,5 +97,13 @@ public class ServiceMessageList implements Serializable {
 
     public void setService_id(String service_id) {
         this.service_id = service_id;
+    }
+
+    public long getReceiver_time() {
+        return receiver_time;
+    }
+
+    public void setReceiver_time(long receiver_time) {
+        this.receiver_time = receiver_time;
     }
 }

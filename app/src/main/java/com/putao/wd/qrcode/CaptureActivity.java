@@ -449,7 +449,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                         ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
                                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                                         for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
-                                            dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()));
+                                            dataBaseManager.insertFinishDownload(serverId, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()), System.currentTimeMillis());
                                         }
                                     } catch (Exception e) {
 
