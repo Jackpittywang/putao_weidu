@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.putao.wd.R;
 import com.putao.wd.model.Collection;
 import com.putao.wd.model.Create;
+import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
@@ -47,7 +48,7 @@ public class CollectionAdapter extends LoadMoreAdapter<Collection, CollectionAda
     public void onBindItem(final CollectionViewHodler holder, Collection collection, int position) {
         holder.tv_title.setText(collection.getTitle());
         holder.tv_content.setText(collection.getSubtitle());
-        holder.iv_icon.setImageURL(collection.getHead_img());
+        holder.iv_icon.setImageURL(ImageUtils.getImageSizeUrl(collection.getHead_img(), ImageUtils.ImageSizeURL.SIZE_240x240));
     }
 
     static class CollectionViewHodler extends BasicViewHolder {

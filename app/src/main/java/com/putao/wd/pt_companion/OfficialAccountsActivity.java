@@ -372,10 +372,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             } else {
                 if (companion.getService_type() != 2)
                     mSelectPopupWindow.tv_second.setText("取消关联");
+                else
+                    mSelectPopupWindow.tv_second.setText("取消订阅");
             }
         } else {
             mSelectPopupWindow.tv_second.setText("取消订阅");
         }
+
         mSelectPopupWindow.tv_second.setTextColor(0xffcc0000);
     }
 
@@ -403,8 +406,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
                             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
                         } else {
-                            EventBusHelper.post("", AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
-                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+                            if (capture_url != null) {
+                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, serviceInfo.getService_icon());
+                            } else {
+                                EventBusHelper.post("", AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
+                                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
+                            }
                         }
                         startActivity(GameDetailListActivity.class, bundle);
                         ToastUtils.showToastShort(mContext, "清除成功");
@@ -423,6 +431,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     } else {
                         if (companion.getService_type() != 2)
                             tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                        else
+                            tv_dialog.setText("取消订阅后后，所有信息将会清空。");
                     }
                 } else {
                     tv_dialog.setText("取消订阅后后，所有信息将会清空。");
