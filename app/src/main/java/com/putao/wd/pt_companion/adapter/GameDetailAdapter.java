@@ -186,9 +186,9 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                     askViewHolder.question_item_answer_context.setVisibility(View.GONE);
                     askViewHolder.question_item_ask_image.resize(200, 200);
                     if (TextUtils.isEmpty(serviceMessageList.getImage().getPic())) {
-                        askViewHolder.question_item_ask_image.setImageURL("file://putao/" + serviceMessageList.getImage().getThumb());
+                        askViewHolder.question_item_ask_image.setImageURL(serviceMessageList.getImage().getThumb());
                     } else {
-                        askViewHolder.question_item_ask_image.setImageURL("file://putao/" + serviceMessageList.getImage().getPic());
+                        askViewHolder.question_item_ask_image.setImageURL(serviceMessageList.getImage().getPic());
                     }
                     askViewHolder.question_item_ask_image.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -346,7 +346,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                             questionLocalViewHolder.img_item_retry_text.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position,1);
+                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, serviceMessageList.getMessage(), position, 1);
                                 }
                             });
                             break;
@@ -552,15 +552,15 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 if (!TextUtils.isEmpty(message)) {
                                     ServiceMessageList serviceMessageList = new ServiceMessageList();
                                     long time = System.currentTimeMillis();
-                                    if (type == 1) {//文字
-                                        serviceMessageList.setType("text");
-                                    } else if (type == 2) {//图片
-                                        serviceMessageList.setType("image");
-                                        serviceMessageList.getImage().setThumb(msg);
-                                        serviceMessageList.getImage().setPic(msg);
-                                    }
+//                                    if (type == 1) {//文字
+                                    serviceMessageList.setType("text");
+//                                    } else if (type == 2) {//图片
+//                                        serviceMessageList.setType("image");
+//                                        serviceMessageList.getImage().setThumb(msg);
+//                                        serviceMessageList.getImage().setPic(msg);
+//                                    }
                                     serviceMessageList.setReceiver_time(time);
-                                    serviceMessageList.setId(time+"");
+                                    serviceMessageList.setId(time + "");
                                     serviceMessageList.setMessage(message);
                                     serviceMessageList.setService_id(mServiceId);
                                     EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
