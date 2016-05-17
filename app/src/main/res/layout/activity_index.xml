@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <!--分割线-->
     <View
         android:id="@+id/v_line_horizontal"
@@ -62,4 +61,10 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/v_line_horizontal" />
 
+    <View
+        android:id="@+id/view_img"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_p_tip_07"/>
 </RelativeLayout>

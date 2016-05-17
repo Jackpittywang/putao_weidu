@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -48,6 +50,9 @@ import butterknife.Bind;
  * Created by guchenkai on 2016/1/13.
  */
 public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
+    public static final String PREFERENCE_STEP1_IS_FIRST = "preference_step1_is_first";
+    private static boolean isFrist = true;
+
     public static boolean isNotRefreshUserInfo = false;
     public final static String PAY_ALL = "pay_all";
     //    public static boolean isPuTaoCompanionPlusCanUse = false;
@@ -63,6 +68,8 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
     TabItem ti_index_store;
     @Bind(R.id.ti_index_me)
     TabItem ti_index_me;
+    @Bind(R.id.view_img)
+    View view_img;
 
     private SparseArray<Fragment> mFragments;
     private boolean isNoMoreService = false;
@@ -77,6 +84,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         //透明状态栏
 /*        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);*/
+
         UmengUpdateAgent.setDefault();
         UmengUpdateAgent.update(IndexActivity.this);
         addFragments();
@@ -96,6 +104,11 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         Boolean is_device_bind = PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false);
         tb_index_tab.setTabItemSelected(/*is_device_bind && */AccountHelper.isLogin() ? R.id.ti_index_companion : R.id.ti_index_discovery);
         vp_content.setCurrentItem(/*is_device_bind &&*/ AccountHelper.isLogin() ? 0 : 1);
+
+        if(AccountHelper.isLogin()){
+            checkFristImg();
+        }
+
         if (AccountHelper.isLogin()) {
             //红点显示
 //            refreshCompanionDot("");
@@ -123,6 +136,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             public void onTabItemSelected(TabItem item, int position) {
                 switch (position) {
                     case 0:
+                        checkFristImg();
                         YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "陪伴");
                         break;
                     case 1:
@@ -142,8 +156,25 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 //                if (0 == position) hideCompanionRedDot();
             }
         });
+
+        view_img.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                view_img.setVisibility(View.GONE);
+                PreferenceUtils.save(PREFERENCE_STEP1_IS_FIRST, true);
+            }
+        });
+
     }
 
+    private void checkFristImg(){
+        if (!PreferenceUtils.getValue(PREFERENCE_STEP1_IS_FIRST, false))
+            view_img.setVisibility(View.VISIBLE);
+        else {
+            view_img.setVisibility(View.GONE);
+        }
+    }
     @Override
     protected String[] getRequestUrls() {
         return new String[0];
