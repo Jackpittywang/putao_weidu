@@ -23,6 +23,7 @@ import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -87,7 +88,6 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener 
                         mPage++;
                         rv_content.loadMoreComplete();
 
-                        //                       checkIsNoMore();
                     } else {
                         rv_content.noMoreLoading();
                         ll_empty.setVisibility(View.VISIBLE);
@@ -115,21 +115,15 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener 
         });
     }
 
-//    private void checkIsNoMore() {
-//        if (rv_content.getLayoutManager().getChildAt(rv_content.getLayoutManager().getItemCount() - 2).getVisibility() == View.VISIBLE) {
-//            rv_content.noMoreLoading();
-//        }
-//    }
 
     private void loadMoreTagList() {
         networkRequest(DisCoveryApi.getTagResources(tagId, String.valueOf(mPage)), new SimpleFastJsonCallback<Campaign>(Campaign.class, loading) {
             @Override
             public void onSuccess(String url, Campaign result) {
                 if (result != null) {
-                    List<Resources> res = result.getResources();
-
-                    if (res != null && res.size() > 0) {
-                        resources.addAll(res);
+                    resources = result.getResources();
+                    if (resources != null && resources.size() > 0) {
+                        labelAdapter.addAll(resources);
                         mPage++;
                         rv_content.loadMoreComplete();
                     } else {
@@ -137,6 +131,7 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener 
                     }
                     loading.dismiss();
                 }
+
             }
         });
     }
@@ -172,6 +167,11 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener 
         });
     }
 
+    private void checkLoadMoreComplete(List<Resources> result) {
+        if (result == null)
+            rv_content.noMoreLoading();
+        else mPage++;
+    }
 
     @Override
     protected String[] getRequestUrls() {

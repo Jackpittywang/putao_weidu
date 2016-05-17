@@ -88,10 +88,10 @@ public class LookHistoryActivity extends PTWDActivity {
         rv_lookHistory.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (isBunding || isSubscribe)
-                    loadMoreData();
-                else
-                    rv_lookHistory.noMoreLoading();
+//                if (isSubscribe || isBunding)
+                loadMoreData();
+//                else
+//                    rv_lookHistory.noMoreLoading();
             }
         });
         rv_lookHistory.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {

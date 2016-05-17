@@ -7,7 +7,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.GlobalApplication;
@@ -47,6 +49,8 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
     BasicRecyclerView rcPhotoList;
     @Bind(R.id.flFolder)
     FrameLayout flFolder;
+    @Bind(R.id.ll_SelectFolder)
+    LinearLayout ll_SelectFolder;
     @Bind(R.id.rcFolderList)
     BasicRecyclerView rcFolderList;
     @Bind(R.id.tvCount)
@@ -143,13 +147,13 @@ public class PhotoAlbumActivity extends BasicFragmentActivity<GlobalApplication>
         return new String[0];
     }
 
-    @OnClick({R.id.tvClose, R.id.tvSelectFolder, R.id.tvNext})
+    @OnClick({R.id.tvClose, R.id.ll_SelectFolder, R.id.tvNext})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvClose:
                 finish();
-            case R.id.tvSelectFolder:
+            case R.id.ll_SelectFolder:
                 showFolderSelect();
                 break;
             case R.id.tvNext:

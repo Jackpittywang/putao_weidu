@@ -23,16 +23,31 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_18sp" />
 
-        <TextView
-            android:id="@+id/tvSelectFolder"
+        <LinearLayout
+            android:id="@+id/ll_SelectFolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="胶卷相机"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18sp" />
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvSelectFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="胶卷相机"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_18sp" />
+
+            <ImageView
+                android:id="@+id/iv_SelectFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_arrow_down" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <View

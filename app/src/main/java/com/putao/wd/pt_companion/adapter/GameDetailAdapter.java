@@ -217,7 +217,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
             gameDetailHolder.rl_article3.setVisibility(View.GONE);
             gameDetailHolder.rl_article4.setVisibility(View.GONE);
             final ServiceMessageContent serviceMessageContent = content_lists.get(0);
-            gameDetailHolder.iv_sign.setImageURL(serviceMessageContent.getCover_pic());
+            gameDetailHolder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(serviceMessageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_240x240));
             if (content_lists.size() == 1) {
                 gameDetailHolder.tv_title.setVisibility(View.VISIBLE);
                 gameDetailHolder.tv_content.setVisibility(View.VISIBLE);

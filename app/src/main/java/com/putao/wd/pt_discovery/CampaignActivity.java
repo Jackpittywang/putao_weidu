@@ -22,6 +22,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.PullToRefreshLayout;
 import com.sunnybear.library.view.recycler.LoadMoreRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
  * 发现的活动列表
  * Created by Administrator on 2016/5/5.
  */
-public class CampaignActivity extends PTWDActivity implements View.OnClickListener{
+public class CampaignActivity extends PTWDActivity implements View.OnClickListener {
     @Bind(R.id.ptl_refresh)
     PullToRefreshLayout ptl_refresh;
     @Bind(R.id.rv_content)
@@ -88,9 +89,9 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
             @Override
             public void onItemClick(Resources resources, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE,ResourceFragment.RESOURCE);
-                bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON,resources.getIcon());
-                bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE,resources.getId());
+                bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE, ResourceFragment.RESOURCE);
+                bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON, resources.getIcon());
+                bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE, resources.getId());
                 bundle.putString(BaseWebViewActivity.TITLE, resources.getTitle());
                 bundle.putString(BaseWebViewActivity.SERVICE_ID, resources.getSid());
                 bundle.putString(BaseWebViewActivity.URL, resources.getLink_url());
@@ -104,10 +105,9 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
             @Override
             public void onSuccess(String url, Campaign result) {
                 if (result != null) {
-                    List<Resources> res = result.getResources();
-
-                    if (res != null && res.size() > 0) {
-                        resources.addAll(res);
+                    resources = result.getResources();
+                    if (resources != null && resources.size() > 0) {
+                        campaignAdapter.addAll(resources);
                         mPage++;
                         rv_content.loadMoreComplete();
                     } else {
@@ -149,7 +149,7 @@ public class CampaignActivity extends PTWDActivity implements View.OnClickListen
                 campaignAdapter.setMainTitleNotify(tag_info.getTag_name());
                 ptl_refresh.refreshComplete();
                 loading.dismiss();
-        //        setMainTitle(tag_info.getTag_name());
+                //        setMainTitle(tag_info.getTag_name());
             }
 
             @Override

@@ -366,8 +366,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         mSelectPopupWindow.tv_first.setText("清空内容");
 
 //        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
-        if (!isSubscribe && companion.getService_type() != 2) {
-            mSelectPopupWindow.tv_second.setText("取消关联");
+        if (!isSubscribe) {
+            if (capture_url != null) {
+                mSelectPopupWindow.tv_second.setText("取消关联");
+            } else {
+                if (companion.getService_type() != 2)
+                    mSelectPopupWindow.tv_second.setText("取消关联");
+            }
         } else {
             mSelectPopupWindow.tv_second.setText("取消订阅");
         }
@@ -412,8 +417,13 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             public void onSecondClick(View v) {//取消关联
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
                 showDialog();
-                if (!isSubscribe && companion.getService_type() != 2) {
-                    tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                if (!isSubscribe) {
+                    if (capture_url != null) {
+                        tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                    } else {
+                        if (companion.getService_type() != 2)
+                            tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                    }
                 } else {
                     tv_dialog.setText("取消订阅后后，所有信息将会清空。");
                 }
