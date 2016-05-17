@@ -3,6 +3,9 @@ package com.putao.wd.pt_me.collection;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -51,6 +54,9 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
     private AlertDialog mDeleteDialog;
     private boolean isCollection = true;
     private ArrayList<Collection> mCollection;
+    private int lastItemPosition;
+    private int lastVisiblePosition;
+    private boolean isFirst = true;
 
     @Override
     protected int getLayoutId() {
@@ -64,6 +70,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
         rv_collection.setAdapter(adapter);
         initData();
         addListenter();
+
     }
 
     private void initData() {
@@ -79,7 +86,13 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
                             mPage++;
-                            rv_collection.loadMoreComplete();
+
+                            if (isFirst) {
+                                checkMoreData();
+                            } else {
+                                rv_collection.loadMoreComplete();
+                            }
+
                         } else {
                             rv_collection.noMoreLoading();
                             ptl_refresh.setVisibility(View.GONE);
@@ -101,6 +114,29 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                         loading.dismiss();
                     }
                 });
+    }
+
+    private void checkMoreData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        isFirst = false;
+                        lastItemPosition = adapter.getItemCount() - 1;
+                        LinearLayoutManager layoutManager = (LinearLayoutManager) rv_collection.getLayoutManager();
+                        lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
+                        if (lastVisiblePosition >= lastItemPosition -1) {
+                            rv_collection.loadMoreComplete();
+                            rv_collection.noMoreLoading();
+                        } else {
+                            rv_collection.loadMoreComplete();
+                        }
+                    }
+                });
+            }
+        }, 500);
     }
 
     private void addListenter() {
@@ -188,6 +224,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
             rv_collection.noMoreLoading();
         else mPage++;
     }
+
 
     @Override
     public void onItemClick(Collection collection, int position) {
