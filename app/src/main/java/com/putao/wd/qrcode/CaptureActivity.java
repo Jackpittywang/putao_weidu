@@ -446,6 +446,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 if (http_code == 200) {
                                     try {
                                         JSONObject data = result.getJSONObject("data");
+                                        data =  data.getJSONObject("auto_reply");
                                         ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
                                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                                         for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
@@ -453,6 +454,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
+                                        Logger.d(e.getMessage());
                                     }
 
                                     EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
