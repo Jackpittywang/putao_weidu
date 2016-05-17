@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
@@ -105,6 +106,9 @@ public abstract class BasicPopupWindow extends PopupWindow implements View.OnTou
      */
     public void show(View target) {
         EventBusHelper.register(this);
+        ViewParent parent = mBackgroundView.getParent();
+        if (null != parent)
+            ((ViewGroup) parent).removeView(mBackgroundView);
         mDecorView.addView(mBackgroundView);
         showAtLocation(target, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
