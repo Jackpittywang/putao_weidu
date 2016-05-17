@@ -226,7 +226,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                 gameDetailHolder.ll_main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onSkipPage(serviceMessageList, serviceMessageContent);
+                        onSkipPage(serviceMessageContent);
                     }
                 });
             } else if (content_lists.size() > 1) {
@@ -235,7 +235,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                 gameDetailHolder.rl_gamedetail_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onSkipPage(serviceMessageList, serviceMessageContent);
+                        onSkipPage(serviceMessageContent);
                     }
                 });
                 for (int i = 1; i < content_lists.size(); i++) {
@@ -249,7 +249,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
-                                    onSkipPage(serviceMessageList, serviceMContent);
+                                    onSkipPage(serviceMContent);
                                 }
                             });
                             break;
@@ -261,7 +261,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
-                                    onSkipPage(serviceMessageList, serviceMContent);
+                                    onSkipPage(serviceMContent);
                                 }
                             });
                             break;
@@ -273,7 +273,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
-                                    onSkipPage(serviceMessageList, serviceMContent);
+                                    onSkipPage(serviceMContent);
                                 }
                             });
 
@@ -286,7 +286,7 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                                 @Override
                                 public void onClick(View v) {
                                     EventBusHelper.post(serviceMContent, AccountConstants.EventBus.EVENT_GAME_START_ACTIVITY);
-                                    onSkipPage(serviceMessageList, serviceMContent);
+                                    onSkipPage(serviceMContent);
                                 }
                             });
                             break;
@@ -563,10 +563,11 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
     /**
      * 跳转页面
      */
-    private void onSkipPage(ServiceMessageList serviceMessageList, ServiceMessageContent serviceMessageContent) {
+    private void onSkipPage(ServiceMessageContent serviceMessageContent) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageContent);
         bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, mServiceId);
+        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, true);
         bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, serviceMessageContent.getTitle());
         bundle.putString(BaseWebViewActivity.URL, serviceMessageContent.getLink_url());
         context.startActivity(ArticleDetailForActivitiesActivity.class, bundle);

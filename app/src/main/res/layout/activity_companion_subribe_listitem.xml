@@ -9,8 +9,10 @@
 
     <com.sunnybear.library.view.image.ImageDraweeView
         android:id="@+id/iv_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
+        style="@style/image_round_4dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
 
     <TextView
         android:id="@+id/tv_title"
@@ -37,7 +39,7 @@
         android:paddingLeft="10dp"
         android:text="可以陪孩子一起学数学让孩子对数字敏感,培养孩子逻辑思维能力"
         android:textColor="@color/text_color_gray"
-        android:textSize="@dimen/text_size_14sp" />
+        android:textSize="@dimen/text_size_12sp" />
 
     <TextView
         android:id="@+id/tv_isSubribe"

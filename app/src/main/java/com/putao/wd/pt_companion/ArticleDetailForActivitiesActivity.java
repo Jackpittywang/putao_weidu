@@ -109,7 +109,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
         super.onViewCreatedFinish(saveInstanceState);
         Collection collection = (Collection) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION);
         String str = args.getString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE);
-        final ServiceMessageContent content_list;
+        ServiceMessageContent content_list;
         if (null != collection) {
             String link_url = collection.getLink_url();
             /*int sid = link_url.indexOf("sid");
@@ -133,6 +133,14 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
             article_id = args.getString(ARTICLE);
             title = args.getString(BaseWebViewActivity.TITLE);
             service_id = args.getString(BaseWebViewActivity.SERVICE_ID);
+        } else if (args.getBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK)) {
+            content_list = (ServiceMessageContent) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
+            service_id = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_ID);
+            title = content_list.getTitle();
+            sub_title = content_list.getSub_title();
+            cover_pic = content_list.getCover_pic();
+            link_url = content_list.getLink_url();
+            article_id = content_list.getArticle_id();
         } else {
             messageList = (ServiceMessageList) args.getSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST);
             service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);

@@ -51,6 +51,12 @@
                 android:layout_height="30dp"
                 android:layout_alignBottom="@+id/iv_sign"
                 android:background="#55000000"
+                android:gravity="center"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18sp"
                 android:visibility="gone" />
         </RelativeLayout>
         <!--活动状态-->
