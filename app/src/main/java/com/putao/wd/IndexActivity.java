@@ -140,7 +140,9 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             public void onTabItemSelected(TabItem item, int position) {
                 switch (position) {
                     case 0:
-                        checkFristImg();
+                        if (AccountHelper.isLogin()) {
+                            checkFristImg();
+                        }
                         YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "陪伴");
                         break;
                     case 1:
