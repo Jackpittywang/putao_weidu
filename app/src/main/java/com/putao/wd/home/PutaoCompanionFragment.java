@@ -19,10 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.putao.ptx.push.core.Constants;
 import com.putao.ptx.push.core.GPushCallback;
 import com.putao.ptx.push.core.NetworkUtil;
-import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
@@ -172,12 +170,17 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                             companion.setIsShowRed(true);
                                         }
                                     }
-                                    Companion max = Collections.max(mSubscriptCompanion, stepComparator);
-                                    companion.setSubstr(max.getService_name() + ":" + (max.getSubstr() != null ? max.getSubstr() : ""));
+                                    Companion min = Collections.min(mSubscriptCompanion, stepComparator);
+                                    companion.setReceiver_time(min.getReceiver_time());
+                                    companion.setSubstr(min.getService_name() + ":" + (min.getSubstr() != null ? min.getSubstr() : ""));
                                     continue;
                                 } else
                                     checkResult(companion);
                             }
+                            /*for(int i =0; i<result.size(); i++){
+                                if(result.get(i).getSort() == "9999"){ result.get(i).setIs_unbunding(true);
+                            }*/
+                            Collections.sort(result, stepComparator);
                             mCompanionAdapter.replaceAll(result);
                             rl_no_commpain.setVisibility(View.GONE);
                             rv_content.setVisibility(View.VISIBLE);
@@ -216,9 +219,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
         @Override
         public int compare(Companion lhs, Companion rhs) {
+            if (rhs.is_unbunding()) return 2;
             if (lhs.getReceiver_time() > rhs.getReceiver_time())
-                return 1;
-            return -1;
+                return -1;
+            return 1;
         }
     }
 
@@ -299,7 +303,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         ll_ScanCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.Assocaite_product);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
                 startActivity(CaptureActivity.class, bundle);
@@ -309,7 +313,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         ll_Subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YouMengHelper.onEvent(mActivity,YouMengHelper.Activity_home_putaoSubscription_subscriberClick);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.Activity_home_putaoSubscription_subscriberClick);
                 startActivity(SubscriptionNumberActivity.class);
                 popupWindow.dismiss();
             }
@@ -359,7 +363,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
             if (companion.getService_type() == 0) {
-                YouMengHelper.onEvent(mActivity,YouMengHelper.Activity_home_destination);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.Activity_home_destination);
                 startActivity(PutaoSubcribeActivity.class, bundle);
             } else {
 //                mDataBaseManager.removeEmptyData(companion.getService_id());
@@ -377,7 +381,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 startActivity(GameDetailListActivity.class, bundle);
             }
         } else {
-            YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
+            YouMengHelper.onEvent(mActivity, YouMengHelper.Assocaite_product);
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, true);
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
             startActivity(OfficialAccountsActivity.class, bundle);
@@ -396,7 +400,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         switch (v.getId()) {
             case R.id.btn_relevance_device:
 
-                YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.Assocaite_product);
                 iv_step1_first.setVisibility(View.GONE);
                 PreferenceUtils.save(GlobalApplication.PREFERENCE_STEP1_IS_FIRST, true);
                 if (!AccountHelper.isLogin()) {
@@ -414,7 +418,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     checkDevice();
                 break;
             case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
-                YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.Assocaite_product);
                 if (isVisible)
                     popupWindow.showAsDropDown(img_compain_menu);
                 break;
@@ -423,7 +427,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 break;
             case R.id.tv_later_relevance://稍后关联
 
-                YouMengHelper.onEvent(mActivity,YouMengHelper.Activity_home_associate_later);
+                YouMengHelper.onEvent(mActivity, YouMengHelper.Activity_home_associate_later);
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
@@ -472,12 +476,17 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         if (result != null) {
                             mFailCount = 0;
                             ArrayList<ServiceMessageList> lists = result.getLists();
+                            int size = lists.size();
                             if (null != lists && lists.size() > 0) {
                                 for (ServiceMessageList serviceMessageList : lists) {
                                     serviceMessageList.setReceiver_time(System.currentTimeMillis());
-                                    mDataBaseManager.insertObject(mServiceId, serviceMessageList);
+                                    if (null != mDataBaseManager.getCompanInfoById(serviceMessageList.getId())) {
+                                        size--;
+                                    } else {
+                                        mDataBaseManager.insertObject(mServiceId, serviceMessageList);
+                                    }
                                 }
-                                setLastPullIdByService(mServiceId, lists.get(lists.size() - 1).getId(), lists.size());
+                                setLastPullIdByService(mServiceId, lists.get(lists.size() - 1).getId(), size);
                                 EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                                 mLoadHandler.postDelayed(mLoadRun, 1000);
                             }
@@ -509,13 +518,15 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         }
 
         private void setLastPullIdByService(String serviceId, String lastPullId, int size) {
+            if (0 == size)
+                return;
             for (Companion companion : mCompanion) {
                 if (companion.getService_id().equals(serviceId)) {
                     companion.setLast_pull_id(lastPullId);
                     companion.setIsShowRed(true);
                     companion.setNotDownloadCount(companion.getNotDownloadCount() + size);
                     mCompanionAdapter.notifyItemChanged(mCompanion.indexOf(companion));
-                    companion.setNotDownloadCount(companion.getNotDownloadCount() + size);
+//                    companion.setNotDownloadCount(companion.getNotDownloadCount() + size);
                     PreferenceUtils.save(companion.getService_id() + AccountHelper.getCurrentUid(), companion.getNotDownloadCount());
                 }
                 if (companion.getService_type() == 0) {

@@ -12,9 +12,11 @@ import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.home.adapter.CompanionAdapter;
+import com.putao.wd.model.Collection;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
+import com.putao.wd.model.ServiceMessageListReply;
 import com.putao.wd.model.ServiceSendData;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
@@ -24,6 +26,8 @@ import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -110,12 +114,18 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
         for (Companion companion : mCompanions) {
             checkResult(companion);
         }
-        mCompanionAdapter.notifyDataSetChanged();
+        Collections.sort(mCompanions, new StepComparator());
+//        mCompanionAdapter.notifyDataSetChanged();
+        mCompanionAdapter.replaceAll(mCompanions);
     }
 
     private void checkResult(Companion companion) {
         try {
             CompanionDB companionDB = mDataBaseManager.getNearestItem(companion.getService_id());
+            String receiver_time = companionDB.getReceiver_time();
+            if (!TextUtils.isEmpty(receiver_time)) {
+                companion.setReceiver_time(Long.parseLong(receiver_time));
+            }
             if (companionDB != null) {
                 switch (companionDB.getType()) {
                     case "text":
@@ -123,6 +133,10 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
                         break;
                     case "image":
                         companion.setSubstr("[图片]");
+                        break;
+                    case "reply":
+                        ServiceMessageListReply serviceMessageListReply = JSON.parseObject(companionDB.getReply(), ServiceMessageListReply.class);
+                        companion.setSubstr(serviceMessageListReply.getAnswer());
                         break;
                     case "upload_text":
                         companion.setSubstr(companionDB.getMessage());
@@ -132,16 +146,12 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
                         break;
                 }
                 if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
-                    int time = Integer.parseInt(companionDB.getRelease_time());
-                    if (time > 0) {
-                        companion.setRelation_time(time);
-                    }
                     List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
                     if ("article".equals(companionDB.getType()) && null != content_lists && content_lists.size() >= 0)
                         companion.setSubstr(content_lists.get(0).getTitle());
                 }
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -153,5 +163,16 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
             mCompanionAdapter = new CompanionAdapter(mContext, null);
         rv_content.setAdapter(mCompanionAdapter);
         mCompanionAdapter.replaceAll(mCompanions);
+    }
+
+    public class StepComparator implements Comparator<Companion> {
+
+
+        @Override
+        public int compare(Companion lhs, Companion rhs) {
+            if (lhs.getReceiver_time() > rhs.getReceiver_time())
+                return -1;
+            return 1;
+        }
     }
 }

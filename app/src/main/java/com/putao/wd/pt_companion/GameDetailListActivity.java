@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -46,6 +47,7 @@ import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
 import com.putao.wd.webview.BaseWebViewActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
@@ -192,14 +194,6 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         return new String[0];
     }
 
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        et_msg.requestFocus();
-//        et_msg.setFocusableInTouchMode(true);
-//        et_msg.setFocusable(true);
-//    }
 
     private void setMainTitleFromNetwork() {
         networkRequest(CompanionApi.getServiceInfo(mServiceId),
@@ -480,6 +474,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
 
     }
 
+
     @OnClick({R.id.iv_send, R.id.iv_menu, R.id.tv_send, R.id.iv_upload_pic, R.id.et_msg, R.id.tv_emojis})
     @Override
     public void onClick(View v) {
@@ -544,16 +539,39 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         }
     }
 
+
+    private boolean isFore;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        et_msg.setText("");
+        isFore = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isFore = false;
+    }
+
     //图片选择后的处理
     @Subcriber(tag = AccountConstants.EventBus.EVENT_ALBUM_SELECT)
-    public void eventSelectPic(List<ImageInfo> selectPhotos) {
-        if (selectPhotos != null && selectPhotos.size() > 0 && selectPhotos.get(0) != null) {
-            ServiceMessageListImage serviceMessageListImage = new ServiceMessageListImage();
-            serviceMessageListImage.setPic("file://" + selectPhotos.get(0)._DATA);
+    public void eventSelectPic(final List<ImageInfo> selectPhotos) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFore) return;
+                if (selectPhotos != null && selectPhotos.size() > 0 && selectPhotos.get(0) != null) {
+                    ServiceMessageListImage serviceMessageListImage = new ServiceMessageListImage();
+                    serviceMessageListImage.setPic("file://" + selectPhotos.get(0)._DATA);
 //            if (!StringUtils.isEmpty(selectPhotos.get(0).THUMB_DATA))
 //                serviceMessageListImage.setThumb("file://" + selectPhotos.get(0).THUMB_DATA);
-            conductPic(serviceMessageListImage);
-        }
+                    conductPic(serviceMessageListImage);
+                }
+            }
+        }, 600);
+
     }
 
     private void conductPic(ServiceMessageListImage serviceMessageListImage) {

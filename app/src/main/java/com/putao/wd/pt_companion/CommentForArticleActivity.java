@@ -44,11 +44,14 @@ import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
 import com.putao.wd.util.UploadFileCallback;
 import com.putao.wd.util.UploadLoader;
+import com.sunnybear.library.controller.ActivityManager;
+import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.model.http.callback.UploadCallback;
+import com.sunnybear.library.util.AppUtils;
 import com.sunnybear.library.util.FileUtils;
 import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.KeyboardUtils;
@@ -620,8 +623,8 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
         }
         if (hasPic) {
             loading.show();
-//            checkSha1(uploadPic);
-            UploadLoader.getInstance().addUploadFile(uploadPic, new UploadFileCallback() {
+            checkSha1(uploadPic);
+            /*UploadLoader.getInstance().addUploadFile(uploadPic, new UploadFileCallback() {
                 @Override
                 protected void onFileUploadSuccess(String ext, String filename, String hash, String filePath) {
                     loading.dismiss();
@@ -633,7 +636,7 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                     super.onFileUploadFail(filePath);
                     loading.dismiss();
                 }
-            }).execute();
+            }).execute();*/
         } else
             sendCommentMsg(null);
     }
