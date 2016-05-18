@@ -246,4 +246,27 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
         public static final String PROTOCOL_HEADER_PUTAO = "putao";
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            if (wv_content != null) {
+                wv_content.getClass().getMethod("onPause").invoke(wv_content, (Object[]) null);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            if (wv_content != null) {
+                wv_content.getClass().getMethod("onResume").invoke(wv_content, (Object[]) null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
