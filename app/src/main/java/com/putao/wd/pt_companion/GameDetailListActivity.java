@@ -697,6 +697,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(BaseWebViewActivity.TITLE, serviceMenu.getName());
                 bundle.putSerializable(BaseWebViewActivity.URL, serviceMenu.getUrl());
+                bundle.putSerializable(BaseWebViewActivity.SERVICE_ID, mServiceId);
                 startActivity(BaseWebViewActivity.class, bundle);
                 break;
 

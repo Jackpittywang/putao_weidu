@@ -583,16 +583,17 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_01);
                         break;
                     case 1:
-                        iv_no_commpain.setImageURL("res://putao/" +R.drawable.img_link_product_02);
+                        iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_02);
                         break;
                     case 2:
-                        iv_no_commpain.setImageURL("res://putao/" +R.drawable.img_link_product_03);
+                        iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_03);
                         break;
                     case 3:
                         iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_04);
                         break;
                 }
-                iv_no_commpain.startAnimation(mSet);
+                if (null != mSet)
+                    iv_no_commpain.startAnimation(mSet);
                 mPicChangeCount++;
             }
 
