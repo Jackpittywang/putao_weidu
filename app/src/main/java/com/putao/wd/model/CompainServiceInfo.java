@@ -11,7 +11,7 @@ public class CompainServiceInfo implements Serializable {
     private String service_description;
     private String service_icon;
     private boolean is_relation;//已关注，0未关注
-    private boolean service_type; // 1服务号 2订阅号
+    private int service_type; // 1服务号 2订阅号
     private boolean is_unbunding;//是否可以解绑，0可以1不可以
 
     public String getService_id() {
@@ -54,11 +54,11 @@ public class CompainServiceInfo implements Serializable {
         this.is_relation = is_relation;
     }
 
-    public boolean isService_type() {
+    public int isService_type() {
         return service_type;
     }
 
-    public void setService_type(boolean service_type) {
+    public void setService_type(int service_type) {
         this.service_type = service_type;
     }
 

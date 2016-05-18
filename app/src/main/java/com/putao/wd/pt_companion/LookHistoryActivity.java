@@ -50,7 +50,7 @@ public class LookHistoryActivity extends PTWDActivity {
     private ArrayList<ServiceMessageList> messageLists;
     private String service_id;
     private String service_name;
-    private boolean isSubscribe, isBunding;
+    private boolean isSubscribe, isBunding, isFromArticle;
     private int mPage = 1;
 
 
@@ -66,14 +66,19 @@ public class LookHistoryActivity extends PTWDActivity {
         service_name = args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME);
         isSubscribe = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
         isBunding = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, false);
+        isFromArticle = args.getBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, false);
         adapter = new LookHistoryAdapter(mContext, null);
         rv_lookHistory.setAdapter(adapter);
-        if (isSubscribe) {
-            if (!args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD))//没有关注的情况下
-                rv_lookHistory.setNoMoreText("订阅后可查看更多精彩内容,帮助您更好的陪伴孩子哦！");
+        if (isFromArticle) {
+            rv_lookHistory.setNoMoreText("订阅后可查看更多精彩内容,帮助您更好的陪伴孩子哦！");
         } else {
-            if (isBunding)
-                rv_lookHistory.setNoMoreText("关联产品后可查看更多内容，帮助您更好的陪伴孩子哦！");
+            if (isSubscribe) {
+                if (!args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD))//没有关注的情况下
+                    rv_lookHistory.setNoMoreText("订阅后可查看更多精彩内容,帮助您更好的陪伴孩子哦！");
+            } else {
+                if (isBunding)
+                    rv_lookHistory.setNoMoreText("关联产品后可查看更多内容，帮助您更好的陪伴孩子哦！");
+            }
         }
         lookHistoryData();
         addListener();
@@ -99,7 +104,7 @@ public class LookHistoryActivity extends PTWDActivity {
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_list_detail);
                 Bundle bundle = new Bundle();
-                if (serviceMessageList.getType().equals("article")) {
+                if (serviceMessageList.getType().equals("article") || serviceMessageList.getType().equals("auto_reply")) {
                     bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, service_name);

@@ -167,7 +167,9 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     startActivity(LoginActivity.class, args);
                 } else {
                     Bundle bundle = new Bundle();
-                    if (capture_url != null) {
+                    if (isFromArticle) {
+                        correlationService(mServiceId, capture_url);
+                    } else if (capture_url != null) {
                         if (serviceInfo.is_relation()) {//已关注(从扫一扫界面跳转过来)
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
@@ -221,6 +223,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
                     bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, isFromArticle);
                     bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, tv_icon.getText().toString().trim());
                     startActivity(LookHistoryActivity.class, bundle);
                 }
@@ -288,84 +291,84 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
 */
 
 
-
-
-            networkRequest(CompanionApi.getServiceRelation(service_id, url), new JSONObjectCallback() {
-                @Override
-                public void onSuccess(String url, JSONObject result) {
-                    Logger.d(result.toString());
-                    int http_code = result.getInteger("http_code");
-                    if (http_code == 200) {
-                        try {
-                            JSONObject data = result.getJSONObject("data");
-                            data = data.getJSONObject("auto_reply");
-                            ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
-                            CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
-                            for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
-                                dataBaseManager.insertFinishDownload(service_id, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()), System.currentTimeMillis());
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Logger.d(e.getMessage());
+        networkRequest(CompanionApi.getServiceRelation(service_id, url), new JSONObjectCallback() {
+            @Override
+            public void onSuccess(String url, JSONObject result) {
+                Logger.d(result.toString());
+                int http_code = result.getInteger("http_code");
+                if (http_code == 200) {
+                    try {
+                        JSONObject data = result.getJSONObject("data");
+                        data = data.getJSONObject("auto_reply");
+                        ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
+                        CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
+                        for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
+                            dataBaseManager.insertFinishDownload(service_id, serviceMessageList.getId(), serviceMessageList.getRelease_time() + "", JSON.toJSONString(serviceMessageList.getContent_lists()), System.currentTimeMillis());
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Logger.d(e.getMessage());
+                    }
 
-                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        // 跳到订阅号列表页面
-                       Bundle bundle = new Bundle();
+                    EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                    // 跳到订阅号列表页面
+                    Bundle bundle = new Bundle();
                        /* bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
                         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, args.getString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME));
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                         startActivity(GameDetailListActivity.class, bundle);*/
-                        ToastUtils.showToastShort(mContext, "关注成功");
+                    ToastUtils.showToastShort(mContext, "关注成功");
 
-
-                        if (capture_url != null || !isSubscribe) {//从扫一扫页面过来以及不是订阅号
-                            // fuwuhao
-                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
-                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, capture_url != null ? serviceInfo.getService_icon() : companion.getService_icon());
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                            startActivity(GameDetailListActivity.class, bundle);
-                            finish();
-                        } else {
-                            // dingyuehao
-                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
-                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
-                            startActivity(GameDetailListActivity.class, bundle);
-                            finish();
-                        }
-
-
-                    } else if (http_code == 4201)
-                        ToastUtils.showToastShort(mContext, "重复绑定");
-                    else if (http_code == 4200)
-                        ToastUtils.showToastShort(mContext, "二维码已过期");
-                    else {
-                        String msg = result.getString("msg");
-                        if (msg != null)
-                            ToastUtils.showToastShort(mContext, result.getString("msg"));
-                        else ToastUtils.showToastShort(mContext, "绑定失败");
+                    if (isFromArticle) {
+                        bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
+                        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, serviceInfo.getService_icon());
+                        startActivity(GameDetailListActivity.class, bundle);
+                        finish();
+                    } else if (capture_url != null || !isSubscribe) {//从扫一扫页面过来以及不是订阅号
+                        // fuwuhao
+                        bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
+                        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, capture_url != null ? serviceInfo.getService_icon() : companion.getService_icon());
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                        startActivity(GameDetailListActivity.class, bundle);
+                        finish();
+                    } else {
+                        // dingyuehao
+                        bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, service_id);
+                        bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, subscribeList.getService_icon());
+                        PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                        startActivity(GameDetailListActivity.class, bundle);
+                        finish();
                     }
-                    loading.dismiss();
-                    // isRequesting = false;
-                    finish();
 
+
+                } else if (http_code == 4201)
+                    ToastUtils.showToastShort(mContext, "重复绑定");
+                else if (http_code == 4200)
+                    ToastUtils.showToastShort(mContext, "二维码已过期");
+                else {
+                    String msg = result.getString("msg");
+                    if (msg != null)
+                        ToastUtils.showToastShort(mContext, result.getString("msg"));
+                    else ToastUtils.showToastShort(mContext, "绑定失败");
                 }
+                loading.dismiss();
+                // isRequesting = false;
+                finish();
 
-                @Override
-                public void onCacheSuccess(String url, JSONObject result) {
+            }
 
-                }
+            @Override
+            public void onCacheSuccess(String url, JSONObject result) {
 
-                @Override
-                public void onFailure(String url, int statusCode, String msg) {
-                    loading.dismiss();
-                    ToastUtils.showToastShort(mContext, msg);
-                    //isRequesting = false;
-                }
-            });
+            }
 
-
+            @Override
+            public void onFailure(String url, int statusCode, String msg) {
+                loading.dismiss();
+                ToastUtils.showToastShort(mContext, msg);
+                //isRequesting = false;
+            }
+        });
 
 
     }
@@ -458,7 +461,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         mSelectPopupWindow.tv_first.setText("清空内容");
 
 //        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
-        if (!isSubscribe) {
+        if (!isSubscribe && isFromArticle) {
             if (capture_url != null) {
                 mSelectPopupWindow.tv_second.setText("取消关联");
             } else {
@@ -519,7 +522,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             public void onSecondClick(View v) {//取消关联
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
                 showDialog();
-                if (!isSubscribe) {
+                if (!isSubscribe && isFromArticle) {
                     if (capture_url != null) {
                         tv_dialog.setText("取消关联产品后，所有信息将会清空。");
                     } else {
@@ -581,7 +584,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                                 isSubscribeCoampin();
                             } else {
                                 navigation_bar.getRightView().setVisibility(View.GONE);
-                                tv_relation_companion.setText(result.isService_type() ? "关联产品" : "立即订阅");
+                                tv_relation_companion.setText(result.isService_type() == 1 ? "关联产品" : "立即订阅");
                             }
 
                             //是否可以解绑

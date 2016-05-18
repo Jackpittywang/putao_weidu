@@ -182,6 +182,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             rl_no_commpain.setVisibility(View.VISIBLE);
                             rv_content.setVisibility(View.GONE);
                         }
+
                         loading.dismiss();
                     }
 
@@ -196,7 +197,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             e.printStackTrace();
                         }
                     }
-                }, 0);
+                }
+
+                , 0);
     }
 
     public class StepComparator implements Comparator<Companion> {
@@ -513,6 +516,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 EventBusHelper.post(companion, AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
             }
         }
+
     }
 
 

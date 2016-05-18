@@ -51,9 +51,12 @@ public class LookHistoryAdapter extends LoadMoreAdapter<ServiceMessageList, Look
                 holder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(serviceMessageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_240x240));
                 holder.tv_title.setText(serviceMessageContent.getTitle());
                 holder.tv_content.setText(serviceMessageContent.getSub_title());
-                holder.iv_sign.setVisibility(View.VISIBLE);
-                holder.tv_title.setVisibility(View.VISIBLE);
-                holder.tv_content.setVisibility(View.VISIBLE);
+                break;
+            case "auto_reply":
+                ServiceMessageContent messageContent = serviceMessageList.getContent_lists().get(0);
+                holder.iv_sign.setImageURL(ImageUtils.getImageSizeUrl(messageContent.getCover_pic(), ImageUtils.ImageSizeURL.SIZE_240x240));
+                holder.tv_title.setText(messageContent.getTitle());
+                holder.tv_content.setText(messageContent.getSub_title());
                 break;
             case "text"://文字
                 holder.tv_title.setText(serviceMessageList.getMessage());

@@ -504,7 +504,7 @@ public class CompanionApi {
      */
     public static Request getSubscribeList(String page) {
         return PTWDRequestHelper.find()
-                .addParam(page, page)
+                .addParam(REQUEST_PAGE, page)
                 .build(RequestMethod.POST, URL_COMPANIN_SUBSCRIBE_LIST);
     }
 
