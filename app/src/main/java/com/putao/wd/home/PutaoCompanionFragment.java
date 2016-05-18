@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.putao.ptx.push.core.Constants;
 import com.putao.ptx.push.core.GPushCallback;
 import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.GPushMessageReceiver;
@@ -191,6 +192,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+
                         try {
                             if (mCompanionAdapter.getItemCount() == 0) {
                                 rl_no_commpain_failure.setVisibility(View.VISIBLE);
@@ -199,6 +201,11 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 //                            ptl_refresh.refreshComplete();
                         } catch (Exception e) {
                             e.printStackTrace();
+                        }
+                        // token 过期
+                        if(statusCode == 601){
+                            AccountHelper.logout();
+                            ToastUtils.showToastShort(mActivity, "长时间未登录，请重新登录");
                         }
                     }
                 }, 0);
