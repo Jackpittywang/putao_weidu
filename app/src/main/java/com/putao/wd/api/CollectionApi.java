@@ -13,7 +13,7 @@ public class CollectionApi {
 
     //    公网线上地址：api-weidu.putao.com ； admin-weidu.putao.com
 //    内网测试地址：api-weidu.ptdev.cn ; admin-weidu.ptdev.cn
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
 
     /**
      * 我的收藏

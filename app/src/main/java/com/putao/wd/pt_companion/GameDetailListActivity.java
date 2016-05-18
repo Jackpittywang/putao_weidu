@@ -1,12 +1,9 @@
 package com.putao.wd.pt_companion;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -25,7 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.putao.wd.GPushMessageReceiver;
+import com.putao.ptx.push.core.GPushCallback;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -39,7 +36,6 @@ import com.putao.wd.db.entity.CompanionDB;
 import com.putao.wd.model.Companion;
 import com.putao.wd.model.GpushMessageAccNumber;
 import com.putao.wd.model.ServiceMenu;
-import com.putao.wd.model.ServiceMessage;
 import com.putao.wd.model.ServiceMessageContent;
 import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.model.ServiceMessageListImage;
@@ -50,7 +46,6 @@ import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
 import com.putao.wd.webview.BaseWebViewActivity;
-import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
@@ -828,7 +823,7 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         et_msg.delete();
     }
 
-    @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)
+    @Subcriber(tag = GPushCallback.COMPANION_DOT)
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         /*for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
             String service_id = gpushMessageAccNumber.getService_id();

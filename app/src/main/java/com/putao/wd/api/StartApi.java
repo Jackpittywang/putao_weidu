@@ -39,7 +39,7 @@ public class StartApi {
 
 
     private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-event-dev.putao.com/" : "http://api-event-dev.putao.com/";//基础url
-    private static final String BASE_WEIDU_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//基础url
+    private static final String BASE_WEIDU_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
 
     public static void install(String base_url) {
 //        BASE_URL = base_url;

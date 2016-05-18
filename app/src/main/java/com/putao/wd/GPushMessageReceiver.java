@@ -20,8 +20,12 @@ import java.util.ArrayList;
  * Created by yanguoqiang on 16/5/11.
  */
 public class GPushMessageReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
 
-    public static final String ME_TABBAR = "me_tabbar";
+    }
+
+   /* public static final String ME_TABBAR = "me_tabbar";
     public static final String COMPANION_TABBAR = "companion_tabbar";
     public static final String COMPANION_DOT = "companion_dot";
     public static final String ME_MESSAGECENTER = "me_messageCenter";
@@ -141,5 +145,5 @@ public class GPushMessageReceiver extends BroadcastReceiver {
 //            }
 //        }
     }
-
+*/
 }

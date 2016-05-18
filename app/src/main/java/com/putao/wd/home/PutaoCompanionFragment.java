@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.putao.ptx.push.core.GPushCallback;
 import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.GlobalApplication;
@@ -129,7 +130,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     private void checkDevice() {
         Logger.d("IS_DEVICE_BIND", PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) + "");
         Logger.d("AccountHelper.isLogin()", AccountHelper.isLogin() + "");
-        EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
+        EventBusHelper.post(false, GPushCallback.COMPANION_TABBAR);
 //        PreferenceUtils.getValue(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), false) &&
         if (AccountHelper.isLogin()) {
             rl_companion_empty.setVisibility(View.GONE);
@@ -169,7 +170,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                                         }
                                     }
                                     Companion max = Collections.max(mSubscriptCompanion, stepComparator);
-                                    companion.setSubstr(max.getService_name() + ":" + max.getSubstr() != null ? max.getSubstr() : "");
+                                    companion.setSubstr(max.getService_name() + ":" + (max.getSubstr() != null ? max.getSubstr() : ""));
                                     continue;
                                 } else
                                     checkResult(companion);
@@ -240,7 +241,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         break;
                 }
                 if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
-                    int time = Integer.parseInt(companionDB.getReceiver_time()) / 1000;
+                    int time = Integer.parseInt(companionDB.getReceiver_time().substring(0, companionDB.getReceiver_time().length() - 3));
                     if (time > 0) {
                         companion.setRelation_time(time);
                     }
@@ -268,7 +269,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         if (0 != value) {
             companion.setNotDownloadCount(value);
             companion.setIsShowRed(true);
-            EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
+            EventBusHelper.post(true, GPushCallback.COMPANION_TABBAR);
         }
     }
 
@@ -356,7 +357,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     if (isShowTabDot) break;
                 }
                 if (!isShowTabDot)
-                    EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
+                    EventBusHelper.post(false, GPushCallback.COMPANION_TABBAR);
                 mCompanionAdapter.notifyItemChanged(position);
                 startActivity(GameDetailListActivity.class, bundle);
             }
@@ -520,14 +521,14 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         checkDevice();
     }
 
-    @Subcriber(tag = GPushMessageReceiver.COMPANION_DOT)
+    @Subcriber(tag = GPushCallback.COMPANION_DOT)
     private void setCompanionDot(ArrayList<GpushMessageAccNumber> accompanyNumber) {
         for (GpushMessageAccNumber gpushMessageAccNumber : accompanyNumber) {
             String service_id = gpushMessageAccNumber.getService_id();
             RequestData requestData = new RequestData(service_id);
             requestData.getLastestArticle();
 //            String id = gpushMessageAccNumber.getId();
-            EventBusHelper.post(true, GPushMessageReceiver.COMPANION_TABBAR);
+            EventBusHelper.post(true, GPushCallback.COMPANION_TABBAR);
             /*for (Companion companion : mCompanion) {
                 if (companion.getService_id().equals(service_id)) {
                     ArrayList<String> notDownloadIds = companion.getNotDownloadIds();
@@ -644,7 +645,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             if (isShowTabDot) break;
         }
         if (!isShowTabDot) {
-            EventBusHelper.post(false, GPushMessageReceiver.COMPANION_TABBAR);
+            EventBusHelper.post(false, GPushCallback.COMPANION_TABBAR);
         }
         mCompanionAdapter.notifyDataSetChanged();
     }

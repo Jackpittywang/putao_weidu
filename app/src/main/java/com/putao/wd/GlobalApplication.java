@@ -140,7 +140,11 @@ public class GlobalApplication extends BasicApplication {
                         if (oldVersion == 1)
                             CompanionDBDao.createTable(db, false);
                         else if (oldVersion == 2) {
-
+                            CompanionDBDao.addColum(db, "MESSAGE");
+                            CompanionDBDao.addColum(db, "IMAGE");
+                            CompanionDBDao.addColum(db, "REPLY");
+                            CompanionDBDao.addColum(db, "IS_UPLOAD_FINISH");
+                            CompanionDBDao.addColum(db, "RECEIVER_TIME");
                         }
                     }
                 };
@@ -181,8 +185,8 @@ public class GlobalApplication extends BasicApplication {
 
     @Override
     protected boolean isDebug() {
-        return true;
-        //     return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
+//        return true;
+        return AppUtils.getVersionName(getApplicationContext()).startsWith("D");
     }
 
     @Override
@@ -249,7 +253,7 @@ public class GlobalApplication extends BasicApplication {
     /**
      */
     public static final String MAP_EMOJI = "map_emoji";
-//    public static final String IN_FORE_MESSAGE = "com.putao.inFore.message";
+    //    public static final String IN_FORE_MESSAGE = "com.putao.inFore.message";
 //    public static final String OUT_FORE_MESSAGE = "com.putao.outFore.message";
 //    public static final String OUT_FORE_MESSAGE_SOON = "com.putao.outForeSoon.message";
 //    public static final String RESTART_MESSAGE = "restart_message";

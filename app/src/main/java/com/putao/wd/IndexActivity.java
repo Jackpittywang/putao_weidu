@@ -1,34 +1,22 @@
 package com.putao.wd;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.ptx.push.core.GPushCallback;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
-import com.putao.wd.api.CompanionApi;
 import com.putao.wd.api.UserApi;
-import com.putao.wd.db.CompanionDBManager;
 import com.putao.wd.home.MeFragment;
 import com.putao.wd.home.PutaoCompanionFragment;
 import com.putao.wd.home.PutaoDiscovery2Fragment;
-import com.putao.wd.home.PutaoDiscoveryFragment;
 import com.putao.wd.home.PutaoStoreFragment;
-import com.putao.wd.model.CompainServiceMessage;
-import com.putao.wd.model.GpushMessageAccNumber;
-import com.putao.wd.model.ServiceMessage;
-import com.putao.wd.model.ServiceMessageList;
 import com.putao.wd.pt_store.pay.PaySuccessActivity;
 import com.putao.wd.util.RedDotUtils;
 import com.sunnybear.library.controller.ActivityManager;
@@ -36,16 +24,11 @@ import com.sunnybear.library.controller.BasicFragmentActivity;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.PreferenceUtils;
 import com.sunnybear.library.view.select.TabBar;
 import com.sunnybear.library.view.select.TabItem;
 import com.sunnybear.library.view.viewpager.UnScrollableViewPager;
 import com.umeng.update.UmengUpdateAgent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -230,7 +213,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
 
 
     //-------------------------------以下是红点信息缓存-------------------------//
-    @Subcriber(tag = GPushMessageReceiver.COMPANION_TABBAR)
+    @Subcriber(tag = GPushCallback.COMPANION_TABBAR)
     private void setCompanionDot(boolean isShow) {
         if (isShow)
             ti_index_companion.show(-1);
@@ -248,7 +231,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         ti_index_companion.hide();
     }
 
-    @Subcriber(tag = GPushMessageReceiver.MESSAGECENTER)
+    @Subcriber(tag = GPushCallback.MESSAGECENTER)
     private void setDot(String messagecenter) {
         ti_index_me.show(-1);
         RedDotUtils.saveMessageCenterDot(messagecenter);

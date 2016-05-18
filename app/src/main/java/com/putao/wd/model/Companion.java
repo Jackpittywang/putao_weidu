@@ -13,7 +13,7 @@ public class Companion implements Serializable {
     private String service_name;//
     private String service_description;//游戏介绍
     private String last_pull_id; //最后拉取此服务号数据的id
-    private int service_type;// //产品类型  0葡萄订阅 1服务号 2订阅号
+    private int service_type = 1;// //产品类型  0葡萄订阅 1服务号 2订阅号
     private ArrayList<Companion> second_level_lists;//是否为订阅号  0不是 1是
     private int relation_time;//更新时间
     private int is_relation;//是否关注
@@ -22,8 +22,9 @@ public class Companion implements Serializable {
     private boolean isShowRed;
     private ServiceMessage auto_reply;//自动回复内容
     private String substr;
-//    private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
+    //    private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
     private int notDownloadCount;
+
     public boolean isShowRed() {
         return isShowRed;
     }

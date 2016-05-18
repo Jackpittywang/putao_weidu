@@ -8,17 +8,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.putao.ptx.push.core.GPushCallback;
 import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.ExploreApi;
-import com.putao.wd.pt_companion.DiaryActivity;
-import com.putao.wd.pt_companion.manage.ManageActivity;
 import com.putao.wd.explore.SmartActivity;
 import com.putao.wd.home.adapter.ProductsAdapter;
 import com.putao.wd.model.DiaryApp;
+import com.putao.wd.pt_companion.DiaryActivity;
+import com.putao.wd.pt_companion.manage.ManageActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.user.LoginActivity;
 import com.sunnybear.library.controller.BasicFragment;
@@ -28,7 +29,6 @@ import com.sunnybear.library.util.DensityUtil;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,7 +148,7 @@ public class PutaoCompanionFragment2 extends BasicFragment implements View.OnCli
      */
     private ArrayList<DiaryApp> setRedDot(ArrayList<DiaryApp> result) {
         //红点显示
-        mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GPushMessageReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid());
+        mRedDotMap = (HashMap<String, String>) mDiskFileCacheHelper.getAsSerializable(GPushCallback.APPPRODUCT_ID + AccountHelper.getCurrentUid());
         if (null != mRedDotMap) {
             if (!TextUtils.isEmpty(mRedDotMap.get(PRO_601)))
                 result.get(0).setShowRedDot(true);
@@ -279,11 +279,11 @@ public class PutaoCompanionFragment2 extends BasicFragment implements View.OnCli
         Bundle bundle = new Bundle();
         bundle.putSerializable(DiaryActivity.DIARY_APP, diaryApp);
         bundle.putSerializable("position", position);
-        mDiskFileCacheHelper.put(GPushMessageReceiver.APPPRODUCT_ID + AccountHelper.getCurrentUid(), mRedDotMap);
+        mDiskFileCacheHelper.put(GPushCallback.APPPRODUCT_ID + AccountHelper.getCurrentUid(), mRedDotMap);
         startActivity(DiaryActivity.class, bundle);
     }
 
-    @Subcriber(tag = GPushMessageReceiver.APPPRODUCT_ID)
+    @Subcriber(tag = GPushCallback.APPPRODUCT_ID)
     private void setDot(String appproduct_id) {
         int position = -1;
         switch (appproduct_id) {

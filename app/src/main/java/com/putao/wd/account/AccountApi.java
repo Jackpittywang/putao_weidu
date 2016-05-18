@@ -25,7 +25,7 @@ public class AccountApi {
     public static final String CLIENT_TYPE = "2";  //设备类型
 
     public static final String BASE_URL = GlobalApplication.isDebug ? "https://account-api-dev.putao.com/" : "https://account-api.putao.com/";
-    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-wd.putao.com/";//基础url
+    private static final String COMPANION_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/" : "http://api-weidu.putao.com/";//基础url
     public static String APP_ID;//app_id
     public static String VERSION;//版本号
     public static String SECRETKEY;

@@ -210,6 +210,11 @@ public class CompanionDBDao extends AbstractDao<CompanionDB, String> {
         }
     }
 
+    public static void addColum(SQLiteDatabase db, String columName) {
+        String str = "alter table " + TABLENAME + " add " + columName + " text";
+        db.execSQL(str);
+    }
+
     /**
      * @inheritdoc
      */

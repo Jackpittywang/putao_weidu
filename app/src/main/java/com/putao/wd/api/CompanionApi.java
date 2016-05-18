@@ -32,7 +32,7 @@ public class CompanionApi {
     private static final String REQUST_TYPE = "type";//1文本，2图片
 
 
-    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-wd.putao.com";//基础url
+    private static final String BASE_URL = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn" : "http://api-weidu.putao.com";//基础url
 
 
     /**

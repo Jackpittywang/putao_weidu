@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 
+import com.putao.ptx.push.core.GPushCallback;
 import com.putao.wd.GPushMessageReceiver;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -72,10 +73,10 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
         //打开预加载 一次就加载所有的fragment
         vp_message.setOffscreenPageLimit(mFragments.size());
         //红点显示
-        mRedDots = PreferenceUtils.getValue(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        mRedDots = PreferenceUtils.getValue(GPushCallback.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         if (mRedDots[0]) {
             mRedDots[0] = false;
-            PreferenceUtils.save(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+            PreferenceUtils.save(GPushCallback.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
         }
         if (mRedDots[1]) ll_cool.show();
@@ -129,32 +130,32 @@ public class MessageCenterActivity extends PTWDActivity implements TitleBar.OnTi
                 break;
         }
         mRedDots[position] = false;
-        PreferenceUtils.save(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        PreferenceUtils.save(GPushCallback.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
         vp_message.setCurrentItem(position, false);
         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_ME_TAB);
 
     }
 
-    @Subcriber(tag = GPushMessageReceiver.MESSAGECENTER)
+    @Subcriber(tag = GPushCallback.MESSAGECENTER)
     private void setDot(String messagecenter) {
         switch (messagecenter) {
-            case GPushMessageReceiver.MESSAGECENTER_REPLY:
+            case GPushCallback.MESSAGECENTER_REPLY:
                 mRedDots[0] = true;
                 ll_reply.show();
                 break;
-            case GPushMessageReceiver.MESSAGECENTER_PRAISE:
+            case GPushCallback.MESSAGECENTER_PRAISE:
                 mRedDots[1] = true;
                 ll_cool.show();
                 break;
-            case GPushMessageReceiver.MESSAGECENTER_REMIND:
+            case GPushCallback.MESSAGECENTER_REMIND:
                 mRedDots[2] = true;
                 ll_remind.show();
                 break;
-            case GPushMessageReceiver.MESSAGECENTER_NOTICE:
+            case GPushCallback.MESSAGECENTER_NOTICE:
                 mRedDots[3] = true;
                 ll_notice.show();
                 break;
         }
-        PreferenceUtils.save(GPushMessageReceiver.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
+        PreferenceUtils.save(GPushCallback.MESSAGECENTER + AccountHelper.getCurrentUid(), mRedDots);
     }
 }
