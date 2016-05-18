@@ -47,6 +47,7 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
 
     @Override
     public void onBindItem(final DiscoveryViewHolder holder, final DisCovery disCoveries, final int position) {
+        holder.iv_discovery.resize(600, 300);
         holder.tv_title.setText(disCoveries.getTitle());
         if (!disCoveries.getVideo_img().equals("")) {
             holder.iv_player.setVisibility(View.VISIBLE);
