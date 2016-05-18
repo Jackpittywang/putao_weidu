@@ -92,9 +92,6 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         tb_index_tab.setTabItemSelected(/*is_device_bind && */AccountHelper.isLogin() ? R.id.ti_index_companion : R.id.ti_index_discovery);
         vp_content.setCurrentItem(/*is_device_bind &&*/ AccountHelper.isLogin() ? 0 : 1);
 
-        if (AccountHelper.isLogin()) {
-            checkFristImg();
-        }
 
         if (AccountHelper.isLogin()) {
             //红点显示
@@ -104,6 +101,12 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (0 == vp_content.getCurrentItem())
+            checkFristImg();
+    }
 
     /**
      * 添加Fragment
@@ -123,9 +126,7 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             public void onTabItemSelected(TabItem item, int position) {
                 switch (position) {
                     case 0:
-                        if (AccountHelper.isLogin()) {
-                            checkFristImg();
-                        }
+                        checkFristImg();
                         YouMengHelper.onEvent(mContext, YouMengHelper.Tabbar_pressed, "陪伴");
                         break;
                     case 1:
@@ -151,14 +152,16 @@ public class IndexActivity extends BasicFragmentActivity<GlobalApplication> {
             @Override
             public void onClick(View v) {
                 view_img.setVisibility(View.GONE);
-                PreferenceUtils.save(PREFERENCE_STEP1_IS_FIRST+AccountHelper.getCurrentUid(), true);
+                PreferenceUtils.save(PREFERENCE_STEP1_IS_FIRST + AccountHelper.getCurrentUid(), true);
             }
         });
 
     }
 
     private void checkFristImg() {
-        if (!PreferenceUtils.getValue(PREFERENCE_STEP1_IS_FIRST+AccountHelper.getCurrentUid(), false))
+        if (!AccountHelper.isLogin())
+            return;
+        if (!PreferenceUtils.getValue(PREFERENCE_STEP1_IS_FIRST + AccountHelper.getCurrentUid(), false))
             view_img.setVisibility(View.VISIBLE);
         else {
             view_img.setVisibility(View.GONE);
