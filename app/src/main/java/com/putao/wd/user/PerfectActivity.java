@@ -152,7 +152,7 @@ public class PerfectActivity extends PTWDActivity implements View.OnClickListene
         startActivity(IndexActivity.class);
         EventBusHelper.post(EVENT_USER_INFO_SAVE_SUCCESS, EVENT_USER_INFO_SAVE_SUCCESS);
         EventBusHelper.post(LoginActivity.EVENT_LOGIN, LoginActivity.EVENT_LOGIN);
-        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+//        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
         loading.dismiss();
         finish();
     }

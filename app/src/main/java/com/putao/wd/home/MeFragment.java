@@ -177,9 +177,11 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 new SimpleFastJsonCallback<UserInfo>(UserInfo.class, loading) {
                     @Override
                     public void onSuccess(String url, final UserInfo result) {
+
                         ONREFRESH = true;
                         //Message message = new Message();
                         AccountHelper.setUserInfo(result);
+                        EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                         tv_user_nickname.setText(result.getNick_name());
                         if (mImg.equals(result.getHead_img())) {
                             if (TextUtils.isEmpty(result.getHead_img())) setDefaultBlur();
@@ -193,7 +195,9 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                             return;
                         }
                         //message.obj = result.getHead_img();
+
                         loading.dismiss();
+
                     }
 
                     @Override
