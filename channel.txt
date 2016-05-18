@@ -51,3 +51,6 @@ leshi
 suning
 jinli
 coolpad
+sougou
+meizu
+tianyu

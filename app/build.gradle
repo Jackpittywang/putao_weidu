@@ -56,30 +56,39 @@ android {
 //        local_release { versionName = "V" + defaultConfig.versionName }
 //        local_debug { versionName = "D" + defaultConfig.versionName }
         channel_putao { versionName = "V" + defaultConfig.versionName }
-//        channel_baiduzhushou { versionName = "V" + defaultConfig.versionName }
-//        channel_360{ versionName = "V" + defaultConfig.versionName }
-//        channel_wandoujia{ versionName = "V" + defaultConfig.versionName }
-//        channel_xiaomi{ versionName = "V" + defaultConfig.versionName }
-//        channel_yingyongbao{ versionName = "V" + defaultConfig.versionName }
+        channel_baiduzhushou { versionName = "V" + defaultConfig.versionName }
+        channel_360{ versionName = "V" + defaultConfig.versionName }
+        channel_yingyongbao{ versionName = "V" + defaultConfig.versionName }
+        channel_wandoujia{ versionName = "V" + defaultConfig.versionName }
+        channel_sougou{ versionName = "V" + defaultConfig.versionName }
+        channel_yingyonghui { versionName = "V" + defaultConfig.versionName }
+        channel_anzhishichang{ versionName = "V" + defaultConfig.versionName }
+        channel_leshi { versionName = "V" + defaultConfig.versionName }
+        channel_wangyi { versionName = "V" + defaultConfig.versionName }
+        channel_suning { versionName = "V" + defaultConfig.versionName }
+        channel_xiaomi{ versionName = "V" + defaultConfig.versionName }
+        channel_lenovo{ versionName = "V" + defaultConfig.versionName }
+        channel_meizu{ versionName = "V" + defaultConfig.versionName }
+        channel_huawei{ versionName = "V" + defaultConfig.versionName }
+        channel_jinli { versionName = "V" + defaultConfig.versionName }
+        channel_oppo{ versionName = "V" + defaultConfig.versionName }
+        channel_coolpad { versionName = "V" + defaultConfig.versionName }
+        channel_tianyu{ versionName = "V" + defaultConfig.versionName }
+        channel_liantongwo { versionName = "V" + defaultConfig.versionName }
+
 //        channel_uc{ versionName = "V" + defaultConfig.versionName }
 //        channel_91{ versionName = "V" + defaultConfig.versionName }
 //        channel_ppzhushou { versionName = "V" + defaultConfig.versionName }
 //        channel_liqu { versionName = "V" + defaultConfig.versionName }
 //        channel_oppo{ versionName = "V" + defaultConfig.versionName }
-//        channel_huawei{ versionName = "V" + defaultConfig.versionName }
-//        channel_lenovo{ versionName = "V" + defaultConfig.versionName }
 //        channel_jifeng{ versionName = "V" + defaultConfig.versionName }
-//        channel_anzhishichang{ versionName = "V" + defaultConfig.versionName }
 //        channel_dangle{ versionName = "V" + defaultConfig.versionName }
 //        channel_mumayi{ versionName = "V" + defaultConfig.versionName }
 //        channel_nduo{ versionName = "V" + defaultConfig.versionName }
 //        channel_anzhuozaixian{ versionName = "V" + defaultConfig.versionName }
 //        channel_dianwanbashi{ versionName = "V" + defaultConfig.versionName }
 //        channel_vivo{ versionName = "V" + defaultConfig.versionName }
-
-//        channel_yingyonghui { versionName = "V" + defaultConfig.versionName }
 //        channel_tengxun { versionName = "V" + defaultConfig.versionName }
-//        channel_wangyi { versionName = "V" + defaultConfig.versionName }
 //        channel_gaoqu { versionName = "V" + defaultConfig.versionName }
 //        channel_zhihuiyun { versionName = "V" + defaultConfig.versionName }
 //        channel_youyi { versionName = "V" + defaultConfig.versionName }
@@ -89,7 +98,6 @@ android {
 //        channel_leshangdian { versionName = "V" + defaultConfig.versionName }
 //        channel_feiliu { versionName = "V" + defaultConfig.versionName }
 //        channel_shizimao { versionName = "V" + defaultConfig.versionName }
-//        channel_liantongwo { versionName = "V" + defaultConfig.versionName }
 //        channel_yiyou { versionName = "V" + defaultConfig.versionName }
 //        channel_zhuole { versionName = "V" + defaultConfig.versionName }
 //        channel_koudaibashi { versionName = "V" + defaultConfig.versionName }
@@ -103,10 +111,6 @@ android {
 //        channel_lexun { versionName = "V" + defaultConfig.versionName }
 //        channel_mogujie { versionName = "V" + defaultConfig.versionName }
 //        channel_anbei { versionName = "V" + defaultConfig.versionName }
-//        channel_leshi { versionName = "V" + defaultConfig.versionName }
-//        channel_suning { versionName = "V" + defaultConfig.versionName }
-//        channel_jinli { versionName = "V" + defaultConfig.versionName }
-//        channel_coolpad { versionName = "V" + defaultConfig.versionName }
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
@@ -130,6 +134,7 @@ dependencies {
     compile files('libs/MobTools-2016.0301.1053.jar')
     compile files('libs/MobCommons-2016.0301.1053.jar')
     compile files('libs/ShareSDK-QQ-2.7.0.jar')
+    compile files('libs/jpush-android-2.1.5.jar')
 }
 //编译结束后删除unaligned包
 android.applicationVariants.all { variant ->
