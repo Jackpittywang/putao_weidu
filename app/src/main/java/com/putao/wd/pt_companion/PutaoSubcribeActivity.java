@@ -85,6 +85,12 @@ public class PutaoSubcribeActivity extends PTWDActivity<GlobalApplication> {
                 mCompanionAdapter.notifyItemChanged(position);
             }
         });
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ptl_refresh.refreshComplete();
+            }
+        });
     }
 
     @Override

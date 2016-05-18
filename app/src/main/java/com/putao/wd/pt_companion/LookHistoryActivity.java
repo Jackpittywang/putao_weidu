@@ -99,6 +99,12 @@ public class LookHistoryActivity extends PTWDActivity {
 //                    rv_lookHistory.noMoreLoading();
             }
         });
+        ptl_refresh.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                lookHistoryData();
+            }
+        });
         rv_lookHistory.setOnItemClickListener(new OnItemClickListener<ServiceMessageList>() {
             @Override
             public void onItemClick(ServiceMessageList serviceMessageList, int position) {
