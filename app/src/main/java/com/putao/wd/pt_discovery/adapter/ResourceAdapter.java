@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.model.FindResource;
 import com.putao.wd.model.ResourceBanner;
 import com.putao.wd.model.ResourceBannerAndTag;
@@ -134,6 +135,7 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             headerHolder.cb_banner.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
+                    YouMengHelper.onEvent(context,YouMengHelper.DiscoverHome_banner);
                     EventBusHelper.post(headerHolder.cb_banner.getCurrentItem(), AccountConstants.EventBus.EVENT_DISCOVERY_CAROUSEL);
                 }
             });

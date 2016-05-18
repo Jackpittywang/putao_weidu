@@ -203,7 +203,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             e.printStackTrace();
                         }
                         // token 过期
-                        if(statusCode == 601){
+                        if (statusCode == 601) {
                             AccountHelper.logout();
                             ToastUtils.showToastShort(mActivity, "长时间未登录，请重新登录");
                         }
@@ -299,6 +299,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         ll_ScanCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
                 startActivity(CaptureActivity.class, bundle);
@@ -308,6 +309,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
         ll_Subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YouMengHelper.onEvent(mActivity,YouMengHelper.Activity_home_putaoSubscription_subscriberClick);
                 startActivity(SubscriptionNumberActivity.class);
                 popupWindow.dismiss();
             }
@@ -357,6 +359,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             companion.setNotDownloadIds(notDownloadIds);
             mCompanionAdapter.notifyItemChanged(position);*/
             if (companion.getService_type() == 0) {
+                YouMengHelper.onEvent(mActivity,YouMengHelper.Activity_home_destination);
                 startActivity(PutaoSubcribeActivity.class, bundle);
             } else {
 //                mDataBaseManager.removeEmptyData(companion.getService_id());
@@ -374,6 +377,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 startActivity(GameDetailListActivity.class, bundle);
             }
         } else {
+            YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, true);
             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, companion);
             startActivity(OfficialAccountsActivity.class, bundle);
@@ -391,6 +395,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_relevance_device:
+
+                YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
                 iv_step1_first.setVisibility(View.GONE);
                 PreferenceUtils.save(GlobalApplication.PREFERENCE_STEP1_IS_FIRST, true);
                 if (!AccountHelper.isLogin()) {
@@ -408,6 +414,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     checkDevice();
                 break;
             case R.id.img_compain_menu://点击“+”号，弹出关于扫一扫和订阅号的菜单框
+                YouMengHelper.onEvent(mActivity,YouMengHelper.Assocaite_product);
                 if (isVisible)
                     popupWindow.showAsDropDown(img_compain_menu);
                 break;
@@ -415,6 +422,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 iv_step1_first.setVisibility(View.GONE);
                 break;
             case R.id.tv_later_relevance://稍后关联
+
+                YouMengHelper.onEvent(mActivity,YouMengHelper.Activity_home_associate_later);
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);

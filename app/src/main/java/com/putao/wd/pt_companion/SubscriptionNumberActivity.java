@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.CompanionApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.SubscribeList;
@@ -159,11 +160,18 @@ public class SubscriptionNumberActivity extends PTWDActivity implements OnItemCl
 
     @Override
     public void onItemClick(SubscribeList subscribeList, int position) {
+
+
+        if (!subscribeList.is_relation()) {
+            YouMengHelper.onEvent(mContext, YouMengHelper.Subscribe_product);
+        }
+        YouMengHelper.onEvent(mContext, YouMengHelper.Activity_home_putaoSubscription_detailClick);
         Bundle bundle = new Bundle();
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, subscribeList.is_relation());
         bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, subscribeList);
         startActivity(OfficialAccountsActivity.class, bundle);
+
     }
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_REFRESH_COMPANION)

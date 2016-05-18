@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.DisCoveryApi;
 import com.putao.wd.model.DiscoveryResource;
 import com.putao.wd.model.FindResource;
@@ -144,6 +145,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
             @Override
             public void onItemClick(FindResource resou, int position) {
                 EventBusHelper.post(resou, AccountConstants.EventBus.EVENT_DISCOVERY_RESOURCE);
+                YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_article);
             }
         });
         rv_discovery.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -391,6 +393,7 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
         Bundle bundle = new Bundle();
         bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_ID, tag.getId());
         bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_TITLE, tag.getTag_name());
+        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_tag);
         if (StringUtils.equals(CAMPAIGN_TYPE, tag.getDisplay_type()))
             startActivity(CampaignActivity.class, bundle);
         else

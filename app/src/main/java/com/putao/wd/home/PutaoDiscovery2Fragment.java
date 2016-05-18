@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.base.PTWDFragment;
 import com.putao.wd.pt_discovery.ResourceFragment;
 import com.putao.wd.pt_discovery.VideoFragment;
@@ -56,6 +57,16 @@ public class PutaoDiscovery2Fragment extends PTWDFragment<GlobalApplication>{
         tb_bar.setOnTabItemSelectedListener(new TabBar.OnTabItemSelectedListener() {
             @Override
             public void onTabItemSelected(TabItem item, int position) {
+                switch (position){
+                    case 0:
+                        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_title,"发现-视频");
+                        break;
+                    case 1:
+                        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_title,"发现-找资源");
+                        break;
+                }
+
+
                 vp_content.setCurrentItem(position,false);
             }
         });

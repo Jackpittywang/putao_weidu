@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.model.PicClickResult;
 import com.putao.wd.pt_companion.GameDetailListActivity;
 import com.putao.wd.pt_companion.OfficialAccountsActivity;
@@ -58,6 +59,9 @@ public class PutaoParse {
                 //PAGE_SETTING不在此处做处理
                 return true;
             } else if (OPEN_ACC_NO.equals(scheme)) {
+
+                YouMengHelper.onEvent(context,YouMengHelper.Subscribe_product);
+
                 String type = jsonObj.getInteger("type") + "";
                 String id = jsonObj.getInteger("id") + "";
                /* if (GlobalApplication.isServiceIdBind(id)) {

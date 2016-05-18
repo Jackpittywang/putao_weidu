@@ -265,8 +265,45 @@ public class YouMengHelper {
      */
     public static final String Activity_menu_should_ask = "Activity_menu_should_ask";
 
+//    /**
+//     * "稍后关联"点击次数
+//     */
+//    public static final String Activity_home_associate_later = "Activity_home_associate_later";
+//
+//    /**
+//     * “葡萄订阅”点击次数
+//     */
+//    public static final String Activity_home_destination = "Activity_home_destination";
+//
+//    /**
+//     * "葡萄订阅-订阅号按钮"点击次数
+//     */
+//    public static final String Activity_home_putaoSubscription_subscriberClick = "Activity_home_putaoSubscription_subscriberClick";
+//
+//    /**
+//     * "葡萄订阅-订阅号点击进入详情"点击次数
+//     */
+//    public static final String Activity_home_putaoSubscription_detailClick = "Activity_home_putaoSubscription_detailClick";
+//
+//    /**
+//     * 关联产品（从未关联产品陪伴页面关联产品、从产品列表页右上角+号关联产品、从产品列表页未关联产品介绍点击关联）
+//     */
+//    public static final String Assocaite_product = "Assocaite_product";
+//
+//    /**
+//     * 订阅(从葡萄订阅-订阅号点击订阅、从发现文章详情订阅号点击订阅）
+//     */
+//    public static final String Subscribe_product = "Subscribe_product";
+
+
+
+
+
+
+
+
     /**
-     * "稍后关联"点击次数
+     * “稍后关联”点击次数
      */
     public static final String Activity_home_associate_later = "Activity_home_associate_later";
 
@@ -276,22 +313,22 @@ public class YouMengHelper {
     public static final String Activity_home_destination = "Activity_home_destination";
 
     /**
-     * "葡萄订阅-订阅号按钮"点击次数
+     * “葡萄订阅-订阅号按钮”点击次数
      */
     public static final String Activity_home_putaoSubscription_subscriberClick = "Activity_home_putaoSubscription_subscriberClick";
 
     /**
-     * "葡萄订阅-订阅号点击进入详情"点击次数
+     *“葡萄订阅-订阅号点击进入详情”点击总次数
      */
     public static final String Activity_home_putaoSubscription_detailClick = "Activity_home_putaoSubscription_detailClick";
 
     /**
-     * 关联产品（从未关联产品陪伴页面关联产品、从产品列表页右上角+号关联产品、从产品列表页未关联产品介绍点击关联）
+     * 从未关联产品陪伴页点击关联//从产品列表页右上角+号点击关联//从产品列表页未关联产品介绍点击关联
      */
     public static final String Assocaite_product = "Assocaite_product";
 
     /**
-     * 订阅(从葡萄订阅-订阅号点击订阅、从发现文章详情订阅号点击订阅）
+     * //从葡萄订阅-订阅号点击订阅//从发现文章详情订阅号点击订阅
      */
     public static final String Subscribe_product = "Subscribe_product";
 
@@ -413,31 +450,66 @@ public class YouMengHelper {
     public static final String UserHome_collect_delete = "UserHome_collect_delete";
 
     /****************************************************发现********************************************************/
+//    /**
+//     * “发现-视频”、"发现-找资源"点击次数
+//     */
+//    public static final String DiscoverHome_title = "DiscoverHome_title";
+//
+//    /**
+//     * “发现-找资源-广告位"点击次数
+//     */
+//    public static final String DiscoverHome_banner = "DiscoverHome_banner";
+//
+//    /**
+//     * "发现-找资源-活动/专题"点击次数
+//     */
+//    public static final String DiscoverHome_column = "DiscoverHome_column";
+//
+//    /**
+//     * "发现-找资源-tag"点击次数
+//     */
+//    public static final String DiscoverHome_tag = "DiscoverHome_tag";
+//
+//    /**
+//     * "发现-找资源-文章"点击次数
+//     */
+//    public static final String DiscoverHome_article = "DiscoverHome_article";
+
+
     /**
-     * “发现-视频”、"发现-找资源"点击次数
+     * “发现-视频”点击次数
      */
     public static final String DiscoverHome_title = "DiscoverHome_title";
 
+//    /**
+//     * “发现-找资源”点击次数
+//     */
+//    public static final String DiscoverHome_title = "DiscoverHome_title";
+
     /**
-     * “发现-找资源-广告位"点击次数
+     * “发现-找资源-广告位”点击次数
      */
     public static final String DiscoverHome_banner = "DiscoverHome_banner";
 
     /**
-     * "发现-找资源-活动/专题"点击次数
+     * “发现-找资源-活动”点击次数
      */
     public static final String DiscoverHome_column = "DiscoverHome_column";
 
+//    /**
+//     * “发现-找资源-专题”点击次数
+//     */
+//    public static final String DiscoverHome_column = "DiscoverHome_column";
+
     /**
-     * "发现-找资源-tag"点击次数
+     * “发现-找资源-tag”点击次数（需分tag统计）
      */
     public static final String DiscoverHome_tag = "DiscoverHome_tag";
 
     /**
-     * "发现-找资源-文章"点击次数
+     * “发现-找资源-文章”点击次数（需分tag统计）
      */
     public static final String DiscoverHome_article = "DiscoverHome_article";
-
     /**
      * 记录打点数据
      */
