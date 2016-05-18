@@ -54,7 +54,7 @@ public class CompainServiceInfo implements Serializable {
         this.is_relation = is_relation;
     }
 
-    public int isService_type() {
+    public int getService_type() {
         return service_type;
     }
 

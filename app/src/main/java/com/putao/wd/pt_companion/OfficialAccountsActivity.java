@@ -168,8 +168,26 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 } else {
                     Bundle bundle = new Bundle();
                     if (isFromArticle) {
-                        correlationService(mServiceId, capture_url);
-                    } else if (capture_url != null) {
+                        if (!GlobalApplication.isServiceIdBind(mServiceId)) {
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, serviceInfo.getService_icon());
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION, serviceInfo.getService_name());
+                            switch (serviceInfo.getService_type()) {
+                                case 1:
+                                    startActivity(CaptureActivity.class, bundle);
+                                    break;
+                                case 2:
+                                    correlationService(mServiceId, capture_url);
+                                    break;
+                            }
+                        } else {
+                            EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
+                            bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
+                            bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, serviceInfo.getService_icon());
+                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
+                            startActivity(GameDetailListActivity.class, bundle);
+                        }
+                    } else if (capture_url != null || isFromArticle) {
                         if (serviceInfo.is_relation()) {//已关注(从扫一扫界面跳转过来)
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
@@ -461,7 +479,12 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         mSelectPopupWindow.tv_first.setText("清空内容");
 
 //        if (!isSubscribe && (companion != null ? (companion.getService_type() != 2) : true)) {
-        if (!isSubscribe && isFromArticle) {
+        if (isFromArticle) {
+            if (serviceInfo.getService_type() != 2)
+                mSelectPopupWindow.tv_second.setText("取消关联");
+            else
+                mSelectPopupWindow.tv_second.setText("取消订阅");
+        } else if (!isSubscribe) {
             if (capture_url != null) {
                 mSelectPopupWindow.tv_second.setText("取消关联");
             } else {
@@ -522,7 +545,12 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
             public void onSecondClick(View v) {//取消关联
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_dessociate, "售后");
                 showDialog();
-                if (!isSubscribe && isFromArticle) {
+                if (isFromArticle) {
+                    if (serviceInfo.getService_type() != 2)
+                        tv_dialog.setText("取消关联产品后，所有信息将会清空。");
+                    else
+                        tv_dialog.setText("取消订阅后后，所有信息将会清空。");
+                } else if (!isSubscribe) {
                     if (capture_url != null) {
                         tv_dialog.setText("取消关联产品后，所有信息将会清空。");
                     } else {
@@ -584,7 +612,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                                 isSubscribeCoampin();
                             } else {
                                 navigation_bar.getRightView().setVisibility(View.GONE);
-                                tv_relation_companion.setText(result.isService_type() == 1 ? "关联产品" : "立即订阅");
+                                tv_relation_companion.setText(result.getService_type() == 1 ? "关联产品" : "立即订阅");
                             }
 
                             //是否可以解绑

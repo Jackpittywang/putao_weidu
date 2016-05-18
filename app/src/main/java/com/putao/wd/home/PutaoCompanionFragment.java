@@ -190,8 +190,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
                         try {
-                            rl_no_commpain_failure.setVisibility(View.VISIBLE);
-                            rv_content.setVisibility(View.GONE);
+                            if (mCompanionAdapter.getItemCount() == 0) {
+                                rl_no_commpain_failure.setVisibility(View.VISIBLE);
+                                rv_content.setVisibility(View.GONE);
+                            }
 //                            ptl_refresh.refreshComplete();
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -60,23 +60,24 @@ public class PutaoParse {
             } else if (OPEN_ACC_NO.equals(scheme)) {
                 String type = jsonObj.getInteger("type") + "";
                 String id = jsonObj.getInteger("id") + "";
-                if (GlobalApplication.isServiceIdBind(id)) {
+               /* if (GlobalApplication.isServiceIdBind(id)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, id);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, icon);
                     Intent intent = new Intent(context, GameDetailListActivity.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
-                    bundle.putString(OfficialAccountsActivity.CAPTURE_SERVICE_ID, id);
-                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, true);
-                    bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_SUBSCR_STATE, type);
-                    Intent intent = new Intent(context, OfficialAccountsActivity.class);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }
+                } else {*/
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, false);
+                bundle.putString(OfficialAccountsActivity.CAPTURE_SERVICE_ID, id);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, icon);
+                bundle.putBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, true);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_SUBSCR_STATE, type);
+                Intent intent = new Intent(context, OfficialAccountsActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+//                }
 
                 return true;
 

@@ -280,8 +280,13 @@ public class GlobalApplication extends BasicApplication {
     }
 
     public static boolean isServiceIdBind(String sId) {
-        if (serviceBindMap == null) return false;
-        if (serviceBindMap.get(sId + AccountHelper.getCurrentUid()) == null) return false;
-        return true;
+//        if (serviceBindMap == null) return false;
+        try {
+            boolean isBInd = serviceBindMap.get(sId + AccountHelper.getCurrentUid());
+            return serviceBindMap.get(sId + AccountHelper.getCurrentUid());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
