@@ -234,7 +234,7 @@ public class ProductDetailV2Activity extends BasicFragmentActivity implements Vi
                 }
                 ToastUtils.showToastShort(ProductDetailV2Activity.this, "复制成功");
             }
-        },shareUrl);
+        }, !product_num.equals("product_num") ? shareUrl : storeProduct.getMobile_url());
     }
 
     private void getProduct(final String product_id) {
