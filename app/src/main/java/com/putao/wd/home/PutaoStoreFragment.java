@@ -101,12 +101,12 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
                         //多了尾布局，因此至少是1
                         if (adapter.getItemCount() <= 1) {
                             rl_no_store_failure.setVisibility(View.VISIBLE);
                             rl_no_stroe.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
-                            ptl_refresh.refreshComplete();
                         }
                     }
                 }, 600 * 1000);
@@ -141,11 +141,11 @@ public class PutaoStoreFragment extends PTWDFragment {
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
                         super.onFailure(url, statusCode, msg);
+                        ptl_refresh.refreshComplete();
                         if (adapter.getItemCount() <= 1) {
                             rl_no_store_failure.setVisibility(View.VISIBLE);
                             rl_no_stroe.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.GONE);
-                            ptl_refresh.refreshComplete();
                         }
                     }
                 });

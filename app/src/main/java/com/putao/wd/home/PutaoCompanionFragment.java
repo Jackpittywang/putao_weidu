@@ -199,9 +199,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                             e.printStackTrace();
                         }
                     }
-                }
-
-                , 0);
+                }, 0);
     }
 
     public class StepComparator implements Comparator<Companion> {
@@ -209,7 +207,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
         @Override
         public int compare(Companion lhs, Companion rhs) {
-            if (lhs.getRelation_time() < rhs.getRelation_time())
+            if (lhs.getReceiver_time() > rhs.getReceiver_time())
                 return 1;
             return -1;
         }
@@ -226,6 +224,10 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 //        ArrayList<String> notDownloadIds = mDataBaseManager.getNotDownloadIds(companion.getService_id());
         try {
             CompanionDB companionDB = mDataBaseManager.getNearestItem(companion.getService_id());
+            String receiver_time = companionDB.getReceiver_time();
+            if (!TextUtils.isEmpty(receiver_time)) {
+                companion.setReceiver_time(Long.parseLong(receiver_time));
+            }
             if (companionDB != null) {
                 switch (companionDB.getType()) {
                     case "text":
@@ -246,16 +248,12 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                         break;
                 }
                 if (companionDB != null && !TextUtils.isEmpty(companionDB.getContent_lists())) {
-                    int time = Integer.parseInt(companionDB.getReceiver_time().substring(0, companionDB.getReceiver_time().length() - 3));
-                    if (time > 0) {
-                        companion.setRelation_time(time);
-                    }
                     List<ServiceMessageContent> content_lists = JSON.parseArray(companionDB.getContent_lists(), ServiceMessageContent.class);
                     if ("article".equals(companionDB.getType()) && null != content_lists && content_lists.size() >= 0)
                         companion.setSubstr(content_lists.get(0).getTitle());
                 }
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 //                            companion.setService_description();
@@ -604,11 +602,23 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         mSet.cancel();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSet.reset();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSet.cancel();
+        mSet =null;
+    }
     @Override
     public void onLeftAction() {
         super.onLeftAction();

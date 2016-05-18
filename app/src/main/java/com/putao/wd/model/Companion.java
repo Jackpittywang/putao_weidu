@@ -24,6 +24,7 @@ public class Companion implements Serializable {
     private String substr;
     //    private ArrayList<String> notDownloadIds = new ArrayList<>(); //一个还没有下载文章的集合，在推送新的文章和初始化的时候会添加数据,请求数据完成之后清空数据
     private int notDownloadCount;
+    private long receiver_time;
 
     public boolean isShowRed() {
         return isShowRed;
@@ -140,6 +141,14 @@ public class Companion implements Serializable {
 
     public String getSubstr() {
         return substr;
+    }
+
+    public long getReceiver_time() {
+        return receiver_time;
+    }
+
+    public void setReceiver_time(long receiver_time) {
+        this.receiver_time = receiver_time;
     }
 
     public void setSubstr(String substr) {
