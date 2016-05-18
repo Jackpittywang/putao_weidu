@@ -196,6 +196,10 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             });*/
         } else {
             ResourceHolder resHolder = (ResourceHolder) holder;
+            if (resou.is_recommend())
+                resHolder.iv_discovery_pic.resize(600, 300);
+            else
+                resHolder.iv_discovery_pic.resize(240, 240);
             resHolder.iv_discovery_pic.setImageURL(resou.getIcon());
             resHolder.tv_discovery_title.setText(resou.getTitle());
             resHolder.tv_show_top.setVisibility(resou.is_top() ? View.VISIBLE : View.GONE);
