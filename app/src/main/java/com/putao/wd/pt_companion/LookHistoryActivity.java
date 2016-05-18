@@ -70,7 +70,7 @@ public class LookHistoryActivity extends PTWDActivity {
         rv_lookHistory.setAdapter(adapter);
         if (isSubscribe) {
             if (!args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD))//没有关注的情况下
-                rv_lookHistory.setNoMoreText("订阅后可查看更多精彩内容,帮助您更好的陪伴孩子哦");
+                rv_lookHistory.setNoMoreText("订阅后可查看更多精彩内容,帮助您更好的陪伴孩子哦！");
         } else {
             if (isBunding)
                 rv_lookHistory.setNoMoreText("关联产品后可查看更多内容，帮助您更好的陪伴孩子哦！");
@@ -103,6 +103,7 @@ public class LookHistoryActivity extends PTWDActivity {
                     bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, serviceMessageList);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_ID, service_id);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, service_name);
+                    bundle.putString(BaseWebViewActivity.SERVICE_ICON, args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST));
                     bundle.putString(BaseWebViewActivity.URL, serviceMessageList.getContent_lists().get(0).getLink_url());
                     startActivity(ArticleDetailForActivitiesActivity.class, bundle);
                 } else {

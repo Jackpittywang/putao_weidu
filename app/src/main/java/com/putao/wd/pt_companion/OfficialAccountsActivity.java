@@ -61,6 +61,8 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
     TextView tv_relation_companion;
     @Bind(R.id.tv_look_history)
     TextView tv_look_history;
+    @Bind(R.id.tv_icon)
+    TextView tv_icon;
     @Bind(R.id.ll_companion)
     LinearLayout ll_companion;
 
@@ -107,6 +109,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 setMainTitle(subscribeList.getService_name());
                 tv_official_title.setText(subscribeList.getService_name());
                 iv_icon.setImageURL(subscribeList.getService_icon());
+                tv_icon.setText(subscribeList.getService_icon());
                 tv_recommend.setText(subscribeList.getService_description());
                 mServiceId = subscribeList.getService_id();
                 mServiceName = subscribeList.getService_name();
@@ -126,6 +129,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                 setMainTitle(companion.getService_name());
                 tv_official_title.setText(companion.getService_name());
                 iv_icon.setImageURL(companion.getService_icon());
+                tv_icon.setText(companion.getService_icon());
                 tv_recommend.setText(companion.getService_description());
                 mServiceId = companion.getService_id();
                 mServiceName = companion.getService_name();
@@ -217,6 +221,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                     bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
                     bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
                     bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
+                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, tv_icon.getText().toString().trim());
                     startActivity(LookHistoryActivity.class, bundle);
                 }
             }
@@ -569,6 +574,7 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                             tv_official_title.setText(result.getService_name());
                             navigation_bar.setMainTitle(result.getService_name());
                             iv_icon.setImageURL(result.getService_icon());
+                            tv_icon.setText(result.getService_icon());
                             tv_recommend.setText(result.getService_description());
                             if (result.is_relation()) {//是否关注
                                 navigation_bar.getRightView().setVisibility(View.VISIBLE);

@@ -159,8 +159,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         } else {
             mServiceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
             if (args.getBoolean(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK))
-                imageIcon = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD);
-            setMainTitle(args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION));
+                setMainTitle(args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION));
+            imageIcon = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD);
             navigation_bar.setRightClickable(false);
             setMainTitleFromNetwork();
         }
