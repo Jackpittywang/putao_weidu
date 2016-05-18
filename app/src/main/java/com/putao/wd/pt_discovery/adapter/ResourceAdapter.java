@@ -139,7 +139,8 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
             });
         } else if (position == 1) {
             final HotTagHolder hotTagHolder = (HotTagHolder) holder;
-            if (null == mHotTagAdapter && null != hotTags) {
+            if ((null == mHotTagAdapter && null != hotTags) || isRefresh) {
+                isRefresh = false;
                 hotTags.add(new ResourceTag());
                 mHotTagAdapter = new HotTagAdapter(context, hotTags);
                 hotTagHolder.rv_discovery_hot_tag.setAdapter(mHotTagAdapter);
@@ -151,7 +152,7 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
                         EventBusHelper.post(tag, AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG);
                     }
                 });
-            } else if (null != hotTags) {
+            }/* else if (null != mHotTagAdapter && null != hotTags) {
                 hotTags.add(new ResourceTag());
                 mHotTagAdapter = new HotTagAdapter(context, hotTags);
                 hotTagHolder.rv_discovery_hot_tag.setAdapter(mHotTagAdapter);
@@ -163,7 +164,7 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
                         EventBusHelper.post(tag, AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG);
                     }
                 });
-            }
+            }*/
 //            linearLayoutManager = new LinearLayoutManager(context);
 //            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 //            hotTagHolder.rv_discovery_hot_tag.setLayoutManager(linearLayoutManager);
@@ -298,11 +299,14 @@ public class ResourceAdapter extends LoadMoreAdapter<FindResource, BasicViewHold
         }
     }
 
+    private boolean isRefresh;
+
     public void setBannerAndTag(ResourceBannerAndTag bannerAndTag) {
 //        if (this.banners != null)
 //            this.banners.clear();
         this.banners = bannerAndTag.getBanner();
         this.hotTags = bannerAndTag.getTag();
+        isRefresh = true;
         notifyDataSetChanged();
     }
 }
