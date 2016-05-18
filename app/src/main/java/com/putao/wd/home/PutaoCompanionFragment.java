@@ -111,6 +111,8 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
+        iv_no_commpain.resize(500, 250);
+        iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_01);
         if (!PreferenceUtils.getValue(GlobalApplication.PREFERENCE_STEP1_IS_FIRST, false))
             iv_step1_first.setVisibility(View.VISIBLE);
         else {
@@ -578,16 +580,16 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
             public void onAnimationEnd(Animation animation) {
                 switch (mPicChangeCount % 4) {
                     case 0:
-                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_01);
+                        iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_01);
                         break;
                     case 1:
-                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_02);
+                        iv_no_commpain.setImageURL("res://putao/" +R.drawable.img_link_product_02);
                         break;
                     case 2:
-                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_03);
+                        iv_no_commpain.setImageURL("res://putao/" +R.drawable.img_link_product_03);
                         break;
                     case 3:
-                        iv_no_commpain.setDefaultImage(R.drawable.img_link_product_04);
+                        iv_no_commpain.setImageURL("res://putao/" + R.drawable.img_link_product_04);
                         break;
                 }
                 iv_no_commpain.startAnimation(mSet);
@@ -617,8 +619,9 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
     public void onDestroy() {
         super.onDestroy();
         mSet.cancel();
-        mSet =null;
+        mSet = null;
     }
+
     @Override
     public void onLeftAction() {
         super.onLeftAction();
