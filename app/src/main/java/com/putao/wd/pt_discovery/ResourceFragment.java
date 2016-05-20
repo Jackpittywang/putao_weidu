@@ -390,10 +390,14 @@ public class ResourceFragment extends BasicFragment implements View.OnClickListe
 
     @Subcriber(tag = AccountConstants.EventBus.EVENT_DISCOVERY_HOT_TAG)
     public void eventDiscoveryHotTag(ResourceTag tag) {
+        if(StringUtils.equals(tag.getTag_name(),"活动")){
+            YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_column);
+        }
+        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_tag);
+
         Bundle bundle = new Bundle();
         bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_ID, tag.getId());
         bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVRY_RESOURCE_TAG_TITLE, tag.getTag_name());
-        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_tag);
         if (StringUtils.equals(CAMPAIGN_TYPE, tag.getDisplay_type()))
             startActivity(CampaignActivity.class, bundle);
         else
