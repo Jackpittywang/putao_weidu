@@ -123,12 +123,14 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                 if (cart.isSelect()) {
                     cart.setIsSelect(false);
                     cart.setEditable(false);
-                    if(cart.isNull()) {
+                    if (cart.isNull()) {
                         cart.setIsSelectUseless(false);
                     }
                 } else {
                     cart.setIsSelect(true);
-                    if(cart.isNull()) {
+//                    if (saveable)
+//                        cart.setEditable(true);
+                    if (cart.isNull()) {
                         cart.setIsSelectUseless(true);
                     }
                 }
@@ -184,8 +186,8 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     private void addUselessProducts(List<Cart> carts, List<Cart> cartsUseless) {
         useCount = carts.size();
-        if(null != cartsUseless && cartsUseless.size() > 0) {
-            for(Cart cart : cartsUseless) {
+        if (null != cartsUseless && cartsUseless.size() > 0) {
+            for (Cart cart : cartsUseless) {
                 cart.setIsNull(true);
                 carts.add(cart);
             }
@@ -196,9 +198,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      * 设置标题购物车数量
      */
     private void setTitleCount(int count) {
-        if(count != 0) {
+        if (count != 0) {
             navigation_bar.setMainTitle(SHOPPING_CAR + "(" + count + ")");
-        }else {
+        } else {
             navigation_bar.setMainTitle(SHOPPING_CAR);
         }
     }
@@ -252,7 +254,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     private List<CartEdit> getReqParam(List<Cart> carts) {
         List<CartEdit> cartEdits = new ArrayList<>();
-        if(carts.size() > 0) {
+        if (carts.size() > 0) {
             for (Cart cart : carts) {
                 CartEdit cartEdit = new CartEdit();
                 cartEdit.setPid(cart.getPid());
@@ -269,13 +271,13 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
      */
     private List<CartEdit> getDeleteReq() {
         List<CartEdit> reqList;
-        if(btn_sel_all.getState()){
+        if (btn_sel_all.getState()) {
             reqList = new ArrayList<>();
-        }else {
+        } else {
             List<Cart> noSelect = new ArrayList<>();
-            for(int i = 0; i < adapter.getItems().size(); i++) {
+            for (int i = 0; i < adapter.getItems().size(); i++) {
                 Cart cart = adapter.getItem(i);
-                if(!mSelected.containsKey(i) && !cart.isSelectUseless()){
+                if (!mSelected.containsKey(i) && !cart.isSelectUseless()) {
                     noSelect.add(cart);
                 }
             }
@@ -358,7 +360,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_all://全选
-                if(useCount != 0){
+                if (useCount != 0) {
                     isSelectAll = isSelectAll ? false : true;
                     btn_sel_all.setState(isSelectAll);
                     adapter.selAll(isSelectAll);
@@ -429,7 +431,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                         cartDelete(pid);
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener(){
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -452,7 +454,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
     public void eventEditable(Map<Integer, Cart> selected) {
         mSelected = selected;
         navigation_bar.setRightAction(true);
-        if(selected.size() != 0) {
+        if (selected.size() != 0) {
             setBottomButtonStyle(true);
             setGoodsPrice();
         }
@@ -472,7 +474,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             setTopButtonStyle(EDIT, PAY, false);
             initData();
         }
-        if(selected.size() != useCount) {
+        if (selected.size() != useCount) {
             btn_sel_all.setState(false);
         }
     }

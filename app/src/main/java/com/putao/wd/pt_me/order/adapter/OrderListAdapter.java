@@ -74,7 +74,7 @@ public class OrderListAdapter extends LoadMoreAdapter<Order, OrderListAdapter.Or
         });
         holder.tv_order_no.setText(order.getOrder_sn());
         holder.tv_order_purchase_time.setText(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-        holder.tv_order_sum_count.setText(order.getTotal_quantity() + "");
+        holder.tv_order_sum_count.setText(order.getTotalQuantity() + "");
         holder.tv_sum_money.setText(order.getTotal_amount() + "");
         holder.tv_sum_carriage.setText(order.getExpress_money());
         adapter = new OrdersAdapter(context, order.getProduct());
