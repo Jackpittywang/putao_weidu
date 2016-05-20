@@ -219,10 +219,13 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
         @Override
         public int compare(Companion lhs, Companion rhs) {
-            if (rhs.is_unbunding()) return 2;
-            if (lhs.getReceiver_time() > rhs.getReceiver_time())
+            if (lhs.getSort() < rhs.getSort()) return 1;
+            else if (lhs.getSort() > rhs.getSort()) return -1;
+            if (lhs.getReceiver_time() < rhs.getReceiver_time())
+                return 1;
+            else if (lhs.getReceiver_time() > rhs.getReceiver_time())
                 return -1;
-            return 1;
+            return 0;
         }
     }
 

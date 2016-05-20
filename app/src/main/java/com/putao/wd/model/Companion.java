@@ -18,7 +18,7 @@ public class Companion implements Serializable {
     private int relation_time;//更新时间
     private int is_relation;//是否关注
     private boolean is_unbunding;//是否可以解绑
-    private String sort;//排序，由大到小
+    private int sort;//排序，由大到小
     private boolean isShowRed;
     private ServiceMessage auto_reply;//自动回复内容
     private String substr;
@@ -131,11 +131,11 @@ public class Companion implements Serializable {
         this.second_level_lists = second_level_lists;
     }
 
-    public String getSort() {
+    public int getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(int sort) {
         this.sort = sort;
     }
 

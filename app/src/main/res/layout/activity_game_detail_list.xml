@@ -141,7 +141,6 @@
                     android:layout_weight="0.7"
                     android:background="@drawable/comment_shape"
                     android:gravity="center_vertical"
-                    android:hint="发表评论"
                     android:imeOptions="actionSend"
                     android:inputType="textMultiLine"
                     android:lines="1"
