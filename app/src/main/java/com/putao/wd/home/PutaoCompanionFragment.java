@@ -406,7 +406,7 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
                 if (!AccountHelper.isLogin()) {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, true);
-                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, IndexActivity.class);
+                    bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, CaptureActivity.class);
                     startActivity(LoginActivity.class, bundle);
                 } else
                     startActivity(CaptureActivity.class);
