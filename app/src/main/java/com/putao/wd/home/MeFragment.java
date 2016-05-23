@@ -20,9 +20,7 @@ import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
 import com.putao.wd.account.AccountHelper;
 import com.putao.wd.account.YouMengHelper;
-import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.UserApi;
-import com.putao.wd.model.OrderCount;
 import com.putao.wd.model.UserInfo;
 import com.putao.wd.pt_me.address.AddressListActivity;
 import com.putao.wd.pt_me.child.ChildInfoActivity;
@@ -30,7 +28,6 @@ import com.putao.wd.pt_me.collection.CollectionActivity;
 import com.putao.wd.pt_me.message.MessageCenterActivity;
 import com.putao.wd.pt_me.order.OrderListActivity;
 import com.putao.wd.pt_me.participation.ParticipationActivity;
-import com.putao.wd.pt_me.service.ServiceListActivity;
 import com.putao.wd.pt_me.setting.SettingActivity;
 import com.putao.wd.qrcode.CaptureActivity;
 import com.putao.wd.start.putaozi.GrapestoneActivity;
@@ -42,13 +39,11 @@ import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.ImageUtils;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.view.SettingItem;
 import com.sunnybear.library.view.image.FastBlur;
 import com.sunnybear.library.view.image.ImageDraweeView;
 import com.sunnybear.library.view.image.processor.ProcessorInterface;
 import com.sunnybear.library.view.scroll.SupportScrollView;
-import com.sunnybear.library.view.select.IndicatorButton;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -71,14 +66,14 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     LinearLayout ll_me;
     @Bind(R.id.sv_me)
     SupportScrollView sv_me;
-    @Bind(R.id.btn_pay)
-    IndicatorButton btn_pay;//待付款
-    @Bind(R.id.btn_deliver)
-    IndicatorButton btn_deliver;//待发货
-    @Bind(R.id.btn_take_deliver)
-    IndicatorButton btn_take_deliver;//待收货
-    @Bind(R.id.btn_after_sale)
-    IndicatorButton btn_after_sale;//售后
+//    @Bind(R.id.btn_pay)
+//    IndicatorButton btn_pay;//待付款
+//    @Bind(R.id.btn_deliver)
+//    IndicatorButton btn_deliver;//待发货
+//    @Bind(R.id.btn_take_deliver)
+//    IndicatorButton btn_take_deliver;//待收货
+//    @Bind(R.id.btn_after_sale)
+//    IndicatorButton btn_after_sale;//售后
     @Bind(R.id.iv_user_icon)
     ImageDraweeView iv_user_icon;
     @Bind(R.id.iv_user_icon_background)
@@ -117,7 +112,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         sv_me.setOnTouchListener(this);
         ll_me.getParent().requestDisallowInterceptTouchEvent(false);
         getUserInfo();
-        getOrderCount();
+//        getOrderCount();
     }
 
     @Override
@@ -151,21 +146,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
         if (!AccountHelper.isLogin()) {
             setDefaultBlur();
         } else if (!IndexActivity.isNotRefreshUserInfo && AccountHelper.isLogin() && !isPrepared) {
-            getOrderCount();
+//            getOrderCount();
             getUserInfo();
         }
         refreshMeDot("");
     }
 
-    /**
-     * 订单上数字没有登录则不显示
-     */
-    private void hideNum() {
-        btn_pay.hide();
-        btn_deliver.hide();
-        btn_take_deliver.hide();
-        btn_after_sale.hide();
-    }
+//    /**
+//     * 订单上数字没有登录则不显示
+//     */
+//    private void hideNum() {
+//        btn_pay.hide();
+//        btn_deliver.hide();
+//        btn_take_deliver.hide();
+//        btn_after_sale.hide();
+//    }
 
     /**
      * 获取用户信息
@@ -214,41 +209,41 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     private int payTakeDeliver = 0;
     private int payAfterSale = 0;
 
-    /**
-     * 获得订单数量
-     */
-    private void getOrderCount() {
-        if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
-        networkRequest(OrderApi.getOrderCount(), new SimpleFastJsonCallback<OrderCount>(OrderCount.class, loading) {
-            @Override
-            public void onSuccess(String url, OrderCount result) {
-                Logger.d(result.toString());
-                setOrderEmpty(payCount, result.getUnpaid().getNum(), btn_pay);
-                setOrderEmpty(payDeliver, result.getUndelivery().getNum(), btn_deliver);
-                setOrderEmpty(payTakeDeliver, result.getUnCheck().getNum(), btn_take_deliver);
-                setOrderEmpty(payAfterSale, result.getService().getNum(), btn_after_sale);
-                /*payCount = result.getUnpaid().getNum();
-                payDeliver = result.getUndelivery().getNum();
-                payTakeDeliver = result.getUnCheck().getNum();
-                payAfterSale = result.getService().getNum();*/
-                loading.dismiss();
-            }
+//    /**
+//     * 获得订单数量
+//     */
+//    private void getOrderCount() {
+//        if (TextUtils.isEmpty(AccountHelper.getCurrentUid())) return;
+//        networkRequest(OrderApi.getOrderCount(), new SimpleFastJsonCallback<OrderCount>(OrderCount.class, loading) {
+//            @Override
+//            public void onSuccess(String url, OrderCount result) {
+//                Logger.d(result.toString());
+//                setOrderEmpty(payCount, result.getUnpaid().getNum(), btn_pay);
+//                setOrderEmpty(payDeliver, result.getUndelivery().getNum(), btn_deliver);
+//                setOrderEmpty(payTakeDeliver, result.getUnCheck().getNum(), btn_take_deliver);
+//                setOrderEmpty(payAfterSale, result.getService().getNum(), btn_after_sale);
+//                /*payCount = result.getUnpaid().getNum();
+//                payDeliver = result.getUndelivery().getNum();
+//                payTakeDeliver = result.getUnCheck().getNum();
+//                payAfterSale = result.getService().getNum();*/
+//                loading.dismiss();
+//            }
+//
+//        }, false);
+//    }
 
-        }, false);
-    }
-
-
-    private void setOrderEmpty(int payCount, int newCount, IndicatorButton btn_pay) {
-        /*if (newCount == 0) {
-            btn_pay.hide();
-            return;
-        }
-        if (payCount != newCount) {
-        }*/
-//        btn_pay.hide();
-        btn_pay.show(newCount);
-
-    }
+//
+//    private void setOrderEmpty(int payCount, int newCount, IndicatorButton btn_pay) {
+//        /*if (newCount == 0) {
+//            btn_pay.hide();
+//            return;
+//        }
+//        if (payCount != newCount) {
+//        }*/
+////        btn_pay.hide();
+//        btn_pay.show(newCount);
+//
+//    }
 
     @Override
     protected String[] getRequestUrls() {
@@ -266,19 +261,19 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
     public void eventLogin(String tag) {
         mImg = "";
         getUserInfo();
-        getOrderCount();
+//        getOrderCount();
     }
 
     @Subcriber(tag = SettingActivity.EVENT_LOGOUT)
     public void eventLogout(String tag) {
         mImg = "";
-        hideNum();
+//        hideNum();
         iv_user_icon.setDefaultImage(R.drawable.img_head_default);
         tv_user_nickname.setText("葡星人");
     }
 
     @OnClick({R.id.iv_setting, R.id.iv_capture, R.id.si_order, R.id.si_address, /*R.id.si_action,*/ R.id.si_question, R.id.iv_user_icon
-            , R.id.si_child_info, R.id.si_message, R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale, R.id.si_participation, R.id.si_collection})
+            , R.id.si_child_info, R.id.si_message, /*R.id.btn_pay, R.id.btn_deliver, R.id.btn_take_deliver, R.id.btn_after_sale,*/ R.id.si_participation, R.id.si_collection})
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -332,22 +327,22 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "消息中心");
                 startActivity(MessageCenterActivity.class);
                 break;
-            case R.id.btn_pay://待付款
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
-                startActivity(OrderListActivity.class, bundle);
-                break;
-            case R.id.btn_deliver://待发货\
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
-                startActivity(OrderListActivity.class, bundle);
-                break;
-            case R.id.btn_take_deliver://待收货
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
-                startActivity(OrderListActivity.class, bundle);
-                break;
-            case R.id.btn_after_sale://售后
-                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "售后");
-                startActivity(ServiceListActivity.class, bundle);
-                break;
+//            case R.id.btn_pay://待付款
+//                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
+//                startActivity(OrderListActivity.class, bundle);
+//                break;
+//            case R.id.btn_deliver://待发货\
+//                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
+//                startActivity(OrderListActivity.class, bundle);
+//                break;
+//            case R.id.btn_take_deliver://待收货
+//                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
+//                startActivity(OrderListActivity.class, bundle);
+//                break;
+//            case R.id.btn_after_sale://售后
+//                YouMengHelper.onEvent(mActivity, YouMengHelper.UserHome_cell_item, "售后");
+//                startActivity(ServiceListActivity.class, bundle);
+//                break;
         }
     }
 
@@ -395,21 +390,21 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
 //                mDiskFileCacheHelper.remove(RedDotReceiver.ME_MESSAGECENTER + AccountHelper.getCurrentUid());
                 bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, MessageCenterActivity.class);
                 break;
-            case R.id.btn_pay://待付款
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
-                break;
-            case R.id.btn_deliver://待发货
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
-                break;
-            case R.id.btn_take_deliver://待收货
-                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
-                break;
-            case R.id.btn_after_sale://售后
-                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ServiceListActivity.class);
-                break;
+//            case R.id.btn_pay://待付款
+//                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_PAY);
+//                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+//                break;
+//            case R.id.btn_deliver://待发货
+//                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SHIPMENT);
+//                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+//                break;
+//            case R.id.btn_take_deliver://待收货
+//                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_WAITING_SIGN);
+//                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OrderListActivity.class);
+//                break;
+//            case R.id.btn_after_sale://售后
+//                bundle.putSerializable(LoginActivity.TERMINAL_ACTIVITY, ServiceListActivity.class);
+//                break;
         }
         startActivity(LoginActivity.class, bundle);
     }
@@ -455,7 +450,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 oldY = 0;
                 if (ONREFRESH) {
                     getUserInfo();
-                    getOrderCount();
+//                    getOrderCount();
                 }
 
                 break;
@@ -471,7 +466,7 @@ public class MeFragment extends BasicFragment implements View.OnClickListener, V
                 oldY = 0;
                 if (ONREFRESH) {
                     getUserInfo();
-                    getOrderCount();
+//                    getOrderCount();
                 }
                 /*if (null != AccountHelper.getCurrentUserInfo()) {
                     try {

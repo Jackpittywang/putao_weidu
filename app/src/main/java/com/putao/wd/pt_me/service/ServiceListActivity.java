@@ -28,6 +28,7 @@ import butterknife.Bind;
  * 售后列表
  * Created by wangou on 15/12/7.
  */
+@Deprecated
 public class ServiceListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
 
     @Bind(R.id.rv_service)
