@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.putao.wd.R;
 import com.putao.wd.model.Norms;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
+import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
@@ -27,8 +28,11 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
     public static final String EVENT_DEFAULT_TAG = "default_tag";
     public static final String EVENT_COUNT = "count";
 
+
+    private int mMaxCount;
     private static final int TYPE_NORMS = 1;
     private static final int TYPE_COUNT = 2;
+    private CountSelectViewHolder countViewHolder;
 
     public NormsSelectAdapter(Context context, List<Norms> normses) {
         super(context, normses);
@@ -50,6 +54,10 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
                 return R.layout.popup_shopping_car_item_count;
         }
         return 0;
+    }
+
+    public void setMaxCount(int maxCount) {
+        mMaxCount = maxCount;
     }
 
     @Override
@@ -77,10 +85,11 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
                 }
             });
         } else if (holder instanceof CountSelectViewHolder) {
-            CountSelectViewHolder viewHolder = (CountSelectViewHolder) holder;
+            countViewHolder = (CountSelectViewHolder) holder;
             if (StringUtils.equals("reset", norms.getTitle()))
-                viewHolder.al_count.reset();
-            viewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
+                countViewHolder.al_count.reset();
+            countViewHolder.al_count.setMaxCount(mMaxCount);
+            countViewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
                 @Override
                 public void onAmountSelected(int count, boolean isPlus) {
                     EventBusHelper.post(count, EVENT_COUNT);
