@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.MyViewPager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -47,7 +47,6 @@ import com.putao.wd.start.comment.EmojiFragment;
 import com.putao.wd.start.comment.adapter.EmojiFragmentAdapter;
 import com.putao.wd.util.BottomPanelUtil;
 import com.putao.wd.webview.BaseWebViewActivity;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.DensityUtil;
@@ -105,12 +104,14 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     LinearLayout ll_custommenu;
     @Bind(R.id.ll_comment_edit)
     LinearLayout ll_comment_edit;
+    @Bind(R.id.ll_empty)
+    LinearLayout ll_empty;
     @Bind(R.id.iv_menu)
     ImageView iv_menu;
     @Bind(R.id.iv_send)
     ImageView iv_send;
     @Bind(R.id.vp_emojis)
-    ViewPager vp_emojis;
+    MyViewPager vp_emojis;
     @Bind(R.id.v_split)
     View v_split;
     @Bind(R.id.et_msg)
@@ -119,6 +120,8 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
     ProgressBar pb_loading;
     @Bind(R.id.tv_emojis)
     TextView tv_emojis;
+    @Bind(R.id.tv_send)
+    TextView tv_send;
 
 
     private boolean isLoadMore = false;
@@ -294,6 +297,15 @@ public class GameDetailListActivity extends PTWDActivity<GlobalApplication> impl
         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
         List<CompanionDB> downloadArticles = dataBaseManager.getDownloadArticles(mServiceId);
         if (null != downloadArticles) {
+            if (downloadArticles.size() == 0) {
+                rv_content.setVisibility(View.GONE);
+                ll_empty.setVisibility(View.VISIBLE);
+                tv_send.setVisibility(View.GONE);
+            } else {
+                rv_content.setVisibility(View.VISIBLE);
+                ll_empty.setVisibility(View.GONE);
+                tv_send.setVisibility(View.VISIBLE);
+            }
             for (CompanionDB companionDB : downloadArticles) {
                 ServiceMessageList serviceMessageList = new ServiceMessageList();
                 serviceMessageList.setService_id(mServiceId);

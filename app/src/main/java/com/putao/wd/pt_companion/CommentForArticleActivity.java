@@ -18,11 +18,13 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -94,6 +96,10 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     LoadMoreRecyclerView rv_content;
     @Bind(R.id.ll_comment_edit)
     LinearLayout ll_comment_edit;
+    @Bind(R.id.rl_empty)
+    RelativeLayout rl_empty;
+    @Bind(R.id.ll_empty)
+    LinearLayout ll_empty;
 
     @Bind(R.id.iv_upload_pic)
     ImageDraweeView iv_upload_pic;
@@ -101,6 +107,8 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
     ViewPager vp_emojis;
     @Bind(R.id.et_msg)
     EmojiEditText et_msg;
+    @Bind(R.id.btn_no_data)
+    Button btn_no_data;
 
 
     private SelectPopupWindow mSelectPopupWindow;
@@ -273,6 +281,17 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                 return false;
             }
         });
+        btn_no_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!NetworkUtil.isNetworkAvailable(mContext)) {
+                    ToastUtils.showToastLong(mContext, "数据加载失败");
+                } else {
+                    refreshCommentList();
+
+                }
+            }
+        });
     }
 
     @OnClick({R.id.tv_emojis, R.id.tv_send, R.id.et_msg, R.id.iv_upload_pic})
@@ -396,7 +415,13 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                                 hasComment = true;
                                 rv_content.loadMoreComplete();
                                 page++;
+                                rl_empty.setVisibility(View.GONE);
+                                ll_empty.setVisibility(View.GONE);
+                                ptl_refresh.setVisibility(View.VISIBLE);
                             } else {
+                                rl_empty.setVisibility(View.GONE);
+                                ll_empty.setVisibility(View.VISIBLE);
+                                ptl_refresh.setVisibility(View.GONE);
                                 adapter.clear();
                                 rv_content.noMoreLoading();
                                 hasComment = false;
@@ -404,6 +429,17 @@ public class CommentForArticleActivity extends PTWDActivity implements View.OnCl
                         }
                         loading.dismiss();
                         ptl_refresh.refreshComplete();
+                    }
+
+                    @Override
+                    public void onFailure(String url, int statusCode, String msg) {
+                        super.onFailure(url, statusCode, msg);
+                        if (adapter.getItemCount() <= 1) {
+                            rl_empty.setVisibility(View.VISIBLE);
+                            ll_empty.setVisibility(View.GONE);
+                            ptl_refresh.setVisibility(View.GONE);
+                            ptl_refresh.refreshComplete();
+                        }
                     }
                 }
 
