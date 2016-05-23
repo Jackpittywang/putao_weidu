@@ -441,11 +441,16 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        if (isSubscribe) {
+                        if (is_relation) {
+                            if (isSubscribe)
+                                ActivityManager.getInstance().popOtherActivity(SubscriptionNumberActivity.class);
+                            else if (isSubscription)
+                                ActivityManager.getInstance().popOtherActivity(PutaoSubcribeActivity.class);
+                            else
+                                ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+                        } else
                             ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
-                        } else {
-                            ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
-                        }
+
                         mDialog.dismiss();
                        /* if (!is_relation) {//未关联
                         } else {//已关联

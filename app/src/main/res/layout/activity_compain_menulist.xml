@@ -18,14 +18,13 @@
         android:layout_gravity="right"
         android:layout_marginRight="10dp"
         android:background="@drawable/img_get_compain_menulist"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/distance_10dp"
-        android:paddingRight="@dimen/distance_10dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_ScanCode"
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:background="@drawable/img_get_compain_code_selector"
             android:gravity="center">
 
             <com.sunnybear.library.view.image.ImageDraweeView
@@ -45,12 +44,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
+            android:layout_marginLeft="@dimen/distance_10dp"
+            android:layout_marginRight="@dimen/distance_10dp"
             android:background="@color/text_color_646464" />
 
         <LinearLayout
             android:id="@+id/ll_Subscribe"
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:background="@drawable/img_get_compain_subscribe_seletor"
             android:gravity="center">
 
             <com.sunnybear.library.view.image.ImageDraweeView
