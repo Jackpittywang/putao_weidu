@@ -101,15 +101,16 @@ public class AmountSelectLayout extends RelativeLayout {
 
                 if (mMaxCount != -1)
                     isMorePlus = mMaxCount > mCurrentCount;
+
                 if (isMorePlus) {
                     mCurrentCount++;
                     tv_minus.setTextColor(mNorColor);
                     mEditCount.setText(String.valueOf(mCurrentCount));
-                    if (mOnAmountSelectedListener != null)
-                        mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true);
                 } else {
                     tv_plus.setTextColor(mDisColor);
                 }
+                if (mOnAmountSelectedListener != null)
+                    mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true);
             }
         });
     }

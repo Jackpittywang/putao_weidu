@@ -9,6 +9,7 @@ import com.putao.wd.model.Norms;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
+import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.AmountSelectLayout;
 import com.sunnybear.library.view.recycler.adapter.BasicAdapter;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
@@ -33,6 +34,7 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
     private static final int TYPE_NORMS = 1;
     private static final int TYPE_COUNT = 2;
     private CountSelectViewHolder countViewHolder;
+    private boolean isLast = false;
 
     public NormsSelectAdapter(Context context, List<Norms> normses) {
         super(context, normses);
@@ -81,6 +83,7 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
             viewHolder.tb_tag.setonTagItemCheckListener(new TagBar.OnTagItemCheckListener() {
                 @Override
                 public void onTagItemCheck(Tag tag, int position) {
+                    isLast = false;
                     EventBusHelper.post(tag, EVENT_SEL_TAG);
                 }
             });
@@ -93,6 +96,14 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
                 @Override
                 public void onAmountSelected(int count, boolean isPlus) {
                     EventBusHelper.post(count, EVENT_COUNT);
+
+                    if(isPlus){
+                        if (isLast)
+                            ToastUtils.showToastShort(context, "库存不足");
+                        if (mMaxCount <= count)
+                            isLast = true;
+                    }else
+                        isLast = false;
                 }
             });
         }

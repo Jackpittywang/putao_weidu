@@ -229,8 +229,5 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
         String sum = MathUtils.multiplication(sku.getPrice(), count);
         mCount = String.valueOf(count);
         tv_product_price.setText(sum);
-        if(MathUtils.compareBigOrEqualsIntFromString(mCount, sku.getQuantity())){
-            ToastUtils.showToastShort(mContext,"库存不足");
-        }
     }
 }
