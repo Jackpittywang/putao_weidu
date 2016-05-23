@@ -201,9 +201,9 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
 
 
 
-                int p = (int)(Math.random()*10);
-                Logger.d(p+"");
-                sku.setQuantity(String.valueOf(p));
+//                int p = (int)(Math.random()*10);
+//                Logger.d(p+"");
+//                sku.setQuantity(String.valueOf(p));
 
 
 
@@ -211,7 +211,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                 adapter.resetAmount();
                 initCar();
                 if (MathUtils.compareIntFromString(mCount, sku.getQuantity())) {
-                    Logger.d("mCount:"+mCount +",sku.getQuantity():" +sku.getQuantity());
+//                    Logger.d("mCount:"+mCount +",sku.getQuantity():" +sku.getQuantity());
                     ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
                     tv_join_car.setText("库存不足");
                     ll_join_car.setClickable(false);
