@@ -134,12 +134,7 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                             if (url.contains("issue.html"))
                                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_menu_should_ask);
 
-                            if (!AccountHelper.isLogin()) {
-                                args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, BaseWebViewActivity.class);
-                                startActivity(LoginActivity.class, args);
-                                finish();
-                            } else
-                                PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, args.getString(SERVICE_ICON), JSON.parseObject(content));
+                            PutaoParse.parseUrl(BaseWebViewActivity.this, scheme, args.getString(SERVICE_ICON), JSON.parseObject(content));
                         }
                         return true;
                 }

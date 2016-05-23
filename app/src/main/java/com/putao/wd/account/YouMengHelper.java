@@ -510,6 +510,19 @@ public class YouMengHelper {
      * “发现-找资源-文章”点击次数（需分tag统计）
      */
     public static final String DiscoverHome_article = "DiscoverHome_article";
+
+    /**
+     * “发现-推荐”点击次数
+     */
+    public static final String DiscoverHome_recommend = "DiscoverHome_recommend";
+
+    /**
+     * “发现-标签-文章list”点击次数
+     */
+    public static final String DiscoverHome_tag_list = "DiscoverHome_tag_list";
+
+
+
     /**
      * 记录打点数据
      */

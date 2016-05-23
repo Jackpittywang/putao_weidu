@@ -85,4 +85,17 @@ public final class MathUtils {
         double number2 = Integer.parseInt(num2);
         return number1 > number2;
     }
+
+    /**
+     * 比较两个数字大小
+     *
+     * @param num1 第一个数字
+     * @param num2 第二个数字
+     * @return 数字大小
+     */
+    public static boolean compareBigOrEqualsIntFromString(String num1, String num2) {
+        double number1 = Integer.parseInt(num1);
+        double number2 = Integer.parseInt(num2);
+        return number1 >= number2;
+    }
 }

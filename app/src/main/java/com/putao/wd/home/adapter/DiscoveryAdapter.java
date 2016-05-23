@@ -49,6 +49,8 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
     public void onBindItem(final DiscoveryViewHolder holder, final DisCovery disCoveries, final int position) {
         holder.iv_discovery.resize(600, 300);
         holder.tv_title.setText(disCoveries.getTitle());
+//        holder.tv_subtitle.setText(disCoveries.getSubtitle());
+        holder.tv_subtitle.setText("这个就是视频介绍");
         if (!disCoveries.getVideo_img().equals("")) {
             holder.iv_player.setVisibility(View.VISIBLE);
             holder.iv_discovery.setImageURL(disCoveries.getVideo_img());
@@ -78,6 +80,8 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         ImageView iv_player;
         @Bind(R.id.tv_title)
         TextView tv_title;
+        @Bind(R.id.tv_subtitle)
+        TextView tv_subtitle;
 
         public DiscoveryViewHolder(View itemView) {
             super(itemView);

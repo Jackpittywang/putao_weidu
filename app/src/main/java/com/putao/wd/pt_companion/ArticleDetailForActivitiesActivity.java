@@ -382,8 +382,8 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_cool://赞
-                if (!checkLogin())
-                    return;
+//                if (!checkLogin())
+//                    return;
 
                 YouMengHelper.onEvent(mContext, YouMengHelper.Activity_detail_action, "赞");
                 if (!property.is_like()) {
@@ -417,8 +417,8 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
                 startActivity(CommentForArticleActivity.class, bundle);
                 break;
             case R.id.sb_cool_icon:
-                if (!checkLogin())
-                    return;
+//                if (!checkLogin())
+//                    return;
 
                 //使用EventBus提交点赞
                 networkRequest(CompanionApi.addCompanyFirstLike(article_id, service_id),

@@ -14,6 +14,7 @@ public class DisCovery implements Serializable {
     private String tag;
     private String time;
     private String create_time;
+    private String subtitle;
     private String modified_time;
     private String sort;
     private String is_delete;
@@ -99,6 +100,14 @@ public class DisCovery implements Serializable {
         this.is_delete = is_delete;
     }
 
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
     @Override
     public String toString() {
         return "DisCovery{" +
@@ -109,6 +118,7 @@ public class DisCovery implements Serializable {
                 ", tag='" + tag + '\'' +
                 ", time='" + time + '\'' +
                 ", create_time='" + create_time + '\'' +
+                ", subtitle='" + subtitle + '\'' +
                 ", modified_time='" + modified_time + '\'' +
                 ", sort='" + sort + '\'' +
                 ", is_delete='" + is_delete + '\'' +

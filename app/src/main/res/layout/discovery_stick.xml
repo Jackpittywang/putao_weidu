@@ -1,117 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_resource"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    >
+    android:orientation="vertical">
+
     <View
         android:id="@+id/view_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/distance_10dp"
         android:background="@color/divider_color"
-        android:visibility="gone"/>
-    <com.sunnybear.library.view.image.ImageDraweeView
-        android:id="@+id/iv_discovery_pic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        auto:aspect_ratio="2"
-        android:scaleType="centerInside"
-        auto:placeholderImageScaleType="centerCrop"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        />
-    <TextView
-        android:id="@+id/tv_discovery_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:text="这里显示的是这篇文章的标题"
-        android:textSize="18sp"
-        android:lineSpacingExtra="@dimen/distance_5dp"
-        android:textColor="@color/color_313131"
-        android:paddingTop="@dimen/distance_10dp"
-        android:paddingBottom="@dimen/distance_10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"/>
+        android:visibility="gone" />
+
     <LinearLayout
-        android:id="@+id/ll_tag_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:background="@drawable/ll_get_diascovery_seletor"
+        android:orientation="vertical">
+
+        <com.sunnybear.library.view.image.ImageDraweeView
+            android:id="@+id/iv_discovery_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerInside"
+            auto:aspect_ratio="2"
+            auto:placeholderImageScaleType="centerCrop" />
+
         <TextView
-            android:id="@+id/tv_show_top"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:paddingLeft="@dimen/distance_5dp"
-            android:paddingRight="@dimen/distance_5dp"
-            android:text="置顶"
-            android:textSize="@dimen/text_size_12sp"
-            android:textColor="@color/text_color_ED5564"
-            android:gravity="center"
-            android:background="@drawable/discover_red_tag"
-            android:enabled="false"
-            android:clickable="false"
-            android:longClickable="false"
-            />
-        <TextView
-            android:id="@+id/tv_tag1"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:paddingLeft="@dimen/distance_5dp"
-            android:paddingRight="@dimen/distance_5dp"
-            android:text="标签名1"
-            android:textSize="@dimen/text_size_12sp"
-            android:textColor="@color/color_C2C2C2"
-            android:gravity="center"
-            android:background="@drawable/discover_nor_tag"
-            android:enabled="false"
-            android:clickable="false"
-            android:longClickable="false"/>
-        <TextView
-            android:id="@+id/tv_tag2"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:paddingLeft="@dimen/distance_5dp"
-            android:paddingRight="@dimen/distance_5dp"
-            android:text="标签名2"
-            android:textSize="@dimen/text_size_12sp"
-            android:textColor="@color/color_C2C2C2"
-            android:gravity="center"
-            android:background="@drawable/discover_nor_tag"
-            android:enabled="false"
-            android:clickable="false"
-            android:longClickable="false"/>
-        <TextView
-            android:id="@+id/tv_tag3"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:paddingLeft="@dimen/distance_5dp"
-            android:paddingRight="@dimen/distance_5dp"
-            android:text="标签名3"
-            android:textSize="@dimen/text_size_12sp"
-            android:textColor="@color/color_C2C2C2"
-            android:gravity="center"
-            android:background="@drawable/discover_nor_tag"
-            android:enabled="false"
-            android:clickable="false"
-            android:longClickable="false"/>
+            android:id="@+id/tv_discovery_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:lineSpacingExtra="@dimen/distance_5dp"
+            android:maxLines="2"
+            android:paddingBottom="@dimen/distance_10dp"
+            android:paddingTop="@dimen/distance_10dp"
+            android:text="这里显示的是这篇文章的标题"
+            android:textColor="@color/color_313131"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_tag_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_show_top"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/discover_red_tag"
+                android:clickable="false"
+                android:enabled="false"
+                android:gravity="center"
+                android:longClickable="false"
+                android:paddingLeft="@dimen/distance_5dp"
+                android:paddingRight="@dimen/distance_5dp"
+                android:text="置顶"
+                android:textColor="@color/text_color_ED5564"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/tv_tag1"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/discover_nor_tag"
+                android:clickable="false"
+                android:enabled="false"
+                android:gravity="center"
+                android:longClickable="false"
+                android:paddingLeft="@dimen/distance_5dp"
+                android:paddingRight="@dimen/distance_5dp"
+                android:text="标签名1"
+                android:textColor="@color/color_C2C2C2"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/tv_tag2"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/discover_nor_tag"
+                android:clickable="false"
+                android:enabled="false"
+                android:gravity="center"
+                android:longClickable="false"
+                android:paddingLeft="@dimen/distance_5dp"
+                android:paddingRight="@dimen/distance_5dp"
+                android:text="标签名2"
+                android:textColor="@color/color_C2C2C2"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/tv_tag3"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/discover_nor_tag"
+                android:clickable="false"
+                android:enabled="false"
+                android:gravity="center"
+                android:longClickable="false"
+                android:paddingLeft="@dimen/distance_5dp"
+                android:paddingRight="@dimen/distance_5dp"
+                android:text="标签名3"
+                android:textColor="@color/color_C2C2C2"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divider_color" />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/divider_color"/>
 
 </LinearLayout>
 

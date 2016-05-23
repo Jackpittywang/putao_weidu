@@ -184,10 +184,9 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
                             bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, serviceInfo.getService_icon());
-                            PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), true);
                             startActivity(GameDetailListActivity.class, bundle);
                         }
-                    } else if (capture_url != null || isFromArticle) {
+                    } else if (capture_url != null) {
                         if (serviceInfo.is_relation()) {//已关注(从扫一扫界面跳转过来)
                             EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
                             bundle.putString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, mServiceId);
@@ -226,26 +225,27 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
         tv_look_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!AccountHelper.isLogin()) {
+//                if (!AccountHelper.isLogin()) {
 //                    Bundle bundle = new Bundle();
 //                    args.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
 //                    args.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
 //                    bundle.putBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, isBind);
-                    args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OfficialAccountsActivity.class);
-                    args.putString(HIDE_FINISH, HIDE_NO_FINISH);
-                    startActivity(LoginActivity.class, args);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, isSubscribe);
-                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, isSubscription);
-                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
-                    bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
-                    bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
+//                    args.putSerializable(LoginActivity.TERMINAL_ACTIVITY, OfficialAccountsActivity.class);
+//                    args.putString(HIDE_FINISH, HIDE_NO_FINISH);
+//                    startActivity(LoginActivity.class, args);
+//                } else {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE, isSubscribe);
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_NOT_DOWNLOAD, isSubscription);
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_COLLECTION, isBind);
+                bundle.putSerializable(LookHistoryActivity.HISTORY_SERVICE_ID, mServiceId);
+                bundle.putString(AccountConstants.Bundle.BUNDLE_SERVICE_NAME, mServiceName);
+                if (!tv_relation_companion.getText().toString().trim().equals("进入"))
                     bundle.putSerializable(AccountConstants.Bundle.BUNDLE_ARTICLE_CLICK, isFromArticle);
-                    bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, tv_icon.getText().toString().trim());
-                    startActivity(LookHistoryActivity.class, bundle);
-                }
+                bundle.putSerializable(AccountConstants.Bundle.BUNDLE_COMPANION_SERVICE_MESSAGE_LIST, tv_icon.getText().toString().trim());
+                startActivity(LookHistoryActivity.class, bundle);
             }
+//            }
         });
     }
 
@@ -441,11 +441,16 @@ public class OfficialAccountsActivity extends PTWDActivity<GlobalApplication> {
                         Boolean is_relation = JSONObject.parseObject(result).getBoolean("is_relation");
                         PreferenceUtils.save(GlobalApplication.IS_DEVICE_BIND + AccountHelper.getCurrentUid(), is_relation);
                         EventBusHelper.post("", AccountConstants.EventBus.EVENT_REFRESH_COMPANION);
-                        if (isSubscribe) {
+                        if (is_relation) {
+                            if (isSubscribe)
+                                ActivityManager.getInstance().popOtherActivity(SubscriptionNumberActivity.class);
+                            else if (isSubscription)
+                                ActivityManager.getInstance().popOtherActivity(PutaoSubcribeActivity.class);
+                            else
+                                ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
+                        } else
                             ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
-                        } else {
-                            ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
-                        }
+
                         mDialog.dismiss();
                        /* if (!is_relation) {//未关联
                         } else {//已关联

@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
+import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.DisCoveryApi;
 import com.putao.wd.base.PTWDActivity;
 import com.putao.wd.model.Campaign;
@@ -141,8 +142,9 @@ public class LabelActivity extends PTWDActivity implements View.OnClickListener 
 
             @Override
             public void onItemClick(Resources resources, int position) {
-                Bundle bundle = new Bundle();
+                YouMengHelper.onEvent(mContext,YouMengHelper.DiscoverHome_tag_list);
 
+                Bundle bundle = new Bundle();
                 bundle.putString(AccountConstants.Bundle.BUNDLE_DISCOVERY_ARTICLE, ResourceFragment.RESOURCE);
                 bundle.putString(ArticleDetailForActivitiesActivity.SHARE_ICON, resources.getIcon());
                 bundle.putString(ArticleDetailForActivitiesActivity.ARTICLE, resources.getId());

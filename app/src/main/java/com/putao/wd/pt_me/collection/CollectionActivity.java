@@ -85,6 +85,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             isCollection = false;
                             ll_empty.setVisibility(View.GONE);
                             ptl_refresh.setVisibility(View.VISIBLE);
+                            rl_no_collection_failure.setVisibility(View.GONE);
                             mPage++;
 
                             if (isFirst) {
@@ -97,6 +98,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                             rv_collection.noMoreLoading();
                             ptl_refresh.setVisibility(View.GONE);
                             ll_empty.setVisibility(View.VISIBLE);
+                            rl_no_collection_failure.setVisibility(View.GONE);
                         }
                         ptl_refresh.refreshComplete();
                         loading.dismiss();
@@ -127,7 +129,7 @@ public class CollectionActivity extends PTWDActivity implements PullToRefreshLay
                         lastItemPosition = adapter.getItemCount() - 1;
                         LinearLayoutManager layoutManager = (LinearLayoutManager) rv_collection.getLayoutManager();
                         lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
-                        if (lastVisiblePosition >= lastItemPosition -1) {
+                        if (lastVisiblePosition >= lastItemPosition - 1) {
                             rv_collection.loadMoreComplete();
                             rv_collection.noMoreLoading();
                         } else {

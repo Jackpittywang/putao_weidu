@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sunnybear.library.R;
+import com.sunnybear.library.util.ToastUtils;
 
 /**
  * 数量选择控件
@@ -20,10 +21,10 @@ public class AmountSelectLayout extends RelativeLayout {
     private View mRootView;
     private LinearLayout mMinusBtn, mPlusBtn;
     private TextView mEditCount;
+    private int mMaxCount = -1;
 
     private int mCurrentCount = 1;//当前数量
 
-    private int mMaxCount;
     private Drawable mBtnBackground;//按钮颜色
     private Drawable mEditBackground;//数字区背景
     private boolean isEditable;//是否可编辑
@@ -34,9 +35,15 @@ public class AmountSelectLayout extends RelativeLayout {
     private TextView tv_minus, tv_plus;
 
     private OnAmountSelectedListener mOnAmountSelectedListener;
+    private OnAmountSelectedPlusListener mOnAmountSelectedPlusListener;
+    private boolean isMorePlus = true;
 
     public void setOnAmountSelectedListener(OnAmountSelectedListener onAmountSelectedListener) {
         mOnAmountSelectedListener = onAmountSelectedListener;
+    }
+
+    public void setOnAmountSelectedPlusListener(OnAmountSelectedPlusListener onAmountSelectedPlusListener) {
+        mOnAmountSelectedPlusListener = onAmountSelectedPlusListener;
     }
 
     public AmountSelectLayout(Context context) {
@@ -65,21 +72,23 @@ public class AmountSelectLayout extends RelativeLayout {
         array.recycle();
     }
 
-    private void initView(Context context) {
+    private void initView(final Context context) {
         mRootView = LayoutInflater.from(context).inflate(R.layout.widget_amount_select, this);
         mMinusBtn = (LinearLayout) mRootView.findViewById(R.id.btn_minus);
         mPlusBtn = (LinearLayout) mRootView.findViewById(R.id.btn_plus);
         mEditCount = (TextView) mRootView.findViewById(R.id.tv_count);
         mEditCount.setText(String.valueOf(mCurrentCount));
         tv_minus = (TextView) mRootView.findViewById(R.id.tv_minus);
-        tv_plus = (TextView) mRootView.findViewById(R.id.tv_minus);
+        tv_plus = (TextView) mRootView.findViewById(R.id.tv_plus);
 
         mMinusBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentCount > 1)
+                if (mCurrentCount > 1) {
                     mCurrentCount--;
-                else if (mCurrentCount == 1)
+                    isMorePlus = true;
+                    tv_plus.setTextColor(mNorColor);
+                } else if (mCurrentCount == 1)
                     tv_minus.setTextColor(mDisColor);
                 mEditCount.setText(String.valueOf(mCurrentCount));
                 if (mOnAmountSelectedListener != null)
@@ -89,9 +98,17 @@ public class AmountSelectLayout extends RelativeLayout {
         mPlusBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentCount++;
-                tv_minus.setTextColor(mNorColor);
-                mEditCount.setText(String.valueOf(mCurrentCount));
+
+                if (mMaxCount != -1)
+                    isMorePlus = mMaxCount > mCurrentCount;
+
+                if (isMorePlus) {
+                    mCurrentCount++;
+                    tv_minus.setTextColor(mNorColor);
+                    mEditCount.setText(String.valueOf(mCurrentCount));
+                } else {
+                    tv_plus.setTextColor(mDisColor);
+                }
                 if (mOnAmountSelectedListener != null)
                     mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true);
             }
@@ -137,6 +154,7 @@ public class AmountSelectLayout extends RelativeLayout {
     public void reset() {
         setCount(1);
         tv_minus.setTextColor(mDisColor);
+        tv_plus.setTextColor(mNorColor);
     }
 
     /**
@@ -145,5 +163,13 @@ public class AmountSelectLayout extends RelativeLayout {
     public interface OnAmountSelectedListener {
 
         void onAmountSelected(int count, boolean isPlus);
+    }
+
+    public interface OnAmountSelectedPlusListener {
+        int onPlusLastSelected();
+    }
+
+    public void setMaxCount(int maxCount) {
+        mMaxCount = maxCount;
     }
 }

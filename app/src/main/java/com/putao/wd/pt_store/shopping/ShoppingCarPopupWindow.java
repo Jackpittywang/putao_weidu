@@ -29,6 +29,7 @@ import com.sunnybear.library.view.select.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -113,6 +114,7 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
                             tv_product_price.setText(skus.get(0).getPrice());
                         } finally {
                             normses.add(new Norms());
+                            adapter.setMaxCount(Integer.valueOf(result.getSku().get(0).getQuantity()));
                             adapter.replaceAll(normses);
                             EventBusHelper.post(EVENT_GET_PRODUCT_SPEC, EVENT_GET_PRODUCT_SPEC);
                         }
@@ -192,15 +194,31 @@ public class ShoppingCarPopupWindow extends BasicPopupWindow implements View.OnC
             if (sku != null) {
                 iv_product_icon.setImageURL(sku.getIcon());
                 ll_join_car.setBackgroundResource(R.color.text_main_color_nor);
+                tv_join_car.setText("加入购物车");
                 ll_join_car.setClickable(true);
                 tv_product_price.setText(sku.getPrice());
+
+
+
+
+//                int p = (int)(Math.random()*10);
+//                Logger.d(p+"");
+//                sku.setQuantity(String.valueOf(p));
+
+
+
+                adapter.setMaxCount(Integer.valueOf(sku.getQuantity()));
                 adapter.resetAmount();
+                initCar();
                 if (MathUtils.compareIntFromString(mCount, sku.getQuantity())) {
+//                    Logger.d("mCount:"+mCount +",sku.getQuantity():" +sku.getQuantity());
                     ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
+                    tv_join_car.setText("库存不足");
                     ll_join_car.setClickable(false);
                 }
             } else {
                 ll_join_car.setBackgroundResource(R.color.color_C2C2C2);
+                tv_join_car.setText("库存不足");
                 ll_join_car.setClickable(false);
             }
         }
