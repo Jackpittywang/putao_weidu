@@ -22,8 +22,10 @@ public class GameDetailActivity extends PTWDActivity {
     public static final String POSITION = "position";
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
+/*
     @Bind(R.id.pb_webview)
     ProgressBar pb_webview;
+*/
 
     @Override
     protected int getLayoutId() {
@@ -34,7 +36,7 @@ public class GameDetailActivity extends PTWDActivity {
     public void onViewCreatedFinish(Bundle savedInstanceState) {
         addNavigation();
         wv_content.loadUrl("http://wap.baidu.com");
-        wv_content.setWebChromeClient(new WebChromeClient() {
+      /*  wv_content.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -42,7 +44,7 @@ public class GameDetailActivity extends PTWDActivity {
                 if (newProgress >= 100)
                     pb_webview.setVisibility(View.GONE);
             }
-        });
+        });*/
     }
 
 

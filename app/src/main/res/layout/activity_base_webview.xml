@@ -13,13 +13,13 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="" />
 
-    <ProgressBar
+   <!-- <ProgressBar
         android:id="@+id/pb_webview"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:progressBackgroundTint="#00000000"
-        android:progressTint="@color/text_main_color_sel" />
+        android:progressTint="@color/text_main_color_sel" />-->
 
     <WebView
         android:id="@+id/wv_content"

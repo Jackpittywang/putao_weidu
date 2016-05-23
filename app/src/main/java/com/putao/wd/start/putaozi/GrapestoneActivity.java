@@ -30,8 +30,8 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
     public static final String URL_GRAPESTONE = GlobalApplication.isDebug ? "http://api-weidu.ptdev.cn/faq/list" : "http://api-weidu.putao.com/faq/list";
     @Bind(R.id.wv_content)
     BasicWebView wv_content;
-    @Bind(R.id.pb_webview)
-    ProgressBar pb_webview;
+/*    @Bind(R.id.pb_webview)
+    ProgressBar pb_webview;*/
 
     @Override
     protected int getLayoutId() {
@@ -47,9 +47,9 @@ public class GrapestoneActivity extends PTWDActivity<GlobalApplication> implemen
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                pb_webview.setProgress(newProgress);
+                /*pb_webview.setProgress(newProgress);
                 if (newProgress >= 100)
-                    pb_webview.setVisibility(View.GONE);
+                    pb_webview.setVisibility(View.GONE);*/
             }
         });
     }

@@ -15,13 +15,13 @@
         auto:nav_main_title_color="@color/text_color"
         auto:nav_right_title_color="@drawable/text_select" />
 
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/pb_webview"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:progressBackgroundTint="#00000000"
-        android:progressTint="@color/text_main_color_sel" />
+        android:progressTint="@color/text_main_color_sel" />-->
 
     <com.sunnybear.library.view.BasicWebView
         android:id="@+id/wv_content"
