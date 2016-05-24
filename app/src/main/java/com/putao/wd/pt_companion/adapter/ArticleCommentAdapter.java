@@ -52,7 +52,7 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
 
     @Override
     public void onBindItem(final CommentViewHolder holder, final ArticleDetailComment comment, final int position) {
-
+        holder.iv_comment_icon.resize(120, 120);
         if (!StringUtils.isEmpty(comment.getHead_img()))
             holder.iv_comment_icon.setImageURL(comment.getHead_img());
         else {
@@ -108,6 +108,7 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
         if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
             String pic = ImageUtils.getImageSizeUrl(comment.getPics().get(0), ImageUtils.ImageSizeURL.SIZE_240x240);
             if (ImageUtils.isImage(pic) && !StringUtils.isEmpty(pic)) {
+                holder.iv_comment_icon.resize(480, 480);
                 holder.iv_comment_pic.setImageURL(pic);
                 holder.iv_comment_pic.setVisibility(View.VISIBLE);
             } else {

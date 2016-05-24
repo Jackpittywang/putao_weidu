@@ -380,43 +380,8 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 0:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
                             questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
-                            questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
-                                    questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
-                                    UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
-                                        @Override
-                                        protected void onFileUploadSuccess(final String ext, final String filename, String hash, String filePath) {
-                                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, String.valueOf(filename + "." + ext), position, 2);
-                                        }
-
-                                        @Override
-                                        protected void onFileUploadFail(String filePath) {
-                                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                            mSendStateMap.put(position, 2);
-                                            serviceMessageList.setSend_state(2);
-                                            questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
-                                            questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
-                                        }
-                                    }).execute();
-                                }
-                            });
-                            UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
-                                @Override
-                                protected void onFileUploadSuccess(final String ext, final String filename, String hash, String filePath) {
-                                    initServiceQuiz(questionLocalViewHolder, serviceMessageList, String.valueOf(filename + "." + ext), position, 2);
-                                }
-
-                                @Override
-                                protected void onFileUploadFail(String filePath) {
-                                    EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                    mSendStateMap.put(position, 2);
-                                    serviceMessageList.setSend_state(2);
-                                    questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
-                                    questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
-                                }
-                            }).execute();
+                            addUploadImageClick(questionLocalViewHolder, picUri, position, serviceMessageList);
+                            upLoadImage(questionLocalViewHolder, picUri, position, serviceMessageList);
                             break;
                         case 1:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
@@ -426,33 +391,42 @@ public class GameDetailAdapter extends BasicAdapter<ServiceMessageList, BasicVie
                         case 2:
                             questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
                             questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
-                            questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
-                                    questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
-                                    UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
-                                        @Override
-                                        protected void onFileUploadSuccess(final String ext, final String filename, String hash, String filePath) {
-                                            initServiceQuiz(questionLocalViewHolder, serviceMessageList, String.valueOf(filename + "." + ext), position, 2);
-                                        }
-
-                                        @Override
-                                        protected void onFileUploadFail(String filePath) {
-                                            EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
-                                            mSendStateMap.put(position, 2);
-                                            serviceMessageList.setSend_state(2);
-                                            questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
-                                            questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
-                                        }
-                                    }).execute();
-                                }
-                            });
+                            addUploadImageClick(questionLocalViewHolder, picUri, position, serviceMessageList);
                             break;
                     }
                     break;
             }
         }
+    }
+
+    private void addUploadImageClick(final QuestionLocalViewHolder questionLocalViewHolder, final String picUri, final int position, final ServiceMessageList serviceMessageList) {
+        questionLocalViewHolder.img_item_retry_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                questionLocalViewHolder.pb_item_ask_image.setVisibility(View.VISIBLE);
+                questionLocalViewHolder.img_item_retry_image.setVisibility(View.GONE);
+                upLoadImage(questionLocalViewHolder, picUri, position, serviceMessageList);
+
+            }
+        });
+    }
+
+    private void upLoadImage(final QuestionLocalViewHolder questionLocalViewHolder, final String picUri, final int position, final ServiceMessageList serviceMessageList) {
+        UploadLoader.getInstance().addUploadFile(picUri, new UploadFileCallback() {
+            @Override
+            protected void onFileUploadSuccess(final String ext, final String filename, String hash, String filePath) {
+                initServiceQuiz(questionLocalViewHolder, serviceMessageList, String.valueOf(filename + "." + ext), position, 2);
+            }
+
+            @Override
+            protected void onFileUploadFail(String filePath) {
+                EventBusHelper.post(serviceMessageList, AccountConstants.EventBus.EVENT_UPDATE_UPLOAD);
+                mSendStateMap.put(position, 2);
+                serviceMessageList.setSend_state(2);
+                questionLocalViewHolder.pb_item_ask_image.setVisibility(View.GONE);
+                questionLocalViewHolder.img_item_retry_image.setVisibility(View.VISIBLE);
+            }
+        }).execute();
     }
 
     static class GameDetailHolder extends BasicViewHolder {

@@ -13,7 +13,7 @@
         auto:nav_left_icon="@drawable/back_selector"
         auto:nav_main_title="这里显示文章标题"
         auto:nav_main_title_color="@color/text_color"
-        auto:nav_right_icon="@drawable/btn_20_more_p_nor"
+        auto:nav_right_icon="@drawable/btn_20_more_p_selector"
         auto:nav_right_title_color="@drawable/text_select" />
 
     <!-- <com.sunnybear.library.view.scroll.NestScrollView
@@ -32,21 +32,21 @@
              android:orientation="vertical">
  -->
 
-    <ProgressBar
+   <!-- <ProgressBar
         android:id="@+id/pb_webview"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/navigation_bar"
         android:progressBackgroundTint="#00000000"
-        android:progressTint="@color/text_main_color_sel" />
+        android:progressTint="@color/text_main_color_sel" />-->
 
     <com.sunnybear.library.view.BasicWebView
         android:id="@+id/wv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/v_line_horizontal"
-        android:layout_below="@+id/pb_webview" />
+        android:layout_below="@+id/navigation_bar" />
     <!--分割线-->
     <View
         android:id="@+id/v_line_horizontal"
@@ -102,6 +102,7 @@
             android:id="@+id/ll_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/ll_comment_selector"
             android:layout_weight="1"
             android:gravity="center">
 

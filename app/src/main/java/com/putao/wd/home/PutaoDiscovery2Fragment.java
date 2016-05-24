@@ -62,7 +62,8 @@ public class PutaoDiscovery2Fragment extends PTWDFragment<GlobalApplication>{
                         YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_title,"发现-视频");
                         break;
                     case 1:
-                        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_title,"发现-找资源");
+//                        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_title,"发现-找资源");
+                        YouMengHelper.onEvent(mActivity,YouMengHelper.DiscoverHome_recommend);
                         break;
                 }
 

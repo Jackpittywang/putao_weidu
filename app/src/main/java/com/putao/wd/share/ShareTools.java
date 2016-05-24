@@ -161,6 +161,7 @@ public class ShareTools {
         }
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
+        
         // 执行图文分享
         plat.share(params);
     }
@@ -178,7 +179,7 @@ public class ShareTools {
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
-        plat.SSOSetting(false);
+//        plat.SSOSetting(false);
         // 执行图`文分享
         plat.share(params);
     }

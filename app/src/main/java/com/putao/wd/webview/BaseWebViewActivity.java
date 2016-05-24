@@ -1,8 +1,8 @@
 package com.putao.wd.webview;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -49,8 +49,8 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
     @Bind(R.id.wv_content)
     WebView wv_content;
 
-    @Bind(R.id.pb_webview)
-    ProgressBar pb_webview;
+    /*@Bind(R.id.pb_webview)
+    ProgressBar pb_webview;*/
 
     public BaseWebViewActivity() {
     }
@@ -100,10 +100,11 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                pb_webview.setProgress(newProgress);
+                /*pb_webview.setProgress(newProgress);
                 if (newProgress >= 100)
-                    pb_webview.setVisibility(View.GONE);
+                    pb_webview.setVisibility(View.GONE);*/
             }
+
         });
 
         wv_content.setWebViewClient(new WebViewClient() {
@@ -140,7 +141,17 @@ public class BaseWebViewActivity extends PTWDActivity<GlobalApplication> {
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                loading.show();
+            }
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                loading.dismiss();
+            }
         });
 
     }

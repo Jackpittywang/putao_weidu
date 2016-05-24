@@ -129,12 +129,6 @@ dependencies {
     androidTestCompile('com.android.support:multidex-instrumentation:1.0.1') {
         exclude group: 'com.android.support', module: 'multidex'
     }
-    compile files('libs/ShareSDK-SinaWeibo-2.7.0.jar')
-    compile files('libs/ShareSDK-Core-2.7.0.jar')
-    compile files('libs/MobTools-2016.0301.1053.jar')
-    compile files('libs/MobCommons-2016.0301.1053.jar')
-    compile files('libs/ShareSDK-QQ-2.7.0.jar')
-    compile files('libs/jpush-android-2.1.5.jar')
 }
 //编译结束后删除unaligned包
 android.applicationVariants.all { variant ->

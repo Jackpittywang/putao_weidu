@@ -34,11 +34,9 @@ import com.putao.wd.share.SharePopupWindow;
 import com.putao.wd.share.ShareTools;
 import com.putao.wd.user.LoginActivity;
 import com.putao.wd.webview.BaseWebViewActivity;
-import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
-import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
@@ -80,8 +78,8 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
     TextView tv_count_comment;
     @Bind(R.id.view_apart)
     View view_apart;
-    @Bind(R.id.pb_webview)
-    ProgressBar pb_webview;
+//    @Bind(R.id.pb_webview)
+//    ProgressBar pb_webview;
     @Bind(R.id.rl_no_webviewData)
     RelativeLayout rl_no_webviewData;
     /* @Bind(R.id.iv_upload_pic)
@@ -216,7 +214,7 @@ public class ArticleDetailForActivitiesActivity extends BaseWebViewActivity impl
 
             @Override
             public void onQQZone() {
-                sub_title = StringUtils.isEmpty(sub_title) ? " ":sub_title;
+                sub_title = StringUtils.isEmpty(sub_title) ? " " : sub_title;
                 ShareTools.OnQQZShare(mContext, false, title, sub_title, cover_pic, link_url);
             }
 
