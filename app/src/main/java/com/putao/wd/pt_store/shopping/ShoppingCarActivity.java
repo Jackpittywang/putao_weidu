@@ -408,6 +408,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
             if (mSelected.size() == 0) {
                 setBottomButtonStyle(true);
             }
+            Logger.d(saveable+":"+ SAVE);
             /*isSelectAll=true;
             btn_sel_all.setState(isSelectAll);
             adapter.selAll(isSelectAll);*/
@@ -415,6 +416,7 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
         } else {//这里做保存操作
             setTopButtonStyle(EDIT, PAY, false);
             saveEdit();
+            Logger.d(saveable + ":" + EDIT);
         }
     }
 
