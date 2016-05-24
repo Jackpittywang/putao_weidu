@@ -146,7 +146,7 @@ public class ShareTools {
     public static void OnQQZShare(final Context context, boolean isWebQQ, String title, String text, String imageUrl, String url) {
         ShareParams params = new ShareParams();
         params.setTitle(title);
-        params.setTitleUrl(url);
+        params.setTitleUrl("http://" + url);
         params.setText(text);
         params.setImageUrl(imageUrl);
 //                ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
@@ -155,8 +155,6 @@ public class ShareTools {
         if (isWebQQ) {
             plat = ShareSDK.getPlatform(QQ.NAME);
         } else {
-            params.setSite("putao");
-            params.setSiteUrl("http://www.baidu.com/");
             plat = ShareSDK.getPlatform(QZone.NAME);
         }
         // 设置分享事件回调
