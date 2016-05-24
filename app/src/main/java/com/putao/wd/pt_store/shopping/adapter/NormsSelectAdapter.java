@@ -34,7 +34,7 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
     private static final int TYPE_NORMS = 1;
     private static final int TYPE_COUNT = 2;
     private CountSelectViewHolder countViewHolder;
-    private boolean isLast = false;
+//    private boolean isLast = false;
 
     public NormsSelectAdapter(Context context, List<Norms> normses) {
         super(context, normses);
@@ -83,7 +83,7 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
             viewHolder.tb_tag.setonTagItemCheckListener(new TagBar.OnTagItemCheckListener() {
                 @Override
                 public void onTagItemCheck(Tag tag, int position) {
-                    isLast = false;
+//                    isLast = false;
                     EventBusHelper.post(tag, EVENT_SEL_TAG);
                 }
             });
@@ -94,16 +94,21 @@ public class NormsSelectAdapter extends BasicAdapter<Norms, BasicViewHolder> {
             countViewHolder.al_count.setMaxCount(mMaxCount);
             countViewHolder.al_count.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
                 @Override
-                public void onAmountSelected(int count, boolean isPlus) {
+                public void onAmountSelected(int count, boolean isPlus ,boolean isLast) {
                     EventBusHelper.post(count, EVENT_COUNT);
 
-                    if(isPlus){
-                        if (isLast)
+                    if(isPlus)
+                        if(isLast)
                             ToastUtils.showToastShort(context, "库存不足");
-                        if (mMaxCount <= count)
-                            isLast = true;
-                    }else
-                        isLast = false;
+
+
+//                    if(isPlus){
+//                        if (isLast)
+//                            ToastUtils.showToastShort(context, "库存不足");
+//                        if (mMaxCount <= count)
+//                            isLast = true;
+//                    }else
+//                        isLast = false;
                 }
             });
         }

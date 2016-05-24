@@ -92,7 +92,7 @@ public class AmountSelectLayout extends RelativeLayout {
                     tv_minus.setTextColor(mDisColor);
                 mEditCount.setText(String.valueOf(mCurrentCount));
                 if (mOnAmountSelectedListener != null)
-                    mOnAmountSelectedListener.onAmountSelected(mCurrentCount, false);
+                    mOnAmountSelectedListener.onAmountSelected(mCurrentCount, false,false);
             }
         });
         mPlusBtn.setOnClickListener(new OnClickListener() {
@@ -106,11 +106,15 @@ public class AmountSelectLayout extends RelativeLayout {
                     mCurrentCount++;
                     tv_minus.setTextColor(mNorColor);
                     mEditCount.setText(String.valueOf(mCurrentCount));
+                    if (mOnAmountSelectedListener != null)
+                        mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true,false);
                 } else {
                     tv_plus.setTextColor(mDisColor);
+                    if (mOnAmountSelectedListener != null)
+                        mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true,true);
                 }
-                if (mOnAmountSelectedListener != null)
-                    mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true);
+//                if (mOnAmountSelectedListener != null)
+//                    mOnAmountSelectedListener.onAmountSelected(mCurrentCount, true);
             }
         });
     }
@@ -162,7 +166,7 @@ public class AmountSelectLayout extends RelativeLayout {
      */
     public interface OnAmountSelectedListener {
 
-        void onAmountSelected(int count, boolean isPlus);
+        void onAmountSelected(int count, boolean isPlus,boolean isLast);
     }
 
     public interface OnAmountSelectedPlusListener {

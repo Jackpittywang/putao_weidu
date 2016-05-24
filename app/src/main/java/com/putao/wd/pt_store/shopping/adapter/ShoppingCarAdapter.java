@@ -110,7 +110,7 @@ public class ShoppingCarAdapter extends BasicAdapter<Cart, ShoppingCarAdapter.Sh
         //修改购买数量
         holder.asl_num_sel.setOnAmountSelectedListener(new AmountSelectLayout.OnAmountSelectedListener() {
             @Override
-            public void onAmountSelected(int count, boolean isPlus) {
+            public void onAmountSelected(int count, boolean isPlus,boolean isLast) {
                 Cart curCart = selected.get(position);
                 if (null == curCart) return;
                 curCart.setGoodsCount(count + "");
