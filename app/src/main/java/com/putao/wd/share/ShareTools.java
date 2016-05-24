@@ -5,8 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 
-import com.putao.wd.GlobalApplication;
-import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -145,13 +143,12 @@ public class ShareTools {
      * QQ、空间分享
      */
     public static void OnQQZShare(final Context context, boolean isWebQQ, String title, String text, String imageUrl, String url) {
-        QQ.ShareParams params = new QQ.ShareParams();
-        params.title = title;
-        params.text = text;
-        params.imageUrl = imageUrl;
+        Platform.ShareParams params = new Platform.ShareParams();
+        params.setTitle(title);
+        params.setText(text);
+        params.setImageUrl(imageUrl);
 //                ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
-        params.titleUrl = url;
-        params.setShareType(Platform.SHARE_TEXT);
+        params.setTitleUrl(url);
 
         Platform plat = null;
         if (isWebQQ) {
@@ -159,9 +156,10 @@ public class ShareTools {
         } else {
             plat = ShareSDK.getPlatform(QZone.NAME);
         }
+//        plat.SSOSetting(false);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
-        
+
         // 执行图文分享
         plat.share(params);
     }
@@ -173,13 +171,13 @@ public class ShareTools {
         if (!checkApkExist(context, "com.sina.weibo")) {
             return;
         }
-        SinaWeibo.ShareParams params = new SinaWeibo.ShareParams();
+        Platform.ShareParams params = new Platform.ShareParams();
         params.setText(text + url);
         params.setImageUrl(imagePath);
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
-//        plat.SSOSetting(false);
+        plat.SSOSetting(false);
         // 执行图`文分享
         plat.share(params);
     }
@@ -195,7 +193,12 @@ public class ShareTools {
         }
 
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-            ToastUtils.showToastShort(mContext, "分享成功");
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ToastUtils.showToastShort(mContext, "分享成功");
+                }
+            });
         }
 
         /**
@@ -210,18 +213,20 @@ public class ShareTools {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    String message = throwable.getMessage();
                     if (throwable.getClass().getName().contains("NotExistException"))
                         ToastUtils.showToastShort(mContext, "您未安装该应用");
-                    else if (StringUtils.equals("text is needed", throwable.getMessage())) {//sub_title 为空
+                    else if (StringUtils.equals("text is needed", message)) {//sub_title 为空
                         ToastUtils.showToastShort(mContext, "链接错误，分享失败");
-                    } else if (StringUtils.equals("sendReq checkArgs fail", throwable.getMessage())) {// shareUrl 为null 或 ""时
+                    } else if (StringUtils.equals("sendReq checkArgs fail", message)) {// shareUrl 为null 或 ""时
                         ToastUtils.showToastShort(mContext, "链接错误，分享失败");
+                    } else if (message.contains("repeat content")) {
+                        ToastUtils.showToastShort(mContext, "重复内容，分享失败");
                     } else {
                         ToastUtils.showToastShort(mContext, "分享失败");
                     }
 
-                    if (GlobalApplication.isDebug)
-                        Logger.d(throwable.getMessage());
+                    Logger.d(throwable.getMessage());
                 }
             });
         }
