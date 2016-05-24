@@ -231,7 +231,8 @@ public class ShareTools {
                         ToastUtils.showToastShort(mContext, "分享失败");
                     }
 
-                    Logger.d(throwable.getMessage());
+                    if (throwable.getMessage() != null)
+                        Logger.d(throwable.getMessage());
                 }
             });
         }

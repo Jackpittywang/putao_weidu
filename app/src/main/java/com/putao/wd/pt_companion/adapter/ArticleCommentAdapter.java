@@ -2,23 +2,20 @@ package com.putao.wd.pt_companion.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.putao.wd.R;
 import com.putao.wd.model.ArticleDetailComment;
-import com.putao.wd.model.Comment;
 import com.sunnybear.library.controller.eventbus.EventBusHelper;
 import com.sunnybear.library.util.DateUtils;
-import com.sunnybear.library.util.ImageUtils;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.SwitchButton;
 import com.sunnybear.library.view.emoji.EmojiTextView;
 import com.sunnybear.library.view.image.ImageDraweeView;
+import com.sunnybear.library.view.recycler.BasicRecyclerView;
 import com.sunnybear.library.view.recycler.BasicViewHolder;
 import com.sunnybear.library.view.recycler.adapter.LoadMoreAdapter;
 
@@ -105,23 +102,27 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
             }
         });
 
-        if (comment.getPics() != null && comment.getPics().size() > 0 && !StringUtils.isEmpty(comment.getPics().get(0))) {
-            String pic = ImageUtils.getImageSizeUrl(comment.getPics().get(0), ImageUtils.ImageSizeURL.SIZE_240x240);
-            if (ImageUtils.isImage(pic) && !StringUtils.isEmpty(pic)) {
-                holder.iv_comment_icon.resize(480, 480);
-                holder.iv_comment_pic.setImageURL(pic);
-                holder.iv_comment_pic.setVisibility(View.VISIBLE);
-            } else {
-                holder.iv_comment_pic.setVisibility(View.GONE);
+        List<String> pics = comment.getPics();
+        ArticleCommentImagesAdapter adapter = (ArticleCommentImagesAdapter) holder.rv_images.getAdapter();
+        if (pics != null && pics.size() > 0) {
+            holder.rv_images.setVisibility(View.VISIBLE);
+            if (adapter == null) {
+                adapter = new ArticleCommentImagesAdapter(mContext, null);
+                holder.rv_images.setAdapter(adapter);
             }
+            adapter.replaceAll(pics);
         } else {
-            holder.iv_comment_pic.setVisibility(View.GONE);
+            if (adapter != null)
+                adapter.clear();
+            holder.rv_images.setVisibility(View.GONE);
         }
     }
 
     static class CommentViewHolder extends BasicViewHolder {
         @Bind(R.id.iv_comment_icon)
         ImageDraweeView iv_comment_icon;
+        @Bind(R.id.rv_images)
+        BasicRecyclerView rv_images;
         @Bind(R.id.tv_username)
         TextView tv_username;
         @Bind(R.id.tv_comment_time)
@@ -136,8 +137,6 @@ public class ArticleCommentAdapter extends LoadMoreAdapter<ArticleDetailComment,
         TextView tv_count_comment;
         @Bind(R.id.rl_cool)
         RelativeLayout rl_cool;
-        @Bind(R.id.iv_comment_pic)
-        ImageDraweeView iv_comment_pic;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
