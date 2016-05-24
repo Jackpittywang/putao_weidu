@@ -41,9 +41,10 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
 
     @Override
     protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        loading.show();
         addNavigation();
-        viewPager.setOffscreenPageLimit(1);
+        ll_title.setOnTitleItemSelectedListener(this);
+        if (args != null)
+            currentType = args.getString(TYPE_INDEX, TYPE_ALL);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -52,7 +53,16 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
                     if (position == 4) {//售后服务
                         fragment = OrderAfterServiceListFragment.newInstance();
                     } else {
-                        fragment = OrderStateListFragment.newInstance(args);
+                        String type = TYPE_ALL;
+                        if (position == 0)
+                            type = TYPE_ALL;
+                        else if (position == 1)
+                            type = TYPE_WAITING_PAY;
+                        else if (position == 2)
+                            type = TYPE_WAITING_SHIPMENT;
+                        else if (position == 3)
+                            type = TYPE_WAITING_SIGN;
+                        fragment = OrderStateListFragment.newInstance(type);
                     }
                 }
                 fragmentIds[position] = fragment.getId();
@@ -74,15 +84,23 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         switch (currentType) {
             case TYPE_ALL:
                 ll_title.selectTitleItem(R.id.ll_all);
+                viewPager.setCurrentItem(0, false);
                 break;
             case TYPE_WAITING_PAY:
                 ll_title.selectTitleItem(R.id.ll_waiting_pay);
+                viewPager.setCurrentItem(1, false);
                 break;
             case TYPE_WAITING_SHIPMENT:
                 ll_title.selectTitleItem(R.id.ll_waiting_shipment);
+                viewPager.setCurrentItem(2, false);
                 break;
             case TYPE_WAITING_SIGN:
                 ll_title.selectTitleItem(R.id.ll_waiting_sign);
+                viewPager.setCurrentItem(3, false);
+                break;
+            case TYPE_AFTER_SALES:
+                ll_title.selectTitleItem(R.id.ll_after_sale);
+                viewPager.setCurrentItem(4, false);
                 break;
         }
     }
@@ -103,23 +121,23 @@ public class OrderListActivity extends PTWDActivity implements TitleBar.OnTitleI
         switch (item.getId()) {
             case R.id.ll_all://全部
                 currentType = TYPE_ALL;
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(0, false);
                 break;
             case R.id.ll_waiting_pay://待付款
                 currentType = TYPE_WAITING_PAY;
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(1, false);
                 break;
             case R.id.ll_waiting_shipment://待发货
                 currentType = TYPE_WAITING_SHIPMENT;
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2, false);
                 break;
             case R.id.ll_waiting_sign://等待签收
                 currentType = TYPE_WAITING_SIGN;
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(3, false);
                 break;
             case R.id.ll_after_sale://售后
                 currentType = TYPE_AFTER_SALES;
-                viewPager.setCurrentItem(4);
+                viewPager.setCurrentItem(4, false);
                 break;
         }
     }

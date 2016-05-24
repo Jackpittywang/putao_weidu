@@ -43,22 +43,18 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
     private OrderListAdapter adapter;
 
     private int currentPage = 1;
-    private String currentType = OrderListActivity.TYPE_ALL;
+    private String type = OrderListActivity.TYPE_ALL;
 
     //    private AlipayHelper mAlipayHelper;
     private String order_id;
+    private boolean isPrepared = false;
 
-    public static OrderStateListFragment newInstance(Bundle bundle) {
+    public static OrderStateListFragment newInstance(String type) {
         OrderStateListFragment fragment = new OrderStateListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(OrderListActivity.TYPE_INDEX, type);
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (args != null)
-            currentType = args.getString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
     }
 
     @Override
@@ -67,42 +63,28 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (args != null)
+            type = args.getString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_ALL);
+    }
+
+    @Override
     public void onViewCreatedFinish(Bundle savedInstanceState) {
-        loading.show();
         adapter = new OrderListAdapter(getActivity(), null);
         rv_order.setAdapter(adapter);
         addListener();
-
-       /* mAlipayHelper = new AlipayHelper();
-        mAlipayHelper.setOnAlipayCallback(new AlipayHelper.OnAlipayCallback() {
-            @Override
-            public void onPayResult(boolean isSuccess, String msg) {
-                if (isSuccess) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
-                    startActivity(PaySuccessActivity.class, bundle);
-                } else {
-                    ToastUtils.showToastShort(mContext, "支付失败");
-                }
-            }
-
-            @Override
-            public void onPayVerify(String msg) {
-                ToastUtils.showToastShort(mContext, msg);
-            }
-
-            @Override
-            public void onPayCancel(String msg) {
-                ToastUtils.showToastShort(mContext, "检查结果为：" + msg);
-            }
-        });*/
+        getOrderLists(type, String.valueOf(currentPage));
+        isPrepared = true;
     }
 
     @Override
     protected void onVisible() {
-        currentPage = 1;
-        if (OrderListActivity.TYPE_ALL.equals(currentType))
-            getOrderLists(currentType, String.valueOf(currentPage));
+        if (isPrepared) {
+            currentPage = 1;
+            loading.show();
+            getOrderLists(type, String.valueOf(currentPage));
+        }
     }
 
     private void addListener() {
@@ -130,14 +112,16 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
+                        if (!isAdded())
+                            return;
                         rv_order.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             rl_no_order.setVisibility(View.GONE);
                             adapter.replaceAll(result);
                             currentPage++;
                         } else {
-                            if (currentPage <= 1)
-                                rl_no_order.setVisibility(View.VISIBLE);
+//                            if (adapter.getItemCount() <= 1)
+                            rl_no_order.setVisibility(View.VISIBLE);
                             rv_order.loadMoreComplete();
                             rv_order.noMoreLoading();
                         }
@@ -148,10 +132,12 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
     }
 
     private void getMoreList() {
-        networkRequest(OrderApi.getOrderLists(currentType, currentPage + ""),
+        networkRequest(OrderApi.getOrderLists(type, currentPage + ""),
                 new SimpleFastJsonCallback<ArrayList<Order>>(Order.class, loading) {
                     @Override
                     public void onSuccess(String url, ArrayList<Order> result) {
+                        if (!isAdded())
+                            return;
                         rv_order.loadMoreComplete();
                         if (result != null && result.size() > 0) {
                             adapter.addAll(result);
@@ -174,7 +160,8 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
      */
     @Subcriber(tag = OrderListAdapter.EVENT_CANCEL_ORDER)
     public void eventCancelOrder(Order order) {
-        showDialog(order);
+        if (isVisible)
+            showDialog(order);
     }
 
     /**
@@ -182,10 +169,12 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
      */
     @Subcriber(tag = OrderListAdapter.EVENT_SALE_SERVICE)
     public void eventSaleService(String orderId) {
-        IndexActivity.isNotRefreshUserInfo = false;
-        Bundle bundle = new Bundle();
-        bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
-        startActivity(ServiceChooseActivity.class, bundle);
+        if (isVisible) {
+            IndexActivity.isNotRefreshUserInfo = false;
+            Bundle bundle = new Bundle();
+            bundle.putString(ServiceChooseActivity.ORDER_ID, orderId);
+            startActivity(ServiceChooseActivity.class, bundle);
+        }
     }
 
     /**
@@ -193,7 +182,8 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
      */
     @Subcriber(tag = OrderListAdapter.EVENT_AOPPLY_REFUND)
     public void queryRefund(Order order) {
-        checkShipment(order);
+        if (isVisible)
+            checkShipment(order);
     }
 
     private void checkShipment(Order order) {
@@ -204,6 +194,7 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
                     .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                             loading.dismiss();
                         }
                     })
@@ -224,17 +215,18 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
      */
     @Subcriber(tag = OrderListAdapter.EVENT_PAY)
     public void eventPay(Order order) {
-        IndexActivity.isNotRefreshUserInfo = false;
-        order_id = order.getId();
-        Bundle bundle = new Bundle();
-        OrderSubmitReturn orderSubmitReturn = new OrderSubmitReturn();
-        orderSubmitReturn.setPrice(order.getTotal_amount());
-        orderSubmitReturn.setOrder_id(order_id);
-        orderSubmitReturn.setOrder_sn(order.getOrder_sn());
-        orderSubmitReturn.setTime(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
-        bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
-        bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, orderSubmitReturn);
-        startActivity(PayActivity.class, bundle);
+        if (isVisible) {
+            IndexActivity.isNotRefreshUserInfo = false;
+            order_id = order.getId();
+            Bundle bundle = new Bundle();
+            OrderSubmitReturn orderSubmitReturn = new OrderSubmitReturn();
+            orderSubmitReturn.setPrice(order.getTotal_amount());
+            orderSubmitReturn.setOrder_id(order_id);
+            orderSubmitReturn.setOrder_sn(order.getOrder_sn());
+            orderSubmitReturn.setTime(DateUtils.secondToDate(Integer.parseInt(order.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
+            bundle.putString(OrderDetailActivity.KEY_ORDER, order_id);
+            bundle.putSerializable(PayActivity.BUNDLE_ORDER_INFO, orderSubmitReturn);
+            startActivity(PayActivity.class, bundle);
        /* networkRequest(StoreApi.aliPay(order_id), new SimpleFastJsonCallback<String>(String.class, loading) {
             @Override
             public void onSuccess(String url, String result) {
@@ -252,6 +244,7 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
                 loading.dismiss();
             }
         });*/
+        }
     }
 
     @Override
@@ -274,7 +267,7 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
                             @Override
                             public void onSuccess(String url, String result) {
                                 IndexActivity.isNotRefreshUserInfo = false;
-                                switch (currentType) {
+                                switch (type) {
                                     case OrderListActivity.TYPE_ALL:
                                         Order newOrder = order;
                                         order.setOrderStatusID(OrderCommonState.ORDER_CANCLED);
@@ -304,7 +297,10 @@ public class OrderStateListFragment extends BasicFragment<GlobalApplication> {
 
     @Subcriber(tag = OrderDetailActivity.CANCEL_ORDER)
     public void detailCancel(OrderDetail orderId) {
-        adapter.clear();
-        getOrderLists(currentType, String.valueOf(currentPage));
+        if (isVisible) {
+            adapter.clear();
+            currentPage = 1;
+            getOrderLists(type, String.valueOf(currentPage));
+        }
     }
 }
