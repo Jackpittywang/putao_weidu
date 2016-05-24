@@ -19,12 +19,13 @@ import com.putao.wd.account.YouMengHelper;
 import com.putao.wd.api.OrderApi;
 import com.putao.wd.api.StoreApi;
 import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.model.ProductStatus;
-import com.putao.wd.pt_me.service.adapter.ServiceAdapter;
 import com.putao.wd.model.Express;
+import com.putao.wd.model.ProductStatus;
 import com.putao.wd.model.ServiceList;
 import com.putao.wd.model.ServiceOrderInfo;
 import com.putao.wd.model.ServiceProduct;
+import com.putao.wd.pt_me.order.OrderListActivity;
+import com.putao.wd.pt_me.service.adapter.ServiceAdapter;
 import com.putao.wd.pt_store.product.ProductDetailActivity;
 import com.putao.wd.pt_store.product.ProductDetailV2Activity;
 import com.sunnybear.library.controller.ActivityManager;
@@ -383,7 +384,10 @@ public class ServiceDetailActivity extends PTWDActivity<GlobalApplication> imple
                             @Override
                             public void onSuccess(String url, String result) {
                                 ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
-                                startActivity(ServiceListActivity.class);
+//                                startActivity(ServiceListActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString(OrderListActivity.TYPE_INDEX, OrderListActivity.TYPE_AFTER_SALES);
+                                startActivity(OrderListActivity.class, bundle);
                                 loading.dismiss();
                             }
                         });

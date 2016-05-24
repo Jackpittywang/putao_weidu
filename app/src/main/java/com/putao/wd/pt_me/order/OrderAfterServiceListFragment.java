@@ -1,4 +1,4 @@
-package com.putao.wd.pt_me.service;
+package com.putao.wd.pt_me.order;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.putao.wd.GlobalApplication;
 import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.OrderApi;
-import com.putao.wd.base.PTWDActivity;
-import com.putao.wd.pt_me.service.adapter.ServiceListAdapter;
 import com.putao.wd.model.Service;
 import com.putao.wd.model.ServiceList;
+import com.putao.wd.pt_me.service.ServiceDetailActivity;
+import com.putao.wd.pt_me.service.ServiceExpressNumberActivity;
+import com.putao.wd.pt_me.service.adapter.ServiceListAdapter;
+import com.sunnybear.library.controller.BasicFragment;
 import com.sunnybear.library.controller.eventbus.Subcriber;
 import com.sunnybear.library.model.http.callback.SimpleFastJsonCallback;
 import com.sunnybear.library.util.Logger;
@@ -23,13 +24,10 @@ import com.sunnybear.library.view.recycler.listener.OnItemClickListener;
 
 import butterknife.Bind;
 
-
 /**
- * 售后列表
- * Created by wangou on 15/12/7.
+ * Created by riven_chris on 16/5/23.
  */
-@Deprecated
-public class ServiceListActivity extends PTWDActivity<GlobalApplication> implements View.OnClickListener {
+public class OrderAfterServiceListFragment extends BasicFragment {
 
     @Bind(R.id.rv_service)
     LoadMoreRecyclerView rv_service;//售后列表
@@ -40,24 +38,26 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
     private String serviceId;
     private int page = 1;
 
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_service_list;
+    public static OrderAfterServiceListFragment newInstance() {
+        OrderAfterServiceListFragment fragment = new OrderAfterServiceListFragment();
+        return fragment;
     }
 
     @Override
-    protected void onViewCreatedFinish(Bundle saveInstanceState) {
-        addNavigation();
+    protected int getLayoutId() {
+        return R.layout.fragment_order_after_service_list;
+    }
 
-        adapter = new ServiceListAdapter(mContext, null);
+    @Override
+    public void onViewCreatedFinish(Bundle saveInstanceState) {
+        adapter = new ServiceListAdapter(getActivity(), null);
         rv_service.setAdapter(adapter);
 
         addListener();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         getServiceList();
     }
@@ -100,7 +100,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                 Bundle bundle = new Bundle();
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_ID, serviceId);
                 bundle.putString(ServiceDetailActivity.KEY_SERVICE_STATUS, ServiceList.getStatusText());
-              //  ActivityManager.getInstance().addActivity(this);
+                //  ActivityManager.getInstance().addActivity(this);
                 startActivity(ServiceDetailActivity.class, bundle);
             }
         });
@@ -116,7 +116,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
      * 取消订单dialog
      */
     private void showDialog() {
-        new AlertDialog.Builder(mContext)
+        new AlertDialog.Builder(getActivity())
                 .setTitle("提示")
                 .setMessage("确定取消")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -141,7 +141,7 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                                             rv_service.noMoreLoading();
                                         }
                                         loading.dismiss();
-                                        ToastUtils.showToastShort(mContext, "取消售后成功");
+                                        ToastUtils.showToastShort(getActivity(), "取消售后成功");
                                     }
                                 });
                             }
@@ -157,11 +157,6 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                 .show();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        }
-    }
 
     @Subcriber(tag = ServiceListAdapter.EVENT_RIGHT_CLICK)
     public void eventClick(Bundle bundle) {
@@ -177,5 +172,4 @@ public class ServiceListActivity extends PTWDActivity<GlobalApplication> impleme
                 break;
         }
     }
-
 }

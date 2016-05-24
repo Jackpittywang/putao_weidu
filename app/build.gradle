@@ -53,9 +53,9 @@ android {
     }
     //产品渠道配置
     productFlavors {
-//        local_release { versionName = "V" + defaultConfig.versionName }
+        local_release { versionName = "V" + defaultConfig.versionName }
 //        local_debug { versionName = "D" + defaultConfig.versionName }
-        channel_putao { versionName = "V" + defaultConfig.versionName }
+//        channel_putao { versionName = "V" + defaultConfig.versionName }
 //        channel_baiduzhushou { versionName = "V" + defaultConfig.versionName }
 //        channel_360{ versionName = "V" + defaultConfig.versionName }
 //        channel_yingyongbao{ versionName = "V" + defaultConfig.versionName }
