@@ -491,7 +491,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                             @Override
                             public void onFailure(String url, int statusCode, String msg) {
                                 loading.dismiss();
-                                ToastUtils.showToastShort(mContext, msg);
+                                ToastUtils.showToastShort(mContext, "网络不给力，稍后重试");
                                 isRequesting = false;
                             }
                         });

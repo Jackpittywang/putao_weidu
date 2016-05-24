@@ -5,9 +5,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.putao.wd.IndexActivity;
 import com.putao.wd.R;
 import com.putao.wd.api.ScanApi;
 import com.putao.wd.base.PTWDActivity;
+import com.sunnybear.library.controller.ActivityManager;
 import com.sunnybear.library.model.http.callback.JSONObjectCallback;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.ToastUtils;
@@ -57,7 +59,8 @@ public class WebLoginActivity extends PTWDActivity implements View.OnClickListen
                         if (error_code == 0)
                             ToastUtils.showToastLong(mContext, "葡萄官网登录成功");
                         loading.dismiss();
-                        finish();
+//                        finish();
+                        ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                     }
 
                     @Override
@@ -72,7 +75,7 @@ public class WebLoginActivity extends PTWDActivity implements View.OnClickListen
                 });
                 break;
             case R.id.tv_cancel_login://取消登录
-
+                ActivityManager.getInstance().popOtherActivity(IndexActivity.class);
                 break;
         }
     }

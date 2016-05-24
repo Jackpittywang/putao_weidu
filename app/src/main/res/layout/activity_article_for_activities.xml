@@ -32,14 +32,14 @@
              android:orientation="vertical">
  -->
 
-   <!-- <ProgressBar
-        android:id="@+id/pb_webview"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/navigation_bar"
-        android:progressBackgroundTint="#00000000"
-        android:progressTint="@color/text_main_color_sel" />-->
+    <!-- <ProgressBar
+         android:id="@+id/pb_webview"
+         style="@android:style/Widget.ProgressBar.Horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_below="@+id/navigation_bar"
+         android:progressBackgroundTint="#00000000"
+         android:progressTint="@color/text_main_color_sel" />-->
 
     <com.sunnybear.library.view.BasicWebView
         android:id="@+id/wv_content"
@@ -77,8 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 auto:isSelect="false"
-                auto:norDrawable="@drawable/btn_support_nor"
-                auto:selDrawable="@drawable/btn_support_sel" />
+                auto:norDrawable="@drawable/icon_16_02"
+                auto:selDrawable="@drawable/icon_16_03" />
 
             <TextView
                 android:id="@+id/tv_count_cool"
@@ -102,8 +102,8 @@
             android:id="@+id/ll_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/ll_comment_selector"
             android:layout_weight="1"
+            android:background="@drawable/ll_comment_selector"
             android:gravity="center">
 
             <ImageView
