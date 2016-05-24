@@ -128,8 +128,9 @@ public class ShoppingCarActivity extends PTWDActivity implements View.OnClickLis
                     }
                 } else {
                     cart.setIsSelect(true);
-//                    if (saveable)
-//                        cart.setEditable(true);
+                    if (saveable){
+                        cart.setEditable(true);
+                    }
                     if (cart.isNull()) {
                         cart.setIsSelectUseless(true);
                     }

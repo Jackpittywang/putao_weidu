@@ -31,6 +31,8 @@
             android:layout_marginBottom="48dp"
             auto:divider_color="@color/white"
             auto:divider_height="1px"
+            auto:is_start_animator="false"
+            auto:duration_animator="0"
             auto:has_row_divider="true"
             android:visibility="gone"/>
 
