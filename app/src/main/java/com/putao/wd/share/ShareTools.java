@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.text.TextUtils;
 
+import com.putao.wd.util.ScanUrlParseUtils;
 import com.sunnybear.library.util.Logger;
 import com.sunnybear.library.util.StringUtils;
 import com.sunnybear.library.util.ToastUtils;
@@ -146,8 +148,8 @@ public class ShareTools {
     public static void OnQQZShare(final Context context, boolean isWebQQ, String title, String text, String imageUrl, String url) {
         ShareParams params = new ShareParams();
         params.setTitle(title);
-        params.setTitleUrl("http://" + url);
         params.setText(text);
+        params.setTitleUrl(url);
         params.setImageUrl(imageUrl);
 //                ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
 
@@ -155,6 +157,10 @@ public class ShareTools {
         if (isWebQQ) {
             plat = ShareSDK.getPlatform(QQ.NAME);
         } else {
+            String sid = ScanUrlParseUtils.getSingleParams(url, "sid");
+            //处理分享空间时会莫名截掉一次sid
+            if (!TextUtils.isEmpty(sid))
+                params.setTitleUrl(url + "&sid=" + sid);
             plat = ShareSDK.getPlatform(QZone.NAME);
         }
         // 设置分享事件回调
