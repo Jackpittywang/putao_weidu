@@ -80,8 +80,8 @@
         SortId="3"
         AppId="cbd693a92c7c"
         AppKey="55f4119789e957aaed362b0876d2532d"
-        ShareByAppClient="false"
-        Enable="true" />
+        ShareByAppClient="true"
+        Enable="true"  />
 
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；

@@ -16,6 +16,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.favorite.WechatFavorite;
@@ -143,23 +144,23 @@ public class ShareTools {
      * QQ、空间分享
      */
     public static void OnQQZShare(final Context context, boolean isWebQQ, String title, String text, String imageUrl, String url) {
-        Platform.ShareParams params = new Platform.ShareParams();
+        ShareParams params = new ShareParams();
         params.setTitle(title);
+        params.setTitleUrl(url);
         params.setText(text);
         params.setImageUrl(imageUrl);
 //                ImageUtils.getImageSizeUrl(imageUrl, ImageUtils.ImageSizeURL.SIZE_120x120);
-        params.setTitleUrl(url);
 
         Platform plat = null;
         if (isWebQQ) {
             plat = ShareSDK.getPlatform(QQ.NAME);
         } else {
+            params.setSite("putao");
+            params.setSiteUrl("http://www.baidu.com/");
             plat = ShareSDK.getPlatform(QZone.NAME);
         }
-//        plat.SSOSetting(false);
         // 设置分享事件回调
         plat.setPlatformActionListener(new MyPlatformActionListener(context));
-
         // 执行图文分享
         plat.share(params);
     }
@@ -171,7 +172,7 @@ public class ShareTools {
         if (!checkApkExist(context, "com.sina.weibo")) {
             return;
         }
-        Platform.ShareParams params = new Platform.ShareParams();
+        ShareParams params = new ShareParams();
         params.setText(text + url);
         params.setImageUrl(imagePath);
         Platform plat = ShareSDK.getPlatform(SinaWeibo.NAME);
