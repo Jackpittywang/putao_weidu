@@ -60,12 +60,20 @@
                 android:textColor="@color/color_313131"
                 android:textSize="@dimen/text_size_16sp" />
 
-            <com.sunnybear.library.view.image.ImageDraweeView
-                android:id="@+id/iv_comment_pic"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:visibility="gone"
-                auto:placeholderImage="@drawable/btn_30_p_selector" />
+            <com.sunnybear.library.view.recycler.BasicRecyclerView
+                android:id="@+id/rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:overScrollMode="never"
+                auto:divider_height="10dp"
+                auto:divider_width="10dp"
+                auto:has_rank_divider="true"
+                auto:has_row_divider="true"
+                auto:is_inner="true"
+                auto:layout_mode="grid"
+                auto:spanCount="3" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,6 +131,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>
