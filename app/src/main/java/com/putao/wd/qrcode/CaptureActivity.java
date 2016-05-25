@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,8 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.bubble.TooltipView;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.Bind;
@@ -85,6 +88,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
     private byte[] mResultByte;
     private Camera mResultCamera;
     private String mResult;
+    private int time = 0;
 
     private Camera.PreviewCallback previewCb;
     private Runnable doAutoFocus = new Runnable() {
@@ -249,6 +253,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         scan_line.clearAnimation();
         mHandlerThread = null;
         mResultByte = null;
+        handler.removeCallbacks(runnable);
     }
 
     private void releaseCamera() {
@@ -370,9 +375,8 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
 
                     @Override
                     public void onFailure(String url, int statusCode, String msg) {
-                        loading.dismiss();
-                        finish();
-                        isRequesting = false;
+                        Thread thread = new Thread(runnable);
+                        thread.start();
                     }
                 });
                 break;
@@ -484,6 +488,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                     else ToastUtils.showToastShort(mContext, "绑定失败");
                                 }
                                 loading.dismiss();
+                                handler.removeCallbacks(runnable);
                                 // isRequesting = false;
                                 finish();
 
@@ -496,9 +501,8 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
 
                             @Override
                             public void onFailure(String url, int statusCode, String msg) {
-                                loading.dismiss();
-                                ToastUtils.showToastShort(mContext, "网络不给力，稍后重试");
-                                isRequesting = false;
+                                Thread thread = new Thread(runnable);
+                                thread.start();
                             }
                         });
 
@@ -517,6 +521,35 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         String scaneErrorInfo = "请扫描葡萄产品的二维码";
         ToastUtils.showNoRepeatToast(getApplicationContext(), scaneErrorInfo);
     }
+
+    /**
+     * 扫描二维码后加载过程如超过10秒则停止加载，跳出提示语“网络不给力，稍后重试”2s后消失
+     */
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            time++;
+            Message message = handler.obtainMessage();
+            message.arg1 = time;
+            handler.sendMessage(message);
+        }
+    };
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            System.out.println("=================" + msg.arg1);
+            if (msg.arg1 >= 10) {
+                loading.dismiss();
+                ToastUtils.showToastShort(mContext, "网络不给力，稍后重试");
+                isRequesting = false;
+                time = 0;
+                handler.removeCallbacks(runnable);
+            } else
+                handler.postDelayed(runnable, 1000);
+        }
+    };
 
 
 //    // http://www.xxx.com/xxx.html?s=xxx&code=xxx
