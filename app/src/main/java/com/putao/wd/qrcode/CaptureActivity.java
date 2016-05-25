@@ -539,7 +539,6 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            System.out.println("=================" + msg.arg1);
             if (msg.arg1 >= 10) {
                 loading.dismiss();
                 ToastUtils.showToastShort(mContext, "网络不给力，稍后重试");
