@@ -58,7 +58,7 @@ public class Constants {
 
     public static String getPushToken() {
         if (isDebug) return GPUSH_TOKEN_DEBUG;
-        else return GPUSH_TOKEN_DEBUG;
+        else return GPUSH_TOKEN;
     }
 
 }
