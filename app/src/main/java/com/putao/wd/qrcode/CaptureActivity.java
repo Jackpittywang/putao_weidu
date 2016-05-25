@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dtr.zbar.build.ZBarDecoder;
+import com.putao.ptx.push.core.NetworkUtil;
 import com.putao.wd.GlobalApplication;
 import com.putao.wd.R;
 import com.putao.wd.account.AccountConstants;
@@ -48,6 +49,7 @@ import com.sunnybear.library.util.ToastUtils;
 import com.sunnybear.library.view.bubble.TooltipView;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -427,11 +429,15 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                 isRequesting = true;
                 boolean isCapture = args.getBoolean(AccountConstants.Bundle.BUNDLE_COMPANION_BIND, false);
                 if (isCapture) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(OfficialAccountsActivity.CAPTURE_SERVICE_ID, serverId);
-                    bundle.putSerializable(OfficialAccountsActivity.CAPTURE_URL, result);
-                    startActivity(OfficialAccountsActivity.class, bundle);
-                    this.finish();
+                    if (NetworkUtil.isNetworkAvailable(mContext))
+                        ToastUtils.showToastShort(mContext, "网络不给力，稍后重试");
+                    else {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(OfficialAccountsActivity.CAPTURE_SERVICE_ID, serverId);
+                        bundle.putSerializable(OfficialAccountsActivity.CAPTURE_URL, result);
+                        startActivity(OfficialAccountsActivity.class, bundle);
+                        this.finish();
+                    }
                 } else {
                     String mServceId = args.getString(AccountConstants.Bundle.BUNDLE_COMPANION_BIND_SERVICE);
                     if (mServceId != null && !serverId.equals(mServceId)) {
@@ -446,7 +452,7 @@ public class CaptureActivity extends PTWDActivity<GlobalApplication> implements 
                                 if (http_code == 200) {
                                     try {
                                         JSONObject data = result.getJSONObject("data");
-                                        data =  data.getJSONObject("auto_reply");
+                                        data = data.getJSONObject("auto_reply");
                                         ServiceMessage serviceMessage = JSON.parseObject(JSON.toJSONString(data), ServiceMessage.class);
                                         CompanionDBManager dataBaseManager = (CompanionDBManager) mApp.getDataBaseManager(CompanionDBManager.class);
                                         for (ServiceMessageList serviceMessageList : serviceMessage.getLists()) {
