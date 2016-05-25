@@ -77,8 +77,10 @@ public class ReplyListsAdapter extends BasicAdapter<ReplyLists, BasicViewHolder>
     public void onBindItem(final BasicViewHolder basicHolder, final ReplyLists commentReply, final int index) {
         if (index == 0) {
             HeaderHolder holder = (HeaderHolder) basicHolder;
-            if (!StringUtils.isEmpty(headerInfo.getPic()))
+            if (!StringUtils.isEmpty(headerInfo.getPic())){
+                holder.iv_articlesdetail_header.resize(500,340);
                 holder.iv_articlesdetail_header.setImageURL(headerInfo.getPic());
+            }
             else
                 holder.iv_articlesdetail_header.setVisibility(View.GONE);
             holder.tv_articlesdetail_resume.setText(headerInfo.getContent());

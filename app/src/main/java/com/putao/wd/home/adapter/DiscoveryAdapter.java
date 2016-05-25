@@ -50,7 +50,7 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         holder.iv_discovery.resize(600, 300);
         holder.tv_title.setText(disCoveries.getTitle());
 //        holder.tv_subtitle.setText(disCoveries.getSubtitle());
-        holder.tv_subtitle.setText("这个就是视频介绍");
+        holder.tv_subtitle.setText("这个就是视频介绍这个就是视频介绍这个就是视频介绍");
         if (!disCoveries.getVideo_img().equals("")) {
             holder.iv_player.setVisibility(View.VISIBLE);
             holder.iv_discovery.setImageURL(disCoveries.getVideo_img());
