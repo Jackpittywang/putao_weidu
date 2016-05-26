@@ -13,6 +13,8 @@ import java.util.LinkedList;
  */
 public class PictureProcessor extends BaseRepeatedPostProcessor {
     private Context mContext;
+    private int mPosition;
+    private ProcessorInterface mProcessorInterface;
     private LinkedList<ProcessorInterface> processorList = new LinkedList<>();
 
     public PictureProcessor(Context context) {
@@ -24,10 +26,18 @@ public class PictureProcessor extends BaseRepeatedPostProcessor {
         return this;
     }
 
+    public PictureProcessor addProcessor(ProcessorInterface processorInterface, int position) {
+        mProcessorInterface = processorInterface;
+        mPosition = position;
+        return this;
+    }
+
     @Override
     public void process(Bitmap bitmap) {
         for (ProcessorInterface processor : processorList) {
             processor.process(mContext, bitmap);
         }
+        if (null != mProcessorInterface)
+            mProcessorInterface.process(mContext, bitmap, mPosition);
     }
 }

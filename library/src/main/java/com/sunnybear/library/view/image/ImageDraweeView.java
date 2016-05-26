@@ -52,7 +52,7 @@ public class ImageDraweeView extends SimpleDraweeView {
 
     private void init(Context context) {
         GenericDraweeHierarchy hierarchy = getHierarchy();
-        hierarchy.setFadeDuration(300);//淡入淡出
+        hierarchy.setFadeDuration(0);//淡入淡出
         setHierarchy(hierarchy);
         mProcessor = new PictureProcessor(context);
     }
@@ -66,7 +66,6 @@ public class ImageDraweeView extends SimpleDraweeView {
         return this;
     }
 
-
     /**
      * 添加加载后处理器
      *
@@ -74,6 +73,16 @@ public class ImageDraweeView extends SimpleDraweeView {
      */
     public ImageDraweeView addProcessor(ProcessorInterface processor) {
         mProcessor.addProcessor(processor);
+        return this;
+    }
+
+    /**
+     * 添加加载后处理器
+     *
+     * @param processor 加载后处理器
+     */
+    public ImageDraweeView addProcessor(ProcessorInterface processor, int position) {
+        mProcessor.addProcessor(processor, position);
         return this;
     }
 
@@ -128,7 +137,8 @@ public class ImageDraweeView extends SimpleDraweeView {
      * @param url 图片的url
      */
     public void setImageURL(String url) {
-        if (TextUtils.isEmpty(url))
+        setImageURL(url, false);
+       /* if (TextUtils.isEmpty(url))
             return;
         Uri uri = Uri.parse(url);
         setImageURI(uri);
@@ -144,7 +154,7 @@ public class ImageDraweeView extends SimpleDraweeView {
                 .setTapToRetryEnabled(true)//加载失败时点击重新加载
                 .setOldController(getController())
                 .build();
-        setController(controller);
+        setController(controller);*/
     }
 
     /**

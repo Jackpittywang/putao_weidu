@@ -219,12 +219,14 @@ public class PutaoCompanionFragment extends PTWDFragment<GlobalApplication> impl
 
         @Override
         public int compare(Companion lhs, Companion rhs) {
+            if (lhs.getIs_relation() > rhs.getIs_relation()) return -1;
+            else if (lhs.getIs_relation() < rhs.getIs_relation()) return 1;  //是否订阅
             if (lhs.getSort() < rhs.getSort()) return 1;
-            else if (lhs.getSort() > rhs.getSort()) return -1;
+            else if (lhs.getSort() > rhs.getSort()) return -1;      //sort排序
             if (lhs.getReceiver_time() < rhs.getReceiver_time())
                 return 1;
             else if (lhs.getReceiver_time() > rhs.getReceiver_time())
-                return -1;
+                return -1;                              //更新时间
             return 0;
         }
     }

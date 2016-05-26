@@ -97,8 +97,13 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="160dp"
-            android:layout_weight="1"
-            android:paddingRight="15dp">
+            android:layout_weight="1">
+
+
+            <com.sunnybear.library.view.image.ImageDraweeView
+                android:id="@+id/iv_blur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -106,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="40dp"
+                android:paddingRight="15dp"
                 android:text="淘淘向右走"
                 android:textColor="#fff"
                 android:textSize="@dimen/text_size_18sp" />
@@ -117,6 +123,7 @@
                 android:layout_below="@+id/tv_title"
                 android:layout_marginTop="15dp"
                 android:gravity="right"
+                android:paddingRight="15dp"
                 android:text="这个是视频介绍"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_14sp" />
