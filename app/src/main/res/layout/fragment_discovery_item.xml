@@ -99,12 +99,6 @@
             android:layout_height="160dp"
             android:layout_weight="1">
 
-
-            <com.sunnybear.library.view.image.ImageDraweeView
-                android:id="@+id/iv_blur"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"

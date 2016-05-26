@@ -54,42 +54,18 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
 
     @Override
     public void replaceAll(List<DisCovery> disCoveries) {
-//        mBitMap.clear();
         super.replaceAll(disCoveries);
     }
 
     @Override
     public void onBindItem(final DiscoveryViewHolder holder, final DisCovery disCoveries, final int position) {
         holder.iv_discovery.resize(600, 300);
-//        holder.iv_discovery.setImageURL("");
-//        holder.iv_blur.setPlaceholderImage(0);
-        holder.iv_blur.setVisibility(View.GONE);
         holder.tv_title.setText(disCoveries.getTitle());
         holder.tv_subtitle.setText(disCoveries.getSubtitle());
 //        holder.tv_subtitle.setText("这个就是视频介绍这个就是视频介绍这个就是视频介绍");
         if (!disCoveries.getVideo_img().equals("")) {
             holder.iv_player.setVisibility(View.VISIBLE);
-            holder.iv_blur.setVisibility(View.VISIBLE);
-            //添加后加载器方法
-            holder.iv_discovery.addProcessor(new ProcessorInterface() {
-                @Override
-                public void process(Context context, Bitmap bitmap) {
-                }
-
-                @Override
-                public void process(Context context, Bitmap bitmap, int position) {
-//                    holder.iv_blur.setDefaultImage(FastBlur.doBlur(Bitmap.createBitmap(Bitmap.createBitmap(bitmap, bitmap.getWidth() / 2, 0, bitmap.getWidth() / 2, bitmap.getHeight(), null, false)), 20, false));
-//                    holder.iv_blur.setImageURL(disCoveries.getVideo_img());
-                    boolean isRefreshItem = null == mBitMap.get(position);
-                    mBitMap.put(position, FastBlur.doBlur(Bitmap.createBitmap(Bitmap.createBitmap(bitmap, bitmap.getWidth() / 2, 0, bitmap.getWidth() / 2, bitmap.getHeight(), null, false)), 10, false));
-                    if (isRefreshItem) notifyItemChanged(position);
-                }
-            }, position);
             holder.iv_discovery.setImageURL(disCoveries.getVideo_img(), true);
-            if (null != mBitMap.get(position)) {
-                holder.iv_blur.setDefaultImage(mBitMap.get(position));
-                holder.iv_blur.setVisibility(View.VISIBLE);
-            }
         } else {
             holder.iv_player.setVisibility(View.GONE);
         }
@@ -118,8 +94,6 @@ public class DiscoveryAdapter extends LoadMoreAdapter<DisCovery, DiscoveryAdapte
         TextView tv_title;
         @Bind(R.id.tv_subtitle)
         TextView tv_subtitle;
-        @Bind(R.id.iv_blur)
-        ImageDraweeView iv_blur;
 
         public DiscoveryViewHolder(View itemView) {
             super(itemView);
